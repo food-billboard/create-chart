@@ -1,2 +1,15 @@
-# h5-chart
-h5可视化数据大屏
+# umi project
+
+## Getting Started
+
+Install dependencies,
+
+```bash
+$ yarn
+```
+
+Start the dev server,
+
+```bash
+$ yarn start
+```
