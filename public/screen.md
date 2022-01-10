@@ -74,6 +74,7 @@ width、height、left、top、rotate、opacity
       zIndex: number // 这个可以暂时不设置，因为没有重叠的情况
     }
     attr: {
+      visible: boolean 
       // TODO  
     },
     event: {
