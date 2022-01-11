@@ -16,7 +16,16 @@
       visible: boolean 
     },
     event: {
+      base: {
+        type: 'onClick'
+        action: {
+          show: boolean 
+          type: 'link'
+          value: string 
+        } 
+      }[]
       // TODO 
+      linkage
       // 具体细节有待参考  
     },
     data: {
@@ -25,7 +34,10 @@
         method: 'POST' | 'GET'
         headers: object  
         body: object 
-        frequency: number 
+        frequency: {
+          show: boolean 
+          value: number
+        } 
         type: 'api' | 'static'
         value: any[] | object  
       }
@@ -49,12 +61,12 @@
 
 ## 组件类型  
 ```ts
-  type TComponentType = ''
+  type TComponentType = 'GROUP_COMPONENT'
 ```
 
 ## 组件自身类型  
 ```ts
-  type TComponentSelfType = ''
+  type TComponentSelfType = 'GROUP_COMPONENT'
 ```
 
 ## 数据过滤  
@@ -105,8 +117,9 @@
     description: string 
     name: string 
     id: string 
-    type: TComponentType  
+    type: TComponentType 
     componentType: TComponentSelfType
+    components: TComponentData<any>[]
     config: TBaseConfig & {
       options: T
     }

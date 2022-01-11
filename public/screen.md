@@ -128,6 +128,11 @@ width、height、left、top、rotate、opacity
 - 表单类型的组件全部重新定义，使用小尺寸的组件  
 - antd的折叠列表样式修改  
 - 关于pc和h5的差异配置需要通过特殊手段磨平，暂时想到的是使用特殊组件包含用于显示隐藏。  
+- **注意**  
+  - 使用`eventemitter`设置每一个组件的在拖拽过程的生命周期函数绑定，初始化时绑定，删除时解绑  
+    beforeDrag、drag、beforeDrop、drop、  
+  - 同上对画布添加事件  
+    beforeAdd、afterAdd、beforeDelete、afterDelete    
 
 ## 可能使用到的库  
 - lodash  
@@ -159,4 +164,6 @@ width、height、left、top、rotate、opacity
 - react-fast-marquee（文字轮播）
 - react-move | Ant Motion | react-spring（动画，暂时先不管）  
 - axios（数据请求）  
+- nanoid（uuid）  
+- eventemitter3（事件）    
 
