@@ -1,15 +1,10 @@
-# umi project
+# 数据可视化大屏  
 
-## Getting Started
+## 介绍  
+这是一个基于[echarts](https://github.com/apache/echarts)数据可视化大屏项目。
 
-Install dependencies,
+## 目录结构  
 
-```bash
-$ yarn
-```
+## 功能  
 
-Start the dev server,
-
-```bash
-$ yarn start
-```
+## 之后的计划  

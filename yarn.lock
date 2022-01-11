@@ -1649,6 +1649,11 @@ array-equal@^1.0.0:
   resolved "https://registry.npmmirror.com/array-equal/download/array-equal-1.0.0.tgz#8c2a5ef2472fd9ea742b04c77a75093ba2757c93"
   integrity sha1-jCpe8kcv2ep0KwTHenUJO6J1fJM=
 
+array-move@3.0.1:
+  version "3.0.1"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/array-move/-/array-move-3.0.1.tgz#179645cc0987b65953a4fc06b6df9045e4ba9618"
+  integrity sha1-F5ZFzAmHtllTpPwGtt+QReS6lhg=
+
 array-tree-filter@2.1.x, array-tree-filter@^2.1.0, array-tree-filter@~2.1.0:
   version "2.1.0"
   resolved "https://registry.npmmirror.com/array-tree-filter/download/array-tree-filter-2.1.0.tgz#873ac00fec83749f255ac8dd083814b4f6329190"
@@ -3049,6 +3054,11 @@ esutils@^2.0.2:
   version "2.0.3"
   resolved "https://registry.npmmirror.com/esutils/download/esutils-2.0.3.tgz#74d2eb4de0b8da1293711910d50775b9b710ef64"
   integrity sha1-dNLrTeC42hKTcRkQ1Qd1ubcQ72Q=
+
+eventemitter3@^4.0.7:
+  version "4.0.7"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
+  integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
 events@^3.0.0:
   version "3.3.0"
@@ -5316,6 +5326,11 @@ nan@^2.12.1:
   resolved "https://registry.npmmirror.com/nan/download/nan-2.15.0.tgz#3f34a473ff18e15c1b5626b62903b5ad6e665fee"
   integrity sha1-PzSkc/8Y4VwbVia2KQO1rW5mX+4=
 
+nanoid@^3.1.30:
+  version "3.1.30"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/nanoid/-/nanoid-3.1.30.tgz#63f93cc548d2a113dc5dfbc63bfa09e2b9b64362"
+  integrity sha512-zJpuPDwOv8D2zq2WRoMe1HsfZthVewpel9CAvTfc/2mBD1uUT/agc5f7GHGWXlYkFvi1mVxe4IjvP2HNrop7nQ==
+
 nanomatch@^1.2.9:
   version "1.2.13"
   resolved "https://registry.npmmirror.com/nanomatch/download/nanomatch-1.2.13.tgz#b87a8aa4fc0de8fe6be88895b38983ff265bd119"
@@ -6990,7 +7005,7 @@ react-refresh@0.10.0:
 
 react-rnd@^10.3.5:
   version "10.3.5"
-  resolved "https://registry.npmmirror.com/react-rnd/download/react-rnd-10.3.5.tgz#b66e5e06f1eb6823e72eb4b552081b4b9241b139"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/react-rnd/-/react-rnd-10.3.5.tgz#b66e5e06f1eb6823e72eb4b552081b4b9241b139"
   integrity sha1-tm5eBvHraCPnLrS1UggbS5JBsTk=
   dependencies:
     re-resizable "6.9.1"
@@ -7075,6 +7090,22 @@ react-sortable-hoc@^2.0.0:
     "@babel/runtime" "^7.2.0"
     invariant "^2.2.4"
     prop-types "^15.5.7"
+
+react-split-pane@^0.1.92:
+  version "0.1.92"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/react-split-pane/-/react-split-pane-0.1.92.tgz#68242f72138aed95dd5910eeb9d99822c4fc3a41"
+  integrity sha1-aCQvchOK7ZXdWRDuudmYIsT8OkE=
+  dependencies:
+    prop-types "^15.7.2"
+    react-lifecycles-compat "^3.0.4"
+    react-style-proptype "^3.2.2"
+
+react-style-proptype@^3.2.2:
+  version "3.2.2"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/react-style-proptype/-/react-style-proptype-3.2.2.tgz#d8e998e62ce79ec35b087252b90f19f1c33968a0"
+  integrity sha1-2OmY5iznnsNbCHJSuQ8Z8cM5aKA=
+  dependencies:
+    prop-types "^15.5.4"
 
 react-syntax-highlighter@^15.4.5:
   version "15.4.5"
