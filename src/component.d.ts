@@ -21,7 +21,7 @@ declare namespace ComponentData {
     attr: {
       visible: boolean;
     };
-    event: {
+    interactive: {
       base: {
         type: 'onClick';
         action: {
@@ -55,6 +55,7 @@ declare namespace ComponentData {
         }[];
         value: {
           name: string;
+          disabled: boolean;
         }[];
         map: {
           field: string;
@@ -72,6 +73,7 @@ declare namespace ComponentData {
 
   // 数据过滤
   export type TFilterConfig = {
+    id: string;
     name: string;
     code: string;
   };
@@ -80,6 +82,7 @@ declare namespace ComponentData {
   export type TGuideLineConfig = {
     type: 'vertical' | 'horizontal';
     position: [number, number];
+    id: string;
   };
 
   // 大屏配置

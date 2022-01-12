@@ -15,7 +15,7 @@
     attr: {
       visible: boolean 
     },
-    event: {
+    interactive: {
       base: {
         type: 'onClick'
         action: {
@@ -49,6 +49,7 @@
         }[]
         value: {
           name: string 
+          disabled: boolean 
         }[]
         map: {
           field: string 
@@ -74,6 +75,7 @@
   type TFilterConfig = {
     name: string 
     code: string 
+    id: string 
   }
 ```
 
@@ -139,11 +141,16 @@
 ## dva全局  
 ```ts
   type TGlobalData = {
-    screenData: TScreenData
+    screenData: Exclude<TScreenData, "components"> 
+    components: TScreenData["components"]
     guideLine: {
-      type: 'vertical' | 'horizontal'  
-      position: [number, number]      
-    }[]
+      show: boolean 
+      value: {
+        type: 'vertical' | 'horizontal'  
+        position: [number, number]   
+        id: string    
+      }[]
+    }
     select: string[]
     history: History // 使用react-undo-component的history 
     theme: string  // 主题 

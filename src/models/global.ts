@@ -1,8 +1,12 @@
 import UndoHistory from 'react-undo-component/lib/Component/history';
 import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
 interface IGlobalModelState {
-  screenData: ComponentData.TScreenData;
-  guideLine: ComponentData.TGuideLineConfig[];
+  screenData: Exclude<ComponentData.TScreenData, 'components'>;
+  components: ComponentData.TScreenData['components'];
+  guideLine: {
+    show: boolean;
+    value: ComponentData.TGuideLineConfig[];
+  };
   select: string[];
   history: UndoHistory;
   theme: ThemeMap;
