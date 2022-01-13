@@ -1,10 +1,10 @@
 export default [
   {
-    path: '/',
+    path: '/list',
     component: '@/pages/ScreenList',
   },
   {
-    path: '/design',
+    path: '/',
     component: '@/pages/Designer',
   },
   {

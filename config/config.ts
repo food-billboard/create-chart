@@ -1,6 +1,7 @@
 // https://umijs.org/config/
 import { defineConfig } from 'umi';
-import { merge } from 'lodash'
+import { merge } from 'lodash';
+import darkTheme from './theme';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routerConfig from './router-config';
@@ -32,9 +33,7 @@ const commonConfig = {
     ie: 11,
   },
   routes: routerConfig,
-  theme: {
-    'primary-color': defaultSettings.primaryColor,
-  },
+  theme: darkTheme,
   // @ts-ignore
   title: false,
   ignoreMomentLocale: true,
@@ -42,23 +41,23 @@ const commonConfig = {
   manifest: {
     basePath: '/',
   },
-}
+};
 
 const developmentConfig: any = merge({}, commonConfig, {
   define: {
     'process.env.REACT_APP_ENV': 'dev',
   },
-})
+});
 
 const productionConfig: any = merge({}, commonConfig, {
   define: {
-    'process.env.REACT_APP_ENV': 'prod'
+    'process.env.REACT_APP_ENV': 'prod',
   },
   //-----打包配置
   base: '/api/backend/',
-  publicPath: "/api/backend/"
-})
+  publicPath: '/api/backend/',
+});
 
 export default defineConfig(
-  REACT_APP_ENV === "prod" ? productionConfig : developmentConfig
+  REACT_APP_ENV === 'prod' ? productionConfig : developmentConfig,
 );

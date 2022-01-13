@@ -1,11 +1,35 @@
+import { Fragment } from 'react';
+import { ConfigProvider } from 'antd';
+import SplitPane from 'react-split-pane';
+import { connect } from 'dva';
+import Header from './components/Header';
+import LeftContent from './components/LeftContent';
+import RightContent from './components/RightContent';
+import Panel from './components/Panel';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
-function Designer() {
+const Designer = () => {
   return (
-    <div>
-      <h1 className={styles.title}>设计页面</h1>
-    </div>
+    <ConfigProvider componentSize="small">
+      <div className={styles['designer-page']}>
+        <Header />
+        <SplitPane
+          split="vertical"
+          minSize={100}
+          maxSize={300}
+          defaultSize={100}
+          className="primary"
+        >
+          <LeftContent />
+          <Fragment>
+            <Panel />
+            <RightContent />
+          </Fragment>
+        </SplitPane>
+      </div>
+    </ConfigProvider>
   );
-}
+};
 
-export default Designer
+export default connect(mapStateToProps, mapDispatchToProps)(Designer);
