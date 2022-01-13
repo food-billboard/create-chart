@@ -104,3 +104,108 @@ ol {
   border-color: transparent;
 }
 // ----end
+
+// variable
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.text-ellipsis-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.text-ellipsis-3 {
+  &:extend(.text-ellipsis-2);
+  -webkit-line-clamp: 3;
+}
+
+// padding
+.p-4 {
+  padding: 4px;
+}
+.p-8 {
+  padding: 8px;
+}
+.p-12 {
+  padding: 12px;
+}
+.p-16 {
+  padding: 16px;
+}
+
+// margin
+.m-4 {
+  margin: 4px;
+}
+.m-8 {
+  margin: 8px;
+}
+.m-12 {
+  margin: 12px;
+}
+.m-16 {
+  margin: 16px;
+}
+
+.m-l-4 {
+  margin-left: 4px;
+}
+.m-l-8 {
+  margin-left: 8px;
+}
+.m-l-12 {
+  margin-left: 12px;
+}
+.m-l-16 {
+  margin-left: 16px;
+}
+.m-r-4 {
+  margin-right: 4px;
+}
+.m-r-8 {
+  margin-right: 8px;
+}
+.m-r-12 {
+  margin-right: 12px;
+}
+.m-r-16 {
+  margin-right: 16px;
+}
+.m-t-4 {
+  margin-top: 4px;
+}
+.m-t-8 {
+  margin-top: 8px;
+}
+.m-t-12 {
+  margin-top: 12px;
+}
+.m-t-16 {
+  margin-top: 16px;
+}
+.m-b-4 {
+  margin-bottom: 4px;
+}
+.m-b-8 {
+  margin-bottom: 8px;
+}
+.m-b-12 {
+  margin-bottom: 12px;
+}
+.m-b-16 {
+  margin-bottom: 16px;
+}
+
+// border
+
+// box-sizing
+.box-sizing-border {
+  box-sizing: border-box;
+}
+
+// ----end
