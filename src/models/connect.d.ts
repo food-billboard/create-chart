@@ -1,4 +1,5 @@
 import { MenuDataItem, Settings as ProSettings } from '@ant-design/pro-layout';
+import { IGlobalModelState } from './global';
 
 export interface Loading {
   global: boolean;
@@ -10,9 +11,9 @@ export interface Loading {
 }
 
 export interface ConnectState {
-  global: any;
-  loading: Loading
-  settings: ProSettings
+  global: IGlobalModelState;
+  loading: Loading;
+  settings: ProSettings;
 }
 
 export interface Route extends MenuDataItem {

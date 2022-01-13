@@ -202,10 +202,40 @@ ol {
 }
 
 // border
+.border-1 {
+  border: 1px solid @border-color-base;
+}
+.border-2 {
+  &:extend(.border-1);
+  border-width: 2px;
+}
+.border-3 {
+  &:extend(.border-1);
+  border-width: 3px;
+}
+
+// border-radius
+.border-r-4 {
+  border-radius: 4px;
+}
+.border-r-8 {
+  border-radius: 8px;
+}
+.border-r-12 {
+  border-radius: 12px;
+}
+.border-r-16 {
+  border-radius: 16px;
+}
 
 // box-sizing
 .box-sizing-border {
   box-sizing: border-box;
+}
+
+// cursor
+.c-po {
+  cursor: pointer;
 }
 
 // ----end

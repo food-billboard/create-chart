@@ -9,6 +9,8 @@ import Panel from './components/Panel';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
+import TestComponent from '@/components/ColorSelect';
+
 const Designer = () => {
   return (
     <ConfigProvider componentSize="small">
@@ -25,6 +27,8 @@ const Designer = () => {
           <Fragment>
             <Panel />
             <RightContent />
+
+            <TestComponent />
           </Fragment>
         </SplitPane>
       </div>

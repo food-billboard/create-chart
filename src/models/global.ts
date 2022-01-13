@@ -1,4 +1,5 @@
 import UndoHistory from 'react-undo-component/lib/Component/history';
+import { set } from 'lodash';
 import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
 interface IGlobalModelState {
   screenData: Exclude<ComponentData.TScreenData, 'components'>;
@@ -30,7 +31,19 @@ export default {
     clipboard: [],
   },
 
-  effects: {},
+  effects: {
+    *setScreenName({ value }: { value: string }, { put }: any) {
+      yield put({
+        type: 'setData',
+        payload: value,
+      });
+    },
+  },
 
-  reducers: {},
+  reducers: {
+    setData(state: any, action: any) {
+      set(state, 'screenData.name', action.payload);
+      return state;
+    },
+  },
 };
