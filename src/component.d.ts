@@ -113,6 +113,7 @@ declare namespace ComponentData {
     name: string;
     id: string;
     type: TComponentType;
+    parent?: string;
     componentType: TComponentSelfType;
     components: TComponentData<any>[];
     config: TBaseConfig & {

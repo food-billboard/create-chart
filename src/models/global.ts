@@ -8,6 +8,7 @@ interface IGlobalModelState {
     value: ComponentData.TGuideLineConfig[];
   };
   select: string[];
+  componentSelect: ComponentData.TComponentData<any> | null;
   history: UndoHistory;
   theme: ThemeMap;
   clipboard: ComponentData.TComponentData<any>[];
@@ -24,6 +25,7 @@ export default {
     guideLine: [],
     select: [],
     history: null,
+    componentSelect: null,
     theme: ThemeMap.dark,
     clipboard: [],
   },

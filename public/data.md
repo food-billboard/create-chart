@@ -125,6 +125,7 @@
     config: TBaseConfig & {
       options: T
     }
+    parent?: string 
   }
 ```
 
