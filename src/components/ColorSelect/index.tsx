@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useControllableValue } from 'ahooks';
 import { Tooltip } from 'antd';
 import {
@@ -11,6 +11,8 @@ import color from 'color';
 import classnames from 'classnames';
 import { omit } from 'lodash';
 import styles from './index.less';
+
+// * 颜色选择组件
 
 const ColorSelect = (
   props: Partial<Exclude<SketchPickerProps, 'color'>> & {

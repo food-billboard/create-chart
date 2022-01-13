@@ -9,7 +9,8 @@ import Panel from './components/Panel';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
-import TestComponent from '@/components/ColorSelect';
+import TestComponent from '@/components/IconTooltip';
+import { DingdingOutlined } from '@ant-design/icons';
 
 const Designer = () => {
   return (
@@ -27,8 +28,10 @@ const Designer = () => {
           <Fragment>
             <Panel />
             <RightContent />
-
-            <TestComponent />
+            hhhhhh
+            <TestComponent title="文星提示">
+              <DingdingOutlined />
+            </TestComponent>
           </Fragment>
         </SplitPane>
       </div>
