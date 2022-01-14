@@ -35,6 +35,7 @@
     "json5": "^2.2.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
+    "monaco-editor": "^0.31.1",
     "nanoid": "^3.1.30",
     "nprogress": "^0.2.0",
     "re-resizable": "^6.9.1",
@@ -67,6 +68,7 @@
     "@umijs/test": "^3.5.20",
     "cross-env": "^7.0.3",
     "lint-staged": "^10.0.7",
+    "monaco-editor-webpack-plugin": "^7.0.1",
     "prettier": "^2.2.0",
     "typescript": "^4.1.2",
     "yorkie": "^2.0.0"

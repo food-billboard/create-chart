@@ -1,7 +1,18 @@
-import React from 'react';
+import { ReactNode } from 'react';
+import classnames from 'classnames';
+import styles from './index.less';
 
-const BackgroundSelect = () => {
-  return <div>关系型边框</div>;
+const RelationBorder = (props: { children?: ReactNode }) => {
+  const { children } = props;
+
+  return (
+    <div className={styles['component-relation-border-wrapper']}>
+      <div
+        className={classnames(styles['component-relation-border'], 'border-1')}
+      ></div>
+      <div className={styles['component-relation-border-main']}>{children}</div>
+    </div>
+  );
 };
 
-export default BackgroundSelect;
+export default RelationBorder;
