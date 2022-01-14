@@ -128,4 +128,19 @@ declare namespace ComponentData {
     fontFamily: string;
     color: string;
   };
+
+  // 颜色配置
+  export type TColorConfig = {
+    r: number;
+    g: number;
+    b: number;
+    a?: number;
+  };
+
+  // 背景配置
+  export type TBackgroundConfig = {
+    type: 'image' | 'color';
+    background?: string;
+    color?: TColorConfig;
+  };
 }

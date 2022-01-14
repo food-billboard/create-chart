@@ -1770,6 +1770,11 @@ atob@^2.1.2:
   resolved "https://registry.npmmirror.com/atob/download/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha1-bZUX654DDSQ2ZmZR6GvZ9vE1M8k=
 
+attr-accept@^2.2.1:
+  version "2.2.2"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/attr-accept/-/attr-accept-2.2.2.tgz#646613809660110749e92f2c10833b70968d929b"
+  integrity sha1-ZGYTgJZgEQdJ6S8sEIM7cJaNkps=
+
 autoprefixer@^9.6.1:
   version "9.8.8"
   resolved "https://registry.npmmirror.com/autoprefixer/download/autoprefixer-9.8.8.tgz#fd4bd4595385fa6f06599de749a4d5f7a474957a"
@@ -2230,6 +2235,29 @@ chokidar@3.5.1:
     readdirp "~3.5.0"
   optionalDependencies:
     fsevents "~2.3.1"
+
+chunk-file-load-component@^1.0.1:
+  version "1.0.1"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/chunk-file-load-component/-/chunk-file-load-component-1.0.1.tgz#f6473cb01e7b29774bd3a5a093a6937c8c0226e6"
+  integrity sha1-9kc8sB57KXdL06Wgk6aTfIwCJuY=
+  dependencies:
+    "@babel/runtime" "^7.15.4"
+    chunk-file-upload "^1.0.8"
+    classnames "^2.3.1"
+    dropzone "^5.9.2"
+    lodash "^4.17.21"
+    nanoid "^3.1.23"
+    react-dropzone "^11.3.4"
+
+chunk-file-upload@^1.0.8:
+  version "1.0.9"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/chunk-file-upload/-/chunk-file-upload-1.0.9.tgz#ff9a4ee578700877212662f7108890cc566650b6"
+  integrity sha1-/5pO5XhwCHchJmL3EIiQzFZmULY=
+  dependencies:
+    "@babel/runtime" "^7.15.4"
+    eventemitter3 "^4.0.7"
+    lodash "^4.17.21"
+    spark-md5 "^3.0.1"
 
 ci-info@^1.5.0:
   version "1.6.0"
@@ -2872,6 +2900,11 @@ domexception@^2.0.1:
   dependencies:
     webidl-conversions "^5.0.0"
 
+dropzone@^5.9.2:
+  version "5.9.3"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/dropzone/-/dropzone-5.9.3.tgz#b3070ae090fa48cbc04c17535635537ca72d70d6"
+  integrity sha1-swcK4JD6SMvATBdTVjVTfKctcNY=
+
 dva-core@2.0.4:
   version "2.0.4"
   resolved "https://registry.npmmirror.com/dva-core/download/dva-core-2.0.4.tgz#086665d1d5f684e089c5bfac9ba388d91cc9050a"
@@ -3331,6 +3364,13 @@ fbjs@^3.0.0, fbjs@^3.0.1:
     promise "^7.1.1"
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.30"
+
+file-selector@^0.2.2:
+  version "0.2.4"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/file-selector/-/file-selector-0.2.4.tgz#7b98286f9dbb9925f420130ea5ed0a69238d4d80"
+  integrity sha1-e5gob527mSX0IBMOpe0KaSONTYA=
+  dependencies:
+    tslib "^2.0.3"
 
 file-uri-to-path@1.0.0:
   version "1.0.0"
@@ -5409,6 +5449,11 @@ nan@^2.12.1:
   resolved "https://registry.npmmirror.com/nan/download/nan-2.15.0.tgz#3f34a473ff18e15c1b5626b62903b5ad6e665fee"
   integrity sha1-PzSkc/8Y4VwbVia2KQO1rW5mX+4=
 
+nanoid@^3.1.23:
+  version "3.1.32"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/nanoid/-/nanoid-3.1.32.tgz#8f96069e6239cc0a9ae8c0d3b41a3b4933a88c0a"
+  integrity sha512-F8mf7R3iT9bvThBoW4tGXhXFHCctyCiUUPrWF8WaTqa3h96d9QybkSeba43XVOOE3oiLfkVDe4bT8MeGmkrTxw==
+
 nanoid@^3.1.30:
   version "3.1.30"
   resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/nanoid/-/nanoid-3.1.30.tgz#63f93cc548d2a113dc5dfbc63bfa09e2b9b64362"
@@ -6975,6 +7020,15 @@ react-draggable@4.4.3:
     classnames "^2.2.5"
     prop-types "^15.6.0"
 
+react-dropzone@^11.3.4:
+  version "11.5.1"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/react-dropzone/-/react-dropzone-11.5.1.tgz#f4d664437bf8af6acfccbf5040a9890c6780a49f"
+  integrity sha512-eNhttdq4ZDe3eKbXAe54Opt+sbtqmNK5NWTHf/l5d+1TdZqShJ8gMjBrya00qx5zkI//TYxRhu1d9pemTgaWwg==
+  dependencies:
+    attr-accept "^2.2.1"
+    file-selector "^0.2.2"
+    prop-types "^15.7.2"
+
 react-fast-compare@^3.0.1, react-fast-compare@^3.1.1:
   version "3.2.0"
   resolved "https://registry.npmmirror.com/react-fast-compare/download/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
@@ -7976,6 +8030,11 @@ space-separated-tokens@^1.0.0:
   resolved "https://registry.npmmirror.com/space-separated-tokens/download/space-separated-tokens-1.1.5.tgz#85f32c3d10d9682007e917414ddc5c26d1aa6899"
   integrity sha1-hfMsPRDZaCAH6RdBTdxcJtGqaJk=
 
+spark-md5@^3.0.1:
+  version "3.0.2"
+  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/spark-md5/-/spark-md5-3.0.2.tgz#7952c4a30784347abcee73268e473b9c0167e3fc"
+  integrity sha512-wcFzz9cDfbuqe0FZzfi2or1sgyIrsDwmPwfZC4hiNidPdPINjeUwNfv5kldczoEAcjl9Y1L3SM7Uz2PUEQzxQw==
+
 spdx-correct@^3.0.0:
   version "3.1.1"
   resolved "https://registry.npmmirror.com/spdx-correct/download/spdx-correct-3.1.1.tgz#dece81ac9c1e6713e5f7d1b6f17d468fa53d89a9"
@@ -8400,7 +8459,7 @@ tslib@2.3.0:
   resolved "https://registry.npmmirror.com/tslib/download/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
   integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
 
-tslib@^2.1.0:
+tslib@^2.0.3, tslib@^2.1.0:
   version "2.3.1"
   resolved "https://registry.npmmirror.com/tslib/download/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==

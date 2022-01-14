@@ -9,7 +9,7 @@ import Panel from './components/Panel';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
-import TestComponent from '@/components/CodeEditor';
+import TestComponent from '@/components/BackgroundSelect';
 import { DingdingOutlined } from '@ant-design/icons';
 
 const Designer = () => {
@@ -29,7 +29,9 @@ const Designer = () => {
             <Panel />
             <RightContent />
             hhhhhh
-            <TestComponent value={``} language="json" />
+            <div style={{ width: 300 }}>
+              <TestComponent />
+            </div>
           </Fragment>
         </SplitPane>
       </div>
