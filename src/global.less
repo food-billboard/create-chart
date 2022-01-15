@@ -262,4 +262,19 @@ ol {
   font-size: 16px;
 }
 
+// display flex
+.dis-flex {
+  display: flex;
+}
+
+.dis-flex-column {
+  &:extend(.dis-flex);
+  flex-direction: column;
+}
+
+.dis-flex-column-between {
+  &:extend(.dis-flex-column);
+  justify-content: space-between;
+}
+
 // ----end

@@ -129,6 +129,13 @@ declare namespace ComponentData {
     color: string;
   };
 
+  // 渐变色配置
+  export type TGradientColorConfig = {
+    start: TColorConfig;
+    end: TColorConfig;
+    direction: number;
+  };
+
   // 颜色配置
   export type TColorConfig = {
     r: number;

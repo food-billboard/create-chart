@@ -8,7 +8,8 @@ import {
 } from 'react-color';
 import color from 'color';
 import classnames from 'classnames';
-import { omit, merge } from 'lodash';
+import { omit, merge, debounce } from 'lodash';
+import { DEFAULT_COLOR } from '@/utils/constants';
 import styles from './index.less';
 
 // * 颜色选择组件
@@ -27,7 +28,7 @@ function getOpacity(prevColor: ComponentData.TColorConfig) {
 function getRgbaString(prevColor: ComponentData.TColorConfig) {
   if (!prevColor) return prevColor;
   return `rgba(${color(omit(prevColor, 'a')).array().join(',')}, ${
-    prevColor.a || 1
+    prevColor.a ?? 1
   })`;
 }
 
@@ -41,12 +42,7 @@ const ColorSelect = (props: TColorSelectProps) => {
   const [state, setState] = useControllableValue<ComponentData.TColorConfig>(
     props,
     {
-      defaultValue: {
-        r: 0,
-        g: 0,
-        b: 0,
-        a: 1,
-      },
+      defaultValue: DEFAULT_COLOR,
     },
   );
 
@@ -62,7 +58,7 @@ const ColorSelect = (props: TColorSelectProps) => {
       title={
         <SketchPicker
           {...nextProps}
-          onChange={onInternalChange}
+          onChange={debounce(onInternalChange, 20)}
           color={state}
         />
       }

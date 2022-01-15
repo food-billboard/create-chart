@@ -9,7 +9,7 @@ import Panel from './components/Panel';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
-import TestComponent from '@/components/BackgroundSelect';
+import TestComponent from '@/components/ColorGradientSelect';
 import { DingdingOutlined } from '@ant-design/icons';
 
 const Designer = () => {

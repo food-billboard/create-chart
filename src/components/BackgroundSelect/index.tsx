@@ -6,6 +6,7 @@ import { merge } from 'lodash';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { CompatColorSelect } from '../ColorSelect';
 import ImageUpload from '../ImageUpload';
+import { DEFAULT_BACKGROUND_CONFIG } from '@/utils/constants';
 import styles from './index.less';
 
 const BackgroundSelect = (props: {
@@ -14,16 +15,7 @@ const BackgroundSelect = (props: {
 }) => {
   const [value, setValue] =
     useControllableValue<ComponentData.TBackgroundConfig>(props, {
-      defaultValue: {
-        type: 'color',
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-          a: 0,
-        },
-        background: '',
-      },
+      defaultValue: DEFAULT_BACKGROUND_CONFIG,
     });
 
   const { color, background, type } = value;
