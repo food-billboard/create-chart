@@ -34,12 +34,6 @@ const BackgroundSelect = (props: {
     [value],
   );
 
-  console.log(
-    `linear-gradient(${direction}deg, ${ColorSelect.getRgbaString(
-      start,
-    )}, ${ColorSelect.getRgbaString(end)})`,
-  );
-
   return (
     <div className={styles['component-gradient-select']}>
       <Row gutter={24}>

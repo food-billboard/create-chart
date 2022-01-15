@@ -1,6 +1,14 @@
 .designer-page {
   width: 100%;
   height: 100vh;
-  overflow: hidden;
+  overflow-y: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  &-content {
+    width: 100vw;
+    display: flex;
+    flex: 1;
+    overflow: auto;
+  }
 }

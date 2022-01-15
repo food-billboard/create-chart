@@ -1,0 +1,26 @@
+.ruler-guide-line-horizontal {
+  border-top: 1px dashed rgb(255, 128, 0);
+}
+.ruler-guide-line-vertical {
+  border-left: 1px dashed rgb(255, 128, 0);
+}
+.ruler-guide-line-horizontal,
+.ruler-guide-line-vertical {
+  width: 100%;
+  height: 100%;
+}
+.ruler-guide-line-wrapper-horizontal,
+.ruler-guide-line-wrapper-vertical {
+  position: absolute;
+  z-index: 3;
+}
+.ruler-guide-line-wrapper-horizontal {
+  left: 0;
+  padding: 5px 0;
+  cursor: ns-resize;
+}
+.ruler-guide-line-wrapper-vertical {
+  top: 0;
+  padding: 0 5px;
+  cursor: ew-resize;
+}

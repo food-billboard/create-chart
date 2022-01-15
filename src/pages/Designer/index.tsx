@@ -9,31 +9,16 @@ import Panel from './components/Panel';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
-import TestComponent from '@/components/ColorGradientSelect';
-import { DingdingOutlined } from '@ant-design/icons';
-
 const Designer = () => {
   return (
     <ConfigProvider componentSize="small">
       <div className={styles['designer-page']}>
         <Header />
-        <SplitPane
-          split="vertical"
-          minSize={100}
-          maxSize={300}
-          defaultSize={100}
-          className="primary"
-        >
+        <div className={styles['designer-page-content']}>
           <LeftContent />
-          <Fragment>
-            <Panel />
-            <RightContent />
-            hhhhhh
-            <div style={{ width: 300 }}>
-              <TestComponent />
-            </div>
-          </Fragment>
-        </SplitPane>
+          <Panel />
+          <RightContent />
+        </div>
       </div>
     </ConfigProvider>
   );

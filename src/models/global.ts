@@ -4,10 +4,7 @@ import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
 interface IGlobalModelState {
   screenData: Exclude<ComponentData.TScreenData, 'components'>;
   components: ComponentData.TScreenData['components'];
-  guideLine: {
-    show: boolean;
-    value: ComponentData.TGuideLineConfig[];
-  };
+  guideLine: ComponentData.TGuideLineConfig;
   select: string[];
   componentSelect: ComponentData.TComponentData<any> | null;
   history: UndoHistory;
@@ -23,7 +20,10 @@ export default {
   state: {
     // 大屏
     screenData: DEFAULT_SCREEN_DATA,
-    guideLine: [],
+    guideLine: {
+      show: true,
+      value: [],
+    },
     select: [],
     history: null,
     componentSelect: null,
@@ -38,11 +38,22 @@ export default {
         payload: value,
       });
     },
+
+    *setGuideLine({ value }: { value: string }, { put }: any) {
+      yield put({
+        type: 'setGuideLineData',
+        payload: value,
+      });
+    },
   },
 
   reducers: {
     setData(state: any, action: any) {
       set(state, 'screenData.name', action.payload);
+      return state;
+    },
+    setGuideLineData(state: any, action: any) {
+      set(state, 'guideLine', action.payload);
       return state;
     },
   },

@@ -65,12 +65,6 @@ declare namespace ComponentData {
     };
   };
 
-  // 背景属性
-  export type TPosterConfig = {
-    type: 'image' | 'color';
-    value: string;
-  };
-
   // 数据过滤
   export type TFilterConfig = {
     id: string;
@@ -79,10 +73,19 @@ declare namespace ComponentData {
   };
 
   // 辅助线
-  export type TGuideLineConfig = {
+  export type TGuideLineConfigItem = {
     type: 'vertical' | 'horizontal';
-    position: [number, number];
+    style: {
+      left: number;
+      top: number;
+      width?: number;
+      height?: number;
+    };
     id: string;
+  };
+  export type TGuideLineConfig = {
+    show: boolean;
+    value: TGuideLineConfigItem[];
   };
 
   // 大屏配置
@@ -97,8 +100,7 @@ declare namespace ComponentData {
         height: number;
       };
       attr: {
-        name: string;
-        poster: TPosterConfig;
+        poster: TBackgroundConfig;
         filter: TFilterConfig[];
       };
       flag: {
