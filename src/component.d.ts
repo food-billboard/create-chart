@@ -154,9 +154,9 @@ declare namespace ComponentData {
   };
 
   export type BaseComponentItem = {
-    name: string;
-    parentType: string;
+    type: string;
+    title: string;
+    icon: string;
     description?: string;
-    id: string;
   };
 }

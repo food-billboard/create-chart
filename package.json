@@ -43,6 +43,8 @@
     "react": "16.14.0",
     "react-color": "^2.19.3",
     "react-contextmenu": "^2.14.0",
+    "react-dnd": "^14.0.5",
+    "react-dnd-html5-backend": "^14.1.0",
     "react-dom": "16.14.0",
     "react-json-view": "^1.21.3",
     "react-monaco-editor": "^0.46.0",

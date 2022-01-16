@@ -1,6 +1,10 @@
 import UndoHistory from 'react-undo-component/lib/Component/history';
-import { set } from 'lodash';
+import { set, get, merge } from 'lodash';
 import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
+
+type DragData = {
+  value: ComponentData.BaseComponentItem | null;
+};
 interface IGlobalModelState {
   screenData: Exclude<ComponentData.TScreenData, 'components'>;
   components: ComponentData.TScreenData['components'];
@@ -10,6 +14,8 @@ interface IGlobalModelState {
   history: UndoHistory;
   theme: ThemeMap;
   clipboard: ComponentData.TComponentData<any>[];
+
+  drag: DragData;
 }
 
 export { IGlobalModelState };
@@ -29,6 +35,9 @@ export default {
     componentSelect: null,
     theme: ThemeMap.dark,
     clipboard: [],
+    drag: {
+      value: null,
+    },
   },
 
   effects: {
@@ -45,6 +54,13 @@ export default {
         payload: value,
       });
     },
+
+    *setDragInfo({ value }: { value: DragData }, { put }: any) {
+      yield put({
+        type: 'setDragData',
+        payload: value,
+      });
+    },
   },
 
   reducers: {
@@ -52,8 +68,14 @@ export default {
       set(state, 'screenData.name', action.payload);
       return state;
     },
+
     setGuideLineData(state: any, action: any) {
       set(state, 'guideLine', action.payload);
+      return state;
+    },
+
+    setDragData(state: any, action: any) {
+      set(state, 'drag', merge({}, get(state, 'drag'), action.payload));
       return state;
     },
   },

@@ -1,33 +1,13 @@
-import { useMemo, useState } from 'react';
-import { Row, Col, Collapse } from 'antd';
+import { useMemo } from 'react';
+import { Row, Collapse } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import Empty from '@/components/Empty';
 import { COMPONENT_TYPE_LIST } from '@/utils/constants';
+import ComponentItem from './item';
 import styles from './index.less';
 
 const { Panel } = Collapse;
-
-const ComponentItem = (props: {
-  type: string;
-  icon: string;
-  title: string;
-}) => {
-  const { type, icon, title } = props;
-
-  return (
-    <Col
-      span={12}
-      className={classnames(
-        styles['design-left-component-list-item'],
-        'ali-cen',
-      )}
-    >
-      <img src={icon} alt={title} />
-      <div className="ali-cen">{title}</div>
-    </Col>
-  );
-};
 
 const ComponentList = (props: { type: string }) => {
   const { type } = props;
