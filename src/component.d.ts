@@ -152,4 +152,11 @@ declare namespace ComponentData {
     background?: string;
     color?: TColorConfig;
   };
+
+  export type BaseComponentItem = {
+    name: string;
+    parentType: string;
+    description?: string;
+    id: string;
+  };
 }
