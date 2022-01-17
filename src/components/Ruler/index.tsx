@@ -1,24 +1,26 @@
-import { useEffect, useRef } from 'react';
-import ReactRuler, { RulerProps } from '@scena/react-ruler';
+import { createRef, Component } from 'react';
+import ReactRuler, { RulerProps as BaseRulerProps } from '@scena/react-ruler';
 
-const Ruler = (props: Partial<RulerProps>) => {
-  const { ...nextProps } = props;
+export type RulerProps = Partial<BaseRulerProps>;
 
-  const rulerRef = useRef<any>();
+class Ruler extends Component<RulerProps> {
+  rulerRef = createRef<any>();
 
-  const resize = () => {
-    rulerRef.current?.resize();
+  resize = () => {
+    this.rulerRef.current?.resize();
   };
 
-  useEffect(() => {
-    resize();
-    window.addEventListener('resize', resize);
-    return () => {
-      window.removeEventListener('resize', resize);
-    };
-  }, []);
+  componentDidMount = () => {
+    window.addEventListener('resize', this.resize);
+  };
 
-  return <ReactRuler type="vertical" {...nextProps} ref={rulerRef} />;
-};
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.resize);
+  };
+
+  render() {
+    return <ReactRuler type="vertical" {...this.props} ref={this.rulerRef} />;
+  }
+}
 
 export default Ruler;

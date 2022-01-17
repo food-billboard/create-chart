@@ -1,12 +1,20 @@
-import { useEffect, useState, useCallback, ReactNode, useMemo } from 'react';
+import {
+  useEffect,
+  useState,
+  useCallback,
+  ReactNode,
+  useMemo,
+  useRef,
+} from 'react';
 import { Button } from 'antd';
 import { merge } from 'lodash';
 import { connect } from 'dva';
+import { useHover, useMouse } from 'ahooks';
 import { nanoid } from 'nanoid';
 import classnames from 'classnames';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import Ruler from '@/components/Ruler';
 import GuideLine from '@/components/GuideLine';
+import Ruler from '@/components/Ruler';
 import { mergeWithoutArray } from '@/utils/tool';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
@@ -38,6 +46,52 @@ const PanelWrapper = (props: {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [wrapperLeft, setWrapperLeft] = useState(0);
   const [wrapperTop, setWrapperTop] = useState(0);
+  const [mouseHorizontalGuideLine, setMouseHorizontalGuideLine] =
+    useState<ComponentData.TGuideLineConfigItem>();
+  const [mouseVerticalGuideLine, setMouseVerticalGuideLine] =
+    useState<ComponentData.TGuideLineConfigItem>();
+
+  const horizontalRulerRef = useRef<any>();
+  const verticalRulerRef = useRef<any>();
+
+  const isHorizontalRulerHover = useHover(horizontalRulerRef);
+
+  const isVerticalRulerHover = useHover(verticalRulerRef);
+
+  const mousePosition = useMouse();
+
+  const setMousePosition = () => {
+    const { clientX, clientY } = mousePosition;
+    if (isHorizontalRulerHover) {
+      const result = generateGuideLine(
+        'vertical',
+        {
+          width: 2,
+          height: size.height,
+        },
+        false,
+        {
+          clientX,
+          clientY,
+        },
+      );
+      setMouseHorizontalGuideLine(result);
+    } else if (isVerticalRulerHover) {
+      const result = generateGuideLine(
+        'horizontal',
+        {
+          width: size.width,
+          height: 2,
+        },
+        false,
+        {
+          clientX,
+          clientY,
+        },
+      );
+      setMouseVerticalGuideLine(result);
+    }
+  };
 
   const wrapperSetGuideLine = useCallback(
     (value: Partial<ComponentData.TGuideLineConfig>) => {
@@ -56,7 +110,7 @@ const PanelWrapper = (props: {
   );
 
   const generateGuideLine = useCallback(
-    (direction, style, e) => {
+    (direction, style, insertToList, e) => {
       if (!guideLineShow) return;
       const { clientX, clientY } = e;
       let positionStyle: Partial<ComponentData.TGuideLineConfigItem['style']> =
@@ -74,12 +128,16 @@ const PanelWrapper = (props: {
         style: merge({}, style, positionStyle),
         id: nanoid(),
       };
-      wrapperSetGuideLine({
-        value: [
-          ...guideLineList,
-          newItem,
-        ] as ComponentData.TGuideLineConfigItem[],
-      });
+
+      insertToList &&
+        wrapperSetGuideLine({
+          value: [
+            ...guideLineList,
+            newItem,
+          ] as ComponentData.TGuideLineConfigItem[],
+        });
+
+      return newItem;
     },
     [
       guideLineShow,
@@ -154,9 +212,8 @@ const PanelWrapper = (props: {
     return guideLineShow ? <EyeOutlined /> : <EyeInvisibleOutlined />;
   }, [guideLineShow]);
 
-  const guideLineListDoms = useMemo(() => {
-    if (!guideLineShow) return;
-    return guideLineList.map((item, index) => {
+  const renderGuideLineItem = useCallback(
+    (item: ComponentData.TGuideLineConfigItem, index: number) => {
       return (
         <GuideLine
           {...item}
@@ -165,8 +222,31 @@ const PanelWrapper = (props: {
           key={item.id}
         />
       );
-    });
-  }, [guideLineShow, onGuidelinePositionChange, onMoveEnd, guideLineList]);
+    },
+    [onMoveEnd, onGuidelinePositionChange],
+  );
+
+  const mouseGuideLineList = useMemo(() => {
+    if (!guideLineShow) return;
+    let list: ComponentData.TGuideLineConfigItem[] = [];
+    if (isHorizontalRulerHover && mouseHorizontalGuideLine)
+      list.push(mouseHorizontalGuideLine);
+    if (isVerticalRulerHover && mouseVerticalGuideLine)
+      list.push(mouseVerticalGuideLine);
+    return list.map(renderGuideLineItem);
+  }, [
+    isHorizontalRulerHover,
+    isVerticalRulerHover,
+    guideLineShow,
+    renderGuideLineItem,
+    mouseHorizontalGuideLine,
+    mouseVerticalGuideLine,
+  ]);
+
+  const guideLineListDoms = useMemo(() => {
+    if (!guideLineShow) return;
+    return guideLineList.map(renderGuideLineItem);
+  }, [guideLineShow, guideLineList, renderGuideLineItem]);
 
   useEffect(() => {
     resize();
@@ -175,6 +255,10 @@ const PanelWrapper = (props: {
       window.removeEventListener('resize', resize);
     };
   }, [resize]);
+
+  useEffect(() => {
+    setMousePosition();
+  }, [mousePosition]);
 
   useEffect(() => {
     getWrapperStyle();
@@ -190,11 +274,18 @@ const PanelWrapper = (props: {
         className={classnames(styles['designer-page-main-sub'], 'pos-re')}
         style={size}
       >
+        {/* Ruler */}
         <div
-          onClick={generateGuideLine.bind(this, 'vertical', {
-            width: 2,
-            height: size.height,
-          })}
+          ref={horizontalRulerRef}
+          onClick={generateGuideLine.bind(
+            this,
+            'vertical',
+            {
+              width: 2,
+              height: size.height,
+            },
+            true,
+          )}
           className={classnames(
             styles['designer-page-main-horizontal-ruler'],
             'dis-flex',
@@ -218,15 +309,21 @@ const PanelWrapper = (props: {
           />
         </div>
         <div
+          ref={verticalRulerRef}
           style={{ height: size.height }}
           className={classnames(
             styles['designer-page-main-vertical-ruler'],
             'pos-ab',
           )}
-          onClick={generateGuideLine.bind(this, 'horizontal', {
-            width: size.width,
-            height: 2,
-          })}
+          onClick={generateGuideLine.bind(
+            this,
+            'horizontal',
+            {
+              width: size.width,
+              height: 2,
+            },
+            true,
+          )}
         >
           <div
             className={styles['designer-page-main-horizontal-ruler-prefix']}
@@ -238,6 +335,8 @@ const PanelWrapper = (props: {
             unit={scale > 0.5 ? 50 : 100}
           />
         </div>
+        {/* Ruler */}
+
         <Button
           onClick={wrapperSetGuideLine.bind(null, { show: !guideLineShow })}
           type="link"
@@ -245,6 +344,7 @@ const PanelWrapper = (props: {
           icon={guideLineShowIcon}
         ></Button>
         {guideLineListDoms}
+        {mouseGuideLineList}
         {children}
       </div>
     </div>
