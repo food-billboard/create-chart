@@ -1,4 +1,4 @@
-import {} from 'react';
+import { useCallback, useRef } from 'react';
 import {
   RedoOutlined,
   UndoOutlined,
@@ -9,6 +9,7 @@ import {
   ArrowsAltOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
+import CallbackManage, { CallbackManageRef } from '../CallbackManage';
 import styles from './index.less';
 
 const commonClass: string = classnames(
@@ -44,5 +45,16 @@ export const GuideLineIcon = () => {
 
 // 回调管理
 export const CallbackIcon = () => {
-  return <BarsOutlined className={classnames(commonClass)} />;
+  const callbackRef = useRef<CallbackManageRef>(null);
+
+  const handleOpen = useCallback(() => {
+    callbackRef.current?.open();
+  }, []);
+
+  return (
+    <>
+      <BarsOutlined className={classnames(commonClass)} onClick={handleOpen} />
+      <CallbackManage ref={callbackRef} />
+    </>
+  );
 };

@@ -12,7 +12,18 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
         type: 'color',
         background: '#999',
       },
-      filter: [],
+      filter: [
+        {
+          id: '1',
+          name: '随便谢谢的名字',
+          code: 'var a = 100; a = 100; a = 1000;',
+        },
+        {
+          id: '2',
+          name: '随便谢谢的名字二号',
+          code: 'var a = 101',
+        },
+      ],
     },
     flag: {
       type: 'WEB',

@@ -61,6 +61,16 @@ export default {
         payload: value,
       });
     },
+
+    *setCallbackData(
+      { value }: { value: ComponentData.TFilterConfig[] },
+      { put }: any,
+    ) {
+      yield put({
+        type: 'setCallback',
+        payload: value,
+      });
+    },
   },
 
   reducers: {
@@ -76,6 +86,11 @@ export default {
 
     setDragData(state: any, action: any) {
       set(state, 'drag', merge({}, get(state, 'drag'), action.payload));
+      return state;
+    },
+
+    setCallback(state: any, action: any) {
+      set(state, 'screenData.config.attr.filter', action.payload);
       return state;
     },
   },
