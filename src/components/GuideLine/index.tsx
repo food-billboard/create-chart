@@ -7,7 +7,9 @@ class GuideLine extends Component<
     disabled?: boolean;
     style?: CSSProperties;
     onChange?: (params: ComponentData.TGuideLineConfigItem) => void;
-    onComplete?: () => void;
+    onMouseUp?: () => void;
+    onMouseDown?: () => void;
+    onMouseMove?: () => void;
   } & ComponentData.TGuideLineConfigItem
 > {
   flag = false;
@@ -62,13 +64,13 @@ class GuideLine extends Component<
   };
 
   onMouseUp = () => {
-    const { disabled, onComplete } = this.props;
+    const { disabled, onMouseUp } = this.props;
     if (!this.flag || disabled) return;
     this.flag = false;
     this.times = 0;
     document.removeEventListener('mousemove', this.onMouseMove);
     document.removeEventListener('mouseup', this.onMouseUp);
-    onComplete && onComplete();
+    onMouseUp?.();
   };
 
   render() {

@@ -53,6 +53,7 @@ const PanelWrapper = (props: {
 
   const horizontalRulerRef = useRef<any>();
   const verticalRulerRef = useRef<any>();
+  const disabledMouseGuideLine = useRef<boolean>(false);
 
   const isHorizontalRulerHover = useHover(horizontalRulerRef);
 
@@ -62,6 +63,7 @@ const PanelWrapper = (props: {
 
   const setMousePosition = () => {
     const { clientX, clientY } = mousePosition;
+    if (disabledMouseGuideLine.current) return;
     if (isHorizontalRulerHover) {
       const result = generateGuideLine(
         'vertical',
@@ -161,6 +163,9 @@ const PanelWrapper = (props: {
 
   const onMoveEnd = useCallback(
     (item: ComponentData.TGuideLineConfigItem, index: number) => {
+      // close the disabled
+      disabledMouseGuideLine.current = false;
+
       const {
         type,
         style: { left, top },
@@ -187,6 +192,10 @@ const PanelWrapper = (props: {
     },
     [guideLineList, size, wrapperSetGuideLine],
   );
+
+  const onMoveStart = useCallback(() => {
+    disabledMouseGuideLine.current = true;
+  }, []);
 
   const resize = useCallback(() => {
     const dom = document.querySelector(`#${wrapperId}`);
@@ -218,7 +227,8 @@ const PanelWrapper = (props: {
         <GuideLine
           {...item}
           onChange={onGuidelinePositionChange.bind(this, index)}
-          onComplete={onMoveEnd.bind(this, item, index)}
+          onMouseUp={onMoveEnd.bind(this, item, index)}
+          onMouseDown={onMoveStart}
           key={item.id}
         />
       );
