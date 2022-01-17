@@ -9,7 +9,10 @@ import {
   ArrowsAltOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
+import { connect } from 'dva';
 import CallbackManage, { CallbackManageRef } from '../CallbackManage';
+import LayerManage, { LayerManageRef } from '../LayerManage';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const commonClass: string = classnames(
@@ -29,7 +32,18 @@ export const UndoIcon = () => {
 
 // 图层显示隐藏
 export const LayerShowIcon = () => {
-  return <BlockOutlined className={classnames(commonClass)} />;
+  const layerRef = useRef<LayerManageRef>(null);
+
+  const handleOpen = useCallback(() => {
+    layerRef.current?.open();
+  }, []);
+
+  return (
+    <>
+      <BlockOutlined className={classnames(commonClass)} onClick={handleOpen} />
+      <LayerManage ref={layerRef} />
+    </>
+  );
 };
 
 // 图层折叠展开
@@ -39,9 +53,24 @@ export const LayerCollapseIcon = () => {
 };
 
 // 辅助线显示隐藏
-export const GuideLineIcon = () => {
-  return <BorderInnerOutlined className={classnames(commonClass)} />;
+const InternalGuideLineIcon = (props: {
+  guideLineShow?: boolean;
+  setGuideLine?: (value: Partial<ComponentData.TGuideLineConfig>) => void;
+}) => {
+  const { guideLineShow, setGuideLine } = props;
+  return (
+    <BorderInnerOutlined
+      className={classnames(commonClass)}
+      onClick={setGuideLine?.bind(null, {
+        show: !guideLineShow,
+      })}
+    />
+  );
 };
+export const GuideLineIcon = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(InternalGuideLineIcon);
 
 // 回调管理
 export const CallbackIcon = () => {

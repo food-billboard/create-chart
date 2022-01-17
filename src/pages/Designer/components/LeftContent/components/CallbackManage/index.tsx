@@ -8,7 +8,6 @@ import {
 import { Button, Drawer, Table } from 'antd';
 import { connect } from 'dva';
 import { mapStateToProps, mapDispatchToProps } from './connect';
-import styles from './index.less';
 
 export interface CallbackManageRef {
   open: () => void;
@@ -120,6 +119,7 @@ const CallbackManage = forwardRef<CallbackManageRef, CallbackManageProps>(
         onClose={onClose}
         footer={footer}
         title="回调管理"
+        placement="left"
       >
         <WrapperCallbackList />
       </Drawer>

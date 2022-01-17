@@ -1,6 +1,7 @@
 import UndoHistory from 'react-undo-component/lib/Component/history';
 import { set, get, merge } from 'lodash';
 import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
+import { mergeWithoutArray } from '@/utils/tool';
 
 type DragData = {
   value: ComponentData.BaseComponentItem | null;
@@ -80,7 +81,11 @@ export default {
     },
 
     setGuideLineData(state: any, action: any) {
-      set(state, 'guideLine', action.payload);
+      set(
+        state,
+        'guideLine',
+        mergeWithoutArray({}, state.guideLine, action.payload),
+      );
       return state;
     },
 

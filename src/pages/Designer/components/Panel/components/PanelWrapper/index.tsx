@@ -350,7 +350,10 @@ const PanelWrapper = (props: {
         <Button
           onClick={wrapperSetGuideLine.bind(null, { show: !guideLineShow })}
           type="link"
-          className="pos-ab"
+          className={classnames(
+            'pos-ab',
+            styles['designer-page-main-guide-btn'],
+          )}
           icon={guideLineShowIcon}
         ></Button>
         {guideLineListDoms}
