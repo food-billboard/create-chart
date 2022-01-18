@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { useEffect } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import {
   ConnectDropTarget,
   DropTargetMonitor,
@@ -7,6 +7,7 @@ import {
   DropTargetConnector,
 } from 'react-dnd';
 import { connect } from 'dva';
+import ComponentList from '../ComponentList';
 import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
@@ -20,10 +21,51 @@ export type PainterProps = {
   didDrop: boolean;
   dragInfo?: ComponentData.BaseComponentItem | null;
   setDragInfo?: (value: ComponentData.BaseComponentItem | null) => void;
+  setSelect?: (value: string[]) => void;
 };
 
 const Painter = (props: PainterProps) => {
-  const { dragInfo, connectDropTarget, setDragInfo, didDrop } = props;
+  const { dragInfo, connectDropTarget, setDragInfo, didDrop, setSelect } =
+    props;
+
+  const clickFlag = useRef<boolean>(false);
+  const clickPos = useRef<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
+  const moveCounter = useRef<number>(0);
+
+  const onMouseMove = () => {
+    moveCounter.current++;
+  };
+
+  const onMouseUp = (e: any) => {
+    const { clientX, clientY } = e;
+    const { x, y } = clickPos.current;
+    if (
+      clickFlag.current &&
+      moveCounter.current < 5 &&
+      Math.abs(clientX - x) < 10 &&
+      Math.abs(clientY - y) < 10
+    ) {
+      setSelect?.([]);
+    }
+    moveCounter.current = 0;
+    clickFlag.current = false;
+    clickPos.current = { x: 0, y: 0 };
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  const onMouseDown = useCallback((e: any) => {
+    clickFlag.current = true;
+    clickPos.current = {
+      x: e.clientX,
+      y: e.clientY,
+    };
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  }, []);
 
   const generateNewComponent = (value: ComponentData.BaseComponentItem) => {
     console.log('generate new item', value);
@@ -39,8 +81,9 @@ const Painter = (props: PainterProps) => {
       className={classnames(styles['page-design-main-panel'], 'pos-re')}
       ref={connectDropTarget}
       role={DROP_TYPE}
+      onMouseDown={onMouseDown}
     >
-      painter
+      <ComponentList />
     </div>
   );
 };

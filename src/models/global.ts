@@ -27,6 +27,7 @@ export default {
   state: {
     // 大屏
     screenData: DEFAULT_SCREEN_DATA,
+    components: DEFAULT_SCREEN_DATA.components,
     guideLine: {
       show: true,
       value: [],
@@ -72,6 +73,29 @@ export default {
         payload: value,
       });
     },
+
+    *setSelect({ value }: { value: string[] }, { put }: any) {
+      yield put({
+        type: 'setSelectData',
+        payload: value,
+      });
+    },
+
+    *setComponent(
+      {
+        value,
+      }: {
+        value:
+          | Partial<ComponentData.TComponentData>
+          | Partial<ComponentData.TComponentData>[];
+      },
+      { put }: any,
+    ) {
+      yield put({
+        type: 'setComponentData',
+        payload: value,
+      });
+    },
   },
 
   reducers: {
@@ -96,6 +120,40 @@ export default {
 
     setCallback(state: any, action: any) {
       set(state, 'screenData.config.attr.filter', action.payload);
+      return state;
+    },
+
+    setSelectData(state: any, action: any) {
+      set(state, 'select', action.payload);
+      return state;
+    },
+
+    setComponentData(state: any, action: any) {
+      let changeComponents: ComponentMethod.SetComponentMethodParamsData[] =
+        Array.isArray(action.payload) ? action.payload : [action.payload];
+      changeComponents = changeComponents.filter(
+        (item: any) => typeof item === 'object' && item.id,
+      );
+      const changeComponentMaps = changeComponents.reduce((acc, cur) => {
+        acc.set(cur.id, cur);
+        return acc;
+      }, new Map<string, ComponentMethod.SetComponentMethodParamsData>());
+      const components: ComponentData.TComponentData[] =
+        get(state, 'components') || [];
+
+      const newComponents = components.map((component) => {
+        const { id } = component;
+
+        const target = changeComponentMaps.get(id);
+        if (target) {
+          return mergeWithoutArray({}, component, target);
+        }
+
+        return component;
+      });
+
+      set(state, 'components', newComponents);
+
       return state;
     },
   },

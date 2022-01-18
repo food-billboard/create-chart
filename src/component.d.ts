@@ -2,10 +2,15 @@
 
 declare namespace ComponentData {
   // 组件上级大类类型
-  export type TComponentType = 'GROUP_COMPONENT';
+  export type TComponentType = 'GROUP_COMPONENT' | 'COMPONENT';
 
   // 组件类型
-  export type TComponentSelfType = 'GROUP_COMPONENT';
+  export type TComponentSelfType =
+    | 'GROUP_COMPONENT'
+    | 'BAR-BASIC'
+    | 'BAR-LINE'
+    | 'LINE-BASIC'
+    | 'LINE-WATERFALL';
 
   // 基础组件属性
   export type TBaseConfig = {
@@ -16,10 +21,11 @@ declare namespace ComponentData {
       top: number;
       opacity: number;
       rotate: number;
-      zIndex: number; // 这个可以暂时不设置，因为没有重叠的情况
+      zIndex: number;
     };
     attr: {
       visible: boolean;
+      lock: boolean;
     };
     interactive: {
       base: {
@@ -111,11 +117,16 @@ declare namespace ComponentData {
 
   // 组件配置
   export type TComponentData<T extends object = {}> = {
+    // 描述
     description: string;
+    // 名称
     name: string;
     id: string;
+    // 组件或组
     type: TComponentType;
+    // 父组件id
     parent?: string;
+    // 组件类型
     componentType: TComponentSelfType;
     components: TComponentData<any>[];
     config: TBaseConfig & {
@@ -159,4 +170,16 @@ declare namespace ComponentData {
     icon: string;
     description?: string;
   };
+}
+
+declare namespace ComponentMethod {
+  type SetComponentMethodParamsData =
+    SuperPartial<ComponentData.TComponentData> & {
+      id: string;
+      __action__: 'add' | 'update' | 'delete';
+    };
+
+  export type SetComponentMethod = (
+    value: SetComponentMethodParamsData[] | SetComponentMethodParamsData,
+  ) => void;
 }
