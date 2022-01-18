@@ -96,6 +96,20 @@ export default {
         payload: value,
       });
     },
+
+    *setComponentAll(
+      {
+        value,
+      }: {
+        value: ComponentData.TComponentData[];
+      },
+      { put }: any,
+    ) {
+      yield put({
+        type: 'setComponentDataAll',
+        payload: value,
+      });
+    },
   },
 
   reducers: {
@@ -154,6 +168,11 @@ export default {
 
       set(state, 'components', newComponents);
 
+      return state;
+    },
+
+    setComponentDataAll(state: any, action: any) {
+      set(state, 'components', action.payload);
       return state;
     },
   },

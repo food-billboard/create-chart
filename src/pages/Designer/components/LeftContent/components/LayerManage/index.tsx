@@ -6,6 +6,7 @@ import {
   useImperativeHandle,
 } from 'react';
 import { Button, Drawer } from 'antd';
+import LayerList from './components/List';
 
 export interface LayerManageRef {
   open: () => void;
@@ -57,7 +58,9 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
         footer={footer}
         title="图层"
         placement="left"
-      ></Drawer>
+      >
+        <LayerList />
+      </Drawer>
     );
   },
 );
