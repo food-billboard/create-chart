@@ -15,6 +15,7 @@ import classnames from 'classnames';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import GuideLine from '@/components/GuideLine';
 import Ruler from '@/components/Ruler';
+import { BackgroundConfigRender } from '@/components/DesignerBackground';
 import { mergeWithoutArray } from '@/utils/tool';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
@@ -288,6 +289,9 @@ const PanelWrapper = (props: {
         className={classnames(styles['designer-page-main-sub'], 'pos-re')}
         style={size}
       >
+        {/* background */}
+        <BackgroundConfigRender />
+
         {/* Ruler */}
         <div
           ref={horizontalRulerRef}

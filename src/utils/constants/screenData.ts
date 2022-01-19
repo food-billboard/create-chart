@@ -72,9 +72,9 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
       poster: {
         type: 'color',
         color: {
-          r: 99,
-          g: 99,
-          b: 99,
+          r: 5,
+          g: 46,
+          b: 36,
         },
       },
       filter: [
