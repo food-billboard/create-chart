@@ -13,6 +13,7 @@ import {
 } from 'react-sortable-hoc';
 import { connect } from 'dva';
 import classnames from 'classnames';
+import { EComponentType } from '@/utils/constants';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -93,7 +94,7 @@ const ListItem = RcSortableElement(
       return <Collapse></Collapse>;
     }, []);
 
-    if (type === ComponentData.ETComponentType.COMPONENT) {
+    if (type === EComponentType.COMPONENT) {
       return normalComponentLayer;
     }
 

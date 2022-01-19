@@ -1,7 +1,19 @@
-import React from 'react';
+import classnames from 'classnames';
+import Scale from './components/Scale';
+import styles from './index.less';
 
 const ToolBar = () => {
-  return <div style={{ height: 50, width: '100%' }}>工具栏</div>;
+  return (
+    <div
+      className={classnames(
+        styles['design-page-toolbar'],
+        'ali-r',
+        'normal-background',
+      )}
+    >
+      <Scale />
+    </div>
+  );
 };
 
 export default ToolBar;

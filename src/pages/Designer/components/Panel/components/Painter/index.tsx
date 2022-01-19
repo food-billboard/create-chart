@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef, useMemo, CSSProperties } from 'react';
 import {
   ConnectDropTarget,
   DropTargetMonitor,
@@ -7,6 +7,8 @@ import {
   DropTargetConnector,
 } from 'react-dnd';
 import { connect } from 'dva';
+import { merge } from 'lodash';
+import { useBackground } from '@/hooks';
 import ComponentList from '../ComponentList';
 import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -22,11 +24,20 @@ export type PainterProps = {
   dragInfo?: ComponentData.BaseComponentItem | null;
   setDragInfo?: (value: ComponentData.BaseComponentItem | null) => void;
   setSelect?: (value: string[]) => void;
+  scale: number;
+  config: ComponentData.TScreenData['config'];
 };
 
 const Painter = (props: PainterProps) => {
-  const { dragInfo, connectDropTarget, setDragInfo, didDrop, setSelect } =
-    props;
+  const {
+    dragInfo,
+    connectDropTarget,
+    setDragInfo,
+    didDrop,
+    setSelect,
+    scale: originScale,
+    config: { style: { width, height } = {}, attr: { poster } = {} } = {},
+  } = props;
 
   const clickFlag = useRef<boolean>(false);
   const clickPos = useRef<{ x: number; y: number }>({
@@ -34,6 +45,25 @@ const Painter = (props: PainterProps) => {
     y: 0,
   });
   const moveCounter = useRef<number>(0);
+
+  const backgroundStyle = useBackground(poster);
+
+  const scale = useMemo(() => {
+    return originScale / 100;
+  }, [originScale]);
+
+  const panelStyle: CSSProperties = useMemo(() => {
+    return merge(
+      {},
+      {
+        transformOrigin: 'left top',
+        transform: `scale(${scale})`,
+        width: width || 1920,
+        height: height || 1080,
+      },
+      backgroundStyle,
+    );
+  }, [scale, backgroundStyle]);
 
   const onMouseMove = () => {
     moveCounter.current++;
@@ -79,6 +109,7 @@ const Painter = (props: PainterProps) => {
   return (
     <div
       className={classnames(styles['page-design-main-panel'], 'pos-re')}
+      style={panelStyle}
       ref={connectDropTarget}
       role={DROP_TYPE}
       onMouseDown={onMouseDown}

@@ -13,6 +13,7 @@ export type RenderComponentProps = {
   style?: CSSProperties;
   value: ComponentData.TComponentData;
   select?: string[];
+  scale: number;
   setSelect?: (value: string[]) => void;
   setComponent?: ComponentMethod.SetComponentMethod;
 };
@@ -25,6 +26,7 @@ const RenderComponent = (props: RenderComponentProps) => {
     select,
     setSelect,
     setComponent: propsSetComponent,
+    scale,
   } = props;
 
   const {
@@ -98,6 +100,7 @@ const RenderComponent = (props: RenderComponentProps) => {
       }}
       disabled={!isSelect || lock}
       setComponent={setComponent}
+      scale={scale / 100}
     >
       <div
         ref={hoverRef}

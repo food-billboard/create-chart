@@ -2,19 +2,15 @@
 
 declare namespace ComponentData {
   // 组件上级大类类型
-  export enum ETComponentType {
-    GROUP_COMPONENT = 'GROUP_COMPONENT',
-    COMPONENT = 'COMPONENT',
-  }
+  export type TComponentType = 'GROUP_COMPONENT' | 'COMPONENT';
 
   // 组件类型
-  export enum EComponentSelfType {
-    GROUP_COMPONENT = 'GROUP_COMPONENT',
-    BAR_BASIC = 'BAR-BASIC',
-    BAR_LINE = 'BAR_LINE',
-    LINE_BASIC = 'LINE_BASIC',
-    LINE_WATERFALL = 'LINE_WATERFALL',
-  }
+  export type TComponentSelfType =
+    | 'GROUP_COMPONENT'
+    | 'BAR_BASIC'
+    | 'BAR_LINE'
+    | 'LINE_BASIC'
+    | 'LINE_WATERFALL';
 
   // 基础组件属性
   export type TBaseConfig = {
@@ -127,11 +123,11 @@ declare namespace ComponentData {
     name: string;
     id: string;
     // 组件或组
-    type: ETComponentType;
+    type: TComponentType;
     // 父组件id
     parent?: string;
     // 组件类型
-    componentType: EComponentSelfType;
+    componentType: TComponentSelfType;
     components: TComponentData<any>[];
     config: TBaseConfig & {
       options: T;

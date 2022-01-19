@@ -17,6 +17,7 @@ interface IGlobalModelState {
   clipboard: ComponentData.TComponentData<any>[];
 
   drag: DragData;
+  scale: number;
 }
 
 export { IGlobalModelState };
@@ -40,6 +41,7 @@ export default {
     drag: {
       value: null,
     },
+    scale: 100,
   },
 
   effects: {
@@ -110,6 +112,13 @@ export default {
         payload: value,
       });
     },
+
+    *setScale({ value }: { value: string[] }, { put }: any) {
+      yield put({
+        type: 'setScaleData',
+        payload: value,
+      });
+    },
   },
 
   reducers: {
@@ -139,6 +148,11 @@ export default {
 
     setSelectData(state: any, action: any) {
       set(state, 'select', action.payload);
+      return state;
+    },
+
+    setScaleData(state: any, action: any) {
+      set(state, 'scale', action.payload);
       return state;
     },
 

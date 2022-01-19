@@ -69,7 +69,6 @@ const ComponentWrapper = (
     <Rnd
       enableResizing={!disabled}
       disableDragging={disabled}
-      scale={1}
       className={className}
       style={merge({}, style)}
       default={{

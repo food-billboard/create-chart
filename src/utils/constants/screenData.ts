@@ -7,7 +7,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
       name: '柱形图',
       id: '1',
       type: 'COMPONENT',
-      componentType: 'BAR-BASIC',
+      componentType: 'BAR_BASIC',
       components: [],
       config: {
         style: {
@@ -71,7 +71,11 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
     attr: {
       poster: {
         type: 'color',
-        background: '#999',
+        color: {
+          r: 99,
+          g: 99,
+          b: 99,
+        },
       },
       filter: [
         {

@@ -21,6 +21,9 @@ import styles from './index.less';
 
 const RIGHT_BOTTOM_PADDING = 200;
 
+export const wrapperId = 'designer-page-main';
+export const subWrapperId = 'designer-page-main-sub';
+
 const PanelWrapper = (props: {
   scale: number;
   width?: number;
@@ -31,7 +34,7 @@ const PanelWrapper = (props: {
   setGuideLine?: (value: ComponentData.TGuideLineConfig) => void;
 }) => {
   const {
-    scale,
+    scale: originScale,
     width = 0,
     height = 0,
     children,
@@ -39,9 +42,6 @@ const PanelWrapper = (props: {
     guideLineShow,
     setGuideLine,
   } = props;
-
-  const wrapperId = 'designer-page-main';
-  const subWrapperId = 'designer-page-main-sub';
 
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [wrapperLeft, setWrapperLeft] = useState(0);
@@ -60,6 +60,10 @@ const PanelWrapper = (props: {
   const isVerticalRulerHover = useHover(verticalRulerRef);
 
   const mousePosition = useMouse();
+
+  const scale = useMemo(() => {
+    return originScale / 100;
+  }, [originScale]);
 
   const setMousePosition = () => {
     const { clientX, clientY } = mousePosition;

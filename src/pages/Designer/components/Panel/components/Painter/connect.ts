@@ -3,6 +3,8 @@ import { ConnectState } from '@/models/connect';
 export const mapStateToProps = (state: ConnectState) => {
   return {
     dragInfo: state.global.drag.value,
+    config: state.global.screenData.config,
+    scale: state.global.scale,
   };
 };
 

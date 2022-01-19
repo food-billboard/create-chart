@@ -7,6 +7,7 @@ export const mapStateToProps = (state: ConnectState) => {
     guideLineShow: get(state, 'global.guideLine.show') ?? false,
     width: get(state, 'global.screenData.config.style.width'),
     height: get(state, 'global.screenData.config.style.height'),
+    scale: get(state, 'global.scale'),
   };
 };
 
