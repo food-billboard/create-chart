@@ -6,7 +6,7 @@ import {
   useImperativeHandle,
 } from 'react';
 import { Button, Drawer } from 'antd';
-import LayerList from './components/List';
+import LayerList from './components/Tree';
 
 export interface LayerManageRef {
   open: () => void;

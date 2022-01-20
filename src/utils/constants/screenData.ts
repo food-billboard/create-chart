@@ -62,6 +62,369 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
         options: {},
       },
     },
+    {
+      description: '这是一个柱形图',
+      name: '柱形图',
+      id: '2',
+      type: 'COMPONENT',
+      componentType: 'BAR_BASIC',
+      components: [],
+      config: {
+        style: {
+          width: 400,
+          height: 300,
+          left: 100,
+          top: 100,
+          opacity: 1,
+          rotate: 0,
+          zIndex: 2,
+        },
+        attr: {
+          visible: true,
+          lock: false,
+        },
+        interactive: {
+          base: [],
+        },
+        data: {
+          request: {
+            url: '',
+            method: 'POST',
+            headers: {},
+            body: {},
+            frequency: {
+              show: false,
+              value: 10,
+            },
+            type: 'static',
+            value: [],
+          },
+          filter: {
+            show: false,
+            fields: [
+              {
+                name: 'x',
+                description: 'x轴',
+              },
+              {
+                name: 'y',
+                description: 'y轴',
+              },
+              {
+                name: 's',
+                description: '系列',
+              },
+            ],
+            value: [],
+            map: [],
+          },
+        },
+        options: {},
+      },
+    },
+    {
+      description: '这是一个柱形图',
+      name: '柱形图',
+      id: '3',
+      type: 'GROUP_COMPONENT',
+      componentType: 'GROUP_COMPONENT',
+      components: [
+        {
+          description: '这是一个柱形图',
+          name: '柱形图',
+          id: '4',
+          type: 'COMPONENT',
+          componentType: 'BAR_BASIC',
+          components: [],
+          config: {
+            style: {
+              width: 400,
+              height: 300,
+              left: 100,
+              top: 100,
+              opacity: 1,
+              rotate: 0,
+              zIndex: 2,
+            },
+            attr: {
+              visible: true,
+              lock: false,
+            },
+            interactive: {
+              base: [],
+            },
+            data: {
+              request: {
+                url: '',
+                method: 'POST',
+                headers: {},
+                body: {},
+                frequency: {
+                  show: false,
+                  value: 10,
+                },
+                type: 'static',
+                value: [],
+              },
+              filter: {
+                show: false,
+                fields: [
+                  {
+                    name: 'x',
+                    description: 'x轴',
+                  },
+                  {
+                    name: 'y',
+                    description: 'y轴',
+                  },
+                  {
+                    name: 's',
+                    description: '系列',
+                  },
+                ],
+                value: [],
+                map: [],
+              },
+            },
+            options: {},
+          },
+        },
+      ],
+      config: {
+        style: {
+          width: 200,
+          height: 100,
+          left: 200,
+          top: 200,
+          opacity: 1,
+          rotate: 0,
+          zIndex: 2,
+        },
+        attr: {
+          visible: true,
+          lock: false,
+        },
+        interactive: {
+          base: [],
+        },
+        data: {
+          request: {
+            url: '',
+            method: 'POST',
+            headers: {},
+            body: {},
+            frequency: {
+              show: false,
+              value: 10,
+            },
+            type: 'static',
+            value: [],
+          },
+          filter: {
+            show: false,
+            fields: [
+              {
+                name: 'x',
+                description: 'x轴',
+              },
+              {
+                name: 'y',
+                description: 'y轴',
+              },
+              {
+                name: 's',
+                description: '系列',
+              },
+            ],
+            value: [],
+            map: [],
+          },
+        },
+        options: {},
+      },
+    },
+    {
+      description: '这是一个柱形图',
+      name: '柱形图',
+      id: '5',
+      type: 'GROUP_COMPONENT',
+      componentType: 'GROUP_COMPONENT',
+      components: [
+        {
+          description: '这是一个柱形图',
+          name: '柱形图',
+          id: '6',
+          type: 'GROUP_COMPONENT',
+          componentType: 'GROUP_COMPONENT',
+          components: [
+            {
+              description: '这是一个柱形图',
+              name: '柱形图',
+              id: '7',
+              type: 'COMPONENT',
+              componentType: 'BAR_BASIC',
+              components: [],
+              config: {
+                style: {
+                  width: 400,
+                  height: 300,
+                  left: 100,
+                  top: 100,
+                  opacity: 1,
+                  rotate: 0,
+                  zIndex: 2,
+                },
+                attr: {
+                  visible: true,
+                  lock: false,
+                },
+                interactive: {
+                  base: [],
+                },
+                data: {
+                  request: {
+                    url: '',
+                    method: 'POST',
+                    headers: {},
+                    body: {},
+                    frequency: {
+                      show: false,
+                      value: 10,
+                    },
+                    type: 'static',
+                    value: [],
+                  },
+                  filter: {
+                    show: false,
+                    fields: [
+                      {
+                        name: 'x',
+                        description: 'x轴',
+                      },
+                      {
+                        name: 'y',
+                        description: 'y轴',
+                      },
+                      {
+                        name: 's',
+                        description: '系列',
+                      },
+                    ],
+                    value: [],
+                    map: [],
+                  },
+                },
+                options: {},
+              },
+            },
+          ],
+          config: {
+            style: {
+              width: 200,
+              height: 100,
+              left: 200,
+              top: 200,
+              opacity: 1,
+              rotate: 0,
+              zIndex: 2,
+            },
+            attr: {
+              visible: true,
+              lock: false,
+            },
+            interactive: {
+              base: [],
+            },
+            data: {
+              request: {
+                url: '',
+                method: 'POST',
+                headers: {},
+                body: {},
+                frequency: {
+                  show: false,
+                  value: 10,
+                },
+                type: 'static',
+                value: [],
+              },
+              filter: {
+                show: false,
+                fields: [
+                  {
+                    name: 'x',
+                    description: 'x轴',
+                  },
+                  {
+                    name: 'y',
+                    description: 'y轴',
+                  },
+                  {
+                    name: 's',
+                    description: '系列',
+                  },
+                ],
+                value: [],
+                map: [],
+              },
+            },
+            options: {},
+          },
+        },
+      ],
+      config: {
+        style: {
+          width: 200,
+          height: 100,
+          left: 200,
+          top: 200,
+          opacity: 1,
+          rotate: 0,
+          zIndex: 2,
+        },
+        attr: {
+          visible: true,
+          lock: false,
+        },
+        interactive: {
+          base: [],
+        },
+        data: {
+          request: {
+            url: '',
+            method: 'POST',
+            headers: {},
+            body: {},
+            frequency: {
+              show: false,
+              value: 10,
+            },
+            type: 'static',
+            value: [],
+          },
+          filter: {
+            show: false,
+            fields: [
+              {
+                name: 'x',
+                description: 'x轴',
+              },
+              {
+                name: 'y',
+                description: 'y轴',
+              },
+              {
+                name: 's',
+                description: '系列',
+              },
+            ],
+            value: [],
+            map: [],
+          },
+        },
+        options: {},
+      },
+    },
   ],
   config: {
     style: {
