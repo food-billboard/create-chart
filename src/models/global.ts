@@ -2,6 +2,7 @@ import UndoHistory from 'react-undo-component/lib/Component/history';
 import { set, get, merge } from 'lodash';
 import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils/tool';
+import { HistoryUtil } from '@/utils/history';
 
 type DragData = {
   value: ComponentData.BaseComponentItem | null;
@@ -12,7 +13,11 @@ interface IGlobalModelState {
   guideLine: ComponentData.TGuideLineConfig;
   select: string[];
   componentSelect: ComponentData.TComponentData<any> | null;
-  history: UndoHistory;
+  history: {
+    value: UndoHistory;
+    isUndoDisabled: boolean;
+    isRedoDisabled: boolean;
+  };
   theme: ThemeMap;
   clipboard: ComponentData.TComponentData<any>[];
 
@@ -34,7 +39,11 @@ export default {
       value: [],
     },
     select: [],
-    history: null,
+    history: {
+      value: new HistoryUtil(),
+      isUndoDisabled: true,
+      isRedoDisabled: true,
+    },
     componentSelect: null,
     theme: ThemeMap.dark,
     clipboard: [],
@@ -119,6 +128,15 @@ export default {
         payload: value,
       });
     },
+
+    *undo({ value }: { value: string[] }, { put }: any) {
+      yield put({
+        type: 'setScaleData',
+        payload: value,
+      });
+    },
+
+    *redo() {},
   },
 
   reducers: {
@@ -157,6 +175,8 @@ export default {
     },
 
     setComponentData(state: any, action: any) {
+      const history = get(state, 'history.value');
+
       let changeComponents: ComponentMethod.SetComponentMethodParamsData[] =
         Array.isArray(action.payload) ? action.payload : [action.payload];
       changeComponents = changeComponents.filter(
@@ -182,11 +202,21 @@ export default {
 
       set(state, 'components', newComponents);
 
+      // * history enqueue
+      history.enqueue(state, newComponents, components);
+
       return state;
     },
 
     setComponentDataAll(state: any, action: any) {
+      // * history enqueue
+      const history = get(state, 'history.value');
+      const components = get(state, 'components');
+
       set(state, 'components', action.payload);
+
+      history.enqueue(state, action.payload, components);
+
       return state;
     },
   },
