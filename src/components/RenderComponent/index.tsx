@@ -50,10 +50,11 @@ const RenderComponent = (props: RenderComponentProps) => {
       {
         transform: `rotate(${rotate}deg)`,
         display: visible ? 'inline-block' : 'none',
+        borderWidth: (1 / scale) * 100,
       },
       style,
     );
-  }, [componentStyle, style, visible]);
+  }, [componentStyle, style, visible, scale]);
 
   const isSelect = useMemo(() => {
     return select?.length === 1 && select[0] === id;

@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import {
   UndoIcon,
   RedoIcon,
-  LayerCollapseIcon,
   LayerShowIcon,
   GuideLineIcon,
   CallbackIcon,
@@ -23,7 +22,6 @@ const ToolBar = () => {
     >
       <UndoIcon />
       <RedoIcon />
-      <LayerCollapseIcon />
       <LayerShowIcon />
       <GuideLineIcon />
       <CallbackIcon />
