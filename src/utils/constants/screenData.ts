@@ -4,7 +4,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
   components: [
     {
       description: '这是一个柱形图',
-      name: '柱形图',
+      name: '柱形图1',
       id: '1',
       type: 'COMPONENT',
       componentType: 'BAR_BASIC',
@@ -64,7 +64,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
     },
     {
       description: '这是一个柱形图',
-      name: '柱形图',
+      name: '柱形图2',
       id: '2',
       type: 'COMPONENT',
       componentType: 'BAR_BASIC',
@@ -245,21 +245,21 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
     },
     {
       description: '这是一个柱形图',
-      name: '柱形图',
+      name: '柱形图3',
       id: '5',
       type: 'GROUP_COMPONENT',
       componentType: 'GROUP_COMPONENT',
       components: [
         {
           description: '这是一个柱形图',
-          name: '柱形图',
+          name: '柱形图4',
           id: '6',
           type: 'GROUP_COMPONENT',
           componentType: 'GROUP_COMPONENT',
           components: [
             {
               description: '这是一个柱形图',
-              name: '柱形图',
+              name: '柱形图5',
               id: '7',
               type: 'COMPONENT',
               componentType: 'BAR_BASIC',
