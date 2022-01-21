@@ -58,7 +58,8 @@ const RenderComponent = (props: RenderComponentProps) => {
   }, [componentStyle, style, visible, scale]);
 
   const isSelect = useMemo(() => {
-    return select?.length === 1 && select[0] === id;
+    return select?.includes(id);
+    // return select?.length === 1 && select[0] === id;
   }, [select, id]);
 
   const handleSelect = useCallback(
@@ -96,10 +97,11 @@ const RenderComponent = (props: RenderComponentProps) => {
     <ContextMenu onVisibleChange={onVisibleChange}>
       <ComponentWrapper
         style={baseStyle}
-        className={classnames(className, {
+        className={classnames(className, 'react-select-to', {
           'border-1': isHover && !isSelect,
           'border-1-a': isSelect,
         })}
+        data-id={id}
         size={{
           width: componentStyle.width,
           height: componentStyle.height,
