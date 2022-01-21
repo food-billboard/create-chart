@@ -1,8 +1,12 @@
 import { useCallback } from 'react';
 import ReactSelecto from 'react-selecto';
 import { connect } from 'dva';
+import { BACKGROUND_ID } from '@/components/DesignerBackground';
 import { wrapperId } from '../PanelWrapper';
+import { PANEL_ID } from '../Painter';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+
+const VALID_SELECT_CONTAINER = [BACKGROUND_ID, wrapperId, PANEL_ID];
 
 const Selecto = (props: {
   select: string[];
@@ -27,6 +31,19 @@ const Selecto = (props: {
     [setSelect, select],
   );
 
+  const handleDragStart = useCallback((e: any) => {
+    try {
+      const id = e.inputEvent.target.id;
+      if (VALID_SELECT_CONTAINER.includes(id)) {
+        setSelect?.([]);
+      } else {
+        e.stop();
+      }
+    } catch (err) {
+      e.stop();
+    }
+  }, []);
+
   return (
     <ReactSelecto
       dragContainer={`#${wrapperId}`}
@@ -35,7 +52,7 @@ const Selecto = (props: {
       selectByClick={true}
       selectFromInside={true}
       ratio={0}
-      onSelectStart={setSelect?.bind(null, [])}
+      onDragStart={handleDragStart}
       onSelect={handleSelect}
     ></ReactSelecto>
   );

@@ -71,6 +71,10 @@ const RenderComponent = (props: RenderComponentProps) => {
     [setSelect, id, select],
   );
 
+  const selectOnly = useCallback(() => {
+    setSelect?.([id]);
+  }, [setSelect, id]);
+
   const onVisibleChange = useCallback(
     (visible) => {
       if (visible) handleSelect(null);
@@ -115,6 +119,8 @@ const RenderComponent = (props: RenderComponentProps) => {
         disabled={!isSelect || lock}
         setComponent={setComponent}
         scale={scale / 100}
+        onDragStart={selectOnly}
+        onResizeStart={selectOnly}
       >
         <div
           ref={hoverRef}

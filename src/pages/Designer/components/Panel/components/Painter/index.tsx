@@ -28,6 +28,8 @@ export type PainterProps = {
   config: ComponentData.TScreenData['config'];
 };
 
+export const PANEL_ID = 'panel-id';
+
 const Painter = (props: PainterProps) => {
   const {
     dragInfo,
@@ -38,8 +40,6 @@ const Painter = (props: PainterProps) => {
     scale: originScale,
     config: { style: { width, height } = {}, attr: { poster } = {} } = {},
   } = props;
-
-  const PANEL_ID = 'panel-id';
 
   const clickFlag = useRef<boolean>(false);
   const clickPos = useRef<{ x: number; y: number }>({
