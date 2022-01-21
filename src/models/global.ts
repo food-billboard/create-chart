@@ -160,27 +160,63 @@ export default {
       let changeComponents: ComponentMethod.SetComponentMethodParamsData[] =
         Array.isArray(action.payload) ? action.payload : [action.payload];
       changeComponents = changeComponents.filter(
-        (item: any) => typeof item === 'object' && item.id,
+        (item) => item.value && (item.action === 'add' || item.id),
       );
-      const changeComponentMaps = changeComponents.reduce((acc, cur) => {
-        acc.set(cur.id, cur);
-        return acc;
-      }, new Map<string, ComponentMethod.SetComponentMethodParamsData>());
-      const components: ComponentData.TComponentData[] =
+
+      let components: ComponentData.TComponentData[] =
         get(state, 'components') || [];
 
-      const newComponents = components.map((component) => {
-        const { id } = component;
+      changeComponents.forEach((component) => {
+        const { id, value, action, path } = component;
+        const parentPath = path.split('.').slice(0, -1).join('.');
 
-        const target = changeComponentMaps.get(id);
-        if (target) {
-          return mergeWithoutArray({}, component, target);
+        switch (action) {
+          case 'add':
+            const targetAddParentComponents = path
+              ? get(components, path)
+              : components;
+            targetAddParentComponents.push(value);
+            if (path) {
+              set(components, path, targetAddParentComponents);
+            } else {
+              components = targetAddParentComponents;
+            }
+            break;
+          case 'delete':
+            let targetDeleteParentComponents = parentPath
+              ? get(components, parentPath)
+              : components;
+            targetDeleteParentComponents = targetDeleteParentComponents.filter(
+              (item: any) => item.id !== id,
+            );
+            if (parentPath) {
+              set(components, parentPath, targetDeleteParentComponents);
+            } else {
+              components = targetDeleteParentComponents;
+            }
+            break;
+          case 'update':
+            let targetUpdateParentComponents = parentPath
+              ? get(components, parentPath)
+              : components;
+            targetUpdateParentComponents = targetUpdateParentComponents.map(
+              (item: any) => {
+                if (item.id === id) {
+                  return mergeWithoutArray({}, item, value);
+                }
+                return item;
+              },
+            );
+            if (parentPath) {
+              set(components, parentPath, targetUpdateParentComponents);
+            } else {
+              components = targetUpdateParentComponents;
+            }
+            break;
         }
-
-        return component;
       });
 
-      set(state, 'components', newComponents);
+      set(state, 'components', components);
 
       return state;
     },

@@ -9,8 +9,8 @@ const ComponentList = (props: {
 
   return (
     <>
-      {components.map((item) => {
-        return <RenderComponent value={item} key={item.id} />;
+      {components.map((item, index) => {
+        return <RenderComponent value={item} key={item.id} index={index} />;
       })}
     </>
   );

@@ -1,7 +1,7 @@
 import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import { merge } from 'lodash';
 import classnames from 'classnames';
-import { useClickAway, useHover } from 'ahooks';
+import { useHover } from 'ahooks';
 import { connect } from 'dva';
 import ComponentWrapper from './components/Wrapper';
 import Content from './components/Content';
@@ -13,6 +13,7 @@ export type RenderComponentProps = {
   className?: string;
   style?: CSSProperties;
   value: ComponentData.TComponentData;
+  index: number;
   select?: string[];
   scale: number;
   setSelect?: (value: string[]) => void;
@@ -28,6 +29,7 @@ const RenderComponent = (props: RenderComponentProps) => {
     setSelect,
     setComponent: propsSetComponent,
     scale,
+    index,
   } = props;
 
   const {
@@ -59,7 +61,6 @@ const RenderComponent = (props: RenderComponentProps) => {
 
   const isSelect = useMemo(() => {
     return select?.includes(id);
-    // return select?.length === 1 && select[0] === id;
   }, [select, id]);
 
   const handleSelect = useCallback(
@@ -85,12 +86,13 @@ const RenderComponent = (props: RenderComponentProps) => {
     ) => {
       const result = callback(value);
       propsSetComponent?.({
-        ...result,
+        value: result,
         id: value.id,
-        __action__: 'update',
+        action: 'update',
+        path: index.toString(),
       });
     },
-    [value, propsSetComponent],
+    [value, propsSetComponent, index],
   );
 
   return (

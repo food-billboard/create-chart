@@ -13,14 +13,18 @@ import styles from './index.less';
 
 const ListItem = ({
   value,
-  setComponent,
+  setComponent: propsSetComponent,
   select,
   setSelect,
+  path,
+  update,
 }: {
   value: ComponentData.TComponentData;
   setComponent?: ComponentMethod.SetComponentMethod;
   select: string[];
   setSelect: (value: string[]) => void;
+  path: string;
+  update?: () => void;
 }) => {
   const {
     id,
@@ -35,36 +39,51 @@ const ListItem = ({
   const editTimestamps = useRef<number>(0);
   const timerRef = useRef<NodeJS.Timeout>();
 
+  const setComponent = useCallback(
+    (value: any) => {
+      propsSetComponent?.(value);
+      update?.();
+    },
+    [propsSetComponent],
+  );
+
   const changeVisible = useCallback(
     (e) => {
       e.stopPropagation();
+
       setComponent?.({
-        id,
-        __action__: 'update',
-        config: {
-          attr: {
-            visible: !visible,
+        value: {
+          config: {
+            attr: {
+              visible: !visible,
+            },
           },
         },
+        id,
+        path,
+        action: 'update',
       });
     },
-    [visible, id, setComponent],
+    [visible, id, setComponent, path],
   );
 
   const changeLock = useCallback(
     (e) => {
       e.stopPropagation();
       setComponent?.({
-        id,
-        __action__: 'update',
-        config: {
-          attr: {
-            lock: !lock,
+        value: {
+          config: {
+            attr: {
+              lock: !lock,
+            },
           },
         },
+        id,
+        path,
+        action: 'update',
       });
     },
-    [lock, id, setComponent],
+    [lock, id, setComponent, path],
   );
 
   const changeName = useCallback(
@@ -72,9 +91,12 @@ const ListItem = ({
       const newName = e.target.value || name;
       setEditable(false);
       setComponent?.({
+        value: {
+          name: newName,
+        },
         id,
-        __action__: 'update',
-        name: newName,
+        path,
+        action: 'update',
       });
     },
     [setComponent, id, name],
