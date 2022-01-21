@@ -1,10 +1,11 @@
 import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import { merge } from 'lodash';
 import classnames from 'classnames';
-import { useHover } from 'ahooks';
+import { useClickAway, useHover } from 'ahooks';
 import { connect } from 'dva';
 import ComponentWrapper from './components/Wrapper';
 import Content from './components/Content';
+import ContextMenu from '../ContextMenu';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -62,10 +63,17 @@ const RenderComponent = (props: RenderComponentProps) => {
 
   const handleSelect = useCallback(
     (e: any) => {
-      e.stopPropagation();
+      e?.stopPropagation();
       if (!select?.includes(id)) setSelect?.([id]);
     },
     [setSelect, id, select],
+  );
+
+  const onVisibleChange = useCallback(
+    (visible) => {
+      if (visible) handleSelect(null);
+    },
+    [handleSelect],
   );
 
   const setComponent = useCallback(
@@ -85,34 +93,36 @@ const RenderComponent = (props: RenderComponentProps) => {
   );
 
   return (
-    <ComponentWrapper
-      style={baseStyle}
-      className={classnames(className, {
-        'border-1': isHover && !isSelect,
-        'border-1-a': isSelect,
-      })}
-      size={{
-        width: componentStyle.width,
-        height: componentStyle.height,
-      }}
-      position={{
-        x: componentStyle.left,
-        y: componentStyle.top,
-      }}
-      disabled={!isSelect || lock}
-      setComponent={setComponent}
-      scale={scale / 100}
-    >
-      <div
-        ref={hoverRef}
-        className={classnames(styles['render-component-content'], {
-          'c-po': !isSelect,
+    <ContextMenu onVisibleChange={onVisibleChange}>
+      <ComponentWrapper
+        style={baseStyle}
+        className={classnames(className, {
+          'border-1': isHover && !isSelect,
+          'border-1-a': isSelect,
         })}
-        onClick={handleSelect}
+        size={{
+          width: componentStyle.width,
+          height: componentStyle.height,
+        }}
+        position={{
+          x: componentStyle.left,
+          y: componentStyle.top,
+        }}
+        disabled={!isSelect || lock}
+        setComponent={setComponent}
+        scale={scale / 100}
       >
-        <Content />
-      </div>
-    </ComponentWrapper>
+        <div
+          ref={hoverRef}
+          className={classnames(styles['render-component-content'], {
+            'c-po': !isSelect,
+          })}
+          onClick={handleSelect}
+        >
+          <Content />
+        </div>
+      </ComponentWrapper>
+    </ContextMenu>
   );
 };
 

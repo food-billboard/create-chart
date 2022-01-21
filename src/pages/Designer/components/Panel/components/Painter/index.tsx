@@ -39,6 +39,8 @@ const Painter = (props: PainterProps) => {
     config: { style: { width, height } = {}, attr: { poster } = {} } = {},
   } = props;
 
+  const PANEL_ID = 'panel-id';
+
   const clickFlag = useRef<boolean>(false);
   const clickPos = useRef<{ x: number; y: number }>({
     x: 0,
@@ -88,6 +90,7 @@ const Painter = (props: PainterProps) => {
   };
 
   const onMouseDown = useCallback((e: any) => {
+    if (e.target.id !== PANEL_ID) return;
     clickFlag.current = true;
     clickPos.current = {
       x: e.clientX,
@@ -102,17 +105,24 @@ const Painter = (props: PainterProps) => {
     setDragInfo?.(null);
   };
 
+  const preventDefaultContextMenu = (e: any) => {
+    e.preventDefault();
+    return false;
+  };
+
   useEffect(() => {
     if (didDrop && dragInfo) generateNewComponent(dragInfo);
   }, [didDrop, dragInfo]);
 
   return (
     <div
+      id={PANEL_ID}
       className={classnames(styles['page-design-main-panel'], 'pos-re')}
       style={panelStyle}
       ref={connectDropTarget}
       role={DROP_TYPE}
       onMouseDown={onMouseDown}
+      onContextMenu={preventDefaultContextMenu}
     >
       <ComponentList />
     </div>
