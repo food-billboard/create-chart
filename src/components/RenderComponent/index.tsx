@@ -5,6 +5,7 @@ import { useHover } from 'ahooks';
 import { connect } from 'dva';
 import ComponentWrapper from './components/Wrapper';
 import Content from './components/Content';
+import ContextMenu from '../ContextMenu';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -12,6 +13,7 @@ export type RenderComponentProps = {
   className?: string;
   style?: CSSProperties;
   value: ComponentData.TComponentData;
+  index: number;
   select?: string[];
   scale: number;
   setSelect?: (value: string[]) => void;
@@ -27,6 +29,7 @@ const RenderComponent = (props: RenderComponentProps) => {
     setSelect,
     setComponent: propsSetComponent,
     scale,
+    index,
   } = props;
 
   const {
@@ -57,16 +60,20 @@ const RenderComponent = (props: RenderComponentProps) => {
   }, [componentStyle, style, visible, scale]);
 
   const isSelect = useMemo(() => {
-    return select?.length === 1 && select[0] === id;
+    return select?.includes(id);
   }, [select, id]);
 
   const handleSelect = useCallback(
     (e: any) => {
-      e.stopPropagation();
+      e?.stopPropagation();
       if (!select?.includes(id)) setSelect?.([id]);
     },
     [setSelect, id, select],
   );
+
+  const selectOnly = useCallback(() => {
+    setSelect?.([id]);
+  }, [setSelect, id]);
 
   const setComponent = useCallback(
     (
@@ -76,43 +83,49 @@ const RenderComponent = (props: RenderComponentProps) => {
     ) => {
       const result = callback(value);
       propsSetComponent?.({
-        ...result,
+        value: result,
         id: value.id,
-        __action__: 'update',
+        action: 'update',
+        path: index.toString(),
       });
     },
-    [value, propsSetComponent],
+    [value, propsSetComponent, index],
   );
 
   return (
-    <ComponentWrapper
-      style={baseStyle}
-      className={classnames(className, {
-        'border-1': isHover && !isSelect,
-        'border-1-a': isSelect,
-      })}
-      size={{
-        width: componentStyle.width,
-        height: componentStyle.height,
-      }}
-      position={{
-        x: componentStyle.left,
-        y: componentStyle.top,
-      }}
-      disabled={!isSelect || lock}
-      setComponent={setComponent}
-      scale={scale / 100}
-    >
-      <div
-        ref={hoverRef}
-        className={classnames(styles['render-component-content'], {
-          'c-po': !isSelect,
+    <ContextMenu value={value}>
+      <ComponentWrapper
+        style={baseStyle}
+        className={classnames(className, 'react-select-to', {
+          'border-1': isHover && !isSelect,
+          'border-1-a': isSelect,
         })}
-        onClick={handleSelect}
+        data-id={id}
+        size={{
+          width: componentStyle.width,
+          height: componentStyle.height,
+        }}
+        position={{
+          x: componentStyle.left,
+          y: componentStyle.top,
+        }}
+        disabled={!isSelect || lock}
+        setComponent={setComponent}
+        scale={scale / 100}
+        onDragStart={selectOnly}
+        onResizeStart={selectOnly}
       >
-        <Content />
-      </div>
-    </ComponentWrapper>
+        <div
+          ref={hoverRef}
+          className={classnames(styles['render-component-content'], {
+            'c-po': !isSelect,
+          })}
+          onClick={handleSelect}
+        >
+          <Content />
+        </div>
+      </ComponentWrapper>
+    </ContextMenu>
   );
 };
 

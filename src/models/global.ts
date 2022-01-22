@@ -1,5 +1,6 @@
 import UndoHistory from 'react-undo-component/lib/Component/history';
 import { set, get, merge } from 'lodash';
+import arrayMove from 'array-move';
 import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils/tool';
 import { HistoryUtil } from '@/utils/history';
@@ -180,27 +181,90 @@ export default {
       let changeComponents: ComponentMethod.SetComponentMethodParamsData[] =
         Array.isArray(action.payload) ? action.payload : [action.payload];
       changeComponents = changeComponents.filter(
-        (item: any) => typeof item === 'object' && item.id,
+        (item) => item.value && (item.action === 'add' || item.id),
       );
-      const changeComponentMaps = changeComponents.reduce((acc, cur) => {
-        acc.set(cur.id, cur);
-        return acc;
-      }, new Map<string, ComponentMethod.SetComponentMethodParamsData>());
-      const components: ComponentData.TComponentData[] =
+
+      let components: ComponentData.TComponentData[] =
         get(state, 'components') || [];
 
-      const newComponents = components.map((component) => {
-        const { id } = component;
+      changeComponents.forEach((component) => {
+        const { id, value, action, path } = component;
+        const pathList = path.split('.');
+        const parentPath = pathList.slice(0, -1).join('.');
 
-        const target = changeComponentMaps.get(id);
-        if (target) {
-          return mergeWithoutArray({}, component, target);
+        switch (action) {
+          case 'add':
+            const targetAddParentComponents = path
+              ? get(components, path)
+              : components;
+            targetAddParentComponents.push(value);
+            if (path) {
+              set(components, path, targetAddParentComponents);
+            } else {
+              components = targetAddParentComponents;
+            }
+            break;
+          case 'delete':
+            let targetDeleteParentComponents = parentPath
+              ? get(components, parentPath)
+              : components;
+            targetDeleteParentComponents = targetDeleteParentComponents.filter(
+              (item: any) => item.id !== id,
+            );
+            if (parentPath) {
+              set(components, parentPath, targetDeleteParentComponents);
+            } else {
+              components = targetDeleteParentComponents;
+            }
+            break;
+          case 'update':
+            let targetUpdateParentComponents = parentPath
+              ? get(components, parentPath)
+              : components;
+            targetUpdateParentComponents = targetUpdateParentComponents.map(
+              (item: any) => {
+                if (item.id === id) {
+                  return mergeWithoutArray({}, item, value);
+                }
+                return item;
+              },
+            );
+            if (parentPath) {
+              set(components, parentPath, targetUpdateParentComponents);
+            } else {
+              components = targetUpdateParentComponents;
+            }
+            break;
+          case 'move':
+            const target = get(components, path);
+            if (target.parent) {
+              const parent = get(components, parentPath);
+              const index = parent.findIndex((item: any) => item.id === id);
+
+              // set target new data
+              const newComponents = arrayMove(parent, index, parent.length - 1);
+              const target = newComponents[newComponents.length - 1];
+              newComponents[newComponents.length - 1] = mergeWithoutArray(
+                target,
+                value,
+              );
+
+              set(components, parentPath, newComponents);
+            } else {
+              const index = components.findIndex((item: any) => item.id === id);
+              components = arrayMove(components, index, components.length - 1);
+
+              // set target new data
+              const target = components[components.length - 1];
+              components[components.length - 1] = mergeWithoutArray(
+                target,
+                value,
+              );
+            }
         }
-
-        return component;
       });
 
-      set(state, 'components', newComponents);
+      set(state, 'components', components);
 
       // * history enqueue
       history.enqueue(state, newComponents, components);

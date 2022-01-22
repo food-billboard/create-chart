@@ -2,6 +2,8 @@ import {} from 'react';
 import classnames from 'classnames';
 import styles from './index.less';
 
+export const BACKGROUND_ID = 'background-id';
+
 const BackgroundConfig = () => {
   return <div>画布背景配色设置</div>;
 };
@@ -16,6 +18,7 @@ export const BackgroundConfigRender = () => {
         color: COLOR,
       }}
       className={classnames('pos-ab', styles['designer-page-background'])}
+      id={BACKGROUND_ID}
     ></div>
   );
 };

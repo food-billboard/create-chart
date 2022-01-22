@@ -115,6 +115,13 @@ declare namespace ComponentData {
     };
   };
 
+  // 带参数的组件配置
+  export type TComponentDateWithPath<T extends object = {}> =
+    TComponentData<T> & {
+      path: string;
+      components: TComponentDateWithPath<any>[];
+    };
+
   // 组件配置
   export type TComponentData<T extends object = {}> = {
     // 描述
@@ -173,11 +180,12 @@ declare namespace ComponentData {
 }
 
 declare namespace ComponentMethod {
-  type SetComponentMethodParamsData =
-    SuperPartial<ComponentData.TComponentData> & {
-      id: string;
-      __action__: 'add' | 'update' | 'delete';
-    };
+  type SetComponentMethodParamsData = {
+    value: SuperPartial<ComponentData.TComponentData>;
+    id: string;
+    path: string;
+    action: 'add' | 'update' | 'delete' | 'move';
+  };
 
   export type SetComponentMethod = (
     value: SetComponentMethodParamsData[] | SetComponentMethodParamsData,
