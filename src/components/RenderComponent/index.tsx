@@ -117,12 +117,12 @@ const RenderComponent = (props: RenderComponentProps) => {
       >
         <div
           ref={hoverRef}
-          className={classnames(styles['render-component-content'], {
+          className={classnames(styles['render-component-content'], 'pos-re', {
             'c-po': !isSelect,
           })}
           onClick={handleSelect}
         >
-          <Content />
+          <Content value={value} />
         </div>
       </ComponentWrapper>
     </ContextMenu>
