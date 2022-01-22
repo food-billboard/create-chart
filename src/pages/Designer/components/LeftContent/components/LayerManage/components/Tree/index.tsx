@@ -1,9 +1,9 @@
-import { useCallback, useState, Component } from 'react';
+import { Component } from 'react';
 import { Tree as AntTree } from 'antd';
-import { useDeepCompareEffect } from 'ahooks';
 import { connect } from 'dva';
 import type { DataNode } from 'antd/es/tree';
 import { EComponentType } from '@/utils/constants';
+import { useComponentPath } from '@/hooks';
 import TreeNode from './components/TreeNode';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
@@ -187,45 +187,29 @@ class TreeClass extends Component<TreeProps> {
   getTreeData: (components: ComponentData.TComponentData[]) => DataNode[] = (
     components,
   ) => {
-    const deepReduce = (
-      list: ComponentData.TComponentData[],
-      checkable: boolean,
-      path?: string,
-    ) => {
-      return list.reduce<DataNode[]>((acc, cur, index) => {
-        const { type, id, components } = cur;
-
+    return useComponentPath<DataNode>(
+      components,
+      (entry, nextPath, deepReduce, checkable) => {
+        const { path, ...nextEntry } = entry;
+        const { id, type, components } = nextEntry;
         const isLeaf = type === EComponentType.COMPONENT;
 
-        const nextPath = path
-          ? `${path}.${index.toString()}.components`
-          : `${index.toString()}.components`;
-        const currentPath = path
-          ? `${path}.${index.toString()}`
-          : index.toString();
-
-        const treeNode: DataNode = {
+        return {
           title: (
             <TreeNode
-              value={cur}
-              path={currentPath}
+              value={nextEntry}
+              path={path}
               update={() => this.forceUpdate()}
             />
           ),
           key: id,
           isLeaf,
           checkable,
-          children: isLeaf ? [] : deepReduce(components, false, nextPath),
+          children: isLeaf ? [] : deepReduce(components, nextPath, false),
         };
-
-        acc.push(treeNode);
-
-        return acc;
-      }, []);
-    };
-    const result = deepReduce(components, true);
-
-    return result;
+      },
+      true,
+    );
   };
 
   onDrop = (info: any) => {

@@ -115,6 +115,13 @@ declare namespace ComponentData {
     };
   };
 
+  // 带参数的组件配置
+  export type TComponentDateWithPath<T extends object = {}> =
+    TComponentData<T> & {
+      path: string;
+      components: TComponentDateWithPath<any>[];
+    };
+
   // 组件配置
   export type TComponentData<T extends object = {}> = {
     // 描述
