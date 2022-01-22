@@ -81,6 +81,7 @@ const PanelWrapper = (props: {
           clientX,
           clientY,
         },
+        'dashed',
       );
       setMouseHorizontalGuideLine(result);
     } else if (isVerticalRulerHover) {
@@ -95,6 +96,7 @@ const PanelWrapper = (props: {
           clientX,
           clientY,
         },
+        'dashed',
       );
       setMouseVerticalGuideLine(result);
     }
@@ -117,7 +119,13 @@ const PanelWrapper = (props: {
   );
 
   const generateGuideLine = useCallback(
-    (direction, style, insertToList, e) => {
+    (
+      direction,
+      style,
+      insertToList,
+      e,
+      lineStyle: 'solid' | 'dashed' = 'solid',
+    ) => {
       if (!guideLineShow) return;
       const { clientX, clientY } = e;
       let positionStyle: Partial<ComponentData.TGuideLineConfigItem['style']> =
@@ -134,6 +142,7 @@ const PanelWrapper = (props: {
         type: direction,
         style: merge({}, style, positionStyle),
         id: nanoid(),
+        lineStyle,
       };
 
       insertToList &&
@@ -164,6 +173,17 @@ const PanelWrapper = (props: {
       });
     },
     [wrapperSetGuideLine, guideLineList],
+  );
+
+  const deleteGuideLine = useCallback(
+    (index: number) => {
+      const newGuideList = [...guideLineList];
+      newGuideList.splice(index, 1);
+      wrapperSetGuideLine({
+        value: newGuideList,
+      });
+    },
+    [guideLineList, wrapperSetGuideLine],
   );
 
   const onMoveEnd = useCallback(
@@ -227,13 +247,18 @@ const PanelWrapper = (props: {
   }, [guideLineShow]);
 
   const renderGuideLineItem = useCallback(
-    (item: ComponentData.TGuideLineConfigItem, index: number) => {
+    (
+      item: ComponentData.TGuideLineConfigItem,
+      index: number,
+      account: ComponentData.TGuideLineConfigItem[],
+    ) => {
       return (
         <GuideLine
           {...item}
           onChange={onGuidelinePositionChange.bind(this, index)}
           onMouseUp={onMoveEnd.bind(this, item, index)}
           onMouseDown={onMoveStart}
+          onDoubleClick={deleteGuideLine.bind(this, index)}
           key={item.id}
         />
       );

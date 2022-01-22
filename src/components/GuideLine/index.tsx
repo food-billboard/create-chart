@@ -10,6 +10,8 @@ class GuideLine extends Component<
     onMouseUp?: () => void;
     onMouseDown?: () => void;
     onMouseMove?: () => void;
+    onDoubleClick?: () => void;
+    lineStyle?: 'dashed' | 'solid';
   } & ComponentData.TGuideLineConfigItem
 > {
   flag = false;
@@ -34,7 +36,7 @@ class GuideLine extends Component<
   };
 
   onMouseMove = (e: any) => {
-    const { disabled, style, onChange, type, id } = this.props;
+    const { disabled, style, onChange, type, id, lineStyle } = this.props;
     if (!this.flag || disabled) return;
     if (this.times <= 5) {
       this.times++;
@@ -56,6 +58,7 @@ class GuideLine extends Component<
         style: merge({}, style, changeStyle),
         type,
         id,
+        lineStyle,
       };
       onChange?.(newItem);
     } catch (e) {
@@ -73,16 +76,27 @@ class GuideLine extends Component<
     onMouseUp?.();
   };
 
+  onDoubleClick = (e: any) => {
+    e.stopPropagation();
+    this.props.onDoubleClick?.();
+  };
+
   render() {
-    const { style, type } = this.props;
+    const { style, type, lineStyle = 'dashed' } = this.props;
 
     return (
       <div
         className={styles[`ruler-guide-line-wrapper-${type}`]}
         style={merge({}, style)}
         onMouseDown={this.onMouseDown}
+        onDoubleClick={this.onDoubleClick}
       >
-        <div className={styles[`ruler-guide-line-${type}`]}></div>
+        <div
+          className={styles[`ruler-guide-line-${type}`]}
+          style={{
+            borderStyle: lineStyle,
+          }}
+        ></div>
       </div>
     );
   }

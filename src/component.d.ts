@@ -87,6 +87,7 @@ declare namespace ComponentData {
       width?: number;
       height?: number;
     };
+    lineStyle?: 'solid' | 'dashed';
     id: string;
   };
   export type TGuideLineConfig = {
