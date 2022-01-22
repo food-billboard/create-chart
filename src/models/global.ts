@@ -267,7 +267,7 @@ export default {
       set(state, 'components', components);
 
       // * history enqueue
-      history.enqueue(state, newComponents, components);
+      // ! history.enqueue(state, newComponents, components);
 
       return state;
     },

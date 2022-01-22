@@ -6,4 +6,5 @@ export interface CommonActionType {
   setSelect: (value: string[]) => void;
   setComponent: ComponentMethod.SetComponentMethod;
   setComponentAll: (value: ComponentData.TComponentData[]) => void;
+  onClick: () => void;
 }

@@ -1,3 +1,14 @@
+let ID_PATH_MAP: {
+  [key: string]: {
+    id: string;
+    path: string;
+  };
+} = {};
+
+export function useIdPathMap() {
+  return ID_PATH_MAP;
+}
+
 export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
   components: ComponentData.TComponentData[],
   customReturn?: (
@@ -63,10 +74,9 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
 
   const result = deepReduce(components, '', config);
 
-  return result;
+  ID_PATH_MAP = {
+    ...componentPathMap,
+  };
 
-  // return {
-  //   components: result,
-  //   path: componentPathMap
-  // }
+  return result;
 }

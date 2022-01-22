@@ -175,8 +175,6 @@ class TreeClass extends Component<TreeProps> {
     treeData: [],
   };
 
-  path = {};
-
   onSelect = (keys: React.Key[], info: any) => {
     const value = keys.length ? [keys[0]] : [];
     this.props.setSelect(value as string[]);

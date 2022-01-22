@@ -1,9 +1,11 @@
 import { ReactNode, useEffect, useState, useMemo, useCallback } from 'react';
 import { Dropdown, Menu } from 'antd';
 import type { DropDownProps } from 'antd/es/dropdown';
+import classnames from 'classnames';
 import { connect } from 'dva';
 import { ActionItemType, ActionItem, DEFAULT_ACTION_LIST } from './action.map';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+import styles from './index.less';
 
 const ContextMenu = (
   props: {
@@ -29,10 +31,12 @@ const ContextMenu = (
     setComponent,
     setComponentAll,
     components,
+    overlayClassName,
     ...nextProps
   } = props;
   const { id } = value;
 
+  const [visible, setVisible] = useState<boolean>(false);
   const [actionList, setActionList] =
     useState<ActionItem[]>(DEFAULT_ACTION_LIST);
 
@@ -42,6 +46,10 @@ const ContextMenu = (
       DEFAULT_ACTION_LIST.filter((item) => !actionIgnore.includes(item.type)),
     );
   };
+
+  const hiddenMenu = useCallback(() => {
+    setVisible(false);
+  }, []);
 
   const menu = useMemo(() => {
     return (
@@ -59,6 +67,7 @@ const ContextMenu = (
                 setSelect={setSelect}
                 setComponentAll={setComponentAll}
                 components={components}
+                onClick={hiddenMenu}
               />
             </Menu.Item>
           );
@@ -88,6 +97,7 @@ const ContextMenu = (
         }
       }
       propsOnVisibleChange?.(visible);
+      setVisible(visible);
     },
     [select, id, propsOnVisibleChange],
   );
@@ -97,6 +107,11 @@ const ContextMenu = (
       overlay={menu}
       trigger={['contextMenu']}
       onVisibleChange={onVisibleChange}
+      visible={visible}
+      overlayClassName={classnames(
+        styles['context-menu-content'],
+        overlayClassName,
+      )}
       {...nextProps}
     >
       {children}
