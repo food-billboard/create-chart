@@ -51,22 +51,8 @@ const ListItem = ({
     [],
   );
 
-  const onVisibleChange = useCallback(
-    (visible: boolean) => {
-      if (visible) {
-        if (!select.includes(id)) {
-          setSelect([id]);
-        }
-      }
-    },
-    [select, id],
-  );
-
   return (
-    <ContextMenu
-      onVisibleChange={onVisibleChange}
-      actionIgnore={['undo', 'redo']}
-    >
+    <ContextMenu actionIgnore={['undo', 'redo']} value={value} path={path}>
       <div className={classnames(styles['design-page-layer-item'], 'dis-flex')}>
         <div className={classnames(styles['design-page-layer-item-name'])}>
           <NameEditor

@@ -184,7 +184,7 @@ declare namespace ComponentMethod {
     value: SuperPartial<ComponentData.TComponentData>;
     id: string;
     path: string;
-    action: 'add' | 'update' | 'delete';
+    action: 'add' | 'update' | 'delete' | 'move';
   };
 
   export type SetComponentMethod = (

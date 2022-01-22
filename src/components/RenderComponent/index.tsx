@@ -75,13 +75,6 @@ const RenderComponent = (props: RenderComponentProps) => {
     setSelect?.([id]);
   }, [setSelect, id]);
 
-  const onVisibleChange = useCallback(
-    (visible) => {
-      if (visible) handleSelect(null);
-    },
-    [handleSelect],
-  );
-
   const setComponent = useCallback(
     (
       callback: (
@@ -100,7 +93,7 @@ const RenderComponent = (props: RenderComponentProps) => {
   );
 
   return (
-    <ContextMenu onVisibleChange={onVisibleChange}>
+    <ContextMenu value={value}>
       <ComponentWrapper
         style={baseStyle}
         className={classnames(className, 'react-select-to', {

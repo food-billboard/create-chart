@@ -12,6 +12,13 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
   ) => T,
   config?: any,
 ) {
+  const componentPathMap: {
+    [key: string]: {
+      id: string;
+      path: string;
+    };
+  } = {};
+
   const deepReduce = (
     list: ComponentData.TComponentData[],
     path?: string,
@@ -26,6 +33,12 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
       const currentPath = path
         ? `${path}.${index.toString()}`
         : index.toString();
+
+      // id path map
+      componentPathMap[cur.id] = {
+        id: cur.id,
+        path: currentPath,
+      };
 
       if (customReturn) {
         acc.push(
@@ -51,4 +64,9 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
   const result = deepReduce(components, '', config);
 
   return result;
+
+  // return {
+  //   components: result,
+  //   path: componentPathMap
+  // }
 }

@@ -134,6 +134,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           name: '柱形图',
           id: '4',
           type: 'COMPONENT',
+          parent: '3',
           componentType: 'BAR_BASIC',
           components: [],
           config: {
@@ -256,11 +257,13 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           id: '6',
           type: 'GROUP_COMPONENT',
           componentType: 'GROUP_COMPONENT',
+          parent: '5',
           components: [
             {
               description: '这是一个柱形图',
               name: '柱形图5',
               id: '7',
+              parent: '6',
               type: 'COMPONENT',
               componentType: 'BAR_BASIC',
               components: [],

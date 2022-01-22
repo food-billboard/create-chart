@@ -1,27 +1,37 @@
-import { ReactNode, useCallback, useEffect, useState, useMemo } from 'react';
+import { ReactNode, useEffect, useState, useMemo, useCallback } from 'react';
 import { Dropdown, Menu } from 'antd';
 import type { DropDownProps } from 'antd/es/dropdown';
-import { merge } from 'lodash';
-import {
-  ActionItemType,
-  ActionItem,
-  DEFAULT_ACTION_LIST,
-  DEFAULT_ACTION_LIST_MAP,
-} from './action.map';
+import { connect } from 'dva';
+import { ActionItemType, ActionItem, DEFAULT_ACTION_LIST } from './action.map';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const ContextMenu = (
   props: {
     actionIgnore?: ActionItemType[];
-    onClick?: (value: ActionItem) => {
-      [K in ActionItemType]: {
-        action: 'delete' | 'add' | 'update';
-        value?: Partial<ActionItem>;
-      };
-    };
     children?: ReactNode;
+    value: ComponentData.TComponentData;
+    path?: string;
+    select: string[];
+    components: ComponentData.TComponentData[];
+    setSelect: (value: string[]) => void;
+    setComponent: ComponentMethod.SetComponentMethod;
+    setComponentAll: (value: ComponentData.TComponentData[]) => void;
   } & Partial<DropDownProps>,
 ) => {
-  const { actionIgnore, onClick, children, ...nextProps } = props;
+  const {
+    actionIgnore,
+    children,
+    onVisibleChange: propsOnVisibleChange,
+    value,
+    path,
+    select,
+    setSelect,
+    setComponent,
+    setComponentAll,
+    components,
+    ...nextProps
+  } = props;
+  const { id } = value;
 
   const [actionList, setActionList] =
     useState<ActionItem[]>(DEFAULT_ACTION_LIST);
@@ -33,70 +43,65 @@ const ContextMenu = (
     );
   };
 
-  const handleClick = useCallback(
-    (value, e) => {
-      e.domEvent.stopPropagation();
-      const result = onClick?.(value);
-      if (result) {
-        let newActionList = [...actionList];
-        // loop the update result
-        Object.entries(result).forEach((item) => {
-          const [key, actionData] = item;
-          const { action, value = {} } = actionData;
-
-          let target!: ActionItem;
-
-          newActionList = newActionList.filter((item) => {
-            const isEqual = item.type === key;
-            if (isEqual) target = item;
-            return isEqual;
-          });
-          switch (action) {
-            case 'add':
-            case 'update':
-              newActionList.push(
-                merge(
-                  {},
-                  DEFAULT_ACTION_LIST_MAP[key as ActionItemType],
-                  target || {},
-                  value,
-                ),
-              );
-            default:
-              return;
-          }
-        });
-
-        setActionList(newActionList);
-      }
-    },
-    [onClick, actionList],
-  );
-
   const menu = useMemo(() => {
     return (
       <Menu>
         {actionList.map((item) => {
-          const { on, onTitle, offTitle, type } = item;
+          const { type, children: Action } = item;
           return (
-            <Menu.Item key={type} onClick={handleClick.bind(null, item)}>
-              {on ? onTitle : offTitle}
+            <Menu.Item key={type}>
+              <Action
+                key={type}
+                value={value}
+                select={select}
+                path={path}
+                setComponent={setComponent}
+                setSelect={setSelect}
+                setComponentAll={setComponentAll}
+                components={components}
+              />
             </Menu.Item>
           );
         })}
       </Menu>
     );
-  }, []);
+  }, [
+    actionList,
+    value,
+    select,
+    setComponent,
+    setSelect,
+    path,
+    setComponentAll,
+    components,
+  ]);
 
   useEffect(() => {
     resetActionList(actionIgnore);
   }, [actionIgnore]);
 
+  const onVisibleChange = useCallback(
+    (visible: boolean) => {
+      if (visible) {
+        if (!select.includes(id)) {
+          setSelect([id]);
+        }
+      }
+      propsOnVisibleChange?.(visible);
+    },
+    [select, id, propsOnVisibleChange],
+  );
+
   return (
-    <Dropdown overlay={menu} trigger={['contextMenu']} {...nextProps}>
+    <Dropdown
+      overlay={menu}
+      trigger={['contextMenu']}
+      onVisibleChange={onVisibleChange}
+      {...nextProps}
+    >
       {children}
     </Dropdown>
   );
 };
 
-export default ContextMenu;
+export default connect(mapStateToProps, mapDispatchToProps)(ContextMenu);

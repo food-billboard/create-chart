@@ -1,5 +1,6 @@
 import UndoHistory from 'react-undo-component/lib/Component/history';
 import { set, get, merge } from 'lodash';
+import arrayMove from 'array-move';
 import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils/tool';
 
@@ -168,7 +169,8 @@ export default {
 
       changeComponents.forEach((component) => {
         const { id, value, action, path } = component;
-        const parentPath = path.split('.').slice(0, -1).join('.');
+        const pathList = path.split('.');
+        const parentPath = pathList.slice(0, -1).join('.');
 
         switch (action) {
           case 'add':
@@ -213,6 +215,32 @@ export default {
               components = targetUpdateParentComponents;
             }
             break;
+          case 'move':
+            const target = get(components, path);
+            if (target.parent) {
+              const parent = get(components, parentPath);
+              const index = parent.findIndex((item: any) => item.id === id);
+
+              // set target new data
+              const newComponents = arrayMove(parent, index, parent.length - 1);
+              const target = newComponents[newComponents.length - 1];
+              newComponents[newComponents.length - 1] = mergeWithoutArray(
+                target,
+                value,
+              );
+
+              set(components, parentPath, newComponents);
+            } else {
+              const index = components.findIndex((item: any) => item.id === id);
+              components = arrayMove(components, index, components.length - 1);
+
+              // set target new data
+              const target = components[components.length - 1];
+              components[components.length - 1] = mergeWithoutArray(
+                target,
+                value,
+              );
+            }
         }
       });
 

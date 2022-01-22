@@ -1,86 +1,75 @@
+import { ReactNode } from 'react';
+import {
+  UndoAction,
+  RedoAction,
+  GroupAction,
+  ShowAction,
+  TopAction,
+  BottomAction,
+  DeleteAction,
+  CopyAction,
+  LockAction,
+} from './Actions';
 
-export type ActionItemType = 'undo' | 'redo' | 'top' | 'bottom' | 'delete' | 'copy' | 'group' | 'show'
+export type ActionItemType =
+  | 'undo'
+  | 'redo'
+  | 'top'
+  | 'bottom'
+  | 'delete'
+  | 'copy'
+  | 'group'
+  | 'show'
+  | 'lock';
 
 export type ActionItem = {
-  type: ActionItemType
-  multiple: boolean 
-  onTitle: string 
-  offTitle: string 
-  disabled: boolean 
-  on: boolean 
-}
+  type: ActionItemType;
+  children: any;
+};
 
 export const DEFAULT_ACTION_LIST: ActionItem[] = [
   {
     type: 'undo',
-    multiple: false,
-    onTitle: '撤销',
-    offTitle: '撤销',
-    disabled: true,
-    on: true 
+    children: UndoAction,
   },
   {
     type: 'redo',
-    multiple: false,
-    onTitle: '重做',
-    offTitle: '重做',
-    disabled: true,
-    on: true 
+    children: RedoAction,
   },
   {
     type: 'top',
-    multiple: true,
-    onTitle: '置顶',
-    offTitle: '取消置顶',
-    disabled: false,
-    on: true 
+    children: TopAction,
   },
   {
     type: 'bottom',
-    multiple: true,
-    onTitle: '置底',
-    offTitle: '取消置第',
-    disabled: false,
-    on: true 
+    children: BottomAction,
   },
   {
     type: 'delete',
-    multiple: false,
-    onTitle: '删除',
-    offTitle: '删除',
-    disabled: false,
-    on: true 
+    children: DeleteAction,
   },
   {
     type: 'copy',
-    multiple: true,
-    onTitle: '复制',
-    offTitle: '粘贴',
-    disabled: false,
-    on: true 
+    children: CopyAction,
   },
   {
     type: 'group',
-    multiple: true,
-    onTitle: '成组',
-    offTitle: '取消成组',
-    disabled: false,
-    on: true 
+    children: GroupAction,
   },
   {
     type: 'show',
-    multiple: true,
-    onTitle: '单独显示',
-    offTitle: '取消单独显示',
-    disabled: false,
-    on: true 
+    children: ShowAction,
   },
-]
+  {
+    type: 'lock',
+    children: LockAction,
+  },
+];
 
 export const DEFAULT_ACTION_LIST_MAP = DEFAULT_ACTION_LIST.reduce<{
-  [K in ActionItemType]: ActionItem
+  [K in ActionItemType]: ActionItem;
 }>((acc, cur) => {
-  const { type } = cur
-  acc[type] = cur  
-  return acc 
-}, {} as any)
+  const { type } = cur;
+  acc[type] = cur;
+  return acc;
+}, {} as any);

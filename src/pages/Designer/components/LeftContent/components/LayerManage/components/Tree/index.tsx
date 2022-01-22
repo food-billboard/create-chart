@@ -175,6 +175,8 @@ class TreeClass extends Component<TreeProps> {
     treeData: [],
   };
 
+  path = {};
+
   onSelect = (keys: React.Key[], info: any) => {
     const value = keys.length ? [keys[0]] : [];
     this.props.setSelect(value as string[]);
@@ -252,6 +254,7 @@ class TreeClass extends Component<TreeProps> {
       loop(data, dropKey, (item) => {
         item.components = item.components || [];
         // where to insert 示例添加到头部，可以是随意位置
+        dragObj.parent = item.id;
         item.components.unshift(dragObj);
       });
     } else if (
@@ -262,6 +265,7 @@ class TreeClass extends Component<TreeProps> {
       loop(data, dropKey, (item) => {
         item.components = item.components || [];
         // where to insert 示例添加到头部，可以是随意位置
+        dragObj.parent = item.id;
         item.components.unshift(dragObj);
         // in previous version, we use item.children.push(dragObj) to insert the
         // item to the tail of the children
@@ -273,6 +277,7 @@ class TreeClass extends Component<TreeProps> {
         ar = arr;
         i = index;
       });
+      dragObj.parent = undefined;
       if (dropPosition === -1) {
         ar.splice(i, 0, dragObj);
       } else {
