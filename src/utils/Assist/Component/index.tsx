@@ -53,9 +53,6 @@ class ComponentUtil {
       newComponents[realIndex] = mergeWithoutArray(target, newValue);
 
       set(components, parentPath, newComponents);
-
-      // ! 使用这种方法强制刷新
-      components = arrayMove(components, 0, 0);
     }
     // outer
     else {
@@ -92,8 +89,6 @@ class ComponentUtil {
     } else {
       components = targetDeleteParentComponents;
     }
-
-    components = arrayMove(components, 0, 0);
 
     return components;
   }
@@ -194,6 +189,9 @@ class ComponentUtil {
           break;
       }
     });
+
+    // ! 使用这种方法强制刷新
+    components = arrayMove(components, 0, 0);
 
     return components;
   }
