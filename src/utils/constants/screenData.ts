@@ -389,42 +389,6 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           visible: true,
           lock: false,
         },
-        interactive: {
-          base: [],
-        },
-        data: {
-          request: {
-            url: '',
-            method: 'POST',
-            headers: {},
-            body: {},
-            frequency: {
-              show: false,
-              value: 10,
-            },
-            type: 'static',
-            value: [],
-          },
-          filter: {
-            show: false,
-            fields: [
-              {
-                name: 'x',
-                description: 'x轴',
-              },
-              {
-                name: 'y',
-                description: 'y轴',
-              },
-              {
-                name: 's',
-                description: '系列',
-              },
-            ],
-            value: [],
-            map: [],
-          },
-        },
         options: {},
       },
     },
@@ -463,3 +427,19 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
 };
 
 export default DEFAULT_SCREEN_DATA;
+
+export const DEFAULT_CONFIG: ComponentData.TBaseConfig = {
+  style: {
+    width: 0,
+    height: 0,
+    left: 0,
+    top: 0,
+    opacity: 1,
+    rotate: 0,
+    zIndex: 2,
+  },
+  attr: {
+    visible: true,
+    lock: false,
+  },
+};

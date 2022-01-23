@@ -1,7 +1,10 @@
-import { set, get, template } from 'lodash';
+import { set, get } from 'lodash';
+import { nanoid } from 'nanoid';
 import arrayMove from 'array-move';
 import { IGlobalModelState } from '@/models/connect';
 import { mergeWithoutArray } from '../../tool';
+import { EComponentType, EComponentSelfType } from '../../index';
+import { DEFAULT_CONFIG } from '../../constants/screenData';
 
 // 组件数据修改操作
 class ComponentUtil {
@@ -198,5 +201,40 @@ class ComponentUtil {
 }
 
 const componentUtil = new ComponentUtil();
+
+// generate template group component
+export const createGroupComponent = (
+  component: SuperPartial<ComponentData.TComponentData>,
+) => {
+  const name = `组-${Date.now()}`;
+  return mergeWithoutArray(
+    {},
+    {
+      id: nanoid(),
+      description: name,
+      name,
+      type: EComponentType.GROUP_COMPONENT,
+      componentType: EComponentSelfType.GROUP_COMPONENT,
+      config: {
+        ...DEFAULT_CONFIG,
+      },
+    },
+    component,
+  );
+};
+
+// get parentPath
+export const getParentPath = (path: string) => {
+  const pathList = path.split('.');
+  const parentPath = pathList.slice(0, -1).join('.');
+  return parentPath;
+};
+
+export const getParentComponent = (
+  components: ComponentData.TComponentData[],
+  path: string,
+) => {
+  return get(components, getParentPath(path));
+};
 
 export default componentUtil;

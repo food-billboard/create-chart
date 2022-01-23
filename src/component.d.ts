@@ -27,7 +27,7 @@ declare namespace ComponentData {
       visible: boolean;
       lock: boolean;
     };
-    interactive: {
+    interactive?: {
       base: {
         type: 'onClick';
         action: {
@@ -40,7 +40,7 @@ declare namespace ComponentData {
       // linkage
       // 具体细节有待参考
     };
-    data: {
+    data?: {
       request: {
         url: string;
         method: 'POST' | 'GET';
@@ -52,6 +52,7 @@ declare namespace ComponentData {
         };
         type: 'api' | 'static';
         value: any[] | object;
+        valueType?: 'object' | 'array';
       };
       filter: {
         show: boolean;

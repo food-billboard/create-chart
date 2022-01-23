@@ -169,7 +169,12 @@ export default {
       const history = get(state, 'history.value');
       const components = get(state, 'components');
 
-      set(state, 'components', action.payload);
+      let newComponents = action.payload;
+
+      // ! 使用这种方法强制刷新
+      newComponents = arrayMove(newComponents, 0, 0);
+
+      set(state, 'components', newComponents);
 
       // ! history.enqueue(state, action.payload, components);
 
