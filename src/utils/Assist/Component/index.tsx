@@ -41,8 +41,6 @@ class ComponentUtil {
     const target = get(components, path);
     const { id, index: targetIndex } = value;
 
-    console.log(33333);
-
     // inner
     if (target.parent) {
       const parent = get(components, parentPath);
@@ -50,14 +48,14 @@ class ComponentUtil {
       const realIndex = this.getRealIndex(parent, targetIndex!);
 
       // set target new data
-      const newComponents = arrayMove(parent, index, targetIndex as number);
-      const target = newComponents[targetIndex as number];
-      newComponents[newComponents.length - 1] = mergeWithoutArray(
-        target,
-        newValue,
-      );
+      const newComponents = arrayMove(parent, index, realIndex);
+      const target = newComponents[realIndex];
+      newComponents[realIndex] = mergeWithoutArray(target, newValue);
 
       set(components, parentPath, newComponents);
+
+      // ! 使用这种方法强制刷新
+      components = arrayMove(components, 0, 0);
     }
     // outer
     else {
@@ -94,6 +92,8 @@ class ComponentUtil {
     } else {
       components = targetDeleteParentComponents;
     }
+
+    components = arrayMove(components, 0, 0);
 
     return components;
   }
