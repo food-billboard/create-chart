@@ -44,8 +44,12 @@ const RenderComponent = (props: RenderComponentProps) => {
 
   const isHover = useHover(hoverRef);
 
+  const isSelect = useMemo(() => {
+    return select?.includes(id);
+  }, [select, id]);
+
   const baseStyle: CSSProperties = useMemo(() => {
-    const { rotate, width, height, left, top, ...nextComponentStyle } =
+    const { rotate, width, height, left, top, zIndex, ...nextComponentStyle } =
       componentStyle;
     return merge(
       {},
@@ -54,14 +58,11 @@ const RenderComponent = (props: RenderComponentProps) => {
         transform: `rotate(${rotate}deg)`,
         display: visible ? 'inline-block' : 'none',
         borderWidth: (1 / scale) * 100,
+        zIndex: isSelect ? 4 : zIndex,
       },
       style,
     );
-  }, [componentStyle, style, visible, scale]);
-
-  const isSelect = useMemo(() => {
-    return select?.includes(id);
-  }, [select, id]);
+  }, [componentStyle, style, visible, scale, isSelect]);
 
   const handleSelect = useCallback(
     (e: any) => {

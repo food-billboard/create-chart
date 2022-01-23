@@ -186,6 +186,7 @@ declare namespace ComponentMethod {
     id: string;
     path: string;
     action: 'add' | 'update' | 'delete' | 'move';
+    index?: number | 'last' | 'first'; // * 移动时用，这里暂时只存在同级移动
   };
 
   export type SetComponentMethod = (

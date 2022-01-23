@@ -57,6 +57,7 @@ const BottomAction = (props: CommonActionType) => {
               path,
               id,
               action: 'move',
+              index: 0,
               value: {
                 config: {
                   style: {
@@ -70,8 +71,8 @@ const BottomAction = (props: CommonActionType) => {
         }, []);
 
         setComponent(updateComponent);
-        onClick();
       }
+      onClick();
     },
     [isBottom, id, path, components, setComponentAll, select, onClick],
   );
