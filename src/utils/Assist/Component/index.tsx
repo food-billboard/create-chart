@@ -202,6 +202,19 @@ class ComponentUtil {
 
 const componentUtil = new ComponentUtil();
 
+// generate template component
+export const createComponent: (
+  component: SuperPartial<ComponentData.TComponentData>,
+) => ComponentData.TComponentData = (component) => {
+  return mergeWithoutArray(
+    {},
+    {
+      id: nanoid(),
+    },
+    component,
+  );
+};
+
 // generate template group component
 export const createGroupComponent = (
   component: SuperPartial<ComponentData.TComponentData>,

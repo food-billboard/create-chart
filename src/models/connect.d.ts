@@ -5,19 +5,20 @@ import { ThemeMap } from '@/utils/constants';
 type DragData = {
   value: ComponentData.BaseComponentItem | null;
 };
+export type TUndoHistory = {
+  value: UndoHistory;
+  isUndoDisabled: boolean;
+  isRedoDisabled: boolean;
+};
 interface IGlobalModelState {
   screenData: Exclude<ComponentData.TScreenData, 'components'>;
   components: ComponentData.TScreenData['components'];
   guideLine: ComponentData.TGuideLineConfig;
   select: string[];
   componentSelect: ComponentData.TComponentData<any> | null;
-  history: {
-    value: UndoHistory;
-    isUndoDisabled: boolean;
-    isRedoDisabled: boolean;
-  };
+  history: TUndoHistory;
   theme: ThemeMap;
-  clipboard: ComponentData.TComponentData<any>[];
+  clipboard: string[];
 
   drag: DragData;
   scale: number;
