@@ -3,7 +3,6 @@ import { connect } from 'dva';
 import { useFocusWithin, useKeyPress } from 'ahooks';
 import { get } from 'lodash';
 import { useIdPathMap } from '@/hooks/useComponentsPath';
-import { TUndoHistory } from '@/models/connect';
 import { createComponent } from '@/utils/Assist/Component';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
@@ -11,7 +10,6 @@ const ClipboardComponent = (props: {
   children?: ReactNode;
   select: string[];
   components: ComponentData.TComponentData[];
-  history: TUndoHistory;
   clipboard: string[];
   setClipboard: (value: string[]) => void;
   setComponentAll: (value: ComponentData.TComponentData[]) => void;
