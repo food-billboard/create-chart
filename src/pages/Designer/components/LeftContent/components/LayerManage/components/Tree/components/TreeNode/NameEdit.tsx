@@ -71,6 +71,7 @@ const NameEditor = (props: {
           'c-po',
           styles['design-page-layer-item-name-basic'],
         )}
+        title={name}
       >
         {name}
       </div>

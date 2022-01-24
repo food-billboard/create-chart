@@ -174,7 +174,7 @@ declare namespace ComponentData {
   };
 
   export type BaseComponentItem = {
-    type: string;
+    type: TComponentSelfType;
     title: string;
     icon: string;
     description?: string;

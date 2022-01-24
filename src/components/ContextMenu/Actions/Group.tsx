@@ -11,15 +11,7 @@ import { mergeWithoutArray } from '@/utils/tool';
 import { CommonActionType } from './type';
 
 const GroupAction = (props: CommonActionType) => {
-  const {
-    value,
-    path,
-    setComponent,
-    setComponentAll,
-    components,
-    select,
-    onClick,
-  } = props;
+  const { value, path, setComponentAll, components, select, onClick } = props;
   const { id, type, parent, components: children, config } = value;
 
   const isGroup = useMemo(() => {
@@ -126,43 +118,48 @@ const GroupAction = (props: CommonActionType) => {
         },
       );
 
-      // format the sub component position
-      const updateComponents: ComponentData.TComponentData[] =
-        updateSelectConfig((config) => {
-          const {
-            config: {
-              style: { left: compLeft, top: compTop },
+      return mergeParentConfig((parentComponent) => {
+        const newGroupComponent = createGroupComponent({
+          parent,
+          config: {
+            style: {
+              left,
+              top,
+              width: right - left,
+              height: bottom - top,
             },
-          } = config;
-
-          return mergeWithoutArray({}, config, {
-            config: {
-              style: {
-                left: compLeft - left,
-                top: compTop - top,
-              },
-            },
-          });
+          },
         });
 
-      return mergeParentConfig((parentComponent) => {
+        // format the sub component position
+        const updateComponents: ComponentData.TComponentData[] =
+          updateSelectConfig((config) => {
+            const {
+              config: {
+                style: { left: compLeft, top: compTop },
+              },
+            } = config;
+
+            return mergeWithoutArray({}, config, {
+              config: {
+                style: {
+                  left: compLeft - left,
+                  top: compTop - top,
+                },
+              },
+              parent: newGroupComponent.id,
+            });
+          });
+
         // generate the list
         return [
           ...(parentComponent || components).filter(
             (item) => !select.includes(item.id),
           ),
-          createGroupComponent({
+          {
+            ...newGroupComponent,
             components: updateComponents,
-            parent,
-            config: {
-              style: {
-                left,
-                top,
-                width: right - left,
-                height: bottom - top,
-              },
-            },
-          }),
+          },
         ];
       });
     } catch (err) {
@@ -178,9 +175,9 @@ const GroupAction = (props: CommonActionType) => {
     // format the sub component position
     const [updateComponents]: ComponentData.TComponentData[] =
       updateSelectConfig((config) => {
-        const { components } = config;
+        const { components, parent } = config;
 
-        return {
+        const newConfig = {
           ...config,
           components: components.map((config) => {
             const {
@@ -188,7 +185,8 @@ const GroupAction = (props: CommonActionType) => {
                 style: { left: compLeft, top: compTop },
               },
             } = config;
-            return mergeWithoutArray({}, config, {
+
+            const newConfig = mergeWithoutArray({}, config, {
               config: {
                 style: {
                   left: compLeft + left,
@@ -196,11 +194,15 @@ const GroupAction = (props: CommonActionType) => {
                 },
               },
             });
+            // * avoid undefined
+            newConfig.parent = parent;
+
+            return newConfig;
           }),
         };
-      });
 
-    console.log(updateComponents, 44444);
+        return newConfig;
+      });
 
     return mergeParentConfig((parentComponent) => {
       // generate the list
@@ -216,6 +218,7 @@ const GroupAction = (props: CommonActionType) => {
   const handleClick = useCallback(
     (e: any) => {
       e.stopPropagation();
+
       if (isGroup) {
         const newComponents = splitGroupConfig();
         newComponents && setComponentAll(newComponents);

@@ -9,6 +9,7 @@ import {
 import { connect } from 'dva';
 import { merge } from 'lodash';
 import { useBackground } from '@/hooks';
+import { createComponent } from '@/utils/Assist/Component';
 import ComponentList from '../ComponentList';
 import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -23,9 +24,10 @@ export type PainterProps = {
   didDrop: boolean;
   dragInfo?: ComponentData.BaseComponentItem | null;
   setDragInfo?: (value: ComponentData.BaseComponentItem | null) => void;
-  setSelect?: (value: string[]) => void;
+  setSelect: (value: string[]) => void;
   scale: number;
   config: ComponentData.TScreenData['config'];
+  setComponent: ComponentMethod.SetComponentMethod;
 };
 
 export const PANEL_ID = 'panel-id';
@@ -39,6 +41,7 @@ const Painter = (props: PainterProps) => {
     setSelect,
     scale: originScale,
     config: { style: { width, height } = {}, attr: { poster } = {} } = {},
+    setComponent,
   } = props;
 
   const clickFlag = useRef<boolean>(false);
@@ -80,7 +83,7 @@ const Painter = (props: PainterProps) => {
       Math.abs(clientX - x) < 10 &&
       Math.abs(clientY - y) < 10
     ) {
-      setSelect?.([]);
+      setSelect([]);
     }
     moveCounter.current = 0;
     clickFlag.current = false;
@@ -101,7 +104,23 @@ const Painter = (props: PainterProps) => {
   }, []);
 
   const generateNewComponent = (value: ComponentData.BaseComponentItem) => {
-    console.log('generate new item', value);
+    const component = createComponent({
+      name: value.title,
+      description: value.description,
+      componentType: value.type,
+    });
+
+    setComponent({
+      action: 'add',
+      id: component.id,
+      value: component,
+      path: '',
+    });
+
+    setSelect([component.id]);
+
+    console.log('generate new item', component);
+
     setDragInfo?.(null);
   };
 
@@ -133,7 +152,22 @@ const dropTarget = DropTarget(
   DRAG_TYPE,
   {
     drop: (props, monitor, component) => {
-      return { name: DROP_TYPE };
+      // const { x, y } = monitor.getSourceClientOffset() as {
+      //   x: number
+      //   y: number
+      // }
+      // console.log(
+      //   monitor.getInitialClientOffset(),
+      //   monitor.getInitialSourceClientOffset(),
+      //   monitor.getClientOffset(),
+      //   monitor.getDifferenceFromInitialOffset(),
+      //   monitor.getSourceClientOffset()
+      // )
+
+      return {
+        name: DROP_TYPE,
+        position: {},
+      };
     },
   },
   (connect: DropTargetConnector, monitor: DropTargetMonitor) => {

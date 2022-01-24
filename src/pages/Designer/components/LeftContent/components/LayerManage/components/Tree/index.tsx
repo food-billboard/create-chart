@@ -6,6 +6,7 @@ import { EComponentType } from '@/utils/constants';
 import { useComponentPath } from '@/hooks';
 import TreeNode from './components/TreeNode';
 import { mapDispatchToProps, mapStateToProps } from './connect';
+import styles from './index.less';
 
 export type TreeProps = {
   components: ComponentData.TComponentData[];
@@ -303,6 +304,7 @@ class TreeClass extends Component<TreeProps> {
         }}
         checkedKeys={this.props.select}
         selectedKeys={this.props.select}
+        className={styles['layer-manage-content']}
       />
     );
   }

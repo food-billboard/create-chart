@@ -2,6 +2,7 @@ import { set, get } from 'lodash';
 import { nanoid } from 'nanoid';
 import arrayMove from 'array-move';
 import { IGlobalModelState } from '@/models/connect';
+import { getComponentDefaultConfigByType } from '@/components/ChartComponents';
 import { mergeWithoutArray } from '../../tool';
 import { EComponentType, EComponentSelfType } from '../../index';
 import { DEFAULT_CONFIG } from '../../constants/screenData';
@@ -201,6 +202,58 @@ class ComponentUtil {
 }
 
 const componentUtil = new ComponentUtil();
+
+// generate template component
+export const createComponent: (
+  component: SuperPartial<ComponentData.TComponentData> & {
+    componentType: ComponentData.TComponentSelfType;
+  },
+) => ComponentData.TComponentData = (component) => {
+  const defaultConfig = getComponentDefaultConfigByType(
+    component.componentType,
+  );
+
+  return mergeWithoutArray(
+    {},
+    {
+      id: nanoid(),
+      description: component.name || `component-${Date.now()}`,
+      type: EComponentType.COMPONENT,
+      config: mergeWithoutArray(
+        {},
+        DEFAULT_CONFIG,
+        {
+          interactive: {
+            base: [],
+          },
+          data: {
+            request: {
+              url: '',
+              method: 'POST',
+              headers: {},
+              body: {},
+              frequency: {
+                show: false,
+                value: 15,
+              },
+              type: 'static',
+              value: [],
+              valueType: 'array',
+            },
+            filter: {
+              show: false,
+              fields: [],
+              value: {},
+              map: [],
+            },
+          },
+        },
+        defaultConfig,
+      ),
+    },
+    component,
+  );
+};
 
 // generate template group component
 export const createGroupComponent = (

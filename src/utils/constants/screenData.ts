@@ -124,14 +124,14 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
     },
     {
       description: '这是一个柱形图',
-      name: '柱形图',
+      name: '组1',
       id: '3',
       type: 'GROUP_COMPONENT',
       componentType: 'GROUP_COMPONENT',
       components: [
         {
           description: '这是一个柱形图',
-          name: '柱形图',
+          name: '组1-柱形图',
           id: '4',
           type: 'COMPONENT',
           parent: '3',
@@ -205,55 +205,19 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           visible: true,
           lock: false,
         },
-        interactive: {
-          base: [],
-        },
-        data: {
-          request: {
-            url: '',
-            method: 'POST',
-            headers: {},
-            body: {},
-            frequency: {
-              show: false,
-              value: 10,
-            },
-            type: 'static',
-            value: [],
-          },
-          filter: {
-            show: false,
-            fields: [
-              {
-                name: 'x',
-                description: 'x轴',
-              },
-              {
-                name: 'y',
-                description: 'y轴',
-              },
-              {
-                name: 's',
-                description: '系列',
-              },
-            ],
-            value: [],
-            map: [],
-          },
-        },
         options: {},
       },
     },
     {
       description: '这是一个柱形图',
-      name: '柱形图3',
+      name: '组2',
       id: '5',
       type: 'GROUP_COMPONENT',
       componentType: 'GROUP_COMPONENT',
       components: [
         {
           description: '这是一个柱形图',
-          name: '柱形图4',
+          name: '组2-组1',
           id: '6',
           type: 'GROUP_COMPONENT',
           componentType: 'GROUP_COMPONENT',
@@ -261,7 +225,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           components: [
             {
               description: '这是一个柱形图',
-              name: '柱形图5',
+              name: '组2-组1-柱形图1',
               id: '7',
               parent: '6',
               type: 'COMPONENT',
@@ -334,42 +298,6 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
             attr: {
               visible: true,
               lock: false,
-            },
-            interactive: {
-              base: [],
-            },
-            data: {
-              request: {
-                url: '',
-                method: 'POST',
-                headers: {},
-                body: {},
-                frequency: {
-                  show: false,
-                  value: 10,
-                },
-                type: 'static',
-                value: [],
-              },
-              filter: {
-                show: false,
-                fields: [
-                  {
-                    name: 'x',
-                    description: 'x轴',
-                  },
-                  {
-                    name: 'y',
-                    description: 'y轴',
-                  },
-                  {
-                    name: 's',
-                    description: '系列',
-                  },
-                ],
-                value: [],
-                map: [],
-              },
             },
             options: {},
           },

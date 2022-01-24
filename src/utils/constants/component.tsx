@@ -20,7 +20,7 @@ export const COMPONENT_TYPE_LIST = [
         title: '柱形图',
         children: [
           {
-            type: 'bar-basic',
+            type: 'BAR_BASIC',
             title: '基础柱形图',
             icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
             description: '',
@@ -37,12 +37,12 @@ export const COMPONENT_TYPE_LIST = [
         title: '折现图',
         children: [
           {
-            type: 'line-basic',
+            type: 'LINE_BASIC',
             title: '基础折线图',
             icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
           },
           {
-            type: 'line-waterfall',
+            type: 'LINE_WATERFALL',
             title: '瀑布图',
             icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
           },

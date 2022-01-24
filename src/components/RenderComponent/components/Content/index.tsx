@@ -18,7 +18,9 @@ const Content = (props: ComponentContentProps) => {
         return renderChildren(component.components);
       }
 
-      const TargetComponent: any = getComponentByType(component);
+      const TargetComponent: any = getComponentByType(component)?.render;
+
+      if (!TargetComponent) return null;
 
       return <TargetComponent value={component} key={id} />;
     });

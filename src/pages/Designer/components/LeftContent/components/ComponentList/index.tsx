@@ -22,7 +22,7 @@ const ComponentList = (props: { type: string }) => {
           <Row gutter={24}>
             {children && children.length ? (
               children.map((item) => {
-                return <ComponentItem {...item} key={item.type} />;
+                return <ComponentItem {...(item as any)} key={item.type} />;
               })
             ) : (
               <Empty />
