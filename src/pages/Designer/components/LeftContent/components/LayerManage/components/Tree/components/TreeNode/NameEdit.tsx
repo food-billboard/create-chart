@@ -41,6 +41,9 @@ const NameEditor = (props: {
 
   const changeEditState = useCallback(
     (e) => {
+      setEditable(true);
+      return;
+
       e.stopPropagation();
       // dbClick
       if (Date.now() - editTimestamps.current < 200) {
@@ -66,7 +69,7 @@ const NameEditor = (props: {
       <Input defaultValue={name} onBlur={changeName} autoFocus />
     ) : (
       <div
-        onClick={changeEditState}
+        onDoubleClick={changeEditState}
         className={classnames(
           'c-po',
           styles['design-page-layer-item-name-basic'],

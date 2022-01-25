@@ -126,6 +126,8 @@ declare namespace ComponentData {
 
   // 组件配置
   export type TComponentData<T extends object = {}> = {
+    // icon
+    icon?: string;
     // 描述
     description: string;
     // 名称

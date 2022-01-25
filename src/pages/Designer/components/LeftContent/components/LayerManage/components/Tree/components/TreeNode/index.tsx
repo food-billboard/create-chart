@@ -54,6 +54,9 @@ const ListItem = ({
   return (
     <ContextMenu actionIgnore={['undo', 'redo']} value={value} path={path}>
       <div className={classnames(styles['design-page-layer-item'], 'dis-flex')}>
+        <div className="">
+          <img />
+        </div>
         <div className={classnames(styles['design-page-layer-item-name'])}>
           <NameEditor
             value={value}
