@@ -1,6 +1,6 @@
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { connect } from 'dva';
-import { useFocusWithin, useKeyPress } from 'ahooks';
+import { useKeyPress } from 'ahooks';
 import { copy } from '@/components/ContextMenu/Actions/Copy';
 import { paste } from '@/components/ContextMenu/Actions/Paste';
 import { mapStateToProps, mapDispatchToProps } from './connect';
@@ -15,6 +15,7 @@ const ClipboardComponent = (props: {
   setSelect: (value: string[]) => void;
   undo: () => void;
   redo: () => void;
+  isFocusWithin: boolean;
 }) => {
   const {
     children,
@@ -26,11 +27,8 @@ const ClipboardComponent = (props: {
     setSelect,
     undo,
     redo,
+    isFocusWithin,
   } = props;
-
-  const ref = useRef<HTMLDivElement>(null);
-
-  const isFocusWithin = useFocusWithin(ref);
 
   // copy
   useKeyPress('ctrl.c', () => {
@@ -62,13 +60,17 @@ const ClipboardComponent = (props: {
     redo();
   });
 
+  useEffect(() => {
+    console.log(isFocusWithin, 'isFocusWithin');
+  }, [isFocusWithin]);
+
   return (
-    <div ref={ref}>
+    <>
       {children}
-      <label style={{ display: 'block' }}>
+      {/* <label style={{ display: 'block' }}>
         First Name: <input />
-      </label>
-    </div>
+      </label> */}
+    </>
   );
 };
 
