@@ -17,6 +17,7 @@ import GuideLine from '@/components/GuideLine';
 import Ruler from '@/components/Ruler';
 import { BackgroundConfigRender } from '@/components/DesignerBackground';
 import { mergeWithoutArray } from '@/utils/tool';
+import ClipboardComponent from '../Clipboard';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -391,7 +392,7 @@ const PanelWrapper = (props: {
         ></Button>
         {guideLineListDoms}
         {mouseGuideLineList}
-        {children}
+        <ClipboardComponent>{children}</ClipboardComponent>
       </div>
     </div>
   );

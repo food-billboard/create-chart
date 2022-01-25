@@ -10,6 +10,7 @@ import {
 } from 'react-dnd';
 import { connect } from 'dva';
 import { pick } from 'lodash';
+import { DragData } from '@/models/connect';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -22,7 +23,7 @@ export type ComponentItemProps = ComponentData.BaseComponentItem & {
   isDragging: boolean;
   connectDragSource: ConnectDragSource;
   connectDragPreview: ConnectDragPreview;
-  setDragInfo?: (value: ComponentData.BaseComponentItem) => void;
+  setDragInfo?: (value: Partial<DragData>) => void;
 };
 
 const ComponentItem = (props: ComponentItemProps) => {
@@ -57,7 +58,9 @@ const dragSource = DragSource(
       const dropResult = monitor.getDropResult();
 
       if (dropResult) {
-        props.setDragInfo?.(monitor.getItem());
+        props.setDragInfo?.({
+          value: monitor.getItem(),
+        });
       }
     },
   },

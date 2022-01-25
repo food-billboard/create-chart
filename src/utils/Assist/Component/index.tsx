@@ -212,11 +212,9 @@ export const createComponent: (
   const defaultConfig = getComponentDefaultConfigByType(
     component.componentType,
   );
-
   return mergeWithoutArray(
     {},
     {
-      id: nanoid(),
       description: component.name || `component-${Date.now()}`,
       type: EComponentType.COMPONENT,
       config: mergeWithoutArray(
@@ -252,6 +250,9 @@ export const createComponent: (
       ),
     },
     component,
+    {
+      id: nanoid(),
+    },
   );
 };
 

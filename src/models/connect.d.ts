@@ -2,8 +2,13 @@ import { MenuDataItem, Settings as ProSettings } from '@ant-design/pro-layout';
 import UndoHistory from 'react-undo-component/lib/Component/history';
 import { ThemeMap } from '@/utils/constants';
 
-type DragData = {
+export type DragData = {
   value: ComponentData.BaseComponentItem | null;
+};
+export type TUndoHistory = {
+  value: UndoHistory;
+  isUndoDisabled: boolean;
+  isRedoDisabled: boolean;
 };
 interface IGlobalModelState {
   screenData: Exclude<ComponentData.TScreenData, 'components'>;
@@ -11,13 +16,9 @@ interface IGlobalModelState {
   guideLine: ComponentData.TGuideLineConfig;
   select: string[];
   componentSelect: ComponentData.TComponentData<any> | null;
-  history: {
-    value: UndoHistory;
-    isUndoDisabled: boolean;
-    isRedoDisabled: boolean;
-  };
+  history: TUndoHistory;
   theme: ThemeMap;
-  clipboard: ComponentData.TComponentData<any>[];
+  clipboard: string[];
 
   drag: DragData;
   scale: number;

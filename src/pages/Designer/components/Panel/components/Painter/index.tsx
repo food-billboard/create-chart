@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { useEffect, useCallback, useRef, useMemo, CSSProperties } from 'react';
+import { useCallback, useRef, useMemo, CSSProperties } from 'react';
 import {
   ConnectDropTarget,
   DropTargetMonitor,
@@ -10,6 +10,7 @@ import { connect } from 'dva';
 import { merge } from 'lodash';
 import { useBackground } from '@/hooks';
 import { createComponent } from '@/utils/Assist/Component';
+import { DragData } from '@/models/connect';
 import ComponentList from '../ComponentList';
 import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -21,9 +22,8 @@ export type PainterProps = {
   canDrop: boolean;
   isOver: boolean;
   connectDropTarget: ConnectDropTarget;
-  didDrop: boolean;
-  dragInfo?: ComponentData.BaseComponentItem | null;
-  setDragInfo?: (value: ComponentData.BaseComponentItem | null) => void;
+  dragInfo: DragData;
+  setDragInfo: (value: Partial<DragData>) => void;
   setSelect: (value: string[]) => void;
   scale: number;
   config: ComponentData.TScreenData['config'];
@@ -34,14 +34,10 @@ export const PANEL_ID = 'panel-id';
 
 const Painter = (props: PainterProps) => {
   const {
-    dragInfo,
     connectDropTarget,
-    setDragInfo,
-    didDrop,
     setSelect,
     scale: originScale,
     config: { style: { width, height } = {}, attr: { poster } = {} } = {},
-    setComponent,
   } = props;
 
   const clickFlag = useRef<boolean>(false);
@@ -103,35 +99,10 @@ const Painter = (props: PainterProps) => {
     document.addEventListener('mouseup', onMouseUp);
   }, []);
 
-  const generateNewComponent = (value: ComponentData.BaseComponentItem) => {
-    const component = createComponent({
-      name: value.title,
-      description: value.description,
-      componentType: value.type,
-    });
-
-    setComponent({
-      action: 'add',
-      id: component.id,
-      value: component,
-      path: '',
-    });
-
-    setSelect([component.id]);
-
-    console.log('generate new item', component);
-
-    setDragInfo?.(null);
-  };
-
   const preventDefaultContextMenu = (e: any) => {
     e.preventDefault();
     return false;
   };
-
-  useEffect(() => {
-    if (didDrop && dragInfo) generateNewComponent(dragInfo);
-  }, [didDrop, dragInfo]);
 
   return (
     <div
@@ -151,32 +122,78 @@ const Painter = (props: PainterProps) => {
 const dropTarget = DropTarget(
   DRAG_TYPE,
   {
-    drop: (props, monitor, component) => {
-      // const { x, y } = monitor.getSourceClientOffset() as {
-      //   x: number
-      //   y: number
-      // }
+    drop: (props: any, monitor, component) => {
+      // mark current item position
+      const { x: sourceX, y: sourceY } = monitor.getSourceClientOffset() || {
+        x: 0,
+        y: 0,
+      };
+      const { setComponent, setSelect, setDragInfo, dragInfo, scale } = props;
+
+      const generateNewComponent = (
+        value: ComponentData.BaseComponentItem & {
+          left: number;
+          top: number;
+        },
+      ) => {
+        const component = createComponent({
+          name: value.title,
+          description: value.description,
+          componentType: value.type,
+          config: {
+            style: {
+              left: value.left,
+              top: value.top,
+            },
+          },
+        });
+
+        setComponent({
+          action: 'add',
+          id: component.id,
+          value: component,
+          path: '',
+        });
+
+        setSelect([component.id]);
+
+        setDragInfo?.({
+          value: null,
+        });
+      };
+
+      // position
+      const { x, y } = document
+        .querySelector(`#${PANEL_ID}`)
+        ?.getBoundingClientRect() || { x: 0, y: 0 };
+
+      const realLeft = ((sourceX - x - 0) / scale) * 100;
+      const realTop = ((sourceY - y - 0) / scale) * 100;
+
       // console.log(
-      //   monitor.getInitialClientOffset(),
-      //   monitor.getInitialSourceClientOffset(),
-      //   monitor.getClientOffset(),
-      //   monitor.getDifferenceFromInitialOffset(),
-      //   monitor.getSourceClientOffset()
+      //   monitor.getInitialClientOffset(), // 一开始的鼠标位置
+      //   monitor.getInitialSourceClientOffset(), // 一开始元素的位置
+      //   monitor.getClientOffset(), // 放置时的鼠标位置
+      //   monitor.getDifferenceFromInitialOffset(), // 开始和结束位置的距离
+      //   monitor.getSourceClientOffset() // 放置时的元素位置
       // )
+
+      generateNewComponent({
+        ...dragInfo.value,
+        left: realLeft,
+        top: realTop,
+      });
 
       return {
         name: DROP_TYPE,
-        position: {},
       };
     },
   },
   (connect: DropTargetConnector, monitor: DropTargetMonitor) => {
-    monitor.didDrop();
     return {
       connectDropTarget: connect.dropTarget(),
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
-      didDrop: monitor.didDrop(),
     };
   },
 )(Painter);

@@ -358,8 +358,8 @@ export default DEFAULT_SCREEN_DATA;
 
 export const DEFAULT_CONFIG: ComponentData.TBaseConfig = {
   style: {
-    width: 0,
-    height: 0,
+    width: 200,
+    height: 200,
     left: 0,
     top: 0,
     opacity: 1,

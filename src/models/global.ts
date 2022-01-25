@@ -47,7 +47,7 @@ export default {
       });
     },
 
-    *setDragInfo({ value }: { value: DragData }, { put }: any) {
+    *setDragInfo({ value }: { value: Partial<DragData> }, { put }: any) {
       yield put({
         type: 'setDragData',
         payload: value,
@@ -108,19 +108,44 @@ export default {
       });
     },
 
-    *undo({ value }: { value: string[] }, { put }: any) {
+    *setClipboard({ value }: { value: string[] }, { put }: any) {
       yield put({
-        type: 'setScaleData',
+        type: 'setClipboardData',
         payload: value,
       });
     },
 
-    *redo() {},
+    *undo({ value }: { value: string[] }, { put }: any) {
+      yield put({
+        type: 'setUndoData',
+        payload: value,
+      });
+    },
+
+    *redo({ value }: { value: string[] }, { put }: any) {
+      yield put({
+        type: 'setRedoData',
+        payload: value,
+      });
+    },
   },
 
   reducers: {
+    setClipboardData(state: any, action: any) {
+      set(state, 'clipboard', action.payload);
+      return state;
+    },
+
     setData(state: any, action: any) {
       set(state, 'screenData.name', action.payload);
+      return state;
+    },
+
+    setUndoData(state: any, action: any) {
+      return state;
+    },
+
+    setRedoData(state: any, action: any) {
       return state;
     },
 

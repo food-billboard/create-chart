@@ -3,6 +3,5 @@ export const mapStateToProps = () => {
 };
 
 export const mapDispatchToProps = (dispatch: any) => ({
-  setDragInfo: (value: any) =>
-    dispatch({ type: 'global/setDragInfo', value: { value } }),
+  setDragInfo: (value: any) => dispatch({ type: 'global/setDragInfo', value }),
 });
