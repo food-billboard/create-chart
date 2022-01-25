@@ -14,8 +14,10 @@ const ContextMenu = (
     value: ComponentData.TComponentData;
     path?: string;
     select: string[];
+    clipboard: string[];
     components: ComponentData.TComponentData[];
     setSelect: (value: string[]) => void;
+    setClipboard: (value: string[]) => void;
     setComponent: ComponentMethod.SetComponentMethod;
     setComponentAll: (value: ComponentData.TComponentData[]) => void;
   } & Partial<DropDownProps>,
@@ -32,6 +34,8 @@ const ContextMenu = (
     setComponentAll,
     components,
     overlayClassName,
+    clipboard,
+    setClipboard,
     ...nextProps
   } = props;
   const { id } = value;
@@ -68,6 +72,8 @@ const ContextMenu = (
                 setComponentAll={setComponentAll}
                 components={components}
                 onClick={hiddenMenu}
+                clipboard={clipboard}
+                setClipboard={setClipboard}
               />
             </Menu.Item>
           );
@@ -83,6 +89,8 @@ const ContextMenu = (
     path,
     setComponentAll,
     components,
+    clipboard,
+    setClipboard,
   ]);
 
   useEffect(() => {

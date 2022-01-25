@@ -1,9 +1,20 @@
 import { useCallback } from 'react';
+import { CommonActionType } from './type';
 
-const CopyAction = () => {
+export const copy = (
+  select: string[],
+  setClipboard: (value: string[]) => void,
+) => {
+  setClipboard(select);
+};
+
+const CopyAction = (props: CommonActionType) => {
+  const { select, setClipboard, onClick } = props;
+
   const handleClick = useCallback(() => {
-    console.log('撤销');
-  }, []);
+    copy(select, setClipboard);
+    onClick?.();
+  }, [setClipboard, select, onClick]);
 
   return (
     <div key="copy" onClick={handleClick}>

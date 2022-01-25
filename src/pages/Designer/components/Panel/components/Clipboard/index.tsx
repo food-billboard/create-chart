@@ -1,9 +1,8 @@
 import { ReactNode, useRef } from 'react';
 import { connect } from 'dva';
 import { useFocusWithin, useKeyPress } from 'ahooks';
-import { get } from 'lodash';
-import { useIdPathMap } from '@/hooks/useComponentsPath';
-import { createComponent } from '@/utils/Assist/Component';
+import { copy } from '@/components/ContextMenu/Actions/Copy';
+import { paste } from '@/components/ContextMenu/Actions/Paste';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const ClipboardComponent = (props: {
@@ -36,31 +35,19 @@ const ClipboardComponent = (props: {
   // copy
   useKeyPress('ctrl.c', () => {
     if (!isFocusWithin) return;
-    setClipboard(select);
+    copy(select, setClipboard);
   });
 
   // paste
   useKeyPress('ctrl.v', () => {
     if (!isFocusWithin) return;
-    const idPathMap = useIdPathMap();
-    const newSelect: string[] = [];
-
-    const newComponents = [
-      ...components,
-      ...clipboard.reduce<ComponentData.TComponentData[]>((acc, cur) => {
-        const targetPath = idPathMap[cur];
-        if (!targetPath) return acc;
-        const component = get(components, targetPath.path);
-        if (!component) return acc;
-        const newComponents = createComponent(component);
-        newSelect.push(newComponents.id);
-        acc.push(newComponents);
-        return acc;
-      }, []),
-    ];
-
-    setComponentAll(newComponents);
-    setSelect(newSelect);
+    paste({
+      components,
+      setComponentAll,
+      setSelect,
+      clipboard,
+      sourceComponents: components,
+    });
   });
 
   // undo

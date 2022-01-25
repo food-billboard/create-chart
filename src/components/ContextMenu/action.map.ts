@@ -9,6 +9,7 @@ import {
   DeleteAction,
   CopyAction,
   LockAction,
+  PasteAction,
 } from './Actions';
 
 export type ActionItemType =
@@ -19,6 +20,7 @@ export type ActionItemType =
   | 'delete'
   | 'copy'
   | 'group'
+  | 'paste'
   | 'show'
   | 'lock';
 
@@ -51,6 +53,10 @@ export const DEFAULT_ACTION_LIST: ActionItem[] = [
   {
     type: 'copy',
     children: CopyAction,
+  },
+  {
+    type: 'paste',
+    children: PasteAction,
   },
   {
     type: 'group',
