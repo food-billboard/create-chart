@@ -1,14 +1,28 @@
-import { useCallback, useMemo, useState, useRef } from 'react';
+import {
+  useCallback,
+  useMemo,
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import { Input } from 'antd';
 import classnames from 'classnames';
 import styles from './index.less';
 
-const NameEditor = (props: {
-  value: ComponentData.TComponentData;
-  onChange: (value: SuperPartial<ComponentData.TComponentData>) => void;
-  select: string[];
-  setSelect: (value: string[]) => void;
-}) => {
+export type NameEditorRefProps = {
+  changeEditStatus: (status: boolean) => void;
+};
+
+const NameEditor = forwardRef<
+  NameEditorRefProps,
+  {
+    value: ComponentData.TComponentData;
+    onChange: (value: SuperPartial<ComponentData.TComponentData>) => void;
+    select: string[];
+    setSelect: (value: string[]) => void;
+  }
+>((props, ref) => {
   const { value, onChange, select, setSelect } = props;
   const { name, id } = value;
 
@@ -81,7 +95,19 @@ const NameEditor = (props: {
     );
   }, [editable, name, changeName, changeEditState]);
 
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        changeEditStatus: (status) => {
+          setEditable(status);
+        },
+      };
+    },
+    [],
+  );
+
   return baseNameEdit;
-};
+});
 
 export default NameEditor;

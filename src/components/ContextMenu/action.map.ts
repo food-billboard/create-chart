@@ -11,6 +11,7 @@ import {
   LockAction,
   PasteAction,
   UnGroupAction,
+  EditNameAction,
 } from './Actions';
 
 export type ActionItemType =
@@ -24,7 +25,8 @@ export type ActionItemType =
   | 'un_group'
   | 'paste'
   | 'show'
-  | 'lock';
+  | 'lock'
+  | 'edit_name';
 
 export type ActionItem = {
   type: ActionItemType;
@@ -75,6 +77,10 @@ export const DEFAULT_ACTION_LIST: ActionItem[] = [
   {
     type: 'lock',
     children: LockAction,
+  },
+  {
+    type: 'edit_name',
+    children: EditNameAction,
   },
 ];
 

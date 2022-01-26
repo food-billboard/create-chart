@@ -1,10 +1,11 @@
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { Space } from 'antd';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import ContextMenu from '@/components/ContextMenu';
+import { ActionItemType } from '@/components/ContextMenu/action.map';
 import VisibleEditor from './Visible';
-import NameEditor from './NameEdit';
+import NameEditor, { NameEditorRefProps } from './NameEdit';
 import LockEditor from './Lock';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
@@ -34,6 +35,8 @@ const ListItem = ({
     icon,
   } = value;
 
+  const editRef = useRef<NameEditorRefProps>(null);
+
   const setComponent = useCallback(
     (value: ComponentMethod.SetComponentMethodParamsData) => {
       propsSetComponent?.(value);
@@ -54,8 +57,19 @@ const ListItem = ({
     [],
   );
 
+  const handleEditName = useCallback((type: ActionItemType) => {
+    if (type === 'edit_name') {
+      editRef.current?.changeEditStatus(true);
+    }
+  }, []);
+
   return (
-    <ContextMenu actionIgnore={['undo', 'redo']} value={value} path={path}>
+    <ContextMenu
+      actionIgnore={['undo', 'redo']}
+      value={value}
+      path={path}
+      onClick={handleEditName}
+    >
       <div className={classnames(styles['design-page-layer-item'], 'dis-flex')}>
         {isLeaf && (
           <div
@@ -73,6 +87,7 @@ const ListItem = ({
             onChange={commonSetComponent}
             select={select}
             setSelect={setSelect}
+            ref={editRef}
           />
         </div>
         <div

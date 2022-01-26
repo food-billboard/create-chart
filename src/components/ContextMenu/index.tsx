@@ -20,6 +20,7 @@ const ContextMenu = (
     setClipboard: (value: string[]) => void;
     setComponent: ComponentMethod.SetComponentMethod;
     setComponentAll: (value: ComponentData.TComponentData[]) => void;
+    onClick?: (actionType: ActionItemType) => void;
   } & Partial<DropDownProps>,
 ) => {
   const {
@@ -36,6 +37,7 @@ const ContextMenu = (
     overlayClassName,
     clipboard,
     setClipboard,
+    onClick,
     ...nextProps
   } = props;
   const { id } = value;
@@ -51,9 +53,13 @@ const ContextMenu = (
     );
   };
 
-  const hiddenMenu = useCallback(() => {
-    setVisible(false);
-  }, []);
+  const hiddenMenu = useCallback(
+    (type: ActionItemType) => {
+      setVisible(false);
+      onClick?.(type);
+    },
+    [onClick],
+  );
 
   const menu = useMemo(() => {
     return (
@@ -71,7 +77,7 @@ const ContextMenu = (
                 setSelect={setSelect}
                 setComponentAll={setComponentAll}
                 components={components}
-                onClick={hiddenMenu}
+                onClick={hiddenMenu.bind(null, type)}
                 clipboard={clipboard}
                 setClipboard={setClipboard}
               />
