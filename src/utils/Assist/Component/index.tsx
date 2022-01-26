@@ -257,6 +257,7 @@ export const createComponent: (
         },
         defaultConfig,
       ),
+      components: [],
     },
     component,
     {
