@@ -9,7 +9,7 @@ import {
 import { Button } from 'antd';
 import { merge } from 'lodash';
 import { connect } from 'dva';
-import { useHover, useMouse, useFocusWithin } from 'ahooks';
+import { useHover, useMouse } from 'ahooks';
 import { nanoid } from 'nanoid';
 import classnames from 'classnames';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
@@ -64,8 +64,6 @@ const PanelWrapper = (props: {
   const mousePosition = useMouse();
 
   const ref = useRef<HTMLDivElement>(null);
-
-  const isFocusWithin = useFocusWithin(ref);
 
   const scale = useMemo(() => {
     return originScale / 100;
@@ -396,9 +394,7 @@ const PanelWrapper = (props: {
         ></Button>
         {guideLineListDoms}
         {mouseGuideLineList}
-        <ClipboardComponent isFocusWithin={isFocusWithin}>
-          {children}
-        </ClipboardComponent>
+        <ClipboardComponent>{children}</ClipboardComponent>
       </div>
     </div>
   );

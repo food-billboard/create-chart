@@ -1,8 +1,10 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import { connect } from 'dva';
+import { message } from 'antd';
 import { useKeyPress } from 'ahooks';
 import { copy } from '@/components/ContextMenu/Actions/Copy';
 import { paste } from '@/components/ContextMenu/Actions/Paste';
+import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const ClipboardComponent = (props: {
@@ -15,7 +17,6 @@ const ClipboardComponent = (props: {
   setSelect: (value: string[]) => void;
   undo: () => void;
   redo: () => void;
-  isFocusWithin: boolean;
 }) => {
   const {
     children,
@@ -27,18 +28,18 @@ const ClipboardComponent = (props: {
     setSelect,
     undo,
     redo,
-    isFocusWithin,
   } = props;
 
   // copy
   useKeyPress('ctrl.c', () => {
-    if (!isFocusWithin) return;
+    if (!CopyAndPasteUtil.isFocus()) return;
     copy(select, setClipboard);
+    message.info('复制成功');
   });
 
   // paste
   useKeyPress('ctrl.v', () => {
-    if (!isFocusWithin) return;
+    if (!CopyAndPasteUtil.isFocus()) return;
     paste({
       components,
       setComponentAll,
@@ -46,32 +47,22 @@ const ClipboardComponent = (props: {
       clipboard,
       sourceComponents: components,
     });
+    message.info('新增成功');
   });
 
   // undo
   useKeyPress('ctrl.z', () => {
-    if (!isFocusWithin) return;
+    if (!CopyAndPasteUtil.isFocus()) return;
     undo();
   });
 
   // redo
   useKeyPress('ctrl.y', () => {
-    if (!isFocusWithin) return;
+    if (!CopyAndPasteUtil.isFocus()) return;
     redo();
   });
 
-  useEffect(() => {
-    console.log(isFocusWithin, 'isFocusWithin');
-  }, [isFocusWithin]);
-
-  return (
-    <>
-      {children}
-      {/* <label style={{ display: 'block' }}>
-        First Name: <input />
-      </label> */}
-    </>
-  );
+  return <>{children}</>;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClipboardComponent);

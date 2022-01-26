@@ -6,6 +6,7 @@ import {
   useImperativeHandle,
 } from 'react';
 import { Button, Drawer } from 'antd';
+import { usePanelFocus } from '@/hooks';
 import LayerList from './components/Tree';
 
 export interface LayerManageRef {
@@ -21,6 +22,8 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
     const { onClose: propsOnClose } = props;
 
     const [visible, setVisible] = useState<boolean>(false);
+
+    usePanelFocus(() => document.querySelector('.design-layer-drawer'));
 
     const onClose = useCallback(() => {
       setVisible(false);
@@ -58,6 +61,7 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
         footer={footer}
         title="图层"
         placement="left"
+        className="design-layer-drawer"
       >
         <LayerList />
       </Drawer>
