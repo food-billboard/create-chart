@@ -7,4 +7,5 @@ export { default as DeleteAction } from './Delete';
 export { default as CopyAction } from './Copy';
 export { default as ShowAction } from './Show';
 export { default as GroupAction } from './Group';
+export { default as UnGroupAction } from './UnGroup';
 export { default as PasteAction } from './Paste';

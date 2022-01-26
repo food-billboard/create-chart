@@ -26,6 +26,8 @@ declare namespace ComponentData {
     attr: {
       visible: boolean;
       lock: boolean;
+      scaleX?: number;
+      scaleY?: number;
     };
     interactive?: {
       base: {

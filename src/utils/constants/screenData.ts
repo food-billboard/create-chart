@@ -207,6 +207,8 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
         attr: {
           visible: true,
           lock: false,
+          scaleX: 1,
+          scaleY: 1,
         },
         options: {},
       },
@@ -302,6 +304,8 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
             attr: {
               visible: true,
               lock: false,
+              scaleX: 1,
+              scaleY: 1,
             },
             options: {},
           },
@@ -390,6 +394,8 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
             attr: {
               visible: true,
               lock: false,
+              scaleX: 1,
+              scaleY: 1,
             },
             options: {},
           },
@@ -408,6 +414,8 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
         attr: {
           visible: true,
           lock: false,
+          scaleX: 1,
+          scaleY: 1,
         },
         options: {},
       },

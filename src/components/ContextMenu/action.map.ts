@@ -10,6 +10,7 @@ import {
   CopyAction,
   LockAction,
   PasteAction,
+  UnGroupAction,
 } from './Actions';
 
 export type ActionItemType =
@@ -20,6 +21,7 @@ export type ActionItemType =
   | 'delete'
   | 'copy'
   | 'group'
+  | 'un_group'
   | 'paste'
   | 'show'
   | 'lock';
@@ -61,6 +63,10 @@ export const DEFAULT_ACTION_LIST: ActionItem[] = [
   {
     type: 'group',
     children: GroupAction,
+  },
+  {
+    type: 'un_group',
+    children: UnGroupAction,
   },
   {
     type: 'show',
