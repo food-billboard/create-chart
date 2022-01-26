@@ -5,9 +5,32 @@ import {
   createComponent,
   getParentComponent,
   getParentPath,
+  isGroupComponent as isGroupComponentMethod,
 } from '@/utils/Assist/Component';
-import { EComponentType } from '@/utils';
 import { CommonActionType } from './type';
+
+function coverPreviousId(
+  component: ComponentData.TComponentData,
+  parent: string = '',
+): ComponentData.TComponentData {
+  const newComponent = createComponent({
+    ...component,
+    parent,
+    // copy and paste
+    name: component.name + '_副本',
+  });
+
+  if (isGroupComponentMethod(newComponent)) {
+    return {
+      ...newComponent,
+      components: newComponent.components.map((component) => {
+        return coverPreviousId(component, newComponent.id);
+      }),
+    };
+  }
+
+  return newComponent;
+}
 
 export const paste = ({
   sourceComponents,
@@ -15,12 +38,14 @@ export const paste = ({
   clipboard,
   setComponentAll,
   setSelect,
+  parent = '',
 }: {
   sourceComponents: ComponentData.TComponentData[];
   components: ComponentData.TComponentData[];
   clipboard: string[];
   setComponentAll: (components: ComponentData.TComponentData[]) => void;
   setSelect: (value: string[]) => void;
+  parent?: string;
 }) => {
   const idPathMap = useIdPathMap();
   const newSelect: string[] = [];
@@ -32,13 +57,9 @@ export const paste = ({
       if (!targetPath) return acc;
       const component = get(sourceComponents, targetPath.path);
       if (!component) return acc;
-      const newComponents = createComponent({
-        ...component,
-        // copy and paste
-        name: component.name + '_副本',
-      });
-      newSelect.push(newComponents.id);
-      acc.push(newComponents);
+      const newComponent = coverPreviousId(component, parent);
+      newSelect.push(newComponent.id);
+      acc.push(newComponent);
       return acc;
     }, []),
   ];
@@ -72,12 +93,13 @@ const PasteAction = (props: CommonActionType) => {
         target.path,
       );
       if (!targetComponent) return false;
+      return true;
       return targetComponent.parent === parent;
     });
   }, [select, parent, components]);
 
   const isGroupComponent = () => {
-    return EComponentType.GROUP_COMPONENT === type;
+    return isGroupComponentMethod({ type });
   };
 
   const handleClick = useCallback(() => {
@@ -85,6 +107,7 @@ const PasteAction = (props: CommonActionType) => {
     const superParentPath = getParentPath(parentPath);
     const parentComponent = getParentComponent(components, path);
     const superParentComponent = getParentComponent(components, parentPath);
+    let parentId: string | undefined = '';
 
     const isGroupComponentClick = isGroupComponent();
 
@@ -92,8 +115,10 @@ const PasteAction = (props: CommonActionType) => {
     let targetParentComponents;
     if (isGroupComponentClick) {
       targetParentComponents = currentComponents;
+      parentId = id;
     } else {
       targetParentComponents = parentComponent;
+      parentId = parent;
     }
 
     paste({
@@ -103,7 +128,7 @@ const PasteAction = (props: CommonActionType) => {
         // group component
         if (isGroupComponentClick) {
           setComponent({
-            path: path,
+            path,
             action: 'update',
             id,
             value: {
@@ -135,6 +160,7 @@ const PasteAction = (props: CommonActionType) => {
       },
       clipboard,
       sourceComponents: components,
+      parent: parentId,
     });
     onClick?.();
   }, [
@@ -149,6 +175,7 @@ const PasteAction = (props: CommonActionType) => {
     setComponentAll,
     setComponent,
     type,
+    parent,
   ]);
 
   return (

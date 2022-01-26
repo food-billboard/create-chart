@@ -25,7 +25,9 @@ class TreeClass extends Component<TreeProps> {
   // 在已选中子或父的情况不可再选择其子或父
   formatSelect = (newSelect: string[]) => {
     const idPathMap = useIdPathMap();
-    let newSelectList = newSelect.map((item) => idPathMap[item]);
+    let newSelectList = newSelect
+      .map((item) => idPathMap[item])
+      .filter(Boolean);
     // 第一项与最后一项必定选中
     newSelectList = arrayMove(newSelectList, newSelectList.length - 1, 1);
 

@@ -1,6 +1,7 @@
 import { set, get } from 'lodash';
 import { nanoid } from 'nanoid';
 import arrayMove from 'array-move';
+import { useComponentPath, useIdPathMap } from '@/hooks';
 import { IGlobalModelState } from '@/models/connect';
 import { getComponentDefaultConfigByType } from '@/components/ChartComponents';
 import { mergeWithoutArray } from '../../tool';
@@ -46,7 +47,7 @@ class ComponentUtil {
     const { id, index: targetIndex } = value;
 
     // inner
-    if (target.parent) {
+    if (target?.parent) {
       const parent = get(components, parentPath);
       const index = parent.findIndex((item: any) => item.id === id);
       const realIndex = this.getRealIndex(parent, targetIndex!);
@@ -146,9 +147,17 @@ class ComponentUtil {
       get(state, 'components') || [];
 
     changeComponents.forEach((component) => {
-      const { value, action, path, id } = component;
-      const pathList = path.split('.');
-      const parentPath = pathList.slice(0, -1).join('.');
+      const { value, action, id } = component;
+
+      // * 为了防止上次操作导致components结构发生变化
+      // * 暂时设置每一次都刷新id-path-map
+      useComponentPath(components);
+      const idPathMap = useIdPathMap();
+      const targetPath = idPathMap[id];
+      if (!targetPath) return;
+      const { path } = targetPath;
+
+      const parentPath = getParentPath(path);
       const valueWithId = {
         ...value,
         id,
@@ -289,6 +298,14 @@ export const getParentComponent = (
   path: string,
 ) => {
   return get(components, getParentPath(path));
+};
+
+export const isGroupComponent = (
+  component: SuperPartial<ComponentData.TComponentData> & {
+    type: ComponentData.TComponentType;
+  },
+) => {
+  return EComponentType.GROUP_COMPONENT === component.type;
 };
 
 export default componentUtil;
