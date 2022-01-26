@@ -136,6 +136,7 @@ const dropTarget = DropTarget(
           top: number;
         },
       ) => {
+        console.log(value, 222);
         const component = createComponent({
           name: value.title,
           description: value.description,
@@ -177,6 +178,8 @@ const dropTarget = DropTarget(
       //   monitor.getDifferenceFromInitialOffset(), // 开始和结束位置的距离
       //   monitor.getSourceClientOffset() // 放置时的元素位置
       // )
+
+      console.log(JSON.stringify(dragInfo.value));
 
       generateNewComponent({
         ...dragInfo.value,

@@ -154,8 +154,8 @@ class ComponentUtil {
       useComponentPath(components);
       const idPathMap = useIdPathMap();
       const targetPath = idPathMap[id];
-      if (!targetPath) return;
-      const { path } = targetPath;
+      if (!targetPath && action !== 'add') return;
+      const { path = '' } = targetPath || {};
 
       const parentPath = getParentPath(path);
       const valueWithId = {

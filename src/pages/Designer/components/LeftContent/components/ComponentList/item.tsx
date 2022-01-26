@@ -52,17 +52,12 @@ const dragSource = DragSource(
   DRAG_TYPE,
   {
     beginDrag: (props: ComponentItemProps) => {
+      props.setDragInfo?.({
+        value: pick(props, ['icon', 'title', 'description', 'type']),
+      });
       return pick(props, ['icon', 'title', 'description', 'type']);
     },
-    endDrag(props: ComponentItemProps, monitor: DragSourceMonitor) {
-      const dropResult = monitor.getDropResult();
-
-      if (dropResult) {
-        props.setDragInfo?.({
-          value: monitor.getItem(),
-        });
-      }
-    },
+    endDrag(props: ComponentItemProps, monitor: DragSourceMonitor) {},
   },
   (connect: DragSourceConnector, monitor: DragSourceMonitor) => {
     return {
