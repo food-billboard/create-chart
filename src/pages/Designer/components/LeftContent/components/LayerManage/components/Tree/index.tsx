@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Tree as AntTree } from 'antd';
 import { connect } from 'dva';
 import type { DataNode } from 'antd/es/tree';
+import arrayMove from 'array-move';
 import { EComponentType } from '@/utils/constants';
 import { useComponentPath, useIdPathMap } from '@/hooks';
 import TreeNode from './components/TreeNode';
@@ -20,41 +21,35 @@ class TreeClass extends Component<TreeProps> {
     treeData: [],
   };
 
-  // [0, 2.components.0]
-  // [0, 2, ]
-
-  // [0, 2]
-  // [0, 2.components.0, ]
-
+  // 格式化选择的项
   // 在已选中子或父的情况不可再选择其子或父
-  isSelectValid = (newSelect: string[]) => {
+  formatSelect = (newSelect: string[]) => {
     const idPathMap = useIdPathMap();
-    const { select } = this.props;
-    const newSelectList = newSelect.map((item) => idPathMap[item].path);
-    const prevSelectList = select.map((item) => idPathMap[item].path);
+    let newSelectList = newSelect.map((item) => idPathMap[item]);
+    // 第一项与最后一项必定选中
+    newSelectList = arrayMove(newSelectList, newSelectList.length - 1, 1);
 
-    return !newSelectList.some((path, index, source) => {
-      const currentJudgeList = [...source];
-      currentJudgeList.splice(index, 1);
+    return newSelectList
+      .reduce<{ id: string; path: string }[]>((source, path, index) => {
+        const isValid = !source.some((judgeSelect) => {
+          return (
+            (judgeSelect.path.startsWith(path.path) ||
+              path.path.startsWith(judgeSelect.path)) &&
+            path !== judgeSelect
+          );
+        });
 
-      return currentJudgeList.some((judgeSelect) => {
-        return (
-          (judgeSelect.startsWith(path) || path.startsWith(judgeSelect)) &&
-          path !== judgeSelect &&
-          prevSelectList.includes(judgeSelect)
-        );
-      });
-    });
+        if (isValid) {
+          source.push(path);
+        }
+
+        return source;
+      }, [])
+      .map((item) => item.id);
   };
 
-  // 格式化选择的项
-  formatSelect = () => {};
-
   onSelect = (keys: React.Key[], info: any) => {
-    if (!this.isSelectValid(keys as string[])) {
-      return;
-    }
-    this.props.setSelect(keys as string[]);
+    this.props.setSelect(this.formatSelect(keys as string[]));
   };
 
   onCheck = (checked: any) => {
@@ -77,6 +72,7 @@ class TreeClass extends Component<TreeProps> {
               value={nextEntry}
               path={path}
               update={() => this.forceUpdate()}
+              isLeaf={isLeaf}
             />
           ),
           key: id,

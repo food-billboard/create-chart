@@ -16,6 +16,7 @@ const ListItem = ({
   setSelect,
   path,
   update,
+  isLeaf,
 }: {
   value: ComponentData.TComponentData;
   setComponent?: ComponentMethod.SetComponentMethod;
@@ -23,12 +24,14 @@ const ListItem = ({
   setSelect: (value: string[]) => void;
   path: string;
   update?: () => void;
+  isLeaf: boolean;
 }) => {
   const {
     id,
     config: {
       attr: { visible, lock },
     },
+    icon,
   } = value;
 
   const setComponent = useCallback(
@@ -54,9 +57,16 @@ const ListItem = ({
   return (
     <ContextMenu actionIgnore={['undo', 'redo']} value={value} path={path}>
       <div className={classnames(styles['design-page-layer-item'], 'dis-flex')}>
-        <div className="">
-          <img />
-        </div>
+        {isLeaf && (
+          <div
+            className={classnames(
+              styles['design-page-layer-item-icon'],
+              'm-r-8',
+            )}
+          >
+            <img src={icon} />
+          </div>
+        )}
         <div className={classnames(styles['design-page-layer-item-name'])}>
           <NameEditor
             value={value}
