@@ -21,14 +21,50 @@ const commonClass: string = classnames(
 );
 
 // 重做
-export const RedoIcon = () => {
-  return <RedoOutlined title="重做" className={classnames(commonClass)} />;
+export const InternalRedoIcon = (props: {
+  isRedoDisabled: boolean;
+  redo: () => void;
+}) => {
+  const { isRedoDisabled, redo } = props;
+  return (
+    <RedoOutlined
+      title="重做"
+      onClick={isRedoDisabled ? undefined : redo}
+      className={classnames(commonClass, {
+        'c-n-alw': !!isRedoDisabled,
+        'c-po': !isRedoDisabled,
+        [styles['design-left-tool-icon-hover']]: !isRedoDisabled,
+      })}
+    />
+  );
 };
+export const RedoIcon = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(InternalRedoIcon);
 
 // 撤销
-export const UndoIcon = () => {
-  return <UndoOutlined title="撤销" className={classnames(commonClass)} />;
+export const InternalUndoIcon = (props: {
+  isUndoDisabled: boolean;
+  undo: () => void;
+}) => {
+  const { isUndoDisabled, undo } = props;
+  return (
+    <UndoOutlined
+      title="撤销"
+      onClick={isUndoDisabled ? undefined : undo}
+      className={classnames(commonClass, {
+        'c-n-alw': !!isUndoDisabled,
+        'c-po': !isUndoDisabled,
+        [styles['design-left-tool-icon-hover']]: !isUndoDisabled,
+      })}
+    />
+  );
 };
+export const UndoIcon = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(InternalUndoIcon);
 
 // 图层显示隐藏
 export const LayerShowIcon = () => {
@@ -42,7 +78,11 @@ export const LayerShowIcon = () => {
     <>
       <BlockOutlined
         title="图层管理"
-        className={classnames(commonClass)}
+        className={classnames(
+          commonClass,
+          'c-po',
+          styles['design-left-tool-icon-hover'],
+        )}
         onClick={handleOpen}
       />
       <LayerManage ref={layerRef} />
@@ -53,7 +93,15 @@ export const LayerShowIcon = () => {
 // 图层折叠展开
 export const LayerCollapseIcon = () => {
   // <ArrowsAltOutlined />
-  return <ShrinkOutlined className={classnames(commonClass)} />;
+  return (
+    <ShrinkOutlined
+      className={classnames(
+        commonClass,
+        'c-po',
+        styles['design-left-tool-icon-hover'],
+      )}
+    />
+  );
 };
 
 // 辅助线显示隐藏
@@ -65,7 +113,11 @@ const InternalGuideLineIcon = (props: {
 
   const domProps = {
     title: '辅助线',
-    className: classnames(commonClass),
+    className: classnames(
+      commonClass,
+      'c-po',
+      styles['design-left-tool-icon-hover'],
+    ),
     onClick: setGuideLine?.bind(null, {
       show: !guideLineShow,
     }),
@@ -94,7 +146,11 @@ export const CallbackIcon = () => {
     <>
       <BarsOutlined
         title="回调管理"
-        className={classnames(commonClass)}
+        className={classnames(
+          commonClass,
+          'c-po',
+          styles['design-left-tool-icon-hover'],
+        )}
         onClick={handleOpen}
       />
       <CallbackManage ref={callbackRef} />

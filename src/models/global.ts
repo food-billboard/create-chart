@@ -2,7 +2,7 @@ import { set, get, merge } from 'lodash';
 import arrayMove from 'array-move';
 import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils/tool';
-import { HistoryUtil } from '@/utils/history';
+import { HistoryUtil } from '@/utils/Assist/History';
 import ComponentUtil from '@/utils/Assist/Component';
 import { DragData } from './connect';
 
@@ -115,17 +115,15 @@ export default {
       });
     },
 
-    *undo({ value }: { value: string[] }, { put }: any) {
+    *undo(_: any, { put }: any) {
       yield put({
         type: 'setUndoData',
-        payload: value,
       });
     },
 
-    *redo({ value }: { value: string[] }, { put }: any) {
+    *redo(_: any, { put }: any) {
       yield put({
         type: 'setRedoData',
-        payload: value,
       });
     },
   },
@@ -141,12 +139,14 @@ export default {
       return state;
     },
 
-    setUndoData(state: any, action: any) {
-      return state;
+    setUndoData(state: any) {
+      const history = get(state, 'history.value');
+      return history.undo(state);
     },
 
-    setRedoData(state: any, action: any) {
-      return state;
+    setRedoData(state: any) {
+      const history = get(state, 'history.value');
+      return history.redo(state);
     },
 
     setGuideLineData(state: any, action: any) {
@@ -179,14 +179,15 @@ export default {
     },
 
     setComponentData(state: any, action: any) {
+      const prevComponents = get(state, 'components');
+      const history = get(state, 'history.value');
+
       const newComponents = ComponentUtil.setComponent(state, action);
 
       set(state, 'components', newComponents);
 
       // * history enqueue
-      // ! history.enqueue(state, newComponents, components);
-
-      return state;
+      return history.enqueue(state, newComponents, prevComponents);
     },
 
     setComponentDataAll(state: any, action: any) {
@@ -201,9 +202,7 @@ export default {
 
       set(state, 'components', newComponents);
 
-      // ! history.enqueue(state, action.payload, components);
-
-      return state;
+      return history.enqueue(state, action.payload, components);
     },
   },
 };

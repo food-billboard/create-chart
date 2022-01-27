@@ -28,9 +28,16 @@ const ComponentWrapper = (
     ...nextProps
   } = props;
 
+  const { position } = nextProps;
+
   const onDragStop: RndDragCallback = useCallback(
     (event, data) => {
       const { x, y } = data;
+      const { x: prevX = 0, y: prevY = 0 } = position || {};
+
+      // * 点击不触发刷新
+      if (Math.abs(x - prevX) < 5 && Math.abs(y - prevY) < 5) return;
+
       setComponent(() => {
         return {
           config: {
@@ -43,11 +50,15 @@ const ComponentWrapper = (
       });
       propsOnDragStop?.();
     },
-    [propsOnDragStop, setComponent],
+    [propsOnDragStop, setComponent, position],
   );
 
   const onResizeStop: RndResizeCallback = useCallback(
     (e, direction, ref, delta, position) => {
+      const { width, height } = delta;
+      // * 点击不触发刷新
+      if (Math.abs(width) < 5 && Math.abs(height) < 5) return;
+
       setComponent(() => {
         return {
           config: {
