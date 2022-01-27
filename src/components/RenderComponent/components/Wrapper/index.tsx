@@ -1,6 +1,8 @@
 import { ReactNode, CSSProperties, useCallback } from 'react';
 import { Rnd, Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
 import { merge } from 'lodash';
+import { isGroupComponent } from '@/utils/Assist/Component';
+import { mergeWithoutArray } from '@/utils';
 
 const ComponentWrapper = (
   props: {
@@ -53,23 +55,56 @@ const ComponentWrapper = (
     [propsOnDragStop, setComponent, position],
   );
 
+  const updateSubComponents = (
+    component: ComponentData.TComponentData,
+    width: number,
+    height: number,
+  ) => {
+    const {} = component;
+  };
+
   const onResizeStop: RndResizeCallback = useCallback(
     (e, direction, ref, delta, position) => {
       const { width, height } = delta;
       // * 点击不触发刷新
       if (Math.abs(width) < 5 && Math.abs(height) < 5) return;
 
-      setComponent(() => {
-        return {
+      setComponent((value) => {
+        const newWidth = parseInt(ref.style.width) || 20;
+        const newHeight = parseInt(ref.style.height) || 20;
+
+        const defaultChangeConfig: SuperPartial<ComponentData.TComponentData> =
+          {
+            config: {
+              style: {
+                width: newWidth,
+                height: newHeight,
+                left: position.x,
+                top: position.y,
+              },
+            },
+          };
+
+        if (!isGroupComponent(value)) return defaultChangeConfig;
+
+        const {
           config: {
-            style: {
-              width: parseInt(ref.style.width) || 20,
-              height: parseInt(ref.style.height) || 20,
-              left: position.x,
-              top: position.y,
+            style: { width, height },
+            attr: { scaleX = 1, scaleY = 1 },
+          },
+        } = value;
+
+        const newScaleX = (newWidth / width) * scaleX;
+        const newScaleY = (newHeight / height) * scaleY;
+
+        return mergeWithoutArray({}, defaultChangeConfig, {
+          config: {
+            attr: {
+              scaleX: newScaleX,
+              scaleY: newScaleY,
             },
           },
-        };
+        });
       });
       propsOnResizeStop?.();
     },

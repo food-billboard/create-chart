@@ -36,7 +36,7 @@ const RenderComponent = (props: RenderComponentProps) => {
     id,
     config: {
       style: componentStyle,
-      attr: { visible, lock },
+      attr: { visible, lock, scaleX = 1, scaleY = 1 },
     },
   } = value;
 
@@ -93,6 +93,15 @@ const RenderComponent = (props: RenderComponentProps) => {
     [value, propsSetComponent, index],
   );
 
+  const childrenStyle = useMemo(() => {
+    const { width, height } = componentStyle;
+    return {
+      width: width / scaleX,
+      height: height / scaleY,
+      transform: `scale(${scaleX}, ${scaleY})`,
+    };
+  }, [componentStyle, scaleX, scaleY]);
+
   return (
     <ContextMenu value={value}>
       <ComponentWrapper
@@ -122,6 +131,7 @@ const RenderComponent = (props: RenderComponentProps) => {
             'c-po': !isSelect,
           })}
           onClick={handleSelect}
+          style={childrenStyle}
         >
           <Content value={value} />
         </div>
