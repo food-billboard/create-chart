@@ -5,8 +5,9 @@ import {
   useMemo,
   useImperativeHandle,
 } from 'react';
-import { Button, Drawer, Table } from 'antd';
+import { Button, Drawer, Table, Modal } from 'antd';
 import { connect } from 'dva';
+import CodeViewer from '@/components/CodeView';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 export interface CallbackManageRef {
@@ -23,6 +24,9 @@ const CallbackList = (props: {
 }) => {
   const { callback = [], setCallbackData } = props;
 
+  const [visible, setVisible] = useState<boolean>(false);
+  const [code, setCode] = useState<string>('');
+
   const deleteData = useCallback(
     (value: ComponentData.TFilterConfig) => {
       const { id } = value;
@@ -31,6 +35,11 @@ const CallbackList = (props: {
     },
     [callback],
   );
+
+  const previewCode = useCallback((value: string) => {
+    setCode(value);
+    setVisible(true);
+  }, []);
 
   const columns = useMemo(() => {
     return [
@@ -44,6 +53,17 @@ const CallbackList = (props: {
         key: 'code',
         dataIndex: 'code',
         ellipsis: true,
+        render: (value: string) => {
+          return (
+            <div
+              title={value}
+              className="c-po text-ellipsis"
+              onClick={previewCode.bind(null, value)}
+            >
+              {value}
+            </div>
+          );
+        },
       },
       {
         title: '操作',
@@ -61,15 +81,26 @@ const CallbackList = (props: {
   }, [deleteData]);
 
   return (
-    <Table
-      dataSource={callback}
-      rowKey={() => Math.random()}
-      columns={columns}
-      pagination={false}
-      scroll={{ y: '70vh' }}
-      bordered
-      size="small"
-    />
+    <>
+      <Table
+        dataSource={callback}
+        rowKey={() => Math.random()}
+        columns={columns}
+        pagination={false}
+        scroll={{ y: '70vh' }}
+        bordered
+        size="small"
+      />
+      <Modal
+        title="函数预览"
+        onCancel={() => setVisible(false)}
+        footer={null}
+        visible={visible}
+        bodyStyle={{ padding: 0 }}
+      >
+        <CodeViewer>{code}</CodeViewer>
+      </Modal>
+    </>
   );
 };
 
