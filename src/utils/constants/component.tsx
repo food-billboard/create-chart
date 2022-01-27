@@ -14,6 +14,7 @@ export const COMPONENT_TYPE_LIST = [
   {
     type: 'chart',
     icon: <AreaChartOutlined className={classnames(commonClass)} />,
+    title: '图表',
     children: [
       {
         type: 'bar',
@@ -52,26 +53,31 @@ export const COMPONENT_TYPE_LIST = [
   },
   {
     type: 'font',
+    title: '文本',
     icon: <FontColorsOutlined className={classnames(commonClass)} />,
     children: [],
   },
   {
     type: 'media',
+    title: '媒体',
     icon: <FundProjectionScreenOutlined className={classnames(commonClass)} />,
     children: [],
   },
   {
     type: 'map',
+    title: '地图',
     icon: <CompassOutlined className={classnames(commonClass)} />,
     children: [],
   },
   {
     type: 'other',
+    title: '其他',
     icon: <AppstoreOutlined className={classnames(commonClass)} />,
     children: [],
   },
   {
     type: 'interactive',
+    title: '联动',
     icon: <InteractionOutlined className={classnames(commonClass)} />,
     children: [],
   },

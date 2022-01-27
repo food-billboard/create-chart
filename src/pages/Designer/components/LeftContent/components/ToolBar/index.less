@@ -1,3 +1,5 @@
+@import '~antd/es/style/themes/default.less';
+
 .page-design-left-tool-bar {
   width: 60px;
   height: 100%;
@@ -6,5 +8,8 @@
   .design-left-tool-icon {
     height: 50px;
     line-height: 50px;
+    &:hover {
+      color: @menu-dark-highlight-color;
+    }
   }
 }

@@ -20,7 +20,7 @@ const ComponentTypeList = (props: { onChange?: (type: string) => void }) => {
 
   const list = useMemo(() => {
     return COMPONENT_TYPE_LIST.map((item) => {
-      const { type, icon } = item;
+      const { type, icon, title } = item;
       return (
         <Menu.Item
           key={type}
@@ -30,6 +30,7 @@ const ComponentTypeList = (props: { onChange?: (type: string) => void }) => {
             'c-po',
             'ali-cen',
           )}
+          title={title}
         >
           {icon}
         </Menu.Item>

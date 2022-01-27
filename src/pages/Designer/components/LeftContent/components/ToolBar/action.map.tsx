@@ -6,7 +6,7 @@ import {
   BarsOutlined,
   BlockOutlined,
   ShrinkOutlined,
-  ArrowsAltOutlined,
+  BorderOuterOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
 import { connect } from 'dva';
@@ -22,12 +22,12 @@ const commonClass: string = classnames(
 
 // 重做
 export const RedoIcon = () => {
-  return <RedoOutlined className={classnames(commonClass)} />;
+  return <RedoOutlined title="重做" className={classnames(commonClass)} />;
 };
 
 // 撤销
 export const UndoIcon = () => {
-  return <UndoOutlined className={classnames(commonClass)} />;
+  return <UndoOutlined title="撤销" className={classnames(commonClass)} />;
 };
 
 // 图层显示隐藏
@@ -40,7 +40,11 @@ export const LayerShowIcon = () => {
 
   return (
     <>
-      <BlockOutlined className={classnames(commonClass)} onClick={handleOpen} />
+      <BlockOutlined
+        title="图层管理"
+        className={classnames(commonClass)}
+        onClick={handleOpen}
+      />
       <LayerManage ref={layerRef} />
     </>
   );
@@ -58,14 +62,20 @@ const InternalGuideLineIcon = (props: {
   setGuideLine?: (value: Partial<ComponentData.TGuideLineConfig>) => void;
 }) => {
   const { guideLineShow, setGuideLine } = props;
-  return (
-    <BorderInnerOutlined
-      className={classnames(commonClass)}
-      onClick={setGuideLine?.bind(null, {
-        show: !guideLineShow,
-      })}
-    />
-  );
+
+  const domProps = {
+    title: '辅助线',
+    className: classnames(commonClass),
+    onClick: setGuideLine?.bind(null, {
+      show: !guideLineShow,
+    }),
+  };
+
+  if (!guideLineShow) {
+    return <BorderOuterOutlined {...domProps} />;
+  }
+
+  return <BorderInnerOutlined {...domProps} />;
 };
 export const GuideLineIcon = connect(
   mapStateToProps,
@@ -82,7 +92,11 @@ export const CallbackIcon = () => {
 
   return (
     <>
-      <BarsOutlined className={classnames(commonClass)} onClick={handleOpen} />
+      <BarsOutlined
+        title="回调管理"
+        className={classnames(commonClass)}
+        onClick={handleOpen}
+      />
       <CallbackManage ref={callbackRef} />
     </>
   );
