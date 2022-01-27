@@ -12,10 +12,16 @@ import { DEFAULT_CONFIG } from '../../constants/screenData';
 class ComponentUtil {
   getRealIndex(
     list: ComponentData.TComponentData[],
-    index: number | 'last' | 'first',
+    index: number | 'last' | 'first' | 'next' | 'prev',
+    currentIndex: number,
   ) {
     if (typeof index === 'number') return index;
     if (index === 'first') return 0;
+    if (index === 'next')
+      return currentIndex + 1 >= list.length - 1
+        ? list.length - 1
+        : currentIndex + 1;
+    if (index === 'prev') return currentIndex - 1 <= 0 ? 0 : currentIndex - 1;
     return list.length - 1;
   }
 
@@ -50,7 +56,7 @@ class ComponentUtil {
     if (target?.parent) {
       const parent = get(components, parentPath);
       const index = parent.findIndex((item: any) => item.id === id);
-      const realIndex = this.getRealIndex(parent, targetIndex!);
+      const realIndex = this.getRealIndex(parent, targetIndex!, index);
 
       // set target new data
       const newComponents = arrayMove(parent, index, realIndex);
@@ -62,7 +68,7 @@ class ComponentUtil {
     // outer
     else {
       const index = components.findIndex((item: any) => item.id === id);
-      const realIndex = this.getRealIndex(components, targetIndex!);
+      const realIndex = this.getRealIndex(components, targetIndex!, index);
 
       components = arrayMove(components, index, realIndex);
 
@@ -127,6 +133,21 @@ class ComponentUtil {
     return components;
   }
 
+  isAddParamsValid = (value: ComponentMethod.SetComponentMethodParamsData) => {
+    return value.action === 'add' || value.id;
+  };
+
+  isMoveParamsValid = (value: ComponentMethod.SetComponentMethodParamsData) => {
+    return (
+      value.action !== 'move' ||
+      typeof value.index === 'number' ||
+      value.index === 'last' ||
+      value.index === 'first' ||
+      value.index === 'prev' ||
+      value.index === 'next'
+    );
+  };
+
   setComponent(state: IGlobalModelState, action: any) {
     const { payload } = action;
 
@@ -136,11 +157,8 @@ class ComponentUtil {
     changeComponents = changeComponents.filter(
       (item) =>
         item.value &&
-        (item.action === 'add' || item.id) &&
-        (item.action !== 'move' ||
-          typeof item.index === 'number' ||
-          item.index === 'last' ||
-          item.index === 'first'),
+        this.isAddParamsValid(item) &&
+        this.isMoveParamsValid(item),
     );
 
     let components: ComponentData.TComponentData[] =

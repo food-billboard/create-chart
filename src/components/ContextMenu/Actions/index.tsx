@@ -10,3 +10,5 @@ export { default as GroupAction } from './Group';
 export { default as UnGroupAction } from './UnGroup';
 export { default as PasteAction } from './Paste';
 export { default as EditNameAction } from './EditName';
+export { default as NextOrderAction } from './NextOrder';
+export { default as PrevOrderAction } from './PrevOrder';

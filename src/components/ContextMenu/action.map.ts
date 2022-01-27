@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import {
   UndoAction,
   RedoAction,
@@ -12,6 +11,8 @@ import {
   PasteAction,
   UnGroupAction,
   EditNameAction,
+  NextOrderAction,
+  PrevOrderAction,
 } from './Actions';
 
 export type ActionItemType =
@@ -26,7 +27,9 @@ export type ActionItemType =
   | 'paste'
   | 'show'
   | 'lock'
-  | 'edit_name';
+  | 'edit_name'
+  | 'next_order'
+  | 'prev_order';
 
 export type ActionItem = {
   type: ActionItemType;
@@ -34,6 +37,14 @@ export type ActionItem = {
 };
 
 export const DEFAULT_ACTION_LIST: ActionItem[] = [
+  {
+    type: 'next_order',
+    children: NextOrderAction,
+  },
+  {
+    type: 'prev_order',
+    children: PrevOrderAction,
+  },
   {
     type: 'undo',
     children: UndoAction,
