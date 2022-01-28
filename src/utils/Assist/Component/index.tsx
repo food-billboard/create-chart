@@ -319,6 +319,18 @@ export const getParentComponent = (
   return get(components, getParentPath(path));
 };
 
+export const getPath = (select: string) => {
+  const idPathMap = useIdPathMap();
+  return (idPathMap[select] || {}).path;
+};
+
+export const getComponent = (
+  select: string,
+  components: ComponentData.TComponentData[],
+) => {
+  return get(components, getPath(select));
+};
+
 export const isGroupComponent = (
   component: SuperPartial<ComponentData.TComponentData> & {
     type: ComponentData.TComponentType;

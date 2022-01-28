@@ -1,27 +1,52 @@
-import { useRef } from 'react';
-import { Input } from 'antd';
+import { useMemo, useRef } from 'react';
 import classnames from 'classnames';
+import { connect } from 'dva';
 import { usePanelFocus } from '@/hooks';
+import { isGroupComponent, getComponent } from '@/utils/Assist/Component';
+import GlobalConfig from './components/GlobalConfig';
+import GroupConfig from './components/GroupConfig';
+import ComponentConfig from './components/ComponentConfig';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
-const RightContent = () => {
+const RightContent = (props: {
+  select: string[];
+  components: ComponentData.TComponentData[];
+}) => {
+  const { select, components } = props;
+
   const ref = useRef<HTMLDivElement>(null);
 
   usePanelFocus(ref);
 
+  const children = useMemo(() => {
+    if (!select.length) return <GlobalConfig />;
+    if (select.length > 1) {
+      return null;
+    }
+
+    const [selectId] = select;
+    const component: ComponentData.TComponentData = getComponent(
+      selectId,
+      components,
+    );
+
+    if (!component) return null;
+
+    if (isGroupComponent(component)) {
+      return <GroupConfig />;
+    }
+
+    return <ComponentConfig />;
+  }, [select, components]);
+
   return (
-    <div className={classnames(styles['design-page-right'], 'p-lr-24')}>
-      <div
-        style={{
-          height: 600,
-          width: '100%',
-        }}
-        ref={ref}
-      >
-        <Input />
-      </div>
+    <div
+      className={classnames(styles['design-page-right'], 'normal-background')}
+    >
+      {children}
     </div>
   );
 };
 
-export default RightContent;
+export default connect(mapStateToProps, mapDispatchToProps)(RightContent);

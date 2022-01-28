@@ -1,0 +1,44 @@
+.design-config {
+  &-field {
+    width: 100%;
+    padding-left: 8px;
+    padding-bottom: 8px;
+    padding-right: 8px;
+    &:first-child {
+      padding-top: 16px;
+    }
+    &:last-child {
+      padding-bottom: 16px;
+    }
+
+    &-level1 {
+      color: white;
+      padding-left: 8px;
+      background-color: rgb(28, 32, 28);
+    }
+    &-level2 {
+      color: rgb(195, 211, 217);
+    }
+    &-level3 {
+      color: rgb(115, 124, 128);
+    }
+
+    &-title {
+      flex: 1;
+      height: var(--config-component-height);
+      line-height: var(--config-component-height);
+      padding-right: 5px;
+    }
+
+    &-container {
+      width: 192px;
+    }
+
+    :global {
+      .ant-input-number,
+      .ant-input {
+        font-size: 12px;
+      }
+    }
+  }
+}
