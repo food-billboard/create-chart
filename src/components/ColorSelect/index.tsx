@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useControllableValue } from 'ahooks';
-import { Tooltip, Row, Col, Input, InputNumber } from 'antd';
+import { Tooltip, Input, InputNumber } from 'antd';
 import {
   SketchPicker,
   SketchPickerProps,
@@ -134,29 +134,17 @@ export const CompatColorSelect = (props: TColorSelectProps) => {
   );
 
   return (
-    <Row gutter={24}>
-      <Col span={4}>
-        <ColorSelect value={value} onChange={onSelectChange} />
-      </Col>
-      <Col span={12}>
-        <Input
-          prefix="#"
-          value={inputColor}
-          onChange={onInputColorChange}
-          className="w-100"
-        />
-      </Col>
-      <Col span={8}>
-        <InputNumber
-          max={100}
-          min={0}
-          step={1}
-          value={opacity * 100}
-          onChange={onOpacityChange}
-          className="w-100"
-        />
-      </Col>
-    </Row>
+    <div className="dis-flex">
+      <ColorSelect value={value} onChange={onSelectChange} />
+      <Input prefix="#" value={inputColor} onChange={onInputColorChange} />
+      <InputNumber
+        max={100}
+        min={0}
+        step={1}
+        value={opacity * 100}
+        onChange={onOpacityChange}
+      />
+    </div>
   );
 };
 

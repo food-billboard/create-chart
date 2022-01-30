@@ -7,9 +7,9 @@ import styles from './index.less';
 
 const Header = (props: {
   name?: string;
-  setScreenName?: (value: string) => void;
+  setScreen?: (data: { name: string }) => void;
 }) => {
-  const { name, setScreenName } = props;
+  const { name, setScreen } = props;
   const [editMode, setEditMode] = useState<boolean>(false);
 
   const Title = useMemo(() => {
@@ -19,7 +19,9 @@ const Header = (props: {
           defaultValue={name}
           allowClear
           onBlur={(e) => {
-            setScreenName?.(e.target.value);
+            setScreen?.({
+              name: e.target.value,
+            });
             setEditMode(false);
           }}
         />
@@ -40,7 +42,7 @@ const Header = (props: {
         {name}
       </div>
     );
-  }, [editMode, name, setScreenName]);
+  }, [editMode, name, setScreen]);
 
   return (
     <PageHeader

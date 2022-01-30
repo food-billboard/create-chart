@@ -94,22 +94,15 @@ const BackgroundSelect = (props: {
 
   return (
     <div className={classnames(styles['component-background-select'])}>
-      <Row gutter={24}>
-        <Col span={7} className="line-height-2">
-          背景类型
-        </Col>
-        <Col span={17} className="line-height-2">
-          <Radio.Group value={type} onChange={onTypeChange}>
-            <Radio key="image" value="image">
-              图片
-            </Radio>
-            <Radio key="color" value="color">
-              颜色
-            </Radio>
-          </Radio.Group>
-        </Col>
-        {form}
-      </Row>
+      <Radio.Group value={type} onChange={onTypeChange}>
+        <Radio key="image" value="image">
+          图片
+        </Radio>
+        <Radio key="color" value="color">
+          颜色
+        </Radio>
+      </Radio.Group>
+      {form}
     </div>
   );
 };

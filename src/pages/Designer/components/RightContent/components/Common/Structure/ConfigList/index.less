@@ -11,15 +11,15 @@
       padding-bottom: 16px;
     }
 
-    &-level1 {
+    &-title-level1 {
       color: white;
       padding-left: 8px;
       background-color: rgb(28, 32, 28);
     }
-    &-level2 {
+    &-title-level2 {
       color: rgb(195, 211, 217);
     }
-    &-level3 {
+    &-title-level3 {
       color: rgb(115, 124, 128);
     }
 
@@ -28,6 +28,7 @@
       height: var(--config-component-height);
       line-height: var(--config-component-height);
       padding-right: 5px;
+      font-size: 12px;
     }
 
     &-container {
@@ -36,8 +37,25 @@
 
     :global {
       .ant-input-number,
-      .ant-input {
+      .ant-input,
+      .ant-radio-wrapper,
+      .ant-radio {
         font-size: 12px;
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .ant-radio-wrapper {
+        line-height: var(--config-component-height);
+        .ant-radio-inner {
+          width: 12px;
+          height: 12px;
+        }
+      }
+      .ant-slider-handle {
+        width: 12px;
+        height: 12px;
+        margin-top: -4px;
+        border-radius: 0;
       }
     }
   }

@@ -54,7 +54,7 @@ const ConfigListItem = (props: {
         className={classnames(
           'text-ellipsis',
           styles['design-config-field-title'],
-          styles[`design-config-field-title-level-${level}`],
+          styles[`design-config-field-title-level${level}`],
           className,
         )}
         style={style}

@@ -1,0 +1,33 @@
+.design-config-default-tab {
+  :global {
+    .ant-tabs-tab {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      font-size: 12px !important;
+    }
+    .ant-tabs-ink-bar {
+      right: unset;
+      left: 0;
+      width: 1px !important;
+    }
+    .ant-tabs-nav {
+      width: 36px;
+      min-width: unset;
+    }
+    .ant-tabs-tabpane {
+      padding: 0 !important;
+    }
+  }
+  &-title {
+    width: 36px;
+    align-items: center;
+    & > div {
+      writing-mode: tb;
+    }
+    :global {
+      .anticon {
+        margin: 2px;
+      }
+    }
+  }
+}

@@ -33,7 +33,7 @@ export default {
   },
 
   effects: {
-    *setScreenName({ value }: { value: string }, { put }: any) {
+    *setScreen({ value }: { value: string }, { put }: any) {
       yield put({
         type: 'setData',
         payload: value,
@@ -135,7 +135,12 @@ export default {
     },
 
     setData(state: any, action: any) {
-      set(state, 'screenData.name', action.payload);
+      const screenData = get(state, 'screenData');
+      set(
+        state,
+        'screenData',
+        mergeWithoutArray({}, screenData, action.payload),
+      );
       return state;
     },
 

@@ -37,10 +37,12 @@ const Designer = (props: { setScale?: (scale: number) => void }) => {
         <Header />
         <div className={styles['designer-page-content']}>
           <DndProvider backend={HTML5Backend}>
-            <LeftContent />
+            {/* <LeftContent /> */}
+            <RightContent />
             <Panel />
           </DndProvider>
-          <RightContent />
+          {/* <RightContent /> */}
+          <LeftContent />
         </div>
       </div>
     </ConfigProvider>
