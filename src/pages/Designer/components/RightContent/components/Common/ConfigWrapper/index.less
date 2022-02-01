@@ -1,0 +1,59 @@
+@import '~antd/es/style/themes/default.less';
+
+.design-config-wrapper-header {
+  :global {
+    .ant-tabs-nav {
+      margin: 0;
+      background-color: @layout-header-background;
+      &:before {
+        border: none;
+      }
+    }
+    .ant-tabs-nav-wrap {
+      width: 100%;
+    }
+    .ant-tabs-nav-list {
+      width: 100%;
+    }
+    .ant-tabs-ink-bar {
+      bottom: unset;
+      top: 0;
+    }
+    .ant-tabs-tab {
+      .ant-tabs-tab-btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+    .ant-tabs-tab-active {
+      background-color: @component-background;
+    }
+  }
+}
+.design-config-wrapper-header-3 {
+  :global {
+    .ant-tabs-tab {
+      width: 33.33%;
+    }
+  }
+}
+.design-config-wrapper-header-2 {
+  :global {
+    .ant-tabs-tab {
+      width: 50%;
+    }
+  }
+}
+.design-config-wrapper-header-1 {
+  :global {
+    .ant-tabs-tab {
+      width: 100%;
+    }
+    .ant-tabs-ink-bar {
+      background: transparent;
+    }
+    .ant-tabs-tab-active {
+      background-color: transparent;
+    }
+  }
+}

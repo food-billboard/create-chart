@@ -1,14 +1,19 @@
+@import '~antd/es/style/themes/default.less';
+
 .design-config-default-tab {
   :global {
     .ant-tabs-tab {
       padding-left: 0 !important;
       padding-right: 0 !important;
       font-size: 12px !important;
+      padding-top: 16px !important;
+      padding-bottom: 16px !important;
     }
     .ant-tabs-ink-bar {
       right: unset;
       left: 0;
       width: 1px !important;
+      background-color: @primary-color;
     }
     .ant-tabs-nav {
       width: 36px;
@@ -16,6 +21,12 @@
     }
     .ant-tabs-tabpane {
       padding: 0 !important;
+    }
+    .ant-tabs-content-holder {
+      border: none;
+    }
+    .ant-tabs-tab-active {
+      background-color: @component-background;
     }
   }
   &-title {
