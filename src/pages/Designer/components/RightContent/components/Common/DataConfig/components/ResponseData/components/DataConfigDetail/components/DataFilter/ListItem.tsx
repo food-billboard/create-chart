@@ -1,7 +1,6 @@
 import {} from 'react';
 import {} from 'antd';
 import classnames from 'classnames';
-import AddItem from './addItem';
 import styles from './index.less';
 
 const DataFilter = (props: { disabled?: boolean }) => {
@@ -16,9 +15,7 @@ const DataFilter = (props: { disabled?: boolean }) => {
         },
         'border-1',
       )}
-    >
-      <AddItem />
-    </div>
+    ></div>
   );
 };
 
