@@ -9,15 +9,15 @@ import IconTooltip from '@/components/IconTooltip';
 import ConfigList from '../Common/Structure/ConfigList';
 import BaseConfig from '../Common/BaseConfig';
 import DataConfig from '../Common/DataConfig';
-import ConfigWrapper from '../Common/ConfigWrapper';
+import ConfigWrapper, { ConfigItem } from '../Common/ConfigWrapper';
 
 const ComponentConfig = (props: { options?: ReactNode }) => {
   const { options } = props;
 
   return (
-    <div>
+    <div className="h-100">
       <ConfigWrapper tabCounter={3}>
-        <Tabs.TabPane
+        <ConfigItem
           tab={
             <IconTooltip title="配置">
               <ProjectOutlined />
@@ -29,8 +29,8 @@ const ComponentConfig = (props: { options?: ReactNode }) => {
             <BaseConfig />
             {options}
           </ConfigList>
-        </Tabs.TabPane>
-        <Tabs.TabPane
+        </ConfigItem>
+        <ConfigItem
           tab={
             <IconTooltip title="数据">
               <CodeOutlined />
@@ -39,15 +39,15 @@ const ComponentConfig = (props: { options?: ReactNode }) => {
           key="2"
         >
           <DataConfig />
-        </Tabs.TabPane>
-        <Tabs.TabPane
+        </ConfigItem>
+        <ConfigItem
           tab={
             <IconTooltip title="交互">
               <ControlOutlined />
             </IconTooltip>
           }
           key="3"
-        ></Tabs.TabPane>
+        ></ConfigItem>
       </ConfigWrapper>
     </div>
   );

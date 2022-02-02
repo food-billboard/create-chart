@@ -1,7 +1,55 @@
 @import '~antd/es/style/themes/default.less';
 
+.design-config-wrapper-item-title {
+  position: relative;
+  height: 60px;
+  color: #fff;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-right: 8px;
+  padding-top: 12px;
+  &-content {
+    flex: 1;
+    padding-left: 10px;
+    padding-right: 5px;
+    overflow: hidden;
+    &-main {
+      font-size: 14px;
+      padding-bottom: 3px;
+      flex-wrap: nowrap;
+      align-items: center;
+    }
+    &-sub {
+      font-size: 12px;
+      color: #647279;
+      flex-wrap: nowrap;
+      align-items: center;
+    }
+  }
+}
+.design-config-wrapper-item-content {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  width: 100%;
+  &-main {
+    min-height: 534px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
 .design-config-wrapper-header {
   :global {
+    .ant-tabs-tabpane {
+      position: relative;
+    }
+    .ant-tabs-content {
+      height: 100%;
+    }
     .ant-tabs-nav {
       margin: 0;
       background-color: @layout-header-background;
