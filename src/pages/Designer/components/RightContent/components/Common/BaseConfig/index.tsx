@@ -6,6 +6,8 @@ import Opacity from '../Opacity';
 
 const { Item } = ConfigList;
 
+// 基础的组件配置
+
 const BaseConfig = (props: ComponentData.TBaseConfig['style'] & {}) => {
   const { width, height, left, top, opacity, rotate } = props;
 

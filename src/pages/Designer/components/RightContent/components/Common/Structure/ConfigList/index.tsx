@@ -4,6 +4,8 @@ import PlaceHolder from '../PlaceHolder';
 import Container from '../Container';
 import styles from './index.less';
 
+// 基础配置的外部容器
+
 const ConfigList = (props: { children?: ReactNode }) => {
   const { children } = props;
 
@@ -22,6 +24,7 @@ const ConfigListItemContainer = (props: { children?: ReactNode }) => {
   );
 };
 
+// 基础配置的容器的每一项
 const ConfigListItem = (props: {
   label?: string | ReactNode;
   placeholder?: string | ReactNode;
@@ -46,6 +49,7 @@ const ConfigListItem = (props: {
         styles['design-config-field'],
         'dis-flex',
         'pos-re',
+        'design-config-format-font-size',
       )}
     >
       <PlaceHolder>{placeholder}</PlaceHolder>

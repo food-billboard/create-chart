@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import styles from './index.less';
 
+// 半行表单的占位符
+
 const HalfFormPlaceHolder = (props: { children?: ReactNode }) => {
   const { children } = props;
 

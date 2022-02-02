@@ -1,0 +1,30 @@
+@import '~antd/es/style/themes/default.less';
+@import '../../../index.less';
+
+.design-config-data {
+  &-title {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    height: 38px;
+    padding-left: 10px;
+    padding-right: 34px;
+    font-size: 12px;
+    // background: #1c1f25;
+    // border-top: 1px solid var(--datav-panel-border-color);
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    transition: 0.4s;
+    & > span {
+      max-width: 160px;
+      white-space: initial;
+      color: #fff;
+    }
+    & &-sub {
+      color: @design-config-sub-color;
+    }
+  }
+}

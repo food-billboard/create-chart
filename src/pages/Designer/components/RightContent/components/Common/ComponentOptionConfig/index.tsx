@@ -6,6 +6,8 @@ import { AppleFilled } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 
+// 组件的定制化配置的tabs
+
 const ComponentOptionConfig = (props: { children?: ReactNode }) => {
   const { children } = props;
 

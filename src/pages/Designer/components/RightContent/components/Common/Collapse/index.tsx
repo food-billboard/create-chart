@@ -16,6 +16,8 @@ import styles from './index.less';
 
 const { Panel: AntPanel } = AntCollapse;
 
+// 重写样式的折叠列表
+
 const Panel = (
   props: Exclude<CollapsePanelProps, 'extra'> & {
     visibleRender?: CollapsePanelProps['extra'] | boolean;

@@ -3,6 +3,8 @@ import { Tabs } from 'antd';
 import classnames from 'classnames';
 import styles from './index.less';
 
+// 配置项顶部的tab切换
+
 const ConfigWrapper = (props: {
   children?: ReactNode;
   tabCounter?: number;

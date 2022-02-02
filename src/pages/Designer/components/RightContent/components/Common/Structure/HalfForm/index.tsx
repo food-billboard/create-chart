@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 import classnames from 'classnames';
 import styles from './index.less';
 
+// 基础配置的半行表单
+
 const HalfForm = ({
   children,
   label,

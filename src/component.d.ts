@@ -4,6 +4,40 @@ declare namespace ComponentData {
   // 组件上级大类类型
   export type TComponentType = 'GROUP_COMPONENT' | 'COMPONENT';
 
+  // 数据字段映射
+  export type TComponentMapData = {
+    field: string;
+    map: string;
+    description: string;
+    id: string;
+    type: 'number' | 'string';
+  };
+
+  // 数据配置
+  export type TComponentApiDataConfig = {
+    request: {
+      url: string;
+      method: 'POST' | 'GET';
+      headers: object;
+      body: object;
+      frequency: {
+        show: boolean;
+        value: number;
+      };
+      type: 'api' | 'static';
+      value: any[] | object;
+      valueType?: 'object' | 'array';
+    };
+    filter: {
+      show: boolean;
+      value: {
+        name: string;
+        disabled: boolean;
+      }[];
+      map: TComponentMapData[];
+    };
+  };
+
   // 组件类型
   export type TComponentSelfType =
     | 'GROUP_COMPONENT'
@@ -42,36 +76,7 @@ declare namespace ComponentData {
       // linkage
       // 具体细节有待参考
     };
-    data?: {
-      request: {
-        url: string;
-        method: 'POST' | 'GET';
-        headers: object;
-        body: object;
-        frequency: {
-          show: boolean;
-          value: number;
-        };
-        type: 'api' | 'static';
-        value: any[] | object;
-        valueType?: 'object' | 'array';
-      };
-      filter: {
-        show: boolean;
-        fields: {
-          name: string;
-          description: string;
-        }[];
-        value: {
-          name: string;
-          disabled: boolean;
-        }[];
-        map: {
-          field: string;
-          map: string;
-        }[];
-      };
-    };
+    data?: TComponentApiDataConfig;
   };
 
   // 数据过滤
