@@ -8,6 +8,7 @@ import CollapseA, { SingleCollapse as Collapse } from '../Collapse';
 import FullForm from '../Structure/FullForm';
 import FontConfig, { FontConfigList } from '../FontConfig';
 import HalfForm from '../Structure/HalfForm';
+import { PositionConfig } from '../PositionConfig';
 
 const { Item } = ConfigList;
 const { TabPane } = Tabs;
@@ -50,6 +51,11 @@ const BaseConfig = (props: ComponentData.TBaseConfig['style'] & {}) => {
         <ComponentOptionConfig>
           <TabPane key={'1'} tab={<Tab>2222</Tab>}>
             <ConfigList level={1}>
+              <Item label="位置">
+                <FullForm>
+                  <PositionConfig />
+                </FullForm>
+              </Item>
               <CollapseA>
                 <CollapseA.Panel header="11111" key="222">
                   222222222
