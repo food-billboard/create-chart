@@ -18,6 +18,7 @@ type TColorSelectProps = Partial<
   Exclude<SketchPickerProps, 'color' | 'onChange'>
 > & {
   value?: ComponentData.TColorConfig;
+  defaultValue?: ComponentData.TColorConfig;
   onChange?: (color: ComponentData.TColorConfig) => void;
 };
 
@@ -92,7 +93,13 @@ WrapperColorSelect.getHexString = getHexString;
 WrapperColorSelect.getOpacity = getOpacity;
 
 export const CompatColorSelect = (props: TColorSelectProps) => {
-  const { value, onChange } = props;
+  const [value, onChange] = useControllableValue<ComponentData.TColorConfig>(
+    props,
+    {
+      defaultValue: DEFAULT_COLOR,
+    },
+  );
+
   const [inputColor, setInputColor] = useState<string>(
     getHexString(value!, false),
   );

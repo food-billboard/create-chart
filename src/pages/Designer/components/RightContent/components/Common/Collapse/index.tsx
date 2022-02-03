@@ -18,14 +18,18 @@ const { Panel: AntPanel } = AntCollapse;
 
 // 重写样式的折叠列表
 
-const Panel = (
-  props: Exclude<CollapsePanelProps, 'extra'> & {
-    visibleRender?: CollapsePanelProps['extra'] | boolean;
-    value?: boolean;
-    onChange?: (value: boolean) => void;
-    children?: ReactNode;
-  },
-) => {
+type TCollapseProps = CollapseProps & {
+  children?: ReactNode;
+};
+
+type TCollapsePanelProps = Exclude<CollapsePanelProps, 'extra'> & {
+  visibleRender?: CollapsePanelProps['extra'] | boolean;
+  value?: boolean;
+  onChange?: (value: boolean) => void;
+  children?: ReactNode;
+};
+
+const Panel = (props: TCollapsePanelProps) => {
   const { value, onChange, children, visibleRender, header, ...nextProps } =
     props;
 
@@ -71,11 +75,7 @@ const Panel = (
   );
 };
 
-const Collapse = (
-  props: CollapseProps & {
-    children?: ReactNode;
-  },
-) => {
+const Collapse = (props: TCollapseProps) => {
   const { className, ...nextProps } = props;
 
   return (
@@ -97,5 +97,28 @@ const WrapperCollapse: typeof Collapse & {
 } = Collapse as any;
 
 WrapperCollapse.Panel = Panel;
+
+export const SingleCollapse = (props: {
+  parent?: TCollapseProps;
+  child: TCollapsePanelProps;
+  children?: ReactNode;
+}) => {
+  const { parent = {}, child, children } = props;
+
+  const { value, visibleRender } = child;
+
+  const collapsible: any = useMemo(() => {
+    if (typeof visibleRender !== 'boolean' || !visibleRender || !!value)
+      return 'header';
+
+    return 'disabled';
+  }, [visibleRender, value]);
+
+  return (
+    <Collapse collapsible={collapsible} {...parent}>
+      <Panel {...child}>{children}</Panel>
+    </Collapse>
+  );
+};
 
 export default WrapperCollapse;

@@ -41,7 +41,7 @@ const DataConfigDetail = forwardRef<
   IDataConfigDetailRef,
   IDataConfigDetailProps
 >((props, ref) => {
-  const [visible, setVisible] = useState<boolean>(true);
+  const [visible, setVisible] = useState<boolean>(false);
 
   const open = useCallback(() => {
     setVisible(true);

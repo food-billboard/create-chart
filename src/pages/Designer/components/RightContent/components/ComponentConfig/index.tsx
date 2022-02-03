@@ -27,7 +27,7 @@ const ComponentConfig = (props: { options?: ReactNode }) => {
         >
           <ConfigList>
             <BaseConfig />
-            {options}
+            <ConfigList level={1}>{options}</ConfigList>
           </ConfigList>
         </ConfigItem>
         <ConfigItem

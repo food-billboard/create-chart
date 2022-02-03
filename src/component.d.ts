@@ -155,9 +155,9 @@ declare namespace ComponentData {
   // 文字通用配置
   export type TFontConfig = {
     fontSize: number;
-    fontWeight: number;
+    fontWeight: number | string;
     fontFamily: string;
-    color: string;
+    color: TColorConfig;
   };
 
   // 渐变色配置

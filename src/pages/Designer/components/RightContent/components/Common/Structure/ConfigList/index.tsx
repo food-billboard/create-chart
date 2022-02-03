@@ -6,11 +6,18 @@ import styles from './index.less';
 
 // 基础配置的外部容器
 
-const ConfigList = (props: { children?: ReactNode }) => {
-  const { children } = props;
+const ConfigList = (props: { children?: ReactNode; level?: 0 | 1 }) => {
+  const { children, level = 0 } = props;
 
   return (
-    <div className={classnames(styles['design-config'], '')}>{children}</div>
+    <div
+      className={classnames(
+        styles['design-config'],
+        styles[`design-config-level-${level}`],
+      )}
+    >
+      {children}
+    </div>
   );
 };
 
@@ -24,8 +31,7 @@ const ConfigListItemContainer = (props: { children?: ReactNode }) => {
   );
 };
 
-// 基础配置的容器的每一项
-const ConfigListItem = (props: {
+export type TConfigListItemProps = {
   label?: string | ReactNode;
   placeholder?: string | ReactNode;
   labelProps?: {
@@ -35,7 +41,10 @@ const ConfigListItem = (props: {
     level?: 1 | 2 | 3;
   };
   children?: ReactNode;
-}) => {
+};
+
+// 基础配置的容器的每一项
+const ConfigListItem = (props: TConfigListItemProps) => {
   const {
     label,
     labelProps: { className, style, title, level } = {},
