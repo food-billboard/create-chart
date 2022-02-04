@@ -1,5 +1,6 @@
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, ReactNode, useMemo } from 'react';
 import classnames from 'classnames';
+import Switch from '../../Switch';
 import PlaceHolder from '../PlaceHolder';
 import Container from '../Container';
 import styles from './index.less';
@@ -33,7 +34,9 @@ const ConfigListItemContainer = (props: { children?: ReactNode }) => {
 
 export type TConfigListItemProps = {
   label?: string | ReactNode;
-  placeholder?: string | ReactNode;
+  placeholder?: string | ReactNode | true;
+  disabled?: boolean;
+  onDisabledChange?: (disabled: boolean) => void;
   labelProps?: {
     className?: string;
     style?: CSSProperties;
@@ -50,7 +53,15 @@ const ConfigListItem = (props: TConfigListItemProps) => {
     labelProps: { className, style, title, level } = {},
     placeholder,
     children,
+    disabled,
+    onDisabledChange,
   } = props;
+
+  const disabledPlaceHoler = useMemo(() => {
+    if (placeholder !== true) return placeholder;
+
+    return <Switch checked={!disabled} onChange={onDisabledChange} />;
+  }, [disabled, placeholder, onDisabledChange]);
 
   return (
     <div
@@ -59,9 +70,12 @@ const ConfigListItem = (props: TConfigListItemProps) => {
         'dis-flex',
         'pos-re',
         'design-config-format-font-size',
+        {
+          [styles['design-config-field-disabled']]: !!disabled,
+        },
       )}
     >
-      <PlaceHolder>{placeholder}</PlaceHolder>
+      <PlaceHolder>{disabledPlaceHoler}</PlaceHolder>
 
       <div
         className={classnames(

@@ -9,13 +9,8 @@ import ConfigList from '../Common/Structure/ConfigList';
 import ConfigWrapper from '../Common/ConfigWrapper';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
-import ComponentOptionConfig, { Tab } from '../Common/ComponentOptionConfig';
-import Collapse from '../Common/Collapse';
-
 const { Item } = ConfigList;
 const { TextArea } = Input;
-const { TabPane } = Tabs;
-const { Panel } = Collapse;
 
 const GlobalConfig = (props: {
   screenData: ComponentData.TScreenData;
@@ -83,44 +78,6 @@ const GlobalConfig = (props: {
                 />
               </FullForm>
             </Item>
-
-            <ComponentOptionConfig>
-              <TabPane key={'1'} tab={<Tab>2222</Tab>}>
-                <Item label="屏幕大小">
-                  <HalfForm label="宽度">
-                    <InputNumber
-                      defaultValue={width}
-                      onBlur={onValueChange.bind(null, 'config.style.width')}
-                    />
-                  </HalfForm>
-                  <HalfForm label="高度">
-                    <InputNumber
-                      defaultValue={height}
-                      onBlur={onValueChange.bind(null, 'config.style.height')}
-                    />
-                  </HalfForm>
-                </Item>
-                <Item label="描述">
-                  <FullForm>
-                    <TextArea
-                      defaultValue={description}
-                      onBlur={onValueChange.bind(null, 'description')}
-                    />
-                  </FullForm>
-                </Item>
-                <Item label="背景">
-                  <FullForm>
-                    <BackgroundSelect
-                      value={poster}
-                      onChange={onValueChange.bind(null, 'config.attr.poster')}
-                    />
-                  </FullForm>
-                </Item>
-              </TabPane>
-              <TabPane key={'2'} tab={<Tab>2222</Tab>}>
-                <div style={{ height: 1000 }}></div>
-              </TabPane>
-            </ComponentOptionConfig>
           </ConfigList>
         </Tabs.TabPane>
       </ConfigWrapper>

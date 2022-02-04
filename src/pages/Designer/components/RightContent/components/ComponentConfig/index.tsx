@@ -47,7 +47,9 @@ const ComponentConfig = (props: { options?: ReactNode }) => {
             </IconTooltip>
           }
           key="3"
-        ></ConfigItem>
+        >
+          33333
+        </ConfigItem>
       </ConfigWrapper>
     </div>
   );

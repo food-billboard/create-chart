@@ -12,6 +12,7 @@ import {
 import classnames from 'classnames';
 import PlaceHolder from '../Structure/PlaceHolder';
 import WrapperConfigList from '../Structure/ConfigList';
+import Switch from '../Switch';
 import styles from './index.less';
 
 const { Panel: AntPanel } = AntCollapse;
@@ -44,6 +45,8 @@ const Panel = (props: TCollapsePanelProps) => {
   const realVisibleRender = useMemo(() => {
     if (typeof visibleRender !== 'boolean') return visibleRender;
     if (!visibleRender) return null;
+
+    return <Switch checked={!!value} onChange={visibleRenderClick} />;
     if (!!value)
       return (
         <EyeOutlined

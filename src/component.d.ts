@@ -160,6 +160,14 @@ declare namespace ComponentData {
     color: TColorConfig;
   };
 
+  // 边距配置
+  export type TComponentMarginConfig = {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+  };
+
   // 渐变色配置
   export type TGradientColorConfig = {
     start: TColorConfig;
