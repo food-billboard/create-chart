@@ -9,6 +9,7 @@
   justify-content: space-between;
   padding-right: 8px;
   padding-top: 12px;
+  background-color: @layout-header-background;
   &-content {
     flex: 1;
     padding-left: 10px;
@@ -52,7 +53,7 @@
     }
     .ant-tabs-nav {
       margin: 0;
-      background-color: @layout-header-background;
+      background-color: @component-background;
       &:before {
         border: none;
       }
@@ -74,7 +75,7 @@
       }
     }
     .ant-tabs-tab-active {
-      background-color: @component-background;
+      background-color: @layout-header-background;
     }
   }
 }

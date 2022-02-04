@@ -44,10 +44,10 @@ const GlobalConfig = (props: {
   );
 
   return (
-    <div>
+    <div className="h-100">
       <ConfigWrapper tabCounter={1}>
         <Tabs.TabPane tab="页面配置" key="1">
-          <ConfigList>
+          <ConfigList style={{ minHeight: '100%' }}>
             <Item label="屏幕大小">
               <HalfForm label="宽度">
                 <InputNumber

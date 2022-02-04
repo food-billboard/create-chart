@@ -4,11 +4,14 @@ import MonacoEditor, {
   MonacoEditorProps,
   EditorDidMount,
 } from 'react-monaco-editor';
+import classnames from 'classnames';
 import { merge } from 'lodash';
+import styles from './index.less';
 
 export type EditorProps = Partial<MonacoEditorProps> & {
   autoFocus?: boolean;
   disabled?: boolean;
+  bordered?: boolean;
 };
 
 const CodeEditor = (props: EditorProps) => {
@@ -20,6 +23,8 @@ const CodeEditor = (props: EditorProps) => {
     autoFocus = true,
     editorDidMount: propsEditorDidMount,
     disabled = false,
+    className,
+    bordered,
     ...nextProps
   } = props;
 
@@ -53,6 +58,12 @@ const CodeEditor = (props: EditorProps) => {
       options={realOptions}
       onChange={setValue}
       editorDidMount={editorDidMount}
+      className={classnames(
+        {
+          [styles['component-code-editor']]: !!bordered,
+        },
+        className,
+      )}
       // editorWillMount={(editor) => {
       //   editor.editor.defineTheme("222", {
       //     base: 'vs-dark',

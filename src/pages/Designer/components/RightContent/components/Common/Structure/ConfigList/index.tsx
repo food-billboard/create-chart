@@ -7,15 +7,22 @@ import styles from './index.less';
 
 // 基础配置的外部容器
 
-const ConfigList = (props: { children?: ReactNode; level?: 0 | 1 }) => {
-  const { children, level = 0 } = props;
+const ConfigList = (props: {
+  children?: ReactNode;
+  level?: 0 | 1;
+  className?: string;
+  style?: CSSProperties;
+}) => {
+  const { children, level = 0, className, style } = props;
 
   return (
     <div
       className={classnames(
         styles['design-config'],
         styles[`design-config-level-${level}`],
+        className,
       )}
+      style={style}
     >
       {children}
     </div>

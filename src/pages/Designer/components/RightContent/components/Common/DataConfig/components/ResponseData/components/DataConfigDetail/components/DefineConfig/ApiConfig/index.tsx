@@ -2,7 +2,6 @@ import {} from 'react';
 import { Select } from 'antd';
 import CodeEditor from '@/components/CodeEditor';
 import SubTitle, { SubForm } from '../../SubTitle';
-import styles from '../../../index.less';
 
 const { Option } = Select;
 
@@ -25,32 +24,17 @@ const ApiConfig = () => {
       </SubForm>
       <SubTitle>URL</SubTitle>
       <SubForm>
-        <CodeEditor
-          language="txt"
-          width={454}
-          height={138}
-          className={styles['design-config-data-detail-code-view']}
-        />
+        <CodeEditor language="txt" width={454} height={138} bordered />
       </SubForm>
       <SubTitle>Headers</SubTitle>
       <SubForm>
-        <CodeEditor
-          language="json"
-          width={454}
-          height={138}
-          className={styles['design-config-data-detail-code-view']}
-        />
+        <CodeEditor language="json" width={454} height={138} bordered />
       </SubForm>
       {true && ( // post请求显示请求body
         <>
           <SubTitle>POST 请求参数</SubTitle>
           <SubForm>
-            <CodeEditor
-              language="json"
-              width={454}
-              height={138}
-              className={styles['design-config-data-detail-code-view']}
-            />
+            <CodeEditor language="json" width={454} height={138} bordered />
           </SubForm>
         </>
       )}

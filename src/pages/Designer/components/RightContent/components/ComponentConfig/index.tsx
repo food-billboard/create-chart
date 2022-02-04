@@ -9,13 +9,15 @@ import IconTooltip from '@/components/IconTooltip';
 import ConfigList from '../Common/Structure/ConfigList';
 import BaseConfig from '../Common/BaseConfig';
 import DataConfig from '../Common/DataConfig';
+import InterActiveConfig from '../Common/InterActiveConfig';
 import ConfigWrapper, { ConfigItem } from '../Common/ConfigWrapper';
+import styles from './index.less';
 
 const ComponentConfig = (props: { options?: ReactNode }) => {
   const { options } = props;
 
   return (
-    <div className="h-100">
+    <div className={styles['design-config-component']}>
       <ConfigWrapper tabCounter={3}>
         <ConfigItem
           tab={
@@ -48,7 +50,7 @@ const ComponentConfig = (props: { options?: ReactNode }) => {
           }
           key="3"
         >
-          33333
+          <InterActiveConfig />
         </ConfigItem>
       </ConfigWrapper>
     </div>

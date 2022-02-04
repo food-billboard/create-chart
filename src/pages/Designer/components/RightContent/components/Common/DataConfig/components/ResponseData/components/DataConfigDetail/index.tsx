@@ -102,7 +102,7 @@ const DataConfigDetail = forwardRef<
           disabled
           width={454}
           height={238}
-          className={styles['design-config-data-detail-code-view']}
+          bordered
         />
       </div>
     </Drawer>
