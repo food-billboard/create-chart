@@ -100,22 +100,20 @@ export const CompatColorSelect = (props: TColorSelectProps) => {
     },
   );
 
+  // 输入框颜色
   const [inputColor, setInputColor] = useState<string>(
     getHexString(value!, false),
   );
 
-  const opacity = useMemo(() => {
-    return WrapperColorSelect.getOpacity(value!);
-  }, [value]);
+  // 透明度
+  const [opacity, setOpacity] = useState<number>(
+    WrapperColorSelect.getOpacity(value!),
+  );
 
   const onInputColorChange = useCallback(
     (e) => {
       const nowColor = e.target.value;
       setInputColor(nowColor);
-      try {
-        const rgbColor = color(`#${nowColor}`).object();
-        onChange?.(merge({}, value, rgbColor));
-      } catch (err) {}
     },
     [value, onChange],
   );
@@ -123,6 +121,7 @@ export const CompatColorSelect = (props: TColorSelectProps) => {
   const onSelectChange = useCallback(
     (value) => {
       setInputColor(getHexString(value!, false));
+      setOpacity(WrapperColorSelect.getOpacity(value!));
       onChange?.(value);
     },
     [onChange],
@@ -135,21 +134,38 @@ export const CompatColorSelect = (props: TColorSelectProps) => {
       realOpacity /= 100;
       realOpacity = parseFloat(realOpacity.toFixed(2));
       realOpacity = Math.max(Math.min(realOpacity, 1), 0);
-      onChange?.(merge({}, value, { a: realOpacity }));
+      setOpacity(realOpacity);
     },
     [value],
   );
 
+  const onOpacityBlur = useCallback(() => {
+    onChange?.(merge({}, value, { a: opacity }));
+  }, [opacity, value]);
+
+  const onInputBlur = useCallback(() => {
+    try {
+      const rgbColor = color(`#${inputColor}`).object();
+      onChange?.(merge({}, value, rgbColor));
+    } catch (err) {}
+  }, [inputColor, value]);
+
   return (
     <div className="dis-flex">
       <ColorSelect value={value} onChange={onSelectChange} />
-      <Input prefix="#" value={inputColor} onChange={onInputColorChange} />
+      <Input
+        prefix="#"
+        value={inputColor}
+        onChange={onInputColorChange}
+        onBlur={onInputBlur}
+      />
       <InputNumber
         max={100}
         min={0}
         step={1}
         value={opacity * 100}
         onChange={onOpacityChange}
+        onBlur={onOpacityBlur}
       />
     </div>
   );
