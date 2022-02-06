@@ -19,11 +19,11 @@ const { Panel: AntPanel } = AntCollapse;
 
 // 重写样式的折叠列表
 
-type TCollapseProps = CollapseProps & {
+export type TCollapseProps = CollapseProps & {
   children?: ReactNode;
 };
 
-type TCollapsePanelProps = Exclude<CollapsePanelProps, 'extra'> & {
+export type TCollapsePanelProps = Exclude<CollapsePanelProps, 'extra'> & {
   visibleRender?: CollapsePanelProps['extra'] | boolean;
   value?: boolean;
   onChange?: (value: boolean) => void;

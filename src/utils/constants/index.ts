@@ -3,6 +3,7 @@ export * from './another';
 export * from './theme';
 export * from './color';
 export * from './component';
+export * from './data';
 
 export enum EComponentType {
   GROUP_COMPONENT = 'GROUP_COMPONENT',

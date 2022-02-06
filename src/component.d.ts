@@ -13,6 +13,12 @@ declare namespace ComponentData {
     type: 'number' | 'string';
   };
 
+  // 组件数据过滤
+  export type TComponentFilterConfig = {
+    id: string;
+    disabled: boolean;
+  };
+
   // 数据配置
   export type TComponentApiDataConfig = {
     request: {
@@ -30,10 +36,7 @@ declare namespace ComponentData {
     };
     filter: {
       show: boolean;
-      value: {
-        name: string;
-        disabled: boolean;
-      }[];
+      value: TComponentFilterConfig[];
       map: TComponentMapData[];
     };
   };
@@ -84,6 +87,7 @@ declare namespace ComponentData {
     id: string;
     name: string;
     code: string;
+    editable: boolean;
   };
 
   // 辅助线

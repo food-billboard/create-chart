@@ -2,28 +2,49 @@ import { useCallback, useMemo } from 'react';
 import { Select, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
-import { connect } from 'dva';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const { Option } = Select;
 
 const DataFilter = (props: {
-  filter: ComponentData.TFilterConfig[];
-  setCallbackData: (value: ComponentData.TFilterConfig[]) => void;
+  dataSource: ComponentData.TFilterConfig[];
+  value: ComponentData.TComponentFilterConfig[];
+  onChange?: (value: ComponentData.TComponentFilterConfig[]) => void;
+  onClick?: () => void;
+  btnDisabled?: boolean;
 }) => {
-  const { filter, setCallbackData } = props;
+  const { dataSource, onClick, value, onChange, btnDisabled } = props;
 
   // 对已经添加的进行过滤
   const realCallback = useMemo(() => {
-    return filter;
-  }, []);
+    return dataSource.filter((item) =>
+      value.every((select) => select.id !== item.id),
+    );
+  }, [dataSource, value]);
 
-  const handleAdd = useCallback(() => {}, []);
+  const onSelect = useCallback(
+    (selectValue: string) => {
+      if (!value.find((item) => item.id === selectValue)) {
+        const newValue: ComponentData.TComponentFilterConfig[] = [
+          ...value,
+          {
+            disabled: false,
+            id: selectValue,
+          },
+        ];
+        onChange?.(newValue);
+      }
+    },
+    [value, onChange],
+  );
 
   return (
     <div className={classnames('dis-flex')}>
-      <Select className={styles['design-config-data-filter-add-item-select']}>
+      <Select
+        className={styles['design-config-data-filter-add-item-select']}
+        onSelect={onSelect}
+        size="middle"
+      >
         {realCallback.map((callback) => {
           const { id, name } = callback;
           return (
@@ -35,13 +56,15 @@ const DataFilter = (props: {
       </Select>
       <Button
         className={styles['design-config-data-filter-add-item-btn']}
-        onClick={handleAdd}
+        onClick={onClick}
+        size="middle"
         type="default"
         ghost
         icon={<PlusOutlined />}
+        disabled={!!btnDisabled}
       ></Button>
     </div>
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DataFilter);
+export default DataFilter;

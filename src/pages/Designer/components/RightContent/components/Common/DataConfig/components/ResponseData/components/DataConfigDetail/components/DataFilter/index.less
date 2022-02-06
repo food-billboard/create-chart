@@ -3,11 +3,17 @@
   padding: 10px;
   background: #0a0b0d;
   &-add-item-btn {
-    width: 24px !important;
+    width: 30px !important;
+    height: 30px;
     margin-left: 10px;
   }
   &-add-item-select {
     flex: 1;
+  }
+  :global {
+    .ant-select-selector {
+      height: 30px !important;
+    }
   }
 }
 .design-config-data-filter-disabled {
