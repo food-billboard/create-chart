@@ -1,5 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode, Children, useMemo, cloneElement } from 'react';
 import { Tabs } from 'antd';
+import { LeftOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import { TabPaneProps } from 'antd/es/tabs';
 import styles from './index.less';
@@ -9,8 +10,19 @@ import styles from './index.less';
 const ConfigWrapper = (props: {
   children?: ReactNode;
   tabCounter?: number;
+  onBack?: () => void;
+  hasBack?: boolean;
 }) => {
-  const { children, tabCounter = 3 } = props;
+  const { children, tabCounter = 3, onBack, hasBack } = props;
+
+  const realChildren = useMemo(() => {
+    return Children.map(children, (child) => {
+      return cloneElement(child as any, {
+        onBack,
+        hasBack,
+      });
+    });
+  }, [children]);
 
   return (
     <Tabs
@@ -22,27 +34,38 @@ const ConfigWrapper = (props: {
       )}
       tabBarGutter={0}
     >
-      {children}
+      {realChildren}
     </Tabs>
   );
 };
 
-export const ConfigItem = (props: TabPaneProps & {}) => {
-  const { children, ...nextProps } = props;
+export const ConfigItem = (
+  props: TabPaneProps & {
+    onBack?: () => void;
+    hasBack?: boolean;
+  },
+) => {
+  const { children, hasBack, onBack, ...nextProps } = props;
 
   return (
     <Tabs.TabPane {...nextProps}>
       <div className={styles['design-config-wrapper-item-title']}>
         <div className={styles['design-config-wrapper-item-title-content']}>
           <div
-            className={styles['design-config-wrapper-item-title-content-main']}
+            className={classnames(
+              styles['design-config-wrapper-item-title-content-main'],
+              'dis-flex',
+            )}
           >
+            {!!hasBack && (
+              <LeftOutlined
+                className="c-po"
+                title="返回上一级"
+                onClick={onBack}
+              />
+            )}
             <span
-              className={classnames(
-                styles['design-config-wrapper-item-title-content-main'],
-                'text-ellipsis',
-                'dis-flex',
-              )}
+              className={classnames('text-ellipsis', 'dis-flex')}
               title="垂直胶囊柱状图"
             >
               垂直胶囊柱状图

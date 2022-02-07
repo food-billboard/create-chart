@@ -1,5 +1,4 @@
-import { ReactNode } from 'react';
-import { Tabs } from 'antd';
+import { ReactNode, useCallback } from 'react';
 import {
   CodeOutlined,
   ControlOutlined,
@@ -12,13 +11,20 @@ import DataConfig from '../Common/DataConfig';
 import InterActiveConfig from '../Common/InterActiveConfig';
 import ConfigWrapper, { ConfigItem } from '../Common/ConfigWrapper';
 import styles from './index.less';
+import { useMemo } from 'react';
 
 const ComponentConfig = (props: { options?: ReactNode }) => {
   const { options } = props;
 
+  const onBack = useCallback(() => {}, []);
+
+  const hasBack = useMemo(() => {
+    return false;
+  }, []);
+
   return (
     <div className={styles['design-config-component']}>
-      <ConfigWrapper tabCounter={3}>
+      <ConfigWrapper hasBack={hasBack} onBack={onBack} tabCounter={3}>
         <ConfigItem
           tab={
             <IconTooltip title="配置">
