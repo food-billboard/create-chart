@@ -1,26 +1,34 @@
-import { ReactNode, useCallback } from 'react';
+import { ReactNode, useCallback, useMemo } from 'react';
 import {
   CodeOutlined,
   ControlOutlined,
   ProjectOutlined,
 } from '@ant-design/icons';
 import IconTooltip from '@/components/IconTooltip';
+import { getComponent } from '@/utils/Assist/Component';
 import ConfigList from '../Common/Structure/ConfigList';
 import BaseConfig from '../Common/BaseConfig';
 import DataConfig from '../Common/DataConfig';
 import InterActiveConfig from '../Common/InterActiveConfig';
 import ConfigWrapper, { ConfigItem } from '../Common/ConfigWrapper';
 import styles from './index.less';
-import { useMemo } from 'react';
 
-const ComponentConfig = (props: { options?: ReactNode }) => {
-  const { options } = props;
+const ComponentConfig = (props: {
+  options?: ReactNode;
+  id: string;
+  components: ComponentData.TComponentData[];
+}) => {
+  const { options, id, components } = props;
 
   const onBack = useCallback(() => {}, []);
 
   const hasBack = useMemo(() => {
-    return false;
-  }, []);
+    const component: ComponentData.TComponentData = getComponent(
+      id,
+      components,
+    );
+    return !!component?.parent;
+  }, [components, id]);
 
   return (
     <div className={styles['design-config-component']}>
@@ -34,7 +42,7 @@ const ComponentConfig = (props: { options?: ReactNode }) => {
           key="1"
         >
           <ConfigList>
-            <BaseConfig />
+            <BaseConfig id={id} />
             <ConfigList level={1}>{options}</ConfigList>
           </ConfigList>
         </ConfigItem>

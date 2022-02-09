@@ -1,7 +1,7 @@
 import { useMemo, useRef } from 'react';
 import classnames from 'classnames';
 import { connect } from 'dva';
-import { usePanelFocus } from '@/hooks';
+import { useComponentPath, usePanelFocus } from '@/hooks';
 import { isGroupComponent, getComponent } from '@/utils/Assist/Component';
 import GlobalConfig from './components/GlobalConfig';
 import GroupConfig from './components/GroupConfig';
@@ -26,18 +26,22 @@ const RightContent = (props: {
     }
 
     const [selectId] = select;
-    const component: ComponentData.TComponentData = getComponent(
+    let component: ComponentData.TComponentData = getComponent(
       selectId,
       components,
     );
 
-    if (!component) return null;
-
-    if (isGroupComponent(component)) {
-      return <GroupConfig />;
+    if (!component) {
+      useComponentPath(components);
+      component = getComponent(selectId, components);
+      if (!component) return null;
     }
 
-    return <ComponentConfig />;
+    if (isGroupComponent(component)) {
+      return <GroupConfig id={selectId} />;
+    }
+
+    return <ComponentConfig id={selectId} components={components} />;
   }, [select, components]);
 
   return (
