@@ -6,9 +6,11 @@ import styles from './index.less';
 const NameEditor = (props: {
   value: string;
   onChange?: (value: string) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
   isHover: boolean;
 }) => {
-  const { value, isHover, onChange } = props;
+  const { value, isHover, onChange, onFocus, onBlur } = props;
   const [inputValue, setInputValue] = useState<string>(value);
   const [editable, setEditable] = useState<boolean>(false);
 
@@ -20,6 +22,7 @@ const NameEditor = (props: {
   const onConfirm = useCallback(() => {
     onChange?.(inputValue || value);
     setEditable(false);
+    onBlur?.();
   }, [onChange]);
 
   const stop = (e: any) => {
@@ -44,6 +47,8 @@ const NameEditor = (props: {
           onChange={onInputChange}
           onBlur={onConfirm}
           onClick={stop}
+          autoFocus
+          onFocus={onFocus}
         />
       ) : (
         <>

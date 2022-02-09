@@ -3,9 +3,11 @@ import { connect } from 'dva';
 import { nanoid } from 'nanoid';
 import classnames from 'classnames';
 import { useControllableValue, useUnmount } from 'ahooks';
+import arrayMove from 'array-move';
 import { DEFAULT_FILTER_CODE } from '@/utils';
 import AddItem from './addItem';
 import ListItem, { TOnChangeType, TOnComponentChangeType } from './ListItem';
+import List from './List';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -137,6 +139,15 @@ const DataFilter = (props: {
     setTempFilterConfig(newFilterConfig);
   }, [tempFilterConfig]);
 
+  const onSortEnd = useCallback(
+    ({ oldIndex, newIndex }) => {
+      const reverseValue = value.reverse();
+      const newResult = arrayMove(reverseValue, oldIndex, newIndex);
+      setValue(newResult.reverse());
+    },
+    [value],
+  );
+
   useUnmount(() => {
     setCallbackData(resetFilterConfig(filter));
   });
@@ -153,11 +164,12 @@ const DataFilter = (props: {
         'border-1',
       )}
     >
-      <div>
-        {mergedFilterList.map((item) => {
+      <List onSortEnd={onSortEnd} useDragHandle distance={10}>
+        {mergedFilterList.map((item, index) => {
           return (
             <ListItem
               {...item}
+              index={index}
               key={item.id}
               onCodeConfirm={onCodeConfirm}
               onCodeCancel={onCodeCancel.bind(null, item.id)}
@@ -167,7 +179,7 @@ const DataFilter = (props: {
             />
           );
         })}
-      </div>
+      </List>
       <AddItem
         dataSource={filter}
         onClick={handleAdd}

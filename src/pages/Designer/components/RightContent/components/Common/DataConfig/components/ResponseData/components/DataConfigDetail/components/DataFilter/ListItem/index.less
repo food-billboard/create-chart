@@ -2,12 +2,20 @@
 
 .design-config-data-filter-list-item {
   margin-bottom: 8px;
+  &-content {
+    :global {
+      .ant-collapse-header {
+        cursor: default !important;
+      }
+    }
+  }
   :global {
     .ant-collapse {
       user-select: none;
     }
     .ant-collapse-content-box {
       padding: 0;
+      user-select: none;
       & > p {
         padding-left: 8px;
         margin-bottom: 0;
@@ -17,6 +25,7 @@
     .ant-collapse-header {
       padding: 0 !important;
       padding-right: 30px !important;
+      user-select: none;
     }
     .ant-collapse-arrow {
       right: 9px !important;

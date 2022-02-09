@@ -2,9 +2,12 @@ import { useState, useCallback, useMemo, useRef } from 'react';
 import { Button, Checkbox, Collapse, Badge, Space } from 'antd';
 import classnames from 'classnames';
 import { useHover } from 'ahooks';
-import { DeleteOutlined, CaretRightOutlined } from '@ant-design/icons';
-import {} from 'react-sortable-hoc';
-import { CollapsePanelProps, CollapseProps } from 'antd/es/collapse';
+import {
+  DeleteOutlined,
+  CaretRightOutlined,
+  HolderOutlined,
+} from '@ant-design/icons';
+import { SortableHandle, SortableElement } from 'react-sortable-hoc';
 import CodeEditor from '@/components/CodeEditor';
 import NameEditor from './NameEditor';
 import styles from './index.less';
@@ -20,17 +23,9 @@ export type TOnComponentChangeType = (
 
 const { Panel } = Collapse;
 
-const Container = (props: CollapseProps) => {
-  return <Collapse {...props} />;
-};
-
-const DragHandle = () => {
-  return <div></div>;
-};
-
-const Content = (props: CollapsePanelProps) => {
-  return <Panel {...props} />;
-};
+const DragHandle = SortableHandle(() => {
+  return <HolderOutlined className="m-r-8 c-po" />;
+});
 
 const DataFilter = (
   props: {
@@ -41,6 +36,7 @@ const DataFilter = (
       value: Partial<ComponentData.TFilterConfig> & { id: string },
     ) => void;
     onCodeCancel?: () => void;
+    dragDisabled?: boolean;
   } & ComponentData.TFilterConfig &
     ComponentData.TComponentFilterConfig,
 ) => {
@@ -54,6 +50,8 @@ const DataFilter = (
     onChange,
     onComponentChange: propsOnComponentChange,
     isTemp,
+    dragDisabled,
+    ...nextProps
   } = props;
 
   const [updateFilter, setUpdateFilter] =
@@ -130,6 +128,7 @@ const DataFilter = (
           styles['design-config-data-filter-list-item-header'],
         )}
       >
+        {!dragDisabled && !isTemp && <DragHandle />}
         <Checkbox
           checked={!disabled}
           onChange={(e) => {
@@ -158,13 +157,20 @@ const DataFilter = (
             icon={<DeleteOutlined />}
             onClick={(e) => {
               stop(e);
-              onConfigChange('code', 'delete', null);
+              onComponentChange('id', 'delete', null);
             }}
           ></Button>
         </div>
       </div>
     );
-  }, [disabled, name, onComponentChange, onConfigChange, isHover]);
+  }, [
+    disabled,
+    name,
+    onComponentChange,
+    onConfigChange,
+    isHover,
+    dragDisabled,
+  ]);
 
   const onPanelCloseChange = useCallback(
     (value) => {
@@ -184,8 +190,17 @@ const DataFilter = (
       className={styles['design-config-data-filter-list-item']}
       activeKey={[activeKey]}
       onChange={onPanelCloseChange}
+      style={{ zIndex: 9999, opacity: 1, visibility: 'visible' }}
+      {...nextProps}
     >
-      <Panel header={header} key={id}>
+      <Panel
+        header={header}
+        key={id}
+        className={classnames({
+          [styles['design-config-data-filter-list-item-content']]:
+            !!updateFilter,
+        })}
+      >
         <p>{'function filter(data) {'}</p>
         <CodeEditor
           language="javascript"
@@ -211,4 +226,4 @@ const DataFilter = (
   );
 };
 
-export default DataFilter;
+export default SortableElement(DataFilter);
