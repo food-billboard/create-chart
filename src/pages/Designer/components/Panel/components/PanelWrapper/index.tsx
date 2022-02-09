@@ -26,6 +26,25 @@ const RIGHT_BOTTOM_PADDING = 200;
 export const wrapperId = 'designer-page-main';
 export const subWrapperId = 'designer-page-main-sub';
 
+let scroll = {
+  x: 0,
+  y: 0,
+  defaultX: 400,
+  defaultY: 82,
+};
+
+const getWrapperScroll = (cover = false) => {
+  const { x, y } = document
+    .querySelector('#designer-page-main')
+    ?.getBoundingClientRect() || { x: 400, y: 82 };
+  scroll.x = x - scroll.defaultX;
+  scroll.y = y - scroll.defaultY;
+  if (cover) {
+    scroll.defaultX = x;
+    scroll.defaultY = y;
+  }
+};
+
 const PanelWrapper = (props: {
   scale: number;
   width?: number;
@@ -63,8 +82,6 @@ const PanelWrapper = (props: {
 
   const mousePosition = useMouse();
 
-  const ref = useRef<HTMLDivElement>(null);
-
   const scale = useMemo(() => {
     return originScale / 100;
   }, [originScale]);
@@ -73,6 +90,8 @@ const PanelWrapper = (props: {
     const { clientX, clientY } = mousePosition;
     if (disabledMouseGuideLine.current) return;
     if (isHorizontalRulerHover) {
+      getWrapperScroll();
+      const { x, y } = scroll;
       const result = generateGuideLine(
         'vertical',
         {
@@ -81,13 +100,15 @@ const PanelWrapper = (props: {
         },
         false,
         {
-          clientX,
-          clientY,
+          clientX: clientX - x,
+          clientY: clientY - y,
         },
         'dashed',
       );
       setMouseHorizontalGuideLine(result);
     } else if (isVerticalRulerHover) {
+      getWrapperScroll();
+      const { x, y } = scroll;
       const result = generateGuideLine(
         'horizontal',
         {
@@ -96,8 +117,8 @@ const PanelWrapper = (props: {
         },
         false,
         {
-          clientX,
-          clientY,
+          clientX: clientX - x,
+          clientY: clientY - y,
         },
         'dashed',
       );
@@ -305,6 +326,7 @@ const PanelWrapper = (props: {
 
   useEffect(() => {
     getWrapperStyle();
+    getWrapperScroll(true);
   }, []);
 
   return (
