@@ -1,41 +1,42 @@
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import { Checkbox, InputNumber } from 'antd';
-import { useControllableValue } from 'ahooks';
 import classnames from 'classnames';
 import styles from './index.less';
 
-type TValue = ComponentData.TComponentApiDataConfig['request']['frequency'];
+export type TValue =
+  ComponentData.TComponentApiDataConfig['request']['frequency'];
 
 const AutoUpdate = (props: {
   value?: TValue;
-  onChange?: (value?: TValue) => void;
+  onChange?: (value: TValue) => void;
 }) => {
-  const [value, setValue] = useControllableValue<TValue>(props, {
-    defaultValue: {
-      show: false,
+  const {
+    value = {
       value: 1,
+      show: false,
     },
-  });
+    onChange,
+  } = props;
 
   const onCheckChange = useCallback(
     (e: any) => {
-      setValue({
+      onChange?.({
         ...value,
         show: !!e.target.checked,
       });
     },
-    [value],
+    [value, onChange],
   );
 
   const onInputChange = useCallback(
-    (inputValue) => {
-      const realValue = parseFloat(inputValue) || 1;
-      setValue({
+    (e) => {
+      const realValue = parseFloat(e.target.value) || 1;
+      onChange?.({
         ...value,
         value: realValue,
       });
     },
-    [value],
+    [value, onChange],
   );
 
   return (
@@ -51,7 +52,7 @@ const AutoUpdate = (props: {
       <InputNumber
         defaultValue={value.value || 0}
         disabled={!value.show}
-        onChange={onInputChange}
+        onBlur={onInputChange}
         controls={false}
       />
       {'  秒一次'}

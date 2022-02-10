@@ -12,19 +12,14 @@ function fieldTypeToString(type: 'string' | 'number') {
   }
 }
 
-const FieldMap = (props: { value?: ComponentData.TComponentMapData[] }) => {
+const FieldMap = (props: {
+  value?: ComponentData.TComponentMapData[];
+  onChange?: (value: ComponentData.TComponentMapData[]) => void;
+}) => {
   const [value, setValue] = useControllableValue<
     ComponentData.TComponentMapData[]
   >(props, {
-    defaultValue: [
-      {
-        field: 'name',
-        map: '',
-        id: '0',
-        description: '字符型字段',
-        type: 'string',
-      },
-    ],
+    defaultValue: [],
   });
 
   const onValueChange = useCallback(

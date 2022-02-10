@@ -24,8 +24,8 @@ declare namespace ComponentData {
     request: {
       url: string;
       method: 'POST' | 'GET';
-      headers: object;
-      body: object;
+      headers: string;
+      body: string;
       frequency: {
         show: boolean;
         value: number;

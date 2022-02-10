@@ -1,7 +1,10 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { Steps, Checkbox } from 'antd';
+import { get } from 'lodash';
+import json5 from 'json5';
 import classnames from 'classnames';
-import AutoUpdate from './components/AutoUpdate';
+import { useResponseData } from '@/hooks';
+import AutoUpdate, { TValue } from './components/AutoUpdate';
 import GhostButton from './components/GhostButton';
 import CodeEditor from './components/CodeViewer';
 import DataConfigDetail, {
@@ -11,12 +14,75 @@ import styles from './index.less';
 
 const { Step } = Steps;
 
-const ResponseData = (props: { value: {}; onChange: () => void }) => {
+const ResponseData = (props: {
+  value: ComponentData.TComponentData;
+  onChange?: (value: SuperPartial<ComponentData.TComponentData>) => void;
+}) => {
+  const { value, onChange } = props;
+
   const configDetailRef = useRef<IDataConfigDetailRef>(null);
 
   const apiTypeString = useMemo(() => {
-    return '静态数据'; // api
-  }, []);
+    const requestType = get(value, 'config.data.request.type');
+    if (requestType === 'api') return '接口数据';
+    return '静态数据';
+  }, [value]);
+
+  const autoUpdateConfig = useMemo(() => {
+    return get(value, 'config.data.request.frequency');
+  }, [value]);
+
+  const filterOpen = useMemo(() => {
+    return get(value, 'config.data.filter.show');
+  }, [value]);
+
+  const dataConfigDetail = useMemo(() => {
+    return value.config.data;
+  }, [value]);
+
+  const responseData = useResponseData(get(value, 'config.data') || {});
+
+  const onDataConfigChange = useCallback(
+    (value: SuperPartial<ComponentData.TComponentApiDataConfig>) => {
+      onChange?.({
+        config: {
+          data: value,
+        },
+      });
+    },
+    [onChange],
+  );
+
+  const onAutoUpdateConfigChange = useCallback(
+    (value: TValue) => {
+      onChange?.({
+        config: {
+          data: {
+            request: {
+              frequency: value,
+            },
+          },
+        },
+      });
+    },
+    [onChange],
+  );
+
+  const onFilterConfigChange = useCallback(
+    (e) => {
+      const checked = e.target.checked;
+      onChange?.({
+        config: {
+          data: {
+            filter: {
+              show: checked,
+            },
+          },
+        },
+      });
+    },
+    [onChange],
+  );
 
   const openDataConfig = useCallback(() => {
     configDetailRef.current?.open();
@@ -24,7 +90,10 @@ const ResponseData = (props: { value: {}; onChange: () => void }) => {
 
   return (
     <div className={styles['design-config-response-data']}>
-      <AutoUpdate />
+      <AutoUpdate
+        value={autoUpdateConfig}
+        onChange={onAutoUpdateConfigChange}
+      />
       <div className={styles['design-config-response-data-step']}>
         <Steps progressDot current={2} direction="vertical">
           <Step
@@ -55,6 +124,7 @@ const ResponseData = (props: { value: {}; onChange: () => void }) => {
             }
           />
           <Step
+            status={filterOpen ? 'finish' : 'wait'}
             title={
               <div
                 className={classnames(
@@ -67,7 +137,12 @@ const ResponseData = (props: { value: {}; onChange: () => void }) => {
                     styles['design-config-response-data-step-item-title']
                   }
                 >
-                  <Checkbox>数据过滤器</Checkbox>
+                  <Checkbox
+                    checked={filterOpen}
+                    onChange={onFilterConfigChange}
+                  >
+                    数据过滤器
+                  </Checkbox>
                 </div>
                 <GhostButton onClick={openDataConfig}>添加过滤器</GhostButton>
               </div>
@@ -94,9 +169,13 @@ const ResponseData = (props: { value: {}; onChange: () => void }) => {
         </Steps>
       </div>
       <div className={styles['design-config-response-data-code-editor-view']}>
-        <CodeEditor />
+        <CodeEditor value={get(value, 'config.data.value')} />
       </div>
-      <DataConfigDetail ref={configDetailRef} />
+      <DataConfigDetail
+        ref={configDetailRef}
+        value={dataConfigDetail!}
+        onChange={onDataConfigChange}
+      />
     </div>
   );
 };

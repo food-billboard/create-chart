@@ -15,6 +15,8 @@ const DataFilter = (props: {
   disabled?: boolean;
   filter: ComponentData.TFilterConfig[];
   setCallbackData: (value: ComponentData.TFilterConfig[]) => void;
+  value?: ComponentData.TComponentFilterConfig[];
+  onChange?: (value: ComponentData.TComponentFilterConfig[]) => void;
 }) => {
   const { disabled, filter, setCallbackData } = props;
 
@@ -168,7 +170,7 @@ const DataFilter = (props: {
         {mergedFilterList.map((item, index) => {
           return (
             <ListItem
-              {...item}
+              props={item}
               index={index}
               key={item.id}
               onCodeConfirm={onCodeConfirm}

@@ -1,11 +1,23 @@
 import {} from 'react';
 import { Select } from 'antd';
-import CodeEditor from '@/components/CodeEditor';
+import CodeEditor from '../SaveCodeEditor';
 import SubTitle, { SubForm } from '../../SubTitle';
+import { TOnChange } from '../type.d';
 
 const { Option } = Select;
 
-const ApiConfig = () => {
+export type ApiConfigProps = Partial<
+  Pick<
+    ComponentData.TComponentApiDataConfig['request'],
+    'method' | 'url' | 'headers' | 'body'
+  >
+> & {
+  onChange?: TOnChange;
+};
+
+const ApiConfig = (props: ApiConfigProps) => {
+  const { method, onChange, url, headers, body } = props;
+
   return (
     <div>
       <SubTitle>请求方式</SubTitle>
@@ -13,6 +25,15 @@ const ApiConfig = () => {
         <Select
           className="w-100 c-f-s"
           dropdownClassName="design-config-select-dropdown"
+          defaultValue="POST"
+          value={method}
+          onChange={(value) => {
+            onChange?.({
+              request: {
+                method: value as any,
+              },
+            });
+          }}
         >
           <Option key="POST" value="POST">
             POST
@@ -24,17 +45,45 @@ const ApiConfig = () => {
       </SubForm>
       <SubTitle>URL</SubTitle>
       <SubForm>
-        <CodeEditor language="txt" width={454} height={138} bordered />
+        <CodeEditor
+          language="txt"
+          value={url}
+          onChange={(value) => {
+            onChange?.({
+              request: {
+                url: value,
+              },
+            });
+          }}
+        />
       </SubForm>
       <SubTitle>Headers</SubTitle>
       <SubForm>
-        <CodeEditor language="json" width={454} height={138} bordered />
+        <CodeEditor
+          value={headers}
+          onChange={(value) => {
+            onChange?.({
+              request: {
+                headers: value,
+              },
+            });
+          }}
+        />
       </SubForm>
-      {true && ( // post请求显示请求body
+      {method === 'POST' && (
         <>
           <SubTitle>POST 请求参数</SubTitle>
           <SubForm>
-            <CodeEditor language="json" width={454} height={138} bordered />
+            <CodeEditor
+              value={body}
+              onChange={(value) => {
+                onChange?.({
+                  request: {
+                    body: value,
+                  },
+                });
+              }}
+            />
           </SubForm>
         </>
       )}

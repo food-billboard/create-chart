@@ -39,6 +39,28 @@ declare let ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION:
 
 declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
 
-declare type SuperPartial<T> = {
-  [P in keyof T]?: T[P] extends object ? SuperPartial<T[P]> : T[P];
+type OptionalFlat<O> = {
+  [K in keyof O]?: O[K];
+} & {};
+
+type OptionalDeep<O> = {
+  [K in keyof O]?: OptionalDeep<O[K]>;
 };
+
+type OptionalPart<O extends object, depth extends Depth> = {
+  flat: OptionalFlat<O>;
+  deep: OptionalDeep<O>;
+}[depth];
+
+type Depth = 'flat' | 'deep';
+
+type InternalPartial<
+  O extends object,
+  depth extends Depth = 'flat',
+> = OptionalPart<O, depth>;
+
+declare type SuperPartial<T extends object> = InternalPartial<T, 'deep'>;
+
+// declare type SuperPartial<T> = {
+//   [P in keyof T]?: T[P] extends object ? SuperPartial<T[P]> : T[P];
+// };

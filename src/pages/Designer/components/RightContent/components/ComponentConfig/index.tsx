@@ -76,7 +76,7 @@ const ComponentConfig = (props: {
           }
           key="2"
         >
-          <DataConfig />
+          <DataConfig id={id} components={components} />
         </ConfigItem>
         <ConfigItem
           tab={

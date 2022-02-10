@@ -31,8 +31,8 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           request: {
             url: '',
             method: 'POST',
-            headers: {},
-            body: {},
+            headers: '{}',
+            body: '{}',
             frequency: {
               show: false,
               value: 10,
@@ -100,8 +100,8 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           request: {
             url: '',
             method: 'POST',
-            headers: {},
-            body: {},
+            headers: '{}',
+            body: '{}',
             frequency: {
               show: false,
               value: 10,
@@ -177,8 +177,8 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
               request: {
                 url: '',
                 method: 'POST',
-                headers: {},
-                body: {},
+                headers: '{}',
+                body: '{}',
                 frequency: {
                   show: false,
                   value: 10,
@@ -282,8 +282,8 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
                   request: {
                     url: '',
                     method: 'POST',
-                    headers: {},
-                    body: {},
+                    headers: '{}',
+                    body: '{}',
                     frequency: {
                       show: false,
                       value: 10,
@@ -380,8 +380,8 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
                   request: {
                     url: '',
                     method: 'POST',
-                    headers: {},
-                    body: {},
+                    headers: '{}',
+                    body: '{}',
                     frequency: {
                       show: false,
                       value: 10,

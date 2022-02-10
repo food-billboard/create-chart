@@ -5,22 +5,13 @@ import SubTitle, { SubForm } from '../SubTitle';
 import commonStyles from '../../../../../FieldMap/index.less';
 
 const ResponseDataMap = (props: {
-  value?: ComponentData.TComponentMapData[];
+  value: ComponentData.TComponentMapData[];
+  valueType: ComponentData.TComponentApiDataConfig['request']['valueType'];
 }) => {
-  const {
-    value = [
-      {
-        field: 'name',
-        map: '2222',
-        id: '0',
-        description: '字符型字段',
-        type: 'string',
-      },
-    ],
-  } = props;
+  const { value = [], valueType } = props;
 
   const responseTypeToString = useMemo(() => {
-    return '列表'; // 数组
+    return valueType === 'array' ? '数组' : '对象';
   }, []);
 
   const columns = useMemo(() => {

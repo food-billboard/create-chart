@@ -255,8 +255,8 @@ export const createComponent: (
             request: {
               url: '',
               method: 'POST',
-              headers: {},
-              body: {},
+              headers: '{}',
+              body: '{}',
               frequency: {
                 show: false,
                 value: 15,

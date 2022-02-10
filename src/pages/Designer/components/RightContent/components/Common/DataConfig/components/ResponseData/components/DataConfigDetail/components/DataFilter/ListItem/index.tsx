@@ -27,24 +27,19 @@ const DragHandle = SortableHandle(() => {
   return <HolderOutlined className="m-r-8 c-po" />;
 });
 
-const DataFilter = (
-  props: {
-    isTemp?: boolean;
-    onChange?: TOnChangeType;
-    onComponentChange?: TOnComponentChangeType;
-    onCodeConfirm?: (
-      value: Partial<ComponentData.TFilterConfig> & { id: string },
-    ) => void;
-    onCodeCancel?: () => void;
-    dragDisabled?: boolean;
-  } & ComponentData.TFilterConfig &
-    ComponentData.TComponentFilterConfig,
-) => {
+const DataFilter = (props: {
+  isTemp?: boolean;
+  onChange?: TOnChangeType;
+  onComponentChange?: TOnComponentChangeType;
+  onCodeConfirm?: (
+    value: Partial<ComponentData.TFilterConfig> & { id: string },
+  ) => void;
+  onCodeCancel?: () => void;
+  dragDisabled?: boolean;
+  props: ComponentData.TFilterConfig & ComponentData.TComponentFilterConfig;
+}) => {
   const {
-    disabled,
-    id,
-    name,
-    code,
+    props: { disabled, id, name, code },
     onCodeCancel: propsOnCodeCancel,
     onCodeConfirm: propsOnCodeConfirm,
     onChange,

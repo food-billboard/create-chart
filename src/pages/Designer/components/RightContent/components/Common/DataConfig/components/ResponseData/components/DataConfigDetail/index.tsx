@@ -8,17 +8,22 @@ import {
   useState,
 } from 'react';
 import CodeEditor from '@/components/CodeEditor';
+import { useResponseData } from '@/hooks';
 import SubTitle, { SubForm } from './components/SubTitle';
 import DataFilter from './components/DataFilter';
 import DefineConfig from './components/DefineConfig';
 import ResponseDataMap from './components/ResponseDataMap';
+import { TOnChange } from './components/DefineConfig/type.d';
 import styles from './index.less';
 
 export interface IDataConfigDetailRef {
   open: () => void;
 }
 
-interface IDataConfigDetailProps {}
+interface IDataConfigDetailProps {
+  value: ComponentData.TComponentApiDataConfig;
+  onChange?: TOnChange;
+}
 
 const { Option } = Select;
 
@@ -41,6 +46,16 @@ const DataConfigDetail = forwardRef<
   IDataConfigDetailRef,
   IDataConfigDetailProps
 >((props, ref) => {
+  const {
+    value: {
+      request: { type, valueType, method, url, body, headers },
+      filter: { show: filterShow, map, value: filterValue },
+    },
+    onChange,
+  } = props;
+
+  const responseData = useResponseData(props.value);
+
   const [visible, setVisible] = useState<boolean>(false);
 
   const open = useCallback(() => {
@@ -62,6 +77,43 @@ const DataConfigDetail = forwardRef<
     [open],
   );
 
+  // config change
+  // --- start
+  const onDataTypeChange = useCallback(
+    (value) => {
+      onChange?.({
+        request: {
+          type: value,
+        },
+      });
+    },
+    [onChange],
+  );
+
+  const onDataFilterOpenChange = useCallback(
+    (e) => {
+      onChange?.({
+        filter: {
+          show: e.target.checked,
+        },
+      });
+    },
+    [onChange],
+  );
+
+  const onDataFilterValueChange = useCallback(
+    (value) => {
+      onChange?.({
+        filter: {
+          value,
+        },
+      });
+    },
+    [onChange],
+  );
+
+  // --- end
+
   return (
     <Drawer
       visible={visible}
@@ -78,6 +130,9 @@ const DataConfigDetail = forwardRef<
           <Select
             className="w-100 c-f-s"
             dropdownClassName="design-config-select-dropdown"
+            value={type}
+            defaultValue="static"
+            onChange={onDataTypeChange}
           >
             <Option key="static" value="static">
               静态数据
@@ -87,13 +142,32 @@ const DataConfigDetail = forwardRef<
             </Option>
           </Select>
         </SubForm>
-        <DefineConfig />
+        <DefineConfig
+          method={type}
+          staticProps={{
+            value: responseData,
+            onChange,
+          }}
+          apiProps={{
+            onChange,
+            method,
+            url,
+            headers,
+            body,
+          }}
+        />
 
-        <Title visible>
-          <Checkbox>数据过滤器</Checkbox>
+        <Title visible={!!filterShow}>
+          <Checkbox checked={filterShow} onChange={onDataFilterOpenChange}>
+            数据过滤器
+          </Checkbox>
         </Title>
-        <DataFilter />
-        <ResponseDataMap />
+        <DataFilter
+          value={filterValue}
+          onChange={onDataFilterValueChange}
+          disabled={!filterShow}
+        />
+        <ResponseDataMap value={map} valueType={valueType} />
 
         <Title>数据响应结果</Title>
 
@@ -103,6 +177,7 @@ const DataConfigDetail = forwardRef<
           width={454}
           height={238}
           bordered
+          value={responseData}
         />
       </div>
     </Drawer>

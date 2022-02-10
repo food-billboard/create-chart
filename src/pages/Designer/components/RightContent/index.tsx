@@ -38,7 +38,7 @@ const RightContent = (props: {
     }
 
     if (isGroupComponent(component)) {
-      return <GroupConfig id={selectId} />;
+      return <GroupConfig id={selectId} components={components} />;
     }
 
     return <ComponentConfig id={selectId} components={components} />;

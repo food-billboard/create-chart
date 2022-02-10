@@ -1,11 +1,26 @@
-import {} from 'react';
-import {} from 'antd';
-import CodeEditor from '@/components/CodeEditor';
+import { useCallback } from 'react';
+import CodeEditor from '../SaveCodeEditor';
 
-const StaticConfig = (props: {}) => {
-  const {} = props;
+const StaticConfig = (props: {
+  value?: string;
+  onChange?: (
+    value: SuperPartial<ComponentData.TComponentApiDataConfig>,
+  ) => void;
+}) => {
+  const { value, onChange: propsOnChange } = props;
 
-  return <CodeEditor language="json" width={454} height={138} bordered />;
+  const onChange = useCallback(
+    (value) => {
+      propsOnChange?.({
+        request: {
+          value,
+        },
+      });
+    },
+    [propsOnChange],
+  );
+
+  return <CodeEditor onChange={onChange} value={value} />;
 };
 
 export default StaticConfig;
