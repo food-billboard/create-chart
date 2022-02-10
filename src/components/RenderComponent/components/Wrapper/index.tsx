@@ -44,8 +44,8 @@ const ComponentWrapper = (
         return {
           config: {
             style: {
-              left: x,
-              top: y,
+              left: Math.floor(x),
+              top: Math.floor(y),
             },
           },
         };
@@ -79,8 +79,8 @@ const ComponentWrapper = (
               style: {
                 width: newWidth,
                 height: newHeight,
-                left: position.x,
-                top: position.y,
+                left: Math.floor(position.x),
+                top: Math.floor(position.y),
               },
             },
           };

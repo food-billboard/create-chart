@@ -4,6 +4,7 @@ import {
   ControlOutlined,
   ProjectOutlined,
 } from '@ant-design/icons';
+import { connect } from 'dva';
 import IconTooltip from '@/components/IconTooltip';
 import { getComponent } from '@/utils/Assist/Component';
 import ConfigList from '../Common/Structure/ConfigList';
@@ -11,16 +12,24 @@ import BaseConfig from '../Common/BaseConfig';
 import DataConfig from '../Common/DataConfig';
 import InterActiveConfig from '../Common/InterActiveConfig';
 import ConfigWrapper, { ConfigItem } from '../Common/ConfigWrapper';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const ComponentConfig = (props: {
   options?: ReactNode;
   id: string;
   components: ComponentData.TComponentData[];
+  setSelect: (value: string[]) => void;
 }) => {
-  const { options, id, components } = props;
+  const { options, id, components, setSelect } = props;
 
-  const onBack = useCallback(() => {}, []);
+  const onBack = useCallback(() => {
+    const { parent }: ComponentData.TComponentData = getComponent(
+      id,
+      components,
+    );
+    setSelect([parent!]);
+  }, [id, components, setSelect]);
 
   const hasBack = useMemo(() => {
     const component: ComponentData.TComponentData = getComponent(
@@ -71,4 +80,4 @@ const ComponentConfig = (props: {
   );
 };
 
-export default ComponentConfig;
+export default connect(mapStateToProps, mapDispatchToProps)(ComponentConfig);

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import { InputNumber } from 'antd';
 import { connect } from 'dva';
 import { get } from 'lodash';
@@ -27,6 +27,11 @@ const BaseConfig = (props: {
     return get(component, 'config.style') || {};
   }, [components]);
 
+  const [stateWidth, setStateWidth] = useState<number>(width);
+  const [stateHeight, setStateHeight] = useState<number>(height);
+  const [stateLeft, setStateLeft] = useState<number>(left);
+  const [stateTop, setStateTop] = useState<number>(top);
+
   const onValueChange = useCallback(
     (path: keyof ComponentData.TBaseConfig['style'], value: any) => {
       const componentPath = getPath(id);
@@ -46,34 +51,54 @@ const BaseConfig = (props: {
     [id],
   );
 
+  useEffect(() => {
+    setStateWidth(width);
+  }, [width]);
+
+  useEffect(() => {
+    setStateHeight(height);
+  }, [height]);
+
+  useEffect(() => {
+    setStateLeft(left);
+  }, [left]);
+
+  useEffect(() => {
+    setStateTop(top);
+  }, [top]);
+
   return (
     <div>
       <ConfigList>
         <Item label="图表尺寸">
           <HalfForm>
             <InputNumber
-              defaultValue={width}
-              onBlur={onValueChange.bind(null, 'width')}
+              value={stateWidth}
+              onChange={(value) => setStateWidth(value)}
+              onBlur={onValueChange.bind(null, 'width', stateWidth)}
             />
           </HalfForm>
           <HalfForm>
             <InputNumber
-              defaultValue={height}
-              onBlur={onValueChange.bind(null, 'height')}
+              value={stateHeight}
+              onChange={(value) => setStateHeight(value)}
+              onBlur={onValueChange.bind(null, 'height', stateHeight)}
             />
           </HalfForm>
         </Item>
         <Item label="图表位置">
           <HalfForm>
             <InputNumber
-              defaultValue={left}
-              onBlur={onValueChange.bind(null, 'left')}
+              value={stateLeft}
+              onChange={(value) => setStateLeft(value)}
+              onBlur={onValueChange.bind(null, 'left', stateLeft)}
             />
           </HalfForm>
           <HalfForm>
             <InputNumber
-              defaultValue={top}
-              onBlur={onValueChange.bind(null, 'top')}
+              value={stateTop}
+              onChange={(value) => setStateTop(value)}
+              onBlur={onValueChange.bind(null, 'top', stateTop)}
             />
           </HalfForm>
         </Item>
