@@ -1,4 +1,5 @@
 import json5 from 'json5';
+
 class FilterData {
   pipeValueByCodeString(value: any, code: string) {
     let filterFunction = new Function('obj', code);
@@ -30,6 +31,34 @@ class FilterData {
     } catch (err) {
       return '{}';
     }
+  }
+
+  requestData(value: ComponentData.TComponentApiDataConfig) {
+    const {
+      filter: {},
+      request: { method, url, headers, body, type, value: responseData },
+    } = value;
+
+    if (type !== 'api') return responseData;
+
+    let realHeaders;
+    let realBody;
+
+    if (method === 'POST') {
+      try {
+        realBody = json5.parse(body);
+      } catch {
+        realBody = {};
+      }
+    }
+
+    try {
+      realHeaders = json5.parse(headers);
+    } catch {
+      realHeaders = {};
+    }
+
+    // TODO
   }
 }
 

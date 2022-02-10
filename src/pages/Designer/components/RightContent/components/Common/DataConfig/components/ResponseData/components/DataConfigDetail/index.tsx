@@ -7,8 +7,10 @@ import {
   useMemo,
   useState,
 } from 'react';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
 import CodeEditor from '@/components/CodeEditor';
 import { useResponseData } from '@/hooks';
+import IconTooltip from '@/components/IconTooltip';
 import SubTitle, { SubForm } from './components/SubTitle';
 import DataFilter from './components/DataFilter';
 import DefineConfig from './components/DefineConfig';
@@ -114,6 +116,10 @@ const DataConfigDetail = forwardRef<
 
   // --- end
 
+  const requestData = useCallback(() => {
+    // TODO
+  }, []);
+
   return (
     <Drawer
       visible={visible}
@@ -169,7 +175,12 @@ const DataConfigDetail = forwardRef<
         />
         <ResponseDataMap value={map} valueType={valueType} />
 
-        <Title>数据响应结果</Title>
+        <Title>
+          数据响应结果
+          <IconTooltip title="重新获取数据">
+            <Loading3QuartersOutlined onClick={requestData} />
+          </IconTooltip>
+        </Title>
 
         <CodeEditor
           language="json"
