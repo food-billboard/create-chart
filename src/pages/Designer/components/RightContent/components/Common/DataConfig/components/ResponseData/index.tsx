@@ -169,7 +169,7 @@ const ResponseData = (props: {
         </Steps>
       </div>
       <div className={styles['design-config-response-data-code-editor-view']}>
-        <CodeEditor value={get(value, 'config.data.value')} />
+        <CodeEditor value={value.config.data!} />
       </div>
       <DataConfigDetail
         ref={configDetailRef}
