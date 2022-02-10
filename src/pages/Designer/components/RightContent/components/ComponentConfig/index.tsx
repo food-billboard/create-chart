@@ -39,9 +39,22 @@ const ComponentConfig = (props: {
     return !!component?.parent;
   }, [components, id]);
 
+  const title = useMemo(() => {
+    const component: ComponentData.TComponentData = getComponent(
+      id,
+      components,
+    );
+    return component?.name;
+  }, [components, id]);
+
   return (
     <div className={styles['design-config-component']}>
-      <ConfigWrapper hasBack={hasBack} onBack={onBack} tabCounter={3}>
+      <ConfigWrapper
+        hasBack={hasBack}
+        onBack={onBack}
+        tabCounter={3}
+        title={title}
+      >
         <ConfigItem
           tab={
             <IconTooltip title="配置">

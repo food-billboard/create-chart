@@ -12,14 +12,16 @@ const ConfigWrapper = (props: {
   tabCounter?: number;
   onBack?: () => void;
   hasBack?: boolean;
+  title: string;
 }) => {
-  const { children, tabCounter = 3, onBack, hasBack } = props;
+  const { children, tabCounter = 3, onBack, hasBack, title } = props;
 
   const realChildren = useMemo(() => {
     return Children.map(children, (child) => {
       return cloneElement(child as any, {
         onBack,
         hasBack,
+        title,
       });
     });
   }, [children]);
@@ -43,9 +45,18 @@ export const ConfigItem = (
   props: TabPaneProps & {
     onBack?: () => void;
     hasBack?: boolean;
+    version?: string;
+    title?: string;
   },
 ) => {
-  const { children, hasBack, onBack, ...nextProps } = props;
+  const {
+    children,
+    hasBack,
+    onBack,
+    title,
+    version = 'v1.0.0',
+    ...nextProps
+  } = props;
 
   return (
     <Tabs.TabPane {...nextProps}>
@@ -66,9 +77,9 @@ export const ConfigItem = (
             )}
             <span
               className={classnames('text-ellipsis', 'dis-flex')}
-              title="垂直胶囊柱状图"
+              title={title}
             >
-              垂直胶囊柱状图
+              {title}
             </span>
           </div>
           <div
@@ -77,7 +88,9 @@ export const ConfigItem = (
               'dis-flex',
             )}
           >
-            <span>v3.0.15 | 垂直胶囊柱状图</span>
+            <span>
+              {version} | {title}
+            </span>
           </div>
         </div>
       </div>
