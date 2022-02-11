@@ -3,16 +3,16 @@ import StaticConfig from './StaticConfig';
 import { TOnChange } from './type.d';
 
 const DefineConfig = (props: {
-  method?: 'api' | 'static';
+  type?: 'api' | 'static';
   staticProps?: {
     value?: string;
     onChange?: TOnChange;
   };
   apiProps?: ApiConfigProps;
 }) => {
-  const { method, staticProps, apiProps } = props;
+  const { type, staticProps, apiProps } = props;
 
-  if (method === 'api') return <ApiConfig {...apiProps!} />;
+  if (type === 'api') return <ApiConfig {...apiProps!} />;
 
   return <StaticConfig {...staticProps!} />;
 };

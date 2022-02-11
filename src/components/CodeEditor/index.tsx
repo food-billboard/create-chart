@@ -4,6 +4,7 @@ import {
   forwardRef,
   useImperativeHandle,
   useState,
+  useEffect,
 } from 'react';
 import { useControllableValue } from 'ahooks';
 import MonacoEditor, {
@@ -12,10 +13,17 @@ import MonacoEditor, {
 } from 'react-monaco-editor';
 import classnames from 'classnames';
 import { merge } from 'lodash';
+import { sleep } from '@/utils';
 import styles from './index.less';
 
 export type EditorProps = Partial<MonacoEditorProps> & {
   autoFocus?: boolean;
+  autoFormat?:
+    | boolean
+    | {
+        mount?: boolean;
+        blur?: boolean;
+      };
   disabled?: boolean;
   bordered?: boolean;
   onBlur?: (value: string) => void;
@@ -38,6 +46,8 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
     className,
     bordered,
     onBlur,
+    autoFormat = false,
+    value: propsValue,
     ...nextProps
   } = props;
 
@@ -53,29 +63,47 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
     );
   }, [options, disabled]);
 
+  const formatIfNeed = useCallback(
+    (editor: any, type: 'mount' | 'blur') => {
+      const needUpdate = autoFormat === true || !!(autoFormat as any)?.[type];
+
+      if (needUpdate) {
+        sleep(200).then((_) => {
+          formatData(editor);
+        });
+      }
+    },
+    [autoFormat],
+  );
+
   const editorDidMount: EditorDidMount = (editor, monaco) => {
     propsEditorDidMount?.(editor, monaco);
     autoFocus && !disabled && editor.focus();
     setEditorRef(editor);
+
+    formatIfNeed(editor, 'mount');
+
     editor.onDidBlurEditorText(() => {
       onBlur?.(editor.getValue());
+      formatIfNeed(editor, 'blur');
     });
   };
 
-  const formatData = useCallback(() => {
-    if (!editorRef) return;
+  const formatData = (editor?: any) => {
+    const realEditorInstance = editor || editorRef;
+    if (!realEditorInstance) return;
     if (disabled) {
-      editorRef.updateOptions({ readOnly: false });
-      editorRef
+      realEditorInstance.updateOptions({ readOnly: false });
+      realEditorInstance
         .getAction('editor.action.formatDocument')
         .run()
         .then(() => {
-          editorRef.updateOptions({ readOnly: true });
+          realEditorInstance.updateOptions({ readOnly: true });
         });
     } else {
-      editorRef.getAction('editor.action.formatDocument').run();
+      realEditorInstance.getAction('editor.action.formatDocument').run();
     }
-  }, [editorRef, disabled]);
+  };
 
   useImperativeHandle(
     ref,
@@ -84,7 +112,7 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
         format: formatData,
       };
     },
-    [formatData],
+    [],
   );
 
   return (

@@ -31,14 +31,18 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           request: {
             url: '',
             method: 'POST',
-            headers: '{}',
-            body: '{}',
+            headers: '{ a: 1 }',
+            body: '{ b: 2 }',
             frequency: {
               show: false,
               value: 10,
             },
             type: 'static',
-            value: [],
+            value: [
+              {
+                value: 1,
+              },
+            ],
           },
           filter: {
             show: false,

@@ -31,11 +31,13 @@ class FilterData {
     filter: ComponentData.TFilterConfig[],
   ) {
     const {
-      filter: { value: filterData },
+      filter: { value: filterData, show },
       request: { value: originData },
     } = value;
 
-    const unDisabledFilterData = filterData.filter((item) => !item.disabled);
+    const unDisabledFilterData = show
+      ? filterData.filter((item) => !item.disabled)
+      : [];
     const existsFilterData = unDisabledFilterData.filter((item) =>
       filter.some((filterData) => filterData.id === item.id),
     );

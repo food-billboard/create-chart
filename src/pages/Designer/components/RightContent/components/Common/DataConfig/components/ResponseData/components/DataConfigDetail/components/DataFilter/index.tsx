@@ -65,6 +65,16 @@ const DataFilter = (props: {
           },
         ]);
         setTempFilterConfig(null);
+      } else {
+        setCallbackData(
+          filter.map((item) => {
+            if (item.id !== id) return item;
+            return {
+              ...item,
+              ...updateValue,
+            };
+          }),
+        );
       }
     },
     [filter, setCallbackData, tempFilterConfig, value],

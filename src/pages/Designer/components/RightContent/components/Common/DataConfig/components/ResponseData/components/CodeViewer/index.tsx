@@ -23,6 +23,7 @@ const CodeViewer = (
       width={'312'}
       height={'240'}
       bordered
+      autoFormat
       {...nextProps}
       value={responseData}
     />

@@ -51,7 +51,7 @@ const DataConfigDetail = forwardRef<
 >((props, ref) => {
   const { value, onChange } = props;
   const {
-    request: { type, valueType, method, url, body, headers },
+    request: { type, valueType },
     filter: { show: filterShow, map, value: filterValue },
   } = value;
 
@@ -115,8 +115,8 @@ const DataConfigDetail = forwardRef<
 
   // --- end
 
-  const reRequestData = useCallback(() => {
-    const result = FilterDataUtil.requestData(props.value!);
+  const reRequestData = useCallback(async () => {
+    const result: any = await FilterDataUtil.requestData(props.value!);
     onChange?.({
       request: {
         value: result,
@@ -153,17 +153,14 @@ const DataConfigDetail = forwardRef<
           </Select>
         </SubForm>
         <DefineConfig
-          method={type}
+          type={type}
           staticProps={{
             value: responseData,
             onChange,
           }}
           apiProps={{
             onChange,
-            method,
-            url,
-            headers,
-            body,
+            value: props.value,
           }}
         />
 
@@ -181,9 +178,11 @@ const DataConfigDetail = forwardRef<
 
         <Title>
           数据响应结果
-          <IconTooltip title="重新获取数据">
-            <Loading3QuartersOutlined onClick={reRequestData} />
-          </IconTooltip>
+          {type === 'api' && (
+            <IconTooltip title="重新获取数据">
+              <Loading3QuartersOutlined onClick={reRequestData} />
+            </IconTooltip>
+          )}
         </Title>
 
         <CodeViewer width={454} height={238} value={props.value!} />

@@ -1,22 +1,40 @@
-import {} from 'react';
+import { useCallback } from 'react';
 import { Select } from 'antd';
+import { merge } from 'lodash';
+import FilterDataUtil from '@/utils/Assist/FilterData';
 import CodeEditor from '../SaveCodeEditor';
 import SubTitle, { SubForm } from '../../SubTitle';
 import { TOnChange } from '../type.d';
 
 const { Option } = Select;
 
-export type ApiConfigProps = Partial<
-  Pick<
-    ComponentData.TComponentApiDataConfig['request'],
-    'method' | 'url' | 'headers' | 'body'
-  >
-> & {
+export type ApiConfigProps = {
   onChange?: TOnChange;
+  value: ComponentData.TComponentApiDataConfig;
 };
 
 const ApiConfig = (props: ApiConfigProps) => {
-  const { method, onChange, url, headers, body } = props;
+  const { onChange, value } = props;
+  const {
+    request: { method, url, headers, body },
+  } = value;
+
+  const onUrlChange = useCallback(async (url) => {
+    const result: any = await FilterDataUtil.requestData(
+      merge({}, value, {
+        request: {
+          url,
+        },
+      }),
+    );
+
+    onChange?.({
+      request: {
+        url: url,
+        value: result,
+      },
+    });
+  }, []);
 
   return (
     <div>
@@ -45,17 +63,7 @@ const ApiConfig = (props: ApiConfigProps) => {
       </SubForm>
       <SubTitle>URL</SubTitle>
       <SubForm>
-        <CodeEditor
-          language="txt"
-          value={url}
-          onChange={(value) => {
-            onChange?.({
-              request: {
-                url: value,
-              },
-            });
-          }}
-        />
+        <CodeEditor language="txt" value={url} onChange={onUrlChange} />
       </SubForm>
       <SubTitle>Headers</SubTitle>
       <SubForm>
