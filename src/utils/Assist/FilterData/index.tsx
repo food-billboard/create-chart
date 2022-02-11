@@ -29,6 +29,7 @@ class FilterData {
   getPipeFilterValue(
     value: ComponentData.TComponentApiDataConfig,
     filter: ComponentData.TFilterConfig[],
+    stringify: boolean = true,
   ) {
     const {
       filter: { value: filterData, show },
@@ -50,6 +51,8 @@ class FilterData {
       result = value;
       return error;
     });
+
+    if (!stringify) return result;
 
     try {
       return JSON.stringify(result);
