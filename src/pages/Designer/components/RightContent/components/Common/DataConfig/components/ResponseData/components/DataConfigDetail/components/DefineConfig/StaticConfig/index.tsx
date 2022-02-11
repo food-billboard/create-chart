@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import FilterDataUtil from '@/utils/Assist/FilterData';
 import CodeEditor from '../SaveCodeEditor';
 
 const StaticConfig = (props: {
@@ -13,7 +14,7 @@ const StaticConfig = (props: {
     (value) => {
       propsOnChange?.({
         request: {
-          value,
+          value: FilterDataUtil.stringDataToObject(value),
         },
       });
     },

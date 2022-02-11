@@ -2,6 +2,14 @@ import json5 from 'json5';
 import request from '../../request';
 
 class FilterData {
+  stringDataToObject(value: string, defaultValue = '{}') {
+    try {
+      return json5.parse(value);
+    } catch (err) {
+      return defaultValue;
+    }
+  }
+
   pipeValueByCodeString(value: any, code: string) {
     let filterFunction = new Function('data', code);
     try {

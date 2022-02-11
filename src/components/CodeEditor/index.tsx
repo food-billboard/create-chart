@@ -18,6 +18,7 @@ export type EditorProps = Partial<MonacoEditorProps> & {
   autoFocus?: boolean;
   disabled?: boolean;
   bordered?: boolean;
+  onBlur?: (value: string) => void;
 };
 
 export type EditorRef = {
@@ -31,11 +32,12 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
   const {
     options,
     onChange,
-    autoFocus = true,
+    autoFocus = false,
     editorDidMount: propsEditorDidMount,
     disabled = false,
     className,
     bordered,
+    onBlur,
     ...nextProps
   } = props;
 
@@ -51,14 +53,14 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
     );
   }, [options, disabled]);
 
-  const editorDidMount: EditorDidMount = useCallback(
-    (editor, monaco) => {
-      propsEditorDidMount?.(editor, monaco);
-      autoFocus && !disabled && editor.focus();
-      setEditorRef(editor);
-    },
-    [propsEditorDidMount, autoFocus],
-  );
+  const editorDidMount: EditorDidMount = (editor, monaco) => {
+    propsEditorDidMount?.(editor, monaco);
+    autoFocus && !disabled && editor.focus();
+    setEditorRef(editor);
+    editor.onDidBlurEditorText(() => {
+      onBlur?.(editor.getValue());
+    });
+  };
 
   const formatData = useCallback(() => {
     if (!editorRef) return;

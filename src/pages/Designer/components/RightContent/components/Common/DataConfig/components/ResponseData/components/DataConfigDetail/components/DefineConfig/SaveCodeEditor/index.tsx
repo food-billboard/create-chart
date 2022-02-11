@@ -10,6 +10,13 @@ const SaveCodeEditor = (props: {
 
   const [stateValue, setStateValue] = useState<string>(value || '');
 
+  const onBlur = useCallback(
+    (value) => {
+      onChange?.(value);
+    },
+    [onChange],
+  );
+
   return (
     <div>
       <CodeEditor
@@ -17,8 +24,9 @@ const SaveCodeEditor = (props: {
         width={454}
         height={138}
         bordered
-        value={value}
-        onChange={onChange}
+        value={stateValue}
+        onChange={setStateValue}
+        onBlur={onBlur}
       />
     </div>
   );
