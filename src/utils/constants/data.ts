@@ -1,1 +1,1 @@
-export const DEFAULT_FILTER_CODE = `return obj`;
+export const DEFAULT_FILTER_CODE = `return data`;

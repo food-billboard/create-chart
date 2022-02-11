@@ -1,5 +1,4 @@
-
-export const API_DOMAIN = "http://localhost:4000"
+export const API_DOMAIN = 'http://47.97.27.23';
 
 export default {
   dev: {

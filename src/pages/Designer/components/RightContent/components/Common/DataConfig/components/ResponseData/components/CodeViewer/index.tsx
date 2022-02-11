@@ -1,16 +1,20 @@
-import {} from 'antd';
+import { useMemo } from 'react';
 import { connect } from 'dva';
-import CodeEditor from '@/components/CodeEditor';
+import CodeEditor, { EditorProps } from '@/components/CodeEditor';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
-const CodeViewer = (props: {
-  value: ComponentData.TComponentApiDataConfig;
-  filter: ComponentData.TFilterConfig[];
-}) => {
-  const { filter, value } = props;
+const CodeViewer = (
+  props: {
+    value: ComponentData.TComponentApiDataConfig;
+    filter: ComponentData.TFilterConfig[];
+  } & Partial<Omit<EditorProps, 'value'>>,
+) => {
+  const { filter, value, ...nextProps } = props;
 
-  const responseData = FilterDataUtil.getPipeFilterValue(value, filter);
+  const responseData = useMemo(() => {
+    return FilterDataUtil.getPipeFilterValue(value, filter);
+  }, [value, filter]);
 
   return (
     <CodeEditor
@@ -19,6 +23,7 @@ const CodeViewer = (props: {
       width={'312'}
       height={'240'}
       bordered
+      {...nextProps}
       value={responseData}
     />
   );

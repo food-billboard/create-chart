@@ -1,9 +1,21 @@
 import json5 from 'json5';
+import request from '../../request';
 
 class FilterData {
   pipeValueByCodeString(value: any, code: string) {
-    let filterFunction = new Function('obj', code);
-    return filterFunction(value);
+    let filterFunction = new Function('data', code);
+    try {
+      return {
+        value: filterFunction(value),
+        error: false,
+      };
+    } catch (err) {
+      console.error(err);
+      return {
+        value,
+        error: true,
+      };
+    }
   }
 
   getPipeFilterValue(
@@ -20,26 +32,29 @@ class FilterData {
       filter.some((filterData) => filterData.id === item.id),
     );
 
-    const result = existsFilterData.reduce<any>((acc, cur) => {
+    let result: any = originData;
+    existsFilterData.some((cur) => {
       const { id } = cur;
       const target = filter.find((item) => item.id === id);
-      return this.pipeValueByCodeString(acc, target!.code);
-    }, originData);
+      const { error, value } = this.pipeValueByCodeString(result, target!.code);
+      result = value;
+      return error;
+    });
 
     try {
-      return json5.stringify(result);
+      return JSON.stringify(result);
     } catch (err) {
       return '{}';
     }
   }
 
-  requestData(value: ComponentData.TComponentApiDataConfig) {
+  async requestData(value: ComponentData.TComponentApiDataConfig) {
     const {
       filter: {},
       request: { method, url, headers, body, type, value: responseData },
     } = value;
 
-    if (type !== 'api') return responseData;
+    if (type !== 'api' || !url) return responseData;
 
     let realHeaders;
     let realBody;
@@ -58,7 +73,17 @@ class FilterData {
       realHeaders = {};
     }
 
-    // TODO
+    try {
+      const result = await request(url, {
+        method,
+        data: realBody,
+        headers: realHeaders,
+      });
+      return result;
+    } catch (err) {
+      console.error(err);
+      return responseData;
+    }
   }
 }
 

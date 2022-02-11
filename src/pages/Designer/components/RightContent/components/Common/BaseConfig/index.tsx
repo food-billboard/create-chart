@@ -34,12 +34,17 @@ const BaseConfig = (props: {
 
   const onValueChange = useCallback(
     (path: keyof ComponentData.TBaseConfig['style'], value: any) => {
+      let realValue = value;
+      try {
+        realValue = value.target.value;
+      } catch (err) {}
+
       const componentPath = getPath(id);
       setComponent({
         value: {
           config: {
             style: {
-              [path]: value,
+              [path]: realValue,
             },
           },
         },
@@ -115,6 +120,9 @@ const BaseConfig = (props: {
             <Opacity
               defaultValue={opacity}
               onAfterChange={onValueChange.bind(null, 'opacity')}
+              max={1}
+              min={0}
+              step={0.1}
             />
           </HalfForm>
         </Item>

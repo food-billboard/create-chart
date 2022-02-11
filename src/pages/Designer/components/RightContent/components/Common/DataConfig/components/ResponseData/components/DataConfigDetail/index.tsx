@@ -8,9 +8,10 @@ import {
   useState,
 } from 'react';
 import { Loading3QuartersOutlined } from '@ant-design/icons';
-import CodeEditor from '@/components/CodeEditor';
 import { useResponseData } from '@/hooks';
 import IconTooltip from '@/components/IconTooltip';
+import FilterDataUtil from '@/utils/Assist/FilterData';
+import CodeViewer from '../CodeViewer';
 import SubTitle, { SubForm } from './components/SubTitle';
 import DataFilter from './components/DataFilter';
 import DefineConfig from './components/DefineConfig';
@@ -48,13 +49,11 @@ const DataConfigDetail = forwardRef<
   IDataConfigDetailRef,
   IDataConfigDetailProps
 >((props, ref) => {
+  const { value, onChange } = props;
   const {
-    value: {
-      request: { type, valueType, method, url, body, headers },
-      filter: { show: filterShow, map, value: filterValue },
-    },
-    onChange,
-  } = props;
+    request: { type, valueType, method, url, body, headers },
+    filter: { show: filterShow, map, value: filterValue },
+  } = value;
 
   const responseData = useResponseData(props.value);
 
@@ -116,9 +115,14 @@ const DataConfigDetail = forwardRef<
 
   // --- end
 
-  const requestData = useCallback(() => {
-    // TODO
-  }, []);
+  const reRequestData = useCallback(() => {
+    const result = FilterDataUtil.requestData(props.value!);
+    onChange?.({
+      request: {
+        value: result,
+      },
+    });
+  }, [value, onChange]);
 
   return (
     <Drawer
@@ -178,18 +182,11 @@ const DataConfigDetail = forwardRef<
         <Title>
           数据响应结果
           <IconTooltip title="重新获取数据">
-            <Loading3QuartersOutlined onClick={requestData} />
+            <Loading3QuartersOutlined onClick={reRequestData} />
           </IconTooltip>
         </Title>
 
-        <CodeEditor
-          language="json"
-          disabled
-          width={454}
-          height={238}
-          bordered
-          value={responseData}
-        />
+        <CodeViewer width={454} height={238} value={props.value!} />
       </div>
     </Drawer>
   );

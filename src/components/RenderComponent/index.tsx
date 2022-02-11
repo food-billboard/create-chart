@@ -94,11 +94,12 @@ const RenderComponent = (props: RenderComponentProps) => {
   );
 
   const childrenStyle = useMemo(() => {
-    const { width, height } = componentStyle;
+    const { width, height, opacity, rotate } = componentStyle;
     return {
       width: width / scaleX,
       height: height / scaleY,
-      transform: `scale(${scaleX}, ${scaleY})`,
+      transform: `scale(${scaleX}, ${scaleY}) rotate(${rotate}deg)`,
+      opacity: opacity,
     };
   }, [componentStyle, scaleX, scaleY]);
 

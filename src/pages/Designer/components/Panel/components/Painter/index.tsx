@@ -59,12 +59,12 @@ const Painter = (props: PainterProps) => {
       {
         transformOrigin: 'left top',
         transform: `scale(${scale})`,
-        width: width || 1920,
-        height: height || 1080,
+        width: Number(width) || 1920,
+        height: Number(height) || 1080,
       },
       backgroundStyle,
     );
-  }, [scale, backgroundStyle]);
+  }, [scale, backgroundStyle, width, height]);
 
   const onMouseMove = () => {
     moveCounter.current++;

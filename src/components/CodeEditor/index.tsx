@@ -1,4 +1,10 @@
-import { useCallback, useMemo } from 'react';
+import {
+  useCallback,
+  useMemo,
+  forwardRef,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import { useControllableValue } from 'ahooks';
 import MonacoEditor, {
   MonacoEditorProps,
@@ -14,8 +20,13 @@ export type EditorProps = Partial<MonacoEditorProps> & {
   bordered?: boolean;
 };
 
-const CodeEditor = (props: EditorProps) => {
+export type EditorRef = {
+  format: () => void;
+};
+
+const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
   const [value, setValue] = useControllableValue<string>(props);
+  const [editorRef, setEditorRef] = useState<any>(null);
 
   const {
     options,
@@ -44,8 +55,34 @@ const CodeEditor = (props: EditorProps) => {
     (editor, monaco) => {
       propsEditorDidMount?.(editor, monaco);
       autoFocus && !disabled && editor.focus();
+      setEditorRef(editor);
     },
     [propsEditorDidMount, autoFocus],
+  );
+
+  const formatData = useCallback(() => {
+    if (!editorRef) return;
+    if (disabled) {
+      editorRef.updateOptions({ readOnly: false });
+      editorRef
+        .getAction('editor.action.formatDocument')
+        .run()
+        .then(() => {
+          editorRef.updateOptions({ readOnly: true });
+        });
+    } else {
+      editorRef.getAction('editor.action.formatDocument').run();
+    }
+  }, [editorRef, disabled]);
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        format: formatData,
+      };
+    },
+    [formatData],
   );
 
   return (
@@ -76,6 +113,6 @@ const CodeEditor = (props: EditorProps) => {
       {...nextProps}
     />
   );
-};
+});
 
 export default CodeEditor;
