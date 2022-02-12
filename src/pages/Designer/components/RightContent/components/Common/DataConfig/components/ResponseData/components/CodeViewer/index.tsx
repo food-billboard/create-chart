@@ -8,13 +8,14 @@ const CodeViewer = (
   props: {
     value: ComponentData.TComponentApiDataConfig;
     filter: ComponentData.TFilterConfig[];
+    params: ComponentData.TParams[];
   } & Partial<Omit<EditorProps, 'value'>>,
 ) => {
-  const { filter, value, ...nextProps } = props;
+  const { filter, value, params, ...nextProps } = props;
 
   const responseData = useMemo(() => {
-    return FilterDataUtil.getPipeFilterValue(value, filter);
-  }, [value, filter]);
+    return FilterDataUtil.getPipeFilterValue(value, filter, params);
+  }, [value, filter, params]);
 
   return (
     <CodeEditor

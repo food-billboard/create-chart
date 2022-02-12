@@ -9,6 +9,7 @@ import { mergeWithoutArray } from '@/utils';
 
 export type TGlobalData = {
   filter: ComponentData.TFilterConfig[];
+  params: ComponentData.TParams[];
   screenType: 'edit' | 'preview' | 'production';
 };
 
@@ -61,7 +62,8 @@ class Component<P = {}, S = {}> extends ReactComponent<P, S> {
     this.requestLoading = true;
 
     const value = get(this.component, 'config.data');
-    const result = await FilterDataUtil.requestData(value);
+    const { params } = this.global;
+    const result = await FilterDataUtil.requestData(value, params);
 
     callback?.(result);
 
@@ -71,7 +73,7 @@ class Component<P = {}, S = {}> extends ReactComponent<P, S> {
   // 获取过滤后的数据
   getValue = (value: any) => {
     const config = get(this.component, 'config.data');
-    const { filter } = this.global;
+    const { filter, params } = this.global;
     return FilterDataUtil.getPipeFilterValue(
       mergeWithoutArray({}, config, {
         request: {
@@ -79,6 +81,7 @@ class Component<P = {}, S = {}> extends ReactComponent<P, S> {
         },
       }),
       filter,
+      params,
       false,
     );
   };
@@ -88,6 +91,19 @@ class Component<P = {}, S = {}> extends ReactComponent<P, S> {
   // * --------------------交互相关--------------------
 
   // * --------------------交互相关-end--------------------
+
+  // * --------------------其他--------------------
+
+  didUpdateBinding = () => {
+    // TODO
+    // * 1. 全局参数发生变化重新获取数据
+  };
+
+  willUnMountBinding = () => {};
+
+  didMountBinding = () => {};
+
+  // * --------------------其他-end--------------------
 }
 
 export default Component;

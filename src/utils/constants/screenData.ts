@@ -493,6 +493,14 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           editable: false,
         },
       ],
+      params: [
+        {
+          originType: 'COMPONENT',
+          value: '100',
+          key: '222',
+          variable: 'aaa',
+        },
+      ],
     },
     flag: {
       type: 'WEB',

@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { Steps, Checkbox } from 'antd';
 import { get } from 'lodash';
-import json5 from 'json5';
 import classnames from 'classnames';
 import { useResponseData } from '@/hooks';
 import AutoUpdate, { TValue } from './components/AutoUpdate';

@@ -1,40 +1,47 @@
 import { useCallback } from 'react';
 import { Select } from 'antd';
 import { merge } from 'lodash';
+import { connect } from 'dva';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import CodeEditor from '../SaveCodeEditor';
 import SubTitle, { SubForm } from '../../SubTitle';
 import { TOnChange } from '../type.d';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const { Option } = Select;
 
 export type ApiConfigProps = {
   onChange?: TOnChange;
   value: ComponentData.TComponentApiDataConfig;
+  params: ComponentData.TParams[];
 };
 
 const ApiConfig = (props: ApiConfigProps) => {
-  const { onChange, value } = props;
+  const { onChange, value, params } = props;
   const {
     request: { method, url, headers, body },
   } = value;
 
-  const onUrlChange = useCallback(async (url) => {
-    const result: any = await FilterDataUtil.requestData(
-      merge({}, value, {
-        request: {
-          url,
-        },
-      }),
-    );
+  const onUrlChange = useCallback(
+    async (url) => {
+      const result: any = await FilterDataUtil.requestData(
+        merge({}, value, {
+          request: {
+            url,
+          },
+        }),
+        params,
+      );
 
-    onChange?.({
-      request: {
-        url: url,
-        value: result,
-      },
-    });
-  }, []);
+      onChange?.({
+        request: {
+          url: url,
+          value: result,
+        },
+      });
+    },
+    [params],
+  );
 
   return (
     <div>
@@ -99,4 +106,4 @@ const ApiConfig = (props: ApiConfigProps) => {
   );
 };
 
-export default ApiConfig;
+export default connect(mapStateToProps, mapDispatchToProps)(ApiConfig);

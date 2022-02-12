@@ -93,6 +93,14 @@ declare namespace ComponentData {
   // 全局参数
   export type TParams = {
     originType: 'COMPONENT' | 'URL';
+    // 源头-针对组件
+    origin?: string;
+    // 值
+    value: string;
+    // 源字段名称
+    key: string;
+    // 变量名称
+    variable: string;
   };
 
   // 辅助线

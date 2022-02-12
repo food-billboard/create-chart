@@ -126,6 +126,19 @@ export default {
         type: 'setRedoData',
       });
     },
+
+    *setParams({ value }: { value: ComponentData.TParams[] }, { put }: any) {
+      yield put({
+        type: 'setData',
+        payload: {
+          config: {
+            attr: {
+              params: value,
+            },
+          },
+        },
+      });
+    },
   },
 
   reducers: {

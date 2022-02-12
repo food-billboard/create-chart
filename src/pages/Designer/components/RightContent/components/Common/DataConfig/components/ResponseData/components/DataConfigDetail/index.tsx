@@ -1,17 +1,15 @@
-import { Drawer, Badge, Select, Checkbox } from 'antd';
+import { Drawer, Select, Checkbox } from 'antd';
 import {
   forwardRef,
-  ReactNode,
   useCallback,
   useImperativeHandle,
   useMemo,
   useState,
 } from 'react';
-import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { useResponseData } from '@/hooks';
-import IconTooltip from '@/components/IconTooltip';
-import FilterDataUtil from '@/utils/Assist/FilterData';
 import CodeViewer from '../CodeViewer';
+import Title from './components/NormalTitle';
+import ResponseDataTitle from './components/ResponseDataTitle';
 import SubTitle, { SubForm } from './components/SubTitle';
 import DataFilter from './components/DataFilter';
 import DefineConfig from './components/DefineConfig';
@@ -29,21 +27,6 @@ interface IDataConfigDetailProps {
 }
 
 const { Option } = Select;
-
-const Title = (props: { children?: ReactNode; visible?: boolean }) => {
-  const { children, visible = true } = props;
-
-  const status = useMemo(() => {
-    return visible ? 'processing' : 'default';
-  }, [visible]);
-
-  return (
-    <div className={styles['design-config-data-detail-title']}>
-      <Badge status={status} size="default" />
-      {children}
-    </div>
-  );
-};
 
 const DataConfigDetail = forwardRef<
   IDataConfigDetailRef,
@@ -115,15 +98,6 @@ const DataConfigDetail = forwardRef<
 
   // --- end
 
-  const reRequestData = useCallback(async () => {
-    const result: any = await FilterDataUtil.requestData(props.value!);
-    onChange?.({
-      request: {
-        value: result,
-      },
-    });
-  }, [value, onChange]);
-
   return (
     <Drawer
       visible={visible}
@@ -176,14 +150,7 @@ const DataConfigDetail = forwardRef<
         />
         <ResponseDataMap value={map} valueType={valueType} />
 
-        <Title>
-          数据响应结果
-          {type === 'api' && (
-            <IconTooltip title="重新获取数据">
-              <Loading3QuartersOutlined onClick={reRequestData} />
-            </IconTooltip>
-          )}
-        </Title>
+        <ResponseDataTitle value={props.value!} onChange={onChange} />
 
         <CodeViewer width={454} height={238} value={props.value!} />
       </div>
