@@ -90,6 +90,11 @@ declare namespace ComponentData {
     editable: boolean;
   };
 
+  // 全局参数
+  export type TParams = {
+    originType: 'COMPONENT' | 'URL';
+  };
+
   // 辅助线
   export type TGuideLineConfigItem = {
     type: 'vertical' | 'horizontal';
@@ -121,6 +126,7 @@ declare namespace ComponentData {
       attr: {
         poster: TBackgroundConfig;
         filter: TFilterConfig[];
+        params: TParams[];
       };
       flag: {
         type: 'WEB' | 'H5';
