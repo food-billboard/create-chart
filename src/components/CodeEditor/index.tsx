@@ -4,7 +4,6 @@ import {
   forwardRef,
   useImperativeHandle,
   useState,
-  useEffect,
 } from 'react';
 import { useControllableValue } from 'ahooks';
 import MonacoEditor, {
@@ -18,6 +17,7 @@ import styles from './index.less';
 
 export type EditorProps = Partial<MonacoEditorProps> & {
   autoFocus?: boolean;
+  blurCanScroll?: boolean;
   autoFormat?:
     | boolean
     | {
@@ -48,8 +48,11 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
     onBlur,
     autoFormat = false,
     value: propsValue,
+    blurCanScroll = false,
     ...nextProps
   } = props;
+
+  const [scrollDisabled, setScrollDisabled] = useState<boolean>(blurCanScroll);
 
   const realOptions = useMemo(() => {
     return merge(
@@ -58,10 +61,17 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
         selectOnLineNumbers: true,
         tabSize: 2,
         readOnly: !!disabled,
+        lineNumbersMinChars: 2,
+        scrollbar: {
+          arrowSize: 4,
+          handleMouseWheel: !scrollDisabled,
+          verticalScrollbarSize: 5,
+          horizontalScrollbarSize: 5,
+        },
       },
       options || {},
     );
-  }, [options, disabled]);
+  }, [options, disabled, scrollDisabled]);
 
   const formatIfNeed = useCallback(
     (editor: any, type: 'mount' | 'blur') => {
@@ -83,9 +93,17 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
 
     formatIfNeed(editor, 'mount');
 
+    editor.onDidFocusEditorText(() => {
+      // blur scroll
+      if (blurCanScroll) setScrollDisabled(false);
+    });
+
     editor.onDidBlurEditorText(() => {
       onBlur?.(editor.getValue());
       formatIfNeed(editor, 'blur');
+
+      // blur scroll
+      if (blurCanScroll) setScrollDisabled(true);
     });
   };
 

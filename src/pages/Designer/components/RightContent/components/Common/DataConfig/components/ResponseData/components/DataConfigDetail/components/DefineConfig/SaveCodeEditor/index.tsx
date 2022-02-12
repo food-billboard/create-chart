@@ -38,6 +38,7 @@ const SaveCodeEditor = (props: {
         value={stateValue}
         onChange={setStateValue}
         onBlur={onBlur}
+        blurCanScroll
         autoFormat={{
           mount: language === 'json',
           blur: false,
