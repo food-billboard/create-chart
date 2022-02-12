@@ -13,6 +13,7 @@ import { useHover, useMouse } from 'ahooks';
 import { nanoid } from 'nanoid';
 import classnames from 'classnames';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import { useScrollBar } from '@/hooks';
 import GuideLine from '@/components/GuideLine';
 import Ruler from '@/components/Ruler';
 import { BackgroundConfigRender } from '@/components/DesignerBackground';
@@ -81,6 +82,8 @@ const PanelWrapper = (props: {
   const isVerticalRulerHover = useHover(verticalRulerRef);
 
   const mousePosition = useMouse();
+
+  useScrollBar(`#${wrapperId}`);
 
   const scale = useMemo(() => {
     return originScale / 100;
@@ -331,92 +334,97 @@ const PanelWrapper = (props: {
 
   return (
     <div
-      id={wrapperId}
-      className={classnames(styles['designer-page-main'], 'box-sizing-border')}
+      className={classnames(
+        styles['designer-page-main'],
+        'box-sizing-border',
+        'pos-re',
+      )}
     >
-      <div
-        id={subWrapperId}
-        className={classnames(styles['designer-page-main-sub'], 'pos-re')}
-        style={size}
-      >
-        {/* background */}
-        <BackgroundConfigRender />
-
-        {/* Ruler */}
+      <div id={wrapperId} className="w-100 h-100">
         <div
-          ref={horizontalRulerRef}
-          onClick={generateGuideLine.bind(
-            this,
-            'vertical',
-            {
-              width: 2,
-              height: size.height,
-            },
-            true,
-          )}
-          className={classnames(
-            styles['designer-page-main-horizontal-ruler'],
-            'dis-flex',
-            'pos-ab',
-          )}
-          style={{ width: size.width }}
+          id={subWrapperId}
+          className={classnames(styles['designer-page-main-sub'], 'pos-re')}
+          style={size}
         >
+          {/* background */}
+          <BackgroundConfigRender />
+
+          {/* Ruler */}
           <div
+            ref={horizontalRulerRef}
+            onClick={generateGuideLine.bind(
+              this,
+              'vertical',
+              {
+                width: 2,
+                height: size.height,
+              },
+              true,
+            )}
             className={classnames(
-              styles['designer-page-main-horizontal-ruler-prefix'],
+              styles['designer-page-main-horizontal-ruler'],
               'dis-flex',
               'pos-ab',
             )}
-          ></div>
-          <Ruler
-            type="horizontal"
-            width={size.width - 70}
-            height={30}
-            zoom={scale}
-            unit={scale > 0.5 ? 50 : 100}
-          />
-        </div>
-        <div
-          ref={verticalRulerRef}
-          style={{ height: size.height }}
-          className={classnames(
-            styles['designer-page-main-vertical-ruler'],
-            'pos-ab',
-          )}
-          onClick={generateGuideLine.bind(
-            this,
-            'horizontal',
-            {
-              width: size.width,
-              height: 2,
-            },
-            true,
-          )}
-        >
+            style={{ width: size.width }}
+          >
+            <div
+              className={classnames(
+                styles['designer-page-main-horizontal-ruler-prefix'],
+                'dis-flex',
+                'pos-ab',
+              )}
+            ></div>
+            <Ruler
+              type="horizontal"
+              width={size.width - 70}
+              height={30}
+              zoom={scale}
+              unit={scale > 0.5 ? 50 : 100}
+            />
+          </div>
           <div
-            className={styles['designer-page-main-horizontal-ruler-prefix']}
-          ></div>
-          <Ruler
-            width={30}
-            height={size.height - 70}
-            zoom={scale}
-            unit={scale > 0.5 ? 50 : 100}
-          />
-        </div>
-        {/* Ruler */}
+            ref={verticalRulerRef}
+            style={{ height: size.height }}
+            className={classnames(
+              styles['designer-page-main-vertical-ruler'],
+              'pos-ab',
+            )}
+            onClick={generateGuideLine.bind(
+              this,
+              'horizontal',
+              {
+                width: size.width,
+                height: 2,
+              },
+              true,
+            )}
+          >
+            <div
+              className={styles['designer-page-main-horizontal-ruler-prefix']}
+            ></div>
+            <Ruler
+              width={30}
+              height={size.height - 70}
+              zoom={scale}
+              unit={scale > 0.5 ? 50 : 100}
+            />
+          </div>
+          {/* Ruler */}
 
-        <Button
-          onClick={wrapperSetGuideLine.bind(null, { show: !guideLineShow })}
-          type="link"
-          className={classnames(
-            'pos-ab',
-            styles['designer-page-main-guide-btn'],
-          )}
-          icon={guideLineShowIcon}
-        ></Button>
-        {guideLineListDoms}
-        {mouseGuideLineList}
-        <ClipboardComponent>{children}</ClipboardComponent>
+          <Button
+            onClick={wrapperSetGuideLine.bind(null, { show: !guideLineShow })}
+            type="link"
+            className={classnames(
+              'pos-ab',
+              styles['designer-page-main-guide-btn'],
+            )}
+            icon={guideLineShowIcon}
+          ></Button>
+          {guideLineListDoms}
+          {mouseGuideLineList}
+          <ClipboardComponent>{children}</ClipboardComponent>
+        </div>
       </div>
     </div>
   );

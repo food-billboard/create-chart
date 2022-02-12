@@ -4,7 +4,10 @@
   min-height: 500px;
   padding-top: 0;
   flex: 1;
-  overflow: auto;
+  overflow: hidden;
+  & > div {
+    overflow: auto;
+  }
   &-guide-btn {
     z-index: 2;
   }

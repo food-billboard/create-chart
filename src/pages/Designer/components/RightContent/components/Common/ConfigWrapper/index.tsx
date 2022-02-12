@@ -1,8 +1,10 @@
-import { ReactNode, Children, useMemo, cloneElement } from 'react';
+import { ReactNode, Children, useMemo, cloneElement, useRef } from 'react';
 import { Tabs } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import { TabPaneProps } from 'antd/es/tabs';
+import { uniqueId } from 'lodash';
+import { useScrollBar } from '@/hooks';
 import styles from './index.less';
 
 // 配置项顶部的tab切换
@@ -12,7 +14,7 @@ const ConfigWrapper = (props: {
   tabCounter?: number;
   onBack?: () => void;
   hasBack?: boolean;
-  title: string;
+  title?: string;
 }) => {
   const { children, tabCounter = 3, onBack, hasBack, title } = props;
 
@@ -58,6 +60,10 @@ export const ConfigItem = (
     ...nextProps
   } = props;
 
+  const scrollBarId = useRef<string>(uniqueId('design-config-item'));
+
+  useScrollBar(`#${scrollBarId.current}`);
+
   return (
     <Tabs.TabPane {...nextProps}>
       <div className={styles['design-config-wrapper-item-title']}>
@@ -94,7 +100,10 @@ export const ConfigItem = (
           </div>
         </div>
       </div>
-      <div className={styles['design-config-wrapper-item-content']}>
+      <div
+        id={scrollBarId.current}
+        className={styles['design-config-wrapper-item-content']}
+      >
         <div className={styles['design-config-wrapper-item-content-main']}>
           {children}
         </div>

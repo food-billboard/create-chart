@@ -40,7 +40,12 @@ const ComponentTypeList = (props: { onChange?: (type: string) => void }) => {
 
   return (
     <>
-      <div className={styles['page-design-left-component-list']}>
+      <div
+        className={classnames(
+          styles['page-design-left-component-list'],
+          'pos-sti',
+        )}
+      >
         <Menu
           theme="dark"
           mode="vertical"

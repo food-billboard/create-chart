@@ -6,7 +6,7 @@ import {
   useImperativeHandle,
 } from 'react';
 import { Button, Drawer } from 'antd';
-import { usePanelFocus } from '@/hooks';
+import { usePanelFocus, useScrollBar } from '@/hooks';
 import LayerList from './components/Tree';
 
 export interface LayerManageRef {
@@ -24,6 +24,8 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
     const [visible, setVisible] = useState<boolean>(false);
 
     usePanelFocus(() => document.querySelector('.design-layer-drawer'));
+
+    useScrollBar('.design-layer-drawer .ant-drawer-body');
 
     const onClose = useCallback(() => {
       setVisible(false);

@@ -18,6 +18,7 @@ const ToolBar = () => {
         'dis-flex-column',
         'border-1',
         'normal-background',
+        'pos-sti',
       )}
     >
       <UndoIcon />
