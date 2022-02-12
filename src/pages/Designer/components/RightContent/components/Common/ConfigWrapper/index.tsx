@@ -14,9 +14,9 @@ const ConfigWrapper = (props: {
   tabCounter?: number;
   onBack?: () => void;
   hasBack?: boolean;
-  title?: string;
+  title?: string | false;
 }) => {
-  const { children, tabCounter = 3, onBack, hasBack, title } = props;
+  const { children, tabCounter = 3, onBack, hasBack, title = false } = props;
 
   const realChildren = useMemo(() => {
     return Children.map(children, (child) => {
@@ -48,14 +48,14 @@ export const ConfigItem = (
     onBack?: () => void;
     hasBack?: boolean;
     version?: string;
-    title?: string;
+    title?: string | false;
   },
 ) => {
   const {
     children,
     hasBack,
     onBack,
-    title,
+    title = false,
     version = 'v1.0.0',
     ...nextProps
   } = props;
@@ -83,7 +83,7 @@ export const ConfigItem = (
             )}
             <span
               className={classnames('text-ellipsis', 'dis-flex')}
-              title={title}
+              title={title || ''}
             >
               {title}
             </span>
@@ -94,9 +94,7 @@ export const ConfigItem = (
               'dis-flex',
             )}
           >
-            <span>
-              {version} | {title}
-            </span>
+            <span>{title && `${version} | ${title}`}</span>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { isGroupComponent, getComponent } from '@/utils/Assist/Component';
 import GlobalConfig from './components/GlobalConfig';
 import GroupConfig from './components/GroupConfig';
 import ComponentConfig from './components/ComponentConfig';
+import MultiConfig from './components/MultiConfig';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -22,7 +23,7 @@ const RightContent = (props: {
   const children = useMemo(() => {
     if (!select.length) return <GlobalConfig />;
     if (select.length > 1) {
-      return null;
+      return <MultiConfig />;
     }
 
     const [selectId] = select;
