@@ -41,6 +41,23 @@ declare namespace ComponentData {
     };
   };
 
+  // 交互
+  export type TInteractiveConfig = {
+    base: {
+      type: string;
+      name: string;
+      show: boolean;
+      fields: {
+        key: string;
+        variable: string;
+        description: string;
+      }[];
+    }[];
+    // TODO
+    // linkage
+    // 具体细节有待参考
+  };
+
   // 组件类型
   export type TComponentSelfType =
     | 'GROUP_COMPONENT'
@@ -66,19 +83,7 @@ declare namespace ComponentData {
       scaleX?: number;
       scaleY?: number;
     };
-    interactive?: {
-      base: {
-        type: 'onClick';
-        action: {
-          show: boolean;
-          type: 'link';
-          value: string;
-        };
-      }[];
-      // TODO
-      // linkage
-      // 具体细节有待参考
-    };
+    interactive?: TInteractiveConfig;
     data?: TComponentApiDataConfig;
   };
 
