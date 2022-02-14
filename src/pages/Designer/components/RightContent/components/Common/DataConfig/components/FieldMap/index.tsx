@@ -1,8 +1,7 @@
 import { useCallback, useMemo } from 'react';
-import { Table, Input, Tooltip } from 'antd';
+import { Input, Tooltip } from 'antd';
 import { useControllableValue } from 'ahooks';
-import classnames from 'classnames';
-import styles from './index.less';
+import MapTable from '../../../MapTable';
 
 function fieldTypeToString(type: 'string' | 'number') {
   if (type === 'string') {
@@ -67,16 +66,7 @@ const FieldMap = (props: {
     ];
   }, [onValueChange]);
 
-  return (
-    <Table
-      columns={columns}
-      rowKey={'id'}
-      bordered={false}
-      className={classnames(styles['design-config-api-field-map'])}
-      dataSource={value}
-      pagination={false}
-    />
-  );
+  return <MapTable columns={columns} rowKey={'id'} dataSource={value} />;
 };
 
 export default FieldMap;

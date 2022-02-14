@@ -25,7 +25,30 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           lock: false,
         },
         interactive: {
-          base: [],
+          base: [
+            {
+              show: false,
+              name: '当点击数据项时',
+              type: 'click',
+              fields: [
+                {
+                  key: 'x',
+                  variable: '',
+                  description: 'x坐标轴值',
+                },
+                {
+                  key: 'y',
+                  variable: '',
+                  description: 'y坐标轴值',
+                },
+                {
+                  key: 's',
+                  variable: '',
+                  description: 's坐标轴值',
+                },
+              ],
+            },
+          ],
         },
         data: {
           request: {
@@ -493,14 +516,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           editable: false,
         },
       ],
-      params: [
-        {
-          originType: 'COMPONENT',
-          value: '100',
-          key: '222',
-          variable: 'aaa',
-        },
-      ],
+      params: [],
     },
     flag: {
       type: 'WEB',

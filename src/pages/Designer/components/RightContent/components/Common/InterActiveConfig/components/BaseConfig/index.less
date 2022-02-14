@@ -1,0 +1,34 @@
+.design-config-interactive-base {
+  &-empty {
+    font-size: 12px;
+    padding-left: 10px;
+  }
+  &-collapse {
+    font-size: 12px;
+    background-color: transparent;
+    :global {
+      .ant-collapse-header {
+        padding: 0 !important;
+        padding-left: 8px !important;
+        height: 40px;
+        display: flex;
+        align-items: center !important;
+      }
+      .ant-collapse-content-box {
+        padding: 0;
+        padding-left: 8px;
+      }
+      .ant-collapse-item {
+        border-color: rgba(52, 52, 52, 0.5);
+      }
+      .ant-collapse-item .ant-collapse-item {
+        border: none;
+      }
+      .ant-collapse-header-text {
+        display: flex;
+        align-items: center;
+        width: 100%;
+      }
+    }
+  }
+}

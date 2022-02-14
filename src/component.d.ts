@@ -41,18 +41,24 @@ declare namespace ComponentData {
     };
   };
 
+  // 组件基础交互配置字段
+  export type TBaseInteractiveConfigField = {
+    key: string;
+    variable: string;
+    description: string;
+  };
+
+  // 组件基础交互配置
+  export type TBaseInteractiveConfig = {
+    type: string;
+    name: string;
+    show: boolean;
+    fields: TBaseInteractiveConfigField[];
+  };
+
   // 交互
   export type TInteractiveConfig = {
-    base: {
-      type: string;
-      name: string;
-      show: boolean;
-      fields: {
-        key: string;
-        variable: string;
-        description: string;
-      }[];
-    }[];
+    base: TBaseInteractiveConfig[];
     // TODO
     // linkage
     // 具体细节有待参考
@@ -98,12 +104,13 @@ declare namespace ComponentData {
   // 全局参数
   export type TParams = {
     originType: 'COMPONENT' | 'URL';
+    id: string;
     // 源头-针对组件
-    origin?: string;
+    origin?: string[];
     // 值
     value: string;
     // 源字段名称
-    key: string;
+    key: string[];
     // 变量名称
     variable: string;
   };

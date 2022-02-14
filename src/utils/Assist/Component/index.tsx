@@ -328,7 +328,7 @@ export const getComponent = (
   select: string,
   components: ComponentData.TComponentData[],
 ) => {
-  return get(components, getPath(select));
+  return get(components, getPath(select)) as ComponentData.TComponentData;
 };
 
 export const isGroupComponent = (

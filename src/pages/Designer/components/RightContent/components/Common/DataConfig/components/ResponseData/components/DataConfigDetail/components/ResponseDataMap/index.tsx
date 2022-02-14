@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
-import { Table } from 'antd';
-import classnames from 'classnames';
 import SubTitle, { SubForm } from '../SubTitle';
-import commonStyles from '../../../../../FieldMap/index.less';
+import MapTable from '../../../../../../../MapTable';
 
 const ResponseDataMap = (props: {
   value: ComponentData.TComponentMapData[];
@@ -43,14 +41,7 @@ const ResponseDataMap = (props: {
         元素包含如下字段
       </SubTitle>
       <SubForm>
-        <Table
-          className={classnames(commonStyles['design-config-api-field-map'])}
-          columns={columns}
-          rowKey={'id'}
-          bordered
-          dataSource={value}
-          pagination={false}
-        />
+        <MapTable columns={columns} rowKey={'id'} bordered dataSource={value} />
       </SubForm>
     </div>
   );

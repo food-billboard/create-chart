@@ -86,7 +86,7 @@ const ComponentConfig = (props: {
           }
           key="3"
         >
-          <InterActiveConfig />
+          <InterActiveConfig id={id} />
         </ConfigItem>
       </ConfigWrapper>
     </div>
