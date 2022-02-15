@@ -103,7 +103,7 @@ const RenderComponent = (props: RenderComponentProps) => {
   }, [value]);
 
   return (
-    <ContextMenu value={value}>
+    <ContextMenu value={value} actionIgnore={['undo', 'redo', 'edit_name']}>
       <ComponentWrapper
         style={baseStyle}
         className={classnames(className, 'react-select-to', {
