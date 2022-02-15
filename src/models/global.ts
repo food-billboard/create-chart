@@ -33,7 +33,10 @@ export default {
   },
 
   effects: {
-    *setScreen({ value }: { value: string }, { put }: any) {
+    *setScreen(
+      { value }: { value: ComponentMethod.GlobalUpdateScreenDataParams },
+      { put }: any,
+    ) {
       yield put({
         type: 'setData',
         payload: value,

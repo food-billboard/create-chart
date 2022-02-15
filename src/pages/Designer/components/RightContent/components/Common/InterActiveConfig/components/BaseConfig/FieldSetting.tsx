@@ -1,21 +1,56 @@
 import { useMemo, useCallback } from 'react';
 import { Input } from 'antd';
+import { connect } from 'dva';
 import { getPath } from '@/utils/Assist/Component';
+import InteractiveUtil from '@/utils/Assist/Interactive';
 import MapTable from '../../../MapTable';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const FieldSetting = (props: {
   value: ComponentData.TBaseInteractiveConfig;
   onChange?: ComponentMethod.SetComponentMethod;
   id: string;
   dataSource: ComponentData.TBaseInteractiveConfig[];
+  params: ComponentData.TParams[];
+  setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
 }) => {
-  const { value, onChange, id, dataSource } = props;
+  const { value, onChange, id, dataSource, params, setScreen } = props;
   const { name, fields } = value;
+
+  const setParams = useCallback(
+    (params: ComponentData.TParams[]) => {
+      setScreen({
+        config: {
+          attr: {
+            params,
+          },
+        },
+      });
+    },
+    [setScreen],
+  );
 
   const onFieldMapChange = useCallback(
     (value: ComponentData.TBaseInteractiveConfigField, e) => {
       const path = getPath(id);
       const mapValue = e.target.value;
+      const { variable } = value;
+
+      if (variable === mapValue) return;
+
+      // sync the global params
+      const mapId = InteractiveUtil.updateBaseInteractiveVariable(
+        {
+          params,
+          setParams,
+        },
+        {
+          variable: mapValue,
+          id: value.mapId,
+          origin: id,
+          key: value.key,
+        },
+      );
 
       onChange?.({
         value: {
@@ -30,6 +65,7 @@ const FieldSetting = (props: {
                     return {
                       ...item,
                       variable: mapValue,
+                      mapId,
                     };
                   }),
                 };
@@ -42,7 +78,7 @@ const FieldSetting = (props: {
         action: 'update',
       });
     },
-    [id, onChange],
+    [id, onChange, params, setParams],
   );
 
   const columns = useMemo(() => {
@@ -82,4 +118,4 @@ const FieldSetting = (props: {
   return <MapTable dataSource={fields} columns={columns} rowKey="key" />;
 };
 
-export default FieldSetting;
+export default connect(mapStateToProps, mapDispatchToProps)(FieldSetting);

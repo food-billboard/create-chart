@@ -46,6 +46,8 @@ declare namespace ComponentData {
     key: string;
     variable: string;
     description: string;
+    // TParams id
+    mapId?: string;
   };
 
   // 组件基础交互配置
@@ -102,15 +104,16 @@ declare namespace ComponentData {
   };
 
   // 全局参数
+  // * 关于组件的全局参数，使用每个组件参数对应一个params id不重复 设置variable则删除对应params
   export type TParams = {
     originType: 'COMPONENT' | 'URL';
     id: string;
     // 源头-针对组件
-    origin?: string[];
+    origin?: string;
     // 值
-    value: string;
+    value?: string;
     // 源字段名称
-    key: string[];
+    key: string;
     // 变量名称
     variable: string;
   };
@@ -240,4 +243,8 @@ declare namespace ComponentMethod {
   export type SetComponentMethod = (
     value: SetComponentMethodParamsData[] | SetComponentMethodParamsData,
   ) => void;
+
+  export type GlobalUpdateScreenDataParams = SuperPartial<
+    Exclude<ComponentData.TScreenData, 'components'>
+  >;
 }
