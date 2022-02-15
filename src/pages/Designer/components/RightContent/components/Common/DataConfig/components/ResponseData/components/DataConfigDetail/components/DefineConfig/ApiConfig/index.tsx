@@ -14,10 +14,11 @@ export type ApiConfigProps = {
   onChange?: TOnChange;
   value: ComponentData.TComponentApiDataConfig;
   params: ComponentData.TParams[];
+  constants: ComponentData.TConstants[];
 };
 
 const ApiConfig = (props: ApiConfigProps) => {
-  const { onChange, value, params } = props;
+  const { onChange, value, params, constants } = props;
   const {
     request: { method, url, headers, body },
   } = value;
@@ -31,6 +32,7 @@ const ApiConfig = (props: ApiConfigProps) => {
           },
         }),
         params,
+        constants,
       );
 
       onChange?.({
@@ -40,7 +42,7 @@ const ApiConfig = (props: ApiConfigProps) => {
         },
       });
     },
-    [params],
+    [params, constants],
   );
 
   return (

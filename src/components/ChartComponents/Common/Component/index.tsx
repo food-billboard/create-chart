@@ -39,15 +39,16 @@ class Component<P = {}, S = {}> extends ReactComponent<ComponentProps<P>, S> {
   // 一开始调用，定时数据请求
   requestDataInterval = (
     params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
     callback?: (value: any) => void,
   ) => {
     const { component } = this.props;
     clearInterval(this.requestTimer);
     const frequency = get(component, 'config.data.request.frequency.value');
-    this.requestData(params, callback).then((_) => {
+    this.requestData(params, constants, callback).then((_) => {
       if (this.isIntervalRequest()) {
         this.requestTimer = setInterval(() => {
-          this.requestData(params, callback);
+          this.requestData(params, constants, callback);
         }, frequency * 1000);
       }
     });
@@ -55,6 +56,7 @@ class Component<P = {}, S = {}> extends ReactComponent<ComponentProps<P>, S> {
 
   requestData = async (
     params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
     callback?: (value: any) => void,
   ) => {
     if (this.requestLoading) return;
@@ -62,7 +64,7 @@ class Component<P = {}, S = {}> extends ReactComponent<ComponentProps<P>, S> {
 
     const { component } = this.props;
     const value = get(component, 'config.data');
-    const result = await FilterDataUtil.requestData(value, params);
+    const result = await FilterDataUtil.requestData(value, params, constants);
 
     callback?.(result);
 
@@ -70,7 +72,11 @@ class Component<P = {}, S = {}> extends ReactComponent<ComponentProps<P>, S> {
   };
 
   // 获取过滤后的数据
-  getValue = (value: any, params: ComponentData.TParams[]) => {
+  getValue = (
+    value: any,
+    params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
+  ) => {
     const { component, global } = this.props;
     const config = get(component, 'config.data');
     const { filter } = global;
@@ -82,6 +88,7 @@ class Component<P = {}, S = {}> extends ReactComponent<ComponentProps<P>, S> {
       }),
       filter,
       params,
+      constants,
       false,
     );
   };

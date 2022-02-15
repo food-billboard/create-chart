@@ -18,8 +18,22 @@ class VariableStringUtil {
     }, {});
   }
 
-  getAllGlobalParams(params: ComponentData.TParams[]) {
+  formatConstants(constants: ComponentData.TConstants[]) {
+    return constants.reduce<{
+      [key: string]: string;
+    }>((acc, cur) => {
+      const { value, key } = cur;
+      acc[key] = value || '';
+      return acc;
+    }, {});
+  }
+
+  getAllGlobalParams(
+    params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
+  ) {
     return {
+      ...this.formatConstants(constants),
       ...this.formatParams(params),
       ...this.#urlParams,
     };
@@ -27,10 +41,11 @@ class VariableStringUtil {
 
   variableStringToRealString(
     value: string,
-    dataSource: ComponentData.TParams[],
+    params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
   ) {
     try {
-      return Mustache.render(value, this.getAllGlobalParams(dataSource));
+      return Mustache.render(value, this.getAllGlobalParams(params, constants));
     } catch (err) {
       return value;
     }

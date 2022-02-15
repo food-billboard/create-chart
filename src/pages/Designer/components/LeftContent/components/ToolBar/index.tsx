@@ -5,6 +5,7 @@ import {
   LayerShowIcon,
   GuideLineIcon,
   CallbackIcon,
+  ConstantIcon,
 } from './action.map';
 import styles from './index.less';
 
@@ -26,6 +27,7 @@ const ToolBar = () => {
       <LayerShowIcon />
       <GuideLineIcon />
       <CallbackIcon />
+      <ConstantIcon />
     </div>
   );
 };

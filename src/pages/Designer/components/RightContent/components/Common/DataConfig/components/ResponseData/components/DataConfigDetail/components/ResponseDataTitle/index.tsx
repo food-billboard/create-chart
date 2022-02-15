@@ -11,15 +11,20 @@ const ResponseDataTitle = (props: {
   onChange?: TOnChange;
   value: ComponentData.TComponentApiDataConfig;
   params: ComponentData.TParams[];
+  constants: ComponentData.TConstants[];
 }) => {
-  const { onChange, value, params } = props;
+  const { onChange, value, params, constants } = props;
 
   const {
     request: { type },
   } = value;
 
   const reRequestData = useCallback(async () => {
-    const result: any = await FilterDataUtil.requestData(props.value!, params);
+    const result: any = await FilterDataUtil.requestData(
+      props.value!,
+      params,
+      constants,
+    );
     onChange?.({
       request: {
         value: result,

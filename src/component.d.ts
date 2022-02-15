@@ -118,6 +118,14 @@ declare namespace ComponentData {
     variable: string;
   };
 
+  // 全局常量
+  export type TConstants = {
+    key: string;
+    description?: string;
+    value: string;
+    id: string;
+  };
+
   // 辅助线
   export type TGuideLineConfigItem = {
     type: 'vertical' | 'horizontal';
@@ -150,6 +158,7 @@ declare namespace ComponentData {
         poster: TBackgroundConfig;
         filter: TFilterConfig[];
         params: TParams[];
+        constants: TConstants[];
       };
       flag: {
         type: 'WEB' | 'H5';

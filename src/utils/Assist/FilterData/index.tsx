@@ -33,6 +33,7 @@ class FilterData {
     value: ComponentData.TComponentApiDataConfig,
     filter: ComponentData.TFilterConfig[],
     params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
     stringify: boolean = true,
   ) {
     const {
@@ -53,7 +54,7 @@ class FilterData {
       const target = filter.find((item) => item.id === id);
       const { error, value } = this.pipeValueByCodeString(
         result,
-        VariableStringUtil.getAllGlobalParams(params),
+        VariableStringUtil.getAllGlobalParams(params, constants),
         target!.code,
       );
       result = value;
@@ -70,11 +71,19 @@ class FilterData {
   }
 
   // 解析字符串对象变量
-  parseVariableStringInObject(value: object, params: ComponentData.TParams[]) {
+  parseVariableStringInObject(
+    value: object,
+    params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
+  ) {
     return Object.entries(value).reduce<{ [key: string]: string }>(
       (acc, cur) => {
         const [key, value] = cur;
-        acc[key] = VariableStringUtil.variableStringToRealString(value, params);
+        acc[key] = VariableStringUtil.variableStringToRealString(
+          value,
+          params,
+          constants,
+        );
         return acc;
       },
       {},
@@ -82,20 +91,28 @@ class FilterData {
   }
 
   // 解析变量body
-  parseBody(value: string, params: ComponentData.TParams[]) {
+  parseBody(
+    value: string,
+    params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
+  ) {
     try {
       const body = json5.parse(value);
-      return this.parseVariableStringInObject(body, params);
+      return this.parseVariableStringInObject(body, params, constants);
     } catch {
       return {};
     }
   }
 
   // 解析变量headers
-  parseHeaders(value: string, params: ComponentData.TParams[]) {
+  parseHeaders(
+    value: string,
+    params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
+  ) {
     try {
       const headers = json5.parse(value);
-      return this.parseVariableStringInObject(headers, params);
+      return this.parseVariableStringInObject(headers, params, constants);
     } catch {
       return {};
     }
@@ -104,6 +121,7 @@ class FilterData {
   async requestData(
     value: ComponentData.TComponentApiDataConfig,
     params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
   ) {
     const {
       filter: {},
@@ -112,11 +130,11 @@ class FilterData {
 
     if (type !== 'api' || !url) return responseData;
 
-    const realHeaders = this.parseHeaders(headers, params);
+    const realHeaders = this.parseHeaders(headers, params, constants);
     let realBody;
 
     if (method === 'POST') {
-      realBody = this.parseBody(body, params);
+      realBody = this.parseBody(body, params, constants);
     }
 
     try {

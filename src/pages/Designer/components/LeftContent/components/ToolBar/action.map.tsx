@@ -7,10 +7,12 @@ import {
   BlockOutlined,
   ShrinkOutlined,
   BorderOuterOutlined,
+  GlobalOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
 import { connect } from 'dva';
 import CallbackManage, { CallbackManageRef } from '../CallbackManage';
+import ConstantManage, { ConstantManageRef } from '../ConstantManage';
 import LayerManage, { LayerManageRef } from '../LayerManage';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
@@ -154,6 +156,30 @@ export const CallbackIcon = () => {
         onClick={handleOpen}
       />
       <CallbackManage ref={callbackRef} />
+    </>
+  );
+};
+
+// 全局常量管理
+export const ConstantIcon = () => {
+  const constantRef = useRef<ConstantManageRef>(null);
+
+  const handleOpen = useCallback(() => {
+    constantRef.current?.open();
+  }, []);
+
+  return (
+    <>
+      <GlobalOutlined
+        title="常量管理"
+        className={classnames(
+          commonClass,
+          'c-po',
+          styles['design-left-tool-icon-hover'],
+        )}
+        onClick={handleOpen}
+      />
+      <ConstantManage ref={constantRef} />
     </>
   );
 };

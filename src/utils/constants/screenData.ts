@@ -517,6 +517,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
         },
       ],
       params: [],
+      constants: [],
     },
     flag: {
       type: 'WEB',
