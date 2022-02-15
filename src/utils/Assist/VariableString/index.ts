@@ -8,23 +8,29 @@ class VariableStringUtil {
 
   #urlParams = {};
 
+  formatParams(params: ComponentData.TParams[]) {
+    return params.reduce<{
+      [key: string]: string;
+    }>((acc, cur) => {
+      const { value, variable } = cur;
+      acc[variable] = value || '';
+      return acc;
+    }, {});
+  }
+
+  getAllGlobalParams(params: ComponentData.TParams[]) {
+    return {
+      ...this.formatParams(params),
+      ...this.#urlParams,
+    };
+  }
+
   variableStringToRealString(
     value: string,
     dataSource: ComponentData.TParams[],
   ) {
-    const dataSourceMap = dataSource.reduce<{
-      [key: string]: string;
-    }>((acc, cur) => {
-      const { value, variable } = cur;
-      acc[variable] = value;
-      return acc;
-    }, {});
-
     try {
-      return Mustache.render(value, {
-        ...dataSourceMap,
-        ...this.#urlParams,
-      });
+      return Mustache.render(value, this.getAllGlobalParams(dataSource));
     } catch (err) {
       return value;
     }

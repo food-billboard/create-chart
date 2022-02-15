@@ -196,7 +196,7 @@ const DataFilter = (props: {
             !!updateFilter,
         })}
       >
-        <p>{'function filter(data) {'}</p>
+        <p>{'function filter( data, global ) {'}</p>
         <CodeEditor
           language="javascript"
           width={426}
