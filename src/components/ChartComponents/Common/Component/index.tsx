@@ -9,23 +9,18 @@ import { mergeWithoutArray } from '@/utils';
 
 export type TGlobalData = {
   filter: ComponentData.TFilterConfig[];
-  params: ComponentData.TParams[];
+  setParams: (params: ComponentData.TParams[]) => void;
   screenType: 'edit' | 'preview' | 'production';
 };
 
-class Component<P = {}, S = {}> extends ReactComponent<P, S> {
-  constructor(
-    props: P,
-    component: ComponentData.TComponentData,
-    global: TGlobalData,
-  ) {
-    super(props);
-    this.component = component;
-    this.global = global;
-  }
-
+type ComponentProps<P> = P & {
   component: ComponentData.TComponentData;
   global: TGlobalData;
+};
+class Component<P = {}, S = {}> extends ReactComponent<ComponentProps<P>, S> {
+  constructor(props: ComponentProps<P>) {
+    super(props);
+  }
 
   // * --------------------数据相关--------------------
 
@@ -34,35 +29,39 @@ class Component<P = {}, S = {}> extends ReactComponent<P, S> {
 
   // 是否需要定时请求
   private isIntervalRequest = () => {
-    const { screenType } = this.global;
-    const frequency =
-      get(this.component, 'config.data.request.frequency') || {};
+    const { global, component } = this.props;
+    const { screenType } = global;
+    const frequency = get(component, 'config.data.request.frequency') || {};
     const { show } = frequency;
     return show || screenType !== 'edit';
   };
 
   // 一开始调用，定时数据请求
-  requestDataInterval = (callback?: (value: any) => void) => {
+  requestDataInterval = (
+    params: ComponentData.TParams[],
+    callback?: (value: any) => void,
+  ) => {
+    const { component } = this.props;
     clearInterval(this.requestTimer);
-    const frequency = get(
-      this.component,
-      'config.data.request.frequency.value',
-    );
-    this.requestData(callback).then((_) => {
+    const frequency = get(component, 'config.data.request.frequency.value');
+    this.requestData(params, callback).then((_) => {
       if (this.isIntervalRequest()) {
         this.requestTimer = setInterval(() => {
-          this.requestData(callback);
+          this.requestData(params, callback);
         }, frequency * 1000);
       }
     });
   };
 
-  requestData = async (callback?: (value: any) => void) => {
+  requestData = async (
+    params: ComponentData.TParams[],
+    callback?: (value: any) => void,
+  ) => {
     if (this.requestLoading) return;
     this.requestLoading = true;
 
-    const value = get(this.component, 'config.data');
-    const { params } = this.global;
+    const { component } = this.props;
+    const value = get(component, 'config.data');
     const result = await FilterDataUtil.requestData(value, params);
 
     callback?.(result);
@@ -71,9 +70,10 @@ class Component<P = {}, S = {}> extends ReactComponent<P, S> {
   };
 
   // 获取过滤后的数据
-  getValue = (value: any) => {
-    const config = get(this.component, 'config.data');
-    const { filter, params } = this.global;
+  getValue = (value: any, params: ComponentData.TParams[]) => {
+    const { component, global } = this.props;
+    const config = get(component, 'config.data');
+    const { filter } = global;
     return FilterDataUtil.getPipeFilterValue(
       mergeWithoutArray({}, config, {
         request: {
@@ -89,6 +89,47 @@ class Component<P = {}, S = {}> extends ReactComponent<P, S> {
   // * --------------------数据相关end--------------------
 
   // * --------------------交互相关--------------------
+
+  // 同步基础事件的数据到全局参数
+  syncInteractiveAction = (
+    params: ComponentData.TParams[],
+    baseInteractiveType: string,
+    value: any,
+  ) => {
+    const { component, global } = this.props;
+    const { setParams } = global;
+    const baseInteractive: ComponentData.TBaseInteractiveConfig[] = get(
+      component,
+      'config.interactive.base',
+    );
+
+    let toUpdateParamsId: string[] = [];
+
+    baseInteractive.some((baseItem) => {
+      const { show, fields, type } = baseItem;
+      if (baseInteractiveType !== type || !show) return false;
+
+      fields.forEach((field) => {
+        const { mapId } = field;
+        if (!mapId) return;
+
+        toUpdateParamsId.push(mapId);
+      });
+
+      return true;
+    });
+
+    setParams(
+      params.map((param) => {
+        const { id } = param;
+        if (!toUpdateParamsId.includes(id)) return param;
+        return {
+          ...param,
+          value: value[param.key],
+        };
+      }),
+    );
+  };
 
   // * --------------------交互相关-end--------------------
 
