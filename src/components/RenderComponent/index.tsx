@@ -1,7 +1,6 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
+import { CSSProperties, useMemo, useCallback } from 'react';
 import { merge } from 'lodash';
 import classnames from 'classnames';
-import { useHover } from 'ahooks';
 import { connect } from 'dva';
 import ComponentWrapper from './components/Wrapper';
 import Content from './components/Content';
@@ -39,10 +38,6 @@ const RenderComponent = (props: RenderComponentProps) => {
       attr: { visible, lock, scaleX = 1, scaleY = 1 },
     },
   } = value;
-
-  const hoverRef = useRef<any>();
-
-  const isHover = useHover(hoverRef);
 
   const isSelect = useMemo(() => {
     return select?.includes(id);
@@ -103,12 +98,16 @@ const RenderComponent = (props: RenderComponentProps) => {
     };
   }, [componentStyle, scaleX, scaleY]);
 
+  const content = useMemo(() => {
+    return <Content value={value} />;
+  }, [value]);
+
   return (
     <ContextMenu value={value}>
       <ComponentWrapper
         style={baseStyle}
         className={classnames(className, 'react-select-to', {
-          'border-1': isHover && !isSelect,
+          [styles['render-component-wrapper']]: !isSelect,
           'border-1-a': isSelect,
         })}
         data-id={id}
@@ -127,14 +126,13 @@ const RenderComponent = (props: RenderComponentProps) => {
         onResizeStart={selectOnly}
       >
         <div
-          ref={hoverRef}
           className={classnames(styles['render-component-content'], 'pos-re', {
             'c-po': !isSelect,
           })}
           onClick={handleSelect}
           style={childrenStyle}
         >
-          <Content value={value} />
+          {content}
         </div>
       </ComponentWrapper>
     </ContextMenu>

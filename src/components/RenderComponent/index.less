@@ -1,5 +1,13 @@
+@import '../../global.less';
+
 .render-component-content {
   transform-origin: left top;
+}
+.render-component-wrapper {
+  border: 1px solid transparent;
+}
+.render-component-wrapper:hover {
+  &:extend(.border-1);
 }
 .render-component-main {
   border-width: 1px;
