@@ -17,6 +17,7 @@ export type RenderComponentProps = {
   scale: number;
   setSelect?: (value: string[]) => void;
   setComponent?: ComponentMethod.SetComponentMethod;
+  path?: string;
 };
 
 const RenderComponent = (props: RenderComponentProps) => {
@@ -29,6 +30,7 @@ const RenderComponent = (props: RenderComponentProps) => {
     setComponent: propsSetComponent,
     scale,
     index,
+    path,
   } = props;
 
   const {
@@ -103,7 +105,11 @@ const RenderComponent = (props: RenderComponentProps) => {
   }, [value]);
 
   return (
-    <ContextMenu value={value} actionIgnore={['undo', 'redo', 'edit_name']}>
+    <ContextMenu
+      value={value}
+      actionIgnore={['undo', 'redo', 'edit_name']}
+      path={path}
+    >
       <ComponentWrapper
         style={baseStyle}
         className={classnames(className, 'react-select-to', {

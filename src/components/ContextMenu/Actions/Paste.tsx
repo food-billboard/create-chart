@@ -180,7 +180,7 @@ const PasteAction = (props: CommonActionType) => {
 
   return (
     <div
-      key="copy"
+      key="paste"
       onClick={handleClick}
       style={{
         display: isValidPasteSelect ? 'block' : 'none',
