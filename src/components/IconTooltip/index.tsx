@@ -2,6 +2,7 @@ import { ReactNode, CSSProperties } from 'react';
 import { Tooltip } from 'antd';
 import classnames from 'classnames';
 import type { TooltipProps } from 'antd/es/tooltip';
+import styles from './index.less';
 
 const IconTooltip = (
   props: {
@@ -10,10 +11,24 @@ const IconTooltip = (
     iconStyle?: CSSProperties;
   } & TooltipProps,
 ) => {
-  const { children, title, iconClassName, iconStyle, ...nextProps } = props;
+  const {
+    children,
+    title,
+    iconClassName,
+    iconStyle,
+    overlayClassName,
+    ...nextProps
+  } = props;
 
   return (
-    <Tooltip {...nextProps} title={title || '提示'}>
+    <Tooltip
+      overlayClassName={classnames(
+        styles['component-icon-tooltip'],
+        overlayClassName,
+      )}
+      {...nextProps}
+      title={title || '提示'}
+    >
       <span
         className={classnames('m-l-8', 'c-po', iconClassName)}
         style={iconStyle}

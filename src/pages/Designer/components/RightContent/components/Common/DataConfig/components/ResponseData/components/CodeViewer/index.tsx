@@ -26,6 +26,7 @@ const CodeViewer = (
       height={'240'}
       bordered
       autoFormat
+      action={['copy']}
       {...nextProps}
       value={responseData}
     />
