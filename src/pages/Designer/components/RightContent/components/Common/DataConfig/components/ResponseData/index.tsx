@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import classnames from 'classnames';
 import { useResponseData } from '@/hooks';
 import AutoUpdate, { TValue } from './components/AutoUpdate';
-import GhostButton from './components/GhostButton';
+import GhostButton from '@/components/GhostButton';
 import CodeEditor from './components/CodeViewer';
 import DataConfigDetail, {
   IDataConfigDetailRef,

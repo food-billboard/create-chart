@@ -9,6 +9,7 @@ import { nanoid } from 'nanoid';
 import { Button, Drawer, Table, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
+import GhostButton from '@/components/GhostButton';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const { TextArea } = Input;
@@ -81,7 +82,7 @@ const ConstantList = (props: {
         title: '名称',
         key: 'key',
         dataIndex: 'key',
-        width: 100,
+        width: 80,
         render: (value: string, record: ComponentData.TConstants) => {
           return (
             <Input
@@ -102,15 +103,12 @@ const ConstantList = (props: {
         title: '常量',
         key: 'value',
         dataIndex: 'value',
-        width: 200,
+        width: 160,
         render: (value: string, record: ComponentData.TConstants) => {
           return (
             <TextArea
               className="w-100"
-              autoSize={{
-                maxRows: 2,
-                minRows: 1,
-              }}
+              rows={2}
               defaultValue={value}
               onBlur={(e) => {
                 const value = e.target.value;
@@ -127,15 +125,12 @@ const ConstantList = (props: {
         title: '描述',
         key: 'description',
         dataIndex: 'description',
-        width: 200,
+        width: 100,
         render: (value: string, record: ComponentData.TConstants) => {
           return (
             <TextArea
               className="w-100"
-              autoSize={{
-                maxRows: 2,
-                minRows: 1,
-              }}
+              rows={2}
               defaultValue={value}
               onBlur={(e) => {
                 const value = e.target.value;
@@ -161,22 +156,26 @@ const ConstantList = (props: {
         },
       },
     ];
-  }, [deleteData, updateValue]);
+  }, [updateValue, deleteData]);
 
   return (
     <>
       <Table
         dataSource={constants}
-        rowKey={() => Math.random()}
+        rowKey={'id'}
         columns={columns}
         pagination={false}
         scroll={{ y: '70vh', x: 'max-content' }}
         bordered
         size="small"
       />
-      <Button className="m-t-8" onClick={handleAdd} icon={<PlusOutlined />}>
+      <GhostButton
+        className="m-t-8"
+        onClick={handleAdd}
+        icon={<PlusOutlined />}
+      >
         新增一个字段
-      </Button>
+      </GhostButton>
     </>
   );
 };
