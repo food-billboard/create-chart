@@ -225,7 +225,7 @@ const ConstantManage = forwardRef<ConstantManageRef, ConstantManageProps>(
         maskClosable={false}
         onClose={onClose}
         footer={footer}
-        title="回调管理"
+        title="全局常量管理"
         placement="left"
       >
         <WrapperConstantList />

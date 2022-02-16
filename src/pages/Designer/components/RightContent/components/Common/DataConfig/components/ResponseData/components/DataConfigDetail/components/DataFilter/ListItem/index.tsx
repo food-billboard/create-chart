@@ -11,7 +11,7 @@ import {
 import { SortableHandle, SortableElement } from 'react-sortable-hoc';
 import CodeEditor from '@/components/CodeEditor';
 import NameEditor from './NameEditor';
-import ParamsSelect from './ParamsSelect';
+import ParamsSelect from '@/components/ParamsSelect';
 import styles from './index.less';
 import IconTooltip from '@/components/IconTooltip';
 

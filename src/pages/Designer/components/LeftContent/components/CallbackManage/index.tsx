@@ -8,6 +8,7 @@ import {
 import { Button, Drawer, Table, Modal } from 'antd';
 import { connect } from 'dva';
 import CodeViewer from '@/components/CodeView';
+import ParamsSelect from '@/components/ParamsSelect';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 export interface CallbackManageRef {
@@ -31,6 +32,20 @@ const CallbackList = (props: {
     (value: ComponentData.TFilterConfig) => {
       const { id } = value;
       const newValue = callback.filter((item) => item.id !== id);
+      setCallbackData?.(newValue);
+    },
+    [callback],
+  );
+
+  const updateCallback = useCallback(
+    (record: ComponentData.TFilterConfig, value: string[]) => {
+      const newValue = callback.map((item) => {
+        if (record.id !== item.id) return item;
+        return {
+          ...item,
+          params: value,
+        };
+      });
       setCallbackData?.(newValue);
     },
     [callback],
@@ -66,6 +81,20 @@ const CallbackList = (props: {
         },
       },
       {
+        title: '关联参数',
+        key: 'params',
+        dataIndex: 'params',
+        width: 100,
+        render: (value: string[], record: ComponentData.TFilterConfig) => {
+          return (
+            <ParamsSelect
+              value={value}
+              onChange={updateCallback.bind(null, record)}
+            />
+          );
+        },
+      },
+      {
         title: '操作',
         key: 'op',
         dataIndex: 'op',
@@ -78,7 +107,7 @@ const CallbackList = (props: {
         },
       },
     ];
-  }, [deleteData]);
+  }, [updateCallback, deleteData]);
 
   return (
     <>
@@ -92,7 +121,7 @@ const CallbackList = (props: {
         size="small"
       />
       <Modal
-        title="函数预览"
+        title="过滤函数"
         onCancel={() => setVisible(false)}
         footer={null}
         visible={visible}
