@@ -106,6 +106,7 @@ const DataConfigDetail = forwardRef<
       title="设置数据源"
       width={500}
       bodyStyle={{ paddingTop: 0 }}
+      destroyOnClose
     >
       <div className={styles['design-config-data-detail']}>
         <Title>数据源</Title>

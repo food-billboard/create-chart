@@ -147,6 +147,7 @@ const DataFilter = (props: {
       editable: true,
       name: '自定义过滤器',
       code: DEFAULT_FILTER_CODE,
+      params: [],
     };
     setTempFilterConfig(newFilterConfig);
   }, [tempFilterConfig]);

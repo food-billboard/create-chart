@@ -1,5 +1,4 @@
 import json5 from 'json5';
-import {} from 'lodash';
 import mustache from 'mustache';
 import VariableStringUtil from '../VariableString';
 import request from '../../request';
@@ -237,10 +236,10 @@ export class CompareFilterUtil {
         variables: this.getVariableInString(url),
       },
       ...filter.map((filterItem) => {
-        const { code } = filterItem;
+        const { params } = filterItem;
         return {
           action: this.onFilter,
-          variables: this.getVariableInString(code),
+          variables: params,
         };
       }),
     ].forEach((item) => {

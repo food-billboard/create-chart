@@ -101,6 +101,8 @@ declare namespace ComponentData {
     name: string;
     code: string;
     editable: boolean;
+    // 使用到的全局参数
+    params: string[];
   };
 
   // 全局参数

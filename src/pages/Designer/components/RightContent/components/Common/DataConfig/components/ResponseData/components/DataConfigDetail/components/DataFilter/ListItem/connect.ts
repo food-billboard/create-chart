@@ -1,9 +1,8 @@
 import { ConnectState } from '@/models/connect';
 
 export const mapStateToProps = (state: ConnectState) => {
-  const { filter, params, constants } = state.global.screenData.config.attr;
+  const { constants, params } = state.global.screenData.config.attr;
   return {
-    filter,
     params,
     constants,
   };

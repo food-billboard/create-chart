@@ -8,7 +8,7 @@ const DefineConfig = (props: {
     value?: string;
     onChange?: TOnChange;
   };
-  apiProps?: Omit<ApiConfigProps, 'params'>;
+  apiProps?: Omit<ApiConfigProps, 'params' | 'constants'>;
 }) => {
   const { type, staticProps, apiProps } = props;
 

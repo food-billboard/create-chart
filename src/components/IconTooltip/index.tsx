@@ -1,17 +1,25 @@
-import { ReactNode } from 'react';
+import { ReactNode, CSSProperties } from 'react';
 import { Tooltip } from 'antd';
+import classnames from 'classnames';
 import type { TooltipProps } from 'antd/es/tooltip';
 
 const IconTooltip = (
   props: {
     children?: ReactNode;
+    iconClassName?: string;
+    iconStyle?: CSSProperties;
   } & TooltipProps,
 ) => {
-  const { children, title, ...nextProps } = props;
+  const { children, title, iconClassName, iconStyle, ...nextProps } = props;
 
   return (
     <Tooltip {...nextProps} title={title || '提示'}>
-      <span className="m-l-8 c-po">{children}</span>
+      <span
+        className={classnames('m-l-8', 'c-po', iconClassName)}
+        style={iconStyle}
+      >
+        {children}
+      </span>
     </Tooltip>
   );
 };

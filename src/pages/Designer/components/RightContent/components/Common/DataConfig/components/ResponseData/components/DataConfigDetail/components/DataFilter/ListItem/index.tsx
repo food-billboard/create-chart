@@ -6,11 +6,14 @@ import {
   DeleteOutlined,
   CaretRightOutlined,
   HolderOutlined,
+  QuestionCircleOutlined,
 } from '@ant-design/icons';
 import { SortableHandle, SortableElement } from 'react-sortable-hoc';
 import CodeEditor from '@/components/CodeEditor';
 import NameEditor from './NameEditor';
+import ParamsSelect from './ParamsSelect';
 import styles from './index.less';
+import IconTooltip from '@/components/IconTooltip';
 
 export type TOnChangeType = (
   action: 'delete' | 'update',
@@ -39,7 +42,7 @@ const DataFilter = (props: {
   props: ComponentData.TFilterConfig & ComponentData.TComponentFilterConfig;
 }) => {
   const {
-    props: { disabled, id, name, code },
+    props: { disabled, id, name, code, params },
     onCodeCancel: propsOnCodeCancel,
     onCodeConfirm: propsOnCodeConfirm,
     onChange,
@@ -86,14 +89,17 @@ const DataFilter = (props: {
     [id, onChange],
   );
 
-  const onCodeChange = useCallback((value: string) => {
-    const newUpdateFilter = {
-      ...(updateFilter || {}),
-      code: value,
-      id,
-    };
-    setUpdateFilter(newUpdateFilter);
-  }, []);
+  const onUpdateFilterChange = useCallback(
+    (key: keyof ComponentData.TFilterConfig, value: any) => {
+      const newUpdateFilter = {
+        ...(updateFilter || {}),
+        [key]: value,
+        id,
+      };
+      setUpdateFilter(newUpdateFilter);
+    },
+    [id],
+  );
 
   const onComponentChange = useCallback(
     (
@@ -196,13 +202,28 @@ const DataFilter = (props: {
             !!updateFilter,
         })}
       >
+        <p className="m-t-4">
+          全局参数
+          <IconTooltip title="可响应式更新数据" iconStyle={{ marginLeft: 0 }}>
+            <QuestionCircleOutlined />
+          </IconTooltip>
+          {' ：'}
+        </p>
+        <div className="p-lr-8">
+          <ParamsSelect
+            value={updateFilter?.params ?? params}
+            onChange={onUpdateFilterChange.bind(null, 'params')}
+            className="m-t-4 m-b-8"
+          />
+        </div>
+
         <p>{'function filter( data, global ) {'}</p>
         <CodeEditor
           language="javascript"
           width={426}
           height={180}
           value={updateFilter?.code ?? code}
-          onChange={onCodeChange}
+          onChange={onUpdateFilterChange.bind(null, 'code')}
         />
         <p>{'}'}</p>
         <div className={styles['design-config-data-filter-list-item-action']}>

@@ -1,4 +1,5 @@
 import Mustache from 'mustache';
+import { nanoid } from 'nanoid';
 import { getPageQuery } from '../../tool';
 
 class VariableStringUtil {
@@ -7,6 +8,7 @@ class VariableStringUtil {
   }
 
   #urlParams = {};
+  #urlParams4Array: ComponentData.TConstants[] = [];
 
   formatParams(params: ComponentData.TParams[]) {
     return params.reduce<{
@@ -39,6 +41,23 @@ class VariableStringUtil {
     };
   }
 
+  getAllGlobalParams4Array(
+    params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
+  ) {
+    return [
+      ...constants,
+      ...params.map((item) => {
+        return {
+          key: item.variable,
+          value: item.value,
+          id: item.id,
+        };
+      }),
+      ...this.#urlParams4Array,
+    ];
+  }
+
   variableStringToRealString(
     value: string,
     params: ComponentData.TParams[],
@@ -55,9 +74,30 @@ class VariableStringUtil {
     return this.#urlParams;
   }
 
+  get urlParams4Array() {
+    return this.#urlParams4Array;
+  }
+
+  object2Array(value: object) {
+    return Object.entries(value).reduce<ComponentData.TConstants[]>(
+      (acc, cur) => {
+        const [key, value] = cur;
+        acc.push({
+          key,
+          value,
+          id: nanoid(),
+          description: `来源于url地址:${key}`,
+        });
+        return acc;
+      },
+      [],
+    );
+  }
+
   getAllUrlParams() {
     const result = getPageQuery();
     this.#urlParams = result;
+    this.#urlParams4Array = this.object2Array(result);
     return result;
   }
 }
