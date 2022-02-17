@@ -63,6 +63,7 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
         tabSize: 2,
         readOnly: !!disabled,
         lineNumbersMinChars: 2,
+        contextmenu: false,
         scrollbar: {
           arrowSize: 4,
           handleMouseWheel: !scrollDisabled,
@@ -88,6 +89,7 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
   );
 
   const editorDidMount: EditorDidMount = (editor, monaco) => {
+    monaco.editor.setTheme('vs-dark-custom');
     propsEditorDidMount?.(editor, monaco);
     autoFocus && !disabled && editor.focus();
     setEditorRef(editor);
@@ -138,7 +140,6 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
   return (
     <MonacoEditor
       language="javascript"
-      theme="vs-dark"
       value={value}
       options={realOptions}
       onChange={setValue}
@@ -149,15 +150,17 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
         },
         className,
       )}
-      // editorWillMount={(editor) => {
-      //   editor.editor.defineTheme("222", {
-      //     base: 'vs-dark',
-      //     inherit: true,
-      //     rules: ITokenThemeRule[];
-      //     // encodedTokensColors?: string[];
-      //     colors: IColors;
-      //   })
-      // }}
+      editorWillMount={(editor) => {
+        editor.editor.defineTheme('vs-dark-custom', {
+          base: 'vs-dark',
+          inherit: true,
+          rules: [],
+          // encodedTokensColors?: string[];
+          colors: {
+            'editor.background': '#141414',
+          },
+        });
+      }}
       {...nextProps}
     />
   );
