@@ -9,7 +9,7 @@ import {
 import { Button } from 'antd';
 import { merge } from 'lodash';
 import { connect } from 'dva';
-import { useHover, useMouse } from 'ahooks';
+import { useHover, useMouse, useScroll } from 'ahooks';
 import { nanoid } from 'nanoid';
 import classnames from 'classnames';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
@@ -17,7 +17,7 @@ import { useScrollBar } from '@/hooks';
 import GuideLine from '@/components/GuideLine';
 import Ruler from '@/components/Ruler';
 import { BackgroundConfigRender } from '@/components/DesignerBackground';
-import { mergeWithoutArray } from '@/utils/tool';
+import { mergeWithoutArray, sleep } from '@/utils/tool';
 import ClipboardComponent from '../Clipboard';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
@@ -26,6 +26,32 @@ const RIGHT_BOTTOM_PADDING = 200;
 
 export const wrapperId = 'designer-page-main';
 export const subWrapperId = 'designer-page-main-sub';
+
+const GuideLineButton = (props: { show: boolean; onClick?: any }) => {
+  const { show, onClick } = props;
+
+  const { left, top } = useScroll(document.querySelector(`#${wrapperId}`)) || {
+    left: 0,
+    top: 0,
+  };
+
+  const guideLineShowIcon = useMemo(() => {
+    return show ? <EyeOutlined /> : <EyeInvisibleOutlined />;
+  }, [show]);
+
+  return (
+    <Button
+      onClick={onClick}
+      type="link"
+      className={classnames('pos-ab', styles['designer-page-main-guide-btn'])}
+      style={{
+        left,
+        top,
+      }}
+      icon={guideLineShowIcon}
+    ></Button>
+  );
+};
 
 let scroll = {
   x: 0,
@@ -269,10 +295,6 @@ const PanelWrapper = (props: {
     setWrapperTop(y || 0);
   }, []);
 
-  const guideLineShowIcon = useMemo(() => {
-    return guideLineShow ? <EyeOutlined /> : <EyeInvisibleOutlined />;
-  }, [guideLineShow]);
-
   const renderGuideLineItem = useCallback(
     (
       item: ComponentData.TGuideLineConfigItem,
@@ -316,7 +338,7 @@ const PanelWrapper = (props: {
   }, [guideLineShow, guideLineList, renderGuideLineItem]);
 
   useEffect(() => {
-    resize();
+    sleep(100).then(resize);
     window.addEventListener('resize', resize);
     return () => {
       window.removeEventListener('resize', resize);
@@ -344,7 +366,7 @@ const PanelWrapper = (props: {
         <div
           id={subWrapperId}
           className={classnames(styles['designer-page-main-sub'], 'pos-re')}
-          style={size}
+          // style={size}
         >
           {/* background */}
           <BackgroundConfigRender />
@@ -364,7 +386,6 @@ const PanelWrapper = (props: {
             className={classnames(
               styles['designer-page-main-horizontal-ruler'],
               'dis-flex',
-              'pos-ab',
             )}
             style={{ width: size.width }}
           >
@@ -385,11 +406,8 @@ const PanelWrapper = (props: {
           </div>
           <div
             ref={verticalRulerRef}
-            style={{ height: size.height }}
-            className={classnames(
-              styles['designer-page-main-vertical-ruler'],
-              'pos-ab',
-            )}
+            style={{ height: size.height - 30 }}
+            className={classnames(styles['designer-page-main-vertical-ruler'])}
             onClick={generateGuideLine.bind(
               this,
               'horizontal',
@@ -400,9 +418,9 @@ const PanelWrapper = (props: {
               true,
             )}
           >
-            <div
+            {/* <div
               className={styles['designer-page-main-horizontal-ruler-prefix']}
-            ></div>
+            ></div> */}
             <Ruler
               width={30}
               height={size.height - 70}
@@ -412,15 +430,11 @@ const PanelWrapper = (props: {
           </div>
           {/* Ruler */}
 
-          <Button
+          <GuideLineButton
             onClick={wrapperSetGuideLine.bind(null, { show: !guideLineShow })}
-            type="link"
-            className={classnames(
-              'pos-ab',
-              styles['designer-page-main-guide-btn'],
-            )}
-            icon={guideLineShowIcon}
-          ></Button>
+            show={!!guideLineShow}
+          ></GuideLineButton>
+
           {guideLineListDoms}
           {mouseGuideLineList}
           <ClipboardComponent>{children}</ClipboardComponent>

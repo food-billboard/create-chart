@@ -107,7 +107,7 @@ const Painter = (props: PainterProps) => {
   return (
     <div
       id={PANEL_ID}
-      className={classnames(styles['page-design-main-panel'], 'pos-re')}
+      className={classnames(styles['page-design-main-panel'], 'pos-ab')}
       style={panelStyle}
       ref={connectDropTarget}
       role={DROP_TYPE}
