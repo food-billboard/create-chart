@@ -1,9 +1,7 @@
 import { useCallback } from 'react';
 
 const RedoAction = () => {
-  const handleClick = useCallback(() => {
-    console.log('撤销');
-  }, []);
+  const handleClick = useCallback(() => {}, []);
 
   return (
     <div key="redo" onClick={handleClick}>

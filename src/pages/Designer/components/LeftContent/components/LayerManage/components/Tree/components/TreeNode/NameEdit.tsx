@@ -2,7 +2,6 @@ import {
   useCallback,
   useMemo,
   useState,
-  useRef,
   forwardRef,
   useImperativeHandle,
 } from 'react';
@@ -19,28 +18,27 @@ const NameEditor = forwardRef<
   {
     value: ComponentData.TComponentData;
     onChange: (value: SuperPartial<ComponentData.TComponentData>) => void;
-    select: string[];
-    setSelect: (value: string[]) => void;
+    disabled?: boolean;
   }
 >((props, ref) => {
-  const { value, onChange, select, setSelect } = props;
+  const { value, onChange, disabled } = props;
   const { name, id } = value;
 
   const [editable, setEditable] = useState<boolean>(false);
 
-  const editTimestamps = useRef<number>(0);
-  const timerRef = useRef<NodeJS.Timeout>();
+  // const editTimestamps = useRef<number>(0);
+  // const timerRef = useRef<NodeJS.Timeout>();
 
-  const changeSelect = useCallback(() => {
-    const index = select.indexOf(id);
-    let newSelect: string[] = [];
-    if (!!~index) {
-      newSelect = [];
-    } else {
-      newSelect = [id];
-    }
-    setSelect(newSelect);
-  }, [id, select, setSelect]);
+  // const changeSelect = useCallback(() => {
+  //   const index = select.indexOf(id);
+  //   let newSelect: string[] = [];
+  //   if (!!~index) {
+  //     newSelect = [];
+  //   } else {
+  //     newSelect = [id];
+  //   }
+  //   setSelect(newSelect);
+  // }, [id, select, setSelect]);
 
   const changeName = useCallback(
     (e) => {
@@ -55,26 +53,27 @@ const NameEditor = forwardRef<
 
   const changeEditState = useCallback(
     (e) => {
+      if (disabled) return;
       setEditable(true);
       return;
 
-      e.stopPropagation();
-      // dbClick
-      if (Date.now() - editTimestamps.current < 200) {
-        setEditable(true);
-        editTimestamps.current = 0;
-        clearTimeout(timerRef.current as any);
-      }
-      // click
-      else {
-        timerRef.current = setTimeout(() => {
-          changeSelect();
-          editTimestamps.current = 0;
-        }, 200);
-        editTimestamps.current = Date.now();
-      }
+      // e.stopPropagation();
+      // // dbClick
+      // if (Date.now() - editTimestamps.current < 200) {
+      //   setEditable(true);
+      //   editTimestamps.current = 0;
+      //   clearTimeout(timerRef.current as any);
+      // }
+      // // click
+      // else {
+      //   timerRef.current = setTimeout(() => {
+      //     changeSelect();
+      //     editTimestamps.current = 0;
+      //   }, 200);
+      //   editTimestamps.current = Date.now();
+      // }
     },
-    [changeSelect],
+    [disabled],
   );
 
   // 名称修改

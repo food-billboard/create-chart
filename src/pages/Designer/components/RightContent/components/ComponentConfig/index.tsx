@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import { connect } from 'dva';
 import IconTooltip from '@/components/IconTooltip';
-import { getComponent } from '@/utils/Assist/Component';
+import { getComponent, isComponentDisabled } from '@/utils/Assist/Component';
 import ConfigList from '../Common/Structure/ConfigList';
 import BaseConfig from '../Common/BaseConfig';
 import DataConfig from '../Common/DataConfig';
@@ -23,32 +23,32 @@ const ComponentConfig = (props: {
 }) => {
   const { options, id, components, setSelect } = props;
 
+  const component = useMemo(() => {
+    return getComponent(id, components);
+  }, [id, components]);
+
   const onBack = useCallback(() => {
-    const { parent }: ComponentData.TComponentData = getComponent(
-      id,
-      components,
-    );
+    const { parent } = component;
     setSelect([parent!]);
-  }, [id, components, setSelect]);
+  }, [component, setSelect]);
 
   const hasBack = useMemo(() => {
-    const component: ComponentData.TComponentData = getComponent(
-      id,
-      components,
-    );
     return !!component?.parent;
-  }, [components, id]);
+  }, [component]);
 
   const title = useMemo(() => {
-    const component: ComponentData.TComponentData = getComponent(
-      id,
-      components,
-    );
     return component?.name;
-  }, [components, id]);
+  }, [component]);
+
+  const disabled = isComponentDisabled(id);
 
   return (
-    <div className={styles['design-config-component']}>
+    <div
+      className={styles['design-config-component']}
+      style={{
+        pointerEvents: disabled ? 'none' : 'unset',
+      }}
+    >
       <ConfigWrapper
         hasBack={hasBack}
         onBack={onBack}

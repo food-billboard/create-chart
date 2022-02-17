@@ -339,4 +339,11 @@ export const isGroupComponent = (
   return EComponentType.GROUP_COMPONENT === component.type;
 };
 
+// 组件是否锁定
+export const isComponentDisabled = (select: string) => {
+  const idPathMap = useIdPathMap();
+  const target = idPathMap[select];
+  return !target || !!target.disabled;
+};
+
 export default componentUtil;

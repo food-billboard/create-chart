@@ -10,7 +10,7 @@ const ComponentWrapper = (
     className?: string;
     style?: CSSProperties;
     select?: string[];
-    disabled?: boolean;
+    pointerDisabled?: boolean;
     setComponent: (
       callback: (
         value: ComponentData.TComponentData,
@@ -25,7 +25,7 @@ const ComponentWrapper = (
     propsOnDragStop,
     propsOnResizeStop,
     select,
-    disabled,
+    pointerDisabled,
     setComponent,
     ...nextProps
   } = props;
@@ -113,8 +113,8 @@ const ComponentWrapper = (
 
   return (
     <Rnd
-      enableResizing={!disabled}
-      disableDragging={disabled}
+      enableResizing={!pointerDisabled}
+      disableDragging={pointerDisabled}
       className={className}
       style={merge({}, style)}
       default={{

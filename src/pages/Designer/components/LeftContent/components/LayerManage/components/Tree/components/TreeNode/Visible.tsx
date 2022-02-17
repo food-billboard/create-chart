@@ -4,12 +4,15 @@ import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 const VisibleEditor = (props: {
   visible: boolean;
   onChange: (value: SuperPartial<ComponentData.TComponentData>) => void;
+  disabled?: boolean;
 }) => {
-  const { visible, onChange } = props;
+  const { visible, onChange, disabled } = props;
 
   const changeVisible = useCallback(
     (e) => {
       e.stopPropagation();
+
+      if (disabled) return;
 
       onChange({
         config: {
@@ -19,7 +22,7 @@ const VisibleEditor = (props: {
         },
       });
     },
-    [visible, onChange],
+    [visible, onChange, disabled],
   );
 
   // 显示隐藏

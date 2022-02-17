@@ -61,9 +61,7 @@ class GuideLine extends Component<
         lineStyle,
       };
       onChange?.(newItem);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   onMouseUp = () => {

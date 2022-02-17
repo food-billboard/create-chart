@@ -1,7 +1,10 @@
+import { getComponent } from '@/utils/Assist/Component';
+
 let ID_PATH_MAP: {
   [key: string]: {
     id: string;
     path: string;
+    disabled?: boolean;
   };
 } = {};
 
@@ -20,8 +23,10 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
   customReturn?: (
     entry: ComponentData.TComponentDateWithPath,
     nextPath: string,
+    disabled: boolean,
     deepReduce: (
       list: ComponentData.TComponentData[],
+      disabled: boolean,
       path?: string,
       config?: any,
     ) => T[],
@@ -29,15 +34,11 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
   ) => T,
   config?: any,
 ) {
-  const componentPathMap: {
-    [key: string]: {
-      id: string;
-      path: string;
-    };
-  } = {};
+  const componentPathMap: typeof ID_PATH_MAP = {};
 
   const deepReduce = (
     list: ComponentData.TComponentData[],
+    disabled: boolean,
     path?: string,
     config?: any,
   ) => {
@@ -51,10 +52,13 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
         ? `${path}.${index.toString()}`
         : index.toString();
 
+      const curComponentDisabled = disabled || !!cur.config.attr.lock;
+
       // id path map
       componentPathMap[cur.id] = {
         id: cur.id,
         path: currentPath,
+        disabled: curComponentDisabled,
       };
 
       if (customReturn) {
@@ -62,6 +66,7 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
           customReturn(
             { ...cur, path: currentPath } as any,
             nextPath,
+            curComponentDisabled,
             deepReduce,
             config,
           ) as any,
@@ -70,7 +75,12 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
         acc.push({
           ...cur,
           path: currentPath,
-          components: deepReduce(components, nextPath, config),
+          components: deepReduce(
+            components,
+            curComponentDisabled,
+            nextPath,
+            config,
+          ),
         } as any);
       }
 
@@ -78,7 +88,7 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
     }, []);
   };
 
-  const result = deepReduce(components, '', config);
+  const result = deepReduce(components, false, '', config);
 
   ID_PATH_MAP = {
     ...componentPathMap,

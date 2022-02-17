@@ -63,7 +63,7 @@ class TreeClass extends Component<TreeProps> {
   ) => {
     return useComponentPath<DataNode>(
       components,
-      (entry, nextPath, deepReduce, checkable) => {
+      (entry, nextPath, disabled, deepReduce, checkable) => {
         const { path, ...nextEntry } = entry;
         const { id, type, components } = nextEntry;
         const isLeaf = type === EComponentType.COMPONENT;
@@ -75,12 +75,15 @@ class TreeClass extends Component<TreeProps> {
               path={path}
               update={() => this.forceUpdate()}
               isLeaf={isLeaf}
+              disabled={disabled}
             />
           ),
           key: id,
           isLeaf,
           checkable,
-          children: isLeaf ? [] : deepReduce(components, nextPath, false),
+          children: isLeaf
+            ? []
+            : deepReduce(components, disabled, nextPath, false),
         };
       },
       true,

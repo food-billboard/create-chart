@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { LockOutlined, UnlockOutlined } from '@ant-design/icons';
+import classnames from 'classnames';
 
 const LockEditor = (props: {
   lock: boolean;
@@ -25,9 +26,17 @@ const LockEditor = (props: {
   // 锁定
   const baseLock = useMemo(() => {
     return lock ? (
-      <LockOutlined onClick={changeLock} className="c-po" />
+      <LockOutlined
+        style={{ cursor: 'pointer' }}
+        onClick={changeLock}
+        className={classnames('c-po')}
+      />
     ) : (
-      <UnlockOutlined onClick={changeLock} className="c-po" />
+      <UnlockOutlined
+        style={{ cursor: 'pointer' }}
+        onClick={changeLock}
+        className={classnames('c-po')}
+      />
     );
   }, [lock, changeLock]);
 

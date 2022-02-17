@@ -56,10 +56,11 @@ const RenderComponent = (props: RenderComponentProps) => {
         display: visible ? 'inline-block' : 'none',
         borderWidth: (1 / scale) * 100,
         zIndex: isSelect ? 4 : zIndex,
+        pointerEvents: lock ? 'none' : 'unset',
       },
       style,
     );
-  }, [componentStyle, style, visible, scale, isSelect]);
+  }, [componentStyle, style, visible, scale, isSelect, lock]);
 
   const handleSelect = useCallback(
     (e: any) => {
@@ -125,7 +126,7 @@ const RenderComponent = (props: RenderComponentProps) => {
           x: componentStyle.left,
           y: componentStyle.top,
         }}
-        disabled={!isSelect || lock}
+        pointerDisabled={!isSelect || lock}
         setComponent={setComponent}
         scale={scale / 100}
         onDragStart={selectOnly}

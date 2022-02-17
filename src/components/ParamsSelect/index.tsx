@@ -32,8 +32,6 @@ const ParamsSelect = (
     return VariableStringUtil.getAllGlobalParams4Array(params, constants);
   }, [params, constants]);
 
-  // console.log(dataSource, 2222)
-
   const domList = useMemo(() => {
     return dataSource.map((item) => {
       const { key, value, id } = item;

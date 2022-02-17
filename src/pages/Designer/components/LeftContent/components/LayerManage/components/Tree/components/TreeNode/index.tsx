@@ -13,19 +13,17 @@ import styles from './index.less';
 const ListItem = ({
   value,
   setComponent: propsSetComponent,
-  select,
-  setSelect,
   path,
   update,
   isLeaf,
+  disabled,
 }: {
   value: ComponentData.TComponentData;
   setComponent?: ComponentMethod.SetComponentMethod;
-  select: string[];
-  setSelect: (value: string[]) => void;
   path: string;
   update?: () => void;
   isLeaf: boolean;
+  disabled?: boolean;
 }) => {
   const {
     id,
@@ -63,6 +61,15 @@ const ListItem = ({
     }
   }, []);
 
+  const handleSelect = useCallback(
+    (e) => {
+      if (disabled) {
+        e.stopPropagation();
+      }
+    },
+    [disabled],
+  );
+
   return (
     <ContextMenu
       actionIgnore={['undo', 'redo']}
@@ -70,7 +77,17 @@ const ListItem = ({
       path={path}
       onClick={handleEditName}
     >
-      <div className={classnames(styles['design-page-layer-item'], 'dis-flex')}>
+      <div
+        className={classnames(
+          styles['design-page-layer-item'],
+          'dis-flex',
+          'p-lr-4',
+          {
+            [styles['design-page-layer-item-disabled']]: !!disabled,
+          },
+        )}
+        onClick={handleSelect}
+      >
         {isLeaf && (
           <div
             className={classnames(
@@ -85,9 +102,8 @@ const ListItem = ({
           <NameEditor
             value={value}
             onChange={commonSetComponent}
-            select={select}
-            setSelect={setSelect}
             ref={editRef}
+            disabled={disabled}
           />
         </div>
         <div
@@ -97,7 +113,11 @@ const ListItem = ({
           )}
         >
           <Space size="large">
-            <VisibleEditor visible={visible} onChange={commonSetComponent} />
+            <VisibleEditor
+              disabled={disabled}
+              visible={visible}
+              onChange={commonSetComponent}
+            />
             <LockEditor lock={lock} onChange={commonSetComponent} />
           </Space>
         </div>

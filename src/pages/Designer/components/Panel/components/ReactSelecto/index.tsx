@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import ReactSelecto from 'react-selecto';
 import { connect } from 'dva';
 import { BACKGROUND_ID } from '@/components/DesignerBackground';
+import { isComponentDisabled } from '@/utils/Assist/Component';
 import { wrapperId } from '../PanelWrapper';
 import { PANEL_ID } from '../Painter';
 import { mapStateToProps, mapDispatchToProps } from './connect';
@@ -18,7 +19,13 @@ const Selecto = (props: {
     (e: any) => {
       const { added, removed } = e;
 
-      const toAddList = added.map((element: any) => element.dataset.id);
+      const toAddList = added.reduce((acc: any, element: any) => {
+        const select = element.dataset.id;
+        if (!isComponentDisabled(select)) {
+          acc.push(select);
+        }
+        return acc;
+      }, []);
       const toRemoveList = removed.map((element: any) => element.dataset.id);
 
       const newSelect = [
