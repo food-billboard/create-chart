@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import { VerticalAlignTopOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
 import { CommonActionType } from './type';
 
@@ -78,6 +79,7 @@ const TopAction = (props: CommonActionType) => {
 
   return (
     <div key="top" onClick={handleClick}>
+      <VerticalAlignTopOutlined className="m-r-4" />
       {title}
     </div>
   );

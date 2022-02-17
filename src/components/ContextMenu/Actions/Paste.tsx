@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { get } from 'lodash';
+import { SnippetsOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks/useComponentsPath';
 import {
   createComponent,
@@ -186,6 +187,7 @@ const PasteAction = (props: CommonActionType) => {
         display: isValidPasteSelect ? 'block' : 'none',
       }}
     >
+      <SnippetsOutlined className="m-r-4" />
       粘贴
     </div>
   );

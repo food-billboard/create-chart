@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import { EyeOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
 import { CommonActionType } from './type';
 
@@ -78,6 +79,7 @@ const ShowAction = (props: CommonActionType) => {
 
   return (
     <div key="show" onClick={handleClick}>
+      <EyeOutlined className="m-r-4" />
       {title}
     </div>
   );

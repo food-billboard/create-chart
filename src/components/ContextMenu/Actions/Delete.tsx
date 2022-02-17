@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { DeleteOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
 import { CommonActionType } from './type';
 
@@ -33,6 +34,7 @@ const DeleteAction = (props: CommonActionType) => {
 
   return (
     <div key="delete" onClick={handleClick}>
+      <DeleteOutlined className="m-r-4" />
       删除
     </div>
   );

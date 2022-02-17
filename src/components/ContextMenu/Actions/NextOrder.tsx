@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { ArrowDownOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
 import { CommonActionType } from './type';
 
@@ -35,6 +36,7 @@ const NextOrderAction = (props: CommonActionType) => {
 
   return (
     <div key="next_order" onClick={handleClick}>
+      <ArrowDownOutlined className="m-r-4" />
       下一个
     </div>
   );

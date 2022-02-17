@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import { UngroupOutlined } from '@ant-design/icons';
 import GroupUtil from '@/utils/Assist/Group';
 import { isGroupComponent } from '@/utils/Assist/Component';
 import { CommonActionType } from './type';
@@ -29,6 +30,7 @@ const UnGroupAction = (props: CommonActionType) => {
         display: isUnGroup ? 'block' : 'none',
       }}
     >
+      <UngroupOutlined className="m-r-4" />
       取消成组
     </div>
   );

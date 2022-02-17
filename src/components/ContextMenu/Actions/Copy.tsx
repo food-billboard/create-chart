@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { CopyOutlined } from '@ant-design/icons';
 import { CommonActionType } from './type';
 
 export const copy = (
@@ -18,6 +19,7 @@ const CopyAction = (props: CommonActionType) => {
 
   return (
     <div key="copy" onClick={handleClick}>
+      <CopyOutlined className="m-r-4" />
       复制
     </div>
   );

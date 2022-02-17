@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { GroupOutlined } from '@ant-design/icons';
 import GroupUtil from '@/utils/Assist/Group';
 import { CommonActionType } from './type';
 
@@ -23,6 +24,7 @@ const GroupAction = (props: CommonActionType) => {
 
   return (
     <div key="group" onClick={handleClick}>
+      <GroupOutlined className="m-r-4" />
       成组
     </div>
   );

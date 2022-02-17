@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { ArrowUpOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
 import { CommonActionType } from './type';
 
@@ -44,6 +45,7 @@ const PrevOrderAction = (props: CommonActionType) => {
 
   return (
     <div key="prev_order" onClick={handleClick}>
+      <ArrowUpOutlined className="m-r-4" />
       上一个
     </div>
   );

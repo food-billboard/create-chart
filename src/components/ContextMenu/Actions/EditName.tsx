@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import { EditOutlined } from '@ant-design/icons';
 import { CommonActionType } from './type';
 
 const CopyAction = (props: CommonActionType) => {
@@ -20,6 +21,7 @@ const CopyAction = (props: CommonActionType) => {
         display: canEdit ? 'block' : 'none',
       }}
     >
+      <EditOutlined className="m-r-4" />
       重命名
     </div>
   );

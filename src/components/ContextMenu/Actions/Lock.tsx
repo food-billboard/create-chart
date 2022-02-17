@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import { LockOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
 import { CommonActionType } from './type';
 
@@ -78,6 +79,7 @@ const LockAction = (props: CommonActionType) => {
 
   return (
     <div key="lock" onClick={handleClick}>
+      <LockOutlined className="m-r-4" />
       {title}
     </div>
   );

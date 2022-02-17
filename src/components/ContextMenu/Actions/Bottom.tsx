@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import { VerticalAlignBottomOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
 import { CommonActionType } from './type';
 
@@ -79,6 +80,7 @@ const BottomAction = (props: CommonActionType) => {
 
   return (
     <div key="bottom" onClick={handleClick}>
+      <VerticalAlignBottomOutlined className="m-r-4" />
       {title}
     </div>
   );
