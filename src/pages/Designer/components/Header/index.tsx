@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
-import { PageHeader, Input } from 'antd';
+import { useMemo, useState, useCallback } from 'react';
+import { PageHeader, Input, Button } from 'antd';
+import { SendOutlined, FundOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -44,11 +45,37 @@ const Header = (props: {
     );
   }, [editMode, name, setScreen]);
 
+  const handlePreview = useCallback(() => {}, []);
+
+  const handleSend = useCallback(() => {}, []);
+
+  const extra = useMemo(() => {
+    return [
+      <Button
+        key="preview"
+        size="large"
+        title="预览"
+        type="link"
+        onClick={handlePreview}
+        icon={<FundOutlined />}
+      ></Button>,
+      <Button
+        key="send"
+        size="large"
+        title="发布"
+        type="link"
+        onClick={handleSend}
+        icon={<SendOutlined />}
+      ></Button>,
+    ];
+  }, [handlePreview, handleSend]);
+
   return (
     <PageHeader
       className={styles['designer-page-header']}
       onBack={() => window.history.back()}
       title={Title}
+      extra={extra}
     ></PageHeader>
   );
 };
