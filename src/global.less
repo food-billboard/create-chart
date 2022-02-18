@@ -1,5 +1,29 @@
 @import '~antd/es/style/themes/default.less';
 
+html {
+  scrollbar-width: thin;
+}
+
+*,
+*:before,
+*:after {
+  scrollbar-width: inherit;
+}
+
+// 伪元素无法继承
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  transition: 0.5s;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(99, 99, 99, 0.8);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
 html,
 body,
 #root {
