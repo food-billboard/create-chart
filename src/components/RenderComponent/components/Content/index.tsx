@@ -1,4 +1,6 @@
+import { useMemo } from 'react';
 import { EComponentType } from '@/utils/constants';
+import ChildrenWrapper from './ChildrenWrapper';
 import { getComponentByType } from '../../../ChartComponents';
 
 type ComponentContentProps = {
@@ -8,25 +10,45 @@ type ComponentContentProps = {
 const Content = (props: ComponentContentProps) => {
   const { value } = props;
 
-  const renderChildren: (value: ComponentData.TComponentData[]) => any = (
-    value,
-  ) => {
-    return value.map((component) => {
-      const { type, id } = component;
+  const children = useMemo(() => {
+    const renderChildren: (
+      value: ComponentData.TComponentData[],
+      isOuter?: boolean,
+    ) => any = (value, isOuter = false) => {
+      return value.map((component) => {
+        const { type, id } = component;
 
-      if (type === EComponentType.GROUP_COMPONENT) {
-        return renderChildren(component.components);
-      }
+        if (type === EComponentType.GROUP_COMPONENT) {
+          return (
+            <ChildrenWrapper
+              value={component}
+              key={component.id}
+              borderNone={isOuter}
+            >
+              {renderChildren(component.components)}
+            </ChildrenWrapper>
+          );
+        }
 
-      const TargetComponent: any = getComponentByType(component)?.render;
+        const TargetComponent: any = getComponentByType(component)?.render;
 
-      if (!TargetComponent) return null;
+        if (!TargetComponent) return null;
 
-      return <TargetComponent value={component} key={id} />;
-    });
-  };
+        return (
+          <ChildrenWrapper
+            value={component}
+            key={component.id}
+            borderNone={isOuter}
+          >
+            <TargetComponent value={component} key={id} />
+          </ChildrenWrapper>
+        );
+      });
+    };
+    return renderChildren([value], true);
+  }, [value]);
 
-  return <>{renderChildren([value])}</>;
+  return <>{children}</>;
 };
 
 export default Content;

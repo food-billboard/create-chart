@@ -1,10 +1,11 @@
 import { Component } from 'react';
 
-class Test extends Component {
+class Test extends Component<any> {
   static id: ComponentData.TComponentSelfType = 'BAR_BASIC';
 
   render() {
-    return <h1>hello</h1>;
+    const { className } = this.props;
+    return <h1 className={className}>hello</h1>;
   }
 }
 

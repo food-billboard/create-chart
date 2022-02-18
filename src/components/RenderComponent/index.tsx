@@ -2,6 +2,7 @@ import { CSSProperties, useMemo, useCallback } from 'react';
 import { merge } from 'lodash';
 import classnames from 'classnames';
 import { connect } from 'dva';
+import { useIsComponentChildrenSelect } from '@/hooks';
 import ComponentWrapper from './components/Wrapper';
 import Content from './components/Content';
 import ContextMenu from '../ContextMenu';
@@ -25,7 +26,7 @@ const RenderComponent = (props: RenderComponentProps) => {
     style,
     className,
     value,
-    select,
+    select = [],
     setSelect,
     setComponent: propsSetComponent,
     scale,
@@ -41,9 +42,7 @@ const RenderComponent = (props: RenderComponentProps) => {
     },
   } = value;
 
-  const isSelect = useMemo(() => {
-    return select?.includes(id);
-  }, [select, id]);
+  const isSelect = useIsComponentChildrenSelect([value], select);
 
   const baseStyle: CSSProperties = useMemo(() => {
     const { rotate, width, height, left, top, zIndex, ...nextComponentStyle } =

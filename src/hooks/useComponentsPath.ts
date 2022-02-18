@@ -1,4 +1,4 @@
-import { getComponent } from '@/utils/Assist/Component';
+import { useMemo } from 'react';
 
 let ID_PATH_MAP: {
   [key: string]: {
@@ -95,4 +95,47 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
   };
 
   return result;
+}
+
+function format(
+  list: ComponentData.TComponentData[],
+  callback?: (target: ComponentData.TComponentData) => void,
+) {
+  return list.reduce<string[]>((acc, cur) => {
+    const { id, components = [] } = cur;
+    acc.push(id, ...format(components, callback));
+    callback?.(cur);
+    return acc;
+  }, []);
+}
+
+export function useComponentChildrenIds(
+  components: ComponentData.TComponentData[],
+) {
+  const childrenIdList = useMemo(() => {
+    return format(components);
+  }, [components]);
+
+  return childrenIdList;
+}
+
+export function useIsComponentChildrenSelect(
+  components: ComponentData.TComponentData[],
+  select: string[],
+) {
+  const isSelect = useMemo(() => {
+    try {
+      format(components, (target) => {
+        const { id } = target;
+        if (select.includes(id)) {
+          throw new Error();
+        }
+      });
+      return false;
+    } catch (err) {
+      return true;
+    }
+  }, [components, select]);
+
+  return isSelect;
 }
