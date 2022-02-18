@@ -8,19 +8,20 @@ import {
 } from 'react';
 import { Space } from 'antd';
 import classnames from 'classnames';
-import Editor, { EditorProps, EditorRef } from './Editor';
+import Editor, {
+  EditorProps as InternalEditorProps,
+  EditorRef as InternalEditorRef,
+} from './Editor';
 import ClipboardAction from './Clipboard';
 import FullScreenEditor from './FullScreenEditor';
 import styles from './index.less';
 
-export { EditorRef, EditorProps };
+export type EditorRef = InternalEditorRef;
+export type EditorProps = InternalEditorProps & {
+  action?: boolean | ['full-screen' | 'copy'];
+};
 
-const CodeEditor = forwardRef<
-  EditorRef,
-  EditorProps & {
-    action?: boolean | ['full-screen' | 'copy'];
-  }
->((props, ref) => {
+const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
   const { onChange: propsOnChange, action = true } = props;
 
   const [code, setCode] = useState<string>(
