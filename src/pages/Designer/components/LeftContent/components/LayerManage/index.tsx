@@ -5,12 +5,16 @@ import {
   useMemo,
   useImperativeHandle,
 } from 'react';
-import { Button, Drawer } from 'antd';
-import { usePanelFocus, useScrollBar } from '@/hooks';
+import classnames from 'classnames';
+import { Button } from 'antd';
+import { usePanelFocus } from '@/hooks';
 import LayerList from './components/Tree';
+import styles from './index.less';
 
 export interface LayerManageRef {
   open: () => void;
+  close: () => void;
+  visible: boolean;
 }
 
 export interface LayerManageProps {
@@ -25,8 +29,6 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
 
     usePanelFocus(() => document.querySelector('.design-layer-drawer'));
 
-    useScrollBar('.design-layer-drawer .ant-drawer-body');
-
     const onClose = useCallback(() => {
       setVisible(false);
       propsOnClose?.();
@@ -34,6 +36,10 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
 
     const open = useCallback(() => {
       setVisible(true);
+    }, []);
+
+    const close = useCallback(() => {
+      setVisible(false);
     }, []);
 
     const footer = useMemo(() => {
@@ -49,25 +55,38 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
       () => {
         return {
           open,
+          visible,
+          close,
         };
       },
-      [open],
+      [open, visible, close],
     );
 
     return (
-      <Drawer
-        mask={false}
-        visible={visible}
-        maskClosable={false}
-        onClose={onClose}
-        footer={footer}
-        title="图层"
-        placement="left"
-        className="design-layer-drawer"
+      <div
+        className={classnames(styles['design-layer-manage-wrapper'], 'p-8')}
+        style={{
+          width: visible ? 300 : 0,
+        }}
       >
         <LayerList />
-      </Drawer>
+      </div>
     );
+
+    // return (
+    //   <Drawer
+    //     mask={false}
+    //     visible={visible}
+    //     maskClosable={false}
+    //     onClose={onClose}
+    //     footer={footer}
+    //     title="图层"
+    //     placement="left"
+    //     className="design-layer-drawer"
+    //   >
+    //     <LayerList />
+    //   </Drawer>
+    // );
   },
 );
 

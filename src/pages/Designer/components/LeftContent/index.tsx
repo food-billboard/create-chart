@@ -1,28 +1,38 @@
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 import classnames from 'classnames';
-import { usePanelFocus, useScrollBar } from '@/hooks';
+import { usePanelFocus } from '@/hooks';
 import ToolBar from './components/ToolBar';
 import ComponentTypeList from './components/ComponentTypeList';
+import LayerManage, { LayerManageRef } from './components/LayerManage';
 import styles from './index.less';
 
 const LeftContent = () => {
   const ref = useRef<HTMLDivElement>(null);
 
+  const layerRef = useRef<LayerManageRef>(null);
+
   usePanelFocus(ref);
 
-  useScrollBar('#design-page-left');
+  const handleClick = useCallback((type) => {
+    if (type === 'layer') {
+      layerRef.current?.visible
+        ? layerRef.current?.close()
+        : layerRef.current?.open();
+    }
+  }, []);
 
   return (
     <div ref={ref} className={classnames(styles['design-page-left'], 'pos-re')}>
       <div
-        className={classnames('p-lr-24', 'dis-flex', 'w-100')}
-        style={{
-          overflow: 'hidden',
-          height: '100%',
-        }}
-        id="design-page-left"
+        className={classnames(
+          'p-lr-24',
+          'dis-flex',
+          'w-100',
+          styles['design-page-left-content'],
+        )}
       >
-        <ToolBar />
+        <ToolBar onClick={handleClick} />
+        <LayerManage ref={layerRef} />
         <ComponentTypeList />
       </div>
     </div>

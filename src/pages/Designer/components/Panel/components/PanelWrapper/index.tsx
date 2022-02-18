@@ -13,7 +13,6 @@ import { useHover, useMouse, useScroll } from 'ahooks';
 import { nanoid } from 'nanoid';
 import classnames from 'classnames';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import { useScrollBar } from '@/hooks';
 import GuideLine from '@/components/GuideLine';
 import Ruler from '@/components/Ruler';
 import { BackgroundConfigRender } from '@/components/DesignerBackground';
@@ -108,8 +107,6 @@ const PanelWrapper = (props: {
   const isVerticalRulerHover = useHover(verticalRulerRef);
 
   const mousePosition = useMouse();
-
-  useScrollBar(`#${wrapperId}`);
 
   const scale = useMemo(() => {
     return originScale / 100;

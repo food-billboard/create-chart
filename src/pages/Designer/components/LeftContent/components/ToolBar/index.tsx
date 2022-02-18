@@ -6,10 +6,13 @@ import {
   GuideLineIcon,
   CallbackIcon,
   ConstantIcon,
+  TCommonProps,
 } from './action.map';
 import styles from './index.less';
 
-const ToolBar = () => {
+const ToolBar = (props: TCommonProps) => {
+  const { ...nextProps } = props;
+
   return (
     <div
       className={classnames(
@@ -22,12 +25,12 @@ const ToolBar = () => {
         'pos-sti',
       )}
     >
-      <UndoIcon />
-      <RedoIcon />
-      <LayerShowIcon />
-      <GuideLineIcon />
-      <CallbackIcon />
-      <ConstantIcon />
+      <UndoIcon {...nextProps} />
+      <RedoIcon {...nextProps} />
+      <LayerShowIcon {...nextProps} />
+      <GuideLineIcon {...nextProps} />
+      <CallbackIcon {...nextProps} />
+      <ConstantIcon {...nextProps} />
     </div>
   );
 };

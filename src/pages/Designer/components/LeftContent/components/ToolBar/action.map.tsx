@@ -22,16 +22,32 @@ const commonClass: string = classnames(
   styles['design-left-tool-icon'],
 );
 
+export type TCommonProps = {
+  onClick?: (
+    type: 'undo' | 'redo' | 'layer' | 'guideline' | 'callback' | 'constant',
+  ) => void;
+};
+
 // 重做
-export const InternalRedoIcon = (props: {
-  isRedoDisabled: boolean;
-  redo: () => void;
-}) => {
-  const { isRedoDisabled, redo } = props;
+export const InternalRedoIcon = (
+  props: {
+    isRedoDisabled: boolean;
+    redo: () => void;
+  } & TCommonProps,
+) => {
+  const { isRedoDisabled, redo, onClick } = props;
+
+  const handleClick = useCallback(() => {
+    if (!isRedoDisabled) {
+      redo();
+      onClick?.('redo');
+    }
+  }, [onClick, isRedoDisabled, redo]);
+
   return (
     <RedoOutlined
       title="重做"
-      onClick={isRedoDisabled ? undefined : redo}
+      onClick={handleClick}
       className={classnames(commonClass, {
         'c-n-alw': !!isRedoDisabled,
         'c-po': !isRedoDisabled,
@@ -46,15 +62,25 @@ export const RedoIcon = connect(
 )(InternalRedoIcon);
 
 // 撤销
-export const InternalUndoIcon = (props: {
-  isUndoDisabled: boolean;
-  undo: () => void;
-}) => {
-  const { isUndoDisabled, undo } = props;
+export const InternalUndoIcon = (
+  props: {
+    isUndoDisabled: boolean;
+    undo: () => void;
+  } & TCommonProps,
+) => {
+  const { isUndoDisabled, undo, onClick } = props;
+
+  const handleClick = useCallback(() => {
+    if (!isUndoDisabled) {
+      undo();
+      onClick?.('undo');
+    }
+  }, [onClick, isUndoDisabled, undo]);
+
   return (
     <UndoOutlined
       title="撤销"
-      onClick={isUndoDisabled ? undefined : undo}
+      onClick={handleClick}
       className={classnames(commonClass, {
         'c-n-alw': !!isUndoDisabled,
         'c-po': !isUndoDisabled,
@@ -69,31 +95,28 @@ export const UndoIcon = connect(
 )(InternalUndoIcon);
 
 // 图层显示隐藏
-export const LayerShowIcon = () => {
-  const layerRef = useRef<LayerManageRef>(null);
+export const LayerShowIcon = (props: TCommonProps) => {
+  const { onClick } = props;
 
   const handleOpen = useCallback(() => {
-    layerRef.current?.open();
-  }, []);
+    onClick?.('layer');
+  }, [onClick]);
 
   return (
-    <>
-      <BlockOutlined
-        title="图层管理"
-        className={classnames(
-          commonClass,
-          'c-po',
-          styles['design-left-tool-icon-hover'],
-        )}
-        onClick={handleOpen}
-      />
-      <LayerManage ref={layerRef} />
-    </>
+    <BlockOutlined
+      title="图层管理"
+      className={classnames(
+        commonClass,
+        'c-po',
+        styles['design-left-tool-icon-hover'],
+      )}
+      onClick={handleOpen}
+    />
   );
 };
 
 // 图层折叠展开
-export const LayerCollapseIcon = () => {
+export const LayerCollapseIcon = (props: TCommonProps) => {
   // <ArrowsAltOutlined />
   return (
     <ShrinkOutlined
@@ -107,11 +130,20 @@ export const LayerCollapseIcon = () => {
 };
 
 // 辅助线显示隐藏
-const InternalGuideLineIcon = (props: {
-  guideLineShow?: boolean;
-  setGuideLine?: (value: Partial<ComponentData.TGuideLineConfig>) => void;
-}) => {
-  const { guideLineShow, setGuideLine } = props;
+const InternalGuideLineIcon = (
+  props: {
+    guideLineShow?: boolean;
+    setGuideLine?: (value: Partial<ComponentData.TGuideLineConfig>) => void;
+  } & TCommonProps,
+) => {
+  const { guideLineShow, setGuideLine, onClick } = props;
+
+  const handleClick = useCallback(() => {
+    setGuideLine?.({
+      show: !guideLineShow,
+    });
+    onClick?.('guideline');
+  }, [onClick, guideLineShow, setGuideLine]);
 
   const domProps = {
     title: '辅助线',
@@ -120,9 +152,7 @@ const InternalGuideLineIcon = (props: {
       'c-po',
       styles['design-left-tool-icon-hover'],
     ),
-    onClick: setGuideLine?.bind(null, {
-      show: !guideLineShow,
-    }),
+    onClick: handleClick,
   };
 
   if (!guideLineShow) {
@@ -137,12 +167,15 @@ export const GuideLineIcon = connect(
 )(InternalGuideLineIcon);
 
 // 回调管理
-export const CallbackIcon = () => {
+export const CallbackIcon = (props: TCommonProps) => {
+  const { onClick } = props;
+
   const callbackRef = useRef<CallbackManageRef>(null);
 
   const handleOpen = useCallback(() => {
     callbackRef.current?.open();
-  }, []);
+    onClick?.('callback');
+  }, [onClick]);
 
   return (
     <>
@@ -161,12 +194,15 @@ export const CallbackIcon = () => {
 };
 
 // 全局常量管理
-export const ConstantIcon = () => {
+export const ConstantIcon = (props: TCommonProps) => {
+  const { onClick } = props;
+
   const constantRef = useRef<ConstantManageRef>(null);
 
   const handleOpen = useCallback(() => {
     constantRef.current?.open();
-  }, []);
+    onClick?.('constant');
+  }, [onClick]);
 
   return (
     <>

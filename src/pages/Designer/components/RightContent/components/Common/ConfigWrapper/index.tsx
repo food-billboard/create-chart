@@ -4,7 +4,6 @@ import { LeftOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import { TabPaneProps } from 'antd/es/tabs';
 import { uniqueId } from 'lodash';
-import { useScrollBar } from '@/hooks';
 import styles from './index.less';
 
 // 配置项顶部的tab切换
@@ -61,8 +60,6 @@ export const ConfigItem = (
   } = props;
 
   const scrollBarId = useRef<string>(uniqueId('design-config-item'));
-
-  useScrollBar(`#${scrollBarId.current}`);
 
   return (
     <Tabs.TabPane {...nextProps}>

@@ -41,8 +41,15 @@ const ComponentItem = (props: ComponentItemProps) => {
         ref={connectDragSource}
         role={DRAG_TYPE}
       >
-        <img src={icon} alt={title} />
-        <div className="ali-cen">{title}</div>
+        <div
+          title={title}
+          style={{
+            backgroundImage: `url(${icon})`,
+          }}
+        ></div>
+        <div className="ali-cen text-ellipsis" title={title}>
+          {title}
+        </div>
       </Col>
     </>
   );
