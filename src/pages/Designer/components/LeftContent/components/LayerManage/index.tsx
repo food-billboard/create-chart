@@ -8,6 +8,7 @@ import {
 import classnames from 'classnames';
 import { Button } from 'antd';
 import { usePanelFocus } from '@/hooks';
+import Header from './components/Header';
 import LayerList from './components/Tree';
 import styles from './index.less';
 
@@ -75,7 +76,10 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
           width: visible ? 300 : 0,
         }}
       >
-        <LayerList />
+        <div className={styles['design-layer-manage-content']}>
+          <Header onBack={onClose} />
+          <LayerList />
+        </div>
       </div>
     );
 

@@ -1,6 +1,13 @@
 .design-layer-manage-wrapper {
   height: 100%;
-  transition: width 0.3s;
+  transition-property: padding, width;
+  transition-duration: 0.5s, 0.5s;
   flex: 1;
   flex-shrink: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &-content {
+    min-height: 100%;
+    width: 100%;
+  }
 }
