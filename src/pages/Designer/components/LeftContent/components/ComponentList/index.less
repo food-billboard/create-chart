@@ -1,3 +1,5 @@
+@import '~antd/es/style/themes/default.less';
+
 .design-left-component-list {
   flex: 1;
   width: 200px;
@@ -6,6 +8,15 @@
   border-bottom-right-radius: 8px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  background-color: @layout-header-background;
+  :global {
+    .ant-collapse-header {
+      padding: 13.5px 16px !important;
+    }
+    .ant-collapse-content {
+      background-color: @component-background !important;
+    }
+  }
   &-item {
     cursor: pointer;
     & div:nth-of-type(2) {
