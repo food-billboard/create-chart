@@ -110,9 +110,15 @@ const RenderComponent = (props: RenderComponentProps) => {
         onResizeStart={selectOnly}
       >
         <div
-          className={classnames(styles['render-component-content'], 'pos-re', {
-            'c-po': !isSelect,
-          })}
+          className={classnames(
+            styles['render-component-content'],
+            'w-100',
+            'h-100',
+            'pos-re',
+            {
+              'c-po': !isSelect,
+            },
+          )}
           onClick={handleSelect}
         >
           {content}

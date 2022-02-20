@@ -252,7 +252,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           width: 200,
           height: 100,
           left: 200,
-          top: 200,
+          top: 500,
           opacity: 1,
           rotate: 0,
           zIndex: 2,

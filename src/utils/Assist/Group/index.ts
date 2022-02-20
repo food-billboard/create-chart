@@ -357,8 +357,8 @@ class GroupUtil {
               const newConfig = mergeWithoutArray({}, config, {
                 config: {
                   style: {
-                    left: compLeft + left,
-                    top: compTop + top,
+                    left: compLeft * scaleX + left,
+                    top: compTop * scaleY + top,
                     width: width * scaleX,
                     height: height * scaleY,
                   },

@@ -17,14 +17,26 @@ const ChildrenWrapper = (props: {
   const isSelect = useIsComponentChildrenSelect([value], select);
 
   const realChildren = useMemo(() => {
-    if (borderNone) return children;
     return Children.map(children, (child) => {
       const className = get(child, 'props.className');
+      const value: ComponentData.TComponentData = get(child, 'props.value');
+      const {
+        config: {
+          style: { left, top },
+        },
+      } = value;
+
       return cloneElement(child as any, {
         className: classnames(className, {
-          [styles['render-component-wrapper-inner']]: !isSelect,
-          'border-1-a': isSelect,
+          [styles['render-component-wrapper-inner']]: !isSelect && !borderNone,
+          'border-1-a': isSelect && !borderNone,
         }),
+        style: borderNone
+          ? {}
+          : {
+              left,
+              top,
+            },
       });
     });
   }, [isSelect, children, borderNone]);
