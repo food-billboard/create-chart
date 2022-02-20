@@ -359,15 +359,14 @@ const PanelWrapper = (props: {
         'pos-re',
       )}
     >
+      {/* background */}
+      <BackgroundConfigRender />
       <div id={wrapperId} className="w-100 h-100">
         <div
           id={subWrapperId}
           className={classnames(styles['designer-page-main-sub'], 'pos-re')}
           // style={size}
         >
-          {/* background */}
-          <BackgroundConfigRender />
-
           {/* Ruler */}
           <div
             ref={horizontalRulerRef}
