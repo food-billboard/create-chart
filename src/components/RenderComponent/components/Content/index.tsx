@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { EComponentType } from '@/utils/constants';
 import ChildrenWrapper from './ChildrenWrapper';
+import SubGroup from './SubGroup';
 import { getComponentByType } from '../../../ChartComponents';
 
 type ComponentContentProps = {
@@ -25,7 +26,9 @@ const Content = (props: ComponentContentProps) => {
               key={component.id}
               borderNone={isOuter}
             >
-              {renderChildren(component.components)}
+              <SubGroup value={component} isOuter={isOuter}>
+                {renderChildren(component.components)}
+              </SubGroup>
             </ChildrenWrapper>
           );
         }

@@ -1,8 +1,7 @@
 import { CSSProperties, useMemo, useCallback } from 'react';
-import { merge } from 'lodash';
 import classnames from 'classnames';
 import { connect } from 'dva';
-import { useIsComponentChildrenSelect } from '@/hooks';
+import { useIsComponentChildrenSelect, useComponentStyle } from '@/hooks';
 import ComponentWrapper from './components/Wrapper';
 import Content from './components/Content';
 import ContextMenu from '../ContextMenu';
@@ -23,7 +22,7 @@ export type RenderComponentProps = {
 
 const RenderComponent = (props: RenderComponentProps) => {
   const {
-    style,
+    style = {},
     className,
     value,
     select = [],
@@ -38,28 +37,17 @@ const RenderComponent = (props: RenderComponentProps) => {
     id,
     config: {
       style: componentStyle,
-      attr: { visible, lock, scaleX = 1, scaleY = 1 },
+      attr: { lock },
     },
   } = value;
 
   const isSelect = useIsComponentChildrenSelect([value], select);
 
-  const baseStyle: CSSProperties = useMemo(() => {
-    const { rotate, width, height, left, top, zIndex, ...nextComponentStyle } =
-      componentStyle;
-    return merge(
-      {},
-      nextComponentStyle,
-      {
-        transform: `rotate(${rotate}deg)`,
-        display: visible ? 'inline-block' : 'none',
-        borderWidth: (1 / scale) * 100,
-        zIndex: isSelect ? 4 : zIndex,
-        pointerEvents: lock ? 'none' : 'unset',
-      },
-      style,
-    );
-  }, [componentStyle, style, visible, scale, isSelect, lock]);
+  const baseStyle = useComponentStyle(value, {
+    isSelect,
+    scale,
+    style,
+  });
 
   const handleSelect = useCallback(
     (e: any) => {
@@ -89,16 +77,6 @@ const RenderComponent = (props: RenderComponentProps) => {
     },
     [value, propsSetComponent, index],
   );
-
-  const childrenStyle = useMemo(() => {
-    const { width, height, opacity, rotate } = componentStyle;
-    return {
-      width: width / scaleX,
-      height: height / scaleY,
-      transform: `scale(${scaleX}, ${scaleY}) rotate(${rotate}deg)`,
-      opacity: opacity,
-    };
-  }, [componentStyle, scaleX, scaleY]);
 
   const content = useMemo(() => {
     return <Content value={value} />;
@@ -136,7 +114,6 @@ const RenderComponent = (props: RenderComponentProps) => {
             'c-po': !isSelect,
           })}
           onClick={handleSelect}
-          style={childrenStyle}
         >
           {content}
         </div>

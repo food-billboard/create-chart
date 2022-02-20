@@ -337,14 +337,20 @@ class GroupUtil {
           components,
         },
         (config) => {
-          const { components, parent } = config;
+          const {
+            components,
+            parent,
+            config: {
+              attr: { scaleX = 1, scaleY = 1 },
+            },
+          } = config;
 
           const newConfig = {
             ...config,
             components: components.map((config) => {
               const {
                 config: {
-                  style: { left: compLeft, top: compTop },
+                  style: { left: compLeft, top: compTop, width, height },
                 },
               } = config;
 
@@ -353,6 +359,8 @@ class GroupUtil {
                   style: {
                     left: compLeft + left,
                     top: compTop + top,
+                    width: width * scaleX,
+                    height: height * scaleY,
                   },
                 },
               });

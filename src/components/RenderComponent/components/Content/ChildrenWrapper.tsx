@@ -22,7 +22,7 @@ const ChildrenWrapper = (props: {
       const className = get(child, 'props.className');
       return cloneElement(child as any, {
         className: classnames(className, {
-          [styles['render-component-wrapper']]: !isSelect,
+          [styles['render-component-wrapper-inner']]: !isSelect,
           'border-1-a': isSelect,
         }),
       });

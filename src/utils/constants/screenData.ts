@@ -23,6 +23,8 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
         attr: {
           visible: true,
           lock: false,
+          scaleX: 2,
+          scaleY: 2,
         },
         interactive: {
           base: [
@@ -185,10 +187,10 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           components: [],
           config: {
             style: {
-              width: 400,
-              height: 300,
-              left: 100,
-              top: 100,
+              width: 100,
+              height: 50,
+              left: 20,
+              top: 20,
               opacity: 1,
               rotate: 0,
               zIndex: 2,
@@ -290,10 +292,10 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
               components: [],
               config: {
                 style: {
-                  width: 400,
-                  height: 300,
-                  left: 100,
-                  top: 100,
+                  width: 100,
+                  height: 50,
+                  left: 20,
+                  top: 20,
                   opacity: 1,
                   rotate: 0,
                   zIndex: 2,
@@ -353,9 +355,9 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           config: {
             style: {
               width: 200,
-              height: 100,
-              left: 200,
-              top: 200,
+              height: 200,
+              left: 40,
+              top: 40,
               opacity: 1,
               rotate: 0,
               zIndex: 2,
@@ -388,10 +390,10 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
               components: [],
               config: {
                 style: {
-                  width: 400,
-                  height: 300,
-                  left: 100,
-                  top: 100,
+                  width: 50,
+                  height: 50,
+                  left: 50,
+                  top: 50,
                   opacity: 1,
                   rotate: 0,
                   zIndex: 2,
@@ -451,9 +453,9 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           config: {
             style: {
               width: 200,
-              height: 100,
-              left: 200,
-              top: 200,
+              height: 200,
+              left: 100,
+              top: 100,
               opacity: 1,
               rotate: 0,
               zIndex: 2,
@@ -470,10 +472,10 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
       ],
       config: {
         style: {
-          width: 200,
-          height: 100,
-          left: 200,
-          top: 200,
+          width: 500,
+          height: 500,
+          left: 300,
+          top: 300,
           opacity: 1,
           rotate: 0,
           zIndex: 2,
