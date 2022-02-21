@@ -361,7 +361,7 @@ const PanelWrapper = (props: {
     >
       {/* background */}
       <BackgroundConfigRender />
-      <div id={wrapperId} className="w-100 h-100">
+      <div id={wrapperId} className="w-100 h-100 pos-re">
         <div
           id={subWrapperId}
           className={classnames(styles['designer-page-main-sub'], 'pos-re')}
