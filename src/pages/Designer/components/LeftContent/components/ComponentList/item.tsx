@@ -1,5 +1,6 @@
 import { Col } from 'antd';
 import classnames from 'classnames';
+import { useCallback } from 'react';
 import {
   DragSourceMonitor,
   ConnectDragSource,
@@ -11,6 +12,7 @@ import {
 import { connect } from 'dva';
 import { pick } from 'lodash';
 import { DragData } from '@/models/connect';
+import { createComponent } from '@/utils/Assist/Component';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -24,10 +26,44 @@ export type ComponentItemProps = ComponentData.BaseComponentItem & {
   connectDragSource: ConnectDragSource;
   connectDragPreview: ConnectDragPreview;
   setDragInfo?: (value: Partial<DragData>) => void;
+  setSelect: (value: string[]) => void;
+  setComponent: ComponentMethod.SetComponentMethod;
 };
 
 const ComponentItem = (props: ComponentItemProps) => {
-  const { icon, title, connectDragSource, connectDragPreview } = props;
+  const {
+    icon,
+    title,
+    description,
+    type,
+    connectDragSource,
+    connectDragPreview,
+    setSelect,
+    setComponent,
+  } = props;
+
+  const handleSelect = useCallback(() => {
+    const component = createComponent({
+      name: title,
+      description,
+      componentType: type,
+      config: {
+        style: {
+          left: 0,
+          top: 0,
+        },
+      },
+    });
+
+    setComponent({
+      action: 'add',
+      id: component.id,
+      value: component,
+      path: '',
+    });
+
+    setSelect([component.id]);
+  }, [title, description, setSelect, setComponent, type]);
 
   return (
     <>
@@ -40,6 +76,7 @@ const ComponentItem = (props: ComponentItemProps) => {
         )}
         ref={connectDragSource}
         role={DRAG_TYPE}
+        onClick={handleSelect}
       >
         <div
           title={title}
