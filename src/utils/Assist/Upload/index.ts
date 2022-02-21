@@ -46,17 +46,14 @@ function uploadFn() {
   };
 }
 
-function beforeDelete(name: Symbol, fileList: any) {
-  return function () {
-    const target = fileList.find((item: any) => item.task.symbol === name);
-    if (name) {
-      UPLOAD_INSTANCE.cancel(name);
-    }
-    if (target && target.url) {
-      URL.revokeObjectURL(target.url);
-    }
-    return true;
-  };
+export function beforeDelete(target: UploadFile) {
+  UPLOAD_INSTANCE.cancel(target.response.task.name);
+  if (target && target.preview) {
+    try {
+      URL.revokeObjectURL(target.preview);
+    } catch (err) {}
+  }
+  return true;
 }
 
 // change
@@ -84,10 +81,9 @@ export function UploadImage(
         if (err) {
           value.status = 'error';
         } else {
-          value.status = 'error';
+          value.status = 'success';
         }
 
-        console.log(value, 2222);
         onChange?.(value);
       },
     },

@@ -1,9 +1,9 @@
-import { extend, ResponseError, RequestOptionsInit as RequestOptionsOrigin } from 'umi-request'
 import { notification, message } from 'antd';
-import { getDvaApp, history } from 'umi'
-import { stringify } from 'querystring'
-import debounce from 'lodash/debounce'
-import { formatQuery } from './tool'
+import axios, { AxiosRequestConfig } from 'axios';
+import { getDvaApp, history } from 'umi';
+import { stringify } from 'querystring';
+import debounce from 'lodash/debounce';
+import { formatQuery } from './tool';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -24,55 +24,48 @@ const codeMessage = {
   504: '网关超时。',
 };
 
-/**
- * 异常处理程序
- */
-const errorHandler = (error: ResponseError) => {
-  throw error;
-};
-
-interface RequestOptions extends RequestOptionsOrigin{
-  mis?: boolean
+interface RequestOptions extends AxiosRequestConfig {
+  mis?: boolean;
+  origin?: boolean;
 }
 
-const requestOrigin = extend({
-  errorHandler,
-  timeout: 300000,
-  credentials: 'include',
-})
-
 // 未登录的多次触发处理
-const dispatchLogin = debounce(function(err){
-  const app = getDvaApp()
-  const dispatch = app._store.dispatch
-  const querystring = stringify({
-    redirect: window.location.href,
-  })
-  history.replace(`/user/login?${querystring}`)
-  if( dispatch ){
-    dispatch({type: 'user/logout'});
-  }
-  message.error(err.msg || '未登录请先登录');
-}, 1000, {'leading': true, 'trailing': false} )
+const dispatchLogin = debounce(
+  function (err) {
+    const app = getDvaApp();
+    const dispatch = app._store.dispatch;
+    const querystring = stringify({
+      redirect: window.location.href,
+    });
+    history.replace(`/user/login?${querystring}`);
+    if (dispatch) {
+      dispatch({ type: 'user/logout' });
+    }
+    message.error(err.msg || '未登录请先登录');
+  },
+  1000,
+  { leading: true, trailing: false },
+);
 
 // 处理报错
 export const misManage = (error: any) => {
-  if( error.messageType === 'body' ){
-    const err = error.err || {}
+  if (error.messageType === 'body') {
+    const err = error.err || {};
 
     // 未登录处理
-    if( error.errorType === 'system' && err.code === '401' ){
+    if (error.errorType === 'system' && err.code === '401') {
       return dispatchLogin(err);
     }
     message.error(err.msg || '网络错误');
-    return
+    return;
   }
   const { response } = error;
-  if( response && response.status === 401 ){
+  if (response && response.status === 401) {
     return dispatchLogin(error);
   }
   if (response && response.status) {
-    const errorText = (codeMessage as any)[response.status] || response.statusText;
+    const errorText =
+      (codeMessage as any)[response.status] || response.statusText;
     const { status, url } = response;
     notification.error({
       message: `请求错误 ${status}: ${url}`,
@@ -84,49 +77,51 @@ export const misManage = (error: any) => {
       message: '网络异常',
     });
   }
-}
+};
 
-const request = async <ResBody>(url: string, setting: RequestOptions = {} as RequestOptions)=>{
-
+const request = async <ResBody>(
+  url: string,
+  setting: RequestOptions = {} as RequestOptions,
+) => {
   // 过滤URL参数
-  const { params, mis=true, ...options } = setting
+  const { params, mis = true, origin, ...options } = setting;
 
-  let body: any
-  let error: any
+  let body: any;
+  let error: any;
 
-  try{
-    body = await requestOrigin(url, {
-      requestType: 'json',
+  try {
+    body = await axios.request({
+      url,
       ...options,
       ...(params ? { params: formatQuery(params) } : {}),
     });
-  } catch(err) {
-    error = err
+  } catch (err) {
+    error = err;
   }
 
   // 报错分为两种，
   // 系统错误，由 httpClient 拦截到的错误 如，4xx，5xx
-  if( error ){
+  if (error) {
     error.errorType = 'system';
     error.messageType = 'response';
     mis && misManage(error);
-    throw error
+    throw error;
   }
 
   // 业务错误，客户端返回的 statusCode === 200 但是response.body 中的success 返回为 false的错误
-  if( body && body.success === false ){
+  if (body && body.success === false) {
     error = body;
     error.errorType = 'logic';
     error.messageType = 'body';
   }
 
   // 返回真正的response body res 内容
-  if( !error ){
-    return (body?.res?.data || {}) as ResBody
+  if (!error) {
+    return (origin ? body : body?.data?.res?.data || {}) as ResBody;
   }
-  error.mis = mis
+  error.mis = mis;
   mis && misManage(error);
-  throw error
+  throw error;
 };
 
-export default request
+export default request;

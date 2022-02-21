@@ -2,9 +2,13 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { Upload, Modal, UploadProps } from 'antd';
 import { useControllableValue } from 'ahooks';
 import classnames from 'classnames';
-import type { UploadFile, UploadChangeParam } from 'antd/es/upload/interface';
+import type { UploadFile } from 'antd/es/upload/interface';
 import { PlusOutlined } from '@ant-design/icons';
-import { UploadImage, createBaseUploadFile } from '@/utils/Assist/Upload';
+import {
+  UploadImage,
+  createBaseUploadFile,
+  beforeDelete,
+} from '@/utils/Assist/Upload';
 import styles from './index.less';
 
 function getBase64(file: File) {
@@ -66,20 +70,26 @@ const PicturesWall = (
     );
   }, []);
 
+  const onRemove = useCallback(
+    (file) => {
+      beforeDelete(file);
+    },
+    [value],
+  );
+
   return (
     <>
       <Upload
         listType="picture-card"
         fileList={value.map((item) => ({
-          ...item,
-          name: 'background',
           status: 'done',
-          uid: '1',
+          ...item,
         }))}
         onPreview={handlePreview}
         beforeUpload={beforeUpload}
         accept="image/*"
         className={classnames(styles['component-image-upload'], className)}
+        onRemove={onRemove}
         {...nextProps}
       >
         {value.length >= 1 ? null : uploadButton}
