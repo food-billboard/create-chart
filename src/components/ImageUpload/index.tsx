@@ -4,7 +4,7 @@ import { useControllableValue } from 'ahooks';
 import classnames from 'classnames';
 import type { UploadFile, UploadChangeParam } from 'antd/es/upload/interface';
 import { PlusOutlined } from '@ant-design/icons';
-import { uploadImage } from '@/services';
+import { UploadImage, createBaseUploadFile } from '@/utils/Assist/Upload';
 import styles from './index.less';
 
 function getBase64(file: File) {
@@ -41,9 +41,21 @@ const PicturesWall = (
     setPreviewVisible(true);
   }, []);
 
-  const handleChange = useCallback(({ fileList }: UploadChangeParam) => {
-    setValue(fileList);
-  }, []);
+  // 自定义上传文件
+  const beforeUpload = useCallback(
+    async (file) => {
+      const baseUploadFile = createBaseUploadFile(file);
+      setValue([baseUploadFile]);
+      UploadImage(baseUploadFile, {
+        onChange: (value) => {
+          setValue([value]);
+        },
+      });
+
+      return false;
+    },
+    [UploadImage],
+  );
 
   const uploadButton = useMemo(() => {
     return (
@@ -57,7 +69,6 @@ const PicturesWall = (
   return (
     <>
       <Upload
-        action={uploadImage}
         listType="picture-card"
         fileList={value.map((item) => ({
           ...item,
@@ -66,7 +77,7 @@ const PicturesWall = (
           uid: '1',
         }))}
         onPreview={handlePreview}
-        onChange={handleChange}
+        beforeUpload={beforeUpload}
         accept="image/*"
         className={classnames(styles['component-image-upload'], className)}
         {...nextProps}
