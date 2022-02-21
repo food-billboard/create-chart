@@ -17,8 +17,11 @@ const Header = (props: {
     if (editMode) {
       return (
         <Input
+          className={styles['designer-page-header-title-active']}
           defaultValue={name}
           allowClear
+          size="large"
+          autoFocus
           onBlur={(e) => {
             setScreen?.({
               name: e.target.value,
@@ -33,7 +36,6 @@ const Header = (props: {
         className={classnames(
           styles['designer-page-header-title'],
           'border-1',
-          'p-4',
           'border-r-4',
           'c-po',
           'text-ellipsis',

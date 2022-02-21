@@ -65,6 +65,7 @@ const ComponentConfig = (props: {
         >
           <ConfigList>
             <BaseConfig id={id} />
+
             <ConfigList level={1}>{options}</ConfigList>
           </ConfigList>
         </ConfigItem>
