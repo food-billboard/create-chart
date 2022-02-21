@@ -49,7 +49,7 @@ export const InternalRedoIcon = (
       title="重做"
       onClick={handleClick}
       className={classnames(commonClass, {
-        'c-n-alw': !!isRedoDisabled,
+        [styles['design-left-tool-icon-n-a-w']]: !!isRedoDisabled,
         'c-po': !isRedoDisabled,
         [styles['design-left-tool-icon-hover']]: !isRedoDisabled,
       })}
@@ -82,7 +82,7 @@ export const InternalUndoIcon = (
       title="撤销"
       onClick={handleClick}
       className={classnames(commonClass, {
-        'c-n-alw': !!isUndoDisabled,
+        [styles['design-left-tool-icon-n-a-w']]: !!isUndoDisabled,
         'c-po': !isUndoDisabled,
         [styles['design-left-tool-icon-hover']]: !isUndoDisabled,
       })}
