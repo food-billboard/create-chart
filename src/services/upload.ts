@@ -71,3 +71,13 @@ export const uploadFile = (params: API_UPLOAD.IUploadParams) => {
     };
   });
 };
+
+export const getUploadFile = (params: API_UPLOAD.IGetUploadParams) => {
+  return request('/api/manage/media', {
+    method: 'GET',
+    params: {
+      type: 0,
+      ...params,
+    },
+  });
+};

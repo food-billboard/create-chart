@@ -1,9 +1,11 @@
 import { Upload } from 'chunk-file-upload';
+import { nanoid } from 'nanoid';
 import type { UploadFile, RcFile } from 'antd/es/upload/interface';
 import {
   checkUploadFile,
   uploadFile,
   DEFAULT_CHECK_UPLOAD_PARAMS,
+  getUploadFile,
 } from '@/services';
 
 const UPLOAD_INSTANCE = new Upload();
@@ -47,12 +49,10 @@ function uploadFn() {
 }
 
 export function beforeDelete(target: UploadFile) {
-  UPLOAD_INSTANCE.cancel(target.response.task.name);
-  if (target && target.preview) {
-    try {
-      URL.revokeObjectURL(target.preview);
-    } catch (err) {}
-  }
+  try {
+    UPLOAD_INSTANCE.cancel(target.response.task.name);
+    URL.revokeObjectURL(target.preview || '');
+  } catch (err) {}
   return true;
 }
 
@@ -67,6 +67,7 @@ export function UploadImage(
   },
 ) {
   const { originFileObj } = value;
+  value.response = value.response || {};
 
   const [name] = UPLOAD_INSTANCE.add({
     file: {
@@ -80,11 +81,21 @@ export function UploadImage(
       callback(err) {
         if (err) {
           value.status = 'error';
+          onChange?.(value);
         } else {
-          value.status = 'success';
+          getUploadFile({ _id: value.response.id })
+            .then((data: any) => {
+              const [target = {}] = data.list || [];
+              value.url = target.src || '';
+              value.status = 'success';
+            })
+            .catch((err) => {
+              value.status = 'error';
+            })
+            .then((_) => {
+              onChange?.(value);
+            });
         }
-
-        onChange?.(value);
       },
     },
   });
@@ -110,5 +121,16 @@ export const createBaseUploadFile: (file: RcFile) => UploadFile = (file) => {
     percent: 0,
     // thumbUrl?: string;
     originFileObj: file,
+  };
+};
+
+export const createUploadedFile = (url: string) => {
+  const name = url.substring(url.lastIndexOf('\\') + 1);
+  return {
+    uid: nanoid(),
+    name,
+    fileName: name,
+    status: 'done',
+    url,
   };
 };

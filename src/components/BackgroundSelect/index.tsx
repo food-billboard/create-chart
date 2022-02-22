@@ -57,18 +57,12 @@ const BackgroundSelect = (props: {
         ? [{ url: background, uid: '-1', name: 'background', status: 'done' }]
         : [];
     return (
-      <>
-        {/* 先不要这个吧 */}
-        {/* <Col span={24} className='m-b-8'>
-          <Input disabled value={background} className='w-100' />
-        </Col> */}
-        <Col span={24}>
-          <ImageUpload
-            defaultFileList={realValue}
-            onChange={onBackgroundChange}
-          />
-        </Col>
-      </>
+      <Col span={24}>
+        <ImageUpload
+          defaultFileList={realValue}
+          onChange={onBackgroundChange}
+        />
+      </Col>
     );
   }, [background, onBackgroundChange]);
 

@@ -1,14 +1,17 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useRef } from 'react';
 import { Upload, Modal, UploadProps } from 'antd';
 import { useControllableValue } from 'ahooks';
 import classnames from 'classnames';
+import { nanoid } from 'nanoid';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, LinkOutlined } from '@ant-design/icons';
 import {
   UploadImage,
   createBaseUploadFile,
+  createUploadedFile,
   beforeDelete,
 } from '@/utils/Assist/Upload';
+import Input, { InputRef } from './Input';
 import styles from './index.less';
 
 function getBase64(file: File) {
@@ -35,30 +38,51 @@ const PicturesWall = (
   const [previewVisible, setPreviewVisible] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string>('');
 
+  const inputRef = useRef<InputRef>(null);
+
   const handleCancel = useCallback(() => setPreviewVisible(false), []);
 
-  const handlePreview = useCallback(async (file: any) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
-    }
-    setPreviewImage(file.url || file.preview);
-    setPreviewVisible(true);
+  const setInputValue = useCallback((value: string = '') => {
+    inputRef.current?.setValue(value);
   }, []);
+
+  const handlePreview = useCallback(
+    async (file: any) => {
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj);
+        setInputValue(file.preview);
+      }
+      setPreviewImage(file.url || file.preview);
+      setPreviewVisible(true);
+    },
+    [setInputValue],
+  );
+
+  const onRemove = useCallback(
+    (file) => {
+      setInputValue('');
+      setValue([]);
+      return beforeDelete(file);
+    },
+    [setInputValue],
+  );
 
   // 自定义上传文件
   const beforeUpload = useCallback(
     async (file) => {
       const baseUploadFile = createBaseUploadFile(file);
+      onRemove(value[0]);
       setValue([baseUploadFile]);
       UploadImage(baseUploadFile, {
         onChange: (value) => {
           setValue([value]);
+          setInputValue(value.url);
         },
       });
 
       return false;
     },
-    [UploadImage],
+    [UploadImage, setInputValue, onRemove, value],
   );
 
   const uploadButton = useMemo(() => {
@@ -70,15 +94,38 @@ const PicturesWall = (
     );
   }, []);
 
-  const onRemove = useCallback(
-    (file) => {
-      beforeDelete(file);
+  const onUrlChange = useCallback(
+    (e) => {
+      const newUrl = e.target.value;
+      if (!newUrl) {
+        setValue([]);
+        return;
+      }
+      const [target] = value;
+      beforeDelete(target);
+      let newTarget: any = target;
+      if (target) {
+        newTarget.url = newUrl;
+        newTarget.uid = nanoid();
+        newTarget.originFileObj = undefined;
+        newTarget.status = 'done';
+      } else {
+        newTarget = createUploadedFile(newUrl);
+      }
+      setValue([newTarget]);
     },
-    [value],
+    [value, onRemove],
   );
 
   return (
     <>
+      <Input
+        defaultValue={value[0]?.preview || ''}
+        onBlur={onUrlChange}
+        className="w-100 m-b-4"
+        ref={inputRef}
+        prefix={<LinkOutlined />}
+      />
       <Upload
         listType="picture-card"
         fileList={value.map((item) => ({

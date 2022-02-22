@@ -33,4 +33,9 @@ declare namespace API_UPLOAD {
     offset: number;
     file: Blob;
   }
+
+  export interface IGetUploadParams {
+    _id: string;
+    type?: 0 | 1 | 2;
+  }
 }

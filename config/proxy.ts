@@ -7,5 +7,22 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
+    '/static/': {
+      target: API_DOMAIN,
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+  },
+  prod: {
+    '/api/': {
+      target: API_DOMAIN,
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    '/static/': {
+      target: API_DOMAIN,
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
   },
 };
