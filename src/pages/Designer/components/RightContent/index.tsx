@@ -48,6 +48,7 @@ const RightContent = (props: {
   return (
     <div
       className={classnames(styles['design-page-right'], 'normal-background')}
+      ref={ref}
     >
       {children}
     </div>

@@ -38,14 +38,14 @@ const ClipboardComponent = (props: {
 
   // copy
   useKeyPress(['ctrl.c', 'meta.c'], () => {
-    if (!CopyAndPasteUtil.isFocus()) return;
+    if (!CopyAndPasteUtil.isFocus() || !select.length) return;
     copy(select, setClipboard);
     message.info('复制成功');
   });
 
   // paste
   useKeyPress(['ctrl.v', 'meta.v'], () => {
-    if (!CopyAndPasteUtil.isFocus()) return;
+    if (!CopyAndPasteUtil.isFocus() || !clipboard.length) return;
     paste({
       components,
       setComponentAll,
@@ -70,7 +70,7 @@ const ClipboardComponent = (props: {
 
   // delete
   useKeyPress(['backspace', 'delete'], () => {
-    if (!CopyAndPasteUtil.isFocus()) return;
+    if (!CopyAndPasteUtil.isFocus() || !select.length) return;
     modalRef.current?.open();
   });
 
