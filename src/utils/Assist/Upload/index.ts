@@ -87,7 +87,7 @@ export function UploadImage(
             .then((data: any) => {
               const [target = {}] = data.list || [];
               value.url = target.src || '';
-              value.status = 'success';
+              value.status = 'done';
             })
             .catch((err) => {
               value.status = 'error';

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState, useRef } from 'react';
-import { Upload, Modal, UploadProps } from 'antd';
+import { Upload, Modal, UploadProps, message } from 'antd';
 import { useControllableValue } from 'ahooks';
 import classnames from 'classnames';
 import { nanoid } from 'nanoid';
@@ -37,6 +37,7 @@ const PicturesWall = (
 
   const [previewVisible, setPreviewVisible] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string>('');
+  const [validLoading, setValidLoading] = useState<boolean>(false);
 
   const inputRef = useRef<InputRef>(null);
 
@@ -96,23 +97,34 @@ const PicturesWall = (
 
   const onUrlChange = useCallback(
     (e) => {
+      const [target] = value;
       const newUrl = e.target.value;
+      if (newUrl === target?.url) return;
       if (!newUrl) {
         setValue([]);
         return;
       }
-      const [target] = value;
-      beforeDelete(target);
-      let newTarget: any = target;
-      if (target) {
-        newTarget.url = newUrl;
-        newTarget.uid = nanoid();
-        newTarget.originFileObj = undefined;
-        newTarget.status = 'done';
-      } else {
-        newTarget = createUploadedFile(newUrl);
-      }
-      setValue([newTarget]);
+      setValidLoading(true);
+      const image = new Image();
+      image.onload = () => {
+        beforeDelete(target);
+        let newTarget: any = target;
+        if (target) {
+          newTarget.url = newUrl;
+          newTarget.uid = nanoid();
+          newTarget.originFileObj = undefined;
+          newTarget.status = 'done';
+        } else {
+          newTarget = createUploadedFile(newUrl);
+        }
+        setValidLoading(false);
+        setValue([newTarget]);
+      };
+      image.onerror = () => {
+        message.info('图片资源获取失败');
+        setValidLoading(false);
+      };
+      image.src = newUrl;
     },
     [value, onRemove],
   );
@@ -137,6 +149,7 @@ const PicturesWall = (
         accept="image/*"
         className={classnames(styles['component-image-upload'], className)}
         onRemove={onRemove}
+        disabled={validLoading}
         {...nextProps}
       >
         {value.length >= 1 ? null : uploadButton}
