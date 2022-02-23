@@ -5,8 +5,11 @@ import ComponentList from '../ComponentList';
 import { COMPONENT_TYPE_LIST } from '@/utils/constants';
 import styles from './index.less';
 
-const ComponentTypeList = (props: { onChange?: (type: string) => void }) => {
-  const { onChange } = props;
+const ComponentTypeList = (props: {
+  onChange?: (type: string) => void;
+  menuClass?: string;
+}) => {
+  const { onChange, menuClass } = props;
 
   const [activeComponentType, setActiveComponentType] = useState<string>(
     COMPONENT_TYPE_LIST[0].type,
@@ -50,7 +53,10 @@ const ComponentTypeList = (props: { onChange?: (type: string) => void }) => {
           theme="dark"
           mode="vertical"
           onClick={handleClick}
-          className={styles['page-design-left-component-list-content']}
+          className={classnames(
+            styles['page-design-left-component-list-content'],
+            menuClass,
+          )}
           selectedKeys={[activeComponentType]}
         >
           {list}

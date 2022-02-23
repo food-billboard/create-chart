@@ -1,7 +1,7 @@
-import {} from 'react';
+import { Empty as AntEmpty, EmptyProps } from 'antd';
 
-const Empty = () => {
-  return <div>暂无数据</div>;
+const Empty = (props: EmptyProps) => {
+  return <AntEmpty {...props} />;
 };
 
 export default Empty;

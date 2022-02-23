@@ -12,9 +12,12 @@ const { Panel } = Collapse;
 const ComponentList = (props: { type: string }) => {
   const { type } = props;
 
+  const target = useMemo(() => {
+    return COMPONENT_TYPE_LIST.find((item) => item.type === type);
+  }, [type]);
+
   const list = useMemo(() => {
-    const target = COMPONENT_TYPE_LIST.find((item) => item.type === type);
-    if (!target) return <Empty />;
+    if (!target?.children.length) return null;
     return target.children.map((item) => {
       const { type, title, children } = item;
       return (
@@ -31,7 +34,19 @@ const ComponentList = (props: { type: string }) => {
         </Panel>
       );
     });
-  }, [type]);
+  }, [target]);
+
+  if (!target?.children.length)
+    return (
+      <Empty
+        description="暂无组件"
+        className={classnames(
+          styles['design-left-component-list'],
+          'border-r-8',
+          'normal-background',
+        )}
+      />
+    );
 
   return (
     <Collapse

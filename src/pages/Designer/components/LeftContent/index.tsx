@@ -1,12 +1,15 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState } from 'react';
 import classnames from 'classnames';
 import { usePanelFocus } from '@/hooks';
 import ToolBar from './components/ToolBar';
 import ComponentTypeList from './components/ComponentTypeList';
 import LayerManage, { LayerManageRef } from './components/LayerManage';
 import styles from './index.less';
+import ComponentTypeListStyles from './components/ComponentTypeList/index.less';
 
 const LeftContent = () => {
+  const [layerVisible, setLayerVisible] = useState<boolean>(false);
+
   const ref = useRef<HTMLDivElement>(null);
 
   const layerRef = useRef<LayerManageRef>(null);
@@ -15,10 +18,14 @@ const LeftContent = () => {
 
   const handleClick = useCallback((type) => {
     if (type === 'layer') {
-      layerRef.current?.visible
-        ? layerRef.current?.close()
-        : layerRef.current?.open();
+      const visible = layerRef.current?.visible;
+      visible ? layerRef.current?.close() : layerRef.current?.open();
+      setLayerVisible(!visible);
     }
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setLayerVisible(false);
   }, []);
 
   return (
@@ -32,8 +39,16 @@ const LeftContent = () => {
         )}
       >
         <ToolBar onClick={handleClick} />
-        <LayerManage ref={layerRef} />
-        <ComponentTypeList />
+        <LayerManage ref={layerRef} onClose={handleClose} />
+        <ComponentTypeList
+          menuClass={
+            layerVisible
+              ? ComponentTypeListStyles[
+                  'page-design-left-component-list-content-border'
+                ]
+              : ''
+          }
+        />
       </div>
     </div>
   );

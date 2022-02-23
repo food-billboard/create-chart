@@ -39,10 +39,6 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
       setVisible(true);
     }, []);
 
-    const close = useCallback(() => {
-      setVisible(false);
-    }, []);
-
     const footer = useMemo(() => {
       return (
         <div className="ali-r">
@@ -57,10 +53,10 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
         return {
           open,
           visible,
-          close,
+          close: onClose,
         };
       },
-      [open, visible, close],
+      [open, visible, onClose],
     );
 
     return (
