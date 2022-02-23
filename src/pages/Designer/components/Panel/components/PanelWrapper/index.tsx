@@ -55,20 +55,12 @@ const GuideLineButton = (props: { show: boolean; onClick?: any }) => {
 let scroll = {
   x: 0,
   y: 0,
-  defaultX: 400,
-  defaultY: 82,
 };
 
 const getWrapperScroll = (cover = false) => {
-  const { x, y } = document
-    .querySelector('#designer-page-main')
-    ?.getBoundingClientRect() || { x: 400, y: 82 };
-  scroll.x = x - scroll.defaultX;
-  scroll.y = y - scroll.defaultY;
-  if (cover) {
-    scroll.defaultX = x;
-    scroll.defaultY = y;
-  }
+  const element = document.querySelector('#designer-page-main');
+  scroll.x = element?.scrollLeft || 0;
+  scroll.y = element?.scrollTop || 0;
 };
 
 const PanelWrapper = (props: {
@@ -91,8 +83,6 @@ const PanelWrapper = (props: {
   } = props;
 
   const [size, setSize] = useState({ width: 0, height: 0 });
-  const [wrapperLeft, setWrapperLeft] = useState(0);
-  const [wrapperTop, setWrapperTop] = useState(0);
   const [mouseHorizontalGuideLine, setMouseHorizontalGuideLine] =
     useState<ComponentData.TGuideLineConfigItem>();
   const [mouseVerticalGuideLine, setMouseVerticalGuideLine] =
@@ -117,7 +107,6 @@ const PanelWrapper = (props: {
     if (disabledMouseGuideLine.current) return;
     if (isHorizontalRulerHover) {
       getWrapperScroll();
-      const { x, y } = scroll;
       const result = generateGuideLine(
         'vertical',
         {
@@ -126,15 +115,14 @@ const PanelWrapper = (props: {
         },
         false,
         {
-          clientX: clientX - x,
-          clientY: clientY - y,
+          clientX: clientX,
+          clientY: clientY,
         },
         'dashed',
       );
       setMouseHorizontalGuideLine(result);
     } else if (isVerticalRulerHover) {
       getWrapperScroll();
-      const { x, y } = scroll;
       const result = generateGuideLine(
         'horizontal',
         {
@@ -143,8 +131,8 @@ const PanelWrapper = (props: {
         },
         false,
         {
-          clientX: clientX - x,
-          clientY: clientY - y,
+          clientX: clientX,
+          clientY: clientY,
         },
         'dashed',
       );
@@ -168,6 +156,28 @@ const PanelWrapper = (props: {
     [setGuideLine, guideLineList, guideLineShow],
   );
 
+  const getSubWrapperStyle = useCallback(() => {
+    let wrapper = document.querySelector(`#${subWrapperId}`);
+    if (!wrapper)
+      return {
+        left: 0,
+        top: 0,
+      };
+    const { x, y } = wrapper.getBoundingClientRect();
+    return {
+      left: x || 0,
+      top: y || 0,
+    };
+  }, []);
+
+  const getWrapperScrollStyle = useCallback(() => {
+    const dom = document.querySelector(`#${wrapperId}`);
+    return {
+      left: dom?.scrollLeft || 0,
+      top: dom?.scrollTop || 0,
+    };
+  }, []);
+
   const generateGuideLine = useCallback(
     (
       direction,
@@ -180,13 +190,14 @@ const PanelWrapper = (props: {
       const { clientX, clientY } = e;
       let positionStyle: Partial<ComponentData.TGuideLineConfigItem['style']> =
         {};
-      const dom = document.querySelector(`#${wrapperId}`);
+
+      const { left, top } = getSubWrapperStyle();
+      const { left: scrollLeft, top: scrollTop } = getWrapperScrollStyle();
+      const { x, y } = scroll;
       if (direction === 'vertical') {
-        var scrollLeft = dom ? dom.scrollLeft : 0;
-        positionStyle.left = clientX - wrapperLeft + scrollLeft;
+        positionStyle.left = clientX - left + scrollLeft - x;
       } else {
-        var scrollTop = dom ? dom.scrollTop : 0;
-        positionStyle.top = clientY - wrapperTop + scrollTop;
+        positionStyle.top = clientY - top + scrollTop - y;
       }
       const newItem: ComponentData.TGuideLineConfigItem = {
         type: direction,
@@ -208,9 +219,9 @@ const PanelWrapper = (props: {
     [
       guideLineShow,
       guideLineList,
-      wrapperLeft,
-      wrapperTop,
       wrapperSetGuideLine,
+      getSubWrapperStyle,
+      getWrapperScroll,
     ],
   );
 
@@ -284,14 +295,6 @@ const PanelWrapper = (props: {
     setSize({ width: newWidth, height: newHeight });
   }, [height, width, scale]);
 
-  const getWrapperStyle = useCallback(() => {
-    let wrapper = document.querySelector(`#${subWrapperId}`);
-    if (!wrapper) return;
-    const { x, y } = wrapper.getBoundingClientRect();
-    setWrapperLeft(x || 0);
-    setWrapperTop(y || 0);
-  }, []);
-
   const renderGuideLineItem = useCallback(
     (
       item: ComponentData.TGuideLineConfigItem,
@@ -347,7 +350,6 @@ const PanelWrapper = (props: {
   }, [mousePosition]);
 
   useEffect(() => {
-    getWrapperStyle();
     getWrapperScroll(true);
   }, []);
 
