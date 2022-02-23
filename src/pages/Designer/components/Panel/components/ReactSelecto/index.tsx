@@ -3,7 +3,7 @@ import ReactSelecto from 'react-selecto';
 import { connect } from 'dva';
 import { BACKGROUND_ID } from '@/components/DesignerBackground';
 import { isComponentDisabled } from '@/utils/Assist/Component';
-import { wrapperId } from '../PanelWrapper';
+import { wrapperId } from '../PanelWrapper/constants';
 import { PANEL_ID } from '../Painter';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
