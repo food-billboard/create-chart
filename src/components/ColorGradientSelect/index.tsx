@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { Slider, Row, Col } from 'antd';
 import { useControllableValue } from 'ahooks';
 import { merge } from 'lodash';
@@ -7,7 +7,7 @@ import ColorSelect, { CompatColorSelect } from '../ColorSelect';
 import { DEFAULT_GRADIENT_COLOR } from '@/utils/constants';
 import styles from './index.less';
 
-const BackgroundSelect = (props: {
+const ColorGradientSelect = (props: {
   value?: ComponentData.TGradientColorConfig;
   onChange?: (value: ComponentData.TGradientColorConfig) => void;
 }) => {
@@ -42,9 +42,11 @@ const BackgroundSelect = (props: {
             className={classnames(
               styles['component-gradient-select-color'],
               'border-1',
+              'w-100',
+              'h-100',
+              'border-r-4',
             )}
             style={{
-              color: 'red',
               backgroundImage: `linear-gradient(${direction}deg, ${ColorSelect.getRgbaString(
                 start,
               )}, ${ColorSelect.getRgbaString(end)})`,
@@ -63,7 +65,7 @@ const BackgroundSelect = (props: {
         </Col>
         <Col span={24}>
           <Slider
-            onChange={onDirectionChange}
+            onAfterChange={onDirectionChange}
             defaultValue={direction}
             max={360}
             min={0}
@@ -75,4 +77,4 @@ const BackgroundSelect = (props: {
   );
 };
 
-export default BackgroundSelect;
+export default ColorGradientSelect;

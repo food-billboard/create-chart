@@ -61,13 +61,9 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
 
     return (
       <div
-        className={classnames(
-          styles['design-layer-manage-wrapper'],
-          'p-tb-8-',
-          {
-            'p-lr-8': visible,
-          },
-        )}
+        className={classnames(styles['design-layer-manage-wrapper'], {
+          'p-lr-8': visible,
+        })}
         style={{
           width: visible ? 300 : 0,
         }}
