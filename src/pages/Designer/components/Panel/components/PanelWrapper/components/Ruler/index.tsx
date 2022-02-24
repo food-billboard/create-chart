@@ -203,7 +203,7 @@ const Ruler = (props: {
         wrapperSetGuideLine({
           value: newGuideList,
         });
-        AbsorbUtil.onGuideLineMoveEnd(item, index);
+        AbsorbUtil.onGuideLineMoveEnd();
       }
     },
     [guideLineList, size, wrapperSetGuideLine],

@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { connect } from 'dva';
 import { merge } from 'lodash';
 import GuideLine from '@/components/GuideLine';
+import { getPath } from '@/utils/Assist/Component';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import {
   AbsorbUtil,
@@ -34,14 +35,18 @@ const AbsorbGuideLine = (props: {
 
   const scale = useMemo(() => {
     return originScale / 100;
-  }, []);
+  }, [originScale]);
 
-  const componentCallback: ComponentCallback = (id, value) => {
-    console.log(id, value);
+  const componentCallback: ComponentCallback = (id, value, components) => {
+    setComponent({
+      value,
+      id,
+      path: getPath(id),
+      action: 'update',
+    });
   };
 
   const guideLineCallback: GuideLineCallback = (value, index, guideLine) => {
-    console.log(value, index);
     const { show, value: list } = guideLine;
     const newValue = [...list];
     const target = merge(list[index], value);

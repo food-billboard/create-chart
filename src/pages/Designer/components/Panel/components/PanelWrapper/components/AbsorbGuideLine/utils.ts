@@ -1,4 +1,4 @@
-import { uniqueId, throttle, pick, get, merge } from 'lodash';
+import { uniqueId, debounce, pick, get, merge } from 'lodash';
 import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants';
 
 type PositionData = {
@@ -115,14 +115,15 @@ class AbsorbUtilClass {
     return value.reduce<any>((acc, cur) => {
       const { type, value } = cur;
       if (type === 'left') {
-        acc.left = comparePosition.left - targetPosition.width;
+        acc.left = comparePosition.left - comparePosition.width;
       } else if (type === 'top') {
         acc.top = comparePosition.top;
       } else if (type === 'bottom') {
         acc.top =
           comparePosition.top + comparePosition.height - targetPosition.height;
       } else if (type === 'right') {
-        acc.left = comparePosition.left + comparePosition.width;
+        acc.left =
+          comparePosition.left + comparePosition.width - targetPosition.width;
       } else if (type === 'horizontal') {
         acc.left =
           comparePosition.left +
@@ -143,6 +144,7 @@ class AbsorbUtilClass {
   getEachRange(
     target: { left: number; top: number; width: number; height: number },
     origin: { left: number; top: number; width: number; height: number },
+    ignore: NearlyData['type'][] = [],
   ) {
     return [
       {
@@ -177,7 +179,11 @@ class AbsorbUtilClass {
           target.left + target.width / 2 - origin.left - origin.width / 2,
         ),
       },
-    ].filter((item) => item.value <= NEARLY_RANGE) as NearlyData[];
+    ].filter(
+      (item) =>
+        item.value <= NEARLY_RANGE &&
+        !ignore.includes(item.type as NearlyData['type']),
+    ) as NearlyData[];
   }
 
   // 组件信息
@@ -215,13 +221,15 @@ class AbsorbUtilClass {
       top: top - PANEL_ABSOLUTE_POSITION.top,
     }).reduce<PositionData>((acc, cur) => {
       const [key, value] = cur;
-      acc[key as keyof PositionData] = value * this.scale;
+      acc[key as keyof PositionData] = value / this.scale;
       return acc;
     }, {} as any);
   }
 
   // 辅助线移动
   _onGuideLineMove(value: ComponentData.TGuideLineConfigItem, index: number) {
+    // ! 暂时先不考虑辅助线了
+    return;
     const { type } = value;
 
     let nearlyComponent!: ComponentData.TComponentData;
@@ -233,6 +241,9 @@ class AbsorbUtilClass {
       const range = this.getEachRange(
         guideLineInfo,
         this.getComponentInfo(component),
+        type === 'horizontal'
+          ? ['left', 'right', 'vertical']
+          : ['top', 'bottom', 'horizontal'],
       );
       if (this.rangeCompare(range, nearlyData)) {
         nearlyData = range;
@@ -249,9 +260,9 @@ class AbsorbUtilClass {
       let changeStyle: any = {};
 
       if (type === 'horizontal') {
-        changeStyle.top = top;
+        changeStyle.top = top / this.scale + PANEL_ABSOLUTE_POSITION.top;
       } else {
-        changeStyle.left = left;
+        changeStyle.left = left / this.scale + PANEL_ABSOLUTE_POSITION.left;
       }
 
       this.dispatchAction(
@@ -265,33 +276,43 @@ class AbsorbUtilClass {
     }
   }
 
-  onGuideLineMove = throttle(this._onGuideLineMove, 100);
+  onGuideLineMove = debounce(this._onGuideLineMove, 50);
 
   // 辅助线移动结束
   onGuideLineMoveEnd() {
+    // ! 暂时先不考虑辅助线了
+    return;
     this.dispatchAction('end');
   }
 
   commonComponentMove(id: string, data: PositionData) {
+    // ! 暂时先不考虑组件了
+    return;
     let nearlyGuideLine!: ComponentData.TGuideLineConfigItem;
     let nearlyData: NearlyData[] = [];
 
     this.guideLine.value.forEach((guideLine) => {
-      const range = this.getEachRange(data, this.getGuideLineInfo(guideLine));
-      // 辅助线判断的时候只有左右或上下的距离
-      let realRange: any;
-      if (guideLine.type === 'vertical') {
-        realRange = range.filter(
-          (item) => item.type === 'left' || item.type === 'right',
-        );
-      } else {
-        realRange = range.filter(
-          (item) => item.type === 'top' || item.type === 'bottom',
-        );
-      }
+      const range = this.getEachRange(
+        data,
+        this.getGuideLineInfo(guideLine),
+        guideLine.type === 'vertical'
+          ? ['bottom', 'top', 'horizontal', 'vertical']
+          : ['left', 'right', 'horizontal', 'vertical'],
+      );
+      // // 辅助线判断的时候只有左右或上下的距离
+      // let realRange: any;
+      // if (guideLine.type === 'vertical') {
+      //   realRange = range.filter(
+      //     (item) => item.type === 'left' || item.type === 'right',
+      //   );
+      // } else {
+      //   realRange = range.filter(
+      //     (item) => item.type === 'top' || item.type === 'bottom',
+      //   );
+      // }
 
-      if (this.rangeCompare(realRange, nearlyData)) {
-        nearlyData = realRange;
+      if (this.rangeCompare(range, nearlyData)) {
+        nearlyData = range;
         nearlyGuideLine = guideLine;
       }
     });
@@ -321,7 +342,7 @@ class AbsorbUtilClass {
     this.commonComponentMove(id, data);
   }
 
-  onComponentResizing = throttle(this._onComponentResizing, 100);
+  onComponentResizing = debounce(this._onComponentResizing, 50);
 
   // 组件调整大小完成
   onComponentResized() {
@@ -335,7 +356,7 @@ class AbsorbUtilClass {
     this.commonComponentMove(id, data);
   }
 
-  onComponentDrag = throttle(this._onComponentDrag, 100);
+  onComponentDrag = debounce(this._onComponentDrag, 50);
 
   // 组件拖拽完成
   onComponentDragEnd() {

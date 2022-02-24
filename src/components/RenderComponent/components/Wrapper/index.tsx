@@ -58,11 +58,7 @@ const ComponentWrapper = (
         };
       });
       propsOnDragStop?.();
-      AbsorbUtil.onComponentDragEnd(componentId, {
-        ...(size as any),
-        left,
-        top,
-      });
+      AbsorbUtil.onComponentDragEnd();
     },
     [propsOnDragStop, setComponent, position, size, componentId],
   );
