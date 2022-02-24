@@ -1,11 +1,13 @@
 import { Component, CSSProperties } from 'react';
 import { merge } from 'lodash';
+import classnames from 'classnames';
 import styles from './index.less';
 
 class GuideLine extends Component<
   {
     disabled?: boolean;
     style?: CSSProperties;
+    className?: string;
     onChange?: (params: ComponentData.TGuideLineConfigItem) => void;
     onMouseUp?: () => void;
     onMouseDown?: () => void;
@@ -20,7 +22,7 @@ class GuideLine extends Component<
   startY = 0;
 
   onMouseDown = (e: any) => {
-    const { disabled } = this.props;
+    const { disabled, onMouseDown } = this.props;
     if (disabled) return;
     this.flag = true;
     this.times = 0;
@@ -32,11 +34,13 @@ class GuideLine extends Component<
       this.startY = evt.clientY + scrollTop;
       document.addEventListener('mousemove', this.onMouseMove);
       document.addEventListener('mouseup', this.onMouseUp);
+      onMouseDown?.();
     } catch (e) {}
   };
 
   onMouseMove = (e: any) => {
-    const { disabled, style, onChange, type, id, lineStyle } = this.props;
+    const { disabled, style, onChange, type, id, lineStyle, onMouseMove } =
+      this.props;
     if (!this.flag || disabled) return;
     if (this.times <= 5) {
       this.times++;
@@ -61,6 +65,7 @@ class GuideLine extends Component<
         lineStyle,
       };
       onChange?.(newItem);
+      onMouseMove?.();
     } catch (e) {}
   };
 
@@ -80,12 +85,15 @@ class GuideLine extends Component<
   };
 
   render() {
-    const { style, type, lineStyle = 'dashed' } = this.props;
+    const { style = {}, type, lineStyle = 'dashed', className } = this.props;
 
     return (
       <div
-        className={styles[`ruler-guide-line-wrapper-${type}`]}
-        style={merge({}, style)}
+        className={classnames(
+          styles[`ruler-guide-line-wrapper-${type}`],
+          className,
+        )}
+        style={style}
         onMouseDown={this.onMouseDown}
         onDoubleClick={this.onDoubleClick}
       >

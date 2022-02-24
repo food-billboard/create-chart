@@ -108,6 +108,7 @@ const RenderComponent = (props: RenderComponentProps) => {
         scale={scale / 100}
         onDragStart={selectOnly}
         onResizeStart={selectOnly}
+        componentId={id}
       >
         <div
           className={classnames(

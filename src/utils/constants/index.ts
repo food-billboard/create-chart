@@ -17,3 +17,8 @@ export enum EComponentSelfType {
   LINE_BASIC = 'LINE_BASIC',
   LINE_WATERFALL = 'LINE_WATERFALL',
 }
+
+export const PANEL_ABSOLUTE_POSITION = {
+  left: 70,
+  top: 70,
+};

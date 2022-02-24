@@ -3,6 +3,7 @@ import { Rnd, Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
 import { merge } from 'lodash';
 import { isGroupComponent } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils';
+import { AbsorbUtil } from '@/pages/Designer/components/Panel/components/PanelWrapper/components/AbsorbGuideLine/utils';
 
 const ComponentWrapper = (
   props: {
@@ -16,6 +17,7 @@ const ComponentWrapper = (
         value: ComponentData.TComponentData,
       ) => SuperPartial<ComponentData.TComponentData>,
     ) => void;
+    componentId: string;
   } & Partial<Props>,
 ) => {
   const {
@@ -27,6 +29,8 @@ const ComponentWrapper = (
     select,
     pointerDisabled,
     setComponent,
+    componentId,
+    size,
     ...nextProps
   } = props;
 
@@ -40,19 +44,27 @@ const ComponentWrapper = (
       // * 点击不触发刷新
       if (Math.abs(x - prevX) < 5 && Math.abs(y - prevY) < 5) return;
 
+      const left = Math.floor(x);
+      const top = Math.floor(y);
+
       setComponent(() => {
         return {
           config: {
             style: {
-              left: Math.floor(x),
-              top: Math.floor(y),
+              left,
+              top,
             },
           },
         };
       });
       propsOnDragStop?.();
+      AbsorbUtil.onComponentDragEnd(componentId, {
+        ...(size as any),
+        left,
+        top,
+      });
     },
-    [propsOnDragStop, setComponent, position],
+    [propsOnDragStop, setComponent, position, size, componentId],
   );
 
   const updateSubComponents = (
@@ -63,6 +75,17 @@ const ComponentWrapper = (
     const {} = component;
   };
 
+  const getComponentStyle = useCallback((position: any, size: any) => {
+    const newWidth = parseInt(size.style.width) || 20;
+    const newHeight = parseInt(size.style.height) || 20;
+    return {
+      width: newWidth,
+      height: newHeight,
+      left: Math.floor(position.x),
+      top: Math.floor(position.y),
+    };
+  }, []);
+
   const onResizeStop: RndResizeCallback = useCallback(
     (e, direction, ref, delta, position) => {
       const { width, height } = delta;
@@ -70,18 +93,13 @@ const ComponentWrapper = (
       if (Math.abs(width) < 5 && Math.abs(height) < 5) return;
 
       setComponent((value) => {
-        const newWidth = parseInt(ref.style.width) || 20;
-        const newHeight = parseInt(ref.style.height) || 20;
+        const newStyle = getComponentStyle(position, ref);
+        const { width: newWidth, height: newHeight } = newStyle;
 
         const defaultChangeConfig: SuperPartial<ComponentData.TComponentData> =
           {
             config: {
-              style: {
-                width: newWidth,
-                height: newHeight,
-                left: Math.floor(position.x),
-                top: Math.floor(position.y),
-              },
+              style: newStyle,
             },
           };
 
@@ -108,7 +126,41 @@ const ComponentWrapper = (
       });
       propsOnResizeStop?.();
     },
-    [propsOnResizeStop],
+    [propsOnResizeStop, getComponentStyle],
+  );
+
+  const onDrag: RndDragCallback = useCallback(
+    (event, data) => {
+      const { x, y } = data;
+      const { x: prevX = 0, y: prevY = 0 } = position || {};
+
+      // * 点击不触发刷新
+      if (Math.abs(x - prevX) < 5 && Math.abs(y - prevY) < 5) return;
+
+      const left = Math.floor(x);
+      const top = Math.floor(y);
+
+      AbsorbUtil.onComponentDrag(componentId, {
+        ...(size as any),
+        left,
+        top,
+      });
+    },
+    [componentId, size, position],
+  );
+
+  const onResize: RndResizeCallback = useCallback(
+    (e, direction, ref, delta, position) => {
+      const { width, height } = delta;
+      // * 点击不触发刷新
+      if (Math.abs(width) < 5 && Math.abs(height) < 5) return;
+
+      AbsorbUtil.onComponentResizing(
+        componentId,
+        getComponentStyle(position, ref),
+      );
+    },
+    [componentId],
   );
 
   return (
@@ -123,9 +175,12 @@ const ComponentWrapper = (
         width: 320,
         height: 200,
       }}
+      onDrag={onDrag}
       onDragStop={onDragStop}
+      onResize={onResize}
       onResizeStop={onResizeStop}
       resizeHandleComponent={{}}
+      size={size}
       {...nextProps}
     >
       {children}

@@ -8,6 +8,7 @@ import GuideLine from '@/components/GuideLine';
 import ComponentRuler from '@/components/Ruler';
 import { wrapperId, subWrapperId } from '../../constants';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+import { AbsorbUtil } from '../AbsorbGuideLine/utils';
 import styles from './index.less';
 
 let scroll = {
@@ -202,6 +203,7 @@ const Ruler = (props: {
         wrapperSetGuideLine({
           value: newGuideList,
         });
+        AbsorbUtil.onGuideLineMoveEnd(item, index);
       }
     },
     [guideLineList, size, wrapperSetGuideLine],
@@ -210,6 +212,13 @@ const Ruler = (props: {
   const onMoveStart = useCallback(() => {
     disabledMouseGuideLine.current = true;
   }, []);
+
+  const onMouseMove = useCallback(
+    (value: ComponentData.TGuideLineConfigItem, index: number) => {
+      AbsorbUtil.onGuideLineMove(value, index);
+    },
+    [],
+  );
 
   const renderGuideLineItem = useCallback(
     (
@@ -224,6 +233,7 @@ const Ruler = (props: {
           onMouseUp={onMoveEnd.bind(this, item, index)}
           onMouseDown={onMoveStart}
           onDoubleClick={deleteGuideLine.bind(this, index)}
+          onMouseMove={onMouseMove.bind(null, item, index)}
           key={item.id}
         />
       );

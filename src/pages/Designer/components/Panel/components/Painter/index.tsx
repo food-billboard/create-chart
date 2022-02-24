@@ -10,6 +10,7 @@ import { connect } from 'dva';
 import { merge } from 'lodash';
 import { useBackground } from '@/hooks';
 import { createComponent } from '@/utils/Assist/Component';
+import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants/index';
 import { DragData } from '@/models/connect';
 import ComponentList from '../ComponentList';
 import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
@@ -61,6 +62,8 @@ const Painter = (props: PainterProps) => {
         transform: `scale(${scale})`,
         width: Number(width) || 1920,
         height: Number(height) || 1080,
+        left: PANEL_ABSOLUTE_POSITION.left,
+        top: PANEL_ABSOLUTE_POSITION.top,
       },
       backgroundStyle,
     );
