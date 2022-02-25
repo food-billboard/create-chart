@@ -98,20 +98,57 @@ data.lineStyle.color data.lineStyle.width data.lineStyle.type
 data.areaStyle.color  
 
 ##### treemap 
+left top right bottom  
+nodeClick  
+label.show label.position label.formatter  
+label.color label.fontFamily label.fontWeight label.fontSize  
+data.value data.name data.color  
 
 ##### sunburst   
+center radius  
+label.show label.formatter  
+label.color label.fontFamily label.fontWeight label.fontSize  
+nodeClick  
+data.value data.name data.itemStyle  
 
 ##### boxplot  
+boxWidth  
+itemStyle.color itemStyle.borderWidth itemStyle.borderColor itemStyle.borderType  
+data.name data.value 
 
 ##### candlestick  
+barWidth data.name data.value data.itemStyle.color data.itemStyle.color0   
 
 ##### sankey  
+left right top bottom  nodeWidth nodeGap nodeAlign orient draggable  
+label.show label.formatter  
+label.color label.fontFamily label.fontWeight label.fontSize  
+data.name data.value data.itemStyle.color 
 
 ##### funnel  
+left top right bottom  
+orient gap  
+label.show label.formatter  
+label.color label.fontFamily label.fontWeight label.fontSize  
+data.name data.value data.itemStyle.color  
 
 ##### gauge  
+center radius startAngle endAngle clockwise  
+min max splitNumber  
+axisLine.show axisLine.lineStyle.color axisLine.lineStyle.width  
+progress.show progress.width progress.color  
+splitLine.show splitLine.length  splitLine.lineStyle.color splitLine.lineStyle.width  
+axisTick.show axisTick.splitNumber axisTick.length axisTick.lineStyle.color axisTick.lineStyle.width axisTick.lineStyle.type   
+axisLabel.show axisLabel.distance axisLabel.color axisLabel.fontSize axisLabel.fontFamily axisLabel.fontWeight  
+pointer.show pointer.length pointer.width pointer.itemStyle.color  
+title.show title.color title.fontSize title.fontWeight title.fontFamily title.offsetCenter  
+detail.show detail.color detail.fontWeight detail.fontSize detail.fontFamily  
+data.name data.value  
 
 ##### pictorialBar  
+label.show label.formatter  
+label.color label.fontFamily label.fontWeight label.fontSize  
+data.name data.value data.symbol data.symbolRotate  
 
 ### 需要新增的公共组件  
 #### 线条样式选择  
