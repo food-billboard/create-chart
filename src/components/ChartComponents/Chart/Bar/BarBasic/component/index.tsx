@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-class Test extends Component<any> {
+class BarBasic extends Component<any> {
   static id: ComponentData.TComponentSelfType = 'BAR_BASIC';
 
   render() {
@@ -13,9 +13,4 @@ class Test extends Component<any> {
   }
 }
 
-export default {
-  defaultConfig: {},
-  configComponent: Test,
-  render: Test,
-  type: Test.id,
-};
+export default BarBasic;

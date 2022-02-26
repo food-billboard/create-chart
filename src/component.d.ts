@@ -196,13 +196,11 @@ declare namespace ComponentData {
     };
   };
 
-  // 文字通用配置
-  export type TFontConfig = {
-    fontSize: number;
-    fontWeight: number | string;
-    fontFamily: string;
-    color: TColorConfig;
-  };
+  // 内部组件配置
+  export type TInternalComponentConfig<T extends object = {}> =
+    SuperPartial<TBaseConfig> & {
+      options: T;
+    };
 
   // 边距配置
   export type TComponentMarginConfig = {
@@ -240,6 +238,92 @@ declare namespace ComponentData {
     icon: string;
     description?: string;
   };
+
+  export type PositionType = {
+    left: 'auto' | number;
+    top: 'auto' | number;
+    right: 'auto' | number;
+    bottom: 'auto' | number;
+  };
+
+  export type OrientType = 'vertical' | 'horizontal';
+
+  // 文字通用配置
+  export type TFontConfig = {
+    fontSize: number;
+    fontWeight: number | string;
+    fontFamily: string;
+    color: TColorConfig;
+  };
+
+  // 图例
+  export type ComponentLegend = {
+    type: 'plain' | 'scroll';
+    show: boolean;
+    orient: OrientType;
+    itemGap: number;
+    textStyle: TFontConfig;
+  } & PositionType;
+
+  // 网格
+  export type ComponentGrid = {
+    show: boolean;
+    backgroundColor: TColorConfig;
+  } & PositionType;
+
+  // xAxis
+  export type ComponentXAxis = {
+    show: boolean;
+    position: 'top' | 'bottom';
+    nameTextStyle: TFontConfig;
+    nameRotate: number;
+    boundaryGap: boolean;
+    axisLabel: {
+      show: boolean;
+      rotate: number;
+      margin: number;
+    } & TFontConfig;
+  };
+
+  // yAxis
+  export type ComponentYAxis = Omit<ComponentXAxis, 'position'> & {
+    position: 'right' | 'left';
+  };
+
+  // tooltip
+  export type ComponentTooltip = {
+    show: boolean;
+    formatter?: string;
+    backgroundColor: TColorConfig;
+    textStyle: TFontConfig;
+  };
+
+  // label position
+  export type ComponentLabelPosition =
+    | 'top'
+    | 'left'
+    | 'right'
+    | 'bottom'
+    | 'inside'
+    | 'insideLeft'
+    | 'insideRight'
+    | 'insideTop'
+    | 'insideBottom'
+    | 'insideTopLeft'
+    | 'insideBottomLeft'
+    | 'insideTopRight'
+    | 'insideBottomRight';
+
+  // symbol
+  export type ComponentSymbol =
+    | 'circle'
+    | 'rect'
+    | 'roundRect'
+    | 'triangle'
+    | 'diamond'
+    | 'pin'
+    | 'arrow'
+    | 'none';
 }
 
 declare namespace ComponentMethod {

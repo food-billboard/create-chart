@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   CodeOutlined,
   ControlOutlined,
@@ -7,6 +7,7 @@ import {
 import { connect } from 'dva';
 import IconTooltip from '@/components/IconTooltip';
 import { getComponent, isComponentDisabled } from '@/utils/Assist/Component';
+import ConfigComponent from './ConfigComponent';
 import ConfigList from '../Common/Structure/ConfigList';
 import BaseConfig from '../Common/BaseConfig';
 import DataConfig from '../Common/DataConfig';
@@ -16,12 +17,11 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const ComponentConfig = (props: {
-  options?: ReactNode;
   id: string;
   components: ComponentData.TComponentData[];
   setSelect: (value: string[]) => void;
 }) => {
-  const { options, id, components, setSelect } = props;
+  const { id, components, setSelect } = props;
 
   const component = useMemo(() => {
     return getComponent(id, components);
@@ -65,8 +65,9 @@ const ComponentConfig = (props: {
         >
           <ConfigList>
             <BaseConfig id={id} />
-
-            <ConfigList level={1}>{options}</ConfigList>
+            <ConfigList level={1}>
+              <ConfigComponent component={component} />
+            </ConfigList>
           </ConfigList>
         </ConfigItem>
         <ConfigItem
