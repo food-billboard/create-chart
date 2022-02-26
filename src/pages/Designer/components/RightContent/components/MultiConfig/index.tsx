@@ -1,5 +1,7 @@
 import classnames from 'classnames';
-import ConfigWrapper, { ConfigItem } from '../Common/ConfigWrapper';
+import ConfigWrapper, {
+  ConfigItem,
+} from '@/components/ChartComponents/Common/ConfigWrapper';
 import styles from './index.less';
 
 const MultiConfig = () => {

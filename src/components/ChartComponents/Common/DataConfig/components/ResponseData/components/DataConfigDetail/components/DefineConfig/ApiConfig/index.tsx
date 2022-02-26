@@ -5,7 +5,7 @@ import { connect } from 'dva';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import CodeEditor from '../SaveCodeEditor';
 import SubTitle, { SubForm } from '../../SubTitle';
-import { TOnChange } from '../type.d';
+import { TOnChange } from '../type';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const { Option } = Select;

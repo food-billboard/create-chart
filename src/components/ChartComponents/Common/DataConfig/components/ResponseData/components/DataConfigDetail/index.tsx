@@ -14,7 +14,7 @@ import SubTitle, { SubForm } from './components/SubTitle';
 import DataFilter from './components/DataFilter';
 import DefineConfig from './components/DefineConfig';
 import ResponseDataMap from './components/ResponseDataMap';
-import { TOnChange } from './components/DefineConfig/type.d';
+import { TOnChange } from './components/DefineConfig/type';
 import styles from './index.less';
 
 export interface IDataConfigDetailRef {

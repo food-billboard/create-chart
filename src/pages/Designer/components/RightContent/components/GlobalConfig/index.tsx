@@ -3,10 +3,10 @@ import { InputNumber, Input, Tabs } from 'antd';
 import { connect } from 'dva';
 import { set } from 'lodash';
 import BackgroundSelect from '@/components/BackgroundSelect';
-import HalfForm from '../Common/Structure/HalfForm';
-import FullForm from '../Common/Structure/FullForm';
-import ConfigList from '../Common/Structure/ConfigList';
-import ConfigWrapper from '../Common/ConfigWrapper';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import ConfigWrapper from '@/components/ChartComponents/Common/ConfigWrapper';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const { Item } = ConfigList;

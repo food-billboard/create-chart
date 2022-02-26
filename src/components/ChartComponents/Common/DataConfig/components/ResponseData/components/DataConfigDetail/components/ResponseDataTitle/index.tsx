@@ -4,7 +4,7 @@ import IconTooltip from '@/components/IconTooltip';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { connect } from 'dva';
 import Title from '../NormalTitle';
-import { TOnChange } from '../DefineConfig/type.d';
+import { TOnChange } from '../DefineConfig/type';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const ResponseDataTitle = (props: {

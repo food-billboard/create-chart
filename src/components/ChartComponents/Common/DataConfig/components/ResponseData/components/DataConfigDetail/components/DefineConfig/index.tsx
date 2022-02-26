@@ -1,6 +1,6 @@
 import ApiConfig, { ApiConfigProps } from './ApiConfig';
 import StaticConfig from './StaticConfig';
-import { TOnChange } from './type.d';
+import { TOnChange } from './type';
 
 const DefineConfig = (props: {
   type?: 'api' | 'static';

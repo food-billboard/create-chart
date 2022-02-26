@@ -8,11 +8,13 @@ import { connect } from 'dva';
 import IconTooltip from '@/components/IconTooltip';
 import { getComponent, isComponentDisabled } from '@/utils/Assist/Component';
 import ConfigComponent from './ConfigComponent';
-import ConfigList from '../Common/Structure/ConfigList';
-import BaseConfig from '../Common/BaseConfig';
-import DataConfig from '../Common/DataConfig';
-import InterActiveConfig from '../Common/InterActiveConfig';
-import ConfigWrapper, { ConfigItem } from '../Common/ConfigWrapper';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';
+import DataConfig from '@/components/ChartComponents/Common/DataConfig';
+import InterActiveConfig from '@/components/ChartComponents/Common/InterActiveConfig';
+import ConfigWrapper, {
+  ConfigItem,
+} from '@/components/ChartComponents/Common/ConfigWrapper';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 

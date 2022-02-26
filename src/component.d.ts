@@ -324,6 +324,11 @@ declare namespace ComponentData {
     | 'pin'
     | 'arrow'
     | 'none';
+
+  export type ComponentConfigProps<T extends object = {}> = {
+    value: TComponentData<T>;
+    onChange: (value: SuperPartial<TComponentData<T>>) => void;
+  };
 }
 
 declare namespace ComponentMethod {

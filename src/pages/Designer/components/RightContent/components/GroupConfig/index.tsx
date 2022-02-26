@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
 import classnames from 'classnames';
 import { getComponent, isComponentDisabled } from '@/utils/Assist/Component';
-import ConfigWrapper, { ConfigItem } from '../Common/ConfigWrapper';
-import BaseConfig from '../Common/BaseConfig';
+import ConfigWrapper, {
+  ConfigItem,
+} from '@/components/ChartComponents/Common/ConfigWrapper';
+import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';
 import styles from './index.less';
 
 const GroupConfig = (props: {
