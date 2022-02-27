@@ -8,11 +8,9 @@ export type TBarBasicConfig = {
     backgroundStyle: {
       color: ComponentData.TColorConfig;
     };
-    label: {
-      show: boolean;
-      position: ComponentData.ComponentLabelPosition;
+    label: ComponentData.ComponentSeriesLabelConfig & {
       rotate: number;
-    } & ComponentData.TFontConfig;
+    };
     itemStyle: {
       color: ComponentData.TColorConfig;
       decal: {

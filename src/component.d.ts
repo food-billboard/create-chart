@@ -329,6 +329,11 @@ declare namespace ComponentData {
     value: TComponentData<T>;
     onChange: (value: SuperPartial<TComponentData<T>>) => void;
   };
+
+  export type ComponentSeriesLabelConfig = {
+    show: boolean;
+    position: ComponentLabelPosition;
+  } & TFontConfig;
 }
 
 declare namespace ComponentMethod {

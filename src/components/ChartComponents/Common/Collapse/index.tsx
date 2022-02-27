@@ -118,7 +118,14 @@ export const SingleCollapse = (props: {
   }, [visibleRender, value]);
 
   return (
-    <Collapse collapsible={collapsible} {...parent}>
+    <Collapse
+      collapsible={collapsible}
+      {...parent}
+      className={classnames(parent.className, {
+        [styles['design-config-collapse-single-disabled']]:
+          collapsible === 'disabled',
+      })}
+    >
       <Panel {...child}>{children}</Panel>
     </Collapse>
   );

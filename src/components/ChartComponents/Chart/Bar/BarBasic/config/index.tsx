@@ -1,28 +1,52 @@
-import {} from 'react';
 import { Tabs } from 'antd';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import LegendConfig from './Legend';
+import TooltipConfig from './Tooltip';
+import AxisConfig from './Axis';
+import SeriesConfig from './Series';
 import { TBarBasicConfig } from '../type';
 
 const { TabPane } = Tabs;
-const { Item } = ConfigList;
 
 const Config = (props: ComponentData.ComponentConfigProps<TBarBasicConfig>) => {
+  const { value, onChange } = props;
+  const {
+    config: {
+      options: { legend, series, xAxis, yAxis, tooltip },
+    },
+  } = value;
+
   return (
     <ComponentOptionConfig>
       <TabPane key={'1'} tab={<Tab>图例</Tab>}>
         <ConfigList level={1}>
-          <Item label="位置" placeholder disabled>
-            <FullForm></FullForm>
-          </Item>
+          <LegendConfig value={legend} onChange={onChange} />
         </ConfigList>
       </TabPane>
-      <TabPane key={'2'} tab={<Tab>坐标轴</Tab>}></TabPane>
-      <TabPane key={'3'} tab={<Tab>提示文字</Tab>}></TabPane>
-      <TabPane key={'4'} tab={<Tab>系列</Tab>}></TabPane>
+      <TabPane key={'2'} tab={<Tab>坐标轴</Tab>}>
+        <ConfigList level={1}>
+          <AxisConfig
+            value={{
+              xAxis,
+              yAxis,
+            }}
+            onChange={onChange}
+          />
+        </ConfigList>
+      </TabPane>
+      <TabPane key={'3'} tab={<Tab>提示文字</Tab>}>
+        <ConfigList level={1}>
+          <TooltipConfig value={tooltip} onChange={onChange} />
+        </ConfigList>
+      </TabPane>
+      <TabPane key={'4'} tab={<Tab>系列</Tab>}>
+        <ConfigList level={1}>
+          <SeriesConfig value={series} onChange={onChange} />
+        </ConfigList>
+      </TabPane>
     </ComponentOptionConfig>
   );
 };
