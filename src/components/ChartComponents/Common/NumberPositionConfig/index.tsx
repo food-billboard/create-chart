@@ -42,8 +42,6 @@ const InputNumber = (props: {
     [onChange, stateValue],
   );
 
-  console.log(value, stateValue, 2222);
-
   return (
     <AntInputNumber
       onBlur={onBlur}
