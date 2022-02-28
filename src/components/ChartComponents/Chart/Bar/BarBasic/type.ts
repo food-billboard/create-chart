@@ -12,11 +12,7 @@ export type TBarBasicConfig = {
       rotate: number;
     };
     itemStyle: {
-      color: ComponentData.TColorConfig;
-      decal: {
-        symbol: ComponentData.ComponentSymbol;
-        symbolSize: number;
-      };
+      color: ComponentData.TColorConfig[];
     };
     barGap: number;
     barWidth: 'auto' | number;

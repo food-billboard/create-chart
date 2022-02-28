@@ -5,17 +5,15 @@ import FontConfig from '../FontConfig';
 
 const SeriesLabelConfig = (
   props: {
-    key: string;
     onChange?: (
       value: SuperPartial<ComponentData.ComponentSeriesLabelConfig>,
     ) => void;
-    options?: ReactNode;
+    children?: ReactNode;
   } & ComponentData.ComponentSeriesLabelConfig,
 ) => {
   const {
-    key,
     show,
-    options,
+    children,
     fontSize,
     fontWeight,
     fontFamily,
@@ -37,7 +35,7 @@ const SeriesLabelConfig = (
     <Collapse
       child={{
         header: '文本标签',
-        key,
+        key: 'label',
         visibleRender: true,
         onChange: commonOnChange.bind(null, 'show'),
         value: show,
@@ -56,7 +54,7 @@ const SeriesLabelConfig = (
         }}
         onChange={onChange}
       />
-      {options}
+      {children}
     </Collapse>
   );
 };

@@ -85,9 +85,6 @@ export const DEFAULT_GRID_CONFIG: ComponentData.ComponentGrid = {
 export const DEFAULT_X_AXIS_CONFIG: ComponentData.ComponentXAxis = {
   show: true,
   position: 'bottom',
-  nameTextStyle: DEFAULT_FONT_CONFIG,
-  nameRotate: 0,
-  boundaryGap: true,
   axisLabel: {
     show: true,
     rotate: 0,

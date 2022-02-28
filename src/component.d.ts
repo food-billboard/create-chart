@@ -275,9 +275,6 @@ declare namespace ComponentData {
   export type ComponentXAxis = {
     show: boolean;
     position: 'top' | 'bottom';
-    nameTextStyle: TFontConfig;
-    nameRotate: number;
-    boundaryGap: boolean;
     axisLabel: {
       show: boolean;
       rotate: number;
@@ -305,14 +302,14 @@ declare namespace ComponentData {
     | 'right'
     | 'bottom'
     | 'inside'
-    | 'insideLeft'
-    | 'insideRight'
+    //| 'insideLeft'
+    //| 'insideRight'
     | 'insideTop'
-    | 'insideBottom'
-    | 'insideTopLeft'
-    | 'insideBottomLeft'
-    | 'insideTopRight'
-    | 'insideBottomRight';
+    | 'insideBottom';
+  // | 'insideTopLeft'
+  // | 'insideBottomLeft'
+  // | 'insideTopRight'
+  // | 'insideBottomRight';
 
   // symbol
   export type ComponentSymbol =

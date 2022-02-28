@@ -2,21 +2,12 @@ import { Component as ReactComponent } from 'react';
 import { get } from 'lodash';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { mergeWithoutArray } from '@/utils';
+import { ComponentProps, TGlobalData } from './type';
 
 // 公共渲染组件
 // 提供对应的一些公共的方法
 // 请求的数据放在内部控制
 
-export type TGlobalData = {
-  filter: ComponentData.TFilterConfig[];
-  setParams: (params: ComponentData.TParams[]) => void;
-  screenType: 'edit' | 'preview' | 'production';
-};
-
-type ComponentProps<P> = P & {
-  component: ComponentData.TComponentData;
-  global: TGlobalData;
-};
 class Component<P = {}, S = {}> extends ReactComponent<ComponentProps<P>, S> {
   constructor(props: ComponentProps<P>) {
     super(props);

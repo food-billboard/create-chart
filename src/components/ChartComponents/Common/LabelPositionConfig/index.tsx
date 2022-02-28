@@ -1,10 +1,40 @@
-import {} from 'react';
+import { useMemo } from 'react';
+import { Select } from 'antd';
 import ConfigList from '../Structure/ConfigList';
 import FullForm from '../Structure/FullForm';
-import RadioGroup, { Radio } from '../IconRadio';
-import Icon from '../Icon';
 
 const { Item } = ConfigList;
+
+const POSITION_MAP = [
+  {
+    label: '上',
+    value: 'top',
+  },
+  {
+    label: '下',
+    value: 'bottom',
+  },
+  {
+    label: '左',
+    value: 'left',
+  },
+  {
+    label: '右',
+    value: 'right',
+  },
+  {
+    label: '内部',
+    value: 'inside',
+  },
+  {
+    label: '内上',
+    value: 'insideTop',
+  },
+  {
+    label: '内下',
+    value: 'insideBottom',
+  },
+];
 
 const LabelPositionConfig = (props: {
   value: ComponentData.ComponentLabelPosition;
@@ -12,14 +42,23 @@ const LabelPositionConfig = (props: {
 }) => {
   const { value, onChange } = props;
 
+  const list = useMemo(() => {
+    return POSITION_MAP.map((item) => {
+      const { value, label } = item;
+      return (
+        <Select.Option key={value} value={value}>
+          {label}
+        </Select.Option>
+      );
+    });
+  }, []);
+
   return (
     <Item label="位置">
       <FullForm>
-        <RadioGroup value={value} onChange={onChange as any}>
-          <Radio key="top" value="top" icon={<Icon type="icon-undo" />} />
-          <Radio value="bottom" key="bottom" icon={<Icon type="icon-undo" />} />
-          <Radio value="right" key="right" icon={<Icon type="icon-undo" />} />
-        </RadioGroup>
+        <Select value={value} onChange={onChange as any} className="w-100">
+          {list}
+        </Select>
       </FullForm>
     </Item>
   );

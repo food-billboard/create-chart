@@ -96,15 +96,13 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBarBasicConfig> = {
         },
       },
       itemStyle: {
-        color: {
-          r: 255,
-          g: 255,
-          b: 255,
-        },
-        decal: {
-          symbol: 'rect',
-          symbolSize: 1,
-        },
+        color: [
+          {
+            r: 255,
+            g: 255,
+            b: 255,
+          },
+        ],
       },
       barGap: 30,
       barWidth: 'auto',

@@ -33,16 +33,12 @@ show left right bottom top backgroundColor
 
 #### xAxis 横坐标  
 show position  
-nameTextStyle.color nameTextStyle.fontFamily nameTextStyle.fontWeight nameTextStyle.fontSize   
-nameRotate boundaryGap  
 axisLabel.show axisLabel.rotate axisLabel.margin  
 axisLabel.color axisLabel.fontSize axisLabel.fontWeight axisLabel.fontFamily  
 data.value 
 
 #### yAxis 纵坐标  
 show position  
-nameTextStyle.color nameTextStyle.fontFamily nameTextStyle.fontWeight nameTextStyle.fontSize   
-nameRotate boundaryGap  
 axisLabel.show axisLabel.rotate axisLabel.margin  
 axisLabel.color axisLabel.fontSize axisLabel.fontWeight axisLabel.fontFamily  
 data.value 

@@ -1,16 +1,24 @@
-import { Component } from 'react';
+import { CSSProperties } from 'react';
+import { TBarBasicConfig } from '../type';
 
-class BarBasic extends Component<any> {
-  static id: ComponentData.TComponentSelfType = 'BAR_BASIC';
+const BarBasic = (props: {
+  className?: string;
+  style?: CSSProperties;
+  value: ComponentData.TComponentData<TBarBasicConfig>;
+}) => {
+  const { className, style, value } = props;
 
-  render() {
-    const { className, value, style } = this.props;
-    return (
-      <h1 className={className} style={style}>
-        hello
-      </h1>
-    );
-  }
-}
+  return (
+    <h1 className={className} style={style}>
+      hello
+    </h1>
+  );
+};
 
-export default BarBasic;
+const WrapperBarBasic: typeof BarBasic & {
+  id: ComponentData.TComponentSelfType;
+} = BarBasic as any;
+
+WrapperBarBasic.id = 'BAR_BASIC';
+
+export default WrapperBarBasic;
