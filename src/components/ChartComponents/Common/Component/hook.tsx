@@ -1,10 +1,12 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 import { get } from 'lodash';
+import echarts from 'echarts';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { mergeWithoutArray } from '@/utils';
+import EventEmitter from './EventEmitter';
 import { ComponentProps } from './type';
 
-export function useComponent<P>(props: ComponentProps<P>) {
+export function useComponent<P extends object = {}>(props: ComponentProps<P>) {
   const { component, global } = props;
 
   const requestTimer = useRef<any>(1);
@@ -144,4 +146,19 @@ export function useComponent<P>(props: ComponentProps<P>) {
   const didMountBinding = useCallback(() => {}, []);
 
   // * --------------------其他-end--------------------
+
+  return {
+    request: requestDataInterval,
+    getValue,
+    syncInteractiveAction,
+  };
+}
+
+export function useChartComponent(instance: echarts.ECharts) {
+  useEffect(() => {
+    instance && EventEmitter.push(instance);
+    return () => {
+      return EventEmitter.pop(instance);
+    };
+  }, [instance]);
 }

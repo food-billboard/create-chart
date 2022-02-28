@@ -1,15 +1,19 @@
 import { useMemo } from 'react';
+import { connect } from 'dva';
+import { ConnectState } from '@/models/connect';
 import { EComponentType } from '@/utils/constants';
+import { ComponentProps } from '../../../ChartComponents/Common/Component/type';
 import ChildrenWrapper from './ChildrenWrapper';
 import SubGroup from './SubGroup';
 import { getComponentByType } from '../../../ChartComponents';
 
-type ComponentContentProps = {
-  value: ComponentData.TComponentData;
-};
-
-const Content = (props: ComponentContentProps) => {
-  const { value } = props;
+const Content = (props: {
+  setParams: (value: ComponentData.TParams[]) => void;
+  filter: ComponentData.TFilterConfig[];
+  screenType: string;
+  component: ComponentProps['component'];
+}) => {
+  const { component, setParams, filter, screenType } = props;
 
   const children = useMemo(() => {
     const renderChildren: (
@@ -43,15 +47,36 @@ const Content = (props: ComponentContentProps) => {
             key={component.id}
             borderNone={isOuter}
           >
-            <TargetComponent value={component} key={id} />
+            <TargetComponent
+              value={component}
+              key={id}
+              global={{
+                setParams,
+                filter,
+                screenType,
+              }}
+            />
           </ChildrenWrapper>
         );
       });
     };
-    return renderChildren([value], true);
-  }, [value]);
+    return renderChildren([component], true);
+  }, [component, setParams, filter, screenType]);
 
   return <>{children}</>;
 };
 
-export default Content;
+export default connect(
+  (state: ConnectState) => {
+    return {
+      filter: state.global.screenData.config.attr.filter,
+      screenType: state.global.screenType,
+    };
+  },
+  (dispatch) => {
+    return {
+      setParams: (value: ComponentData.TParams[]) =>
+        dispatch({ type: 'global/setParams', value }),
+    };
+  },
+)(Content);

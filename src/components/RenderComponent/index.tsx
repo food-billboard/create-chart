@@ -79,7 +79,7 @@ const RenderComponent = (props: RenderComponentProps) => {
   );
 
   const content = useMemo(() => {
-    return <Content value={value} />;
+    return <Content component={value} />;
   }, [value]);
 
   return (

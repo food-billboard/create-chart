@@ -4,7 +4,7 @@ export type TGlobalData = {
   screenType: 'edit' | 'preview' | 'production';
 };
 
-export type ComponentProps<P> = P & {
-  component: ComponentData.TComponentData;
+export type ComponentProps<P extends object = {}> = {
+  component: ComponentData.TComponentData<P>;
   global: TGlobalData;
 };

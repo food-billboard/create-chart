@@ -10,6 +10,7 @@ export default {
   namespace: 'global',
 
   state: {
+    screenType: 'edit',
     // 大屏
     screenData: DEFAULT_SCREEN_DATA,
     components: DEFAULT_SCREEN_DATA.components,
