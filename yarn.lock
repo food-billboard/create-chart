@@ -954,6 +954,11 @@
   resolved "https://registry.npmmirror.com/@types/lodash/download/@types/lodash-4.14.178.tgz#341f6d2247db528d4a13ddbb374bcdc80406f4f8"
   integrity sha512-0d5Wd09ItQWH1qFbEyQ7oTQ3GZrMfth5JkbN3EvTKLXcHLRDSXeLnlvlOn0wvxVIwK5o2M8JzP/OWz7T3NRsbw==
 
+"@types/mockjs@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.npmmirror.com/@types/mockjs/-/mockjs-1.0.6.tgz#dafdd5de65156f7aa63eab4e29fa3d532cd95609"
+  integrity sha512-Yu5YlqbYZyqsd6LjO4e8ONJDN9pTSnciHDcRP4teNOh/au2b8helFhgRx+3w8xsTFEnwr9jtfTVJbAx+eYmlHA==
+
 "@types/mustache@^4.1.2":
   version "4.1.2"
   resolved "https://registry.npmmirror.com/@types/mustache/-/mustache-4.1.2.tgz#d0e158013c81674a5b6d8780bc3fe234e1804eaf"
@@ -2467,6 +2472,11 @@ comma-separated-tokens@^1.0.0:
   version "1.0.8"
   resolved "https://registry.nlark.com/comma-separated-tokens/download/comma-separated-tokens-1.0.8.tgz#632b80b6117867a158f1080ad498b2fbe7e3f5ea"
   integrity sha1-YyuAthF4Z6FY8QgK1Jiy++fj9eo=
+
+commander@*:
+  version "9.0.0"
+  resolved "https://registry.npmmirror.com/commander/-/commander-9.0.0.tgz#86d58f24ee98126568936bd1d3574e0308a99a40"
+  integrity sha512-JJfP2saEKbQqvW+FI93OYUB4ByV5cizMpFMiiJI8xDbBvQvSkIk0VvQdn1CZ8mqAO8Loq2h0gYTYtDFUZUeERw==
 
 commander@^2.20.0:
   version "2.20.3"
@@ -5526,6 +5536,13 @@ mkdirp@^0.5.1:
   integrity sha1-2Rzv1i0UNsoPQWIOJRKI1CAJne8=
   dependencies:
     minimist "^1.2.5"
+
+mockjs@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmmirror.com/mockjs/-/mockjs-1.1.0.tgz#e6a0c378e91906dbaff20911cc0273b3c7d75b06"
+  integrity sha512-eQsKcWzIaZzEZ07NuEyO4Nw65g0hdWAyurVol1IPl1gahRwY+svqzfgfey8U8dahLwG44d6/RwEzuK52rSa/JQ==
+  dependencies:
+    commander "*"
 
 moment@^2.24.0, moment@^2.25.3, moment@^2.27.0, moment@^2.29.1:
   version "2.29.1"

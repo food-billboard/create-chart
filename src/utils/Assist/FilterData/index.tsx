@@ -69,6 +69,43 @@ class FilterData {
     }
   }
 
+  // 字段映射修改
+  // 返回的数据和用户指定的字段映射修改
+  getFieldMapValue(
+    value: any,
+    {
+      map,
+    }: {
+      map: ComponentData.TComponentMapData[];
+    },
+  ) {
+    function format(value: any): any {
+      if (Array.isArray(value)) {
+        return value.map((item) => {
+          return format(item);
+        });
+      } else {
+        return Object.entries(value).reduce<any>((acc, cur) => {
+          const [key, value] = cur;
+          const target = map.find((item) => item.map === key);
+          if (target) {
+            const { field } = target;
+            acc[field] = value;
+          } else {
+            acc[key] = value;
+          }
+          return acc;
+        }, {});
+      }
+    }
+
+    try {
+      return format(value);
+    } catch (err) {
+      return value;
+    }
+  }
+
   // 解析字符串对象变量
   parseVariableStringInObject(
     value: object,

@@ -10,7 +10,18 @@ import {
   DEFAULT_TOOLTIP_CONFIG,
   DEFAULT_FONT_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
+import { getDate, getNumberValue } from '@/utils/constants';
 import { TBarBasicConfig } from './type';
+
+const DEFAULT_DATE_LABEL = getDate(10);
+const DEFAULT_DATE_VALUE = getNumberValue(10);
+
+const DEFAULT_VALUE = DEFAULT_DATE_LABEL.map((item, index) => {
+  return {
+    x: item,
+    y: DEFAULT_DATE_VALUE[index],
+  };
+});
 
 const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBarBasicConfig> = {
   interactive: {
@@ -41,7 +52,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBarBasicConfig> = {
   },
   data: {
     request: {
-      value: [],
+      value: DEFAULT_VALUE,
     },
     filter: {
       map: [
@@ -96,13 +107,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBarBasicConfig> = {
         },
       },
       itemStyle: {
-        color: [
-          {
-            r: 255,
-            g: 255,
-            b: 255,
-          },
-        ],
+        color: [],
       },
       barGap: 30,
       barWidth: 'auto',
@@ -113,8 +118,10 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBarBasicConfig> = {
 const DefaultConfig: ComponentData.TComponentData<TBarBasicConfig> =
   mergeWithoutArray(
     {},
-    BASIC_DEFAULT_DATA_CONFIG,
-    BASIC_DEFAULT_INTERACTIVE_CONFIG,
+    {
+      data: BASIC_DEFAULT_DATA_CONFIG,
+      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
+    },
     BASIC_DEFAULT_CONFIG,
     CUSTOM_CONFIG,
   );

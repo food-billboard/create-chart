@@ -1,0 +1,58 @@
+import { useMemo } from 'react';
+import FilterDataUtil from '@/utils/Assist/FilterData';
+
+const format = (processedValue: any, fields: any, counter?: any) => {
+  if (Array.isArray(processedValue)) {
+    return processedValue.reduce(
+      (acc: any, cur: any) => {
+        format(cur, fields, acc);
+        return acc;
+      },
+      {
+        seriesKeys: [],
+        xAxisKeys: [],
+        yAxisValues: {
+          _defaultValue_: [],
+        },
+      },
+    );
+  } else {
+    const seriesKey = processedValue[fields.seriesKey];
+    const yAxisValue = processedValue[fields.yAxisValue];
+    if (seriesKey && !counter.seriesKeys.includes(seriesKey)) {
+      counter.seriesKeys.push(seriesKey);
+    }
+    if (seriesKey) {
+      if (!counter.yAxisValues[seriesKey]) counter.yAxisValues[seriesKey] = [];
+      counter.yAxisValues[seriesKey].push(yAxisValue);
+    } else {
+      counter.yAxisValues._defaultValue_.push(yAxisValue);
+    }
+    counter.xAxisKeys.push(processedValue[fields.xAxisKeyKey]);
+  }
+};
+
+export function useChartValueMapField(
+  value: any[],
+  {
+    map,
+    fields,
+  }: {
+    map: ComponentData.TComponentMapData[];
+    fields: {
+      seriesKey: string;
+      xAxisKeyKey: string;
+      yAxisValue: string;
+    };
+  },
+) {
+  const processedValue = useMemo(() => {
+    return FilterDataUtil.getFieldMapValue(value, { map });
+  }, [value, map]);
+
+  const fieldsMap = useMemo(() => {
+    return format(processedValue, fields);
+  }, [processedValue, fields]);
+
+  return fieldsMap;
+}

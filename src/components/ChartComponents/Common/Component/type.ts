@@ -1,5 +1,4 @@
 export type TGlobalData = {
-  filter: ComponentData.TFilterConfig[];
   setParams: (params: ComponentData.TParams[]) => void;
   screenType: 'edit' | 'preview' | 'production';
 };

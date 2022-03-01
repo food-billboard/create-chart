@@ -9,11 +9,10 @@ import { getComponentByType } from '../../../ChartComponents';
 
 const Content = (props: {
   setParams: (value: ComponentData.TParams[]) => void;
-  filter: ComponentData.TFilterConfig[];
   screenType: string;
   component: ComponentProps['component'];
 }) => {
-  const { component, setParams, filter, screenType } = props;
+  const { component, setParams, screenType } = props;
 
   const children = useMemo(() => {
     const renderChildren: (
@@ -52,7 +51,6 @@ const Content = (props: {
               key={id}
               global={{
                 setParams,
-                filter,
                 screenType,
               }}
             />
@@ -61,7 +59,7 @@ const Content = (props: {
       });
     };
     return renderChildren([component], true);
-  }, [component, setParams, filter, screenType]);
+  }, [component, setParams, screenType]);
 
   return <>{children}</>;
 };
@@ -69,7 +67,6 @@ const Content = (props: {
 export default connect(
   (state: ConnectState) => {
     return {
-      filter: state.global.screenData.config.attr.filter,
       screenType: state.global.screenType,
     };
   },

@@ -8,7 +8,10 @@ import { ComponentProps, TGlobalData } from './type';
 // 提供对应的一些公共的方法
 // 请求的数据放在内部控制
 
-class Component<P = {}, S = {}> extends ReactComponent<ComponentProps<P>, S> {
+class Component<P extends object = {}, S = {}> extends ReactComponent<
+  ComponentProps<P>,
+  S
+> {
   constructor(props: ComponentProps<P>) {
     super(props);
   }
@@ -70,7 +73,8 @@ class Component<P = {}, S = {}> extends ReactComponent<ComponentProps<P>, S> {
   ) => {
     const { component, global } = this.props;
     const config = get(component, 'config.data');
-    const { filter } = global;
+    // ! const { filter } = global;
+    const filter: any[] = [];
     return FilterDataUtil.getPipeFilterValue(
       mergeWithoutArray({}, config, {
         request: {

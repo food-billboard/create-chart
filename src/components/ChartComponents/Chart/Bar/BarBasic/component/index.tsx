@@ -1,12 +1,20 @@
 import { CSSProperties, useEffect, useRef } from 'react';
-import echarts from 'echarts';
-import { uniqueId } from 'lodash';
+import { init } from 'echarts';
+import { uniqueId, merge } from 'lodash';
 import {
   useComponent,
-  useChartComponent,
+  useChartComponentResize,
+  useChartValueMapField,
+  useComponentResize,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
+import ColorSelect from '@/components/ColorSelect';
+import FetchFragment, {
+  TFetchFragmentRef,
+} from '@/components/ChartComponents/Common/FetchFragment';
 import { TBarBasicConfig } from '../type';
+
+const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'BAR_BASIC';
 
@@ -26,38 +34,146 @@ const BarBasic = (props: {
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
+  const requestRef = useRef<TFetchFragmentRef>(null);
 
-  const { request, syncInteractiveAction, getValue } =
-    useComponent<TBarBasicConfig>({
+  useComponentResize(value, () => {
+    chartInstance?.current?.resize();
+  });
+
+  const {
+    request,
+    syncInteractiveAction,
+    getValue,
+    requestUrl,
+    componentFilter,
+    value: processedValue = [],
+    componentFilterMap,
+  } = useComponent<TBarBasicConfig>(
+    {
       component: value,
       global,
-    });
+    },
+    requestRef,
+  );
+
+  const { seriesKeys, xAxisKeys, yAxisValues } = useChartValueMapField(
+    processedValue,
+    {
+      map: componentFilterMap,
+      fields: {
+        seriesKey: 's',
+        xAxisKeyKey: 'x',
+        yAxisValue: 'y',
+      },
+    },
+  );
 
   const initChart = () => {
-    const chart = echarts.init(
-      document.querySelector(`#${chartId.current!}`)!,
-      {
-        renderer: 'canvas',
-      },
-    );
+    const chart = init(document.querySelector(`#${chartId.current!}`)!, {
+      renderer: 'canvas',
+    });
     chartInstance.current = chart;
     setOption();
   };
 
-  const setOption = () => {
-    const { itemStyle, ...nextSeries } = series;
-    chartInstance.current?.setOption({
-      legend,
-      series: {
-        ...nextSeries,
+  const getSeries = () => {
+    const { itemStyle, backgroundStyle, label, ...nextSeries } = series;
+    const baseSeries = {
+      ...nextSeries,
+      backgroundStyle: {
+        ...backgroundStyle,
+        color: getRgbaString(backgroundStyle.color),
       },
-      xAxis,
-      yAxis,
-      tooltip,
+      label: {
+        ...label,
+        color: getRgbaString(label.color),
+      },
+      type: 'bar',
+      itemStyle: {
+        ...itemStyle,
+        color: getRgbaString(itemStyle.color[0]) || 'auto',
+      },
+      data: yAxisValues._defaultValue_,
+    };
+
+    const realSeries = seriesKeys.length
+      ? seriesKeys.map((item: any, index: number) => {
+          return {
+            ...baseSeries,
+            itemStyle: {
+              ...itemStyle,
+              color: getRgbaString(itemStyle.color[index]) || 'auto',
+            },
+            data: yAxisValues[item] || [],
+            name: item,
+          };
+        })
+      : baseSeries;
+
+    return realSeries;
+  };
+
+  const setOption = () => {
+    const { textStyle: legendTextStyle, ...nextLegend } = legend;
+    const {
+      backgroundColor,
+      textStyle: tooltipTextStyle,
+      ...nextTooltip
+    } = tooltip;
+    const { axisLabel: xAxisLabel, ...nextXAxis } = xAxis;
+    const { axisLabel: yAxisLabel, ...nextYAxis } = yAxis;
+    const series = getSeries();
+
+    chartInstance.current?.setOption({
+      grid: {
+        show: false,
+      },
+      legend: {
+        ...nextLegend,
+        data: seriesKeys,
+        textStyle: {
+          ...legendTextStyle,
+          color: getRgbaString(legendTextStyle.color),
+        },
+      },
+      series,
+      xAxis: [
+        {
+          ...nextXAxis,
+          splitLine: {
+            show: false,
+          },
+          data: xAxisKeys,
+          axisLabel: {
+            ...xAxisLabel,
+            color: getRgbaString(xAxisLabel.color),
+          },
+        },
+      ],
+      yAxis: [
+        {
+          ...nextYAxis,
+          splitLine: {
+            show: false,
+          },
+          axisLabel: {
+            ...yAxisLabel,
+            color: getRgbaString(yAxisLabel.color),
+          },
+        },
+      ],
+      tooltip: {
+        ...nextTooltip,
+        backgroundColor: getRgbaString(backgroundColor),
+        textStyle: {
+          ...tooltipTextStyle,
+          color: getRgbaString(tooltipTextStyle.color),
+        },
+      },
     });
   };
 
-  useChartComponent(chartInstance.current!);
+  useChartComponentResize(chartInstance.current!);
 
   useEffect(() => {
     initChart();
@@ -66,10 +182,33 @@ const BarBasic = (props: {
     };
   }, []);
 
+  // 数据发生变化时
+  useEffect(() => {
+    setOption();
+    chartInstance.current?.resize();
+  }, [processedValue]);
+
   return (
-    <div className={className} style={style} id={chartId.current}>
-      hello
-    </div>
+    <>
+      <div
+        className={className}
+        style={merge(
+          {
+            width: '100%',
+            height: '100%',
+          },
+          style,
+        )}
+        id={chartId.current}
+      ></div>
+      <FetchFragment
+        url={requestUrl}
+        ref={requestRef}
+        reFetchData={request}
+        reGetValue={getValue}
+        componentFilter={componentFilter}
+      />
+    </>
   );
 };
 

@@ -7,6 +7,7 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 export type TFetchFragmentProps = {
   params: ComponentData.TParams[];
   filter: ComponentData.TFilterConfig[];
+  constants: ComponentData.TConstants[];
   url: string;
   componentFilter: ComponentData.TComponentFilterConfig[];
 
@@ -16,12 +17,23 @@ export type TFetchFragmentProps = {
 
 export type TFetchFragmentRef = {
   params: ComponentData.TParams[];
+  constants: ComponentData.TConstants[];
+  filter: ComponentData.TFilterConfig[];
 };
 
 const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
   (props, ref) => {
-    const { params, filter, componentFilter, url, reFetchData, reGetValue } =
-      props;
+    const {
+      params,
+      filter,
+      constants,
+      componentFilter,
+      url,
+      reFetchData,
+      reGetValue,
+    } = props;
+
+    // 检查数据过滤的方法
     const filterUtil = useRef<CompareFilterUtil>(
       new CompareFilterUtil(
         {
@@ -39,6 +51,7 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
       ),
     );
 
+    // 数据发生改变的时候比较数据
     useUpdateEffect(() => {
       filterUtil.current?.compare(params);
     }, [params]);
@@ -48,9 +61,11 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
       () => {
         return {
           params,
+          constants,
+          filter,
         };
       },
-      [params],
+      [params, constants, filter],
     );
 
     return <></>;

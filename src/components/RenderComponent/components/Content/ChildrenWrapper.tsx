@@ -22,7 +22,7 @@ const ChildrenWrapper = (props: {
       const value: ComponentData.TComponentData = get(child, 'props.value');
       const {
         config: {
-          style: { left, top },
+          style: { left, top, rotate },
         },
       } = value;
 
@@ -32,7 +32,10 @@ const ChildrenWrapper = (props: {
           'border-1-a': isSelect && !borderNone,
         }),
         style: borderNone
-          ? {}
+          ? {
+              transform: `rotate(${rotate}deg)`,
+              transformOrigin: 'left top',
+            }
           : {
               left,
               top,
