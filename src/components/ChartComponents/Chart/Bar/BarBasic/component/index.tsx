@@ -1,6 +1,7 @@
 import { CSSProperties, useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
+import { useUpdateEffect } from 'ahooks';
 import {
   useComponent,
   useChartComponentResize,
@@ -27,10 +28,10 @@ const BarBasic = (props: {
   const { className, style, value, global } = props;
 
   const {
-    config: {
-      options: { legend, series, xAxis, yAxis, tooltip },
-    },
+    config: { options },
   } = value;
+
+  const { legend, series, xAxis, yAxis, tooltip } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -187,6 +188,12 @@ const BarBasic = (props: {
     setOption();
     chartInstance.current?.resize();
   }, [processedValue]);
+
+  // 配置发生变化时
+  useUpdateEffect(() => {
+    setOption();
+    chartInstance.current?.resize();
+  }, [options]);
 
   return (
     <>
