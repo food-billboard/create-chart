@@ -274,7 +274,7 @@ class GroupUtil {
           if (left < acc.left) acc.left = left;
           if (left + width > acc.right) acc.right = left + width;
           if (top < acc.top) acc.top = top;
-          if (top + height) acc.bottom = top + height;
+          if (top + height > acc.bottom) acc.bottom = top + height;
 
           return acc;
         },

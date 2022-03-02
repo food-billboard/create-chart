@@ -140,6 +140,7 @@ const dropTarget = DropTarget(
         },
       ) => {
         const component = createComponent({
+          icon: value.icon,
           name: value.title,
           description: value.description,
           componentType: value.type,
