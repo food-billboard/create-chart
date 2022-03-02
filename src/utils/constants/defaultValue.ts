@@ -16,3 +16,9 @@ export function getNumberValue(count = 10, min = 0, max = 200) {
     return Random.natural(min, max);
   });
 }
+
+export function getSeries(count = 2) {
+  return new Array(count).fill(0).map((_, index) => {
+    return `系列${index + 1}`;
+  });
+}

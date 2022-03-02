@@ -1,11 +1,12 @@
 import { useCallback, useMemo } from 'react';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { CompatColorSelect } from '@/components/ColorSelect';
+import IconTooltip from '@/components/IconTooltip';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import AngleSelect from '@/components/ChartComponents/Common/AngleSelect';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
@@ -106,7 +107,14 @@ const SeriesConfig = (props: {
   const barConfig = useMemo(() => {
     return (
       <>
-        <Item label="柱子">
+        <Item
+          label="柱子"
+          placeholder={
+            <IconTooltip title="间距为柱子的宽度占比">
+              <InfoCircleOutlined />
+            </IconTooltip>
+          }
+        >
           <FullForm label="宽度">
             <AutoInputNumber
               value={barWidth}

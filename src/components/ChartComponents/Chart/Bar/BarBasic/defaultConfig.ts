@@ -10,18 +10,25 @@ import {
   DEFAULT_TOOLTIP_CONFIG,
   DEFAULT_FONT_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
-import { getDate, getNumberValue } from '@/utils/constants';
+import { getDate, getNumberValue, getSeries } from '@/utils/constants';
 import { TBarBasicConfig } from './type';
 
 const DEFAULT_DATE_LABEL = getDate(10);
 const DEFAULT_DATE_VALUE = getNumberValue(10);
+const DEFAULT_SERIES = getSeries(2);
 
-const DEFAULT_VALUE = DEFAULT_DATE_LABEL.map((item, index) => {
-  return {
-    x: item,
-    y: DEFAULT_DATE_VALUE[index],
-  };
-});
+const DEFAULT_VALUE = DEFAULT_SERIES.reduce<any>((acc, cur) => {
+  acc.push(
+    ...DEFAULT_DATE_LABEL.map((item, index) => {
+      return {
+        x: item,
+        y: DEFAULT_DATE_VALUE[index],
+        s: cur,
+      };
+    }),
+  );
+  return acc;
+}, []);
 
 const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBarBasicConfig> = {
   interactive: {
@@ -109,7 +116,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBarBasicConfig> = {
       itemStyle: {
         color: [],
       },
-      barGap: 30,
+      barGap: 1,
       barWidth: 'auto',
     },
   },

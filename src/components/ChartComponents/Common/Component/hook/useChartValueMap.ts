@@ -19,6 +19,7 @@ const format = (processedValue: any, fields: any, counter?: any) => {
   } else {
     const seriesKey = processedValue[fields.seriesKey];
     const yAxisValue = processedValue[fields.yAxisValue];
+    const xAxisValue = processedValue[fields.xAxisKeyKey];
     if (seriesKey && !counter.seriesKeys.includes(seriesKey)) {
       counter.seriesKeys.push(seriesKey);
     }
@@ -28,7 +29,8 @@ const format = (processedValue: any, fields: any, counter?: any) => {
     } else {
       counter.yAxisValues._defaultValue_.push(yAxisValue);
     }
-    counter.xAxisKeys.push(processedValue[fields.xAxisKeyKey]);
+    if (!counter.xAxisKeys.includes(xAxisValue))
+      counter.xAxisKeys.push(processedValue[fields.xAxisKeyKey]);
   }
 };
 

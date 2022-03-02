@@ -29,10 +29,7 @@ const IconTooltip = (
       {...nextProps}
       title={title || '提示'}
     >
-      <span
-        className={classnames('m-l-8', 'c-po', iconClassName)}
-        style={iconStyle}
-      >
+      <span className={classnames('c-po', iconClassName)} style={iconStyle}>
         {children}
       </span>
     </Tooltip>

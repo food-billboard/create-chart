@@ -1,5 +1,4 @@
 import { ReactNode, useCallback, useMemo } from 'react';
-import { InputNumber } from 'antd';
 import { pick } from 'lodash';
 import ConfigList from '../Structure/ConfigList';
 import YAxisPosition from './YAxisPosition';
@@ -8,6 +7,7 @@ import { SingleCollapse as Collapse } from '../Collapse';
 import { FontConfigList } from '../FontConfig';
 import AngleSelect from '../AngleSelect';
 import FullForm from '../Structure/FullForm';
+import InputNumber from '../InputNumber';
 
 const { Item } = ConfigList;
 

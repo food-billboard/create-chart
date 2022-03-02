@@ -44,9 +44,9 @@ export const BASIC_DEFAULT_INTERACTIVE_CONFIG: ComponentData.TBaseConfig['intera
 
 export const DEFAULT_FONT_CONFIG: ComponentData.TFontConfig = {
   color: {
-    r: 33,
-    g: 33,
-    b: 33,
+    r: 255,
+    g: 255,
+    b: 255,
   },
   fontSize: 12,
   fontWeight: 'normal',
