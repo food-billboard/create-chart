@@ -97,11 +97,8 @@ const AxisConfig = (props: AxisConfigProps) => {
         <Item label="间距">
           <FullForm>
             <InputNumber
-              defaultValue={axisLabel!.margin || 0}
-              onBlur={(e) => {
-                const value = e.target.value;
-                onAxisLabelChange('margin', value);
-              }}
+              value={axisLabel!.margin || 0}
+              onChange={onAxisLabelChange.bind(null, 'margin')}
               className="w-100"
             />
           </FullForm>

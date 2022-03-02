@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useControllableValue } from 'ahooks';
 import { Tooltip, Input, InputNumber } from 'antd';
 import {
@@ -93,6 +93,7 @@ WrapperColorSelect.getHexString = getHexString;
 WrapperColorSelect.getOpacity = getOpacity;
 
 export const CompatColorSelect = (props: TColorSelectProps) => {
+  const { value: propsValue, defaultValue: propsDefaultValue } = props;
   const [value, onChange] = useControllableValue<ComponentData.TColorConfig>(
     props,
     {
@@ -150,9 +151,23 @@ export const CompatColorSelect = (props: TColorSelectProps) => {
     } catch (err) {}
   }, [inputColor, value]);
 
+  // * 避免外部刷新导致内部数据不刷新
+  useEffect(() => {
+    if (propsValue) {
+      setOpacity(WrapperColorSelect.getOpacity(propsValue!));
+      setInputColor(getHexString(propsValue!, false));
+    } else if (propsDefaultValue) {
+      setOpacity(WrapperColorSelect.getOpacity(propsDefaultValue!));
+      setInputColor(getHexString(propsDefaultValue!, false));
+    }
+  }, [propsValue, propsDefaultValue]);
+
   return (
     <div className="dis-flex">
-      <ColorSelect value={value} onChange={onSelectChange} />
+      <ColorSelect
+        value={props.value ?? props.defaultValue ?? value}
+        onChange={onSelectChange}
+      />
       <Input
         prefix="#"
         value={inputColor}

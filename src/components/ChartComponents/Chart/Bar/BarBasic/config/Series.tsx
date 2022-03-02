@@ -1,5 +1,4 @@
 import { useCallback, useMemo } from 'react';
-import { InputNumber } from 'antd';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
@@ -8,6 +7,8 @@ import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelCo
 import AngleSelect from '@/components/ChartComponents/Common/AngleSelect';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
 import { TBarBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -106,22 +107,18 @@ const SeriesConfig = (props: {
     return (
       <>
         <Item label="柱子">
-          <HalfForm label="宽度">
-            <InputNumber
-              defaultValue={barWidth}
-              onBlur={(e) => {
-                onKeyChange('barWidth', e.target.value);
-              }}
+          <FullForm label="宽度">
+            <AutoInputNumber
+              value={barWidth}
+              onChange={onKeyChange.bind(null, 'barWidth')}
             />
-          </HalfForm>
-          <HalfForm label="间距">
+          </FullForm>
+          <FullForm label="间距">
             <InputNumber
-              defaultValue={barGap}
-              onBlur={(e) => {
-                onKeyChange('barGap', e.target.value);
-              }}
+              value={barGap}
+              onChange={onKeyChange.bind(null, 'barGap')}
             />
-          </HalfForm>
+          </FullForm>
         </Item>
       </>
     );

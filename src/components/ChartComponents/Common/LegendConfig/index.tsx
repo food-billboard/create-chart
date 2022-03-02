@@ -1,11 +1,11 @@
 import { ReactNode, useCallback, useMemo } from 'react';
-import { InputNumber } from 'antd';
 import ConfigList from '../Structure/ConfigList';
 import { SingleCollapse as Collapse } from '../Collapse';
 import { FontConfigList } from '../FontConfig';
 import FullForm from '../Structure/FullForm';
 import OrientSelect from '../OrientSelect';
 import NumberPositionConfig, { PositionValue } from '../NumberPositionConfig';
+import InputNumber from '../InputNumber';
 
 const { Item } = ConfigList;
 
@@ -104,8 +104,8 @@ const LegendConfig = (props: LegendConfigProps) => {
         <FullForm>
           <InputNumber
             className="w-100"
-            defaultValue={itemGap}
-            onBlur={(e) => onKeyChange('itemGap', e.target.value)}
+            value={itemGap}
+            onChange={onKeyChange.bind(null, 'itemGap')}
           />
         </FullForm>
       </Item>

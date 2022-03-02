@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, useEffect } from 'react';
+import { useCallback, useMemo } from 'react';
 import { InputNumber } from 'antd';
 import { connect } from 'dva';
 import { get } from 'lodash';
@@ -25,12 +25,7 @@ const BaseConfig = (props: {
       components,
     );
     return get(component, 'config.style') || {};
-  }, [components]);
-
-  const [stateWidth, setStateWidth] = useState<number>(width);
-  const [stateHeight, setStateHeight] = useState<number>(height);
-  const [stateLeft, setStateLeft] = useState<number>(left);
-  const [stateTop, setStateTop] = useState<number>(top);
+  }, [components, id]);
 
   const onValueChange = useCallback(
     (path: keyof ComponentData.TBaseConfig['style'], value: any) => {
@@ -56,70 +51,50 @@ const BaseConfig = (props: {
     [id],
   );
 
-  useEffect(() => {
-    setStateWidth(width);
-  }, [width]);
-
-  useEffect(() => {
-    setStateHeight(height);
-  }, [height]);
-
-  useEffect(() => {
-    setStateLeft(left);
-  }, [left]);
-
-  useEffect(() => {
-    setStateTop(top);
-  }, [top]);
-
   return (
     <div>
       <ConfigList>
         <Item label="图表尺寸">
           <HalfForm>
             <InputNumber
-              value={stateWidth}
-              onChange={(value) => setStateWidth(value)}
-              onBlur={onValueChange.bind(null, 'width', stateWidth)}
+              value={width}
+              onChange={onValueChange.bind(null, 'width')}
             />
           </HalfForm>
           <HalfForm>
             <InputNumber
-              value={stateHeight}
-              onChange={(value) => setStateHeight(value)}
-              onBlur={onValueChange.bind(null, 'height', stateHeight)}
+              value={height}
+              onChange={onValueChange.bind(null, 'height')}
             />
           </HalfForm>
         </Item>
         <Item label="图表位置">
           <HalfForm>
             <InputNumber
-              value={stateLeft}
-              onChange={(value) => setStateLeft(value)}
-              onBlur={onValueChange.bind(null, 'left', stateLeft)}
+              value={left}
+              onChange={onValueChange.bind(null, 'left')}
             />
           </HalfForm>
           <HalfForm>
             <InputNumber
-              value={stateTop}
-              onChange={(value) => setStateTop(value)}
-              onBlur={onValueChange.bind(null, 'top', stateTop)}
+              value={top}
+              onChange={onValueChange.bind(null, 'top')}
             />
           </HalfForm>
         </Item>
         <Item label="旋转角度">
           <HalfForm>
             <InputNumber
-              defaultValue={rotate}
-              onBlur={onValueChange.bind(null, 'rotate')}
+              value={rotate}
+              onChange={onValueChange.bind(null, 'rotate')}
             />
           </HalfForm>
         </Item>
         <Item label="不透明度">
           <HalfForm>
             <Opacity
-              defaultValue={opacity}
-              onAfterChange={onValueChange.bind(null, 'opacity')}
+              value={opacity}
+              onChange={onValueChange.bind(null, 'opacity')}
               max={1}
               min={0}
               step={0.1}

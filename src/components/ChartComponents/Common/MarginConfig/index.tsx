@@ -39,29 +39,29 @@ const MarginConfig = (props: {
     <Item label="边距">
       <HalfForm label="左">
         <InputNumber
-          defaultValue={left}
-          onBlur={onChange.bind(null, 'left')}
+          value={left}
+          onChange={onChange.bind(null, 'left')}
           className="w-100"
         />
       </HalfForm>
       <HalfForm label="右">
         <InputNumber
-          defaultValue={right}
-          onBlur={onChange.bind(null, 'right')}
+          value={right}
+          onChange={onChange.bind(null, 'right')}
           className="w-100"
         />
       </HalfForm>
       <HalfForm label="上">
         <InputNumber
-          defaultValue={top}
-          onBlur={onChange.bind(null, 'top')}
+          value={top}
+          onChange={onChange.bind(null, 'top')}
           className="w-100"
         />
       </HalfForm>
       <HalfForm label="下">
         <InputNumber
-          defaultValue={bottom}
-          onBlur={onChange.bind(null, 'bottom')}
+          value={bottom}
+          onChange={onChange.bind(null, 'bottom')}
           className="w-100"
         />
       </HalfForm>

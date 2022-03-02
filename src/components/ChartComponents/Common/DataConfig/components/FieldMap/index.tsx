@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
-import { Input, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
 import { useControllableValue } from 'ahooks';
+import Input from '@/components/ChartComponents/Common/Input';
 import MapTable from '../../../MapTable';
 
 function fieldTypeToString(type: 'string' | 'number') {
@@ -22,11 +23,10 @@ const FieldMap = (props: {
   });
 
   const onValueChange = useCallback(
-    (record: ComponentData.TComponentMapData, e: any) => {
+    (record: ComponentData.TComponentMapData, newMap: any) => {
       const { id } = record;
       const index = value.findIndex((item) => item.id === id);
       const target = value[index];
-      const newMap = e.target.value;
       const newValue = [...value];
       newValue.splice(index, 1, {
         ...target,
@@ -56,8 +56,8 @@ const FieldMap = (props: {
           return (
             <Input
               className="w-100"
-              defaultValue={value}
-              onBlur={onValueChange.bind(null, record)}
+              value={value}
+              onChange={onValueChange.bind(null, record)}
               placeholder={fieldTypeToString(record.type)}
             />
           );

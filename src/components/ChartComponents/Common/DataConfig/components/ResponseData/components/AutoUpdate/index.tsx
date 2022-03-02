@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
-import { Checkbox, InputNumber } from 'antd';
+import { Checkbox } from 'antd';
 import classnames from 'classnames';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import styles from './index.less';
 
 export type TValue =
@@ -29,8 +30,8 @@ const AutoUpdate = (props: {
   );
 
   const onInputChange = useCallback(
-    (e) => {
-      const realValue = parseFloat(e.target.value) || 1;
+    (value) => {
+      const realValue = parseFloat(value) || 1;
       onChange?.({
         ...value,
         value: realValue,
@@ -50,9 +51,9 @@ const AutoUpdate = (props: {
         自动更新请求
       </Checkbox>
       <InputNumber
-        defaultValue={value.value || 0}
+        value={value.value || 0}
         disabled={!value.show}
-        onBlur={onInputChange}
+        onChange={onInputChange}
         controls={false}
       />
       {'  秒一次'}

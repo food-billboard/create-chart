@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { InputNumber, Input, Tabs } from 'antd';
+import { Input, Tabs } from 'antd';
 import { connect } from 'dva';
 import { set } from 'lodash';
 import BackgroundSelect from '@/components/BackgroundSelect';
@@ -7,6 +7,7 @@ import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import ConfigWrapper from '@/components/ChartComponents/Common/ConfigWrapper';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const { Item } = ConfigList;
@@ -51,14 +52,14 @@ const GlobalConfig = (props: {
             <Item label="屏幕大小">
               <HalfForm label="宽度">
                 <InputNumber
-                  defaultValue={width}
-                  onBlur={onValueChange.bind(null, 'config.style.width')}
+                  value={width}
+                  onChange={onValueChange.bind(null, 'config.style.width')}
                 />
               </HalfForm>
               <HalfForm label="高度">
                 <InputNumber
-                  defaultValue={height}
-                  onBlur={onValueChange.bind(null, 'config.style.height')}
+                  value={height}
+                  onChange={onValueChange.bind(null, 'config.style.height')}
                 />
               </HalfForm>
             </Item>

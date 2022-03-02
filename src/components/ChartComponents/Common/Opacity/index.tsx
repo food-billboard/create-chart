@@ -1,5 +1,5 @@
 import {} from 'react';
-import { Slider } from 'antd';
+import Slider from '../Slider';
 import { SliderSingleProps } from 'antd/es/slider';
 
 // 透明度配置表单

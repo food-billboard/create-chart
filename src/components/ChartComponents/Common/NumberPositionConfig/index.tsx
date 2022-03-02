@@ -1,8 +1,7 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import { InputNumber as AntInputNumber, Switch } from 'antd';
 import ConfigList from '../Structure/ConfigList';
 import FullForm from '../Structure/FullForm';
-import HalfForm from '../Structure/HalfForm';
 
 const { Item } = ConfigList;
 
@@ -13,7 +12,7 @@ export type PositionValue = {
   top: number | 'auto';
 };
 
-const InputNumber = (props: {
+export const InputNumber = (props: {
   value: number | 'auto';
   onChange: (value: number | 'auto') => void;
 }) => {
@@ -41,6 +40,10 @@ const InputNumber = (props: {
     },
     [onChange, stateValue],
   );
+
+  useEffect(() => {
+    setStateValue(value === 'auto' ? 0 : value);
+  }, [value]);
 
   return (
     <AntInputNumber

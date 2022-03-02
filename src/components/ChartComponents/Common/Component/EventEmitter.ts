@@ -7,27 +7,27 @@ class EventEmitter {
 
   emitters: any[] = [];
 
-  dispose() {
+  dispose = () => {
     window.removeEventListener('resize', this.resize);
-  }
+  };
 
-  resize() {
+  resize = () => {
     this.emitters.forEach((emitter) => {
       const { instance, action } = emitter;
       instance.resize();
     });
-  }
+  };
 
-  push(instance: echarts.ECharts, action?: any) {
+  push = (instance: echarts.ECharts, action?: any) => {
     this.emitters.push({
       instance,
       action,
     });
-  }
+  };
 
-  pop(instance: echarts.ECharts) {
+  pop = (instance: echarts.ECharts) => {
     this.emitters = this.emitters.filter((item) => item.instance !== instance);
-  }
+  };
 }
 
 export default new EventEmitter();

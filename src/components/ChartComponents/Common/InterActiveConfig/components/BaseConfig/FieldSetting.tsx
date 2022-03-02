@@ -1,6 +1,6 @@
 import { useMemo, useCallback } from 'react';
-import { Input } from 'antd';
 import { connect } from 'dva';
+import Input from '@/components/ChartComponents/Common/Input';
 import { getPath } from '@/utils/Assist/Component';
 import InteractiveUtil from '@/utils/Assist/Interactive';
 import MapTable from '../../../MapTable';
@@ -31,9 +31,8 @@ const FieldSetting = (props: {
   );
 
   const onFieldMapChange = useCallback(
-    (value: ComponentData.TBaseInteractiveConfigField, e) => {
+    (value: ComponentData.TBaseInteractiveConfigField, mapValue) => {
       const path = getPath(id);
-      const mapValue = e.target.value;
       const { variable } = value;
 
       if (variable === mapValue) return;
@@ -100,8 +99,8 @@ const FieldSetting = (props: {
           return (
             <Input
               className="w-100"
-              defaultValue={value}
-              onBlur={onFieldMapChange.bind(null, record)}
+              value={value}
+              onChange={onFieldMapChange.bind(null, record)}
               placeholder="可自定义"
             />
           );

@@ -7,6 +7,7 @@ import { mapStateToProps, mapDispatchToProps } from './configConnect';
 const ConfigComponent = (props: {
   component: ComponentData.TComponentData;
   setComponent: ComponentMethod.SetComponentMethod;
+  id: string;
 }) => {
   const { component, setComponent } = props;
   const { componentType: type, id } = component;
@@ -27,7 +28,7 @@ const ConfigComponent = (props: {
     [setComponent, id],
   );
 
-  return <ConfigComponent value={component} onChange={onChange} />;
+  return <ConfigComponent value={component} onChange={onChange} id={id} />;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigComponent);

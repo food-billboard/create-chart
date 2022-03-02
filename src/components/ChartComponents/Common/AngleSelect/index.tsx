@@ -1,21 +1,12 @@
-import { useCallback } from 'react';
-import { InputNumber } from 'antd';
+import InputNumber from '../InputNumber';
 
 const AngleSelect = (props: {
   value?: number;
-  onChange?: (value: number) => void;
+  onChange?: (value: number | string) => void;
 }) => {
   const { value, onChange } = props;
 
-  const onBlur = useCallback(
-    (e) => {
-      const value = e.target.value;
-      onChange?.(value);
-    },
-    [onChange],
-  );
-
-  return <InputNumber defaultValue={value} onBlur={onBlur} className="w-100" />;
+  return <InputNumber value={value} onChange={onChange} className="w-100" />;
 };
 
 export default AngleSelect;

@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
-import { InputNumber, Select } from 'antd';
+import { Select } from 'antd';
 import { useControllableValue } from 'ahooks';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import ConfigList, { TConfigListItemProps } from '../Structure/ConfigList';
 import HalfForm from '../Structure/HalfForm';
 import Collapse from '../Collapse';
 import FullForm from '../Structure/FullForm';
+import InputNumber from '../InputNumber';
 
 const { Item } = ConfigList;
 const { Option } = Select;
@@ -103,8 +104,8 @@ const FontConfig = (props: {
       </HalfForm>
       <HalfForm label="字号">
         <InputNumber
-          defaultValue={fontSize}
-          onBlur={onChange.bind(null, 'fontSize')}
+          value={fontSize}
+          onChange={onChange.bind(null, 'fontSize')}
           className="w-100"
         />
       </HalfForm>
@@ -194,8 +195,8 @@ export const FontConfigList = (props: {
       <Item label="字号" labelProps={labelProps}>
         <FullForm>
           <InputNumber
-            defaultValue={fontSize}
-            onBlur={onChange.bind(null, 'fontSize')}
+            value={fontSize}
+            onChange={onChange.bind(null, 'fontSize')}
             className="w-100"
           />
         </FullForm>
