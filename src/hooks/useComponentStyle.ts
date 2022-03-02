@@ -18,8 +18,16 @@ export const useComponentStyle: (
   const { isSelect, style, scale } = options;
 
   const styles = useMemo(() => {
-    const { rotate, width, height, left, top, zIndex, ...nextComponentStyle } =
-      componentStyle;
+    const {
+      rotate,
+      width,
+      height,
+      left,
+      top,
+      zIndex,
+      opacity,
+      ...nextComponentStyle
+    } = componentStyle;
     return merge(
       {},
       nextComponentStyle,
@@ -61,10 +69,8 @@ export const useComponentChildrenStyle: (
     return {
       width: width / scaleX,
       height: height / scaleY,
-      // width: '100%',
-      // height: '100%',
       transform: `scale(${scaleX}, ${scaleY}) rotate(${rotate}deg)`,
-      opacity: opacity,
+      opacity,
       ...position,
     };
   }, [componentStyle, scaleX, scaleY, isOuter]);

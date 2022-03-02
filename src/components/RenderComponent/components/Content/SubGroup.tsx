@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import classnames from 'classnames';
-import { useComponentChildrenStyle, useComponentStyle } from '@/hooks';
+import { useComponentChildrenStyle } from '@/hooks';
 import styles from '../../index.less';
 
 const SubGroup = (props: {
