@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, memo } from 'react';
 import { connect } from 'dva';
 import { ConnectState } from '@/models/connect';
 import { EComponentType } from '@/utils/constants';
@@ -11,8 +11,9 @@ const Content = (props: {
   setParams: (value: ComponentData.TParams[]) => void;
   screenType: string;
   component: ComponentProps['component'];
+  timestamps?: number;
 }) => {
-  const { component, setParams, screenType } = props;
+  const { component, setParams, screenType, timestamps } = props;
 
   const children = useMemo(() => {
     const renderChildren: (
@@ -21,7 +22,6 @@ const Content = (props: {
     ) => any = (value, isOuter = false) => {
       return value.map((component) => {
         const { type, id } = component;
-
         if (type === EComponentType.GROUP_COMPONENT) {
           return (
             <ChildrenWrapper
@@ -59,7 +59,7 @@ const Content = (props: {
       });
     };
     return renderChildren([component], true);
-  }, [component, setParams, screenType]);
+  }, [component, setParams, screenType, timestamps]);
 
   return <>{children}</>;
 };

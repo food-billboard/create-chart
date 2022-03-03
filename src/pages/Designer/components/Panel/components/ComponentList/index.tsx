@@ -2,7 +2,10 @@ import { useMemo } from 'react';
 import { connect } from 'dva';
 import { useIdPathMap } from '@/hooks';
 import RenderComponent from '@/components/RenderComponent';
-import { getPath } from '@/utils/Assist/Component';
+import {
+  getPath,
+  isGroupComponent as isGroupComponentFunc,
+} from '@/utils/Assist/Component';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const ComponentList = (props: {
@@ -14,8 +17,20 @@ const ComponentList = (props: {
     useIdPathMap(true, components);
     return components.map((item, index) => {
       const path = getPath(item.id);
+
+      // * 暂时这样处理防止 组 内更新下面不刷新
+      const isGroupComponent = isGroupComponentFunc(item);
+      const props: any = {};
+      if (isGroupComponent) props.timestamps = Date.now();
+
       return (
-        <RenderComponent value={item} key={item.id} index={index} path={path} />
+        <RenderComponent
+          value={item}
+          key={item.id}
+          index={index}
+          path={path}
+          {...props}
+        />
       );
     });
   }, [components]);
