@@ -8,6 +8,7 @@ export const deleteAction = (
   setComponent: (
     updateComponent: ComponentMethod.SetComponentMethodParamsData[],
   ) => void,
+  setSelect: (value: string[]) => void,
 ) => {
   const idPathMap = useIdPathMap();
 
@@ -28,13 +29,14 @@ export const deleteAction = (
   }, []);
 
   setComponent(updateComponent);
+  setSelect([]);
 };
 
 const DeleteAction = (props: CommonActionType) => {
-  const { value, setComponent, select, onClick } = props;
+  const { value, setComponent, select, onClick, setSelect } = props;
 
   const handleClick = useCallback(() => {
-    deleteAction(select, setComponent);
+    deleteAction(select, setComponent, setSelect);
 
     onClick?.();
   }, [select, onClick]);

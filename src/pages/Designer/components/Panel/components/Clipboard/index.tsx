@@ -75,7 +75,7 @@ const ClipboardComponent = (props: {
   });
 
   const handleDelete = useCallback(() => {
-    deleteAction(select, setComponent);
+    deleteAction(select, setComponent, setSelect);
   }, [setComponent, select]);
 
   return (
