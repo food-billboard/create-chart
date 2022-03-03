@@ -31,7 +31,7 @@ const BarBasic = (props: {
     config: { options },
   } = value;
 
-  const { legend, series, xAxis, yAxis, tooltip } = options;
+  const { legend, series, xAxis, yAxis, tooltip, animation } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -79,6 +79,7 @@ const BarBasic = (props: {
 
   const getSeries = () => {
     const { itemStyle, backgroundStyle, label, ...nextSeries } = series;
+    const { animation: show, animationDuration, animationEasing } = animation;
     const baseSeries = {
       ...nextSeries,
       backgroundStyle: {
@@ -95,6 +96,14 @@ const BarBasic = (props: {
         color: getRgbaString(itemStyle.color[0]) || 'auto',
       },
       data: yAxisValues._defaultValue_,
+      emphasis: {
+        focus: 'series',
+      },
+      animation: show,
+      animationEasing,
+      animationEasingUpdate: animationEasing,
+      animationDuration,
+      animationDurationUpdate: animationDuration,
     };
 
     const realSeries = seriesKeys.length

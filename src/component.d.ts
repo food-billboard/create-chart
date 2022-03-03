@@ -300,6 +300,44 @@ declare namespace ComponentData {
     textStyle: TFontConfig;
   };
 
+  export type ComponentChartAnimationConfig = {
+    animation: boolean;
+    animationEasing: ChartAnimationType;
+    animationDuration: number;
+  };
+
+  export type ChartAnimationType =
+    | 'linear'
+    | 'quadraticIn'
+    | 'quadraticOut'
+    | 'quadraticInOut'
+    | 'cubicIn'
+    | 'cubicOut'
+    | 'cubicInOut'
+    | 'quarticIn'
+    | 'quarticInOut'
+    | 'quinticIn'
+    | 'quinticOut'
+    | 'quinticInOut'
+    | 'sinusoidalIn'
+    | 'sinusoidalOut'
+    | 'sinusoidalInOut'
+    | 'exponentialIn'
+    | 'exponentialOut'
+    | 'exponentialInOut'
+    | 'circularIn'
+    | 'circularOut'
+    | 'circularInOut'
+    | 'elasticIn'
+    | 'elasticOut'
+    | 'elasticInOut'
+    | 'backIn'
+    | 'backOut'
+    | 'backInOut'
+    | 'bounceIn'
+    | 'bounceOut'
+    | 'bounceInOut';
+
   // label position
   export type ComponentLabelPosition =
     | 'top'

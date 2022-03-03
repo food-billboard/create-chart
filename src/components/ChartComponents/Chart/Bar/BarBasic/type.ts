@@ -17,4 +17,5 @@ export type TBarBasicConfig = {
     barGap: number;
     barWidth: 'auto' | number;
   };
+  animation: ComponentData.ComponentChartAnimationConfig;
 };

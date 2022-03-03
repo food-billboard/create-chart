@@ -9,6 +9,7 @@ import {
   DEFAULT_Y_AXIS_CONFIG,
   DEFAULT_TOOLTIP_CONFIG,
   DEFAULT_FONT_CONFIG,
+  DEFAULT_ANIMATION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue, getSeries } from '@/utils/constants';
 import { TBarBasicConfig } from './type';
@@ -92,6 +93,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBarBasicConfig> = {
     xAxis: DEFAULT_X_AXIS_CONFIG,
     yAxis: DEFAULT_Y_AXIS_CONFIG,
     tooltip: DEFAULT_TOOLTIP_CONFIG,
+    animation: DEFAULT_ANIMATION_CONFIG,
     series: {
       showBackground: false,
       backgroundStyle: {

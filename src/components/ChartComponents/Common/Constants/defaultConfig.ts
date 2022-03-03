@@ -117,3 +117,11 @@ export const DEFAULT_TOOLTIP_CONFIG: ComponentData.ComponentTooltip = {
     fontSize: 14,
   },
 };
+
+// animation
+export const DEFAULT_ANIMATION_CONFIG: ComponentData.ComponentChartAnimationConfig =
+  {
+    animation: true,
+    animationDuration: 1000,
+    animationEasing: 'cubicOut',
+  };
