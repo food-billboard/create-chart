@@ -4,7 +4,7 @@ import { SingleCollapse as Collapse } from '../Collapse';
 import { FontConfigList } from '../FontConfig';
 import FullForm from '../Structure/FullForm';
 import OrientSelect from '../OrientSelect';
-import NumberPositionConfig, { PositionValue } from '../NumberPositionConfig';
+import KeyWordPosition from '../KeyWordPosition';
 import InputNumber from '../InputNumber';
 
 const { Item } = ConfigList;
@@ -18,8 +18,7 @@ export type LegendConfigProps = {
 
 const LegendConfig = (props: LegendConfigProps) => {
   const { ignore = [], value, onChange, children } = props;
-  const { show, type, orient, itemGap, textStyle, left, top, right, bottom } =
-    value;
+  const { show, type, orient, itemGap, textStyle, left, top } = value;
 
   const onKeyChange = useCallback(
     (key: string, value: any) => {
@@ -31,7 +30,7 @@ const LegendConfig = (props: LegendConfigProps) => {
   );
 
   const onPositionChange = useCallback(
-    (value: PositionValue) => {
+    (value: ComponentData.KeyWordPositionType) => {
       onChange?.(value);
     },
     [onChange],
@@ -115,17 +114,15 @@ const LegendConfig = (props: LegendConfigProps) => {
   const positionConfig = useMemo(() => {
     if (!needPosition) return null;
     return (
-      <NumberPositionConfig
+      <KeyWordPosition
         value={{
           left: left!,
-          right: right!,
           top: top!,
-          bottom: bottom!,
         }}
         onChange={onPositionChange}
       />
     );
-  }, [needPosition, left, top, right, bottom, onPositionChange]);
+  }, [needPosition, left, top, onPositionChange]);
 
   if (needShow) {
     return (

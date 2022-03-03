@@ -246,6 +246,11 @@ declare namespace ComponentData {
     bottom: 'auto' | number;
   };
 
+  export type KeyWordPositionType = {
+    left: 'left' | 'center' | 'right';
+    top: 'top' | 'center' | 'bottom';
+  };
+
   export type OrientType = 'vertical' | 'horizontal';
 
   // 文字通用配置
@@ -263,7 +268,7 @@ declare namespace ComponentData {
     orient: OrientType;
     itemGap: number;
     textStyle: TFontConfig;
-  } & PositionType;
+  } & KeyWordPositionType;
 
   // 网格
   export type ComponentGrid = {

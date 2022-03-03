@@ -1,7 +1,8 @@
-import { Children, ReactNode, useCallback, useMemo, cloneElement } from 'react';
+import { Children, ReactNode, useMemo, cloneElement } from 'react';
 import { Radio as AntRadio } from 'antd';
 import { useControllableValue } from 'ahooks';
 import classnames from 'classnames';
+import { RadioProps } from 'antd/es/radio';
 import styles from './index.less';
 
 const IconRadio = (props: {
@@ -24,13 +25,15 @@ const IconRadio = (props: {
   return <AntRadio.Group value={value}>{realChildren}</AntRadio.Group>;
 };
 
-export const Radio = (props: {
-  value?: string;
-  icon: ReactNode;
-  className?: string;
-  parentValue?: string;
-  onChange?: (value: string) => void;
-}) => {
+export const Radio = (
+  props: {
+    value?: string;
+    icon: ReactNode;
+    className?: string;
+    parentValue?: string;
+    onChange?: (value: string) => void;
+  } & Partial<RadioProps>,
+) => {
   const { icon, value, className, parentValue, onChange, ...nextProps } = props;
 
   return (

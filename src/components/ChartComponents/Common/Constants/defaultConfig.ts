@@ -60,10 +60,8 @@ export const DEFAULT_LEGEND_CONFIG: ComponentData.ComponentLegend = {
   orient: 'horizontal',
   itemGap: 10,
   textStyle: DEFAULT_FONT_CONFIG,
-  left: 'auto',
-  top: 'auto',
-  right: 'auto',
-  bottom: 'auto',
+  left: 'center',
+  top: 'bottom',
 };
 
 // grid
