@@ -1,4 +1,5 @@
 import { ReactNode, useCallback, useMemo } from 'react';
+import { Select } from 'antd';
 import ConfigList from '../Structure/ConfigList';
 import { SingleCollapse as Collapse } from '../Collapse';
 import { FontConfigList } from '../FontConfig';
@@ -62,7 +63,16 @@ const LegendConfig = (props: LegendConfigProps) => {
 
   const typeConfig = useMemo(() => {
     if (!needType) return null;
-    return <div></div>;
+    return (
+      <Select value={value} onChange={onChange} className="w-100">
+        <Select.Option key="plain" value="plain">
+          普通图例
+        </Select.Option>
+        <Select.Option key="scroll" value="scroll">
+          可滚动翻页的图例
+        </Select.Option>
+      </Select>
+    );
   }, [needType]);
 
   const orientConfig = useMemo(() => {
