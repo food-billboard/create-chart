@@ -14,11 +14,12 @@ import Editor, {
 } from './Editor';
 import ClipboardAction from './Clipboard';
 import FullScreenEditor from './FullScreenEditor';
+import Typesetting from './Typesetting';
 import styles from './index.less';
 
 export type EditorRef = InternalEditorRef;
 export type EditorProps = InternalEditorProps & {
-  action?: boolean | ['full-screen' | 'copy'];
+  action?: boolean | ('full-screen' | 'copy' | 'typesetting')[];
 };
 
 const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
@@ -47,12 +48,22 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
       <FullScreenEditor value={code} onConfirm={onValueChange} />
     );
     const copy = <ClipboardAction value={code} />;
+    const typesetting = (
+      <Typesetting
+        onClick={() => {
+          return editorContentRef.current?.format();
+        }}
+      />
+    );
     if (!action) return null;
-    let newAction = Array.isArray(action) ? action : ['full-screen', 'copy'];
+    let newAction = Array.isArray(action)
+      ? action
+      : ['full-screen', 'copy', 'typesetting'];
     return (
       <Space>
         {newAction.includes('full-screen') && fullScreen}
         {newAction.includes('copy') && copy}
+        {newAction.includes('typesetting') && typesetting}
       </Space>
     );
   }, [action, code, onValueChange]);

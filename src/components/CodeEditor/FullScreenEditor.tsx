@@ -1,8 +1,9 @@
 import { Modal } from 'antd';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { FullscreenOutlined } from '@ant-design/icons';
-import Editor from './Editor';
+import Editor, { EditorRef } from './Editor';
 import IconTooltip from '../IconTooltip';
+import Typesetting from './Typesetting';
 import styles from './index.less';
 
 const FullScreenEditor = (props: {
@@ -14,6 +15,8 @@ const FullScreenEditor = (props: {
 
   const [stateCode, setStateCode] = useState<string>(value || '');
   const [visible, setVisible] = useState<boolean>(false);
+
+  const editorContentRef = useRef<EditorRef>(null);
 
   const handleFullScreen = useCallback(() => {
     setVisible(true);
@@ -41,7 +44,20 @@ const FullScreenEditor = (props: {
         wrapClassName={styles['full-screen-editor-modal']}
         width="70vw"
       >
-        <Editor value={stateCode} onChange={setStateCode} />
+        <div className="pos-re w-100 h-100">
+          <Editor
+            value={stateCode}
+            onChange={setStateCode}
+            ref={editorContentRef}
+          />
+          <div className={styles['component-code-editor-action']}>
+            <Typesetting
+              onClick={() => {
+                return editorContentRef.current?.format();
+              }}
+            />
+          </div>
+        </div>
       </Modal>
     </>
   );

@@ -134,7 +134,7 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
         setValue,
       };
     },
-    [],
+    [editorRef, formatData],
   );
 
   return (

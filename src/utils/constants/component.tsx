@@ -26,28 +26,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
             description: '',
           },
-          {
-            type: 'bar-line',
-            title: '折现柱形图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
-          },
         ],
       },
       {
         type: 'line',
         title: '折现图',
-        children: [
-          {
-            type: 'LINE_BASIC',
-            title: '基础折线图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
-          },
-          {
-            type: 'LINE_WATERFALL',
-            title: '瀑布图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
-          },
-        ],
+        children: [],
       },
     ],
   },
