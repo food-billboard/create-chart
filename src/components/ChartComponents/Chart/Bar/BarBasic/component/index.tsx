@@ -7,6 +7,7 @@ import {
   useChartComponentResize,
   useChartValueMapField,
   useComponentResize,
+  useAnimationChange,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -193,7 +194,7 @@ const BarBasic = (props: {
   }, []);
 
   // 数据发生变化时
-  useEffect(() => {
+  useUpdateEffect(() => {
     setOption();
     chartInstance.current?.resize();
   }, [processedValue]);
@@ -203,6 +204,8 @@ const BarBasic = (props: {
     setOption();
     chartInstance.current?.resize();
   }, [options]);
+
+  useAnimationChange(chartInstance.current!, animation, setOption);
 
   return (
     <>
