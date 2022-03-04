@@ -1,6 +1,6 @@
 import { useRef, useCallback, useState } from 'react';
 import classnames from 'classnames';
-import { usePanelFocus } from '@/hooks';
+import FocusWrapper from '@/components/FocusWrapper';
 import ToolBar from './components/ToolBar';
 import ComponentTypeList from './components/ComponentTypeList';
 import LayerManage, { LayerManageRef } from './components/LayerManage';
@@ -10,11 +10,7 @@ import ComponentTypeListStyles from './components/ComponentTypeList/index.less';
 const LeftContent = () => {
   const [layerVisible, setLayerVisible] = useState<boolean>(false);
 
-  const ref = useRef<HTMLDivElement>(null);
-
   const layerRef = useRef<LayerManageRef>(null);
-
-  usePanelFocus(ref);
 
   const handleClick = useCallback((type) => {
     if (type === 'layer') {
@@ -29,7 +25,7 @@ const LeftContent = () => {
   }, []);
 
   return (
-    <div ref={ref} className={classnames(styles['design-page-left'], 'pos-re')}>
+    <FocusWrapper className={classnames(styles['design-page-left'], 'pos-re')}>
       <div
         className={classnames(
           'p-lr-24',
@@ -50,7 +46,7 @@ const LeftContent = () => {
           }
         />
       </div>
-    </div>
+    </FocusWrapper>
   );
 };
 

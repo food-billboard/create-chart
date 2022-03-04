@@ -7,6 +7,7 @@ import {
   useState,
 } from 'react';
 import { useResponseData } from '@/hooks';
+import FocusWrapper from '@/components/FocusWrapper';
 import CodeViewer from '../CodeViewer';
 import Title from './components/NormalTitle';
 import ResponseDataTitle from './components/ResponseDataTitle';
@@ -108,7 +109,7 @@ const DataConfigDetail = forwardRef<
       bodyStyle={{ paddingTop: 0 }}
       destroyOnClose
     >
-      <div className={styles['design-config-data-detail']}>
+      <FocusWrapper className={styles['design-config-data-detail']}>
         <Title>数据源</Title>
         <SubTitle>数据源类型</SubTitle>
         <SubForm>
@@ -154,7 +155,7 @@ const DataConfigDetail = forwardRef<
         <ResponseDataTitle value={props.value!} onChange={onChange} />
 
         <CodeViewer width={454} height={238} value={props.value!} />
-      </div>
+      </FocusWrapper>
     </Drawer>
   );
 });

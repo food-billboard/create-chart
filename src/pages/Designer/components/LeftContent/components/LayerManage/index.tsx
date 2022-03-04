@@ -7,7 +7,7 @@ import {
 } from 'react';
 import classnames from 'classnames';
 import { Button } from 'antd';
-import { usePanelFocus } from '@/hooks';
+import FocusWrapper from '@/components/FocusWrapper';
 import Header from './components/Header';
 import LayerList from './components/Tree';
 import styles from './index.less';
@@ -27,8 +27,6 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
     const { onClose: propsOnClose } = props;
 
     const [visible, setVisible] = useState<boolean>(false);
-
-    usePanelFocus(() => document.querySelector('.design-layer-drawer'));
 
     const onClose = useCallback(() => {
       setVisible(false);
@@ -60,7 +58,7 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
     );
 
     return (
-      <div
+      <FocusWrapper
         className={classnames(styles['design-layer-manage-wrapper'], {
           'p-lr-8': visible,
         })}
@@ -72,7 +70,7 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
           <Header onBack={onClose} />
           <LayerList />
         </div>
-      </div>
+      </FocusWrapper>
     );
 
     // return (

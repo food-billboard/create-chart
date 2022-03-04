@@ -1,7 +1,8 @@
-import { useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import classnames from 'classnames';
 import { connect } from 'dva';
-import { useComponentPath, usePanelFocus } from '@/hooks';
+import FocusWrapper from '@/components/FocusWrapper';
+import { useComponentPath } from '@/hooks';
 import { isGroupComponent, getComponent } from '@/utils/Assist/Component';
 import GlobalConfig from './components/GlobalConfig';
 import GroupConfig from './components/GroupConfig';
@@ -15,10 +16,6 @@ const RightContent = (props: {
   components: ComponentData.TComponentData[];
 }) => {
   const { select, components } = props;
-
-  const ref = useRef<HTMLDivElement>(null);
-
-  usePanelFocus(ref);
 
   const children = useMemo(() => {
     if (!select.length) return <GlobalConfig />;
@@ -46,12 +43,11 @@ const RightContent = (props: {
   }, [select, components]);
 
   return (
-    <div
+    <FocusWrapper
       className={classnames(styles['design-page-right'], 'normal-background')}
-      ref={ref}
     >
       {children}
-    </div>
+    </FocusWrapper>
   );
 };
 

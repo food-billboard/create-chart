@@ -9,6 +9,7 @@ import { nanoid } from 'nanoid';
 import { Button, Drawer, Table, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
+import FocusWrapper from '@/components/FocusWrapper';
 import GhostButton from '@/components/GhostButton';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
@@ -159,7 +160,7 @@ const ConstantList = (props: {
   }, [updateValue, deleteData]);
 
   return (
-    <>
+    <FocusWrapper>
       <Table
         dataSource={constants}
         rowKey={'id'}
@@ -176,7 +177,7 @@ const ConstantList = (props: {
       >
         新增一个字段
       </GhostButton>
-    </>
+    </FocusWrapper>
   );
 };
 

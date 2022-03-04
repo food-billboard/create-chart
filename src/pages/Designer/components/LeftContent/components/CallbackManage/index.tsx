@@ -9,6 +9,7 @@ import { Button, Drawer, Table, Modal } from 'antd';
 import { connect } from 'dva';
 import CodeViewer from '@/components/CodeView';
 import ParamsSelect from '@/components/ParamsSelect';
+import FocusWrapper from '@/components/FocusWrapper';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 export interface CallbackManageRef {
@@ -110,7 +111,7 @@ const CallbackList = (props: {
   }, [updateCallback, deleteData]);
 
   return (
-    <>
+    <FocusWrapper>
       <Table
         dataSource={callback}
         rowKey={() => Math.random()}
@@ -129,7 +130,7 @@ const CallbackList = (props: {
       >
         <CodeViewer>{code}</CodeViewer>
       </Modal>
-    </>
+    </FocusWrapper>
   );
 };
 

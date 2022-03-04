@@ -3,7 +3,7 @@ import {
   RedoOutlined,
   UndoOutlined,
   BorderInnerOutlined,
-  BarsOutlined,
+  ToolOutlined,
   BlockOutlined,
   ShrinkOutlined,
   BorderOuterOutlined,
@@ -179,7 +179,7 @@ export const CallbackIcon = (props: TCommonProps) => {
 
   return (
     <>
-      <BarsOutlined
+      <ToolOutlined
         title="回调管理"
         className={classnames(
           commonClass,

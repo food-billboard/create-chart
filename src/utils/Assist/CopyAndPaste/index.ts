@@ -7,6 +7,14 @@ class CopyAndPasteUtil {
     return !this.FOCUS_FLAG;
   };
 
+  forceUnFocus = () => {
+    this.FOCUS_FLAG = false;
+  };
+
+  forceFocus = () => {
+    this.FOCUS_FLAG = true;
+  };
+
   injectHooksOptions = (options?: Partial<Options>) => {
     return {
       ...(options || {}),

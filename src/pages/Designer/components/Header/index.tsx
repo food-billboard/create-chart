@@ -3,6 +3,7 @@ import { PageHeader, Input, Button } from 'antd';
 import { SendOutlined, FundOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
 import classnames from 'classnames';
+import FocusWrapper from '@/components/FocusWrapper';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -73,12 +74,14 @@ const Header = (props: {
   }, [handlePreview, handleSend]);
 
   return (
-    <PageHeader
-      className={styles['designer-page-header']}
-      onBack={() => window.history.back()}
-      title={Title}
-      extra={extra}
-    ></PageHeader>
+    <FocusWrapper>
+      <PageHeader
+        className={styles['designer-page-header']}
+        onBack={() => window.history.back()}
+        title={Title}
+        extra={extra}
+      ></PageHeader>
+    </FocusWrapper>
   );
 };
 
