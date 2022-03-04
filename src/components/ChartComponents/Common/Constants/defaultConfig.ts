@@ -100,7 +100,7 @@ export const DEFAULT_Y_AXIS_CONFIG: ComponentData.ComponentYAxis = {
 // tooltip
 export const DEFAULT_TOOLTIP_CONFIG: ComponentData.ComponentTooltip = {
   show: true,
-  formatter: undefined,
+  formatter: '',
   backgroundColor: {
     r: 50,
     g: 50,

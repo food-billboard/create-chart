@@ -20,7 +20,8 @@ const Input = (
   );
 
   const onChange = useCallback(
-    (value) => {
+    (e) => {
+      const value = e.target.value;
       setStateValue(value);
       triggerOnChangeInOnChange && propsOnChange?.(value);
     },

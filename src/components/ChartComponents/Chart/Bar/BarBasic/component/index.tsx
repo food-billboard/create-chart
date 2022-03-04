@@ -175,6 +175,10 @@ const BarBasic = (props: {
       ],
       tooltip: {
         ...nextTooltip,
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
+        },
         backgroundColor: getRgbaString(backgroundColor),
         textStyle: {
           ...tooltipTextStyle,

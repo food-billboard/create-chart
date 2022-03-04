@@ -23,3 +23,5 @@ export const PANEL_ABSOLUTE_POSITION = {
   left: 70,
   top: 70,
 };
+
+export const ECHARTS_URL = 'https://echarts.apache.org/zh/index.html';

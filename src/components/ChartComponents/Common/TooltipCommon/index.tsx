@@ -46,8 +46,13 @@ const TooltipConfig = (props: TooltipConfigProps) => {
 
   const formatterConfig = useMemo(() => {
     if (!needFormatter) return null;
-    return <FormatterSelect />;
-  }, [formatter]);
+    return (
+      <FormatterSelect
+        value={formatter}
+        onChange={onKeyChange.bind(null, 'formatter')}
+      />
+    );
+  }, [needFormatter, formatter]);
 
   const backgroundColorConfig = useMemo(() => {
     if (!needBackgroundColor) return null;
