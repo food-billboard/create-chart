@@ -6,7 +6,8 @@ import {
   useMemo,
   RefObject,
 } from 'react';
-import { get } from 'lodash';
+import { get, isEqual } from 'lodash';
+import { useUpdateEffect } from 'ahooks';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { mergeWithoutArray } from '@/utils';
 import { TFetchFragmentRef } from '@/components/ChartComponents/Common/FetchFragment';
@@ -62,6 +63,11 @@ export function useComponent<P extends object = {}>(
   const requestDataConfig = useMemo(() => {
     return get(component, 'config.data');
   }, [component]);
+
+  // 请求的value
+  const requestDataValue = useMemo(() => {
+    return get(requestDataConfig, 'request.value');
+  }, [requestDataConfig]);
 
   // 数据请求的地址
   const requestUrl = useMemo(() => {
@@ -202,14 +208,20 @@ export function useComponent<P extends object = {}>(
   );
 
   // 外部调用的getValue
-  const outerGetValue = useCallback(() => {
-    const {
-      params = [],
-      constants = [],
-      filter = [],
-    } = requestRef.current || {};
-    return getValue(requestResult, params, constants, filter);
-  }, [getValue, requestResult]);
+  const outerGetValue = useCallback(
+    (value?: any) => {
+      const {
+        params = [],
+        constants = [],
+        filter = [],
+      } = requestRef.current || {};
+      if (value) {
+        setRequestResult(value);
+      }
+      return getValue(value, params, constants, filter);
+    },
+    [getValue, requestResult],
+  );
 
   // * --------------------其他--------------------
 
@@ -219,6 +231,12 @@ export function useComponent<P extends object = {}>(
       clearInterval(requestTimer.current);
     };
   }, []);
+
+  useUpdateEffect(() => {
+    if (!isEqual(requestResult, requestDataValue)) {
+      outerGetValue(requestDataValue);
+    }
+  }, [outerGetValue, requestResult, requestDataValue]);
 
   // * --------------------其他-end--------------------
 

@@ -2,7 +2,6 @@ import { useCallback, useMemo, useRef } from 'react';
 import { Steps, Checkbox } from 'antd';
 import { get } from 'lodash';
 import classnames from 'classnames';
-import { useResponseData } from '@/hooks';
 import AutoUpdate, { TValue } from './components/AutoUpdate';
 import GhostButton from '@/components/GhostButton';
 import CodeEditor from './components/CodeViewer';
@@ -38,8 +37,6 @@ const ResponseData = (props: {
   const dataConfigDetail = useMemo(() => {
     return value.config.data;
   }, [value]);
-
-  const responseData = useResponseData(get(value, 'config.data') || {});
 
   const onDataConfigChange = useCallback(
     (value: SuperPartial<ComponentData.TComponentApiDataConfig>) => {

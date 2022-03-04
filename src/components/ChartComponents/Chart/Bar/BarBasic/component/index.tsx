@@ -1,7 +1,7 @@
 import { CSSProperties, useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
-import { useUpdateEffect } from 'ahooks';
+import { useUpdateEffect, useDeepCompareEffect } from 'ahooks';
 import {
   useComponent,
   useChartComponentResize,
@@ -75,7 +75,7 @@ const BarBasic = (props: {
       renderer: 'canvas',
     });
     chartInstance.current = chart;
-    setOption();
+    // setOption();
   };
 
   const getSeries = () => {
@@ -198,7 +198,7 @@ const BarBasic = (props: {
   }, []);
 
   // 数据发生变化时
-  useUpdateEffect(() => {
+  useDeepCompareEffect(() => {
     setOption();
     chartInstance.current?.resize();
   }, [processedValue]);
