@@ -23,7 +23,7 @@ export type EditorProps = InternalEditorProps & {
 };
 
 const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
-  const { onChange: propsOnChange, action = true, language } = props;
+  const { onChange: propsOnChange, action = true, language, onBlur } = props;
 
   const [code, setCode] = useState<string>(
     props?.value ?? props?.defaultValue ?? '',
@@ -39,9 +39,13 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
     [propsOnChange],
   );
 
-  const onValueChange = useCallback((value) => {
-    editorContentRef.current?.setValue(value);
-  }, []);
+  const onValueChange = useCallback(
+    (value) => {
+      editorContentRef.current?.setValue(value);
+      onBlur?.(value);
+    },
+    [onBlur],
+  );
 
   const actionList = useMemo(() => {
     const fullScreen = (

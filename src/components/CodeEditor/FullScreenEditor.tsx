@@ -45,6 +45,7 @@ const FullScreenEditor = (props: {
         onCancel={onCancel}
         wrapClassName={styles['full-screen-editor-modal']}
         width="70vw"
+        maskClosable={false}
       >
         <FocusWrapper className="pos-re w-100 h-100">
           <Editor
