@@ -23,7 +23,7 @@ export type EditorProps = InternalEditorProps & {
 };
 
 const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
-  const { onChange: propsOnChange, action = true } = props;
+  const { onChange: propsOnChange, action = true, language } = props;
 
   const [code, setCode] = useState<string>(
     props?.value ?? props?.defaultValue ?? '',
@@ -45,7 +45,11 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
 
   const actionList = useMemo(() => {
     const fullScreen = (
-      <FullScreenEditor value={code} onConfirm={onValueChange} />
+      <FullScreenEditor
+        value={code}
+        onConfirm={onValueChange}
+        language={language}
+      />
     );
     const copy = <ClipboardAction value={code} />;
     const typesetting = (
@@ -66,7 +70,7 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
         {newAction.includes('typesetting') && typesetting}
       </Space>
     );
-  }, [action, code, onValueChange]);
+  }, [action, code, onValueChange, language]);
 
   useImperativeHandle(
     ref,

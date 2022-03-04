@@ -10,8 +10,9 @@ const FullScreenEditor = (props: {
   value: string;
   onConfirm?: (value: string) => void;
   onCancel?: () => void;
+  language?: string;
 }) => {
-  const { onConfirm, value, onCancel: propsOnCancel } = props;
+  const { onConfirm, value, onCancel: propsOnCancel, language } = props;
 
   const [stateCode, setStateCode] = useState<string>(value || '');
   const [visible, setVisible] = useState<boolean>(false);
@@ -49,6 +50,8 @@ const FullScreenEditor = (props: {
             value={stateCode}
             onChange={setStateCode}
             ref={editorContentRef}
+            language={language}
+            autoFormat
           />
           <div className={styles['component-code-editor-action']}>
             <Typesetting
