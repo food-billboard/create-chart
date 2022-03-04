@@ -6,6 +6,7 @@ export const mapStateToProps = (state: ConnectState) => {
     select: state.global.select,
     clipboard: state.global.clipboard,
     components: state.global.components,
+    screenType: state.global.screenType,
   };
 };
 

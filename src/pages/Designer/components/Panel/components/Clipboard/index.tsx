@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useRef } from 'react';
+import { ReactNode, useCallback, useRef, useMemo } from 'react';
 import { connect } from 'dva';
 import { message } from 'antd';
 import { useKeyPress } from 'ahooks';
@@ -18,6 +18,7 @@ const ClipboardComponent = (props: {
   setComponent: ComponentMethod.SetComponentMethod;
   setComponentAll: (value: ComponentData.TComponentData[]) => void;
   setSelect: (value: string[]) => void;
+  screenType: ComponentData.ScreenType;
   undo: () => void;
   redo: () => void;
 }) => {
@@ -32,20 +33,27 @@ const ClipboardComponent = (props: {
     setSelect,
     undo,
     redo,
+    screenType,
   } = props;
 
   const modalRef = useRef<ConfirmModalRef>(null);
 
+  const disabledKeyEvent = useMemo(() => {
+    return screenType === 'preview';
+  }, [screenType]);
+
   // copy
   useKeyPress(['ctrl.c', 'meta.c'], () => {
-    if (!CopyAndPasteUtil.isFocus() || !select.length) return;
+    if (disabledKeyEvent || !CopyAndPasteUtil.isFocus() || !select.length)
+      return;
     copy(select, setClipboard);
     message.info('复制成功');
   });
 
   // paste
   useKeyPress(['ctrl.v', 'meta.v'], () => {
-    if (!CopyAndPasteUtil.isFocus() || !clipboard.length) return;
+    if (disabledKeyEvent || !CopyAndPasteUtil.isFocus() || !clipboard.length)
+      return;
     paste({
       components,
       setComponentAll,
@@ -58,7 +66,7 @@ const ClipboardComponent = (props: {
 
   // undo
   useKeyPress(['ctrl.z', 'meta.z'], () => {
-    if (!CopyAndPasteUtil.isFocus()) return;
+    if (disabledKeyEvent || !CopyAndPasteUtil.isFocus()) return;
     undo();
   });
 
@@ -70,7 +78,8 @@ const ClipboardComponent = (props: {
 
   // delete
   useKeyPress(['backspace', 'delete'], () => {
-    if (!CopyAndPasteUtil.isFocus() || !select.length) return;
+    if (disabledKeyEvent || !CopyAndPasteUtil.isFocus() || !select.length)
+      return;
     modalRef.current?.open();
   });
 

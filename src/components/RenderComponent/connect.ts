@@ -4,6 +4,7 @@ export const mapStateToProps = (state: ConnectState) => {
   return {
     select: state.global.select || [],
     scale: state.global.scale,
+    screenType: state.global.screenType,
   };
 };
 

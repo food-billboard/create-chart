@@ -19,6 +19,7 @@ export type RenderComponentProps = {
   setSelect?: (value: string[]) => void;
   setComponent?: ComponentMethod.SetComponentMethod;
   path?: string;
+  screenType: ComponentData.ScreenType;
   timestamps?: number;
 };
 
@@ -34,6 +35,7 @@ const RenderComponent = memo(
       scale,
       index,
       path,
+      screenType,
       timestamps,
     } = props;
 
@@ -47,6 +49,11 @@ const RenderComponent = memo(
 
     const isSelect = useIsComponentChildrenSelect([value], select);
 
+    // 是否响应鼠标事件
+    const pointerDisabled = useMemo(() => {
+      return screenType === 'preview' || !isSelect || lock;
+    }, [lock, isSelect, screenType]);
+
     const baseStyle = useComponentStyle(value, {
       isSelect,
       scale,
@@ -56,9 +63,9 @@ const RenderComponent = memo(
     const handleSelect = useCallback(
       (e: any) => {
         e?.stopPropagation();
-        if (!select?.includes(id)) setSelect?.([id]);
+        if (!pointerDisabled && !select?.includes(id)) setSelect?.([id]);
       },
-      [setSelect, id, select],
+      [setSelect, id, select, pointerDisabled],
     );
 
     const selectOnly = useCallback(() => {
@@ -91,6 +98,7 @@ const RenderComponent = memo(
         value={value}
         actionIgnore={['undo', 'redo', 'edit_name']}
         path={path}
+        disabled={pointerDisabled}
       >
         <ComponentWrapper
           style={baseStyle}
@@ -107,7 +115,7 @@ const RenderComponent = memo(
             x: componentStyle.left,
             y: componentStyle.top,
           }}
-          pointerDisabled={!isSelect || lock}
+          pointerDisabled={pointerDisabled}
           setComponent={setComponent}
           scale={scale / 100}
           onDragStart={selectOnly}

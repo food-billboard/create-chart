@@ -12,8 +12,11 @@ const VALID_SELECT_CONTAINER = [BACKGROUND_ID, wrapperId, PANEL_ID];
 const Selecto = (props: {
   select: string[];
   setSelect: (value: string[]) => void;
+  screenType: ComponentData.ScreenType;
 }) => {
-  const { select, setSelect } = props;
+  const { select, setSelect, screenType } = props;
+
+  if (screenType === 'preview') return <></>;
 
   const handleSelect = useCallback(
     (e: any) => {

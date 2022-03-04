@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import classnames from 'classnames';
 import { get } from 'lodash';
 import { useIsComponentChildrenSelect } from '@/hooks';
+import { getComponentStyleInScreenType } from '@/utils/Assist/Component';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from '../../index.less';
 
@@ -11,10 +12,15 @@ const ChildrenWrapper = (props: {
   value: ComponentData.TComponentData;
   select: string[];
   borderNone?: boolean;
+  screenType: ComponentData.ScreenType;
 }) => {
-  const { value, select, children, borderNone = false } = props;
+  const { value, select, children, borderNone = false, screenType } = props;
 
   const isSelect = useIsComponentChildrenSelect([value], select);
+
+  const componentScreenTypeStyle = useMemo(() => {
+    return getComponentStyleInScreenType(screenType);
+  }, [screenType]);
 
   const realChildren = useMemo(() => {
     return Children.map(children, (child) => {
@@ -37,6 +43,7 @@ const ChildrenWrapper = (props: {
               transform: `rotate(${rotate}deg)`,
               transformOrigin: 'left top',
               opacity,
+              ...componentScreenTypeStyle,
             }
           : // 部件内组件
             {
@@ -45,10 +52,11 @@ const ChildrenWrapper = (props: {
               width,
               height,
               position: 'absolute',
+              ...componentScreenTypeStyle,
             },
       });
     });
-  }, [isSelect, children, borderNone]);
+  }, [isSelect, children, borderNone, componentScreenTypeStyle]);
 
   return <>{realChildren}</>;
 };

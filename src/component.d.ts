@@ -1,6 +1,9 @@
 // * 大屏的数据格式
 
 declare namespace ComponentData {
+  // 大屏显示的类型
+  export type ScreenType = 'edit' | 'preview';
+
   // 组件上级大类类型
   export type TComponentType = 'GROUP_COMPONENT' | 'COMPONENT';
 

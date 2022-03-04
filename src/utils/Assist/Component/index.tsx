@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import { set, get } from 'lodash';
 import { nanoid } from 'nanoid';
 import arrayMove from 'array-move';
@@ -344,6 +345,18 @@ export const isComponentDisabled = (select: string) => {
   const idPathMap = useIdPathMap();
   const target = idPathMap[select];
   return !target || !!target.disabled;
+};
+
+// 组件在不同 screenType 下的样式
+export const getComponentStyleInScreenType: (
+  screenType: ComponentData.ScreenType,
+) => CSSProperties = (screenType) => {
+  if (screenType === 'preview') {
+    return {};
+  }
+  return {
+    pointerEvents: 'none',
+  };
 };
 
 export default componentUtil;
