@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Button, Input } from 'antd';
+import { Button, Input, message } from 'antd';
 import { EditFilled } from '@ant-design/icons';
 import styles from './index.less';
 
@@ -20,10 +20,15 @@ const NameEditor = (props: {
   }, []);
 
   const onConfirm = useCallback(() => {
+    if (!inputValue.trim().length) {
+      message.info('名称不能为空');
+      setInputValue(value);
+      return;
+    }
     onChange?.(inputValue || value);
     setEditable(false);
     onBlur?.();
-  }, [onChange]);
+  }, [onChange, inputValue, value]);
 
   const stop = (e: any) => {
     e.stopPropagation();

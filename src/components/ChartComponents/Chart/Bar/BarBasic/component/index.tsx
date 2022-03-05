@@ -37,6 +37,7 @@ const BarBasic = (props: {
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
   const requestRef = useRef<TFetchFragmentRef>(null);
+  const isFirst = useRef<boolean>(true);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -75,7 +76,7 @@ const BarBasic = (props: {
       renderer: 'canvas',
     });
     chartInstance.current = chart;
-    // setOption();
+    setOption();
   };
 
   const getSeries = () => {
@@ -199,8 +200,12 @@ const BarBasic = (props: {
 
   // 数据发生变化时
   useDeepCompareEffect(() => {
-    setOption();
-    chartInstance.current?.resize();
+    if (isFirst.current) {
+      isFirst.current = false;
+    } else {
+      setOption();
+      chartInstance.current?.resize();
+    }
   }, [processedValue]);
 
   // 配置发生变化时

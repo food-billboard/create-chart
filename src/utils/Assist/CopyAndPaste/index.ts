@@ -15,15 +15,18 @@ class CopyAndPasteUtil {
     this.FOCUS_FLAG = true;
   };
 
-  injectHooksOptions = (options?: Partial<Options>) => {
+  injectHooksOptions = (
+    options?: Partial<Options>,
+    control: boolean = true,
+  ) => {
     return {
       ...(options || {}),
       onFocus: (e: any) => {
-        this.FOCUS_FLAG = true;
+        if (control) this.FOCUS_FLAG = true;
         return options?.onFocus?.(e);
       },
       onBlur: (e: any) => {
-        this.FOCUS_FLAG = false;
+        if (control) this.FOCUS_FLAG = false;
         return options?.onBlur?.(e);
       },
     };

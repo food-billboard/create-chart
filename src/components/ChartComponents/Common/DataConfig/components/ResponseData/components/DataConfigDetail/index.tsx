@@ -109,7 +109,10 @@ const DataConfigDetail = forwardRef<
       bodyStyle={{ paddingTop: 0 }}
       destroyOnClose
     >
-      <FocusWrapper className={styles['design-config-data-detail']}>
+      <FocusWrapper
+        className={styles['design-config-data-detail']}
+        force={visible}
+      >
         <Title>数据源</Title>
         <SubTitle>数据源类型</SubTitle>
         <SubForm>

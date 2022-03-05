@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo, useRef } from 'react';
-import { Button, Checkbox, Collapse, Badge, Space } from 'antd';
+import { Button, Checkbox, Collapse, Badge, Space, message } from 'antd';
 import classnames from 'classnames';
 import { useHover } from 'ahooks';
 import {
@@ -67,7 +67,7 @@ const DataFilter = (props: {
     setUpdateFilter(null);
     propsOnCodeCancel?.();
     setActiveKey('');
-  }, []);
+  }, [propsOnCodeCancel]);
 
   const onConfirm = useCallback(() => {
     propsOnCodeConfirm?.(updateFilter ? { id, ...updateFilter } : { id });

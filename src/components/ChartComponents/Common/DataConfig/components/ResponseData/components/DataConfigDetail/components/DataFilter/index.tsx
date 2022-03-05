@@ -82,12 +82,13 @@ const DataFilter = (props: {
 
   const onCodeCancel = useCallback(
     (id: string) => {
-      setCallbackData(resetFilterConfig(filter));
+      const newFilterList = resetFilterConfig(filter);
+      setCallbackData(newFilterList);
       if (id === tempFilterConfig?.id) {
         setTempFilterConfig(null);
       }
     },
-    [setCallbackData, tempFilterConfig],
+    [setCallbackData, tempFilterConfig, filter],
   );
 
   const onComponentChange: TOnComponentChangeType = useCallback(
@@ -95,6 +96,9 @@ const DataFilter = (props: {
       if (action === 'delete') {
         const newValue = value.filter((item) => item.id !== updateValue.id);
         setValue(newValue);
+        if (updateValue.id === tempFilterConfig?.id) {
+          setTempFilterConfig(null);
+        }
       } else {
         setValue(
           value.map((item) => {
@@ -107,7 +111,7 @@ const DataFilter = (props: {
         );
       }
     },
-    [value],
+    [value, tempFilterConfig],
   );
 
   const onConfigChange: TOnChangeType = useCallback(
