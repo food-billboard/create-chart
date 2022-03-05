@@ -98,7 +98,7 @@ const DataFilter = (props: {
       };
       setUpdateFilter(newUpdateFilter);
     },
-    [id],
+    [id, updateFilter],
   );
 
   const onComponentChange = useCallback(
