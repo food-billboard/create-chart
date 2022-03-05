@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef } from 'react';
+import { CSSProperties, useCallback, useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import { useUpdateEffect, useDeepCompareEffect } from 'ahooks';
@@ -71,11 +71,21 @@ const BarBasic = (props: {
     },
   );
 
+  const onClick = (params: any) => {
+    const { seriesName, name, data } = params;
+    syncInteractiveAction('click', {
+      x: name,
+      y: data,
+      s: seriesName,
+    });
+  };
+
   const initChart = () => {
     const chart = init(document.querySelector(`#${chartId.current!}`)!, {
       renderer: 'canvas',
     });
     chartInstance.current = chart;
+
     setOption();
   };
 
@@ -197,6 +207,11 @@ const BarBasic = (props: {
       chartInstance.current?.dispose();
     };
   }, []);
+
+  useEffect(() => {
+    chartInstance.current?.off('click');
+    chartInstance.current?.on('click', onClick);
+  }, [syncInteractiveAction]);
 
   // 数据发生变化时
   useDeepCompareEffect(() => {

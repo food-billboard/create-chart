@@ -56,6 +56,7 @@ const BaseConfig = (props: {
             key={type}
             extra={
               <Checkbox
+                className={styles['design-config-interactive-base-checkbox']}
                 checked={show}
                 onClick={(e) => e.stopPropagation()}
                 onChange={(e) => {

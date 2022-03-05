@@ -80,6 +80,11 @@ export function useComponent<P extends object = {}>(
     return show || screenType !== 'edit';
   }, [requestFrequencyConfig, screenType]);
 
+  const baseInteractive: ComponentData.TBaseInteractiveConfig[] =
+    useMemo(() => {
+      return get(component, 'config.interactive.base');
+    }, [component]);
+
   // 数据请求
   const requestData = useCallback(
     async (
@@ -160,11 +165,8 @@ export function useComponent<P extends object = {}>(
       baseInteractiveType: string,
       value: any,
     ) => {
+      if (screenType === 'edit') return;
       const { setParams } = global;
-      const baseInteractive: ComponentData.TBaseInteractiveConfig[] = get(
-        component,
-        'config.interactive.base',
-      );
 
       let toUpdateParamsId: string[] = [];
 
@@ -193,7 +195,7 @@ export function useComponent<P extends object = {}>(
         }),
       );
     },
-    [component, global],
+    [component, global, screenType, baseInteractive],
   );
 
   // * --------------------交互相关-end--------------------
@@ -223,6 +225,15 @@ export function useComponent<P extends object = {}>(
     [getValue, requestResult],
   );
 
+  // 外部调用的同步全部参数
+  const outerSyncInteractiveAction = useCallback(
+    (baseInteractiveType: string, value: any) => {
+      const { params = [] } = requestRef.current || {};
+      return syncInteractiveAction(params, baseInteractiveType, value);
+    },
+    [syncInteractiveAction, baseInteractive],
+  );
+
   // * --------------------其他--------------------
 
   // 取消定时器
@@ -243,7 +254,7 @@ export function useComponent<P extends object = {}>(
   return {
     request: outerRequest,
     getValue: outerGetValue,
-    syncInteractiveAction,
+    syncInteractiveAction: outerSyncInteractiveAction,
     requestUrl,
     componentFilter,
     componentFilterMap,

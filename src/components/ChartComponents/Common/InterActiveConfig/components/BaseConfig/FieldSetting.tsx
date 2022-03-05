@@ -77,7 +77,7 @@ const FieldSetting = (props: {
         action: 'update',
       });
     },
-    [id, onChange, params, setParams],
+    [id, onChange, params, setParams, dataSource],
   );
 
   const columns = useMemo(() => {
