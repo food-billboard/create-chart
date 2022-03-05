@@ -34,6 +34,16 @@ export default {
   },
 
   effects: {
+    *setScreenType(
+      { value }: { value: ComponentData.ScreenType },
+      { put }: any,
+    ) {
+      yield put({
+        type: 'setScreenTypeData',
+        payload: value,
+      });
+    },
+
     *setScreen(
       { value }: { value: ComponentMethod.GlobalUpdateScreenDataParams },
       { put }: any,
@@ -146,6 +156,11 @@ export default {
   },
 
   reducers: {
+    setScreenTypeData(state: any, action: any) {
+      set(state, 'screenType', action.payload);
+      return state;
+    },
+
     setClipboardData(state: any, action: any) {
       set(state, 'clipboard', action.payload);
       return state;

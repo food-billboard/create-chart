@@ -20,15 +20,17 @@ import styles from './index.less';
 export const DROP_TYPE = 'PAINTER_DROP_TYPE';
 
 export type PainterProps = {
-  canDrop: boolean;
-  isOver: boolean;
-  connectDropTarget: ConnectDropTarget;
+  // canDrop: boolean;
+  // isOver: boolean;
+  connectDropTarget?: ConnectDropTarget;
   dragInfo: DragData;
   setDragInfo: (value: Partial<DragData>) => void;
   setSelect: (value: string[]) => void;
   scale: number;
   config: ComponentData.TScreenData['config'];
   setComponent: ComponentMethod.SetComponentMethod;
+  className?: string;
+  style?: CSSProperties;
 };
 
 export const PANEL_ID = 'panel-id';
@@ -39,6 +41,8 @@ const Painter = (props: PainterProps) => {
     setSelect,
     scale: originScale,
     config: { style: { width, height } = {}, attr: { poster } = {} } = {},
+    className,
+    style,
   } = props;
 
   const clickFlag = useRef<boolean>(false);
@@ -66,8 +70,9 @@ const Painter = (props: PainterProps) => {
         top: PANEL_ABSOLUTE_POSITION.top,
       },
       backgroundStyle,
+      style,
     );
-  }, [scale, backgroundStyle, width, height]);
+  }, [scale, backgroundStyle, width, height, style]);
 
   const onMouseMove = () => {
     moveCounter.current++;
@@ -110,7 +115,11 @@ const Painter = (props: PainterProps) => {
   return (
     <div
       id={PANEL_ID}
-      className={classnames(styles['page-design-main-panel'], 'pos-ab')}
+      className={classnames(
+        styles['page-design-main-panel'],
+        'pos-ab',
+        className,
+      )}
       style={panelStyle}
       ref={connectDropTarget}
       role={DROP_TYPE}
@@ -196,10 +205,15 @@ const dropTarget = DropTarget(
   (connect: DropTargetConnector, monitor: DropTargetMonitor) => {
     return {
       connectDropTarget: connect.dropTarget(),
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
+      // isOver: monitor.isOver(),
+      // canDrop: monitor.canDrop(),
     };
   },
+)(Painter);
+
+export const NormalPainter = connect(
+  mapStateToProps,
+  mapDispatchToProps,
 )(Painter);
 
 export default connect(mapStateToProps, mapDispatchToProps)(dropTarget);

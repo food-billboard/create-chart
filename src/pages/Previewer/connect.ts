@@ -1,11 +1,10 @@
-import { ConnectState } from '@/models/connect' 
+import { ConnectState } from '@/models/connect';
 
 export const mapStateToProps = (state: ConnectState) => {
-  return {
-    loading: state.loading.effects["settings/getUserInfo"]
-  }
-}
+  return {};
+};
 
 export const mapDispatchToProps = (dispatch: any) => ({
-  
-})
+  setScreenType: (value: any) =>
+    dispatch({ type: 'global/setScreenType', value }),
+});
