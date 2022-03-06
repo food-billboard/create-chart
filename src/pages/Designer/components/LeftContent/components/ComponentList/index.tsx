@@ -16,6 +16,13 @@ const ComponentList = (props: { type: string }) => {
     return COMPONENT_TYPE_LIST.find((item) => item.type === type);
   }, [type]);
 
+  const defaultActiveKey = useMemo(() => {
+    if (!target?.children.length) return [];
+    const firstList = target.children.find((item) => !!item.children.length);
+    if (!firstList) return [];
+    return [firstList.type];
+  }, [target]);
+
   const list = useMemo(() => {
     if (!target?.children.length) return null;
     return target.children.map((item) => {
@@ -56,7 +63,7 @@ const ComponentList = (props: { type: string }) => {
         'normal-background',
       )}
       bordered={false}
-      defaultActiveKey={[1]}
+      defaultActiveKey={defaultActiveKey}
       expandIcon={({ isActive }) => (
         <CaretRightOutlined rotate={isActive ? 90 : 0} />
       )}

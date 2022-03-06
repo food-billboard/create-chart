@@ -155,8 +155,8 @@ const dropTarget = DropTarget(
           componentType: value.type,
           config: {
             style: {
-              left: value.left,
-              top: value.top,
+              left: Math.floor(value.left),
+              top: Math.floor(value.top),
             },
           },
         });

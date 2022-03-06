@@ -93,7 +93,11 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBarBasicConfig> = {
     xAxis: DEFAULT_X_AXIS_CONFIG,
     yAxis: DEFAULT_Y_AXIS_CONFIG,
     tooltip: DEFAULT_TOOLTIP_CONFIG,
-    animation: DEFAULT_ANIMATION_CONFIG,
+    animation: {
+      ...DEFAULT_ANIMATION_CONFIG,
+      animationDuration: 2000,
+      animationEasing: 'quadraticInOut',
+    },
     series: {
       showBackground: false,
       backgroundStyle: {
@@ -132,6 +136,12 @@ const DefaultConfig: ComponentData.TComponentData<TBarBasicConfig> =
       interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
     },
     BASIC_DEFAULT_CONFIG,
+    {
+      style: {
+        width: 400,
+        height: 400,
+      },
+    },
     CUSTOM_CONFIG,
   );
 
