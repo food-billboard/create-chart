@@ -1,4 +1,4 @@
-import { CSSProperties, useCallback, useEffect, useRef } from 'react';
+import { CSSProperties, useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import { useUpdateEffect, useDeepCompareEffect } from 'ahooks';
@@ -27,6 +27,7 @@ const BarBasic = (props: {
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
+  const { screenTheme } = global;
 
   const {
     config: { options },
@@ -81,9 +82,13 @@ const BarBasic = (props: {
   };
 
   const initChart = () => {
-    const chart = init(document.querySelector(`#${chartId.current!}`)!, {
-      renderer: 'canvas',
-    });
+    const chart = init(
+      document.querySelector(`#${chartId.current!}`)!,
+      screenTheme,
+      {
+        renderer: 'canvas',
+      },
+    );
     chartInstance.current = chart;
 
     setOption();
@@ -206,7 +211,7 @@ const BarBasic = (props: {
     return () => {
       chartInstance.current?.dispose();
     };
-  }, []);
+  }, [screenTheme]);
 
   useEffect(() => {
     chartInstance.current?.off('click');

@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import GhostButton from '@/components/GhostButton';
+import ThemeUtil from '@/utils/Assist/Theme';
 import FullForm from '../Structure/FullForm';
 
 const SimpleHueSelect = (props: {
@@ -12,13 +13,10 @@ const SimpleHueSelect = (props: {
   const { value, onChange, max = 15 } = props;
 
   const handleAdd = useCallback(() => {
+    const currentIndex = value.length;
     onChange?.([
       ...value,
-      {
-        r: 0,
-        g: 0,
-        b: 0,
-      },
+      ThemeUtil.generateNextColor4CurrentTheme(currentIndex),
     ]);
   }, [value, onChange]);
 

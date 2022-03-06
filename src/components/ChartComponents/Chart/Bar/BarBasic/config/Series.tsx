@@ -99,6 +99,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
+          max={8}
         />
       </Item>
     );

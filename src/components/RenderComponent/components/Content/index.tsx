@@ -1,4 +1,4 @@
-import { useMemo, memo } from 'react';
+import { useMemo } from 'react';
 import { connect } from 'dva';
 import { ConnectState } from '@/models/connect';
 import { EComponentType } from '@/utils/constants';
@@ -12,8 +12,9 @@ const Content = (props: {
   screenType: string;
   component: ComponentProps['component'];
   timestamps?: number;
+  screenTheme: string;
 }) => {
-  const { component, setParams, screenType, timestamps } = props;
+  const { component, setParams, screenType, timestamps, screenTheme } = props;
 
   const children = useMemo(() => {
     const renderChildren: (
@@ -52,6 +53,7 @@ const Content = (props: {
               global={{
                 setParams,
                 screenType,
+                screenTheme,
               }}
             />
           </ChildrenWrapper>
@@ -68,6 +70,7 @@ export default connect(
   (state: ConnectState) => {
     return {
       screenType: state.global.screenType,
+      screenTheme: state.global.screenTheme,
     };
   },
   (dispatch) => {

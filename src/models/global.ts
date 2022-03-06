@@ -4,12 +4,16 @@ import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils/tool';
 import { HistoryUtil } from '@/utils/Assist/History';
 import ComponentUtil from '@/utils/Assist/Component';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { DragData } from './connect';
 
 export default {
   namespace: 'global',
 
   state: {
+    // 大屏大屏的色调
+    screenTheme: ThemeUtil.currentTheme,
+    // 当前大屏的类型
     screenType: 'edit',
     // 大屏
     screenData: DEFAULT_SCREEN_DATA,
