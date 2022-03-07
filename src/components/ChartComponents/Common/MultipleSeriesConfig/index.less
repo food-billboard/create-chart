@@ -1,0 +1,26 @@
+@import '~antd/es/style/themes/default.less';
+
+.multiple-series-config {
+  :global {
+    .ant-tabs-nav {
+      width: unset;
+    }
+    .ant-tabs-tab {
+      background-color: @component-background !important;
+      border: none !important;
+    }
+    .ant-tabs-tab.ant-tabs-tab-active {
+      background-color: @layout-header-background !important;
+    }
+    .ant-tabs-tab {
+      padding-top: 4px !important;
+      padding-bottom: 4px !important;
+      padding-left: 2px !important;
+      padding-right: 2px !important;
+      width: unset !important;
+    }
+    .ant-tabs-tab-remove {
+      font-size: 10px;
+    }
+  }
+}

@@ -18,6 +18,16 @@ const DEFAULT_DATE_LABEL = getDate(10);
 const DEFAULT_DATE_VALUE = getNumberValue(10);
 const DEFAULT_SERIES = getSeries(2);
 
+export const DEFAULT_DECAL = {
+  symbol: 'circle',
+  symbolSize: 4,
+};
+
+export const DEFAULT_LINE_STYLE = {
+  width: 1,
+  type: 'solid',
+};
+
 const DEFAULT_VALUE = DEFAULT_SERIES.reduce<any>((acc, cur) => {
   acc.push(
     ...DEFAULT_DATE_LABEL.map((item, index) => {
@@ -116,7 +126,9 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TLineBasicConfig> =
           color: [],
           decal: [],
         },
-        areaStyle: [],
+        areaStyle: {
+          color: [],
+        },
         lineStyle: [],
       },
     },

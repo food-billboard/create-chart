@@ -1,61 +1,84 @@
-import { useCallback, useState } from 'react';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { Tabs } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import GhostButton from '@/components/GhostButton';
 import styles from './index.less';
 
-const MultipleSeriesConfig = (props: {}) => {
-  const [activeKey, setActiveKey] = useState<string>('');
+const { TabPane } = Tabs;
 
-  const onChange = useCallback(() => {}, []);
+const MultipleSeriesConfig = (props: {
+  onAdd?: () => void;
+  onRemove?: (index: number) => void;
+  counter: number;
+  max?: number;
+  renderContent: (index: number) => ReactNode;
+}) => {
+  const { onAdd, onRemove, counter, max, renderContent } = props;
 
-  const onEdit = useCallback((targetKey, action) => {}, []);
+  const [activeKey, setActiveKey] = useState<string>('0');
+
+  const onChange = useCallback((activeKey) => {
+    setActiveKey(activeKey);
+  }, []);
 
   const add = useCallback(() => {
-    // const { panes } = this.state;
-    // const activeKey = `newTab${this.newTabIndex++}`;
-    // const newPanes = [...panes];
-    // newPanes.push({ title: 'New Tab', content: 'Content of new Tab', key: activeKey });
-    // this.setState({
-    //   panes: newPanes,
-    //   activeKey,
-    // });
-  }, []);
+    setActiveKey(counter.toString());
+    onAdd?.();
+  }, [onAdd, counter]);
 
-  const remove = useCallback((targetKey) => {
-    // const { panes, activeKey } = this.state;
-    // let newActiveKey = activeKey;
-    // let lastIndex;
-    // panes.forEach((pane, i) => {
-    //   if (pane.key === targetKey) {
-    //     lastIndex = i - 1;
-    //   }
-    // });
-    // const newPanes = panes.filter(pane => pane.key !== targetKey);
-    // if (newPanes.length && newActiveKey === targetKey) {
-    //   if (lastIndex >= 0) {
-    //     newActiveKey = newPanes[lastIndex].key;
-    //   } else {
-    //     newActiveKey = newPanes[0].key;
-    //   }
-    // }
-    // this.setState({
-    //   panes: newPanes,
-    //   activeKey: newActiveKey,
-    // });
-  }, []);
+  const remove = useCallback(
+    (targetKey) => {
+      const index = parseInt(targetKey);
+      setActiveKey((index === 0 ? 0 : index - 1).toString());
+      onRemove?.(index);
+    },
+    [onRemove],
+  );
+
+  const onEdit = useCallback(
+    (targetKey, action) => {
+      if (action === 'add') {
+        add();
+      } else if (action === 'remove') {
+        remove(targetKey);
+      }
+    },
+    [add, remove],
+  );
+
+  const hideAdd = useMemo(() => {
+    if (typeof max !== 'number') return false;
+    return max <= counter;
+  }, [max, counter]);
 
   return (
-    <Tabs
-      type="editable-card"
-      onChange={onChange}
-      activeKey={activeKey}
-      onEdit={onEdit}
-    >
-      {/* {panes.map(pane => (
-        <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>
-          {pane.content}
-        </TabPane>
-      ))} */}
-    </Tabs>
+    <>
+      {!hideAdd && (
+        <GhostButton
+          icon={<PlusOutlined />}
+          onClick={add}
+          className="m-t-8 m-b-4"
+        >
+          新增系列
+        </GhostButton>
+      )}
+      <Tabs
+        type="editable-card"
+        onChange={onChange}
+        activeKey={activeKey}
+        onEdit={onEdit}
+        hideAdd
+        className={styles['multiple-series-config']}
+      >
+        {new Array(counter).fill(0).map((_, index) => {
+          return (
+            <TabPane tab={`系列${index + 1}`} key={index.toString()}>
+              {renderContent(index)}
+            </TabPane>
+          );
+        })}
+      </Tabs>
+    </>
   );
 };
 

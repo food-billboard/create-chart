@@ -5,6 +5,14 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import AngleSelect from '@/components/ChartComponents/Common/AngleSelect';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
+import { CompatColorSelect } from '@/components/ColorSelect';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
+import ThemeUtil from '@/utils/Assist/Theme';
+import { DEFAULT_DECAL, DEFAULT_LINE_STYLE } from '../defaultConfig';
 import { TLineBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -64,26 +72,264 @@ const SeriesConfig = (props: {
   }, [label, onKeyChange]);
 
   const itemStyleConfig = useMemo(() => {
+    const { color, decal } = itemStyle;
+    const { color: areaStyleColor } = areaStyle;
+    const counter = color.length;
     return (
-      <Item label="柱子颜色">
-        <MultipleSeriesConfig
-        // value={itemStyle.color}
-        // onChange={(value) => {
-        //   onKeyChange('itemStyle', {
-        //     color: value,
-        //   });
-        // }}
-        // max={8}
-        />
-      </Item>
+      <MultipleSeriesConfig
+        counter={counter}
+        renderContent={(index) => {
+          const targetColor = color[index];
+          const targetDecal = decal[index];
+          const targetAreaStyleColor = areaStyleColor[index];
+          const targetLineStyle = lineStyle[index];
+          return (
+            <>
+              <Collapse
+                child={{
+                  header: '拐点',
+                  key: 'itemStyle',
+                }}
+              >
+                <Item label="颜色">
+                  <FullForm>
+                    <CompatColorSelect
+                      value={targetColor}
+                      onChange={(value) => {
+                        const newColor = [...color];
+                        newColor.splice(index, 1, value as any);
+                        onChange({
+                          config: {
+                            options: {
+                              series: {
+                                itemStyle: {
+                                  color: newColor,
+                                },
+                              },
+                            },
+                          },
+                        });
+                      }}
+                    />
+                  </FullForm>
+                </Item>
+                <Item label="形状">
+                  <HalfForm label="类型">
+                    <SymbolSelect
+                      value={targetDecal.symbol}
+                      onChange={(value) => {
+                        const newDecal = [...decal];
+                        newDecal.splice(index, 1, {
+                          ...newDecal[index],
+                          symbol: value,
+                        } as any);
+                        onChange({
+                          config: {
+                            options: {
+                              series: {
+                                itemStyle: {
+                                  decal: newDecal,
+                                },
+                              },
+                            },
+                          },
+                        });
+                      }}
+                    />
+                  </HalfForm>
+                  <HalfForm label="大小">
+                    <InputNumber
+                      value={targetDecal.symbolSize}
+                      onChange={(value) => {
+                        const newDecal = [...decal];
+                        newDecal.splice(index, 1, {
+                          ...newDecal[index],
+                          symbolSize: value,
+                        } as any);
+                        onChange({
+                          config: {
+                            options: {
+                              series: {
+                                itemStyle: {
+                                  decal: newDecal,
+                                },
+                              },
+                            },
+                          },
+                        });
+                      }}
+                    />
+                  </HalfForm>
+                </Item>
+              </Collapse>
+              <Collapse
+                child={{
+                  header: '线条',
+                  key: 'lineStyle',
+                }}
+              >
+                <Item label="颜色">
+                  <FullForm>
+                    <CompatColorSelect
+                      value={targetLineStyle.color}
+                      onChange={(value) => {
+                        const newColor = [...lineStyle];
+                        newColor.splice(index, 1, {
+                          ...targetLineStyle,
+                          color: value as any,
+                        });
+                        onChange({
+                          config: {
+                            options: {
+                              series: {
+                                lineStyle: newColor,
+                              },
+                            },
+                          },
+                        });
+                      }}
+                    />
+                  </FullForm>
+                </Item>
+                <Item label="宽度">
+                  <InputNumber
+                    value={targetLineStyle.width}
+                    onChange={(value) => {
+                      const newColor = [...lineStyle];
+                      newColor.splice(index, 1, {
+                        ...targetLineStyle,
+                        width: value as any,
+                      });
+                      onChange({
+                        config: {
+                          options: {
+                            series: {
+                              lineStyle: newColor,
+                            },
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </Item>
+                <Item label="线条类型">
+                  <LineStyle
+                    value={targetLineStyle.type}
+                    onChange={(value) => {
+                      const newColor = [...lineStyle];
+                      newColor.splice(index, 1, {
+                        ...targetLineStyle,
+                        type: value as any,
+                      });
+                      onChange({
+                        config: {
+                          options: {
+                            series: {
+                              lineStyle: newColor,
+                            },
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </Item>
+              </Collapse>
+              <Item label="区域颜色">
+                <FullForm>
+                  <CompatColorSelect
+                    value={targetAreaStyleColor}
+                    onChange={(value) => {
+                      const newColor = [...areaStyleColor];
+                      newColor.splice(index, 1, value as any);
+                      onChange({
+                        config: {
+                          options: {
+                            series: {
+                              areaStyle: {
+                                color: newColor,
+                              },
+                            },
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </FullForm>
+              </Item>
+            </>
+          );
+        }}
+        onAdd={() => {
+          onChange({
+            config: {
+              options: {
+                series: {
+                  itemStyle: {
+                    color: [
+                      ...color,
+                      ThemeUtil.generateNextColor4CurrentTheme(counter),
+                    ],
+                    decal: [...decal, DEFAULT_DECAL as any],
+                  },
+                  areaStyle: {
+                    color: [
+                      ...areaStyleColor,
+                      {
+                        ...ThemeUtil.generateNextColor4CurrentTheme(counter),
+                        a: 0.5,
+                      },
+                    ],
+                  },
+                  lineStyle: [
+                    ...lineStyle,
+                    {
+                      ...DEFAULT_LINE_STYLE,
+                      color: ThemeUtil.generateNextColor4CurrentTheme(counter),
+                    } as any,
+                  ],
+                },
+              },
+            },
+          });
+        }}
+        onRemove={(index) => {
+          const newItemStyleColor = [...color];
+          const newItemStyleDecal = [...decal];
+          const newAreaStyleColor = [...areaStyleColor];
+          const newLineStyle = [...lineStyle];
+
+          newItemStyleColor.splice(index, 1);
+          newItemStyleDecal.splice(index, 1);
+          newAreaStyleColor.splice(index, 1);
+          newLineStyle.splice(index, 1);
+
+          onChange({
+            config: {
+              options: {
+                series: {
+                  itemStyle: {
+                    color: newItemStyleColor,
+                    decal: newItemStyleDecal,
+                  },
+                  areaStyle: {
+                    color: newAreaStyleColor,
+                  },
+                  lineStyle: newLineStyle,
+                },
+              },
+            },
+          });
+        }}
+        max={8}
+      />
     );
-  }, [itemStyle, onKeyChange]);
+  }, [itemStyle, areaStyle, lineStyle, onKeyChange, onChange]);
 
   return (
     <ConfigList>
       {smoothConfig}
       {labelConfig}
-      {/* {itemStyleConfig} */}
+      {itemStyleConfig}
     </ConfigList>
   );
 };

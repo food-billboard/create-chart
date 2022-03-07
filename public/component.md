@@ -69,7 +69,7 @@ smooth
 label.show label.position label.rotate  
 label.color label.fontFamily label.fontWeight label.fontSize  
 itemStyle.color itemStyle.decal.symbol itemStyle.decal.symbolSize  
-lineStyle.color lineStyle.width lineStyle.type lineStyle.opacity  
+lineStyle.color lineStyle.width lineStyle.type
 areaStyle.color  
 data.name data.value  
 

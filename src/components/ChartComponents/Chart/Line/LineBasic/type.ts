@@ -17,12 +17,11 @@ export type TLineBasicConfig = {
     };
     areaStyle: {
       color: ComponentData.TColorConfig[];
-    }[];
+    };
     lineStyle: {
       color: ComponentData.TColorConfig;
       width: number;
       type: ComponentData.ComponentLineStyle;
-      opacity: number;
     }[];
   };
   animation: ComponentData.ComponentChartAnimationConfig;
