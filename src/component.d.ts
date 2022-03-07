@@ -368,6 +368,9 @@ declare namespace ComponentData {
     | 'arrow'
     | 'none';
 
+  // 线条类型
+  export type ComponentLineStyle = 'solid' | 'dashed' | 'dotted';
+
   export type ComponentConfigProps<T extends object = {}> = {
     value: TComponentData<T>;
     onChange: (value: SuperPartial<TComponentData<T>>) => void;

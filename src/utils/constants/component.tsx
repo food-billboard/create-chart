@@ -31,7 +31,14 @@ export const COMPONENT_TYPE_LIST = [
       {
         type: 'line',
         title: '折现图',
-        children: [],
+        children: [
+          {
+            type: 'LINE_BASIC',
+            title: '基础折线图',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+        ],
       },
     ],
   },

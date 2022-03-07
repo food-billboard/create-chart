@@ -65,6 +65,7 @@ textStyle.color textStyle.fontFamily textStyle.fontWeight textStyle.fontSize
 
 #### series 系列  
 ##### line 
+smooth 
 label.show label.position label.rotate  
 label.color label.fontFamily label.fontWeight label.fontSize  
 itemStyle.color itemStyle.decal.symbol itemStyle.decal.symbolSize  
@@ -76,7 +77,7 @@ data.name data.value
 showBackground backgroundStyle.color  
 label.show label.position label.rotate  
 label.color label.fontFamily label.fontWeight label.fontSize  
-itemStyle.color itemStyle.decal.symbol itemStyle.decal.symbolSize  
+itemStyle.color 
 barGap barWidth  
 data.name data.value 
 
