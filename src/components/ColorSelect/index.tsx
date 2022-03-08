@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useControllableValue } from 'ahooks';
-import { Tooltip, Input, InputNumber } from 'antd';
+import { Input, InputNumber } from 'antd';
 import {
   SketchPicker,
   SketchPickerProps,
@@ -9,6 +9,7 @@ import {
 import color from 'color';
 import classnames from 'classnames';
 import { omit, merge, debounce } from 'lodash';
+import Tooltip from '../ChartComponents/Common/Tooltip';
 import { DEFAULT_COLOR } from '@/utils/constants';
 import styles from './index.less';
 

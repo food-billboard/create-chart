@@ -51,8 +51,8 @@ const RenderComponent = memo(
 
     // 是否响应鼠标事件
     const pointerDisabled = useMemo(() => {
-      return screenType === 'preview' || !isSelect || lock;
-    }, [lock, isSelect, screenType]);
+      return screenType === 'preview' || lock;
+    }, [lock, screenType]);
 
     const baseStyle = useComponentStyle(value, {
       isSelect,
@@ -63,7 +63,9 @@ const RenderComponent = memo(
     const handleSelect = useCallback(
       (e: any) => {
         e?.stopPropagation();
-        if (!pointerDisabled && !select?.includes(id)) setSelect?.([id]);
+        if (!pointerDisabled && !select?.includes(id)) {
+          setSelect?.([id]);
+        }
       },
       [setSelect, id, select, pointerDisabled],
     );
