@@ -7,7 +7,6 @@ class CopyAndPasteUtil {
   FOCUS_FLAG = false;
 
   isFocus = () => {
-    console.log(this.FOCUS_POOL);
     return this.FOCUS_POOL === 0;
     return !this.FOCUS_FLAG;
   };

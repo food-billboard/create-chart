@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { Select } from 'antd';
 import { useControllableValue } from 'ahooks';
 import { CompatColorSelect } from '@/components/ColorSelect';
@@ -61,9 +61,13 @@ const FontConfig = (props: {
 
   const onChange = useCallback(
     (key: keyof ComponentData.TFontConfig, changeValue: any) => {
+      let realValue = changeValue;
+      try {
+        realValue = changeValue.target.value;
+      } catch (err) {}
       setValue({
         ...value,
-        [key]: changeValue,
+        [key]: realValue,
       });
     },
     [value],
@@ -147,9 +151,13 @@ export const FontConfigList = (props: {
 
   const onChange = useCallback(
     (key: keyof ComponentData.TFontConfig, changeValue: any) => {
+      let realValue = changeValue;
+      try {
+        realValue = changeValue.target.value;
+      } catch (err) {}
       setValue({
         ...value,
-        [key]: changeValue,
+        [key]: realValue,
       });
     },
     [value],
