@@ -15,7 +15,6 @@ import { getDate, getNumberValue, getSeries } from '@/utils/constants';
 import { TLineBasicConfig } from './type';
 
 const DEFAULT_DATE_LABEL = getDate(10);
-const DEFAULT_DATE_VALUE = getNumberValue(10);
 const DEFAULT_SERIES = getSeries(2);
 
 export const DEFAULT_DECAL = {
@@ -29,6 +28,7 @@ export const DEFAULT_LINE_STYLE = {
 };
 
 const DEFAULT_VALUE = DEFAULT_SERIES.reduce<any>((acc, cur) => {
+  const DEFAULT_DATE_VALUE = getNumberValue(10);
   acc.push(
     ...DEFAULT_DATE_LABEL.map((item, index) => {
       return {

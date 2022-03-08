@@ -276,7 +276,7 @@ const SeriesConfig = (props: {
                       ...areaStyleColor,
                       {
                         ...ThemeUtil.generateNextColor4CurrentTheme(counter),
-                        a: 0.5,
+                        a: 0,
                       },
                     ],
                   },

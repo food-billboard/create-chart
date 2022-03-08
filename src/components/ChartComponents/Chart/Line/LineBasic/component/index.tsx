@@ -101,6 +101,7 @@ const LineBasic = (props: {
 
     const baseSeries = {
       ...nextSeries,
+      ...(decal[0] || {}),
       smoothMonotone: 'x',
       label: {
         ...label,
@@ -109,15 +110,16 @@ const LineBasic = (props: {
       type: 'line',
       itemStyle: {
         ...nextItemStyle,
-        color: getRgbaString(color[0]) || 'auto',
-        decal: decal[0],
+        color: getRgbaString(color[0]),
       },
-      areaStyle: areaStyle[0],
-      lineStyle: lineStyle[0],
+      areaStyle: {
+        color: getRgbaString(areaStyle.color[0]) || 'transparent',
+      },
+      lineStyle: {
+        ...(lineStyle[0] || {}),
+        color: getRgbaString(lineStyle[0]?.color),
+      },
       data: yAxisValues._defaultValue_,
-      // emphasis: {
-      //   focus: 'series',
-      // },
       animation: show,
       animationEasing,
       animationEasingUpdate: animationEasing,
@@ -129,13 +131,18 @@ const LineBasic = (props: {
       ? seriesKeys.map((item: any, index: number) => {
           return {
             ...baseSeries,
+            ...(decal[index] || {}),
             itemStyle: {
               ...nextItemStyle,
-              color: getRgbaString(itemStyle.color[index]) || 'auto',
-              decal: decal[index],
+              color: getRgbaString(itemStyle.color[index]),
             },
-            areaStyle: areaStyle[index],
-            lineStyle: lineStyle[index],
+            areaStyle: {
+              color: getRgbaString(areaStyle.color[index]) || 'transparent',
+            },
+            lineStyle: {
+              ...(lineStyle[index] || {}),
+              color: getRgbaString(lineStyle[index]?.color),
+            },
             data: yAxisValues[item] || [],
             name: item,
           };
@@ -156,57 +163,60 @@ const LineBasic = (props: {
     const { axisLabel: yAxisLabel, ...nextYAxis } = yAxis;
     const series = getSeries();
 
-    chartInstance.current?.setOption({
-      grid: {
-        show: false,
+    chartInstance.current?.setOption(
+      {
+        grid: {
+          show: false,
+        },
+        legend: {
+          ...nextLegend,
+          data: seriesKeys,
+          textStyle: {
+            ...legendTextStyle,
+            color: getRgbaString(legendTextStyle.color),
+          },
+        },
+        series,
+        xAxis: [
+          {
+            ...nextXAxis,
+            splitLine: {
+              show: false,
+            },
+            data: xAxisKeys,
+            axisLabel: {
+              ...xAxisLabel,
+              color: getRgbaString(xAxisLabel.color),
+            },
+          },
+        ],
+        yAxis: [
+          {
+            ...nextYAxis,
+            splitLine: {
+              show: false,
+            },
+            axisLabel: {
+              ...yAxisLabel,
+              color: getRgbaString(yAxisLabel.color),
+            },
+          },
+        ],
+        tooltip: {
+          ...nextTooltip,
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow',
+          },
+          backgroundColor: getRgbaString(backgroundColor),
+          textStyle: {
+            ...tooltipTextStyle,
+            color: getRgbaString(tooltipTextStyle.color),
+          },
+        },
       },
-      legend: {
-        ...nextLegend,
-        data: seriesKeys,
-        textStyle: {
-          ...legendTextStyle,
-          color: getRgbaString(legendTextStyle.color),
-        },
-      },
-      series,
-      xAxis: [
-        {
-          ...nextXAxis,
-          splitLine: {
-            show: false,
-          },
-          data: xAxisKeys,
-          axisLabel: {
-            ...xAxisLabel,
-            color: getRgbaString(xAxisLabel.color),
-          },
-        },
-      ],
-      yAxis: [
-        {
-          ...nextYAxis,
-          splitLine: {
-            show: false,
-          },
-          axisLabel: {
-            ...yAxisLabel,
-            color: getRgbaString(yAxisLabel.color),
-          },
-        },
-      ],
-      tooltip: {
-        ...nextTooltip,
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow',
-        },
-        backgroundColor: getRgbaString(backgroundColor),
-        textStyle: {
-          ...tooltipTextStyle,
-          color: getRgbaString(tooltipTextStyle.color),
-        },
-      },
-    });
+      true,
+    );
   };
 
   useChartComponentResize(chartInstance.current!);
