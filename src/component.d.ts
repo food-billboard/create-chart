@@ -290,6 +290,8 @@ declare namespace ComponentData {
       rotate: number;
       margin: number;
     } & TFontConfig;
+    name: string;
+    nameTextStyle: TFontConfig;
   };
 
   // yAxis

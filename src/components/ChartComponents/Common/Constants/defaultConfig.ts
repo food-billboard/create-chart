@@ -89,6 +89,10 @@ export const DEFAULT_X_AXIS_CONFIG: ComponentData.ComponentXAxis = {
     margin: 8,
     ...DEFAULT_FONT_CONFIG,
   },
+  name: '',
+  nameTextStyle: {
+    ...DEFAULT_FONT_CONFIG,
+  },
 };
 
 // yAxis

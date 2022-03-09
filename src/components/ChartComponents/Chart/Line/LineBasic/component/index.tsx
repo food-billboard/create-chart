@@ -159,8 +159,16 @@ const LineBasic = (props: {
       textStyle: tooltipTextStyle,
       ...nextTooltip
     } = tooltip;
-    const { axisLabel: xAxisLabel, ...nextXAxis } = xAxis;
-    const { axisLabel: yAxisLabel, ...nextYAxis } = yAxis;
+    const {
+      axisLabel: xAxisLabel,
+      nameTextStyle: xNameTextStyle,
+      ...nextXAxis
+    } = xAxis;
+    const {
+      axisLabel: yAxisLabel,
+      nameTextStyle: yNameTextStyle,
+      ...nextYAxis
+    } = yAxis;
     const series = getSeries();
 
     chartInstance.current?.setOption(
@@ -188,6 +196,10 @@ const LineBasic = (props: {
               ...xAxisLabel,
               color: getRgbaString(xAxisLabel.color),
             },
+            nameTextStyle: {
+              ...xNameTextStyle,
+              color: getRgbaString(xNameTextStyle.color),
+            },
           },
         ],
         yAxis: [
@@ -199,6 +211,10 @@ const LineBasic = (props: {
             axisLabel: {
               ...yAxisLabel,
               color: getRgbaString(yAxisLabel.color),
+            },
+            nameTextStyle: {
+              ...yNameTextStyle,
+              color: getRgbaString(yNameTextStyle.color),
             },
           },
         ],

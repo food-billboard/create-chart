@@ -7,6 +7,7 @@ import { SingleCollapse as Collapse } from '../Collapse';
 import { FontConfigList } from '../FontConfig';
 import AngleSelect from '../AngleSelect';
 import FullForm from '../Structure/FullForm';
+import Input from '../Input';
 import InputNumber from '../InputNumber';
 
 const { Item } = ConfigList;
@@ -24,7 +25,7 @@ export type AxisConfigProps = {
 
 const AxisConfig = (props: AxisConfigProps) => {
   const { type, ignore = [], value, onChange, children } = props;
-  const { position, axisLabel } = value;
+  const { position, axisLabel, name, nameTextStyle } = value;
 
   const onKeyChange = useCallback(
     (key: string, value: any) => {
@@ -52,6 +53,10 @@ const AxisConfig = (props: AxisConfigProps) => {
 
   const needAxisLabel = useMemo(() => {
     return !ignore.includes('axisLabel');
+  }, [ignore]);
+
+  const needName = useMemo(() => {
+    return ignore.includes('name');
   }, [ignore]);
 
   const positionConfig = useMemo(() => {
@@ -123,10 +128,32 @@ const AxisConfig = (props: AxisConfigProps) => {
     );
   }, [needAxisLabel, axisLabel, onAxisLabelChange, onKeyChange]);
 
+  const nameConfig = useMemo(() => {
+    return (
+      <Collapse
+        child={{
+          header: '名称',
+          key: 'name',
+        }}
+      >
+        <Item label="内容">
+          <FullForm>
+            <Input value={name} onChange={onKeyChange.bind(null, 'name')} />
+          </FullForm>
+        </Item>
+        <FontConfigList
+          value={nameTextStyle}
+          onChange={onKeyChange.bind(null, 'nameTextStyle')}
+        />
+      </Collapse>
+    );
+  }, [needName, name, nameTextStyle, onKeyChange]);
+
   return (
     <ConfigList>
       {positionConfig}
       {axisLabelConfig}
+      {nameConfig}
       {children}
     </ConfigList>
   );

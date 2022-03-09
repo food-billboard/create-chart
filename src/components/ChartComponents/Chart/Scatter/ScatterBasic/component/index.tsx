@@ -127,8 +127,16 @@ const ScatterBasic = (props: {
       textStyle: tooltipTextStyle,
       ...nextTooltip
     } = tooltip;
-    const { axisLabel: xAxisLabel, ...nextXAxis } = xAxis;
-    const { axisLabel: yAxisLabel, ...nextYAxis } = yAxis;
+    const {
+      axisLabel: xAxisLabel,
+      nameTextStyle: xNameTextStyle,
+      ...nextXAxis
+    } = xAxis;
+    const {
+      axisLabel: yAxisLabel,
+      nameTextStyle: yNameTextStyle,
+      ...nextYAxis
+    } = yAxis;
 
     const series = getSeries();
 
@@ -147,6 +155,7 @@ const ScatterBasic = (props: {
         xAxis: [
           {
             ...nextXAxis,
+            scale: true,
             splitLine: {
               show: false,
             },
@@ -155,17 +164,26 @@ const ScatterBasic = (props: {
               color: getRgbaString(xAxisLabel.color),
             },
             data: xAxisKeys,
+            nameTextStyle: {
+              ...xNameTextStyle,
+              color: getRgbaString(xNameTextStyle.color),
+            },
           },
         ],
         yAxis: [
           {
             ...nextYAxis,
+            scale: true,
             splitLine: {
               show: false,
             },
             axisLabel: {
               ...yAxisLabel,
               color: getRgbaString(yAxisLabel.color),
+            },
+            nameTextStyle: {
+              ...yNameTextStyle,
+              color: getRgbaString(yNameTextStyle.color),
             },
           },
         ],
