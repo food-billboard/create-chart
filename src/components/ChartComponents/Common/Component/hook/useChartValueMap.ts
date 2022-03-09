@@ -56,5 +56,8 @@ export function useChartValueMapField(
     return format(processedValue, fields);
   }, [processedValue, fields]);
 
-  return fieldsMap;
+  return {
+    ...fieldsMap,
+    value: processedValue,
+  };
 }

@@ -93,9 +93,7 @@ data.name data.value data.itemStyle.color
 
 ##### scatter 
 symbol symbolSize  
-label.show label.position label.formatter  
-label.color label.fontFamily label.fontWeight label.fontSize  
-itemStyle.color  
+itemStyle.color itemStyle.borderColor itemStyle.borderWidth itemStyle.borderType      
 data.name data.value  
 
 ##### radar 

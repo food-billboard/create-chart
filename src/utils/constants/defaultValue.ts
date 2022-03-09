@@ -8,7 +8,7 @@ export function getName(count = 5) {
 }
 
 export function getDate(count = 10) {
-  const realCounter = count > 30 ? 30 : count;
+  const realCounter = count > 100 ? 100 : count;
   let month: string | number = new Date().getMonth() + 1;
   month = month < 10 ? `0${month}` : month;
   return new Array(realCounter).fill(0).map((_, index) => {

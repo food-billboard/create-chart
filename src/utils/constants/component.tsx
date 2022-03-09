@@ -46,7 +46,19 @@ export const COMPONENT_TYPE_LIST = [
         children: [
           {
             type: 'PIE_BASIC',
-            title: '基础拼图',
+            title: '基础饼图',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+        ],
+      },
+      {
+        type: 'scatter',
+        title: '散点图',
+        children: [
+          {
+            type: 'SCATTER_BASIC',
+            title: '基础散点图',
             icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
             description: '',
           },
