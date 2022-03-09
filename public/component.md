@@ -49,12 +49,15 @@ show left right bottom top backgroundColor
 show position  
 axisLabel.show axisLabel.rotate axisLabel.margin  
 axisLabel.color axisLabel.fontSize axisLabel.fontWeight axisLabel.fontFamily  
+name  
+nameTextStyle.color nameTextStyle.fontSize nameTextStyle.fontWeight nameTextStyle.fontFamily  
 data.value 
 
 #### yAxis 纵坐标  
 show position  
 axisLabel.show axisLabel.rotate axisLabel.margin  
 axisLabel.color axisLabel.fontSize axisLabel.fontWeight axisLabel.fontFamily  
+nameTextStyle.color nameTextStyle.fontSize nameTextStyle.fontWeight nameTextStyle.fontFamily  
 data.value 
 
 #### tooltip 提示框  

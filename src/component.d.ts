@@ -77,7 +77,8 @@ declare namespace ComponentData {
     | 'LINE_BASIC'
     | 'PIE_BASIC'
     | 'LINE_WATERFALL'
-    | 'SCATTER_BASIC';
+    | 'SCATTER_BASIC'
+    | 'RADAR_BASIC';
 
   // 基础组件属性
   export type TBaseConfig = {
