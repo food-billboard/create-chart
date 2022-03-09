@@ -75,6 +75,7 @@ declare namespace ComponentData {
     | 'BAR_BASIC'
     | 'BAR_LINE'
     | 'LINE_BASIC'
+    | 'PIE_BASIC'
     | 'LINE_WATERFALL';
 
   // 基础组件属性

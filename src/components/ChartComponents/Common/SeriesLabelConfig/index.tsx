@@ -1,4 +1,4 @@
-import { ReactNode, useCallback } from 'react';
+import { ReactNode, useCallback, useMemo } from 'react';
 import { SingleCollapse as Collapse } from '../Collapse';
 import LabelPositionConfig from '../LabelPositionConfig';
 import FontConfig from '../FontConfig';
@@ -9,6 +9,7 @@ const SeriesLabelConfig = (
       value: SuperPartial<ComponentData.ComponentSeriesLabelConfig>,
     ) => void;
     children?: ReactNode;
+    ignore?: string[];
   } & ComponentData.ComponentSeriesLabelConfig,
 ) => {
   const {
@@ -20,6 +21,7 @@ const SeriesLabelConfig = (
     color,
     onChange,
     position,
+    ignore,
   } = props;
 
   const commonOnChange = useCallback(
@@ -31,6 +33,10 @@ const SeriesLabelConfig = (
     [onChange],
   );
 
+  const needPositionConfig = useMemo(() => {
+    return !ignore?.includes('position');
+  }, [ignore]);
+
   return (
     <Collapse
       child={{
@@ -41,10 +47,12 @@ const SeriesLabelConfig = (
         value: show,
       }}
     >
-      <LabelPositionConfig
-        value={position}
-        onChange={commonOnChange.bind(null, 'position')}
-      />
+      {needPositionConfig && (
+        <LabelPositionConfig
+          value={position}
+          onChange={commonOnChange.bind(null, 'position')}
+        />
+      )}
       <FontConfig
         value={{
           fontFamily,

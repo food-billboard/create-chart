@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import BarBasic from './Chart/Bar/BarBasic';
 import LineBasic from './Chart/Line/LineBasic';
+import PieBasic from './Chart/Pie/PieBasic';
 
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
@@ -13,6 +14,7 @@ const COMPONENT_MAP = new Map<
 
 COMPONENT_MAP.set(BarBasic.type, BarBasic);
 COMPONENT_MAP.set(LineBasic.type, LineBasic);
+COMPONENT_MAP.set(PieBasic.type, PieBasic);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

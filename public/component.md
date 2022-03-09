@@ -82,13 +82,12 @@ barGap barWidth
 data.name data.value 
 
 ##### pie 
-left top right bottom  
 label.show label.position label.formatter  
 label.color label.fontFamily label.fontWeight label.fontSize  
 labelLine.show labelLine.length labelLine.length2 labelLine.smooth  
-labelLine.lineStyle.color labelLine.lineStyle.width labelLine.lineStyle.type  
-itemStyle.opacity  
-center 这个和上面的位置二选一  
+labelLine.lineStyle.width labelLine.lineStyle.type  
+itemStyle.opacity itemStyle.color 
+center
 radius 基础的话就只能设置外面  
 data.name data.value data.itemStyle.color  
 

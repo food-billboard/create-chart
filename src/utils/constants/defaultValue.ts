@@ -1,5 +1,12 @@
 import { Random } from 'mockjs';
 
+export function getName(count = 5) {
+  const realCounter = count > 30 ? 30 : count;
+  return new Array(realCounter).fill(0).map(() => {
+    return Random.cname();
+  });
+}
+
 export function getDate(count = 10) {
   const realCounter = count > 30 ? 30 : count;
   let month: string | number = new Date().getMonth() + 1;
