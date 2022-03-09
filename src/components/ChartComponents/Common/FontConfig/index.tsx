@@ -29,10 +29,55 @@ const FONT_WEIGHT_ENUM = [
   '800',
 ];
 
+// const FONT_TYPE_ENUM = [
+//   {
+//     key: '默认',
+//     value: 'sans-serif'
+//   },
+//   {
+//     key: '宋体',
+//     value: 'SimSun STSong',
+//   },
+//   {
+//     key: '黑体',
+//     value: 'SimHei STHeiti',
+//   },
+//   {
+//     key: '楷体',
+//     value: 'KaiTi STKaiti',
+//   },
+//   {
+//     key: '仿宋',
+//     value: 'FangSong STFangsong',
+//   },
+// ];
+
+// * 暂时先用这个
+// * 待改进
 const FONT_TYPE_ENUM = [
   {
-    key: '1',
-    value: '1',
+    key: 'sans-serif',
+    value: 'sans-serif',
+  },
+  {
+    key: 'serif',
+    value: 'serif',
+  },
+  {
+    key: 'monospace',
+    value: 'monospace',
+  },
+  {
+    key: 'Arial',
+    value: 'Arial',
+  },
+  {
+    key: 'Courier New',
+    value: 'Courier New',
+  },
+  {
+    key: 'Microsoft YaHei',
+    value: 'Microsoft YaHei',
   },
 ];
 
@@ -78,8 +123,9 @@ const FontConfig = (props: {
       <HalfForm label="字体">
         <Select
           defaultValue={fontFamily}
-          onBlur={onChange.bind(null, 'fontFamily')}
+          onChange={onChange.bind(null, 'fontFamily')}
           className="w-100"
+          allowClear
         >
           {FONT_TYPE_ENUM.map((item) => {
             const { key, value } = item;
@@ -94,7 +140,7 @@ const FontConfig = (props: {
       <HalfForm label="文字粗细">
         <Select
           defaultValue={fontWeight}
-          onBlur={onChange.bind(null, 'fontWeight')}
+          onChange={onChange.bind(null, 'fontWeight')}
           className="w-100"
         >
           {FONT_WEIGHT_ENUM.map((item) => {
@@ -169,7 +215,7 @@ export const FontConfigList = (props: {
         <FullForm>
           <Select
             defaultValue={fontFamily}
-            onBlur={onChange.bind(null, 'fontFamily')}
+            onChange={onChange.bind(null, 'fontFamily')}
             className="w-100"
           >
             {FONT_TYPE_ENUM.map((item) => {
@@ -187,7 +233,7 @@ export const FontConfigList = (props: {
         <FullForm>
           <Select
             defaultValue={fontWeight}
-            onBlur={onChange.bind(null, 'fontWeight')}
+            onChange={onChange.bind(null, 'fontWeight')}
             className="w-100"
           >
             {FONT_WEIGHT_ENUM.map((item) => {
