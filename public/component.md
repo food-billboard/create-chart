@@ -110,9 +110,14 @@ data.areaStyle.color
 
 ##### treemap 
 left top right bottom  
+squareRatio 
+期望矩形长宽比率。布局计算时会尽量向这个比率靠近。  
+默认为黄金比：0.5 * (1 + Math.sqrt(5))。  
 nodeClick  
 label.show label.position label.formatter  
 label.color label.fontFamily label.fontWeight label.fontSize  
+breadcrumb.show breadcrumb.left breadcrumb.top breadcrumb.right breadcrumb.bottom breadcrumb.height  
+breadcrumb.itemStyle.textStyle breadcrumb.itemStyle.color 
 data.value data.name data.color  
 
 ##### sunburst   
@@ -137,11 +142,14 @@ label.color label.fontFamily label.fontWeight label.fontSize
 data.name data.value data.itemStyle.color 
 
 ##### funnel  
+min max  
+minSize maxSize  
 left top right bottom  
 orient gap  
-label.show label.formatter  
+label.show label.formatter label.position  
 label.color label.fontFamily label.fontWeight label.fontSize  
-data.name data.value data.itemStyle.color  
+labelLine.show labelLine.length labelLine.lineStyle.color labelLine.lineStyle.width labelLine.lineStyle.type    
+itemStyle.color  
 
 ##### gauge  
 center radius startAngle endAngle clockwise  

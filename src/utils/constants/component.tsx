@@ -76,6 +76,18 @@ export const COMPONENT_TYPE_LIST = [
           },
         ],
       },
+      {
+        type: 'box-plot',
+        title: '盒须图',
+        children: [
+          {
+            type: 'BOX_PLOT_BASIC',
+            title: '基础盒须图',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+        ],
+      },
     ],
   },
   {

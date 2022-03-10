@@ -4,11 +4,13 @@ import { useControllableValue } from 'ahooks';
 import Input from '@/components/ChartComponents/Common/Input';
 import MapTable from '../../../MapTable';
 
-function fieldTypeToString(type: 'string' | 'number') {
+function fieldTypeToString(type: 'string' | 'number' | 'number[]') {
   if (type === 'string') {
     return '字符型字段';
-  } else {
+  } else if (type === 'number') {
     return '数值型字段';
+  } else {
+    return '数值型数组字段';
   }
 }
 

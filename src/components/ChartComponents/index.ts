@@ -4,6 +4,7 @@ import LineBasic from './Chart/Line/LineBasic';
 import PieBasic from './Chart/Pie/PieBasic';
 import ScatterBasic from './Chart/Scatter/ScatterBasic';
 import RadarBasic from './Chart/Radar/RadarBasic';
+import BoxPlotBasic from './Chart/BoxPlot/BoxPlotBasic';
 
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
@@ -19,6 +20,7 @@ COMPONENT_MAP.set(LineBasic.type, LineBasic);
 COMPONENT_MAP.set(PieBasic.type, PieBasic);
 COMPONENT_MAP.set(ScatterBasic.type, ScatterBasic);
 COMPONENT_MAP.set(RadarBasic.type, RadarBasic);
+COMPONENT_MAP.set(BoxPlotBasic.type, BoxPlotBasic);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

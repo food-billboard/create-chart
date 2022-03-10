@@ -13,7 +13,7 @@ declare namespace ComponentData {
     map: string;
     description: string;
     id: string;
-    type: 'number' | 'string';
+    type: 'number' | 'string' | 'number[]';
   };
 
   // 组件数据过滤
@@ -78,7 +78,8 @@ declare namespace ComponentData {
     | 'PIE_BASIC'
     | 'LINE_WATERFALL'
     | 'SCATTER_BASIC'
-    | 'RADAR_BASIC';
+    | 'RADAR_BASIC'
+    | 'BOX_PLOT_BASIC';
 
   // 基础组件属性
   export type TBaseConfig = {
