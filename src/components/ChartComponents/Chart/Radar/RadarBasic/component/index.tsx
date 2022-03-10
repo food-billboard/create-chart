@@ -33,7 +33,7 @@ const RadarBasic = (props: {
     config: { options },
   } = value;
 
-  const { legend, series, tooltip, animation } = options;
+  const { legend, series, tooltip, animation, radar } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -59,14 +59,17 @@ const RadarBasic = (props: {
     requestRef,
   );
 
-  const { xAxisKeys, yAxisValues } = useChartValueMapField(processedValue, {
-    map: componentFilterMap,
-    fields: {
-      seriesKey: '',
-      xAxisKeyKey: 'name',
-      yAxisValue: 'value',
+  const { xAxisKeys, yAxisValues, seriesKeys } = useChartValueMapField(
+    processedValue,
+    {
+      map: componentFilterMap,
+      fields: {
+        seriesKey: 's',
+        xAxisKeyKey: 'name',
+        yAxisValue: 'value',
+      },
     },
-  });
+  );
 
   const initChart = () => {
     const chart = init(
@@ -81,10 +84,59 @@ const RadarBasic = (props: {
     setOption();
   };
 
+  const getRadar = () => {
+    const {
+      center,
+      radius,
+      axisName,
+      axisLine,
+      splitLine,
+      splitArea,
+      ...nextRadar
+    } = radar;
+    return {
+      ...nextRadar,
+      center: center.map((item) => `${item}%`),
+      radius: radius + '%',
+      axisName: {
+        ...axisName,
+        color: getRgbaString(axisName.color),
+      },
+      axisLine: {
+        ...axisLine,
+        lineStyle: {
+          ...axisLine.lineStyle,
+          color: getRgbaString(axisLine.lineStyle.color),
+        },
+      },
+      splitLine: {
+        ...splitLine,
+        lineStyle: {
+          ...splitLine.lineStyle,
+          color: getRgbaString(splitLine.lineStyle.color),
+        },
+      },
+      splitArea: {
+        ...splitArea,
+        areaStyle: {
+          ...splitArea.areaStyle,
+          color: getRgbaString(splitArea.areaStyle.color),
+        },
+      },
+      indicator: xAxisKeys.map((item: any) => {
+        return {
+          name: item,
+          max: 200,
+        };
+      }),
+    };
+  };
+
   const getSeries = () => {
-    const { itemStyle, label, ...nextSeries } = series;
+    const { itemStyle, label, lineStyle, areaStyle, ...nextSeries } = series;
     const { animation: show, animationDuration, animationEasing } = animation;
     const { color, ...nextItemStyle } = itemStyle;
+    const { color: areaColor, ...nextAreaStyle } = areaStyle;
 
     const baseSeries = {
       ...nextSeries,
@@ -93,16 +145,42 @@ const RadarBasic = (props: {
         color: getRgbaString(label.color),
       },
       type: 'radar',
-      itemStyle: nextItemStyle,
-      data: xAxisKeys.map((item: any, index: number) => {
-        return {
-          name: item,
-          value: yAxisValues._defaultValue_[index],
-          itemStyle: {
-            color: getRgbaString(color[index]),
-          },
-        };
-      }),
+      data: seriesKeys.length
+        ? seriesKeys.map((item: any, index: number) => {
+            return {
+              itemStyle: {
+                ...nextItemStyle,
+                color: getRgbaString(color[index]),
+              },
+              areaStyle: {
+                ...nextAreaStyle,
+                color: getRgbaString(areaColor[index]) || 'transparent',
+              },
+              lineStyle: {
+                ...(lineStyle[index] || {}),
+                color: getRgbaString(lineStyle[index]?.color),
+              },
+              value: yAxisValues[item] || [],
+              name: item,
+            };
+          })
+        : [
+            {
+              itemStyle: {
+                ...nextItemStyle,
+                color: getRgbaString(color[0]),
+              },
+              areaStyle: {
+                ...nextAreaStyle,
+                color: getRgbaString(areaColor[0]) || 'transparent',
+              },
+              lineStyle: {
+                ...(lineStyle[0] || {}),
+                color: getRgbaString(lineStyle[0]?.color),
+              },
+              value: yAxisValues._defaultValue_,
+            },
+          ],
       animation: show,
       animationEasing,
       animationEasingUpdate: animationEasing,
@@ -122,12 +200,24 @@ const RadarBasic = (props: {
     } = tooltip;
 
     const series = getSeries();
+    const radar = getRadar();
+
+    console.log(
+      radar,
+      series,
+      xAxisKeys,
+      yAxisValues,
+      seriesKeys,
+      processedValue,
+      29999,
+    );
 
     chartInstance.current?.setOption(
       {
         grid: {
           show: false,
         },
+        radar,
         legend: {
           ...nextLegend,
           textStyle: {
@@ -138,7 +228,6 @@ const RadarBasic = (props: {
         series,
         tooltip: {
           ...nextTooltip,
-          trigger: 'item',
           backgroundColor: getRgbaString(backgroundColor),
           textStyle: {
             ...tooltipTextStyle,

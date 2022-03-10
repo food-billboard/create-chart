@@ -8,7 +8,7 @@ export type TRadarBasicConfig = {
       show: boolean;
       formatter: string;
     } & ComponentData.TFontConfig;
-    nameGap: number;
+    axisNameGap: number;
     splitNumber: number;
     shape: 'polygon' | 'circle';
     axisLine: {
@@ -37,15 +37,15 @@ export type TRadarBasicConfig = {
   series: {
     symbol: ComponentData.ComponentSymbol;
     symbolSize: number;
-    label: Omit<ComponentData.ComponentSeriesLabelConfig, 'position'> & {
+    label: ComponentData.ComponentSeriesLabelConfig & {
       formatter: string;
-      position: 'outside' | 'inside';
+      distance: number;
     };
     itemStyle: {
       color: ComponentData.TColorConfig[];
     };
     lineStyle: {
-      color: ComponentData.TColorConfig[];
+      color: ComponentData.TColorConfig;
       width: number;
       type: ComponentData.ComponentLineStyle;
     }[];

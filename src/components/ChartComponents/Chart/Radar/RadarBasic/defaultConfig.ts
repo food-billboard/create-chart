@@ -83,7 +83,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRadarBasicConfig> =
           formatter: '{value}',
           ...DEFAULT_FONT_CONFIG,
         },
-        nameGap: 15,
+        axisNameGap: 15,
         splitNumber: 5,
         shape: 'polygon',
         axisLine: {
@@ -125,7 +125,8 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRadarBasicConfig> =
       series: {
         label: {
           show: false,
-          position: 'outside',
+          position: 'top',
+          distance: 5,
           formatter: '{b}: {c}',
           ...DEFAULT_FONT_CONFIG,
           color: {

@@ -64,6 +64,18 @@ export const COMPONENT_TYPE_LIST = [
           },
         ],
       },
+      {
+        type: 'radar',
+        title: '雷达图',
+        children: [
+          {
+            type: 'RADAR_BASIC',
+            title: '基础雷达图',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+        ],
+      },
     ],
   },
   {
