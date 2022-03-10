@@ -97,7 +97,10 @@ export const ConfigItem = (
       </div>
       <div
         id={scrollBarId.current}
-        className={styles['design-config-wrapper-item-content']}
+        className={classnames(
+          styles['design-config-wrapper-item-content'],
+          'zero-scrollbar',
+        )}
       >
         <div className={styles['design-config-wrapper-item-content-main']}>
           {children}

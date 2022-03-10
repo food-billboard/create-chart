@@ -61,6 +61,7 @@ const ComponentList = (props: { type: string }) => {
         styles['design-left-component-list'],
         'border-r-8',
         'normal-background',
+        'zero-scrollbar',
       )}
       bordered={false}
       defaultActiveKey={defaultActiveKey}
