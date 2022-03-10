@@ -152,16 +152,16 @@ labelLine.show labelLine.length labelLine.lineStyle.width labelLine.lineStyle.ty
 itemStyle.color  
 
 ##### gauge  
-center radius startAngle endAngle clockwise  
+center radius startAngle endAngle  
 min max splitNumber  
 axisLine.show axisLine.lineStyle.color axisLine.lineStyle.width  
 progress.show progress.width progress.color  
-splitLine.show splitLine.length  splitLine.lineStyle.color splitLine.lineStyle.width  
+splitLine.show splitLine.length splitLine.lineStyle.color splitLine.lineStyle.width  
 axisTick.show axisTick.splitNumber axisTick.length axisTick.lineStyle.color axisTick.lineStyle.width axisTick.lineStyle.type   
 axisLabel.show axisLabel.distance axisLabel.color axisLabel.fontSize axisLabel.fontFamily axisLabel.fontWeight  
 pointer.show pointer.length pointer.width pointer.itemStyle.color  
 title.show title.color title.fontSize title.fontWeight title.fontFamily title.offsetCenter  
-detail.show detail.color detail.fontWeight detail.fontSize detail.fontFamily  
+detail.show detail.animation detail.color detail.fontWeight detail.fontSize detail.fontFamily  
 data.name data.value  
 
 ##### pictorialBar  

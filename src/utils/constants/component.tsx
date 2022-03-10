@@ -100,6 +100,18 @@ export const COMPONENT_TYPE_LIST = [
           },
         ],
       },
+      {
+        type: 'gauge',
+        title: '仪表盘',
+        children: [
+          {
+            type: 'GAUGE_BASIC',
+            title: '基础仪表盘',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+        ],
+      },
     ],
   },
   {
