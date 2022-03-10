@@ -148,7 +148,7 @@ left top right bottom
 orient gap  
 label.show label.formatter label.position  
 label.color label.fontFamily label.fontWeight label.fontSize  
-labelLine.show labelLine.length labelLine.lineStyle.color labelLine.lineStyle.width labelLine.lineStyle.type    
+labelLine.show labelLine.length labelLine.lineStyle.width labelLine.lineStyle.type    
 itemStyle.color  
 
 ##### gauge  
