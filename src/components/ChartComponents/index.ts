@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+// Chart
 import BarBasic from './Chart/Bar/BarBasic';
 import LineBasic from './Chart/Line/LineBasic';
 import PieBasic from './Chart/Pie/PieBasic';
@@ -7,6 +8,8 @@ import RadarBasic from './Chart/Radar/RadarBasic';
 import BoxPlotBasic from './Chart/BoxPlot/BoxPlotBasic';
 import FunnelBasic from './Chart/Funnel/FunnelBasic';
 import GaugeBasic from './Chart/Gauge/GaugeBasic';
+// other
+import WordCloud from './Other/WordCloud';
 
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
@@ -25,6 +28,7 @@ COMPONENT_MAP.set(RadarBasic.type, RadarBasic);
 COMPONENT_MAP.set(BoxPlotBasic.type, BoxPlotBasic);
 COMPONENT_MAP.set(FunnelBasic.type, FunnelBasic);
 COMPONENT_MAP.set(GaugeBasic.type, GaugeBasic);
+COMPONENT_MAP.set(WordCloud.type, WordCloud);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

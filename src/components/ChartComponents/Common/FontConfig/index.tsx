@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo, ReactNode } from 'react';
 import { Select } from 'antd';
 import { useControllableValue } from 'ahooks';
 import { CompatColorSelect } from '@/components/ColorSelect';
@@ -85,6 +85,8 @@ const FontConfig = (props: {
   value?: ComponentData.TFontConfig;
   defaultValue?: ComponentData.TFontConfig;
   onChange?: (value: ComponentData.TFontConfig) => void;
+  ignore?: (keyof ComponentData.TFontConfig)[];
+  children?: ReactNode;
 }) => {
   const [value, setValue] = useControllableValue<ComponentData.TFontConfig>(
     props,
@@ -101,6 +103,7 @@ const FontConfig = (props: {
       },
     },
   );
+  const { ignore, children } = props;
 
   const { fontSize, fontWeight, fontFamily, color } = value;
 
@@ -118,8 +121,9 @@ const FontConfig = (props: {
     [value],
   );
 
-  return (
-    <Item label="文本">
+  const fontFamilyConfig = useMemo(() => {
+    if (ignore?.includes('fontFamily')) return null;
+    return (
       <HalfForm label="字体">
         <Select
           defaultValue={fontFamily}
@@ -137,6 +141,12 @@ const FontConfig = (props: {
           })}
         </Select>
       </HalfForm>
+    );
+  }, [ignore, fontFamily, onChange]);
+
+  const fontWeightConfig = useMemo(() => {
+    if (ignore?.includes('fontWeight')) return null;
+    return (
       <HalfForm label="文字粗细">
         <Select
           defaultValue={fontWeight}
@@ -152,6 +162,12 @@ const FontConfig = (props: {
           })}
         </Select>
       </HalfForm>
+    );
+  }, [ignore, fontWeight, onChange]);
+
+  const fontSizeConfig = useMemo(() => {
+    if (ignore?.includes('fontSize')) return null;
+    return (
       <HalfForm label="字号">
         <InputNumber
           value={fontSize}
@@ -159,12 +175,28 @@ const FontConfig = (props: {
           className="w-100"
         />
       </HalfForm>
+    );
+  }, [ignore, fontSize, onChange]);
+
+  const colorConfig = useMemo(() => {
+    if (ignore?.includes('color')) return null;
+    return (
       <HalfForm label="颜色">
         <CompatColorSelect
           defaultValue={color}
           onChange={onChange.bind(null, 'color')}
         />
       </HalfForm>
+    );
+  }, [ignore, color, onChange]);
+
+  return (
+    <Item label="文本">
+      {fontFamilyConfig}
+      {fontWeightConfig}
+      {fontSizeConfig}
+      {colorConfig}
+      {children}
     </Item>
   );
 };
@@ -174,6 +206,8 @@ export const FontConfigList = (props: {
   defaultValue?: ComponentData.TFontConfig;
   onChange?: (value: ComponentData.TFontConfig) => void;
   labelProps?: TConfigListItemProps['labelProps'];
+  ignore?: (keyof ComponentData.TFontConfig)[];
+  children?: ReactNode;
 }) => {
   const [value, setValue] = useControllableValue<ComponentData.TFontConfig>(
     props,
@@ -190,6 +224,8 @@ export const FontConfigList = (props: {
       },
     },
   );
+
+  const { ignore, children } = props;
 
   const { fontSize, fontWeight, fontFamily, color } = value;
 
@@ -209,8 +245,9 @@ export const FontConfigList = (props: {
     [value],
   );
 
-  return (
-    <>
+  const fontFamilyConfig = useMemo(() => {
+    if (ignore?.includes('fontFamily')) return null;
+    return (
       <Item label="字体" labelProps={labelProps}>
         <FullForm>
           <Select
@@ -229,6 +266,12 @@ export const FontConfigList = (props: {
           </Select>
         </FullForm>
       </Item>
+    );
+  }, [ignore, fontFamily, onChange]);
+
+  const fontWeightConfig = useMemo(() => {
+    if (ignore?.includes('fontWeight')) return null;
+    return (
       <Item label="文字粗细" labelProps={labelProps}>
         <FullForm>
           <Select
@@ -246,6 +289,12 @@ export const FontConfigList = (props: {
           </Select>
         </FullForm>
       </Item>
+    );
+  }, [ignore, fontWeight, onChange]);
+
+  const fontSizeConfig = useMemo(() => {
+    if (ignore?.includes('fontSize')) return null;
+    return (
       <Item label="字号" labelProps={labelProps}>
         <FullForm>
           <InputNumber
@@ -255,6 +304,12 @@ export const FontConfigList = (props: {
           />
         </FullForm>
       </Item>
+    );
+  }, [ignore, fontSize, onChange]);
+
+  const colorConfig = useMemo(() => {
+    if (ignore?.includes('color')) return null;
+    return (
       <Item label="颜色" labelProps={labelProps}>
         <FullForm>
           <CompatColorSelect
@@ -263,6 +318,16 @@ export const FontConfigList = (props: {
           />
         </FullForm>
       </Item>
+    );
+  }, [ignore, color, onChange]);
+
+  return (
+    <>
+      {fontFamilyConfig}
+      {fontWeightConfig}
+      {fontSizeConfig}
+      {colorConfig}
+      {children}
     </>
   );
 };

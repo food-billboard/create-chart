@@ -81,7 +81,8 @@ declare namespace ComponentData {
     | 'RADAR_BASIC'
     | 'BOX_PLOT_BASIC'
     | 'FUNNEL_BASIC'
-    | 'GAUGE_BASIC';
+    | 'GAUGE_BASIC'
+    | 'WORD_CLOUD_BASIC';
 
   // 基础组件属性
   export type TBaseConfig = {

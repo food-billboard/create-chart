@@ -275,7 +275,7 @@ yearLabel.show yearLabel.margin yearLabel.position yearLabel.color yearLabel.fon
 | textStyle.fontWeight | 文字粗细 | number \| string | - |
 | textStyle.fontFamily | 文字字体 | string | - |
 | addonBefore.show | 是否前缀 | boolean | - |
-| addonBefore.content | 前缀内容，支持变量 | boolean | - |
+| addonBefore.content | 前缀内容，支持变量 | string | - |
 | addonBefore.color | 前缀文字颜色 | string | - |
 | addonBefore.fontSize | 前缀文字大小 | number | - |
 | addonBefore.fontWeight | 前缀文字粗细 | number \| string | - |

@@ -136,7 +136,20 @@ export const COMPONENT_TYPE_LIST = [
     type: 'other',
     title: '其他',
     icon: <AppstoreOutlined className={classnames(commonClass)} />,
-    children: [],
+    children: [
+      {
+        type: 'word-cloud',
+        title: '词云',
+        children: [
+          {
+            type: 'WORD_CLOUD_BASIC',
+            title: '词云',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+        ],
+      },
+    ],
   },
   {
     type: 'interactive',
