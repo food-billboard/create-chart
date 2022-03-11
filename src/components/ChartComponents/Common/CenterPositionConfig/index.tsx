@@ -1,5 +1,4 @@
-import { useCallback } from 'react';
-import {} from 'antd';
+import { useCallback, ReactNode } from 'react';
 import ConfigList from '../Structure/ConfigList';
 import HalfForm from '../Structure/HalfForm';
 import InputNumber from '../InputNumber';
@@ -11,11 +10,15 @@ export type PositionValue = {
   top: number;
 };
 
-const CenterPositionConfig = (props: {
+export type CenterPositionConfigProps = {
   value: PositionValue;
   onChange: (value: PositionValue) => void;
-}) => {
-  const { value, onChange } = props;
+  parentLabel?: ReactNode;
+  subLabel?: [ReactNode, ReactNode];
+};
+
+const CenterPositionConfig = (props: CenterPositionConfigProps) => {
+  const { value, onChange, parentLabel, subLabel } = props;
   const { left, top } = value;
 
   const onKeyChange = useCallback(
@@ -29,11 +32,11 @@ const CenterPositionConfig = (props: {
   );
 
   return (
-    <Item label="位置">
-      <HalfForm label="左">
+    <Item label={parentLabel || '位置'}>
+      <HalfForm label={subLabel?.[0] || '左'}>
         <InputNumber value={left} onChange={onKeyChange.bind(null, 'left')} />
       </HalfForm>
-      <HalfForm label="上">
+      <HalfForm label={subLabel?.[1] || '上'}>
         <InputNumber value={top} onChange={onKeyChange.bind(null, 'top')} />
       </HalfForm>
     </Item>

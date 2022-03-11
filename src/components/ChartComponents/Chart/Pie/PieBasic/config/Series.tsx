@@ -10,6 +10,7 @@ import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
 import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
+import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import { TPieBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -90,28 +91,20 @@ const SeriesConfig = (props: {
           value: labelLine.show,
         }}
       >
-        <Item label="线段">
-          <HalfForm label="第一线段">
-            <InputNumber
-              value={labelLine.length}
-              onChange={(value) => {
-                onKeyChange('labelLine', {
-                  length: value,
-                });
-              }}
-            />
-          </HalfForm>
-          <HalfForm label="第二线段">
-            <InputNumber
-              value={labelLine.length2}
-              onChange={(value) => {
-                onKeyChange('labelLine', {
-                  length2: value,
-                });
-              }}
-            />
-          </HalfForm>
-        </Item>
+        <MaxMinConfig
+          label="线段"
+          subLabel={['第一线段', '第二线段']}
+          value={{
+            max: labelLine.length2,
+            min: labelLine.length,
+          }}
+          onChange={(value) => {
+            onKeyChange('labelLine', {
+              length: value.min,
+              length2: value.max,
+            });
+          }}
+        />
         <Item label="平滑曲线">
           <Switch
             checked={labelLine.smooth}

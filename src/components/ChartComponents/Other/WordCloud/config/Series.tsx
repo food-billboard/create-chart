@@ -6,6 +6,7 @@ import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
+import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import { TWordCloudBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -99,47 +100,31 @@ const SeriesConfig = (props: {
 
   const sizeRangeConfig = useMemo(() => {
     return (
-      <Item label="文字大小">
-        <HalfForm label="最小">
-          <InputNumber
-            value={sizeRange[0]}
-            onChange={(value) => {
-              onKeyChange('sizeRange', [value, sizeRange[1]]);
-            }}
-          />
-        </HalfForm>
-        <HalfForm label="最大">
-          <InputNumber
-            value={sizeRange[1]}
-            onChange={(value) => {
-              onKeyChange('sizeRange', [sizeRange[0], value]);
-            }}
-          />
-        </HalfForm>
-      </Item>
+      <MaxMinConfig
+        label="文字大小"
+        value={{
+          max: sizeRange[1],
+          min: sizeRange[0],
+        }}
+        onChange={(value) => {
+          onKeyChange('sizeRange', [value.min, value.max]);
+        }}
+      />
     );
   }, [sizeRange, onKeyChange]);
 
   const rotationRangeConfig = useMemo(() => {
     return (
-      <Item label="旋转角度">
-        <HalfForm label="最小">
-          <InputNumber
-            value={rotationRange[0]}
-            onChange={(value) => {
-              onKeyChange('rotationRange', [value, rotationRange[1]]);
-            }}
-          />
-        </HalfForm>
-        <HalfForm label="最大">
-          <InputNumber
-            value={rotationRange[1]}
-            onChange={(value) => {
-              onKeyChange('rotationRange', [rotationRange[0], value]);
-            }}
-          />
-        </HalfForm>
-      </Item>
+      <MaxMinConfig
+        label="旋转角度"
+        value={{
+          max: rotationRange[1],
+          min: rotationRange[0],
+        }}
+        onChange={(value) => {
+          onKeyChange('rotationRange', [value.min, value.max]);
+        }}
+      />
     );
   }, [rotationRange, onKeyChange]);
 

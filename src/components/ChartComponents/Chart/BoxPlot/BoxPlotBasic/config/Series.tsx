@@ -7,6 +7,7 @@ import { CompatColorSelect } from '@/components/ColorSelect';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TBoxPlotBasicConfig } from '../type';
 
@@ -36,24 +37,16 @@ const SeriesConfig = (props: {
 
   const boxWidthConfig = useMemo(() => {
     return (
-      <Item label="宽度">
-        <HalfForm label="最小">
-          <InputNumber
-            value={boxWidth[0]}
-            onChange={(value) => {
-              onKeyChange('boxWidth', [value, boxWidth[1]]);
-            }}
-          />
-        </HalfForm>
-        <HalfForm label="最大">
-          <InputNumber
-            value={boxWidth[0]}
-            onChange={(value) => {
-              onKeyChange('boxWidth', [boxWidth[0], value]);
-            }}
-          />
-        </HalfForm>
-      </Item>
+      <MaxMinConfig
+        label="宽度"
+        value={{
+          max: boxWidth[1],
+          min: boxWidth[0],
+        }}
+        onChange={(value) => {
+          onKeyChange('boxWidth', [value.min, value.max]);
+        }}
+      />
     );
   }, [boxWidth, onKeyChange]);
 

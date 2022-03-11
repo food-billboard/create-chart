@@ -10,6 +10,7 @@ import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
 import NumberPositionConfig from '@/components/ChartComponents/Common/NumberPositionConfig';
+import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import { TFunnelBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -146,33 +147,46 @@ const SeriesConfig = (props: {
 
   const minMaxConfig = useMemo(() => {
     return (
-      <Item label="数值范围">
-        <HalfForm label="最小">
-          <InputNumber value={min} onChange={onKeyChange.bind(null, 'min')} />
-        </HalfForm>
-        <HalfForm label="最大">
-          <InputNumber value={max} onChange={onKeyChange.bind(null, 'max')} />
-        </HalfForm>
-      </Item>
+      <MaxMinConfig
+        label="数值范围"
+        value={{
+          max,
+          min,
+        }}
+        onChange={(value) => {
+          onChange({
+            config: {
+              options: {
+                series: value,
+              },
+            },
+          });
+        }}
+      />
     );
   }, [min, max, onKeyChange]);
 
   const minMaxSizeConfig = useMemo(() => {
     return (
-      <Item label="宽度范围(%)">
-        <HalfForm label="最小">
-          <InputNumber
-            value={minSize}
-            onChange={onKeyChange.bind(null, 'minSize')}
-          />
-        </HalfForm>
-        <HalfForm label="最大">
-          <InputNumber
-            value={maxSize}
-            onChange={onKeyChange.bind(null, 'maxSize')}
-          />
-        </HalfForm>
-      </Item>
+      <MaxMinConfig
+        label="宽度范围(%)"
+        value={{
+          max: maxSize,
+          min: minSize,
+        }}
+        onChange={(value) => {
+          onChange({
+            config: {
+              options: {
+                series: {
+                  minSize: value.min,
+                  maxSize: value.max,
+                },
+              },
+            },
+          });
+        }}
+      />
     );
   }, [minSize, maxSize, onKeyChange]);
 

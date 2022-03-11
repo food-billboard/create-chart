@@ -3,14 +3,11 @@ import { Switch } from 'antd';
 import { pick } from 'lodash';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
-import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
-import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
-import NumberPositionConfig from '@/components/ChartComponents/Common/NumberPositionConfig';
+import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
@@ -190,14 +187,22 @@ const SeriesConfig = (props: {
 
   const minMaxConfig = useMemo(() => {
     return (
-      <Item label="数值范围">
-        <HalfForm label="最小">
-          <InputNumber value={min} onChange={onKeyChange.bind(null, 'min')} />
-        </HalfForm>
-        <HalfForm label="最大">
-          <InputNumber value={max} onChange={onKeyChange.bind(null, 'max')} />
-        </HalfForm>
-      </Item>
+      <MaxMinConfig
+        label="数值范围"
+        value={{
+          max,
+          min,
+        }}
+        onChange={(value) => {
+          onChange({
+            config: {
+              options: {
+                series: value,
+              },
+            },
+          });
+        }}
+      />
     );
   }, [min, max, onKeyChange]);
 
@@ -217,20 +222,26 @@ const SeriesConfig = (props: {
 
   const minMaxAngleConfig = useMemo(() => {
     return (
-      <Item label="角度范围">
-        <HalfForm label="起始">
-          <InputNumber
-            value={startAngle}
-            onChange={onKeyChange.bind(null, 'startAngle')}
-          />
-        </HalfForm>
-        <HalfForm label="结束">
-          <InputNumber
-            value={endAngle}
-            onChange={onKeyChange.bind(null, 'endAngle')}
-          />
-        </HalfForm>
-      </Item>
+      <MaxMinConfig
+        label="角度范围"
+        subLabel={['起始', '结束']}
+        value={{
+          max: endAngle,
+          min: startAngle,
+        }}
+        onChange={(value) => {
+          onChange({
+            config: {
+              options: {
+                series: {
+                  startAngle: value.min,
+                  endAngle: value.max,
+                },
+              },
+            },
+          });
+        }}
+      />
     );
   }, [startAngle, endAngle, onKeyChange]);
 
