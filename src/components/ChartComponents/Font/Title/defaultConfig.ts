@@ -5,10 +5,10 @@ import {
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
 } from '../../Common/Constants/defaultConfig';
-import { getName } from '@/utils/constants';
+import { getText } from '@/utils/constants';
 import { TTitleConfig } from './type';
 
-const [DEFAULT_NAME_LABEL] = getName(1);
+const [DEFAULT_NAME_LABEL] = getText(1);
 
 const DEFAULT_VALUE = {
   value: DEFAULT_NAME_LABEL,

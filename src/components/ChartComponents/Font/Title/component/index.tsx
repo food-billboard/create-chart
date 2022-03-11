@@ -71,6 +71,7 @@ const TitleBasic = (props: {
       justifyContent: horizontal,
       alignItems: vertical,
       writingMode: orient as any,
+      whiteSpace: orient === 'vertical-lr' ? 'pre' : 'nowrap',
     };
     return baseStyle;
   }, [nextOptions]);

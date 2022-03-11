@@ -7,6 +7,13 @@ export function getName(count = 5) {
   });
 }
 
+export function getText(count = 5, min: number = 5, max = 20) {
+  const realCounter = count > 100 ? 100 : count;
+  return new Array(realCounter).fill(0).map(() => {
+    return Random.ctitle(min, max);
+  });
+}
+
 export function getDate(count = 10) {
   const realCounter = count > 100 ? 100 : count;
   let month: string | number = new Date().getMonth() + 1;

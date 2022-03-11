@@ -141,10 +141,17 @@ const AxisConfig = (props: AxisConfigProps) => {
             <Input value={name} onChange={onKeyChange.bind(null, 'name')} />
           </FullForm>
         </Item>
-        <FontConfigList
-          value={nameTextStyle}
-          onChange={onKeyChange.bind(null, 'nameTextStyle')}
-        />
+        <Collapse
+          child={{
+            header: '文字',
+            key: 'font',
+          }}
+        >
+          <FontConfigList
+            value={nameTextStyle}
+            onChange={onKeyChange.bind(null, 'nameTextStyle')}
+          />
+        </Collapse>
       </Collapse>
     );
   }, [needName, name, nameTextStyle, onKeyChange]);
