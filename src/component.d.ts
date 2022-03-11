@@ -82,7 +82,8 @@ declare namespace ComponentData {
     | 'BOX_PLOT_BASIC'
     | 'FUNNEL_BASIC'
     | 'GAUGE_BASIC'
-    | 'WORD_CLOUD_BASIC';
+    | 'WORD_CLOUD_BASIC'
+    | 'TITLE';
 
   // 基础组件属性
   export type TBaseConfig = {

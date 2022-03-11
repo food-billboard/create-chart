@@ -252,7 +252,6 @@ yearLabel.show yearLabel.margin yearLabel.position yearLabel.color yearLabel.fon
 | textStyle.fontFamily | 文字字体 | string | - |
 | textStyle.align | 对齐方式 | string | - |
 | textStyle.orient | 排列方式 | string | - |
-| textStyle.fontStyle | 文字特效 | string | - |
 
 #### 时间  
 |  属性   | 描述  | 类型  | 其他  |

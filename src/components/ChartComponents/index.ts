@@ -10,6 +10,8 @@ import FunnelBasic from './Chart/Funnel/FunnelBasic';
 import GaugeBasic from './Chart/Gauge/GaugeBasic';
 // other
 import WordCloud from './Other/WordCloud';
+// font
+import Title from './Font/Title';
 
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
@@ -29,6 +31,7 @@ COMPONENT_MAP.set(BoxPlotBasic.type, BoxPlotBasic);
 COMPONENT_MAP.set(FunnelBasic.type, FunnelBasic);
 COMPONENT_MAP.set(GaugeBasic.type, GaugeBasic);
 COMPONENT_MAP.set(WordCloud.type, WordCloud);
+COMPONENT_MAP.set(Title.type, Title);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

@@ -24,6 +24,7 @@
     "@ant-design/pro-layout": "^6.5.0",
     "@scena/react-ruler": "^0.9.1",
     "ahooks": "^3.1.5",
+    "animate.css": "^4.1.1",
     "antd": "^4.18.2",
     "array-move": "3.0.1",
     "axios": "^0.24.0",

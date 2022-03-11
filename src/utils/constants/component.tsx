@@ -118,7 +118,20 @@ export const COMPONENT_TYPE_LIST = [
     type: 'font',
     title: '文本',
     icon: <FontColorsOutlined className={classnames(commonClass)} />,
-    children: [],
+    children: [
+      {
+        type: 'text',
+        title: '文字',
+        children: [
+          {
+            type: 'TITLE',
+            title: '标题',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+        ],
+      },
+    ],
   },
   {
     type: 'media',
