@@ -1,7 +1,17 @@
 import { useMemo } from 'react';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 
-const format = (processedValue: any, fields: any, counter?: any) => {
+const format = (
+  processedValue: any,
+  fields: any,
+  counter: any = {
+    seriesKeys: [],
+    xAxisKeys: [],
+    yAxisValues: {
+      _defaultValue_: [],
+    },
+  },
+) => {
   if (Array.isArray(processedValue)) {
     return processedValue.reduce(
       (acc: any, cur: any) => {
@@ -31,6 +41,8 @@ const format = (processedValue: any, fields: any, counter?: any) => {
     }
     if (!counter.xAxisKeys.includes(xAxisValue))
       counter.xAxisKeys.push(processedValue[fields.xAxisKeyKey]);
+
+    return counter;
   }
 };
 

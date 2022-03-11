@@ -46,7 +46,6 @@ const GaugeBasic = (props: {
 
   const {
     request,
-    syncInteractiveAction,
     getValue,
     requestUrl,
     componentFilter,
@@ -69,14 +68,6 @@ const GaugeBasic = (props: {
     },
   });
 
-  const onClick = (params: any) => {
-    const { name, data } = params;
-    syncInteractiveAction('click', {
-      name: name,
-      value: data,
-    });
-  };
-
   const initChart = () => {
     const chart = init(
       document.querySelector(`#${chartId.current!}`)!,
@@ -91,12 +82,59 @@ const GaugeBasic = (props: {
   };
 
   const getSeries = () => {
-    const { ...nextSeries } = series;
+    const {
+      center,
+      radius,
+      progress,
+      splitLine,
+      axisTick,
+      axisLabel,
+      pointer,
+      title,
+      detail,
+      ...nextSeries
+    } = series;
     const { animation: show, animationDuration, animationEasing } = animation;
 
     const baseSeries = {
       ...nextSeries,
-      type: 'funnel',
+      center: center.map((item) => `${item}%`),
+      radius: radius + '%',
+      type: 'gauge',
+      progress: {
+        ...progress,
+        color: getRgbaString(progress.color),
+      },
+      splitLine: {
+        ...splitLine,
+        color: getRgbaString(splitLine.color),
+      },
+      axisLabel: {
+        ...axisLabel,
+        color: getRgbaString(axisLabel.color),
+      },
+      pointer: {
+        ...pointer,
+        itemStyle: {
+          ...pointer.itemStyle,
+          color: getRgbaString(pointer.itemStyle.color),
+        },
+      },
+      title: {
+        ...title,
+        color: getRgbaString(title.color),
+      },
+      detail: {
+        ...detail,
+        color: getRgbaString(detail.color),
+      },
+      axisTick: {
+        ...axisTick,
+        lineStyle: {
+          ...axisTick.lineStyle,
+          color: getRgbaString(splitLine.color),
+        },
+      },
       data: xAxisKeys.map((item: any, index: number) => {
         return {
           name: item,
@@ -118,9 +156,6 @@ const GaugeBasic = (props: {
 
     chartInstance.current?.setOption(
       {
-        grid: {
-          show: false,
-        },
         series,
       },
       true,
@@ -135,11 +170,6 @@ const GaugeBasic = (props: {
       chartInstance.current?.dispose();
     };
   }, [screenTheme]);
-
-  useEffect(() => {
-    chartInstance.current?.off('click');
-    chartInstance.current?.on('click', onClick);
-  }, [syncInteractiveAction]);
 
   // 数据发生变化时
   useDeepCompareEffect(() => {

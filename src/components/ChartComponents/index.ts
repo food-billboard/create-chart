@@ -6,6 +6,7 @@ import ScatterBasic from './Chart/Scatter/ScatterBasic';
 import RadarBasic from './Chart/Radar/RadarBasic';
 import BoxPlotBasic from './Chart/BoxPlot/BoxPlotBasic';
 import FunnelBasic from './Chart/Funnel/FunnelBasic';
+import GaugeBasic from './Chart/Gauge/GaugeBasic';
 
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
@@ -23,6 +24,7 @@ COMPONENT_MAP.set(ScatterBasic.type, ScatterBasic);
 COMPONENT_MAP.set(RadarBasic.type, RadarBasic);
 COMPONENT_MAP.set(BoxPlotBasic.type, BoxPlotBasic);
 COMPONENT_MAP.set(FunnelBasic.type, FunnelBasic);
+COMPONENT_MAP.set(GaugeBasic.type, GaugeBasic);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

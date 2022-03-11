@@ -41,8 +41,10 @@ export type TGaugeBasicConfig = {
     pointer: {
       show: boolean;
       length: number;
-      color: ComponentData.TColorConfig;
       width: number;
+      itemStyle: {
+        color: ComponentData.TColorConfig;
+      };
     };
     title: {
       show: boolean;
@@ -50,7 +52,7 @@ export type TGaugeBasicConfig = {
     } & ComponentData.TFontConfig;
     detail: {
       show: boolean;
-      animation: boolean;
+      valueAnimation: boolean;
     } & ComponentData.TFontConfig;
   };
   animation: ComponentData.ComponentChartAnimationConfig;

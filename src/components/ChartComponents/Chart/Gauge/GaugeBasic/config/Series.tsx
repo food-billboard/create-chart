@@ -206,6 +206,7 @@ const SeriesConfig = (props: {
       <Item label="大小">
         <FullForm>
           <InputNumber
+            className="w-100"
             value={radius}
             onChange={onKeyChange.bind(null, 'radius')}
           />
@@ -236,10 +237,11 @@ const SeriesConfig = (props: {
   const splitNumberConfig = useMemo(() => {
     return (
       <Item label="刻度段数">
-        <FullForm label="最小">
+        <FullForm>
           <InputNumber
             value={splitNumber}
             onChange={onKeyChange.bind(null, 'splitNumber')}
+            className="w-100"
           />
         </FullForm>
       </Item>
@@ -407,8 +409,8 @@ const SeriesConfig = (props: {
           value: pointer.show,
         }}
       >
-        <Item label="长度">
-          <FullForm>
+        <Item label="尺寸">
+          <HalfForm label="长度">
             <InputNumber
               value={pointer.length}
               onChange={(value) => {
@@ -417,27 +419,27 @@ const SeriesConfig = (props: {
                 });
               }}
             />
-          </FullForm>
+          </HalfForm>
+          <HalfForm label="宽度">
+            <InputNumber
+              value={pointer.width}
+              onChange={(value) => {
+                onKeyChange('pointer', {
+                  width: value,
+                });
+              }}
+            />
+          </HalfForm>
         </Item>
         <Item label="颜色">
           <FullForm>
             <CompatColorSelect
-              value={pointer.color}
+              value={pointer.itemStyle.color}
               onChange={(value) => {
                 onKeyChange('pointer', {
-                  color: value,
-                });
-              }}
-            />
-          </FullForm>
-        </Item>
-        <Item label="长度">
-          <FullForm>
-            <InputNumber
-              value={pointer.length}
-              onChange={(value) => {
-                onKeyChange('pointer', {
-                  length: value,
+                  itemStyle: {
+                    color: value,
+                  },
                 });
               }}
             />
@@ -463,13 +465,8 @@ const SeriesConfig = (props: {
         }}
       >
         <FontConfigList
-          value={pick(axisLabel, [
-            'color',
-            'fontSize',
-            'fontWeight',
-            'fontFamily',
-          ])}
-          onChange={onKeyChange.bind(null, 'axisLabel')}
+          value={pick(title, ['color', 'fontSize', 'fontWeight', 'fontFamily'])}
+          onChange={onKeyChange.bind(null, 'title')}
         />
         <CenterPositionConfig
           value={{
@@ -513,10 +510,10 @@ const SeriesConfig = (props: {
         <Item label="动画">
           <FullForm>
             <Switch
-              checked={detail.animation}
+              checked={detail.valueAnimation}
               onChange={(value) => {
                 onKeyChange('detail', {
-                  animation: value,
+                  valueAnimation: value,
                 });
               }}
             />

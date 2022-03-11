@@ -1,11 +1,8 @@
-import { omit } from 'lodash';
 import { mergeWithoutArray } from '@/utils';
 import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
-  DEFAULT_LEGEND_CONFIG,
-  DEFAULT_TOOLTIP_CONFIG,
   DEFAULT_FONT_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
@@ -13,15 +10,13 @@ import { getName, getNumberValue } from '@/utils/constants';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TGaugeBasicConfig } from './type';
 
-const DEFAULT_NAME_LABEL = getName(5);
-const DEFAULT_DATE_VALUE = getNumberValue(5);
+const [DEFAULT_NAME_LABEL] = getName(1);
+const [DEFAULT_DATE_VALUE] = getNumberValue(1, 0, 100);
 
-const DEFAULT_VALUE = DEFAULT_NAME_LABEL.map((item, index) => {
-  return {
-    name: item,
-    value: DEFAULT_DATE_VALUE[index],
-  };
-});
+const DEFAULT_VALUE = {
+  name: DEFAULT_NAME_LABEL,
+  value: DEFAULT_DATE_VALUE,
+};
 
 const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TGaugeBasicConfig> =
   {
@@ -31,6 +26,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TGaugeBasicConfig> =
     data: {
       request: {
         value: DEFAULT_VALUE,
+        valueType: 'object',
       },
       filter: {
         map: [
@@ -100,8 +96,10 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TGaugeBasicConfig> =
         pointer: {
           show: true,
           length: 60,
-          color: ThemeUtil.generateNextColor4CurrentTheme(0),
           width: 6,
+          itemStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
         },
         title: {
           show: true,
@@ -110,7 +108,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TGaugeBasicConfig> =
         },
         detail: {
           show: false,
-          animation: false,
+          valueAnimation: false,
           ...DEFAULT_FONT_CONFIG,
         },
       },
