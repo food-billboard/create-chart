@@ -101,11 +101,13 @@ const WrapperCollapse: typeof Collapse & {
 
 WrapperCollapse.Panel = Panel;
 
-export const SingleCollapse = (props: {
+export type SingleCollapseProps = {
   parent?: TCollapseProps;
   child: TCollapsePanelProps;
   children?: ReactNode;
-}) => {
+};
+
+export const SingleCollapse = (props: SingleCollapseProps) => {
   const { parent = {}, child, children } = props;
 
   const { value, visibleRender } = child;

@@ -11,6 +11,7 @@ import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
+import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import { TGaugeBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -89,44 +90,29 @@ const SeriesConfig = (props: {
 
   const progressConfig = useMemo(() => {
     return (
-      <Collapse
-        child={{
-          header: '当前进度',
-          key: 'progress',
-          visibleRender: true,
-          onChange: (value) => {
-            onKeyChange('progress', {
-              show: value,
-            });
+      <LineStyleGroupConfig
+        collapseProps={{
+          child: {
+            header: '当前进度',
+            key: 'progress',
+            visibleRender: true,
+            onChange: (value) => {
+              onKeyChange('progress', {
+                show: value,
+              });
+            },
+            value: progress.show,
           },
-          value: progress.show,
         }}
-      >
-        <Item label="宽度">
-          <FullForm>
-            <InputNumber
-              value={progress.width}
-              onChange={(value) => {
-                onKeyChange('progress', {
-                  width: value,
-                });
-              }}
-            />
-          </FullForm>
-        </Item>
-        <Item label="颜色">
-          <FullForm>
-            <CompatColorSelect
-              value={progress.color}
-              onChange={(value) => {
-                onKeyChange('progress', {
-                  color: value,
-                });
-              }}
-            />
-          </FullForm>
-        </Item>
-      </Collapse>
+        ignore={['type']}
+        value={
+          {
+            color: progress.color,
+            width: progress.width,
+          } as any
+        }
+        onChange={onKeyChange.bind(null, 'progress')}
+      />
     );
   }, [progress, onKeyChange]);
 
@@ -171,8 +157,8 @@ const SeriesConfig = (props: {
         </Item>
         <Item label="长度">
           <FullForm>
-            <CompatColorSelect
-              value={splitLine.color}
+            <InputNumber
+              value={splitLine.length}
               onChange={(value) => {
                 onKeyChange('splitLine', {
                   length: value,
@@ -297,6 +283,7 @@ const SeriesConfig = (props: {
                   length: value,
                 });
               }}
+              className="w-100"
             />
           </FullForm>
         </Item>
@@ -309,58 +296,24 @@ const SeriesConfig = (props: {
                   splitNumber: value,
                 });
               }}
+              className="w-100"
             />
           </FullForm>
         </Item>
-        <Collapse
-          child={{
-            header: '线条样式',
-            key: 'axisTick_lineStyle',
+        <LineStyleGroupConfig
+          collapseProps={{
+            child: {
+              header: '线条样式',
+              key: 'axisTick_lineStyle',
+            },
           }}
-        >
-          <Item label="颜色">
-            <FullForm>
-              <CompatColorSelect
-                value={axisTick.lineStyle.color}
-                onChange={(value) => {
-                  onKeyChange('axisTick', {
-                    lineStyle: {
-                      color: value,
-                    },
-                  });
-                }}
-              />
-            </FullForm>
-          </Item>
-          <Item label="长度">
-            <FullForm>
-              <InputNumber
-                value={axisTick.lineStyle.width}
-                onChange={(value) => {
-                  onKeyChange('axisTick', {
-                    lineStyle: {
-                      width: value,
-                    },
-                  });
-                }}
-              />
-            </FullForm>
-          </Item>
-          <Item label="类型">
-            <FullForm>
-              <LineStyle
-                value={axisTick.lineStyle.type}
-                onChange={(value) => {
-                  onKeyChange('axisTick', {
-                    lineStyle: {
-                      type: value,
-                    },
-                  });
-                }}
-              />
-            </FullForm>
-          </Item>
-        </Collapse>
+          value={axisTick.lineStyle}
+          onChange={(value) => {
+            onKeyChange('axisTick', {
+              lineStyle: value,
+            });
+          }}
+        />
       </Collapse>
     );
   }, [axisTick, onKeyChange]);

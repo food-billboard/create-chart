@@ -389,6 +389,12 @@ declare namespace ComponentData {
     show: boolean;
     position: ComponentLabelPosition;
   } & TFontConfig;
+
+  export type ComponentLineGroupConfig = {
+    color: TColorConfig;
+    width: number;
+    type: ComponentLineStyle;
+  };
 }
 
 declare namespace ComponentMethod {

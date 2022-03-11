@@ -6,11 +6,10 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import { CompatColorSelect } from '@/components/ColorSelect';
-import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
+import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import { TRadarBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -86,58 +85,53 @@ const RadarConfig = (props: {
 
   const axisLineConfig = useMemo(() => {
     return (
-      <Collapse
-        child={{
-          header: '轴线',
-          key: 'splitLine',
-          visibleRender: true,
-          onChange: (value) => {
-            onKeyChange('splitLine', {
-              show: value,
-            });
-          },
-          value: splitLine.show,
-        }}
-      >
-        <Item label="颜色">
-          <CompatColorSelect
-            value={splitLine.lineStyle.color}
-            onChange={(value) => {
-              onKeyChange('splitLine', {
-                lineStyle: {
-                  color: value,
-                },
+      <LineStyleGroupConfig
+        collapseProps={{
+          child: {
+            header: '轴线',
+            key: 'axisLine',
+            visibleRender: true,
+            onChange: (value) => {
+              onKeyChange('axisLine', {
+                show: value,
               });
-            }}
-          />
-        </Item>
-        <Item label="样式">
-          <HalfForm label="宽度">
-            <InputNumber
-              value={splitLine.lineStyle.width}
-              onChange={(value) => {
-                onKeyChange('splitLine', {
-                  lineStyle: {
-                    width: value,
-                  },
-                });
-              }}
-            />
-          </HalfForm>
-          <HalfForm label="线条类型">
-            <LineStyle
-              value={splitLine.lineStyle.type}
-              onChange={(value) => {
-                onKeyChange('splitLine', {
-                  lineStyle: {
-                    type: value,
-                  },
-                });
-              }}
-            />
-          </HalfForm>
-        </Item>
-      </Collapse>
+            },
+            value: axisLine.show,
+          },
+        }}
+        value={axisLine.lineStyle}
+        onChange={(value) => {
+          onKeyChange('axisLine', {
+            lineStyle: value,
+          });
+        }}
+      />
+    );
+  }, [axisLine, onKeyChange]);
+
+  const splitLineConfig = useMemo(() => {
+    return (
+      <LineStyleGroupConfig
+        collapseProps={{
+          child: {
+            header: '分隔线',
+            key: 'splitLine',
+            visibleRender: true,
+            onChange: (value) => {
+              onKeyChange('splitLine', {
+                show: value,
+              });
+            },
+            value: splitLine.show,
+          },
+        }}
+        value={splitLine.lineStyle}
+        onChange={(value) => {
+          onKeyChange('splitLine', {
+            lineStyle: value,
+          });
+        }}
+      />
     );
   }, [axisLine, onKeyChange]);
 
@@ -261,6 +255,7 @@ const RadarConfig = (props: {
       {shapeConfig}
       {axisNameConfig}
       {axisLineConfig}
+      {splitLineConfig}
       {splitAreaConfig}
     </ConfigList>
   );

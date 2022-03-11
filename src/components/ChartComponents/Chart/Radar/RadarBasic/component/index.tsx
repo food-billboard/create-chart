@@ -202,16 +202,6 @@ const RadarBasic = (props: {
     const series = getSeries();
     const radar = getRadar();
 
-    console.log(
-      radar,
-      series,
-      xAxisKeys,
-      yAxisValues,
-      seriesKeys,
-      processedValue,
-      29999,
-    );
-
     chartInstance.current?.setOption(
       {
         grid: {

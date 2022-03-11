@@ -4,10 +4,10 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import { CompatColorSelect } from '@/components/ColorSelect';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
+import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TBoxPlotBasicConfig } from '../type';
 
@@ -83,78 +83,37 @@ const SeriesConfig = (props: {
                   />
                 </FullForm>
               </Item>
-              <Collapse
-                child={{
-                  header: '边框',
-                  key: 'borderStyle',
+              <LineStyleGroupConfig
+                collapseProps={{
+                  child: {
+                    header: '边框',
+                    key: 'borderStyle',
+                  },
                 }}
-              >
-                <Item label="颜色">
-                  <FullForm>
-                    <CompatColorSelect
-                      value={borderColor}
-                      onChange={(value) => {
-                        const newItemStyle = [...itemStyle];
-                        newItemStyle.splice(index, 1, {
-                          ...target,
-                          borderColor: value,
-                        } as any);
-                        onChange({
-                          config: {
-                            options: {
-                              series: {
-                                itemStyle: newItemStyle,
-                              },
-                            },
-                          },
-                        });
-                      }}
-                    />
-                  </FullForm>
-                </Item>
-                <Item label="宽度">
-                  <InputNumber
-                    value={borderWidth}
-                    onChange={(value) => {
-                      const newItemStyle = [...itemStyle];
-                      newItemStyle.splice(index, 1, {
-                        ...target,
-                        borderWidth: value,
-                      } as any);
-                      onChange({
-                        config: {
-                          options: {
-                            series: {
-                              itemStyle: newItemStyle,
-                            },
-                          },
+                value={{
+                  width: borderWidth,
+                  color: borderColor,
+                  type: borderType,
+                }}
+                onChange={(value) => {
+                  const newItemStyle = [...itemStyle];
+                  newItemStyle.splice(index, 1, {
+                    ...target,
+                    borderColor: value.color,
+                    borderType: value.type,
+                    borderWidth: value.width,
+                  } as any);
+                  onChange({
+                    config: {
+                      options: {
+                        series: {
+                          itemStyle: newItemStyle,
                         },
-                      });
-                    }}
-                  />
-                </Item>
-                <Item label="线条类型">
-                  <LineStyle
-                    value={borderType}
-                    onChange={(value) => {
-                      const newItemStyle = [...itemStyle];
-                      newItemStyle.splice(index, 1, {
-                        ...target,
-                        borderType: value,
-                      } as any);
-                      onChange({
-                        config: {
-                          options: {
-                            series: {
-                              itemStyle: newItemStyle,
-                            },
-                          },
-                        },
-                      });
-                    }}
-                  />
-                </Item>
-              </Collapse>
+                      },
+                    },
+                  });
+                }}
+              />
             </>
           );
         }}

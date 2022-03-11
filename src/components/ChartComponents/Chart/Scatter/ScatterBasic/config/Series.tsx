@@ -2,12 +2,11 @@ import { useCallback, useMemo } from 'react';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
-import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
 import { CompatColorSelect } from '@/components/ColorSelect';
+import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TScatterBasicConfig } from '../type';
 
@@ -67,78 +66,37 @@ const SeriesConfig = (props: {
           const { color, borderColor, borderType, borderWidth } = target;
           return (
             <>
-              <Collapse
-                child={{
-                  header: '边框',
-                  key: 'border',
+              <LineStyleGroupConfig
+                collapseProps={{
+                  child: {
+                    header: '边框',
+                    key: 'border',
+                  },
                 }}
-              >
-                <Item label="颜色">
-                  <FullForm>
-                    <CompatColorSelect
-                      value={borderColor}
-                      onChange={(value) => {
-                        const newItemStyle = [...itemStyle];
-                        newItemStyle.splice(index, 1, {
-                          ...target,
-                          borderColor: value,
-                        } as any);
-                        onChange({
-                          config: {
-                            options: {
-                              series: {
-                                itemStyle: newItemStyle,
-                              },
-                            },
-                          },
-                        });
-                      }}
-                    />
-                  </FullForm>
-                </Item>
-                <Item label="宽度">
-                  <InputNumber
-                    value={borderWidth}
-                    onChange={(value) => {
-                      const newItemStyle = [...itemStyle];
-                      newItemStyle.splice(index, 1, {
-                        ...target,
-                        borderWidth: value,
-                      } as any);
-                      onChange({
-                        config: {
-                          options: {
-                            series: {
-                              itemStyle: newItemStyle,
-                            },
-                          },
+                value={{
+                  color: borderColor,
+                  width: borderWidth,
+                  type: borderType,
+                }}
+                onChange={(value) => {
+                  const newItemStyle = [...itemStyle];
+                  newItemStyle.splice(index, 1, {
+                    ...target,
+                    borderColor: value.color,
+                    borderType: value.type,
+                    borderWidth: value.width,
+                  } as any);
+                  onChange({
+                    config: {
+                      options: {
+                        series: {
+                          itemStyle: newItemStyle,
                         },
-                      });
-                    }}
-                  />
-                </Item>
-                <Item label="线条类型">
-                  <LineStyle
-                    value={borderType}
-                    onChange={(value) => {
-                      const newItemStyle = [...itemStyle];
-                      newItemStyle.splice(index, 1, {
-                        ...target,
-                        borderType: value,
-                      } as any);
-                      onChange({
-                        config: {
-                          options: {
-                            series: {
-                              itemStyle: newItemStyle,
-                            },
-                          },
-                        },
-                      });
-                    }}
-                  />
-                </Item>
-              </Collapse>
+                      },
+                    },
+                  });
+                }}
+              />
               <Item label="颜色">
                 <FullForm>
                   <CompatColorSelect

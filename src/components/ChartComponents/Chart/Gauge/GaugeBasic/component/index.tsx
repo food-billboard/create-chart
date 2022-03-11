@@ -103,7 +103,9 @@ const GaugeBasic = (props: {
       type: 'gauge',
       progress: {
         ...progress,
-        color: getRgbaString(progress.color),
+        itemStyle: {
+          color: getRgbaString(progress.color),
+        },
       },
       splitLine: {
         ...splitLine,
@@ -132,7 +134,7 @@ const GaugeBasic = (props: {
         ...axisTick,
         lineStyle: {
           ...axisTick.lineStyle,
-          color: getRgbaString(splitLine.color),
+          color: getRgbaString(axisTick.lineStyle.color),
         },
       },
       data: xAxisKeys.map((item: any, index: number) => {

@@ -9,6 +9,7 @@ import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
+import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import { TRadarBasicConfig } from '../type';
@@ -99,81 +100,27 @@ const SeriesConfig = (props: {
           const targetItemStyleColor = itemStyle.color[index];
           const targetLineStyle = lineStyle[index];
           const targetAreaStyleColor = areaStyle.color[index];
-          const { color, width, type } = targetLineStyle;
           return (
             <>
-              <Collapse
-                child={{
-                  header: '线条',
-                  key: 'lineStyle',
+              <LineStyleGroupConfig
+                value={targetLineStyle}
+                onChange={(value) => {
+                  const newLineStyle = [...lineStyle];
+                  newLineStyle.splice(index, 1, {
+                    ...targetLineStyle,
+                    ...value,
+                  } as any);
+                  onChange({
+                    config: {
+                      options: {
+                        series: {
+                          lineStyle: newLineStyle,
+                        },
+                      },
+                    },
+                  });
                 }}
-              >
-                <Item label="颜色">
-                  <FullForm>
-                    <CompatColorSelect
-                      value={color}
-                      onChange={(value) => {
-                        const newLineStyle = [...lineStyle];
-                        newLineStyle.splice(index, 1, {
-                          ...targetLineStyle,
-                          color: value,
-                        } as any);
-                        onChange({
-                          config: {
-                            options: {
-                              series: {
-                                lineStyle: newLineStyle,
-                              },
-                            },
-                          },
-                        });
-                      }}
-                    />
-                  </FullForm>
-                </Item>
-                <Item label="宽度">
-                  <InputNumber
-                    value={width}
-                    onChange={(value) => {
-                      const newLineStyle = [...lineStyle];
-                      newLineStyle.splice(index, 1, {
-                        ...targetLineStyle,
-                        width: value,
-                      } as any);
-                      onChange({
-                        config: {
-                          options: {
-                            series: {
-                              lineStyle: newLineStyle,
-                            },
-                          },
-                        },
-                      });
-                    }}
-                  />
-                </Item>
-                <Item label="线条类型">
-                  <LineStyle
-                    value={type}
-                    onChange={(value) => {
-                      const newLineStyle = [...lineStyle];
-                      newLineStyle.splice(index, 1, {
-                        ...targetLineStyle,
-                        type: value,
-                      } as any);
-                      onChange({
-                        config: {
-                          options: {
-                            series: {
-                              lineStyle: newLineStyle,
-                            },
-                          },
-                        },
-                      });
-                    }}
-                  />
-                </Item>
-              </Collapse>
+              />
               <Item label="拐点颜色">
                 <FullForm>
                   <CompatColorSelect

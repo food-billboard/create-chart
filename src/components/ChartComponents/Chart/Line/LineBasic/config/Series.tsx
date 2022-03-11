@@ -11,6 +11,7 @@ import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
+import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { DEFAULT_DECAL, DEFAULT_LINE_STYLE } from '../defaultConfig';
 import { TLineBasicConfig } from '../type';
@@ -162,78 +163,25 @@ const SeriesConfig = (props: {
                   </HalfForm>
                 </Item>
               </Collapse>
-              <Collapse
-                child={{
-                  header: '线条',
-                  key: 'lineStyle',
+              <LineStyleGroupConfig
+                value={targetLineStyle}
+                onChange={(value) => {
+                  const newColor = [...lineStyle];
+                  newColor.splice(index, 1, {
+                    ...targetLineStyle,
+                    ...value,
+                  });
+                  onChange({
+                    config: {
+                      options: {
+                        series: {
+                          lineStyle: newColor,
+                        },
+                      },
+                    },
+                  });
                 }}
-              >
-                <Item label="颜色">
-                  <FullForm>
-                    <CompatColorSelect
-                      value={targetLineStyle.color}
-                      onChange={(value) => {
-                        const newColor = [...lineStyle];
-                        newColor.splice(index, 1, {
-                          ...targetLineStyle,
-                          color: value as any,
-                        });
-                        onChange({
-                          config: {
-                            options: {
-                              series: {
-                                lineStyle: newColor,
-                              },
-                            },
-                          },
-                        });
-                      }}
-                    />
-                  </FullForm>
-                </Item>
-                <Item label="宽度">
-                  <InputNumber
-                    value={targetLineStyle.width}
-                    onChange={(value) => {
-                      const newColor = [...lineStyle];
-                      newColor.splice(index, 1, {
-                        ...targetLineStyle,
-                        width: value as any,
-                      });
-                      onChange({
-                        config: {
-                          options: {
-                            series: {
-                              lineStyle: newColor,
-                            },
-                          },
-                        },
-                      });
-                    }}
-                  />
-                </Item>
-                <Item label="线条类型">
-                  <LineStyle
-                    value={targetLineStyle.type}
-                    onChange={(value) => {
-                      const newColor = [...lineStyle];
-                      newColor.splice(index, 1, {
-                        ...targetLineStyle,
-                        type: value as any,
-                      });
-                      onChange({
-                        config: {
-                          options: {
-                            series: {
-                              lineStyle: newColor,
-                            },
-                          },
-                        },
-                      });
-                    }}
-                  />
-                </Item>
-              </Collapse>
+              />
               <Item label="区域颜色">
                 <FullForm>
                   <CompatColorSelect
