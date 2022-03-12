@@ -70,15 +70,22 @@ const RadarConfig = (props: {
             });
           }}
         />
-        <FontConfigList
-          value={pick(axisName, [
-            'fontSize',
-            'color',
-            'fontFamily',
-            'fontWeight',
-          ])}
-          onChange={onKeyChange.bind(null, 'axisName')}
-        />
+        <Collapse
+          child={{
+            header: '文字',
+            key: 'font',
+          }}
+        >
+          <FontConfigList
+            value={pick(axisName, [
+              'fontSize',
+              'color',
+              'fontFamily',
+              'fontWeight',
+            ])}
+            onChange={onKeyChange.bind(null, 'axisName')}
+          />
+        </Collapse>
       </Collapse>
     );
   }, [axisName, onKeyChange]);

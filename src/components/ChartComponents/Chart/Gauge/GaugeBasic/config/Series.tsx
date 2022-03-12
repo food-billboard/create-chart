@@ -345,15 +345,22 @@ const SeriesConfig = (props: {
             />
           </FullForm>
         </Item>
-        <FontConfigList
-          value={pick(axisLabel, [
-            'color',
-            'fontSize',
-            'fontWeight',
-            'fontFamily',
-          ])}
-          onChange={onKeyChange.bind(null, 'axisLabel')}
-        />
+        <Collapse
+          child={{
+            header: '文字',
+            key: 'font',
+          }}
+        >
+          <FontConfigList
+            value={pick(axisLabel, [
+              'color',
+              'fontSize',
+              'fontWeight',
+              'fontFamily',
+            ])}
+            onChange={onKeyChange.bind(null, 'axisLabel')}
+          />
+        </Collapse>
       </Collapse>
     );
   }, [axisLabel, onKeyChange]);
@@ -428,10 +435,22 @@ const SeriesConfig = (props: {
           value: title.show,
         }}
       >
-        <FontConfigList
-          value={pick(title, ['color', 'fontSize', 'fontWeight', 'fontFamily'])}
-          onChange={onKeyChange.bind(null, 'title')}
-        />
+        <Collapse
+          child={{
+            header: '文字',
+            key: 'font',
+          }}
+        >
+          <FontConfigList
+            value={pick(title, [
+              'color',
+              'fontSize',
+              'fontWeight',
+              'fontFamily',
+            ])}
+            onChange={onKeyChange.bind(null, 'title')}
+          />
+        </Collapse>
         <CenterPositionConfig
           value={{
             left: title.offsetCenter[0],
@@ -462,15 +481,22 @@ const SeriesConfig = (props: {
           value: detail.show,
         }}
       >
-        <FontConfigList
-          value={pick(detail, [
-            'color',
-            'fontSize',
-            'fontWeight',
-            'fontFamily',
-          ])}
-          onChange={onKeyChange.bind(null, 'detail')}
-        />
+        <Collapse
+          child={{
+            header: '文字',
+            key: 'font',
+          }}
+        >
+          <FontConfigList
+            value={pick(detail, [
+              'color',
+              'fontSize',
+              'fontWeight',
+              'fontFamily',
+            ])}
+            onChange={onKeyChange.bind(null, 'detail')}
+          />
+        </Collapse>
         <Item label="动画">
           <FullForm>
             <Switch
