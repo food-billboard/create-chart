@@ -276,22 +276,16 @@ yearLabel.show yearLabel.margin yearLabel.position yearLabel.color yearLabel.fon
 | textStyle.fontSize | 文字大小 | number | - |
 | textStyle.fontWeight | 文字粗细 | number \| string | - |
 | textStyle.fontFamily | 文字字体 | string | - |
-| addonBefore.show | 是否前缀 | boolean | - |
+| addonBefore.show | 是否前缀prefix | boolean | - |
 | addonBefore.content | 前缀内容，支持变量 | string | - |
-| addonBefore.color | 前缀文字颜色 | string | - |
-| addonBefore.fontSize | 前缀文字大小 | number | - |
-| addonBefore.fontWeight | 前缀文字粗细 | number \| string | - |
-| addonBefore.fontFamily | 前缀文字字体 | string | - |
-| addonAfter.show | 是否前缀 | boolean | - |
+| addonAfter.show | 是否前缀suffix | boolean | - |
 | addonAfter.content | 前缀内容，支持变量 | boolean | - |
-| addonAfter.color | 前缀文字颜色 | string | - |
-| addonAfter.fontSize | 前缀文字大小 | number | - |
-| addonAfter.fontWeight | 前缀文字粗细 | number \| string | - |
-| addonAfter.fontFamily | 前缀文字字体 | string | - |
-| thousands.show | 千分位是否显示 | boolean | - |
-| thousands.content | 千分位内容,支持变量 | string | - |
 | round.show | 是否四舍五入 | boolean | - |
 | round.length | 四舍五入保留小数位数 | number | - |
+| thousands.show | 千分位是否显示(useGrouping) | boolean | - |
+| thousands.content | 千分位内容(separator) | string | - |
+| decimal | 小数分隔符号 | string | - |
+| animation.duration | 动画时间s | number | - |
 
 #### 图片  
 |  属性   | 描述  | 类型  | 其他  |

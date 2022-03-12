@@ -13,6 +13,7 @@ import WordCloud from './Other/WordCloud';
 // font
 import Title from './Font/Title';
 import TimeMachine from './Font/TimeMachine';
+import CountUpNumber from './Font/CountUpNumber';
 
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
@@ -34,6 +35,7 @@ COMPONENT_MAP.set(GaugeBasic.type, GaugeBasic);
 COMPONENT_MAP.set(WordCloud.type, WordCloud);
 COMPONENT_MAP.set(Title.type, Title);
 COMPONENT_MAP.set(TimeMachine.type, TimeMachine);
+COMPONENT_MAP.set(CountUpNumber.type, CountUpNumber);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

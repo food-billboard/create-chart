@@ -1,4 +1,4 @@
-import { Component, useCallback, useMemo } from 'react';
+import { Component } from 'react';
 import { Tabs, Select } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import ComponentOptionConfig, {
