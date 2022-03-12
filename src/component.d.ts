@@ -86,7 +86,8 @@ declare namespace ComponentData {
     | 'WORD_CLOUD_BASIC'
     | 'TITLE'
     | 'TIME_MACHINE'
-    | 'COUNT_UP_NUMBER';
+    | 'COUNT_UP_NUMBER'
+    | 'IMAGE';
 
   // 基础组件属性
   export type TBaseConfig = {

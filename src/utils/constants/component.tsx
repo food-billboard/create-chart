@@ -149,7 +149,20 @@ export const COMPONENT_TYPE_LIST = [
     type: 'media',
     title: '媒体',
     icon: <FundProjectionScreenOutlined className={classnames(commonClass)} />,
-    children: [],
+    children: [
+      {
+        type: 'media',
+        title: '媒体',
+        children: [
+          {
+            type: 'IMAGE',
+            title: '图片',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+        ],
+      },
+    ],
   },
   {
     type: 'map',
