@@ -1602,7 +1602,7 @@ ajv@^6.1.0, ajv@^6.12.3, ajv@^6.12.5:
 
 animate.css@^4.1.1:
   version "4.1.1"
-  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/animate.css/-/animate.css-4.1.1.tgz#614ec5a81131d7e4dc362a58143f7406abd68075"
+  resolved "https://registry.npmmirror.com/animate.css/-/animate.css-4.1.1.tgz#614ec5a81131d7e4dc362a58143f7406abd68075"
   integrity sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==
 
 ansi-colors@^4.1.1:
@@ -3060,7 +3060,7 @@ ecc-jsbn@~0.1.1:
 
 echarts-wordcloud@^2.0.0:
   version "2.0.0"
-  resolved "http://192.168.10.162:8081/nexus/content/groups/npm-all/echarts-wordcloud/-/echarts-wordcloud-2.0.0.tgz#52ef817895801ffe9e99dd1bacab7686b2dec04a"
+  resolved "https://registry.npmmirror.com/echarts-wordcloud/-/echarts-wordcloud-2.0.0.tgz#52ef817895801ffe9e99dd1bacab7686b2dec04a"
   integrity sha512-K7l6pTklqdW7ZWzT/1CS0KhBSINr/cd7c5N1fVMzZMwLQHEwT7x+nivK7g5hkVh7WNcAv4Dn6/ZS5zMKRozC1g==
 
 echarts@^5.2.2:
