@@ -83,7 +83,8 @@ declare namespace ComponentData {
     | 'FUNNEL_BASIC'
     | 'GAUGE_BASIC'
     | 'WORD_CLOUD_BASIC'
-    | 'TITLE';
+    | 'TITLE'
+    | 'TIME_MACHINE';
 
   // 基础组件属性
   export type TBaseConfig = {

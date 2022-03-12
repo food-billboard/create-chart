@@ -129,6 +129,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
             description: '',
           },
+          {
+            type: 'TIME_MACHINE',
+            title: '时间器',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
         ],
       },
     ],

@@ -261,10 +261,13 @@ yearLabel.show yearLabel.margin yearLabel.position yearLabel.color yearLabel.fon
 | textStyle.fontWeight | 文字粗细 | number \| string | - |
 | textStyle.fontFamily | 文字字体 | string | - |
 | textStyle.formatter | 格式化 | string | - |
+| formatter | 格式 | string | YYYY-MM-DD HH:MM:ss |
 | icon.show | 是否显示图标 | boolean | - |
+| icon.value | 图标名称 | string | - |
 | icon.color | 图标颜色 | string | - |
 | icon.size | 图标大小 | number | - |
 | icon.margin | 图标边距 | number | - |
+| icon.position | 图标位置 | 'before' \| 'after' | 'before' |
 
 #### 数字翻牌器  
 |  属性   | 描述  | 类型  | 其他  |

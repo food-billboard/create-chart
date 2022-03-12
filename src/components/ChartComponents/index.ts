@@ -12,6 +12,7 @@ import GaugeBasic from './Chart/Gauge/GaugeBasic';
 import WordCloud from './Other/WordCloud';
 // font
 import Title from './Font/Title';
+import TimeMachine from './Font/TimeMachine';
 
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
@@ -32,6 +33,7 @@ COMPONENT_MAP.set(FunnelBasic.type, FunnelBasic);
 COMPONENT_MAP.set(GaugeBasic.type, GaugeBasic);
 COMPONENT_MAP.set(WordCloud.type, WordCloud);
 COMPONENT_MAP.set(Title.type, Title);
+COMPONENT_MAP.set(TimeMachine.type, TimeMachine);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

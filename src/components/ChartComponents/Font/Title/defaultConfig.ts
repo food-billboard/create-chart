@@ -34,6 +34,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTitleConfig> = {
   data: {
     request: {
       value: DEFAULT_VALUE,
+      valueType: 'object',
     },
     filter: {
       map: [
