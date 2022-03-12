@@ -42,6 +42,7 @@ declare namespace ComponentData {
       value: TComponentFilterConfig[];
       map: TComponentMapData[];
     };
+    disabled?: boolean;
   };
 
   // 组件基础交互配置字段

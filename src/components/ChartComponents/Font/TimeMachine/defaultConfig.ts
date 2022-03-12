@@ -23,6 +23,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTimeMachineConfig> 
       filter: {
         map: [],
       },
+      disabled: true,
     },
     options: {
       textStyle: {

@@ -1,6 +1,7 @@
 import { useMemo, useCallback } from 'react';
 import classnames from 'classnames';
 import { connect } from 'dva';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { getComponent, getPath } from '@/utils/Assist/Component';
 import FieldMap from './components/FieldMap';
 import ResponseData from './components/ResponseData';
@@ -19,6 +20,23 @@ const DataConfig = (props: {
   const component: ComponentData.TComponentData = useMemo(() => {
     return getComponent(id, components);
   }, [id, components]);
+
+  const isDisabled = !!component.config.data?.disabled;
+
+  if (isDisabled) {
+    return (
+      <div
+        className={classnames(
+          styles['design-config-data'],
+          styles['design-config-data-empty'],
+          'design-config-format-font-size',
+        )}
+      >
+        <InfoCircleOutlined style={{ marginRight: 4 }} />
+        该组件无数据配置
+      </div>
+    );
+  }
 
   const fieldMap = component.config?.data?.filter?.map || [];
 
