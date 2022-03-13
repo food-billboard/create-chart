@@ -90,7 +90,8 @@ declare namespace ComponentData {
     | 'IMAGE'
     | 'CAROUSEL'
     | 'IFRAME'
-    | 'TAB';
+    | 'TAB'
+    | 'SELECT';
 
   // 基础组件属性
   export type TBaseConfig = {

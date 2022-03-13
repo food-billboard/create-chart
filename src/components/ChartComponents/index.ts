@@ -20,6 +20,7 @@ import Image from './Media/Image';
 import Carousel from './Media/Carousel';
 // interactive
 import Tab from './Interactive/Tab';
+import Select from './Interactive/Select';
 
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
@@ -46,6 +47,7 @@ COMPONENT_MAP.set(Image.type, Image);
 COMPONENT_MAP.set(Carousel.type, Carousel);
 COMPONENT_MAP.set(Iframe.type, Iframe);
 COMPONENT_MAP.set(Tab.type, Tab);
+COMPONENT_MAP.set(Select.type, Select);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

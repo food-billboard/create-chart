@@ -9,14 +9,15 @@ import { CompatColorSelect } from '@/components/ColorSelect';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import { TTabConfig } from '../type';
+import { TSelectConfig } from '../type';
 
 const { TabPane } = Tabs;
 const { Item } = ConfigList;
 
-class Config extends Component<ComponentData.ComponentConfigProps<TTabConfig>> {
-  onKeyChange = (key: keyof TTabConfig, value: any) => {
+class Config extends Component<
+  ComponentData.ComponentConfigProps<TSelectConfig>
+> {
+  onKeyChange = (key: keyof TSelectConfig, value: any) => {
     this.props.onChange({
       config: {
         options: {
@@ -30,7 +31,7 @@ class Config extends Component<ComponentData.ComponentConfigProps<TTabConfig>> {
     const { value } = this.props;
     const {
       config: {
-        options: { base, active, loop },
+        options: { base, active },
       },
     } = value;
 
@@ -112,40 +113,6 @@ class Config extends Component<ComponentData.ComponentConfigProps<TTabConfig>> {
                 />
               </FullForm>
             </Item>
-          </ConfigList>
-        </TabPane>
-        <TabPane key={'3'} tab={<Tab>轮播</Tab>}>
-          <ConfigList level={1}>
-            <Collapse
-              child={{
-                header: '是否轮播',
-                key: 'loop',
-                visibleRender: true,
-                value: loop.show,
-                onChange: (value) => {
-                  this.onKeyChange('loop', {
-                    show: value,
-                  });
-                },
-              }}
-              parent={{
-                activeKey: ['loop'],
-              }}
-            >
-              <Item label="时间间隔">
-                <FullForm>
-                  <InputNumber
-                    className="w-100"
-                    value={loop.speed}
-                    onChange={(value) => {
-                      this.onKeyChange('loop', {
-                        speed: value,
-                      });
-                    }}
-                  />
-                </FullForm>
-              </Item>
-            </Collapse>
           </ConfigList>
         </TabPane>
       </ComponentOptionConfig>
