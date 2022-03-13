@@ -89,7 +89,8 @@ declare namespace ComponentData {
     | 'COUNT_UP_NUMBER'
     | 'IMAGE'
     | 'CAROUSEL'
-    | 'IFRAME';
+    | 'IFRAME'
+    | 'TAB';
 
   // 基础组件属性
   export type TBaseConfig = {

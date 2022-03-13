@@ -205,6 +205,19 @@ export const COMPONENT_TYPE_LIST = [
     type: 'interactive',
     title: '联动',
     icon: <InteractionOutlined className={classnames(commonClass)} />,
-    children: [],
+    children: [
+      {
+        type: 'interactive',
+        title: '联动',
+        children: [
+          {
+            type: 'TAB',
+            title: 'Tab标签',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+        ],
+      },
+    ],
   },
 ];

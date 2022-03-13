@@ -336,6 +336,9 @@ yearLabel.show yearLabel.margin yearLabel.position yearLabel.color yearLabel.fon
 | active.backgroundColor | 当前背景颜色 | string | - |
 | active.borderColor | 当前边框颜色 | string | - |
 | active.borderWidth | 当前边框宽度 | string | - |
+| loop.show | 是否轮播 | boolean | false |
+| loop.speed | 轮播速度 | number | 3000 |
+
 
 #### select 
 |  属性   | 描述  | 类型  | 其他  |
