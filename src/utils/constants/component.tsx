@@ -182,12 +182,18 @@ export const COMPONENT_TYPE_LIST = [
     icon: <AppstoreOutlined className={classnames(commonClass)} />,
     children: [
       {
-        type: 'word-cloud',
-        title: '词云',
+        type: 'other',
+        title: '其他',
         children: [
           {
             type: 'WORD_CLOUD_BASIC',
             title: '词云',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+          {
+            type: 'IFRAME',
+            title: 'iframe',
             icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
             description: '',
           },

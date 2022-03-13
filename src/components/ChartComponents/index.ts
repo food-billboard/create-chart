@@ -10,6 +10,7 @@ import FunnelBasic from './Chart/Funnel/FunnelBasic';
 import GaugeBasic from './Chart/Gauge/GaugeBasic';
 // other
 import WordCloud from './Other/WordCloud';
+import Iframe from './Other/Iframe';
 // font
 import Title from './Font/Title';
 import TimeMachine from './Font/TimeMachine';
@@ -41,6 +42,7 @@ COMPONENT_MAP.set(TimeMachine.type, TimeMachine);
 COMPONENT_MAP.set(CountUpNumber.type, CountUpNumber);
 COMPONENT_MAP.set(Image.type, Image);
 COMPONENT_MAP.set(Carousel.type, Carousel);
+COMPONENT_MAP.set(Iframe.type, Iframe);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

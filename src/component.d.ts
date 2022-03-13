@@ -88,7 +88,8 @@ declare namespace ComponentData {
     | 'TIME_MACHINE'
     | 'COUNT_UP_NUMBER'
     | 'IMAGE'
-    | 'CAROUSEL';
+    | 'CAROUSEL'
+    | 'IFRAME';
 
   // 基础组件属性
   export type TBaseConfig = {
