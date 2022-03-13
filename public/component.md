@@ -297,6 +297,7 @@ yearLabel.show yearLabel.margin yearLabel.position yearLabel.color yearLabel.fon
 |  属性   | 描述  | 类型  | 其他  |
 |  ----  | ----  | ----  | ----  |
 | speed | 轮播速度 | number | - |
+| autoplay | 自动播放 | boolean | - |
 | dot.show | 是否显示 | string | - |
 | dot.position | 位置 | string | - |
 | easing | 动画 | string | - |
@@ -335,6 +336,7 @@ yearLabel.show yearLabel.margin yearLabel.position yearLabel.color yearLabel.fon
 | active.backgroundColor | 当前背景颜色 | string | - |
 | active.borderColor | 当前边框颜色 | string | - |
 | active.borderWidth | 当前边框宽度 | string | - |
+
 #### select 
 |  属性   | 描述  | 类型  | 其他  |
 |  ----  | ----  | ----  | ----  |

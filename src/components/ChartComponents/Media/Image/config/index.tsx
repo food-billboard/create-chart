@@ -116,10 +116,16 @@ class Config extends Component<
         <TabPane key={'1'} tab={<Tab>内容</Tab>}>
           <ConfigList level={1}>
             <Item label="类型">
-              <RadioGroup value={type} onChange={this.onTypeChange}>
-                <Radio icon={<PictureOutlined />} key="image" value="image" />
-                <Radio icon={<BgColorsOutlined />} key="color" value="color" />
-              </RadioGroup>
+              <FullForm>
+                <RadioGroup value={type} onChange={this.onTypeChange}>
+                  <Radio icon={<PictureOutlined />} key="image" value="image" />
+                  <Radio
+                    icon={<BgColorsOutlined />}
+                    key="color"
+                    value="color"
+                  />
+                </RadioGroup>
+              </FullForm>
             </Item>
             <Item
               label={type === 'color' ? '颜色' : '图片'}
