@@ -54,7 +54,7 @@ class Config extends Component<
     // 上传失败或者是图片，修改静态数据
     if (typeof realValue !== 'string') {
       // 颜色
-      if (realValue.a && realValue.b && realValue.c) {
+      if (realValue.a && realValue.g && realValue.b) {
         realValue = getRgbaString(realValue);
       } else {
         realValue = '';
@@ -133,7 +133,7 @@ class Config extends Component<
                 {type === 'color' && (
                   <CompatColorSelect
                     value={content as ComponentData.TColorConfig}
-                    onChange={this.onKeyChange.bind(this, 'content')}
+                    onChange={this.onContentChange}
                   />
                 )}
                 {type === 'image' && this.backgroundForm()}

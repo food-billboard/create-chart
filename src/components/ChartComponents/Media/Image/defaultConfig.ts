@@ -72,6 +72,7 @@ const DefaultConfig: ComponentData.TComponentData<TImageConfig> =
       style: {
         width: 300,
         height: 300,
+        zIndex: 1,
       },
     },
     CUSTOM_CONFIG,

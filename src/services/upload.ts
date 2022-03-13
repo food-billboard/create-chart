@@ -34,6 +34,7 @@ export const checkUploadFile = (
     method: 'HEAD',
     headers: merge({}, { 'Tus-Resumable': '1.0.0' }, mergeMetaData(newParams)),
     origin: true,
+    mis: false,
   }).then((data) => {
     const { headers } = data as any;
     const offset = headers['upload-offset'] ?? headers['Upload-Offset'];
@@ -62,6 +63,7 @@ export const uploadFile = (params: API_UPLOAD.IUploadParams) => {
       ),
       data: file,
       origin: true,
+      mis: false,
     },
   ).then((data) => {
     const { headers } = data as any;
@@ -79,5 +81,6 @@ export const getUploadFile = (params: API_UPLOAD.IGetUploadParams) => {
       type: 0,
       ...params,
     },
+    mis: false,
   });
 };
