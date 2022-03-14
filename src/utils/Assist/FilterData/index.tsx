@@ -75,10 +75,21 @@ class FilterData {
     value: any,
     {
       map,
+      deep = false,
     }: {
       map: ComponentData.TComponentMapData[];
+      deep?: boolean;
     },
   ) {
+    function needDeep(value: any) {
+      if (
+        Array.isArray(value) ||
+        (typeof value === 'object' && value !== null && deep)
+      ) {
+        return format(value);
+      }
+      return value;
+    }
     function format(value: any): any {
       if (Array.isArray(value)) {
         return value.map((item) => {
@@ -90,9 +101,9 @@ class FilterData {
           const target = map.find((item) => item.map === key);
           if (target) {
             const { field } = target;
-            acc[field] = value;
+            acc[field] = needDeep(value);
           } else {
-            acc[key] = value;
+            acc[key] = needDeep(value);
           }
           return acc;
         }, {});

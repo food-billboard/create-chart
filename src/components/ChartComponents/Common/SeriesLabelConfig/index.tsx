@@ -1,5 +1,5 @@
 import { ReactNode, useCallback, useMemo } from 'react';
-import { SingleCollapse as Collapse } from '../Collapse';
+import { SingleCollapse as Collapse, SingleCollapseProps } from '../Collapse';
 import LabelPositionConfig from '../LabelPositionConfig';
 import FontConfig from '../FontConfig';
 
@@ -10,6 +10,8 @@ const SeriesLabelConfig = (
     ) => void;
     children?: ReactNode;
     ignore?: string[];
+    child: Partial<SingleCollapseProps['child']>;
+    parent: Partial<SingleCollapseProps['parent']>;
   } & ComponentData.ComponentSeriesLabelConfig,
 ) => {
   const {
@@ -22,6 +24,8 @@ const SeriesLabelConfig = (
     onChange,
     position,
     ignore,
+    child,
+    parent,
   } = props;
 
   const commonOnChange = useCallback(
@@ -45,7 +49,9 @@ const SeriesLabelConfig = (
         visibleRender: true,
         onChange: commonOnChange.bind(null, 'show'),
         value: show,
+        ...child,
       }}
+      parent={parent}
     >
       {needPositionConfig && (
         <LabelPositionConfig

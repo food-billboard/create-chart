@@ -13,7 +13,7 @@ declare namespace ComponentData {
     map: string;
     description: string;
     id: string;
-    type: 'number' | 'string' | 'number[]';
+    type: 'number' | 'string' | 'number[]' | 'array[]';
   };
 
   // 组件数据过滤
@@ -91,7 +91,8 @@ declare namespace ComponentData {
     | 'CAROUSEL'
     | 'IFRAME'
     | 'TAB'
-    | 'SELECT';
+    | 'SELECT'
+    | 'TREE_MAP_BASIC';
 
   // 基础组件属性
   export type TBaseConfig = {
@@ -366,6 +367,7 @@ declare namespace ComponentData {
     | 'right'
     | 'bottom'
     | 'inside'
+    | 'outside'
     //| 'insideLeft'
     //| 'insideRight'
     | 'insideTop'

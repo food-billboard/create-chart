@@ -112,6 +112,18 @@ export const COMPONENT_TYPE_LIST = [
           },
         ],
       },
+      {
+        type: 'tree-map',
+        title: '矩形树图',
+        children: [
+          {
+            type: 'TREE_MAP_BASIC',
+            title: '基础矩形树图',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+        ],
+      },
     ],
   },
   {

@@ -8,6 +8,7 @@ import RadarBasic from './Chart/Radar/RadarBasic';
 import BoxPlotBasic from './Chart/BoxPlot/BoxPlotBasic';
 import FunnelBasic from './Chart/Funnel/FunnelBasic';
 import GaugeBasic from './Chart/Gauge/GaugeBasic';
+import TreeMapBasic from './Chart/TreeMap/TreeMapBasic';
 // other
 import WordCloud from './Other/WordCloud';
 import Iframe from './Other/Iframe';
@@ -48,6 +49,7 @@ COMPONENT_MAP.set(Carousel.type, Carousel);
 COMPONENT_MAP.set(Iframe.type, Iframe);
 COMPONENT_MAP.set(Tab.type, Tab);
 COMPONENT_MAP.set(Select.type, Select);
+COMPONENT_MAP.set(TreeMapBasic.type, TreeMapBasic);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

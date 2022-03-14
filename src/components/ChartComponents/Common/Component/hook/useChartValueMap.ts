@@ -51,6 +51,7 @@ export function useChartValueMapField(
   {
     map,
     fields,
+    deep,
   }: {
     map: ComponentData.TComponentMapData[];
     fields: {
@@ -58,11 +59,12 @@ export function useChartValueMapField(
       xAxisKeyKey: string;
       yAxisValue: string;
     };
+    deep?: boolean;
   },
 ) {
   const processedValue = useMemo(() => {
-    return FilterDataUtil.getFieldMapValue(value, { map });
-  }, [value, map]);
+    return FilterDataUtil.getFieldMapValue(value, { map, deep });
+  }, [value, map, deep]);
 
   const fieldsMap = useMemo(() => {
     return format(processedValue, fields);

@@ -27,6 +27,10 @@ const POSITION_MAP = [
     value: 'inside',
   },
   {
+    label: '外部',
+    value: 'outside',
+  },
+  {
     label: '内上',
     value: 'insideTop',
   },

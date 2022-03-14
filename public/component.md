@@ -109,16 +109,18 @@ data.lineStyle.color data.lineStyle.width data.lineStyle.type
 data.areaStyle.color  
 
 ##### treemap 
-left top right bottom  
 squareRatio 
 期望矩形长宽比率。布局计算时会尽量向这个比率靠近。  
 默认为黄金比：0.5 * (1 + Math.sqrt(5))。  
 nodeClick  
 label.show label.position label.formatter  
 label.color label.fontFamily label.fontWeight label.fontSize  
-breadcrumb.show breadcrumb.left breadcrumb.top breadcrumb.right breadcrumb.bottom breadcrumb.height  
+upperLabel.show upperLabel.position upperLabel.formatter  
+upperLabel.color upperLabel.fontFamily upperLabel.fontWeight upperLabel.fontSize  
+breadcrumb.show breadcrumb.left breadcrumb.top breadcrumb.height  
 breadcrumb.itemStyle.textStyle breadcrumb.itemStyle.color 
-data.value data.name data.color  
+labelLine.show labelLine.length2 labelLine.smooth labelLine.lineStyle.width labelLine.lineStyle.type  
+data.value data.name   
 
 ##### sunburst   
 center radius  
