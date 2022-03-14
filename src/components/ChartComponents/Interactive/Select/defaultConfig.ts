@@ -65,14 +65,71 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TSelectConfig> = {
         g: 0,
         b: 0,
       },
-      border: {
-        type: 'solid',
-        width: 1,
+      height: 48,
+    },
+    menu: {
+      height: 200,
+      backgroundColor: {
+        r: 0,
+        g: 0,
+        b: 0,
+      },
+    },
+    baseHover: {
+      textStyle: {
+        ...DEFAULT_FONT_CONFIG,
+        fontSize: 24,
         color: {
           r: 255,
           g: 255,
           b: 255,
         },
+      },
+      backgroundColor: {
+        ...ThemeUtil.generateNextColor4CurrentTheme(0),
+        a: 0.5,
+      },
+    },
+    activeHover: {
+      textStyle: {
+        ...DEFAULT_FONT_CONFIG,
+        color: {
+          r: 255,
+          g: 255,
+          b: 255,
+        },
+        fontSize: 24,
+      },
+      backgroundColor: {
+        ...ThemeUtil.generateNextColor4CurrentTheme(0),
+        a: 0.7,
+      },
+    },
+    activeSelect: {
+      textStyle: {
+        ...DEFAULT_FONT_CONFIG,
+        color: {
+          r: 255,
+          g: 255,
+          b: 255,
+        },
+        fontSize: 24,
+      },
+      backgroundColor: {
+        ...ThemeUtil.generateNextColor4CurrentTheme(0),
+        a: 0.7,
+      },
+    },
+    placeholder: {
+      textStyle: {
+        ...DEFAULT_FONT_CONFIG,
+        color: {
+          r: 255,
+          g: 255,
+          b: 255,
+          a: 0.7,
+        },
+        fontSize: 24,
       },
     },
     active: {
@@ -92,6 +149,14 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TSelectConfig> = {
         width: 1,
         color: ThemeUtil.generateNextColor4CurrentTheme(0),
       },
+    },
+    indicator: {
+      color: {
+        r: 255,
+        g: 255,
+        b: 255,
+      },
+      fontSize: 24,
     },
   },
 };

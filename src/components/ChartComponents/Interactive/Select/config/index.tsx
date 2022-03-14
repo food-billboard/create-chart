@@ -9,6 +9,7 @@ import { CompatColorSelect } from '@/components/ColorSelect';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { TSelectConfig } from '../type';
 
 const { TabPane } = Tabs;
@@ -31,82 +32,289 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: { base, active },
+        options: {
+          base,
+          active,
+          activeSelect,
+          baseHover,
+          activeHover,
+          placeholder,
+          menu,
+          indicator,
+        },
       },
     } = value;
 
     return (
       <ComponentOptionConfig>
-        <TabPane key={'1'} tab={<Tab>基础样式</Tab>}>
+        <TabPane key={'1'} tab={<Tab>选择框</Tab>}>
           <ConfigList level={1}>
             <Collapse
               child={{
-                header: '文字样式',
-                key: 'textStyle',
+                key: 'active',
+                header: '内容',
               }}
             >
-              <FontConfigList
-                value={base.textStyle}
-                onChange={(value) => {
-                  this.onKeyChange('base', {
-                    textStyle: value,
-                  });
+              <Collapse
+                child={{
+                  key: 'active',
+                  header: '文本',
                 }}
-              />
-            </Collapse>
-            <LineStyleGroupConfig
-              value={base.border}
-              onChange={(value) => {
-                this.onKeyChange('base', {
-                  border: value,
-                });
-              }}
-            />
-            <Item label="背景颜色">
-              <FullForm>
-                <CompatColorSelect
-                  value={base.backgroundColor}
+              >
+                <FontConfigList
+                  value={active.textStyle}
                   onChange={(value) => {
-                    this.onKeyChange('base', {
-                      backgroundColor: value,
+                    this.onKeyChange('active', {
+                      textStyle: value,
                     });
                   }}
                 />
-              </FullForm>
-            </Item>
-          </ConfigList>
-        </TabPane>
-        <TabPane key={'2'} tab={<Tab>选中样式</Tab>}>
-          <ConfigList level={1}>
-            <Collapse
-              child={{
-                header: '文字样式',
-                key: 'textStyle',
-              }}
-            >
-              <FontConfigList
-                value={active.textStyle}
+              </Collapse>
+              <Item label="背景颜色">
+                <FullForm>
+                  <CompatColorSelect
+                    value={active.backgroundColor}
+                    onChange={(value) => {
+                      this.onKeyChange('active', {
+                        backgroundColor: value,
+                      });
+                    }}
+                  />
+                </FullForm>
+              </Item>
+              <LineStyleGroupConfig
+                value={active.border}
                 onChange={(value) => {
                   this.onKeyChange('active', {
-                    textStyle: value,
+                    border: value,
                   });
                 }}
               />
             </Collapse>
-            <LineStyleGroupConfig
-              value={active.border}
-              onChange={(value) => {
-                this.onKeyChange('active', {
-                  border: value,
-                });
+            <Collapse
+              child={{
+                key: 'placeholder',
+                header: '占位符',
               }}
-            />
+            >
+              <Collapse
+                child={{
+                  header: '文本',
+                  key: 'textStyle',
+                }}
+                parent={{
+                  defaultActiveKey: ['textStyle'],
+                }}
+              >
+                <FontConfigList
+                  value={placeholder.textStyle}
+                  onChange={(value) => {
+                    this.onKeyChange('placeholder', {
+                      textStyle: value,
+                    });
+                  }}
+                />
+              </Collapse>
+            </Collapse>
+            <Collapse
+              child={{
+                header: '选择箭头',
+                key: 'indicator',
+              }}
+            >
+              <Item label="大小">
+                <FullForm>
+                  <InputNumber
+                    value={indicator.fontSize}
+                    onChange={(value) => {
+                      this.onKeyChange('indicator', {
+                        fontSize: value,
+                      });
+                    }}
+                    className="w-100"
+                  />
+                </FullForm>
+              </Item>
+              <Item label="颜色">
+                <FullForm>
+                  <CompatColorSelect
+                    value={indicator.color}
+                    onChange={(value) => {
+                      this.onKeyChange('indicator', {
+                        color: value,
+                      });
+                    }}
+                  />
+                </FullForm>
+              </Item>
+            </Collapse>
+          </ConfigList>
+        </TabPane>
+        <TabPane key={'2'} tab={<Tab>基础项样式</Tab>}>
+          <ConfigList level={1}>
+            <Collapse
+              child={{
+                header: '选中样式',
+                key: 'activeSelect',
+              }}
+            >
+              <Collapse
+                child={{
+                  header: '文本',
+                  key: 'textStyle',
+                }}
+              >
+                <FontConfigList
+                  value={activeSelect.textStyle}
+                  onChange={(value) => {
+                    this.onKeyChange('activeSelect', {
+                      textStyle: value,
+                    });
+                  }}
+                />
+              </Collapse>
+              <Item label="背景颜色">
+                <FullForm>
+                  <CompatColorSelect
+                    value={activeSelect.backgroundColor}
+                    onChange={(value) => {
+                      this.onKeyChange('activeSelect', {
+                        backgroundColor: value,
+                      });
+                    }}
+                  />
+                </FullForm>
+              </Item>
+            </Collapse>
+            <Collapse
+              child={{
+                header: '基础样式',
+                key: 'base',
+              }}
+            >
+              <Collapse
+                child={{
+                  header: '文本',
+                  key: 'textStyle',
+                }}
+              >
+                <FontConfigList
+                  value={base.textStyle}
+                  onChange={(value) => {
+                    this.onKeyChange('base', {
+                      textStyle: value,
+                    });
+                  }}
+                />
+                <Item label="背景颜色">
+                  <FullForm>
+                    <CompatColorSelect
+                      value={base.backgroundColor}
+                      onChange={(value) => {
+                        this.onKeyChange('base', {
+                          backgroundColor: value,
+                        });
+                      }}
+                    />
+                  </FullForm>
+                </Item>
+              </Collapse>
+            </Collapse>
+          </ConfigList>
+        </TabPane>
+        <TabPane key={'3'} tab={<Tab>移入项样式</Tab>}>
+          <ConfigList level={1}>
+            <Collapse
+              child={{
+                header: '基础移入样式',
+                key: 'baseHover',
+              }}
+            >
+              <Collapse
+                child={{
+                  header: '文本',
+                  key: 'textStyle',
+                }}
+              >
+                <FontConfigList
+                  value={baseHover.textStyle}
+                  onChange={(value) => {
+                    this.onKeyChange('baseHover', {
+                      textStyle: value,
+                    });
+                  }}
+                />
+              </Collapse>
+              <Item label="背景颜色">
+                <FullForm>
+                  <CompatColorSelect
+                    value={baseHover.backgroundColor}
+                    onChange={(value) => {
+                      this.onKeyChange('baseHover', {
+                        backgroundColor: value,
+                      });
+                    }}
+                  />
+                </FullForm>
+              </Item>
+            </Collapse>
+            <Collapse
+              child={{
+                header: '选中移入样式',
+                key: 'activeHover',
+              }}
+            >
+              <Collapse
+                child={{
+                  header: '文本',
+                  key: 'textStyle',
+                }}
+              >
+                <FontConfigList
+                  value={activeHover.textStyle}
+                  onChange={(value) => {
+                    this.onKeyChange('activeHover', {
+                      textStyle: value,
+                    });
+                  }}
+                />
+              </Collapse>
+              <Item label="背景颜色">
+                <FullForm>
+                  <CompatColorSelect
+                    value={activeHover.backgroundColor}
+                    onChange={(value) => {
+                      this.onKeyChange('activeHover', {
+                        backgroundColor: value,
+                      });
+                    }}
+                  />
+                </FullForm>
+              </Item>
+            </Collapse>
+          </ConfigList>
+        </TabPane>
+        <TabPane key={'4'} tab={<Tab>下拉列表</Tab>}>
+          <ConfigList level={1}>
+            <Item label="高度">
+              <FullForm>
+                <InputNumber
+                  value={menu.height}
+                  onChange={(value) => {
+                    this.onKeyChange('menu', {
+                      height: value,
+                    });
+                  }}
+                  className="w-100"
+                />
+              </FullForm>
+            </Item>
             <Item label="背景颜色">
               <FullForm>
                 <CompatColorSelect
-                  value={active.backgroundColor}
+                  value={menu.backgroundColor}
                   onChange={(value) => {
-                    this.onKeyChange('active', {
+                    this.onKeyChange('menu', {
                       backgroundColor: value,
                     });
                   }}

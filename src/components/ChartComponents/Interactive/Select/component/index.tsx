@@ -1,7 +1,8 @@
 import { CSSProperties, useMemo, useRef, useCallback, useState } from 'react';
-import { Select } from 'antd';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
+import Select from 'react-select';
+import { CaretRightOutlined } from '@ant-design/icons';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
@@ -27,10 +28,19 @@ const SelectBasic = (props: {
   const {
     config: { options },
   } = value;
-  const { active, base } = options;
-  const { screenType } = global;
+  const {
+    active,
+    base,
+    indicator,
+    menu,
+    baseHover,
+    activeHover,
+    activeSelect: activeSelectStyle,
+    placeholder,
+  } = options;
 
   const [activeSelect, setActiveSelect] = useState<number>(0);
+  const [selectOpen, setSelectOpen] = useState<boolean>(false);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -58,48 +68,73 @@ const SelectBasic = (props: {
   }, [processedValue, componentFilterMap]);
 
   const onClick = useCallback(
-    (item: any, option: any) => {
-      syncInteractiveAction('select', option);
+    (item: any) => {
+      syncInteractiveAction('select', item);
       setActiveSelect(item);
     },
     [syncInteractiveAction],
   );
 
-  const activeStyle = useMemo(() => {
-    const { border, textStyle, backgroundColor, ...nextActiveStyle } = active;
-    return {
-      ...nextActiveStyle,
-      ...textStyle,
-      color: getRgbaString(textStyle.color),
-      backgroundColor: getRgbaString(backgroundColor),
-      border: `${border.width}px ${border.type} ${getRgbaString(border.color)}`,
-    };
-  }, [active]);
-
-  const baseStyle = useMemo(() => {
-    const { border, textStyle, backgroundColor, ...nextBaseStyle } = base;
-    return {
-      ...nextBaseStyle,
-      ...textStyle,
-      color: getRgbaString(textStyle.color),
-      backgroundColor: getRgbaString(backgroundColor),
-      border: `${border.width}px ${border.type} ${getRgbaString(border.color)}`,
-    };
-  }, [base]);
-
-  const domList = useMemo(() => {
-    return finalValue.map((item: any, index: number) => {
-      const { name, value } = item;
-      return {
-        label: name,
-        value,
-      };
-    });
-  }, [finalValue]);
-
   const componentClassName = useMemo(() => {
     return classnames(className, styles['component-interactive-select']);
   }, [className]);
+
+  const activeStyle: any = useMemo(() => {
+    const { textStyle, backgroundColor, ...nextActive } = activeSelectStyle;
+    return {
+      ...nextActive,
+      ...textStyle,
+      color: getRgbaString(textStyle.color),
+      backgroundColor: getRgbaString(backgroundColor),
+    };
+  }, [activeSelectStyle]);
+
+  const baseStyle: any = useMemo(() => {
+    const { textStyle, backgroundColor, ...nexBase } = base;
+    return {
+      ...nexBase,
+      ...textStyle,
+      color: getRgbaString(textStyle.color),
+      backgroundColor: getRgbaString(backgroundColor),
+    };
+  }, [active]);
+
+  const activeHoverStyle: any = useMemo(() => {
+    const { textStyle, backgroundColor, ...nextActiveHover } = activeHover;
+    return {
+      ...nextActiveHover,
+      ...textStyle,
+      color: getRgbaString(textStyle.color),
+      backgroundColor: getRgbaString(backgroundColor),
+    };
+  }, [activeHover]);
+
+  const baseHoverStyle: any = useMemo(() => {
+    const { textStyle, backgroundColor, ...nextBaseHover } = baseHover;
+    return {
+      ...nextBaseHover,
+      ...textStyle,
+      color: getRgbaString(textStyle.color),
+      backgroundColor: getRgbaString(backgroundColor),
+    };
+  }, [baseHover]);
+
+  const components = useMemo(() => {
+    return {
+      IndicatorsContainer: () => {
+        return (
+          <CaretRightOutlined
+            style={{
+              transform: selectOpen ? 'rotate(90deg)' : 'rotate(0)',
+              fontSize: `${indicator.fontSize}px`,
+              color: getRgbaString(indicator.color),
+              transition: 'rotate .3s',
+            }}
+          />
+        );
+      },
+    };
+  }, [indicator, selectOpen]);
 
   return (
     <>
@@ -115,11 +150,77 @@ const SelectBasic = (props: {
         id={chartId.current}
       >
         <Select
-          allowClear={false}
+          placeholder="请选择..."
           value={activeSelect}
+          onMenuOpen={setSelectOpen.bind(null, true)}
+          onMenuClose={setSelectOpen.bind(null, false)}
           onChange={onClick}
-          options={domList}
-          // dropdownRender
+          isSearchable={false}
+          components={components}
+          styles={{
+            placeholder(styles) {
+              return {
+                ...styles,
+                ...placeholder.textStyle,
+                color: getRgbaString(placeholder.textStyle.color),
+              };
+            },
+            // 容器
+            container(styles) {
+              return {
+                ...styles,
+                height: '100%',
+              };
+            },
+            // 常规显示框
+            control(styles) {
+              return {
+                ...styles,
+                backgroundColor: getRgbaString(active.backgroundColor),
+                height: '100%',
+                border: `${active.border.width}px ${
+                  active.border.type
+                } ${getRgbaString(active.border.color)}`,
+              };
+            },
+            // 选择框内容
+            singleValue(styles) {
+              return {
+                ...styles,
+                ...active.textStyle,
+                color: getRgbaString(active.textStyle.color),
+              };
+            },
+            // 下拉框列表
+            menu(styles) {
+              return {
+                ...styles,
+                height: menu.height,
+                backgroundColor: getRgbaString(menu.backgroundColor),
+              };
+            },
+            // 下拉框内容
+            option(styles, { isSelected }) {
+              return {
+                ...styles,
+                ...(isSelected ? activeStyle : baseStyle),
+                height: base.height,
+                lineHeight: `${base.height - 16}px`,
+                ':hover': isSelected ? activeHoverStyle : baseHoverStyle,
+              };
+            },
+            // 下拉列表内部
+            menuList(styles) {
+              return {
+                ...styles,
+                maxHeight: menu.height,
+              };
+            },
+          }}
+          options={finalValue.map((item: any) => ({
+            label: item.name,
+            value: item.value,
+          }))}
         ></Select>
       </div>
       <FetchFragment

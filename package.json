@@ -55,6 +55,7 @@
     "react-player": "^2.9.0",
     "react-redux": "^7.2.6",
     "react-rnd": "^10.3.5",
+    "react-select": "^5.2.2",
     "react-selecto": "^1.13.2",
     "react-sortable-hoc": "^2.0.0",
     "react-split-pane": "^0.1.92",
