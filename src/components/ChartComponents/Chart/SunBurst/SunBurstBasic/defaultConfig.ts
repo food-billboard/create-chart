@@ -8,25 +8,25 @@ import {
   DEFAULT_ANIMATION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getName, getNumberValue } from '@/utils/constants';
-import { TTreeMapBasicConfig } from './type';
+import { TSunBurstBasicConfig } from './type';
 
 function generateList(count = 10): any {
   return new Array(count).fill(0).map((item) => {
     const [name] = getName(1);
-    const [value] = getNumberValue(1);
+    const [value] = getNumberValue(1, 5, 10);
     const number = Math.random();
     const [nextCount] = getNumberValue(1, 1, 5);
     return {
       name,
       value,
-      children: number > 0.8 ? generateList(Math.round(nextCount)) : [],
+      children: number > 0.9 ? generateList(Math.round(nextCount)) : [],
     };
   });
 }
 
 const DEFAULT_VALUE = generateList();
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTreeMapBasicConfig> =
+const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TSunBurstBasicConfig> =
   {
     interactive: {
       base: [
@@ -87,9 +87,8 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTreeMapBasicConfig>
         animationEasing: 'quadraticInOut',
       },
       series: {
-        nodeClick: 'zoomToNode',
-        // 黄金比例
-        squareRatio: 0.5 * (1 + Math.sqrt(5)),
+        center: [50, 50],
+        radius: 75,
         label: {
           show: true,
           formatter: '{b}',
@@ -100,44 +99,12 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTreeMapBasicConfig>
             b: 255,
           },
         },
-        upperLabel: {
-          show: false,
-          position: 'inside',
-          formatter: '{b}',
-          ...DEFAULT_FONT_CONFIG,
-          color: {
-            r: 255,
-            g: 255,
-            b: 255,
-          },
-        },
-        breadcrumb: {
-          show: true,
-          left: 'center',
-          top: 'bottom',
-          height: 22,
-          itemStyle: {
-            textStyle: {
-              ...DEFAULT_FONT_CONFIG,
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            color: {
-              r: 0,
-              g: 0,
-              b: 0,
-              a: 0.7,
-            },
-          },
-        },
+        nodeClick: 'rootToNode',
       },
     },
   };
 
-const DefaultConfig: ComponentData.TComponentData<TTreeMapBasicConfig> =
+const DefaultConfig: ComponentData.TComponentData<TSunBurstBasicConfig> =
   mergeWithoutArray(
     {},
     {

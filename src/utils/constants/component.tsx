@@ -124,6 +124,18 @@ export const COMPONENT_TYPE_LIST = [
           },
         ],
       },
+      {
+        type: 'sub-burst',
+        title: '旭日图',
+        children: [
+          {
+            type: 'SUN_BURST_BASIC',
+            title: '基础旭日图',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+        ],
+      },
     ],
   },
   {

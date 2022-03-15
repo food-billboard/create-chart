@@ -126,6 +126,7 @@ data.value data.name
 center radius  
 label.show label.formatter  
 label.color label.fontFamily label.fontWeight label.fontSize  
+labelLine.show labelLine.length2 labelLine.smooth labelLine.lineStyle.width labelLine.lineStyle.type  
 nodeClick  
 data.value data.name data.itemStyle  
 

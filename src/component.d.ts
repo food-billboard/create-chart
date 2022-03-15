@@ -92,7 +92,8 @@ declare namespace ComponentData {
     | 'IFRAME'
     | 'TAB'
     | 'SELECT'
-    | 'TREE_MAP_BASIC';
+    | 'TREE_MAP_BASIC'
+    | 'SUN_BURST_BASIC';
 
   // 基础组件属性
   export type TBaseConfig = {

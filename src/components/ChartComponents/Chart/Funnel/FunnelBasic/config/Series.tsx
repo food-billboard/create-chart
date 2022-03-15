@@ -112,6 +112,7 @@ const SeriesConfig = (props: {
                   length: value,
                 });
               }}
+              className="w-100"
             />
           </FullForm>
         </Item>
@@ -126,6 +127,7 @@ const SeriesConfig = (props: {
                   },
                 });
               }}
+              className="w-100"
             />
           </HalfForm>
           <HalfForm label="线条类型">

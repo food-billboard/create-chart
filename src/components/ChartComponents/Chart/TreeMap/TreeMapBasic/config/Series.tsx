@@ -22,8 +22,7 @@ const SeriesConfig = (props: {
   onChange: ComponentData.ComponentConfigProps<TTreeMapBasicConfig>['onChange'];
 }) => {
   const { value, onChange } = props;
-  const { label, upperLabel, labelLine, squareRatio, nodeClick, breadcrumb } =
-    value;
+  const { label, upperLabel, squareRatio, nodeClick, breadcrumb } = value;
 
   const onKeyChange = useCallback(
     (key: keyof TTreeMapBasicConfig['series'], value: any) => {
@@ -45,6 +44,7 @@ const SeriesConfig = (props: {
       <SeriesLabelConfig
         {...(label as any)}
         onChange={onKeyChange.bind(null, 'label')}
+        ignore={['position']}
       >
         <FormatterSelect
           value={label.formatter}
@@ -78,63 +78,6 @@ const SeriesConfig = (props: {
       </SeriesLabelConfig>
     );
   }, [upperLabel, onKeyChange]);
-
-  const labelLineConfig = useMemo(() => {
-    return (
-      <Collapse
-        child={{
-          header: '引导线',
-          key: 'labelLine',
-          visibleRender: true,
-          onChange: (value) => {
-            onKeyChange('labelLine', {
-              show: value,
-            });
-          },
-          value: labelLine.show,
-        }}
-      >
-        <Item label="线段">
-          <FullForm>
-            <InputNumber
-              value={labelLine.length2}
-              onChange={(value) => {
-                onKeyChange('labelLine', {
-                  length2: value,
-                });
-              }}
-            />
-          </FullForm>
-        </Item>
-        <Item label="样式">
-          <HalfForm label="宽度">
-            <InputNumber
-              value={labelLine.lineStyle.width}
-              onChange={(value) => {
-                onKeyChange('labelLine', {
-                  lineStyle: {
-                    width: value,
-                  },
-                });
-              }}
-            />
-          </HalfForm>
-          <HalfForm label="线条类型">
-            <LineStyle
-              value={labelLine.lineStyle.type}
-              onChange={(value) => {
-                onKeyChange('labelLine', {
-                  lineStyle: {
-                    type: value,
-                  },
-                });
-              }}
-            />
-          </HalfForm>
-        </Item>
-      </Collapse>
-    );
-  }, [labelLine, onKeyChange]);
 
   const squareRatioConfig = useMemo(() => {
     return (
@@ -246,7 +189,6 @@ const SeriesConfig = (props: {
       {nodeClickConfig}
       {labelConfig}
       {upperLabelConfig}
-      {labelLineConfig}
       {breadcrumbConfig}
     </ConfigList>
   );

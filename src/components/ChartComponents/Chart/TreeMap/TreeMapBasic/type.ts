@@ -3,7 +3,7 @@ export type TTreeMapBasicConfig = {
   series: {
     nodeClick: false | 'zoomToNode';
     squareRatio: number;
-    label: ComponentData.ComponentSeriesLabelConfig & {
+    label: Omit<ComponentData.ComponentSeriesLabelConfig, 'position'> & {
       formatter: string;
     };
     upperLabel: ComponentData.ComponentSeriesLabelConfig & {
@@ -17,14 +17,6 @@ export type TTreeMapBasicConfig = {
       itemStyle: {
         textStyle: ComponentData.TFontConfig;
         color: ComponentData.TColorConfig;
-      };
-    };
-    labelLine: {
-      show: boolean;
-      length2: number;
-      lineStyle: {
-        width: number;
-        type: ComponentData.ComponentLineStyle;
       };
     };
   };
