@@ -11,6 +11,7 @@ import GaugeBasic from './Chart/Gauge/GaugeBasic';
 import TreeMapBasic from './Chart/TreeMap/TreeMapBasic';
 import SunBurstBasic from './Chart/SunBurst/SunBurstBasic';
 import PictorialBarBasic from './Chart/PictorialBar/PictorialBarBasic';
+import ParallelBasic from './Chart/Parallel/ParallelBasic';
 // other
 import WordCloud from './Other/WordCloud';
 import Iframe from './Other/Iframe';
@@ -56,6 +57,7 @@ COMPONENT_MAP.set(TreeMapBasic.type, TreeMapBasic);
 COMPONENT_MAP.set(SunBurstBasic.type, SunBurstBasic);
 COMPONENT_MAP.set(Video.type, Video);
 COMPONENT_MAP.set(PictorialBarBasic.type, PictorialBarBasic);
+COMPONENT_MAP.set(ParallelBasic.type, ParallelBasic);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

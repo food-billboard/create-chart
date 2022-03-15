@@ -148,6 +148,18 @@ export const COMPONENT_TYPE_LIST = [
           },
         ],
       },
+      {
+        type: 'parallel',
+        title: '平行坐标系',
+        children: [
+          {
+            type: 'PARALLEL_BASIC',
+            title: '基础平行坐标系',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+        ],
+      },
     ],
   },
   {

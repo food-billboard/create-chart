@@ -173,6 +173,9 @@ label.color label.fontFamily label.fontWeight label.fontSize
 symbol symbolSize symbolRotate symbolRepeat symbolMargin symbolRepeatDirection symbolColor  
 data.name data.value 
 
+##### parallel  
+lineStyle.color lineStyle.width lineStyle.type smooth  
+
 #### wordCloud
 **npm install echarts-wordcloud**
 
@@ -224,6 +227,18 @@ function color() {
 ```
 
 ### 特殊组件的配置项  
+
+#### parallelAxis 平行坐标系  
+dim 写死的序号  
+areaSelectStyle.width areaSelectStyle.color  
+nameLocation nameTextStyle.color nameTextStyle.fontSize nameTextStyle.fontWeight nameTextStyle.fontFamily  
+nameGap nameRotate  
+axisLine.show axisLine.lineStyle.color axisLine.lineStyle.width axisLine.lineStyle.type  
+axisLabel.show axisLabel.rotate axisLabel.margin axisLabel.color axisLabel.fontSize axisLabel.fontWeight axisLabel.fontFamily  
+
+#### parallel 平行坐标系  
+left top right bottom  
+layout  
 
 #### radar 雷达图
 center radius startAngle  
@@ -439,8 +454,8 @@ yearLabel.show yearLabel.margin yearLabel.position yearLabel.color yearLabel.fon
 #### 平行坐标系  
 - 基础平行坐标系  
 
-#### 桑葚图  
-- 基础桑葚图  
+#### 桑基图  
+- 基础桑基图  
 
 #### 漏斗图  
 - 基础漏斗图  

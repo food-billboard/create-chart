@@ -23,8 +23,6 @@ const DEFAULT_VALUE = DEFAULT_DATE_LABEL.map((item, index) => {
   };
 });
 
-console.log(DEFAULT_VALUE);
-
 const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TPictorialBarBasicConfig> =
   {
     interactive: {

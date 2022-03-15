@@ -55,7 +55,10 @@ const SeriesConfig = (props: {
 
   const labelConfig = useMemo(() => {
     return (
-      <SeriesLabelConfig {...label} onChange={onKeyChange.bind(null, 'label')}>
+      <SeriesLabelConfig
+        {...(label as any)}
+        onChange={onKeyChange.bind(null, 'label')}
+      >
         <Item label="旋转">
           <FullForm>
             <AngleSelect

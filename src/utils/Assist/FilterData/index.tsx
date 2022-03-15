@@ -95,7 +95,7 @@ class FilterData {
         return value.map((item) => {
           return format(item);
         });
-      } else {
+      } else if (typeof value === 'object') {
         return Object.entries(value).reduce<any>((acc, cur) => {
           const [key, value] = cur;
           const target = map.find((item) => item.map === key);
@@ -107,6 +107,8 @@ class FilterData {
           }
           return acc;
         }, {});
+      } else {
+        return value;
       }
     }
 
