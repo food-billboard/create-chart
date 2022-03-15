@@ -93,7 +93,8 @@ declare namespace ComponentData {
     | 'TAB'
     | 'SELECT'
     | 'TREE_MAP_BASIC'
-    | 'SUN_BURST_BASIC';
+    | 'SUN_BURST_BASIC'
+    | 'VIDEO';
 
   // 基础组件属性
   export type TBaseConfig = {

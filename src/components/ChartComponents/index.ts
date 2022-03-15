@@ -19,6 +19,7 @@ import TimeMachine from './Font/TimeMachine';
 import CountUpNumber from './Font/CountUpNumber';
 // media
 import Image from './Media/Image';
+import Video from './Media/Video';
 import Carousel from './Media/Carousel';
 // interactive
 import Tab from './Interactive/Tab';
@@ -52,6 +53,7 @@ COMPONENT_MAP.set(Tab.type, Tab);
 COMPONENT_MAP.set(Select.type, Select);
 COMPONENT_MAP.set(TreeMapBasic.type, TreeMapBasic);
 COMPONENT_MAP.set(SunBurstBasic.type, SunBurstBasic);
+COMPONENT_MAP.set(Video.type, Video);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

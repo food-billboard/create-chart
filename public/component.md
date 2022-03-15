@@ -309,16 +309,9 @@ yearLabel.show yearLabel.margin yearLabel.position yearLabel.color yearLabel.fon
 #### 视频  
 |  属性   | 描述  | 类型  | 其他  |
 |  ----  | ----  | ----  | ----  |
-| empty.show | 空态内容显示 | boolean | - |
-| empty.type | 空态内容类型 | string | - |
-| empty.content | 空态内容 | string \| object | - |
-| empty.textStyle.color | 文字颜色 | string | - |
-| empty.textStyle.fontWeight | 文字粗细 | string | - |
-| empty.textStyle.fontSize | 文字大小 | string | - |
-| empty.textStyle.fontFamily | 文字字体 | string | - |
 | autoPlay | 是否自动播放 | boolean | - |
-| loopPlay | 是否循环播放 | boolean | - |
 | controls | 控制条 | boolean | - |
+| loop | 循环播放 | boolean | - |
 | muted.show | 是否静音 | boolean | - |
 | muted.value | 音量大小 | number | - |
 
