@@ -170,7 +170,8 @@ data.name data.value
 ##### pictorialBar  
 label.show label.formatter  
 label.color label.fontFamily label.fontWeight label.fontSize  
-data.name data.value data.symbol data.symbolRotate  
+symbol symbolSize symbolRotate symbolRepeat symbolMargin symbolRepeatDirection symbolColor  
+data.name data.value 
 
 #### wordCloud
 **npm install echarts-wordcloud**

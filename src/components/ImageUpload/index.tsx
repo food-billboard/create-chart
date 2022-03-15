@@ -14,7 +14,7 @@ import {
 import Input, { InputRef } from './Input';
 import styles from './index.less';
 
-function getBase64(file: File) {
+export function getBase64(file: File) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
