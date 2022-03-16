@@ -3,3 +3,4 @@ export * from './useComponentsPath';
 export * from './usePanelFocus';
 export * from './useResponseData';
 export * from './useComponentStyle';
+export * from './useDeepUpdateEffect';

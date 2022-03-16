@@ -55,7 +55,6 @@ const CountUpNumberBasic = (props: {
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<CountUp>();
   const requestRef = useRef<TFetchFragmentRef>(null);
-  const previousValue = useRef<number>(0);
 
   const {
     request,

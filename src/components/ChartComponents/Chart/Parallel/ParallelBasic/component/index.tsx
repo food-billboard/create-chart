@@ -9,6 +9,7 @@ import {
   useComponentResize,
   useAnimationChange,
 } from '@/components/ChartComponents/Common/Component/hook';
+import { useDeepUpdateEffect } from '@/hooks';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
@@ -38,7 +39,6 @@ const ParallelBasic = (props: {
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
   const requestRef = useRef<TFetchFragmentRef>(null);
-  const isFirst = useRef<boolean>(true);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -203,17 +203,13 @@ const ParallelBasic = (props: {
   }, [screenTheme]);
 
   // 数据发生变化时
-  useDeepCompareEffect(() => {
-    if (isFirst.current) {
-      isFirst.current = false;
-    } else {
-      setOption();
-      chartInstance.current?.resize();
-    }
+  useDeepUpdateEffect(() => {
+    setOption();
+    chartInstance.current?.resize();
   }, [processedValue]);
 
   // 配置发生变化时
-  useUpdateEffect(() => {
+  useDeepUpdateEffect(() => {
     setOption();
     chartInstance.current?.resize();
   }, [options]);

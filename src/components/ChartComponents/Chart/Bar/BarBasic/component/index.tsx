@@ -1,7 +1,7 @@
 import { CSSProperties, useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
-import { useUpdateEffect, useDeepCompareEffect } from 'ahooks';
+import { useDeepUpdateEffect } from '@/hooks';
 import {
   useComponent,
   useChartComponentResize,
@@ -38,7 +38,6 @@ const BarBasic = (props: {
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
   const requestRef = useRef<TFetchFragmentRef>(null);
-  const isFirst = useRef<boolean>(true);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -235,17 +234,13 @@ const BarBasic = (props: {
   }, [syncInteractiveAction]);
 
   // 数据发生变化时
-  useDeepCompareEffect(() => {
-    if (isFirst.current) {
-      isFirst.current = false;
-    } else {
-      setOption();
-      chartInstance.current?.resize();
-    }
+  useDeepUpdateEffect(() => {
+    setOption();
+    chartInstance.current?.resize();
   }, [processedValue]);
 
   // 配置发生变化时
-  useUpdateEffect(() => {
+  useDeepUpdateEffect(() => {
     setOption();
     chartInstance.current?.resize();
   }, [options]);
