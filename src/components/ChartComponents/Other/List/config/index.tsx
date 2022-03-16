@@ -45,6 +45,19 @@ class Config extends Component<
       <ComponentOptionConfig>
         <TabPane key={'1'} tab={<Tab>全局样式</Tab>}>
           <ConfigList level={1}>
+            <Item label="列表显示行数">
+              <FullForm>
+                <InputNumber
+                  className="w-100"
+                  value={global.column}
+                  onChange={(value) => {
+                    this.onKeyChange('global', {
+                      column: value,
+                    });
+                  }}
+                />
+              </FullForm>
+            </Item>
             <Collapse
               child={{
                 header: '动画',
@@ -388,7 +401,7 @@ class Config extends Component<
                         />
                       </HalfForm>
                     </Item>
-                    <Item label="宽度">
+                    <Item label="宽度（%）">
                       <FullForm>
                         <InputNumber
                           className="w-100"
@@ -550,7 +563,7 @@ class Config extends Component<
                 },
               }}
             >
-              <Item label="宽度">
+              <Item label="宽度（%）">
                 <FullForm>
                   <InputNumber
                     className="w-100"
@@ -558,6 +571,19 @@ class Config extends Component<
                     onChange={(value) => {
                       this.onKeyChange('index', {
                         width: value,
+                      });
+                    }}
+                  />
+                </FullForm>
+              </Item>
+              <Item label="大小">
+                <FullForm>
+                  <InputNumber
+                    className="w-100"
+                    value={index.size}
+                    onChange={(value) => {
+                      this.onKeyChange('index', {
+                        size: value,
                       });
                     }}
                   />

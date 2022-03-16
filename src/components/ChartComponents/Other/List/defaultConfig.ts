@@ -5,15 +5,14 @@ import {
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
 } from '../../Common/Constants/defaultConfig';
-import { getText } from '@/utils/constants';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TListConfig } from './type';
 
-const [DEFAULT_NAME_LABEL] = getText(1);
-
-const DEFAULT_VALUE = {
-  value: DEFAULT_NAME_LABEL,
-};
+const DEFAULT_VALUE = new Array(20).fill({
+  name: 'daniel',
+  age: 25,
+  job: 'front-end developer',
+});
 
 const DEFAULT_HEADER = {
   backgroundColor: ThemeUtil.generateNextColor4CurrentTheme(0),
@@ -96,10 +95,11 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TListConfig> = {
         internal: 5000,
         less: false,
       },
+      column: 10,
     },
     header: {
       show: true,
-      height: 20,
+      height: 60,
       ...DEFAULT_HEADER,
     },
     index: {
@@ -110,6 +110,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TListConfig> = {
         b: 255,
         a: 0,
       },
+      size: 20,
       width: 20,
       radius: 50,
       textStyle: {
@@ -164,7 +165,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TListConfig> = {
         {
           key: 'job',
           name: '工作',
-          width: 20,
+          width: 40,
           type: 'text',
           textStyle: {
             ...DEFAULT_FONT_CONFIG,

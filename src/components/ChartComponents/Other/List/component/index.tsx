@@ -24,12 +24,15 @@ const ListBasic = (props: {
   const { className, style, value, global } = props;
 
   const {
-    config: { options },
+    config: {
+      options,
+      style: { height },
+    },
   } = value;
   const {
-    global: { animation },
+    global: { animation, column },
     index,
-    columns,
+    columns: { data, margin, even, odd },
     header,
   } = options;
 
@@ -64,25 +67,162 @@ const ListBasic = (props: {
     });
   }, [syncInteractiveAction, finalValue]);
 
+  const contentHeight = useMemo(() => {
+    return height - header.height;
+  }, [height, header]);
+
+  const listItemHeight = useMemo(() => {
+    return contentHeight / column - margin;
+  }, [contentHeight, column, margin]);
+
   const componentClassName = useMemo(() => {
-    return classnames(className, 'dis-flex', styles['component-other-list']);
+    return classnames(className, styles['component-other-list']);
   }, [className, animation]);
+
+  const listItem = useCallback(
+    (value: any, currIndex: number) => {
+      return (
+        <div
+          className={styles['component-other-list-content-column']}
+          style={{
+            height: listItemHeight,
+            marginBottom: margin,
+            backgroundColor:
+              currIndex % 2 === 0
+                ? getRgbaString(odd.backgroundColor)
+                : getRgbaString(even.backgroundColor),
+          }}
+          key={currIndex}
+        >
+          {/* index索引 */}
+          {index.show && (
+            <div
+              className={classnames(
+                styles['component-other-list-item'],
+                styles['component-other-list-item-text'],
+                styles['component-other-list-item-index'],
+              )}
+              style={{
+                width: index.width + '%',
+                minWidth: index.width + '%',
+                lineHeight: listItemHeight + 'px',
+                ...index.textStyle,
+                color: getRgbaString(index.textStyle.color),
+                textAlign: 'center',
+              }}
+            >
+              <div
+                style={{
+                  backgroundColor: getRgbaString(index.backgroundColor),
+                  borderRadius: index.radius + '%',
+                  width: index.size,
+                  height: index.size,
+                }}
+              >
+                {currIndex + 1}
+              </div>
+            </div>
+          )}
+          {data.map((item) => {
+            const { type, key, name, textStyle, width } = item;
+            return (
+              <div
+                className={classnames(styles['component-other-list-item'], {
+                  [styles['component-other-list-item-text']]: type === 'text',
+                  [styles['component-other-list-item-image']]: type === 'image',
+                })}
+                key={key}
+                style={{
+                  width: width + '%',
+                  minWidth: width + '%',
+                  lineHeight: listItemHeight + 'px',
+                  ...textStyle,
+                  color: getRgbaString(textStyle.color),
+                }}
+              >
+                {type === 'image' && <img src={value[key]} alt={name} />}
+                {type === 'text' && value[key]}
+              </div>
+            );
+          })}
+        </div>
+      );
+    },
+    [data, listItemHeight, index],
+  );
+
+  const listContent = useMemo(() => {
+    return (
+      <div className={styles['component-other-list-content']}>
+        {finalValue.map((item: any, index: number) => {
+          return listItem(item, index);
+        })}
+      </div>
+    );
+  }, [finalValue]);
+
+  const headerDom = useMemo(() => {
+    if (!header.show) return null;
+    const { height, backgroundColor, textStyle } = header;
+    return (
+      <div
+        className={styles['component-other-list-header']}
+        style={{
+          ...textStyle,
+          color: getRgbaString(textStyle.color),
+          backgroundColor: getRgbaString(backgroundColor),
+          height,
+        }}
+      >
+        {(index.show
+          ? [
+              {
+                key: '__index__',
+                name: '',
+                width: index.width,
+                textStyle: {
+                  textAlign: 'center' as any,
+                },
+              },
+              ...data,
+            ]
+          : data
+        ).map((item) => {
+          const {
+            key,
+            name,
+            width,
+            textStyle: { textAlign },
+          } = item;
+          return (
+            <div
+              className={styles['component-other-list-header-item']}
+              style={{
+                width: width + '%',
+                minWidth: width + '%',
+                textAlign,
+                lineHeight: height + 'px',
+              }}
+              key={key}
+            >
+              {name}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }, [header, data, index]);
 
   return (
     <>
       <div
         className={componentClassName}
-        style={merge(
-          {
-            width: '100%',
-            height: '100%',
-          },
-          style,
-        )}
+        style={style}
         id={chartId.current}
         onClick={onClick}
       >
-        {finalValue.value || ''}
+        {headerDom}
+        {listContent}
       </div>
       <FetchFragment
         url={requestUrl}

@@ -1,2 +1,30 @@
 .component-other-list {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  &-header {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    &-item {
+      display: inline-block;
+    }
+  }
+  &-content {
+  }
+  &-item-index {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &-item {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  &-content-column {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+  }
 }

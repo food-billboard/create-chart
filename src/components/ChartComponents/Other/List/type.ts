@@ -6,6 +6,7 @@ export type TListConfig = {
       internal: number;
       less: boolean;
     };
+    column: number;
   };
   header: {
     show: boolean;
@@ -19,6 +20,7 @@ export type TListConfig = {
     width: number;
     radius: number;
     textStyle: ComponentData.TFontConfig;
+    size: number;
   };
   columns: {
     margin: number;
