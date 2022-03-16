@@ -24,7 +24,7 @@ type TColorSelectProps = Partial<
 };
 
 function getOpacity(prevColor: ComponentData.TColorConfig) {
-  return prevColor.a ?? 1;
+  return prevColor?.a ?? 1;
 }
 
 function getRgbaString(prevColor: ComponentData.TColorConfig) {

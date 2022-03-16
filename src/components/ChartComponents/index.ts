@@ -16,6 +16,7 @@ import CandlestickBasic from './Chart/Candlestick/CandlestickBasic';
 // other
 import WordCloud from './Other/WordCloud';
 import Iframe from './Other/Iframe';
+import List from './Other/List';
 // font
 import Title from './Font/Title';
 import TimeMachine from './Font/TimeMachine';
@@ -60,6 +61,7 @@ COMPONENT_MAP.set(Video.type, Video);
 COMPONENT_MAP.set(PictorialBarBasic.type, PictorialBarBasic);
 COMPONENT_MAP.set(ParallelBasic.type, ParallelBasic);
 COMPONENT_MAP.set(CandlestickBasic.type, CandlestickBasic);
+COMPONENT_MAP.set(List.type, List);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

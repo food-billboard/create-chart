@@ -105,7 +105,7 @@ const FontConfig = (props: {
   );
   const { ignore, children } = props;
 
-  const { fontSize, fontWeight, fontFamily, color } = value;
+  const { fontSize, fontWeight, fontFamily, color } = value || {};
 
   const onChange = useCallback(
     (key: keyof ComponentData.TFontConfig, changeValue: any) => {
@@ -227,7 +227,7 @@ export const FontConfigList = (props: {
 
   const { ignore, children } = props;
 
-  const { fontSize, fontWeight, fontFamily, color } = value;
+  const { fontSize, fontWeight, fontFamily, color } = value || {};
 
   const { labelProps = { level: 2 } } = props;
 

@@ -394,7 +394,6 @@ yearLabel.show yearLabel.margin yearLabel.position yearLabel.color yearLabel.fon
 | header.textStyle.fontSize | 文字大小 | string | - |
 | header.textStyle.fontFamily | 文字字体 | string | - |
 | header.textStyle.color | 文字颜色 | string | - |
-| header.textStyle.align | 对齐方式 | string | - |
 | columns.margin | 行间距 | number | - |
 | columns.even.backgroundColor | 奇数行背景颜色 | string | - |
 | columns.odd.backgroundColor | 偶数行背景颜色 | string | - |
@@ -414,7 +413,7 @@ yearLabel.show yearLabel.margin yearLabel.position yearLabel.color yearLabel.fon
 | columns.data.textStyle.fontSize | 文字大小 | string | - |
 | columns.data.textStyle.fontFamily | 文字字体 | string | - |
 | columns.data.textStyle.color | 文字颜色 | string | - |
-| columns.data.textStyle.align | 对齐方式 | string | - |
+| columns.data.textStyle.textAlign | 对齐方式 | string | - |
 
 #### 词云  
 暂时没有啥其他配置了
