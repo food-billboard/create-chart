@@ -129,3 +129,10 @@ export const DEFAULT_ANIMATION_CONFIG: ComponentData.ComponentChartAnimationConf
     animationDuration: 1000,
     animationEasing: 'cubicOut',
   };
+
+// label
+export const DEFAULT_LABEL_CONFIG: ComponentData.ComponentSeriesLabelConfig = {
+  position: 'inside',
+  ...DEFAULT_FONT_CONFIG,
+  show: true,
+};

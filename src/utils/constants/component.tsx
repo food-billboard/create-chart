@@ -160,6 +160,18 @@ export const COMPONENT_TYPE_LIST = [
           },
         ],
       },
+      {
+        type: 'candlestick',
+        title: 'K线图',
+        children: [
+          {
+            type: 'CANDLESTICK_BASIC',
+            title: '基础K线图',
+            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            description: '',
+          },
+        ],
+      },
     ],
   },
   {

@@ -132,11 +132,20 @@ data.value data.name data.itemStyle
 
 ##### boxplot  
 boxWidth  
-itemStyle.color itemStyle.borderWidth itemStyle.borderColor itemStyle.borderType  
 data.name data.value 
 
 ##### candlestick  
-barWidth data.name data.value data.itemStyle.color data.itemStyle.color0   
+barWidth  
+itemStyle.color itemStyle.borderWidth itemStyle.borderColor itemStyle.borderType  
+itemStyle.color0 itemStyle.borderColor0  
+markPoint.symbol markPoint.symbolSize markPoint.symbolRotate  
+markPoint.label.show markPoint.label.position markPoint.label.distance markPoint.label.formatter  
+markPoint.label.color markPoint.label.fontSize markPoint.label.fontWeight markPoint.label.fontFamily  
+markPoint.itemStyle.color 
+markPoint.data.type  
+markLine.lineStyle.color markLine.lineStyle.type markLine.lineStyle.width  
+markLine.type markLine.data.symbol markLine.data.symbolSize markLine.data.label  
+data.name data.value data.itemStyle.color data.itemStyle.color0   
 
 ##### sankey  
 left right top bottom  nodeWidth nodeGap nodeAlign orient draggable  

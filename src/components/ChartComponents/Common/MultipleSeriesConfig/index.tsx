@@ -12,8 +12,18 @@ const MultipleSeriesConfig = (props: {
   counter: number;
   max?: number;
   renderContent: (index: number) => ReactNode;
+  buttonLabel?: ReactNode;
+  seriesLabel?: (value: number) => ReactNode;
 }) => {
-  const { onAdd, onRemove, counter, max, renderContent } = props;
+  const {
+    onAdd,
+    onRemove,
+    counter,
+    max,
+    renderContent,
+    buttonLabel,
+    seriesLabel,
+  } = props;
 
   const [activeKey, setActiveKey] = useState<string>('0');
 
@@ -59,7 +69,7 @@ const MultipleSeriesConfig = (props: {
           onClick={add}
           className="m-t-8 m-b-4"
         >
-          新增系列
+          {buttonLabel || '新增系列'}
         </GhostButton>
       )}
       <Tabs
@@ -72,7 +82,10 @@ const MultipleSeriesConfig = (props: {
       >
         {new Array(counter).fill(0).map((_, index) => {
           return (
-            <TabPane tab={`系列${index + 1}`} key={index.toString()}>
+            <TabPane
+              tab={seriesLabel ? seriesLabel(index) : `系列${index + 1}`}
+              key={index.toString()}
+            >
               {renderContent(index)}
             </TabPane>
           );

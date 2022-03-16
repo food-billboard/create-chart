@@ -96,7 +96,8 @@ declare namespace ComponentData {
     | 'SUN_BURST_BASIC'
     | 'VIDEO'
     | 'PICTORIAL_BAR_BASIC'
-    | 'PARALLEL_BASIC';
+    | 'PARALLEL_BASIC'
+    | 'CANDLESTICK_BASIC';
 
   // 基础组件属性
   export type TBaseConfig = {
