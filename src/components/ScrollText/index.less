@@ -1,0 +1,18 @@
+.component-scroll-text {
+  overflow: hidden;
+  &-content {
+    position: absolute;
+    width: 100%;
+    white-space: nowrap;
+    animation-name: scroll-text-animation;
+  }
+}
+
+@keyframes scroll-text-animation {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -110%;
+  }
+}

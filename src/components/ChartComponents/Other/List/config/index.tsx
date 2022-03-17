@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Tabs, Select, Switch } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { merge } from 'lodash';
 import ComponentOptionConfig, {
   Tab,
@@ -13,6 +14,7 @@ import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import IconTooltip from '@/components/IconTooltip';
 import { DEFAULT_FONT_CONFIG } from '../../../Common/Constants/defaultConfig';
 import { TListConfig } from '../type';
 
@@ -109,34 +111,33 @@ class Config extends Component<
                   </Select>
                 </FullForm>
               </Item>
-              <Item label="时间间隔">
-                <FullForm>
+              <Item label="时间">
+                <HalfForm label="滚动时间">
                   <InputNumber
                     className="w-100"
-                    value={global.animation.internal}
+                    value={global.animation.speed}
                     onChange={(value) => {
                       this.onKeyChange('global', {
                         animation: {
-                          internal: value,
+                          speed: value,
                         },
                       });
                     }}
                   />
-                </FullForm>
-              </Item>
-              <Item label="低数据轮播">
-                <FullForm>
-                  <Switch
-                    checked={global.animation.less}
+                </HalfForm>
+                <HalfForm label="时间间隔">
+                  <InputNumber
+                    className="w-100"
+                    value={global.animation.autoplaySpeed}
                     onChange={(value) => {
                       this.onKeyChange('global', {
                         animation: {
-                          less: value,
+                          autoplaySpeed: value,
                         },
                       });
                     }}
                   />
-                </FullForm>
+                </HalfForm>
               </Item>
             </Collapse>
           </ConfigList>
@@ -270,6 +271,9 @@ class Config extends Component<
                   header: {
                     show: true,
                   },
+                  scroll: {
+                    show: false,
+                  },
                 };
                 const newDataList = [...columns.data, newData];
                 this.onKeyChange('columns', {
@@ -320,7 +324,7 @@ class Config extends Component<
               counter={columns.data.length}
               max={10}
               renderContent={(index) => {
-                const { key, name, width, type, textStyle, header } =
+                const { key, name, width, type, textStyle, header, scroll } =
                   columns.data[index];
                 return (
                   <>
@@ -417,6 +421,8 @@ class Config extends Component<
                             );
                             this.onKeyChange('columns', {
                               data: newData,
+                              // ! 暂时用这个方法强制刷新
+                              timestamps: Date.now(),
                             });
                           }}
                         />
@@ -438,6 +444,8 @@ class Config extends Component<
                             );
                             this.onKeyChange('columns', {
                               data: newData,
+                              // ! 暂时用这个方法强制刷新
+                              timestamps: Date.now(),
                             });
                           }}
                           options={[
@@ -447,9 +455,40 @@ class Config extends Component<
                             },
                             {
                               label: '图片',
-                              value: 'value',
+                              value: 'image',
                             },
                           ]}
+                        />
+                      </FullForm>
+                    </Item>
+                    <Item
+                      label="是否滚动"
+                      placeholder={
+                        <IconTooltip title={'只对文字类型内容生效'}>
+                          <InfoCircleOutlined />
+                        </IconTooltip>
+                      }
+                    >
+                      <FullForm>
+                        <Switch
+                          checked={scroll.show}
+                          onChange={(value) => {
+                            const newData = [...columns.data];
+                            newData.splice(
+                              index,
+                              1,
+                              merge(newData[index], {
+                                scroll: {
+                                  show: value,
+                                },
+                              }),
+                            );
+                            this.onKeyChange('columns', {
+                              data: newData,
+                              // ! 暂时用这个方法强制刷新
+                              timestamps: Date.now(),
+                            });
+                          }}
                         />
                       </FullForm>
                     </Item>
@@ -472,6 +511,8 @@ class Config extends Component<
                           );
                           this.onKeyChange('columns', {
                             data: newData,
+                            // ! 暂时用这个方法强制刷新
+                            timestamps: Date.now(),
                           });
                         }}
                       />

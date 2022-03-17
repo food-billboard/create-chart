@@ -3,8 +3,8 @@ export type TListConfig = {
     animation: {
       show: boolean;
       type: 'column' | 'page';
-      internal: number;
-      less: boolean;
+      speed: number;
+      autoplaySpeed: number;
     };
     column: number;
   };
@@ -37,6 +37,9 @@ export type TListConfig = {
       type: 'image' | 'text';
       textStyle: ComponentData.TFontConfig & {
         textAlign: 'left' | 'right' | 'center';
+      };
+      scroll: {
+        show: boolean;
       };
       header: {
         textStyle?: ComponentData.TFontConfig;

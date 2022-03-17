@@ -92,8 +92,8 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TListConfig> = {
       animation: {
         show: true,
         type: 'column',
-        internal: 5000,
-        less: false,
+        speed: 2000,
+        autoplaySpeed: 3000,
       },
       column: 10,
     },
@@ -111,7 +111,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TListConfig> = {
         a: 0,
       },
       size: 20,
-      width: 20,
+      width: 5,
       radius: 50,
       textStyle: {
         ...DEFAULT_FONT_CONFIG,
@@ -147,6 +147,9 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TListConfig> = {
           header: {
             show: true,
           },
+          scroll: {
+            show: false,
+          },
         },
         {
           key: 'age',
@@ -161,11 +164,14 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TListConfig> = {
           header: {
             show: true,
           },
+          scroll: {
+            show: false,
+          },
         },
         {
           key: 'job',
           name: '工作',
-          width: 40,
+          width: 55,
           type: 'text',
           textStyle: {
             ...DEFAULT_FONT_CONFIG,
@@ -174,6 +180,9 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TListConfig> = {
           },
           header: {
             show: true,
+          },
+          scroll: {
+            show: false,
           },
         },
       ],
