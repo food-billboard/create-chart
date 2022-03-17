@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { connect } from 'dva';
+import FetchScreenComponent from '@/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
@@ -13,7 +14,12 @@ function Previewer(props: {
     setScreenType('preview');
   }, [setScreenType]);
 
-  return <NormalPainter className={styles['page-preview']} />;
+  return (
+    <>
+      <NormalPainter className={styles['page-preview']} />
+      <FetchScreenComponent />
+    </>
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Previewer);

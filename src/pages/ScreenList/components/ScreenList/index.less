@@ -1,0 +1,44 @@
+.screen-list-icon-content {
+  &-item {
+    height: 200px;
+    cursor: pointer;
+    border-radius: 8px;
+    overflow: hidden;
+    transform-origin: center center;
+    transition: transform 0.3s;
+    margin-bottom: 24px;
+    &:hover {
+      transform: scale(1.1);
+    }
+    &-main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: 150px;
+      text-align: right;
+    }
+    &-footer {
+      height: 50px;
+      background-color: white;
+      padding: 0 8px;
+      &-name {
+        font-size: 16px;
+        color: black;
+      }
+      &-action {
+        text-align: right;
+        &-switch-close {
+          :global {
+            .ant-switch-inner {
+              color: gray;
+            }
+          }
+        }
+        :global {
+          .ant-switch {
+            box-shadow: 0 0 1px gray;
+          }
+        }
+      }
+    }
+  }
+}

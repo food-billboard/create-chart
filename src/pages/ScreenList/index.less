@@ -1,3 +1,53 @@
-.title {
-  background: rgb(121, 242, 157);
+.screen-page {
+  height: 100vh;
+  overflow: hidden;
+  &-logo {
+    background-image: url('../../../public/icons/icon-128x128.png');
+    float: left;
+    width: 31px;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+    background-size: cover;
+  }
+  &-content {
+    display: flex;
+    flex-direction: column;
+  }
+  &-content-main {
+    background-color: black;
+    padding: 24px;
+    flex: 1;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    &-header {
+      font-size: 48px;
+      font-weight: bolder;
+      text-align: center;
+      line-height: 1.6;
+      position: sticky;
+      top: 0;
+    }
+    &-action {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      :global {
+        .ant-input-search {
+          width: 200px;
+        }
+      }
+    }
+    &-list {
+      flex: 1;
+    }
+    &-pagination {
+      text-align: center;
+      padding: 4px;
+      border-radius: 4px;
+      position: sticky;
+      bottom: 0;
+    }
+  }
 }

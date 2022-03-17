@@ -6,4 +6,7 @@ export const mapStateToProps = (state: ConnectState) => {
 
 export const mapDispatchToProps = (dispatch: any) => ({
   setScale: (value: any) => dispatch({ type: 'global/setScale', value }),
+  setScreen: (value: any) => dispatch({ type: 'global/setScreen', value }),
+  setComponentAll: (value: any) =>
+    dispatch({ type: 'global/setComponentAll', value }),
 });
