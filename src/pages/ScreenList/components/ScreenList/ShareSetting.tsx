@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle, useCallback, useState } from 'react';
-import { Modal, Form, Select, Radio, Input, message } from 'antd';
+import { Modal, Form, Select, Radio, Input, message, Button } from 'antd';
+import { shareScreenGet, closeShareScreen } from '@/services';
 
 const { Item } = Form;
 const { Password } = Input;
@@ -38,7 +39,7 @@ const TIME_MAP = [
 ];
 
 export type ShareSettingRef = {
-  open: () => void;
+  open: (id: string) => void;
 };
 
 const ShareSetting = forwardRef<
@@ -58,11 +59,15 @@ const ShareSetting = forwardRef<
   const [auth, setAuth] = useState<'PUBLIC' | 'PRIVATE'>('PUBLIC');
   const [time, setTime] = useState<string>('30d');
   const [password, setPassword] = useState<string>('');
+  const [screenId, setScreenId] = useState<string>('');
+  const [shared, setShared] = useState<boolean>(false);
 
   const clear = useCallback(() => {
     setAuth('PUBLIC');
     setTime('30d');
     setPassword('');
+    setScreenId('');
+    setShared(false);
   }, []);
 
   const onCancel = useCallback(() => {
@@ -93,9 +98,40 @@ const ShareSetting = forwardRef<
     clear();
   }, [auth, getTimeData, password, clear]);
 
-  const open = useCallback(() => {
-    setVisible(true);
+  const fetchData = useCallback(async (id) => {
+    const { auth, time } = await shareScreenGet({
+      _id: id,
+    });
+    setAuth(auth);
+    setShared(!!auth);
+    const target = TIME_MAP.find((item) => item.realValue === time);
+    if (target) setTime(target.value);
   }, []);
+
+  const open = useCallback(
+    async (id: string) => {
+      try {
+        await fetchData(id);
+        setVisible(true);
+      } catch (err) {
+        message.info('操作失败');
+      }
+    },
+    [fetchData],
+  );
+
+  // 取消分享
+  const shareScreenMethod = useCallback(
+    async (e) => {
+      e.stopPropagation();
+      try {
+        await closeShareScreen({ _id: screenId });
+      } catch (err) {
+        message.info('操作失败');
+      }
+    },
+    [screenId],
+  );
 
   useImperativeHandle(
     ref,
@@ -108,7 +144,24 @@ const ShareSetting = forwardRef<
   );
 
   return (
-    <Modal onCancel={onCancel} onOk={onOk} visible={visible} title="分享设置">
+    <Modal
+      onCancel={onCancel}
+      visible={visible}
+      title="分享设置"
+      footer={[
+        shared ? (
+          <Button key="un_share" danger onClick={shareScreenMethod}>
+            取消分享
+          </Button>
+        ) : null,
+        <Button key="cancel" onClick={onCancel}>
+          取消
+        </Button>,
+        <Button key="ok" onClick={onOk}>
+          确定
+        </Button>,
+      ]}
+    >
       <Form labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
         <Item label="权限">
           <Radio.Group

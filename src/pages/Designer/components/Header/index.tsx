@@ -1,9 +1,11 @@
 import { useMemo, useState, useCallback } from 'react';
-import { PageHeader, Input, Button } from 'antd';
+import { PageHeader, Input, Button, message } from 'antd';
+import { history } from 'umi';
 import { SendOutlined, FundOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import FocusWrapper from '@/components/FocusWrapper';
+import { shareScreen } from '@/services';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -48,7 +50,19 @@ const Header = (props: {
     );
   }, [editMode, name, setScreen]);
 
-  const handlePreview = useCallback(() => {}, []);
+  const handlePreview = useCallback(async () => {
+    try {
+      // await shareScreen({ _id:  })
+      history.push({
+        pathname: '/preview',
+        query: {
+          // _id:
+        },
+      });
+    } catch (err) {
+      message.info('操作失败');
+    }
+  }, []);
 
   const handleSend = useCallback(() => {}, []);
 

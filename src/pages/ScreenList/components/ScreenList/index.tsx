@@ -1,18 +1,16 @@
 import { useRef, useCallback } from 'react';
-import { Row, Col, Button, Switch } from 'antd';
+import { Row, Col, Button, Switch, message, Modal } from 'antd';
 import { history } from 'umi';
 import {
   SendOutlined,
   DeleteOutlined,
   FolderViewOutlined,
-  DisconnectOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
 import {
   deleteScreen,
   previewScreen,
   shareScreen,
-  closeShareScreen,
   enableScreen,
   disabledScreen,
 } from '@/services';
@@ -28,7 +26,7 @@ const ScreenList = (props: {
   value: API_SCREEN.TGetScreenListData[];
   onChange?: () => any;
 }) => {
-  const { value } = props;
+  const { value, onChange } = props;
 
   const fetchLoading = useRef<boolean>(false);
   const shareSettingRef = useRef<ShareSettingRef>(null);
@@ -37,43 +35,78 @@ const ScreenList = (props: {
   const onEnabledChange = useCallback(
     async (target: API_SCREEN.TGetScreenListData, value) => {
       if (fetchLoading.current) return;
-      // enableScreen
-      // disabledScreen
+      try {
+        if (value) {
+          await enableScreen({ _id: target._id });
+        } else {
+          await disabledScreen({ _id: target._id });
+        }
+        onChange?.();
+      } catch (err) {
+        message.info('操作失败');
+      } finally {
+        fetchLoading.current = false;
+      }
     },
-    [],
+    [onChange],
   );
 
   // 预览
   const previewScreenMethod = useCallback(async (value, e) => {
     e.stopPropagation();
     if (fetchLoading.current) return;
-    // previewScreen
+    try {
+      await previewScreen({ _id: value._id });
+      history.push({
+        pathname: '/preview',
+        query: {
+          id: value._id,
+        },
+      });
+    } catch (err) {
+      message.info('操作失败');
+    } finally {
+      fetchLoading.current = false;
+    }
   }, []);
 
   // 分享 | 取消分享
   const shareScreenMethod = useCallback(async (value, e) => {
     e.stopPropagation();
     if (fetchLoading.current) return;
-    const {
-      share: { open },
-    } = value;
-    if (open) {
-      // closeShareScreen
-    } else {
-      shareSettingRef.current?.open();
-    }
+    shareSettingRef.current?.open(value._id);
   }, []);
 
   // 确定分享参数
-  const onShareOk = useCallback((value) => {
-    // shareScreen
+  const onShareOk = useCallback(async (value) => {
+    try {
+      await shareScreen(value);
+    } catch (err) {
+      message.info('操作失败');
+    } finally {
+      fetchLoading.current = false;
+    }
   }, []);
 
   // 删除
   const deleteScreenMethod = useCallback(async (value, e) => {
     e.stopPropagation();
     if (fetchLoading.current) return;
-    // deleteScreen
+    Modal.confirm({
+      title: '提示',
+      content: '是否确定删除？',
+      onOk: async () => {
+        try {
+          await deleteScreen({
+            _id: value._id,
+          });
+        } catch (err) {
+          message.info('操作失败');
+        } finally {
+          fetchLoading.current = false;
+        }
+      },
+    });
   }, []);
 
   // 编辑
@@ -91,9 +124,9 @@ const ScreenList = (props: {
     <div className={styles['screen-list-icon-content']}>
       <Row gutter={24}>
         {value.map((item) => {
-          const { name, poster, id, share, enable } = item;
+          const { name, poster, _id, enable } = item;
           return (
-            <Col key={id} {...COL_SPAN} onClick={handleEdit.bind(null, item)}>
+            <Col key={_id} {...COL_SPAN} onClick={handleEdit.bind(null, item)}>
               <div className={styles['screen-list-icon-content-item']}>
                 <div
                   className={styles['screen-list-icon-content-item-main']}
@@ -106,10 +139,8 @@ const ScreenList = (props: {
                       <Button
                         size="small"
                         type="link"
-                        icon={
-                          share.open ? <DisconnectOutlined /> : <SendOutlined />
-                        }
-                        title={share.open ? '取消分享' : '分享'}
+                        icon={<SendOutlined />}
+                        title={'分享'}
                         onClick={shareScreenMethod.bind(null, item)}
                       ></Button>
                     )}

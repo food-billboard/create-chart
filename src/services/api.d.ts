@@ -53,17 +53,12 @@ declare namespace API_SCREEN {
   };
 
   export type TGetScreenListData = {
-    id: string;
+    _id: string;
     description: string;
     name: string;
     flag: 'WEB' | 'H5';
     group: string;
     poster: string;
-    share: {
-      open: boolean;
-      time?: number;
-      password?: string;
-    };
     enable: boolean;
   };
 
@@ -96,5 +91,36 @@ declare namespace API_SCREEN {
 
   export type TGetScreenDetail = {
     _id: string;
+  };
+
+  export type TAddScreenParams = {
+    name: string;
+    description?: string;
+    poster: string;
+    flag: 'PC' | 'H5';
+    data: string;
+  };
+
+  export type TEditScreenParams = TAddScreenParams & {
+    _id: string;
+  };
+
+  export type TShareScreenGetParams = {
+    _id: string;
+  };
+
+  export type TShareScreenGetData = {
+    auth: 'PUBLIC' | 'PRIVATE';
+    password: boolean;
+    time: number;
+  };
+
+  export type TShareScreenHeartbeatParams = {
+    _id: string;
+  };
+
+  export type TShareScreenPostParams = {
+    _id: string;
+    password: string;
   };
 }
