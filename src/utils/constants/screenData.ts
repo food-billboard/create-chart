@@ -21,7 +21,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
       constants: [],
     },
     flag: {
-      type: 'WEB',
+      type: 'PC',
     },
   },
 };

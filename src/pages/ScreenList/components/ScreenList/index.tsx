@@ -70,7 +70,7 @@ const ScreenList = (props: {
     }
   }, []);
 
-  // 分享 | 取消分享
+  // 分享
   const shareScreenMethod = useCallback(async (value, e) => {
     e.stopPropagation();
     if (fetchLoading.current) return;
@@ -111,11 +111,11 @@ const ScreenList = (props: {
 
   // 编辑
   const handleEdit = useCallback((value) => {
-    const { id } = value;
+    const { _id } = value;
     history.push({
       pathname: '/designer',
       state: {
-        id,
+        id: _id,
       },
     });
   }, []);

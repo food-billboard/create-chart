@@ -173,7 +173,7 @@ declare namespace ComponentData {
 
   // 大屏配置
   export type TScreenData = {
-    id?: string;
+    _id?: string;
     description: string;
     name: string;
     components: TComponentData[];
@@ -189,9 +189,19 @@ declare namespace ComponentData {
         constants: TConstants[];
       };
       flag: {
-        type: 'WEB' | 'H5';
+        type: 'PC' | 'H5';
       };
     };
+  };
+
+  // 大屏保存配置
+  export type TScreenSaveData = {
+    _id?: string;
+    name: string;
+    description?: string;
+    poster: string;
+    flag: 'PC' | 'H5';
+    data: TScreenData;
   };
 
   // 带参数的组件配置

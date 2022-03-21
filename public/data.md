@@ -106,7 +106,7 @@
         filter: TFilterConfig[]
       },
       flag: {
-        type: 'WEB' | 'H5'
+        type: 'PC' | 'H5'
       }
     }
 

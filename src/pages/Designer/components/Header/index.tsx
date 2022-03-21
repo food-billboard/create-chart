@@ -5,16 +5,22 @@ import { SendOutlined, FundOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import FocusWrapper from '@/components/FocusWrapper';
-import { shareScreen } from '@/services';
+import { previewScreen, postScreen, putScreen } from '@/services';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const Header = (props: {
-  name?: string;
+  screenData: Exclude<ComponentData.TScreenData, 'components'>;
+  components: ComponentData.TComponentData[];
   setScreen?: (data: { name: string }) => void;
 }) => {
-  const { name, setScreen } = props;
+  const { screenData, setScreen, components } = props;
+  const { name, _id, description, config = {} } = screenData || {};
+  const {
+    attr: { poster },
+  } = config as any;
   const [editMode, setEditMode] = useState<boolean>(false);
+  const [fetchLoading, setFetchLoading] = useState<boolean>(false);
 
   const Title = useMemo(() => {
     if (editMode) {
@@ -51,23 +57,48 @@ const Header = (props: {
   }, [editMode, name, setScreen]);
 
   const handlePreview = useCallback(async () => {
+    if (fetchLoading) return;
+    setFetchLoading(true);
     try {
-      // await shareScreen({ _id:  })
+      await previewScreen({ _id: _id as string });
       history.push({
         pathname: '/preview',
         query: {
-          // _id:
+          id: _id as string,
         },
       });
     } catch (err) {
       message.info('操作失败');
+    } finally {
+      setFetchLoading(false);
     }
-  }, []);
+  }, [_id, fetchLoading]);
 
-  const handleSend = useCallback(() => {}, []);
+  const handleStore = useCallback(async () => {
+    if (fetchLoading) return;
+    try {
+      const params = {
+        _id,
+        name,
+        description,
+        poster,
+        flag: 'PC',
+        data: JSON.stringify({
+          ...screenData,
+          components,
+        }),
+      };
+      const method = _id ? putScreen : postScreen;
+      await method(params as any);
+    } catch (err) {
+      message.info('保存失败，请重试');
+    } finally {
+      setFetchLoading(false);
+    }
+  }, [components, description, fetchLoading, _id, name, screenData]);
 
   const extra = useMemo(() => {
-    return [
+    const previewButton = (
       <Button
         key="preview"
         size="large"
@@ -75,17 +106,21 @@ const Header = (props: {
         type="link"
         onClick={handlePreview}
         icon={<FundOutlined />}
-      ></Button>,
+      ></Button>
+    );
+    const storeButton = (
       <Button
         key="send"
         size="large"
-        title="发布"
+        title="保存"
         type="link"
-        onClick={handleSend}
+        onClick={handleStore}
         icon={<SendOutlined />}
-      ></Button>,
-    ];
-  }, [handlePreview, handleSend]);
+      ></Button>
+    );
+    if (!_id) return [storeButton];
+    return [previewButton, storeButton];
+  }, [handlePreview, handleStore, _id]);
 
   return (
     <FocusWrapper>

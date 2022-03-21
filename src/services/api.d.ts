@@ -56,7 +56,7 @@ declare namespace API_SCREEN {
     _id: string;
     description: string;
     name: string;
-    flag: 'WEB' | 'H5';
+    flag: 'PC' | 'H5';
     group: string;
     poster: string;
     enable: boolean;
@@ -122,5 +122,13 @@ declare namespace API_SCREEN {
   export type TShareScreenPostParams = {
     _id: string;
     password: string;
+  };
+
+  export type TScreenDetail = {
+    _id: string;
+    name: string;
+    description: string;
+    poster: string;
+    components: string;
   };
 }

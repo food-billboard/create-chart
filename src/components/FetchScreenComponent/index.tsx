@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { connect } from 'dva';
+import { message } from 'antd';
 import { get } from 'lodash';
 import { history } from 'umi';
 import { DEFAULT_SCREEN_DATA } from '@/utils/constants';
@@ -28,10 +29,16 @@ const FetchScreenComponent = (props: {
         const data = await getScreenDetail({
           _id: id,
         });
-        const { components, ...nextData } = data;
+        const { components } = data;
+        const {
+          components: componentsList,
+          ...nextData
+        }: ComponentData.TScreenData = JSON.parse(components);
         setScreen(nextData);
-        setComponentAll(components);
-      } catch (err) {}
+        setComponentAll(componentsList);
+      } catch (err) {
+        message.info('数据获取失败');
+      }
     }
 
     const result = autoFitScale(width, height);

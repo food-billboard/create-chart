@@ -2,7 +2,7 @@ import request from '../utils/request';
 
 // 新增大屏
 export const postScreen = (data: API_SCREEN.TAddScreenParams) => {
-  return request<ComponentData.TScreenData>('/', {
+  return request('/api/screen/list', {
     method: 'POST',
     data,
   });
@@ -10,7 +10,7 @@ export const postScreen = (data: API_SCREEN.TAddScreenParams) => {
 
 // 修改大屏
 export const putScreen = (data: API_SCREEN.TEditScreenParams) => {
-  return request<ComponentData.TScreenData>('/', {
+  return request('/api/screen/list', {
     method: 'PUT',
     data,
   });
@@ -18,7 +18,7 @@ export const putScreen = (data: API_SCREEN.TEditScreenParams) => {
 
 // 大屏详情
 export const getScreenDetail = (params: API_SCREEN.TGetScreenDetail) => {
-  return request<ComponentData.TScreenData>('/', {
+  return request<API_SCREEN.TScreenDetail>('/api/screen/detail', {
     method: 'GET',
     params,
   });

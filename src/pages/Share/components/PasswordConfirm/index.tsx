@@ -10,7 +10,7 @@ export type PasswordConfirmRef = {
 const PasswordConfirm = forwardRef<
   PasswordConfirmRef,
   {
-    onOk?: (value: string) => void;
+    onOk?: (value: string) => Promise<boolean>;
   }
 >((props, ref) => {
   const { onOk: propsOnOk } = props;
@@ -27,9 +27,23 @@ const PasswordConfirm = forwardRef<
       message.info('请输入密码');
       return;
     }
-    propsOnOk?.(password);
-    setVisible(false);
-    clear();
+    if (propsOnOk) {
+      propsOnOk(password)
+        .then((data) => {
+          if (data) {
+            setVisible(false);
+            clear();
+          } else {
+            message.info('密码错误');
+          }
+        })
+        .catch((err) => {
+          message.info('请重试');
+        });
+    } else {
+      setVisible(false);
+      clear();
+    }
   }, [clear]);
 
   const open = useCallback(() => {

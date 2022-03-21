@@ -2,7 +2,8 @@ import { ConnectState } from '@/models/connect';
 
 export const mapStateToProps = (state: ConnectState) => {
   return {
-    name: state.global.screenData.name,
+    screenData: state.global.screenData,
+    components: state.global.components,
   };
 };
 
