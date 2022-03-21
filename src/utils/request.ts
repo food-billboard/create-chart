@@ -37,7 +37,7 @@ const dispatchLogin = debounce(
     const querystring = stringify({
       redirect: window.location.href,
     });
-    history.replace(`/user/login?${querystring}`);
+    history.replace(`/login?${querystring}`);
     if (dispatch) {
       dispatch({ type: 'user/logout' });
     }
@@ -104,7 +104,7 @@ const request = async <ResBody>(
   if (error) {
     error.errorType = 'system';
     error.messageType = 'response';
-    mis && misManage(error);
+    mis && (await misManage(error));
     throw error;
   }
 
@@ -120,7 +120,7 @@ const request = async <ResBody>(
     return (origin ? body : body?.data?.res?.data || {}) as ResBody;
   }
   error.mis = mis;
-  mis && misManage(error);
+  mis && (await misManage(error));
   throw error;
 };
 

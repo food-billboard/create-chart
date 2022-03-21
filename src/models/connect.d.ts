@@ -26,6 +26,9 @@ interface IGlobalModelState {
   scale: number;
 }
 
+interface IUserModelState {
+  currentUser: any;
+}
 export interface Loading {
   global: boolean;
   effects: { [key: string]: boolean | undefined };
@@ -39,6 +42,7 @@ export interface ConnectState {
   global: IGlobalModelState;
   loading: Loading;
   settings: ProSettings;
+  user: IUserModelState;
 }
 
 export interface Route extends MenuDataItem {

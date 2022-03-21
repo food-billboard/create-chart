@@ -23,7 +23,7 @@ function ScreenList() {
   const [searchData, setSearchData] = useState<string>('');
   const [list, setList] = useState<API_SCREEN.TGetScreenListData[]>([]);
 
-  const fetchLoading = useRef<boolean>(false);
+  const fetchLoading = useRef<boolean>(true);
 
   const onPageChange = useCallback((page) => {
     setCurrPage(page);

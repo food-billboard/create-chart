@@ -1,18 +1,37 @@
 export default [
   {
+    extra: false,
     path: '/',
-    component: '@/pages/ScreenList',
-  },
-  {
-    path: '/designer',
-    component: '@/pages/Designer',
-  },
-  {
-    path: '/share',
-    component: '@/pages/Share',
-  },
-  {
-    path: '/preview',
-    component: '@/pages/Previewer',
+    component: '@/layouts/index',
+    routes: [
+      {
+        path: '/',
+        component: '@/pages/ScreenList',
+      },
+      {
+        path: '/designer',
+        component: '@/pages/Designer',
+      },
+      {
+        path: '/share',
+        component: '@/pages/Share',
+      },
+      {
+        path: '/preview',
+        component: '@/pages/Previewer',
+      },
+      {
+        path: '/register',
+        component: '@/pages/Register',
+      },
+      {
+        path: '/login',
+        component: '@/pages/Login',
+      },
+      {
+        path: '/forget',
+        component: '@/pages/Forget',
+      },
+    ],
   },
 ];
