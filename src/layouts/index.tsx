@@ -1,6 +1,7 @@
 import { useEffect, ReactNode, useState } from 'react';
 import { connect } from 'dva';
 import Loading from '@/components/PageLoading';
+import IntroductionButton from '@/components/IntroductionButton';
 import { getUserInfo } from '@/services';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
@@ -24,7 +25,12 @@ const LoginWrapper = (props: { children: ReactNode; location: any }) => {
 
   if (fetchLoading) return <Loading />;
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      <IntroductionButton />
+    </>
+  );
 };
 
 const FetchLoginWrapper = connect(
@@ -39,13 +45,18 @@ const GlobalLayout = (props: any) => {
   } = props;
 
   // 分享页不用管登录
+  if (pathname === '/share') return children;
   if (
-    pathname === '/share' ||
     pathname.startsWith('/login') ||
     pathname.startsWith('/register') ||
     pathname.startsWith('/forget')
   ) {
-    return children;
+    return (
+      <>
+        {children}
+        <IntroductionButton />
+      </>
+    );
   }
 
   return <FetchLoginWrapper {...props} />;
