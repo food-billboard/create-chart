@@ -7,7 +7,12 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
-    '/static/': {
+    '/static/image/': {
+      target: API_DOMAIN,
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    '/static/video/': {
       target: API_DOMAIN,
       changeOrigin: true,
       pathRewrite: { '^': '' },
@@ -19,7 +24,12 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
-    '/static/': {
+    '/static/video/': {
+      target: API_DOMAIN,
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    '/static/image/': {
       target: API_DOMAIN,
       changeOrigin: true,
       pathRewrite: { '^': '' },

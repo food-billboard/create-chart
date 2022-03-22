@@ -1,12 +1,13 @@
 .login-form-background {
   width: 100vw;
   height: 100vh;
+  background-image: url('../../../public/background.jpeg');
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: cover;
   position: relative;
   .login-form-main {
     border-radius: 8px;
-    width: 40%;
+    width: 30%;
     min-width: 400px;
     position: absolute;
     right: 0;
@@ -14,6 +15,7 @@
     transform: translateX(-50%) translateY(-50%);
     box-shadow: 0 0 20px gray;
     padding: 16px;
+    backdrop-filter: blur(100px);
     &-title {
       font-size: 24px;
       font-weight: bold;

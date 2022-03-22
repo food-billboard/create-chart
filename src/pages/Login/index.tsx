@@ -8,6 +8,7 @@ import {
 } from 'react';
 import classnames from 'classnames';
 import { history } from 'umi';
+import { connect } from 'dva';
 import {
   UserOutlined,
   LockOutlined,
@@ -17,11 +18,12 @@ import {
 import { Form, Input, Row, Col, Button, message, Space } from 'antd';
 import Icon from '@/components/ChartComponents/Common/Icon';
 import { getCaptcha } from '@/services';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const { Password: InputPassword } = Input;
 
-const Mobile = (props: {
+export const Mobile = (props: {
   value?: string;
   onChange?: (value: string) => void;
 }) => {
@@ -41,7 +43,7 @@ const Mobile = (props: {
   );
 };
 
-const Username = (props: {
+export const Username = (props: {
   value?: string;
   onChange?: (value: string) => void;
 }) => {
@@ -60,7 +62,7 @@ const Username = (props: {
   );
 };
 
-const Email = (props: {
+export const Email = (props: {
   value?: string;
   onChange?: (value: string) => void;
 }) => {
@@ -79,7 +81,7 @@ const Email = (props: {
   );
 };
 
-const Password = (props: {
+export const Password = (props: {
   value?: string;
   onChange?: (value: string) => void;
 }) => {
@@ -98,7 +100,7 @@ const Password = (props: {
   );
 };
 
-const Captcha = (props: {
+export const Captcha = (props: {
   value?: string;
   onChange?: (value: string) => void;
   status: 'register' | 'forget';
@@ -156,7 +158,6 @@ const Captcha = (props: {
         <Button
           disabled={timing}
           className={styles.getCaptcha}
-          size="large"
           onClick={onGetCaptcha}
         >
           {timing ? `${count} 秒` : '获取验证码'}
@@ -199,27 +200,20 @@ export const CommonBackground = (props: {
   );
 };
 
-const Login = () => {
+const Login = (props: { login: (value: any) => any }) => {
+  const { login } = props;
+
   const [mobile, setMobile] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [fetchLoading, setFetchLoading] = useState<boolean>(false);
 
   const tips = useMemo(() => {
     return (
       <div
-        className={'dis-flex'}
         style={{
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          textAlign: 'right',
         }}
       >
-        <Button
-          type="link"
-          onClick={() => {
-            history.push('/register');
-          }}
-        >
-          注册
-        </Button>
         <Button
           type="link"
           onClick={() => {
@@ -232,22 +226,55 @@ const Login = () => {
     );
   }, []);
 
-  const handleLogin = useCallback(() => {}, [mobile, password]);
+  const handleLogin = useCallback(async () => {
+    if (!mobile || !password) {
+      return message.info('账号或密码错误');
+    }
+    setFetchLoading(true);
+    try {
+      await login({ mobile, password });
+    } catch (err) {
+      message.info('账号或密码错误');
+    } finally {
+      setFetchLoading(false);
+    }
+  }, [mobile, password, login]);
 
   const action = useMemo(() => {
     return (
-      <Button type="primary" block onClick={handleLogin}>
-        登录
-      </Button>
+      <Space direction="vertical" className="w-100">
+        <Button
+          loading={fetchLoading}
+          type="primary"
+          block
+          onClick={handleLogin}
+        >
+          登录
+        </Button>
+        <Button
+          type="primary"
+          block
+          onClick={() => {
+            history.push('/register');
+          }}
+        >
+          注册
+        </Button>
+      </Space>
     );
   }, [handleLogin]);
 
   return (
-    <CommonBackground title="" subTitle="" tips={tips} action={action}>
+    <CommonBackground
+      title="Welcome"
+      subTitle="数据可视化大屏登录🐲"
+      tips={tips}
+      action={action}
+    >
       <Mobile value={mobile} onChange={setMobile} />
       <Password value={password} onChange={setPassword} />
     </CommonBackground>
   );
 };
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

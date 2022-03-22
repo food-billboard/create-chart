@@ -11,6 +11,14 @@ export const locale = {
   default: 'zh-CN',
 };
 
+export const dva = {
+  config: {
+    onError(error: any) {
+      console.error(error);
+    },
+  },
+};
+
 export const render = (nextRender: any) => {
   nextRender();
 };

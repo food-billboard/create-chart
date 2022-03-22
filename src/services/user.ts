@@ -33,6 +33,7 @@ export async function accountLogin(
   return request<any>('/api/user/logon/account', {
     method: 'POST',
     data: merge(params, { env: REACT_APP_ENV || 'prod' }),
+    mis: false,
   });
 }
 
