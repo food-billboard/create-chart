@@ -1,5 +1,7 @@
 import request from '../utils/request';
 
+const { REACT_APP_ENV } = process.env;
+
 // 新增大屏
 export const postScreen = (data: API_SCREEN.TAddScreenParams) => {
   return request('/api/screen/list', {
@@ -26,9 +28,10 @@ export const getScreenDetail = (params: API_SCREEN.TGetScreenDetail) => {
 
 // 大屏列表
 export const getScreenList = (params: API_SCREEN.TGetScreenListParams) => {
-  return request<API_SCREEN.TGetScreenListRes>('/api/screen/list', {
+  return request<any>('/api/screen/list', {
     method: 'GET',
     params,
+    origin: true,
   });
 };
 
@@ -50,7 +53,7 @@ export const previewScreen = (data: API_SCREEN.TPreviewScreenParams) => {
 
 // 大屏预览验证
 export const previewScreenValid = (params: API_SCREEN.TPreviewScreenParams) => {
-  return request('/api/screen/preview/detail', {
+  return request('/api/screen/preview/valid', {
     method: 'GET',
     params,
   });
@@ -60,10 +63,10 @@ export const previewScreenValid = (params: API_SCREEN.TPreviewScreenParams) => {
 // 分享
 // 设置公共或加密
 // 设置有效时间
-export const shareScreen = (params: API_SCREEN.TShareScreenParams) => {
+export const shareScreen = (data: API_SCREEN.TShareScreenParams) => {
   return request('/api/screen/share', {
     method: 'POST',
-    params,
+    data,
   });
 };
 
@@ -89,17 +92,21 @@ export const shareScreenHeartbeat = (
 
 // 大屏分享权限信息获取
 export const shareScreenGet = (params: API_SCREEN.TShareScreenGetParams) => {
-  return request<API_SCREEN.TShareScreenGetData>('/api/screen/share', {
+  return request<API_SCREEN.TShareScreenGetData>('/api/screen/share/valid', {
     method: 'GET',
     params,
+    mis: false,
   });
 };
 
 // 大屏分享权限验证
 export const shareScreenPost = (data: API_SCREEN.TShareScreenPostParams) => {
-  return request('/api/screen/share', {
+  return request('/api/screen/share/valid', {
     method: 'POST',
-    data,
+    data: {
+      ...data,
+      env: REACT_APP_ENV || 'prod',
+    },
   });
 };
 

@@ -23,6 +23,7 @@ export interface ResetParamsType
 export async function getUserInfo() {
   return request<any>('/api/customer/manage', {
     method: 'GET',
+    mis: false,
   });
 }
 

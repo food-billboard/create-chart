@@ -1,8 +1,8 @@
 import { notification, message } from 'antd';
 import axios, { AxiosRequestConfig } from 'axios';
 import { getDvaApp, history } from 'umi';
+import { debounce, get } from 'lodash';
 import { stringify } from 'querystring';
-import debounce from 'lodash/debounce';
 import { formatQuery } from './tool';
 
 const codeMessage = {
@@ -30,7 +30,7 @@ interface RequestOptions extends AxiosRequestConfig {
 }
 
 // 未登录的多次触发处理
-const dispatchLogin = debounce(
+export const dispatchLogin = debounce(
   function (err) {
     const app = getDvaApp();
     const dispatch = app._store.dispatch;
@@ -66,9 +66,13 @@ export const misManage = (error: any) => {
   if (response && response.status) {
     const errorText =
       (codeMessage as any)[response.status] || response.statusText;
-    const { status, url } = response;
+    const {
+      status,
+      url,
+      request: { responseURL },
+    } = response;
     notification.error({
-      message: `请求错误 ${status}: ${url}`,
+      message: `请求错误 ${status}: ${responseURL}`,
       description: errorText,
     });
   } else if (!response) {

@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import Loading from '@/components/PageLoading';
 import IntroductionButton from '@/components/IntroductionButton';
 import { getUserInfo } from '@/services';
+import { dispatchLogin } from '@/utils/request';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const LoginWrapper = (props: { children: ReactNode; location: any }) => {
@@ -15,8 +16,13 @@ const LoginWrapper = (props: { children: ReactNode; location: any }) => {
 
   const fetchUserInfo = async () => {
     setFetchLoading(true);
-    await getUserInfo();
-    setFetchLoading(false);
+    try {
+      await getUserInfo();
+    } catch (err) {
+      dispatchLogin(err);
+    } finally {
+      setFetchLoading(false);
+    }
   };
 
   useEffect(() => {

@@ -11,6 +11,7 @@ import {
 import classnames from 'classnames';
 import { history } from 'umi';
 import { getScreenList } from '@/services';
+import { goDesign } from '@/utils/tool';
 import List from './components/ScreenList';
 import styles from './index.less';
 
@@ -18,12 +19,12 @@ const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
 function ScreenList() {
-  const [currPage, setCurrPage] = useState<number>(0);
+  const [currPage, setCurrPage] = useState<number>(1);
   const [total, setTotal] = useState<number>(0);
   const [searchData, setSearchData] = useState<string>('');
   const [list, setList] = useState<API_SCREEN.TGetScreenListData[]>([]);
 
-  const fetchLoading = useRef<boolean>(true);
+  const fetchLoading = useRef<boolean>(false);
 
   const onPageChange = useCallback((page) => {
     setCurrPage(page);
@@ -41,10 +42,11 @@ function ScreenList() {
     const { currPage, content } = params;
 
     try {
-      const { total, list } = await getScreenList({
-        currPage,
+      const res = await getScreenList({
+        currPage: (currPage || 1) - 1,
         content,
       });
+      const { total, list } = res.data.res;
       setTotal(total);
       setList(list);
     } catch (err) {
@@ -60,9 +62,7 @@ function ScreenList() {
   }, [currPage]);
 
   const handleAdd = useCallback(() => {
-    history.push({
-      pathname: '/designer',
-    });
+    goDesign();
   }, []);
 
   useEffect(() => {
@@ -119,7 +119,7 @@ function ScreenList() {
             </div>
           </div>
           <div className={styles['screen-page-content-main-list']}>
-            {!list.length ? (
+            {list.length ? (
               <List value={list} onChange={onChange} />
             ) : (
               <Empty />

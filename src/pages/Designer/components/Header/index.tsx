@@ -6,6 +6,8 @@ import { connect } from 'dva';
 import classnames from 'classnames';
 import FocusWrapper from '@/components/FocusWrapper';
 import { previewScreen, postScreen, putScreen } from '@/services';
+import { captureCover, captureCoverAndUpload } from '@/utils/captureCover';
+import { goPreview } from '@/utils/tool';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -15,10 +17,7 @@ const Header = (props: {
   setScreen?: (data: { name: string }) => void;
 }) => {
   const { screenData, setScreen, components } = props;
-  const { name, _id, description, config = {} } = screenData || {};
-  const {
-    attr: { poster },
-  } = config as any;
+  const { name, _id, description, poster } = screenData || {};
   const [editMode, setEditMode] = useState<boolean>(false);
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
 
@@ -61,12 +60,7 @@ const Header = (props: {
     setFetchLoading(true);
     try {
       await previewScreen({ _id: _id as string });
-      history.push({
-        pathname: '/preview',
-        query: {
-          id: _id as string,
-        },
-      });
+      goPreview(_id as string);
     } catch (err) {
       message.info('操作失败');
     } finally {
@@ -76,12 +70,20 @@ const Header = (props: {
 
   const handleStore = useCallback(async () => {
     if (fetchLoading) return;
+
     try {
+      let coverPoster = poster;
+      if (!coverPoster) {
+        // 截图
+        const coverBlob = await captureCover('#panel-id');
+        coverPoster = (await captureCoverAndUpload(coverBlob)) as any;
+      }
+
       const params = {
         _id,
         name,
         description,
-        poster,
+        poster: coverPoster,
         flag: 'PC',
         data: JSON.stringify({
           ...screenData,
@@ -90,12 +92,13 @@ const Header = (props: {
       };
       const method = _id ? putScreen : postScreen;
       await method(params as any);
+      message.success('保存成功');
     } catch (err) {
       message.info('保存失败，请重试');
     } finally {
       setFetchLoading(false);
     }
-  }, [components, description, fetchLoading, _id, name, screenData]);
+  }, [components, description, fetchLoading, _id, name, poster, screenData]);
 
   const extra = useMemo(() => {
     const previewButton = (

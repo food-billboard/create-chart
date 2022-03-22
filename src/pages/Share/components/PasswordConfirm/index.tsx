@@ -44,7 +44,7 @@ const PasswordConfirm = forwardRef<
       setVisible(false);
       clear();
     }
-  }, [clear]);
+  }, [clear, password]);
 
   const open = useCallback(() => {
     setVisible(true);
@@ -68,7 +68,7 @@ const PasswordConfirm = forwardRef<
       closable={false}
       maskClosable={false}
       footer={[
-        <Button type="primary" onClick={onOk}>
+        <Button key="confirm" type="primary" onClick={onOk}>
           确认
         </Button>,
       ]}

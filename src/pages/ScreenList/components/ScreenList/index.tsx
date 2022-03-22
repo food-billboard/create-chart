@@ -14,6 +14,7 @@ import {
   enableScreen,
   disabledScreen,
 } from '@/services';
+import { goDesign, goPreview } from '@/utils/tool';
 import ShareSetting, { ShareSettingRef } from './ShareSetting';
 import styles from './index.less';
 
@@ -33,7 +34,8 @@ const ScreenList = (props: {
 
   // 启用 | 禁用
   const onEnabledChange = useCallback(
-    async (target: API_SCREEN.TGetScreenListData, value) => {
+    async (target: API_SCREEN.TGetScreenListData, value, e) => {
+      e.stopPropagation();
       if (fetchLoading.current) return;
       try {
         if (value) {
@@ -57,12 +59,7 @@ const ScreenList = (props: {
     if (fetchLoading.current) return;
     try {
       await previewScreen({ _id: value._id });
-      history.push({
-        pathname: '/preview',
-        query: {
-          id: value._id,
-        },
-      });
+      goPreview(value._id);
     } catch (err) {
       message.info('操作失败');
     } finally {
@@ -112,12 +109,7 @@ const ScreenList = (props: {
   // 编辑
   const handleEdit = useCallback((value) => {
     const { _id } = value;
-    history.push({
-      pathname: '/designer',
-      state: {
-        id: _id,
-      },
-    });
+    goDesign(_id);
   }, []);
 
   return (

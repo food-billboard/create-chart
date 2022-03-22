@@ -1,7 +1,8 @@
 const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
-  name: '这是一个大屏呀',
+  name: '大屏名称',
   description: '',
   components: [],
+  poster: '',
   config: {
     style: {
       width: 1920,

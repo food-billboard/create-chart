@@ -1,4 +1,5 @@
 import html2canvas, { Options } from 'html2canvas';
+import { UploadImage } from './Assist/Upload';
 
 export async function captureCover(
   query: string,
@@ -50,5 +51,31 @@ export async function captureCover(
         0.9,
       );
     });
+  });
+}
+
+export async function captureCoverAndUpload(blob: Blob) {
+  const file = new File([blob], `cover_${Date.now()}.png`, {
+    type: 'image/png',
+  });
+  return new Promise((resolve, reject) => {
+    UploadImage(
+      {
+        originFileObj: file,
+      } as any,
+      {
+        onChange: (value) => {
+          const { status, url } = value;
+          if (status === 'done') {
+            resolve(url);
+          } else if (status === 'error') {
+            reject('upload error');
+          }
+          setTimeout(() => {
+            reject('timeout');
+          }, 1 * 60 * 1000);
+        },
+      },
+    );
   });
 }

@@ -129,6 +129,6 @@ declare namespace API_SCREEN {
     name: string;
     description: string;
     poster: string;
-    components: string;
+    components: any;
   };
 }

@@ -176,6 +176,7 @@ declare namespace ComponentData {
     _id?: string;
     description: string;
     name: string;
+    poster: string;
     components: TComponentData[];
     config: {
       style: {

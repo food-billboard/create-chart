@@ -106,7 +106,7 @@ export const Captcha = (props: {
   status: 'register' | 'forget';
   email?: string;
 }) => {
-  const [count, setCount] = useState<number>(0);
+  const [count, setCount] = useState<number>(60);
   const [timing, setTiming] = useState(false);
 
   const { value, onChange, status, email } = props;
@@ -116,12 +116,9 @@ export const Captcha = (props: {
       message.info('请输入邮箱');
       return;
     }
-    const result = await getCaptcha(email || '', status || 'register');
-    if (result === false) {
-      return;
-    }
+    await getCaptcha(email || '', status || 'register');
     setTiming(true);
-  }, [email]);
+  }, [email, status]);
 
   useEffect(() => {
     let interval: number = 0;
@@ -155,11 +152,7 @@ export const Captcha = (props: {
         />
       </Col>
       <Col span={8}>
-        <Button
-          disabled={timing}
-          className={styles.getCaptcha}
-          onClick={onGetCaptcha}
-        >
+        <Button disabled={timing} onClick={onGetCaptcha} className="w-100">
           {timing ? `${count} 秒` : '获取验证码'}
         </Button>
       </Col>

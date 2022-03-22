@@ -105,8 +105,9 @@ const RenderComponent = memo(
         <ComponentWrapper
           style={baseStyle}
           className={classnames(className, 'react-select-to', {
-            [styles['render-component-wrapper']]: !isSelect,
-            'border-1-a': isSelect,
+            [styles['render-component-wrapper']]:
+              !isSelect && screenType !== 'preview',
+            'border-1-a': isSelect && screenType !== 'preview',
           })}
           data-id={id}
           size={{

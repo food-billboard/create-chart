@@ -19,9 +19,9 @@ const FetchScreenComponent = (props: {
   const fetchData = async () => {
     const { width, height } = get(DEFAULT_SCREEN_DATA, 'config.style');
     const {
-      location: { state },
+      location: { query },
     } = history;
-    const { id } = (state as any) || {};
+    const { id } = (query as any) || {};
 
     // fetchData
     if (id) {
@@ -33,7 +33,7 @@ const FetchScreenComponent = (props: {
         const {
           components: componentsList,
           ...nextData
-        }: ComponentData.TScreenData = JSON.parse(components);
+        }: ComponentData.TScreenData = components;
         setScreen(nextData);
         setComponentAll(componentsList);
       } catch (err) {

@@ -1,9 +1,25 @@
-import { forwardRef, useImperativeHandle, useCallback, useState } from 'react';
-import { Modal, Form, Select, Radio, Input, message, Button } from 'antd';
+import {
+  forwardRef,
+  useImperativeHandle,
+  useCallback,
+  useState,
+  useMemo,
+} from 'react';
+import {
+  Modal,
+  Form,
+  Select,
+  Radio,
+  Input,
+  message,
+  Button,
+  Typography,
+} from 'antd';
 import { shareScreenGet, closeShareScreen } from '@/services';
 
 const { Item } = Form;
 const { Password } = Input;
+const { Paragraph } = Typography;
 
 const TIME_MAP = [
   {
@@ -49,6 +65,7 @@ const ShareSetting = forwardRef<
       auth: 'PUBLIC' | 'PRIVATE';
       time: number;
       password: string;
+      _id: string;
     }) => void;
     onCancel?: () => void;
   }
@@ -93,24 +110,28 @@ const ShareSetting = forwardRef<
       auth,
       time: getTimeData(),
       password,
+      _id: screenId,
     });
     setVisible(false);
     clear();
-  }, [auth, getTimeData, password, clear]);
+  }, [auth, getTimeData, password, clear, screenId]);
 
   const fetchData = useCallback(async (id) => {
-    const { auth, time } = await shareScreenGet({
-      _id: id,
-    });
-    setAuth(auth);
-    setShared(!!auth);
-    const target = TIME_MAP.find((item) => item.realValue === time);
-    if (target) setTime(target.value);
+    try {
+      const { auth, time } = await shareScreenGet({
+        _id: id,
+      });
+      setAuth(auth || 'PUBLIC');
+      setShared(!!auth);
+      const target = TIME_MAP.find((item) => item.realValue === time);
+      if (target) setTime(target.value);
+    } catch (err) {}
   }, []);
 
   const open = useCallback(
     async (id: string) => {
       try {
+        setScreenId(id);
         await fetchData(id);
         setVisible(true);
       } catch (err) {
@@ -120,17 +141,26 @@ const ShareSetting = forwardRef<
     [fetchData],
   );
 
+  // 分享地址
+  const shareAddress = useMemo(() => {
+    const href = location.href;
+    const { origin } = new URL(href);
+    return origin + '/#/share?id=' + screenId;
+  }, [screenId]);
+
   // 取消分享
   const shareScreenMethod = useCallback(
     async (e) => {
       e.stopPropagation();
       try {
         await closeShareScreen({ _id: screenId });
+        setVisible(false);
+        clear();
       } catch (err) {
         message.info('操作失败');
       }
     },
-    [screenId],
+    [screenId, clear],
   );
 
   useImperativeHandle(
@@ -157,7 +187,7 @@ const ShareSetting = forwardRef<
         <Button key="cancel" onClick={onCancel}>
           取消
         </Button>,
-        <Button key="ok" onClick={onOk}>
+        <Button key="ok" onClick={onOk} type="primary">
           确定
         </Button>,
       ]}
@@ -205,6 +235,11 @@ const ShareSetting = forwardRef<
             }}
           />
         </Item>
+        {shared && (
+          <Item label="分享地址">
+            <Paragraph copyable={{ tooltips: false }}>{shareAddress}</Paragraph>
+          </Item>
+        )}
       </Form>
     </Modal>
   );

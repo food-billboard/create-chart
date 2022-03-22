@@ -74,7 +74,10 @@ function Share(props: {
       _id: id as string,
       password: value,
     });
-    if (data) await intervalHeartbeat();
+    if (data) {
+      await intervalHeartbeat();
+      setNeedFetch(true);
+    }
     return !!data;
   }, []);
 
