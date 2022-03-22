@@ -4,6 +4,7 @@ import { InputProps } from 'antd/es/input';
 
 export type InputRef = {
   setValue: (value: string) => void;
+  getValue: () => string;
 };
 
 const Input = forwardRef<InputRef, InputProps>((props, ref) => {
@@ -34,9 +35,10 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     () => {
       return {
         setValue,
+        getValue: () => value,
       };
     },
-    [],
+    [value],
   );
 
   return (

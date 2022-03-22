@@ -2,13 +2,18 @@ import { useCallback } from 'react';
 import { Input, Tabs } from 'antd';
 import { connect } from 'dva';
 import { set } from 'lodash';
+import classnames from 'classnames';
+import { InfoCircleOutlined } from '@ant-design/icons';
+import IconTooltip from '@/components/IconTooltip';
 import BackgroundSelect from '@/components/BackgroundSelect';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import ConfigWrapper from '@/components/ChartComponents/Common/ConfigWrapper';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import CoverSelect from '@/components/CoverSelect';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+import styles from './index.less';
 
 const { Item } = ConfigList;
 const { TextArea } = Input;
@@ -25,6 +30,7 @@ const GlobalConfig = (props: {
       attr: { poster },
     },
     description,
+    poster: cover,
   } = screenData;
 
   const onValueChange = useCallback(
@@ -45,7 +51,7 @@ const GlobalConfig = (props: {
   );
 
   return (
-    <div className="h-100">
+    <div className={classnames('h-100', styles['design-config-global'])}>
       <ConfigWrapper tabCounter={1}>
         <Tabs.TabPane tab="页面配置" key="1">
           <ConfigList style={{ minHeight: '100%' }}>
@@ -76,6 +82,21 @@ const GlobalConfig = (props: {
                 <BackgroundSelect
                   value={poster}
                   onChange={onValueChange.bind(null, 'config.attr.poster')}
+                />
+              </FullForm>
+            </Item>
+            <Item
+              label="封面"
+              placeholder={
+                <IconTooltip title="设置保存时的封面，可以截图">
+                  <InfoCircleOutlined />
+                </IconTooltip>
+              }
+            >
+              <FullForm>
+                <CoverSelect
+                  value={cover}
+                  onChange={onValueChange.bind(null, 'poster')}
                 />
               </FullForm>
             </Item>

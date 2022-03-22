@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, useRef } from 'react';
+import { useCallback, useMemo, useState, useRef, useEffect } from 'react';
 import { Upload, Modal, UploadProps, message } from 'antd';
 import { useControllableValue } from 'ahooks';
 import classnames from 'classnames';
@@ -128,6 +128,14 @@ const PicturesWall = (
     },
     [value, onRemove],
   );
+
+  useEffect(() => {
+    const inputValue = inputRef.current?.getValue();
+    const [target] = value;
+    if (inputValue !== target?.url && target?.url) {
+      inputRef.current?.setValue(target.url);
+    }
+  }, [value]);
 
   return (
     <>
