@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import ReactSelecto from 'react-selecto';
 import { connect } from 'dva';
 import { BACKGROUND_ID } from '@/components/DesignerBackground';
@@ -16,30 +16,32 @@ const Selecto = (props: {
 }) => {
   const { select, setSelect, screenType } = props;
 
+  const currentSelect = useRef<string[]>(select);
+
   if (screenType === 'preview') return <></>;
 
-  const handleSelect = useCallback(
-    (e: any) => {
-      const { added, removed } = e;
+  const handleSelectEnd = useCallback(() => {
+    setSelect(currentSelect.current);
+  }, [setSelect]);
 
-      const toAddList = added.reduce((acc: any, element: any) => {
-        const select = element.dataset.id;
-        if (!isComponentDisabled(select)) {
-          acc.push(select);
-        }
-        return acc;
-      }, []);
-      const toRemoveList = removed.map((element: any) => element.dataset.id);
+  const handleSelect = useCallback((e: any) => {
+    const { added, removed } = e;
 
-      const newSelect = [
-        ...select.filter((item) => !toRemoveList.includes(item)),
-        ...toAddList,
-      ];
+    const toAddList = added.reduce((acc: any, element: any) => {
+      const select = element.dataset.id;
+      if (!isComponentDisabled(select)) {
+        acc.push(select);
+      }
+      return acc;
+    }, []);
+    const toRemoveList = removed.map((element: any) => element.dataset.id);
 
-      setSelect(newSelect);
-    },
-    [setSelect, select],
-  );
+    const newSelect = [
+      ...currentSelect.current.filter((item) => !toRemoveList.includes(item)),
+      ...toAddList,
+    ];
+    currentSelect.current = newSelect;
+  }, []);
 
   const handleDragStart = useCallback((e: any) => {
     try {
@@ -63,6 +65,7 @@ const Selecto = (props: {
       selectFromInside={true}
       ratio={0}
       onDragStart={handleDragStart}
+      onSelectEnd={handleSelectEnd}
       onSelect={handleSelect}
     ></ReactSelecto>
   );
