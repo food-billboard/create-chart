@@ -12,19 +12,25 @@ import { NormalPainter } from '../Designer/components/Panel/components/Painter';
 import PasswordConfirm, {
   PasswordConfirmRef,
 } from './components/PasswordConfirm';
+import useResize from './useResize';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 function Share(props: {
   setScreenType: (value: ComponentData.ScreenType) => void;
+  width: number;
+  height: number;
+  setScale: (value: number) => void;
 }) {
-  const { setScreenType } = props;
+  const { setScreenType, width, height, setScale } = props;
 
   const [needFetch, setNeedFetch] = useState<boolean>(false);
   const [heartbeat, setHeartbeat] = useState<boolean>(true);
 
   const passwordConfirmRef = useRef<PasswordConfirmRef>(null);
   const timerRef = useRef<any>();
+
+  const scale = useResize(width, height, setScale);
 
   const heartbeatFetch = async () => {
     try {
@@ -91,7 +97,14 @@ function Share(props: {
 
   return (
     <>
-      {heartbeat && <NormalPainter className={styles['page-preview']} />}
+      {heartbeat && (
+        <NormalPainter
+          className={styles['page-share']}
+          style={{
+            transform: `scale(${scale}) translateX(-50%)`,
+          }}
+        />
+      )}
       <FetchScreenComponent needFetch={needFetch} />
       <PasswordConfirm ref={passwordConfirmRef} onOk={onPasswordConfirm} />
     </>
