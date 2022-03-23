@@ -95,14 +95,16 @@ export function useComponent<P extends object = {}>(
       if (requestLoading.current) return;
       requestLoading.current = true;
 
-      const result = await FilterDataUtil.requestData(
-        requestDataConfig,
-        params,
-        constants,
-      );
+      try {
+        const result = await FilterDataUtil.requestData(
+          requestDataConfig,
+          params,
+          constants,
+        );
 
-      callback?.(result);
-      setRequestResult(result);
+        callback?.(result);
+        setRequestResult(result);
+      } catch (err) {}
 
       requestLoading.current = false;
     },
@@ -166,6 +168,7 @@ export function useComponent<P extends object = {}>(
       value: any,
     ) => {
       if (screenType === 'edit') return;
+
       const { setParams } = global;
 
       let toUpdateParamsId: string[] = [];
