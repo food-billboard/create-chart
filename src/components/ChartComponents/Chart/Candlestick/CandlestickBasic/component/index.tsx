@@ -206,6 +206,9 @@ const CandlestickBasic = (props: {
             ...tooltipTextStyle,
             color: getRgbaString(tooltipTextStyle.color),
           },
+          axisPointer: {
+            type: 'cross',
+          },
         },
       },
       true,

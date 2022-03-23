@@ -1,4 +1,11 @@
-import { CSSProperties, useMemo, useCallback, memo } from 'react';
+import {
+  CSSProperties,
+  useMemo,
+  useCallback,
+  memo,
+  ReactNode,
+  useRef,
+} from 'react';
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { isEqual } from 'lodash';
@@ -21,6 +28,40 @@ export type RenderComponentProps = {
   path?: string;
   screenType: ComponentData.ScreenType;
   timestamps?: number;
+};
+
+const OnlyClickDiv = (props: {
+  onClick?: (e: any) => void;
+  className?: string;
+  style?: CSSProperties;
+  children?: ReactNode;
+  [key: string]: any;
+}) => {
+  const { children, onClick, ...nextProps } = props;
+  const currentPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  const onMouseDown = useCallback((e) => {
+    const { clientX, clientY } = e;
+    currentPosition.current = {
+      x: clientX,
+      y: clientY,
+    };
+  }, []);
+
+  const onMouseUp = useCallback(
+    (e) => {
+      const { clientX, clientY } = e;
+      const { x, y } = currentPosition.current;
+      if (Math.abs(x - clientX) < 5 && Math.abs(y - clientY) < 5) onClick?.(e);
+    },
+    [onClick],
+  );
+
+  return (
+    <div {...nextProps} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
+      {children}
+    </div>
+  );
 };
 
 const RenderComponent = memo(
@@ -52,7 +93,7 @@ const RenderComponent = memo(
     // 是否响应鼠标事件
     const pointerDisabled = useMemo(() => {
       return screenType === 'preview' || lock;
-    }, [lock, screenType]);
+    }, [lock, screenType, isSelect]);
 
     const baseStyle = useComponentStyle(value, {
       isSelect,
@@ -121,11 +162,10 @@ const RenderComponent = memo(
           pointerDisabled={pointerDisabled}
           setComponent={setComponent}
           scale={scale / 100}
-          onDragStart={selectOnly}
-          onResizeStart={selectOnly}
           componentId={id}
+          isSelect={isSelect}
         >
-          <div
+          <OnlyClickDiv
             className={classnames(
               styles['render-component-content'],
               'w-100',
@@ -138,7 +178,7 @@ const RenderComponent = memo(
             onClick={handleSelect}
           >
             {content}
-          </div>
+          </OnlyClickDiv>
         </ComponentWrapper>
       </ContextMenu>
     );

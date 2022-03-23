@@ -219,7 +219,6 @@ const LineBasic = (props: {
         ],
         tooltip: {
           ...nextTooltip,
-          trigger: 'axis',
           axisPointer: {
             type: 'shadow',
           },

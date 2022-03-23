@@ -95,6 +95,7 @@ const TabBasic = (props: {
       backgroundColor: getRgbaString(backgroundColor),
       border: `${border.width}px ${border.type} ${getRgbaString(border.color)}`,
       width: valueWidth + '%',
+      boxShadow: `0 0 10px ${getRgbaString(border.color)}`,
     };
   }, [active]);
 

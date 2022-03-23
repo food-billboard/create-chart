@@ -34,7 +34,10 @@ const FetchScreenComponent = (props: {
           components: componentsList,
           ...nextData
         }: ComponentData.TScreenData = components;
-        setScreen(nextData);
+        setScreen({
+          ...nextData,
+          _id: id,
+        });
         setComponentAll(componentsList);
       } catch (err) {
         message.info('数据获取失败');

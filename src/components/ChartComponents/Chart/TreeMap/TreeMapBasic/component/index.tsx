@@ -116,6 +116,7 @@ const TreeMapBasic = (props: {
           },
         },
       },
+      roam: 'move',
       data: realValue,
       animation: show,
       animationEasing,

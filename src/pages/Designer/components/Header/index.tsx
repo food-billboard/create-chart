@@ -14,7 +14,7 @@ import styles from './index.less';
 const Header = (props: {
   screenData: Exclude<ComponentData.TScreenData, 'components'>;
   components: ComponentData.TComponentData[];
-  setScreen?: (data: { name: string }) => void;
+  setScreen?: (data: ComponentMethod.GlobalUpdateScreenDataParams) => void;
 }) => {
   const { screenData, setScreen, components } = props;
   const { name, _id, description, poster } = screenData || {};
@@ -77,6 +77,9 @@ const Header = (props: {
         // 截图
         const coverBlob = await captureCover('#panel-id');
         coverPoster = (await captureCoverAndUpload(coverBlob)) as any;
+        setScreen?.({
+          poster: coverPoster,
+        });
       }
 
       const params = {
@@ -87,6 +90,7 @@ const Header = (props: {
         flag: 'PC',
         data: JSON.stringify({
           ...screenData,
+          poster: screenData.poster || coverPoster,
           components,
         }),
       };

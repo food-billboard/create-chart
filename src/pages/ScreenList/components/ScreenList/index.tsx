@@ -75,36 +75,44 @@ const ScreenList = (props: {
   }, []);
 
   // 确定分享参数
-  const onShareOk = useCallback(async (value) => {
-    try {
-      await shareScreen(value);
-    } catch (err) {
-      message.info('操作失败');
-    } finally {
-      fetchLoading.current = false;
-    }
-  }, []);
+  const onShareOk = useCallback(
+    async (value) => {
+      try {
+        await shareScreen(value);
+        onChange?.();
+      } catch (err) {
+        message.info('操作失败');
+      } finally {
+        fetchLoading.current = false;
+      }
+    },
+    [onChange],
+  );
 
   // 删除
-  const deleteScreenMethod = useCallback(async (value, e) => {
-    e.stopPropagation();
-    if (fetchLoading.current) return;
-    Modal.confirm({
-      title: '提示',
-      content: '是否确定删除？',
-      onOk: async () => {
-        try {
-          await deleteScreen({
-            _id: value._id,
-          });
-        } catch (err) {
-          message.info('操作失败');
-        } finally {
-          fetchLoading.current = false;
-        }
-      },
-    });
-  }, []);
+  const deleteScreenMethod = useCallback(
+    async (value, e) => {
+      e.stopPropagation();
+      if (fetchLoading.current) return;
+      Modal.confirm({
+        title: '提示',
+        content: '是否确定删除？',
+        onOk: async () => {
+          try {
+            await deleteScreen({
+              _id: value._id,
+            });
+            onChange?.();
+          } catch (err) {
+            message.info('操作失败');
+          } finally {
+            fetchLoading.current = false;
+          }
+        },
+      });
+    },
+    [onChange],
+  );
 
   // 编辑
   const handleEdit = useCallback((value) => {

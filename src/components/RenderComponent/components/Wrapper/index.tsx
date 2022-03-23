@@ -18,6 +18,7 @@ const ComponentWrapper = (
       ) => SuperPartial<ComponentData.TComponentData>,
     ) => void;
     componentId: string;
+    isSelect: boolean;
   } & Partial<Props>,
 ) => {
   const {
@@ -31,6 +32,7 @@ const ComponentWrapper = (
     setComponent,
     componentId,
     size,
+    isSelect,
     ...nextProps
   } = props;
 
@@ -38,6 +40,9 @@ const ComponentWrapper = (
 
   const onDragStop: RndDragCallback = useCallback(
     (event, data) => {
+      // * 未选中不触发事件
+      if (!isSelect) return;
+
       const { x, y } = data;
       const { x: prevX = 0, y: prevY = 0 } = position || {};
 
@@ -60,7 +65,7 @@ const ComponentWrapper = (
       propsOnDragStop?.();
       AbsorbUtil.onComponentDragEnd();
     },
-    [propsOnDragStop, setComponent, position, size, componentId],
+    [propsOnDragStop, setComponent, position, size, componentId, isSelect],
   );
 
   const updateSubComponents = (
@@ -84,6 +89,9 @@ const ComponentWrapper = (
 
   const onResizeStop: RndResizeCallback = useCallback(
     (e, direction, ref, delta, position) => {
+      // * 未选中不触发事件
+      if (!isSelect) return;
+
       const { width, height } = delta;
       // * 点击不触发刷新
       if (Math.abs(width) < 5 && Math.abs(height) < 5) return;
@@ -122,11 +130,14 @@ const ComponentWrapper = (
       });
       propsOnResizeStop?.();
     },
-    [propsOnResizeStop, getComponentStyle],
+    [propsOnResizeStop, getComponentStyle, isSelect],
   );
 
   const onDrag: RndDragCallback = useCallback(
     (event, data) => {
+      // * 未选中不触发事件
+      if (!isSelect) return;
+
       const { x, y } = data;
       const { x: prevX = 0, y: prevY = 0 } = position || {};
 
@@ -142,11 +153,14 @@ const ComponentWrapper = (
         top,
       });
     },
-    [componentId, size, position],
+    [componentId, size, position, isSelect],
   );
 
   const onResize: RndResizeCallback = useCallback(
     (e, direction, ref, delta, position) => {
+      // * 未选中不触发事件
+      if (!isSelect) return;
+
       const { width, height } = delta;
       // * 点击不触发刷新
       if (Math.abs(width) < 5 && Math.abs(height) < 5) return;
@@ -156,13 +170,13 @@ const ComponentWrapper = (
         getComponentStyle(position, ref),
       );
     },
-    [componentId],
+    [componentId, isSelect],
   );
 
   return (
     <Rnd
-      enableResizing={!pointerDisabled}
-      disableDragging={pointerDisabled}
+      enableResizing={!pointerDisabled && isSelect}
+      disableDragging={pointerDisabled || !isSelect}
       className={className}
       style={merge({}, style)}
       default={{

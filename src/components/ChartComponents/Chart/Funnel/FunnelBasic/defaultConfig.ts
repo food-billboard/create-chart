@@ -86,7 +86,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TFunnelBasicConfig> 
         minSize: 0,
         maxSize: 100,
         label: {
-          show: false,
+          show: true,
           position: 'inside',
           formatter: '{b}: {d}',
           ...DEFAULT_FONT_CONFIG,

@@ -181,6 +181,10 @@ const SelectBasic = (props: {
                 border: `${active.border.width}px ${
                   active.border.type
                 } ${getRgbaString(active.border.color)}`,
+                boxShadow: `0 0 1px ${getRgbaString(active.border.color)}`,
+                ':hover': {
+                  borderColor: getRgbaString(active.border.color),
+                },
               };
             },
             // 选择框内容

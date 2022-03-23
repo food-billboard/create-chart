@@ -72,7 +72,9 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TCandlestickBasicCon
     options: {
       xAxis: DEFAULT_X_AXIS_CONFIG,
       yAxis: DEFAULT_Y_AXIS_CONFIG,
-      tooltip: DEFAULT_TOOLTIP_CONFIG,
+      tooltip: {
+        ...DEFAULT_TOOLTIP_CONFIG,
+      },
       animation: {
         ...DEFAULT_ANIMATION_CONFIG,
         animationDuration: 2000,
