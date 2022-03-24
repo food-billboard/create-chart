@@ -5,10 +5,10 @@ import ComponentOptionConfig, {
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import LegendConfig from './Legend';
-import ParallelConfig from './parallel';
+import ParallelConfig from './Parallel';
 import SeriesConfig from './Series';
 import AnimationConfig from './Animation';
-import ParallelAxisConfig from './parallelAxis';
+import ParallelAxisConfig from './ParallelAxis';
 import { TParallelBasicConfig } from '../type';
 
 const { TabPane } = Tabs;

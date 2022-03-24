@@ -7,7 +7,8 @@
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
+    "test:coverage": "umi-test --coverage",
+    "check": "tsc --noEmit"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

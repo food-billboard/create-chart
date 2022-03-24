@@ -19,7 +19,7 @@ class Config extends Component<
     const { value, onChange } = this.props;
     const {
       config: {
-        options: { legend, series, xAxis, yAxis, tooltip, animation },
+        options: { series, xAxis, yAxis, tooltip, animation },
       },
     } = value;
 
