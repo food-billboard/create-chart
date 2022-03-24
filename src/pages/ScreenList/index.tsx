@@ -92,7 +92,14 @@ function ScreenList() {
             'border-r-16',
           )}
         >
-          <div className={styles['screen-page-content-main-header']}>
+          <div
+            className={classnames(
+              styles['screen-page-content-main-header'],
+              'animate__fadeInDown',
+              'animate__animated',
+              'animate__delay-1s',
+            )}
+          >
             自己做的数据可视化大屏
           </div>
           <div
