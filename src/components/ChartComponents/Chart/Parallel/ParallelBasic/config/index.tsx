@@ -5,7 +5,7 @@ import ComponentOptionConfig, {
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import LegendConfig from './Legend';
-import ParallelConfig from './Parallel';
+import ParallelConfig from './ParallelConfig';
 import SeriesConfig from './Series';
 import AnimationConfig from './Animation';
 import ParallelAxisConfig from './ParallelAxis';
