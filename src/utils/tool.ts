@@ -79,22 +79,22 @@ export function mergeWithoutArray(...args: any[]) {
 
 // 预览
 export function goPreview(id: string) {
-  const { origin } = new URL(location.href);
-  const url = origin + '/#/preview?id=' + id;
+  const { origin, pathname } = new URL(location.href);
+  const url = origin + pathname + '/#/preview?id=' + id;
   window.open(url, '_blank');
 }
 
 // 分享
 export function goShare(id: string) {
-  const { origin } = new URL(location.href);
-  const url = origin + '/#/share?id=' + id;
+  const { origin, pathname } = new URL(location.href);
+  const url = origin + pathname + '/#/share?id=' + id;
   window.open(url, '_blank');
 }
 
 // 设计页面
 export function goDesign(id?: string) {
-  const { origin } = new URL(location.href);
-  const baseUrl = origin + '/#/designer';
+  const { origin, pathname } = new URL(location.href);
+  const baseUrl = origin + pathname + '/#/designer';
   const url = id ? baseUrl + '?id=' + id : baseUrl;
   window.open(url, '_blank');
 }

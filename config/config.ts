@@ -62,7 +62,8 @@ const productionConfig: any = merge({}, commonConfig, {
     'process.env.REACT_APP_ENV': 'prod',
   },
   //-----打包配置
-  base: '/api/backend/screen/',
+  // base: '/api/backend/screen/',
+  base: '/',
   publicPath: '/api/backend/screen/',
 });
 
