@@ -15,12 +15,16 @@
   }
   &-content-main {
     background-color: black;
-    padding: 24px;
     flex: 1;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     position: relative;
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
     &-header {
       font-size: 48px;
       font-weight: bolder;
@@ -28,11 +32,14 @@
       line-height: 1.6;
       position: sticky;
       top: 0;
+      background-color: black;
+      z-index: 1;
     }
     &-action {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 0 24px;
       :global {
         .ant-input-search {
           width: 200px;
@@ -41,6 +48,7 @@
     }
     &-list {
       flex: 1;
+      padding: 0 24px;
     }
     &-pagination {
       text-align: center;
@@ -48,6 +56,8 @@
       border-radius: 4px;
       position: sticky;
       bottom: 0;
+      background-color: black;
+      z-index: 1;
     }
   }
 }

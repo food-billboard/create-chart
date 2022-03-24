@@ -19,8 +19,10 @@ import ShareSetting, { ShareSettingRef } from './ShareSetting';
 import styles from './index.less';
 
 const COL_SPAN = {
-  xs: 6,
-  lg: 4,
+  xs: 12,
+  md: 8,
+  lg: 6,
+  xl: 4,
 };
 
 const ScreenList = (props: {
@@ -122,7 +124,13 @@ const ScreenList = (props: {
 
   return (
     <div className={styles['screen-list-icon-content']}>
-      <Row gutter={24}>
+      <Row
+        gutter={{
+          xs: 12,
+          sm: 24,
+          md: 24,
+        }}
+      >
         {value.map((item) => {
           const { name, poster, _id, enable } = item;
           return (

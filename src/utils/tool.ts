@@ -77,6 +77,12 @@ export function mergeWithoutArray(...args: any[]) {
   });
 }
 
+export const getShare = (id: string) => {
+  const { origin, pathname } = new URL(location.href);
+  const url = origin + pathname + '#/share?id=' + id;
+  return url;
+};
+
 // 预览
 export function goPreview(id: string) {
   const { origin, pathname } = new URL(location.href);
@@ -86,8 +92,7 @@ export function goPreview(id: string) {
 
 // 分享
 export function goShare(id: string) {
-  const { origin, pathname } = new URL(location.href);
-  const url = origin + pathname + '#/share?id=' + id;
+  const url = getShare(id);
   window.open(url, '_blank');
 }
 

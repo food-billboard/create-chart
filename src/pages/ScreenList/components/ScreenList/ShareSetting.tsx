@@ -16,6 +16,7 @@ import {
   Typography,
 } from 'antd';
 import { shareScreenGet, closeShareScreen } from '@/services';
+import { getShare } from '@/utils';
 
 const { Item } = Form;
 const { Password } = Input;
@@ -143,9 +144,7 @@ const ShareSetting = forwardRef<
 
   // 分享地址
   const shareAddress = useMemo(() => {
-    const href = location.href;
-    const { origin } = new URL(href);
-    return origin + '/#/share?id=' + screenId;
+    return getShare(screenId);
   }, [screenId]);
 
   // 取消分享
