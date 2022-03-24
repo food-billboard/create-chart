@@ -16,7 +16,7 @@ jobs:
         run: |
           npm install yarn -g 
           yarn 
-          yarn build:h5
+          yarn build
 
       - name: createTag 🚀 
         uses: appleboy/ssh-action@master
