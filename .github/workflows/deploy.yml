@@ -1,0 +1,40 @@
+name: build
+on: 
+  push: 
+    branches: 
+      - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        with:
+          persist-credentials: false
+
+      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+        run: |
+          npm install yarn -g 
+          yarn 
+          yarn build:h5
+
+      - name: createTag 🚀 
+        uses: appleboy/ssh-action@master
+        with:
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          host: ${{ secrets.SSH_HOST }}
+          script: |
+            rm -rf ${{ secrets.REMOTE_PATH_PREV }}
+            mkdir -p ${{ secrets.REMOTE_PATH }}
+            mv ${{ secrets.REMOTE_PATH }} ${{ secrets.REMOTE_PATH_PREV }}
+
+      - name: Deploy 🚀
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: "./dist/"
+          remote: ${{ secrets.REMOTE_PATH }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+           
