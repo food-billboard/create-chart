@@ -69,7 +69,7 @@ const ComponentItem = (props: ComponentItemProps) => {
     <>
       <DragPreviewImage connect={connectDragPreview} src={icon} />
       <Col
-        span={12}
+        span={24}
         className={classnames(
           styles['design-left-component-list-item'],
           'ali-cen',

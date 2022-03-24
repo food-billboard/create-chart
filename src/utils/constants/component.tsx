@@ -7,6 +7,30 @@ import {
   AppstoreOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
+import BarBasic from '../../../public/components/bar-basic.png';
+import LineBasic from '../../../public/components/line-basic.png';
+import PieBasic from '../../../public/components/pie-basic.png';
+import ScatterBasic from '../../../public/components/scatter-basic.png';
+import RadarBasic from '../../../public/components/radar-basic.png';
+import BoxPlotBasic from '../../../public/components/box-plot.png';
+import FunnelBasic from '../../../public/components/funnel-basic.png';
+import GaugeBasic from '../../../public/components/gauge-basic.png';
+import TreeMapBasic from '../../../public/components/tree-map-basic.png';
+import SunBurstBasic from '../../../public/components/sub-burst-basic.png';
+import PictorialBarBasic from '../../../public/components/pictorial-bar-basic.png';
+import ParallelBarBasic from '../../../public/components/parallel-basic.png';
+import CandlestickBasic from '../../../public/components/candlestick-basic.png';
+import TitleBasic from '../../../public/components/title-basic.jpg';
+import TimeMachineBasic from '../../../public/components/time-machine.jpg';
+import CountUpNumberBasic from '../../../public/components/count-up-number.jpg';
+import ImageBasic from '../../../public/components/image-basic.jpg';
+import VideoBasic from '../../../public/components/video-basic.jpg';
+import CarouselBasic from '../../../public/components/carousel-basic.jpg';
+import WordCloudBasic from '../../../public/components/word-cloud.jpg';
+import IframeBasic from '../../../public/components/iframe.jpg';
+import ListBasic from '../../../public/components/list-basic.png';
+import TabBasic from '../../../public/components/tab-basic.jpg';
+import SelectBasic from '../../../public/components/select-basic.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -23,7 +47,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'BAR_BASIC',
             title: '基础柱形图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: BarBasic,
             description: '',
           },
         ],
@@ -35,7 +59,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'LINE_BASIC',
             title: '基础折线图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: LineBasic,
             description: '',
           },
         ],
@@ -47,7 +71,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'PIE_BASIC',
             title: '基础饼图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: PieBasic,
             description: '',
           },
         ],
@@ -59,7 +83,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'SCATTER_BASIC',
             title: '基础散点图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: ScatterBasic,
             description: '',
           },
         ],
@@ -71,7 +95,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'RADAR_BASIC',
             title: '基础雷达图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: RadarBasic,
             description: '',
           },
         ],
@@ -83,7 +107,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'BOX_PLOT_BASIC',
             title: '基础盒须图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: BoxPlotBasic,
             description: '',
           },
         ],
@@ -95,7 +119,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'FUNNEL_BASIC',
             title: '基础漏斗图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: FunnelBasic,
             description: '',
           },
         ],
@@ -107,7 +131,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'GAUGE_BASIC',
             title: '基础仪表盘',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: GaugeBasic,
             description: '',
           },
         ],
@@ -119,7 +143,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'TREE_MAP_BASIC',
             title: '基础矩形树图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: TreeMapBasic,
             description: '',
           },
         ],
@@ -131,7 +155,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'SUN_BURST_BASIC',
             title: '基础旭日图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: SunBurstBasic,
             description: '',
           },
         ],
@@ -143,7 +167,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'PICTORIAL_BAR_BASIC',
             title: '象形柱图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: PictorialBarBasic,
             description: '',
           },
         ],
@@ -155,7 +179,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'PARALLEL_BASIC',
             title: '基础平行坐标系',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: ParallelBarBasic,
             description: '',
           },
         ],
@@ -167,7 +191,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'CANDLESTICK_BASIC',
             title: '基础K线图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: CandlestickBasic,
             description: '',
           },
         ],
@@ -186,19 +210,19 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'TITLE',
             title: '标题',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: TitleBasic,
             description: '',
           },
           {
             type: 'TIME_MACHINE',
             title: '时间器',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: TimeMachineBasic,
             description: '',
           },
           {
             type: 'COUNT_UP_NUMBER',
             title: '数字翻牌器',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: CountUpNumberBasic,
             description: '',
           },
         ],
@@ -217,19 +241,19 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'IMAGE',
             title: '图片',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: ImageBasic,
             description: '',
           },
           {
             type: 'VIDEO',
             title: '视频',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: VideoBasic,
             description: '',
           },
           {
             type: 'CAROUSEL',
             title: '轮播图',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: CarouselBasic,
             description: '',
           },
         ],
@@ -254,19 +278,19 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'WORD_CLOUD_BASIC',
             title: '词云',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: WordCloudBasic,
             description: '',
           },
           {
             type: 'IFRAME',
             title: 'iframe',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: IframeBasic,
             description: '',
           },
           {
             type: 'LIST',
             title: '列表',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: ListBasic,
             description: '',
           },
         ],
@@ -285,13 +309,13 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'TAB',
             title: 'Tab标签',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: TabBasic,
             description: '',
           },
           {
             type: 'SELECT',
             title: '下拉框',
-            icon: 'https://t11.baidu.com/it/u=3568834696,3961759073&fm=58',
+            icon: SelectBasic,
             description: '',
           },
         ],

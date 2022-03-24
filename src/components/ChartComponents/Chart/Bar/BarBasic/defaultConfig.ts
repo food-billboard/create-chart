@@ -11,25 +11,18 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
-import { getDate, getNumberValue, getSeries } from '@/utils/constants';
+import { getDate, getNumberValue } from '@/utils/constants';
 import { TBarBasicConfig } from './type';
 
 const DEFAULT_DATE_LABEL = getDate(10);
 const DEFAULT_DATE_VALUE = getNumberValue(10);
-const DEFAULT_SERIES = getSeries(2);
 
-const DEFAULT_VALUE = DEFAULT_SERIES.reduce<any>((acc, cur) => {
-  acc.push(
-    ...DEFAULT_DATE_LABEL.map((item, index) => {
-      return {
-        x: item,
-        y: DEFAULT_DATE_VALUE[index],
-        s: cur,
-      };
-    }),
-  );
-  return acc;
-}, []);
+const DEFAULT_VALUE = DEFAULT_DATE_LABEL.map((item, index) => {
+  return {
+    x: item,
+    y: DEFAULT_DATE_VALUE[index],
+  };
+});
 
 const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBarBasicConfig> = {
   interactive: {
