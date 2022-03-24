@@ -1,4 +1,4 @@
-import { useRef, forwardRef, useImperativeHandle } from 'react';
+import { useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { connect } from 'dva';
 import { useUpdateEffect } from 'ahooks';
 import { CompareFilterUtil } from '@/utils/Assist/FilterData';
@@ -8,6 +8,7 @@ export type TFetchFragmentProps = {
   params: ComponentData.TParams[];
   filter: ComponentData.TFilterConfig[];
   constants: ComponentData.TConstants[];
+  screenType: ComponentData.ScreenType;
   url: string;
   componentFilter: ComponentData.TComponentFilterConfig[];
 
@@ -31,6 +32,7 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
       url,
       reFetchData,
       reGetValue,
+      screenType,
     } = props;
 
     // 检查数据过滤的方法
@@ -67,6 +69,12 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
       },
       [params, constants, filter],
     );
+
+    useEffect(() => {
+      if (screenType !== 'edit') {
+        reFetchData().then(reGetValue);
+      }
+    }, [screenType]);
 
     return <></>;
   },

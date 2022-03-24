@@ -300,7 +300,7 @@ export class CompareFilterUtil {
           this.mapParams[variable].action.push(action);
         } else {
           const index = this.prevParams.findIndex(
-            (param) => param.variable === variable,
+            (param) => param.id === variable,
           );
           const target = this.prevParams[index];
           if (!!~index) {
