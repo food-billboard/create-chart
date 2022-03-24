@@ -191,10 +191,14 @@ class FilterData {
         method,
         data: realBody,
         headers: realHeaders as any,
+        mis: false,
       });
       return result;
     } catch (err) {
+      console.error('-----------error generate start-----------');
+      console.error(`request error for: ${url}`);
       console.error(err);
+      console.error('-----------error generate end-----------');
       return responseData;
     }
   }

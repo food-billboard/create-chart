@@ -71,10 +71,8 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
     );
 
     useEffect(() => {
-      if (screenType !== 'edit') {
-        reFetchData().then(reGetValue);
-      }
-    }, [screenType]);
+      reFetchData().then(reGetValue);
+    }, []);
 
     return <></>;
   },

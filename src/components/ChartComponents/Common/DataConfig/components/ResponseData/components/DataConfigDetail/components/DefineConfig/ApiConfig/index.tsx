@@ -2,6 +2,8 @@ import { useCallback } from 'react';
 import { Select } from 'antd';
 import { merge } from 'lodash';
 import { connect } from 'dva';
+import { InfoCircleOutlined } from '@ant-design/icons';
+import IconTooltipBase from '@/components/IconTooltip';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import CodeEditor from '../SaveCodeEditor';
 import SubTitle, { SubForm } from '../../SubTitle';
@@ -9,6 +11,14 @@ import { TOnChange } from '../type';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const { Option } = Select;
+
+const IconTooltip = () => {
+  return (
+    <IconTooltipBase title="可以使用全局的变量">
+      <InfoCircleOutlined className="m-r-4" />
+    </IconTooltipBase>
+  );
+};
 
 export type ApiConfigProps = {
   onChange?: TOnChange;
@@ -74,7 +84,10 @@ const ApiConfig = (props: ApiConfigProps) => {
       <SubForm>
         <CodeEditor language="txt" value={url} onChange={onUrlChange} />
       </SubForm>
-      <SubTitle>Headers</SubTitle>
+      <SubTitle>
+        <IconTooltip />
+        Headers
+      </SubTitle>
       <SubForm>
         <CodeEditor
           value={headers}
@@ -89,7 +102,10 @@ const ApiConfig = (props: ApiConfigProps) => {
       </SubForm>
       {method === 'POST' && (
         <>
-          <SubTitle>POST 请求参数</SubTitle>
+          <SubTitle>
+            <IconTooltip />
+            POST 请求参数
+          </SubTitle>
           <SubForm>
             <CodeEditor
               value={body}
