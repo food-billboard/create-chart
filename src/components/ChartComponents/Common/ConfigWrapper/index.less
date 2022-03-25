@@ -48,11 +48,16 @@
 
 .design-config-wrapper-header {
   :global {
+    .ant-tabs-content-holder {
+      display: flex;
+      flex-direction: column;
+    }
     .ant-tabs-tabpane {
       position: relative;
     }
     .ant-tabs-content {
       height: 100%;
+      flex: 1;
     }
     .ant-tabs-nav {
       margin: 0;

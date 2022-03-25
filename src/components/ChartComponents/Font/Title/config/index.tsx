@@ -135,7 +135,7 @@ class Config extends Component<
               }}
             >
               <Item
-                label="动画名称"
+                label="动画"
                 placeholder={
                   <IconTooltip
                     title={
@@ -152,15 +152,59 @@ class Config extends Component<
                 }
               >
                 <FullForm>
-                  <Input
+                  <Select
+                    value={animation.value ? [animation.value] : []}
                     className="w-100"
-                    value={animation.value}
                     onChange={(value) => {
+                      const [target] = value.slice(-1);
                       this.onKeyChange('animation', {
-                        value,
+                        value: target || '',
                       });
                     }}
-                  />
+                    mode="tags"
+                    options={[
+                      {
+                        label: 'animate__bounce',
+                        value: 'animate__bounce',
+                      },
+                      {
+                        label: 'animate__flash',
+                        value: 'animate__flash',
+                      },
+                      {
+                        label: 'animate__rubberBand',
+                        value: 'animate__rubberBand',
+                      },
+                      {
+                        label: 'animate__heartBeat',
+                        value: 'animate__heartBeat',
+                      },
+                      {
+                        label: 'animate__wobble',
+                        value: 'animate__wobble',
+                      },
+                      {
+                        label: 'animate__pulse',
+                        value: 'animate__pulse',
+                      },
+                      {
+                        label: 'animate__backInDown',
+                        value: 'animate__backInDown',
+                      },
+                      {
+                        label: 'animate__backInRight',
+                        value: 'animate__backInRight',
+                      },
+                      {
+                        label: 'animate__bounceIn',
+                        value: 'animate__bounceIn',
+                      },
+                      {
+                        label: 'animate__fadeInDown',
+                        value: 'animate__fadeInDown',
+                      },
+                    ]}
+                  ></Select>
                 </FullForm>
               </Item>
               <Item label="速度">
