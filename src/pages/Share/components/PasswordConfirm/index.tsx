@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle, useCallback, useState } from 'react';
 import { Modal, Input, message, Button } from 'antd';
+import EnterSubmitWrapper from '@/components/EnterSubmitWrapper';
 
 const { Password } = Input;
 
@@ -73,13 +74,15 @@ const PasswordConfirm = forwardRef<
         </Button>,
       ]}
     >
-      <Password
-        className="w-100"
-        value={password}
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      />
+      <EnterSubmitWrapper onSubmit={onOk}>
+        <Password
+          className="w-100"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+      </EnterSubmitWrapper>
     </Modal>
   );
 });

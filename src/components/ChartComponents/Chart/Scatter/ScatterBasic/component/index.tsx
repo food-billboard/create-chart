@@ -100,6 +100,11 @@ const ScatterBasic = (props: {
       animationEasingUpdate: animationEasing,
       animationDuration,
       animationDurationUpdate: animationDuration,
+      emphasis: {
+        focus: 'series',
+        blurScope: 'coordinateSystem',
+        scale: true,
+      },
     };
 
     const realSeries = seriesKeys.length

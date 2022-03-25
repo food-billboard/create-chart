@@ -13,19 +13,22 @@ const Forget = (props: { forger: (value: any) => any }) => {
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
 
   const handleForget = useCallback(async () => {
+    if (fetchLoading) return;
+    const realEmail = email.trim();
+    const realCaptcha = captcha.trim();
     if (!password) {
       return message.info('请输入密码');
     }
-    if (!email) {
+    if (!realEmail) {
       return message.info('请输入邮箱');
     }
-    if (!captcha) {
+    if (!realCaptcha) {
       return message.info('请输入验证码');
     }
 
     setFetchLoading(true);
     try {
-      await forger({ password, captcha, email });
+      await forger({ password, captcha: realCaptcha, email: realEmail });
     } catch (err) {
       message.info('提交错误');
     } finally {
@@ -48,7 +51,12 @@ const Forget = (props: { forger: (value: any) => any }) => {
   }, [handleForget]);
 
   return (
-    <CommonBackground title="Welcome" subTitle="忘记密码🐲" action={action}>
+    <CommonBackground
+      title="Welcome"
+      subTitle="忘记密码🐲"
+      action={action}
+      onSubmit={handleForget}
+    >
       <Email value={email} onChange={setEmail} />
       <Captcha
         email={email}

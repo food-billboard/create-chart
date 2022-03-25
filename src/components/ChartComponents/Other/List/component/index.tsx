@@ -26,6 +26,7 @@ const ListBasic = (props: {
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
+  const { screenType } = global;
 
   const {
     config: {
@@ -84,8 +85,8 @@ const ListBasic = (props: {
 
   const autoplay = useMemo(() => {
     const { show } = animation;
-    return show && finalValue.length > column;
-  }, [finalValue, column, animation]);
+    return show && finalValue.length > column && screenType !== 'edit';
+  }, [finalValue, column, animation, screenType]);
 
   // 内容高度
   const contentHeight = useMemo(() => {

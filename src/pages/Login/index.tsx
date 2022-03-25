@@ -17,6 +17,7 @@ import {
 } from '@ant-design/icons';
 import { Form, Input, Row, Col, Button, message, Space } from 'antd';
 import Icon from '@/components/ChartComponents/Common/Icon';
+import EnterSubmitWrapper from '@/components/EnterSubmitWrapper';
 import { getCaptcha } from '@/services';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
@@ -112,11 +113,12 @@ export const Captcha = (props: {
   const { value, onChange, status, email } = props;
 
   const onGetCaptcha = useCallback(async () => {
-    if (!email) {
+    const realEmail = email?.trim();
+    if (!realEmail) {
       message.info('请输入邮箱');
       return;
     }
-    await getCaptcha(email || '', status || 'register');
+    await getCaptcha(realEmail || '', status || 'register');
     setTiming(true);
   }, [email, status]);
 
@@ -168,13 +170,24 @@ export const CommonBackground = (props: {
   subTitle?: ReactNode;
   tips?: ReactNode;
   action?: ReactNode;
+  onSubmit?: () => void;
 }) => {
-  const { className, style, title, subTitle, children, tips, action } = props;
+  const {
+    className,
+    style,
+    title,
+    subTitle,
+    children,
+    tips,
+    action,
+    onSubmit,
+  } = props;
 
   return (
-    <div
+    <EnterSubmitWrapper
       className={classnames(styles['login-form-background'], className)}
       style={style}
+      onSubmit={onSubmit}
     >
       <div className={styles['login-form-main']}>
         <div className={styles['login-form-main-title']}>{title}</div>
@@ -189,7 +202,7 @@ export const CommonBackground = (props: {
         <div className={styles['login-form-main-tips']}>{tips}</div>
         <div className={styles['login-form-main-action']}>{action}</div>
       </div>
-    </div>
+    </EnterSubmitWrapper>
   );
 };
 
@@ -220,18 +233,20 @@ const Login = (props: { login: (value: any) => any }) => {
   }, []);
 
   const handleLogin = useCallback(async () => {
-    if (!mobile || !password) {
+    if (fetchLoading) return;
+    const realMobile = mobile.trim();
+    if (!realMobile || !password) {
       return message.info('账号或密码错误');
     }
     setFetchLoading(true);
     try {
-      await login({ mobile, password });
+      await login({ mobile: realMobile, password });
     } catch (err) {
       message.info('账号或密码错误');
     } finally {
       setFetchLoading(false);
     }
-  }, [mobile, password, login]);
+  }, [mobile, password, login, fetchLoading]);
 
   const action = useMemo(() => {
     return (
@@ -263,6 +278,7 @@ const Login = (props: { login: (value: any) => any }) => {
       subTitle="数据可视化大屏登录🐲"
       tips={tips}
       action={action}
+      onSubmit={handleLogin}
     >
       <Mobile value={mobile} onChange={setMobile} />
       <Password value={password} onChange={setPassword} />

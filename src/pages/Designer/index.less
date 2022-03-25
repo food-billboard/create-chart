@@ -5,6 +5,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  & *:not(input) {
+    user-select: none;
+  }
   &-content {
     min-width: 100vw;
     display: flex;

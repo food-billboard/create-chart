@@ -1,8 +1,11 @@
 import { Component, CSSProperties } from 'react';
 import { merge } from 'lodash';
 import classnames from 'classnames';
+import ColorSelect from '../ColorSelect';
+import ThemeUtil from '@/utils/Assist/Theme';
 import styles from './index.less';
 
+const { getRgbaString } = ColorSelect;
 class GuideLine extends Component<
   {
     disabled?: boolean;
@@ -101,6 +104,9 @@ class GuideLine extends Component<
           className={styles[`ruler-guide-line-${type}`]}
           style={{
             borderStyle: lineStyle,
+            borderColor: getRgbaString(
+              ThemeUtil.generateNextColor4CurrentTheme(0),
+            ),
           }}
         ></div>
       </div>

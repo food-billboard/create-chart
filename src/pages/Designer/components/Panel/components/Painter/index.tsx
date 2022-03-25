@@ -107,11 +107,6 @@ const Painter = (props: PainterProps) => {
     document.addEventListener('mouseup', onMouseUp);
   }, []);
 
-  const preventDefaultContextMenu = (e: any) => {
-    e.preventDefault();
-    return false;
-  };
-
   return (
     <div
       id={PANEL_ID}
@@ -124,7 +119,6 @@ const Painter = (props: PainterProps) => {
       ref={connectDropTarget}
       role={DROP_TYPE}
       onMouseDown={onMouseDown}
-      onContextMenu={preventDefaultContextMenu}
     >
       <ComponentList />
     </div>

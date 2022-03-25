@@ -10,9 +10,17 @@ import Panel from './components/Panel';
 import styles from './index.less';
 
 const Designer = () => {
+  const preventDefaultContextMenu = (e: any) => {
+    e.preventDefault();
+    return false;
+  };
+
   return (
     <ConfigProvider componentSize="small">
-      <div className={styles['designer-page']}>
+      <div
+        className={styles['designer-page']}
+        onContextMenu={preventDefaultContextMenu}
+      >
         <Header />
         <div className={styles['designer-page-content']}>
           <DndProvider backend={HTML5Backend}>

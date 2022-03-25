@@ -11,6 +11,11 @@ html {
   scrollbar-width: inherit;
 }
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99, 99, 99, 0.8) rgba(99, 99, 99, 0.8);
+}
+
 // 伪元素无法继承
 *::-webkit-scrollbar {
   width: 8px;
@@ -30,6 +35,7 @@ html {
     width: 0;
     height: 0;
   }
+  scrollbar-width: none;
 }
 
 html,

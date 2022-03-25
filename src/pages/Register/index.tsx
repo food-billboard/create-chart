@@ -14,22 +14,31 @@ const Register = (props: { register: (value: any) => any }) => {
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
 
   const handleRegister = useCallback(async () => {
-    if (!mobile) {
+    if (fetchLoading) return;
+    const realMobile = mobile.trim();
+    const realEmail = email.trim();
+    const realCaptcha = captcha.trim();
+    if (!realMobile) {
       return message.info('请输入手机号');
     }
     if (!password) {
       return message.info('请输入密码');
     }
-    if (!email) {
+    if (!realEmail) {
       return message.info('请输入邮箱');
     }
-    if (!captcha) {
+    if (!realCaptcha) {
       return message.info('请输入验证码');
     }
 
     setFetchLoading(true);
     try {
-      await register({ mobile, password, captcha, email });
+      await register({
+        mobile: realMobile,
+        password,
+        captcha: realCaptcha,
+        email: realEmail,
+      });
     } catch (err) {
       message.info('提交错误');
     } finally {
@@ -56,6 +65,7 @@ const Register = (props: { register: (value: any) => any }) => {
       title="Welcome"
       subTitle="数据可视化大屏注册🐲"
       action={action}
+      onSubmit={handleRegister}
     >
       <Mobile value={mobile} onChange={setMobile} />
       <Password value={password} onChange={setPassword} />

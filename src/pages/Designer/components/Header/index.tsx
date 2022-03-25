@@ -133,9 +133,9 @@ const Header = (props: {
     <FocusWrapper>
       <PageHeader
         className={styles['designer-page-header']}
-        onBack={() => window.history.back()}
         title={Title}
         extra={extra}
+        backIcon={false}
       ></PageHeader>
     </FocusWrapper>
   );
