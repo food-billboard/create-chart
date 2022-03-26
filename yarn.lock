@@ -2428,10 +2428,10 @@ chokidar@3.5.1:
   optionalDependencies:
     fsevents "~2.3.1"
 
-chunk-file-upload@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.npmmirror.com/chunk-file-upload/-/chunk-file-upload-1.0.9.tgz#ff9a4ee578700877212662f7108890cc566650b6"
-  integrity sha512-UipmWiWy6zhBjHP/bN+DqLG/S4KRDXPWtl5ETDGgYCT95352rtYkDkmywtea7rnJum/MwDFlz2pO0FYe92weUg==
+chunk-file-upload@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.npmjs.org/chunk-file-upload/-/chunk-file-upload-1.0.11.tgz#faa1df3c40e7e1623282df718979b6933d290fe4"
+  integrity sha512-g6RIcjVqOXWgqAplX4tnfInXu17Np7bkzG4lMDGdx8OqEGemRERXA5n/NG+pouOMAGZUsA1Yd8hVCfnEt6Bf8g==
   dependencies:
     "@babel/runtime" "^7.15.4"
     eventemitter3 "^4.0.7"
@@ -8404,7 +8404,7 @@ space-separated-tokens@^1.0.0:
 
 spark-md5@^3.0.1:
   version "3.0.2"
-  resolved "https://registry.npmmirror.com/spark-md5/-/spark-md5-3.0.2.tgz#7952c4a30784347abcee73268e473b9c0167e3fc"
+  resolved "https://registry.npmjs.org/spark-md5/-/spark-md5-3.0.2.tgz#7952c4a30784347abcee73268e473b9c0167e3fc"
   integrity sha512-wcFzz9cDfbuqe0FZzfi2or1sgyIrsDwmPwfZC4hiNidPdPINjeUwNfv5kldczoEAcjl9Y1L3SM7Uz2PUEQzxQw==
 
 spdx-correct@^3.0.0:
