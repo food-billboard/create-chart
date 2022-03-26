@@ -12,6 +12,7 @@ const SeriesLabelConfig = (
     ignore?: string[];
     child: Partial<SingleCollapseProps['child']>;
     parent: Partial<SingleCollapseProps['parent']>;
+    level?: any;
   } & ComponentData.ComponentSeriesLabelConfig,
 ) => {
   const {
@@ -26,6 +27,7 @@ const SeriesLabelConfig = (
     ignore,
     child,
     parent,
+    level,
   } = props;
 
   const commonOnChange = useCallback(
@@ -52,6 +54,7 @@ const SeriesLabelConfig = (
         ...child,
       }}
       parent={parent}
+      level={level}
     >
       {needPositionConfig && (
         <LabelPositionConfig

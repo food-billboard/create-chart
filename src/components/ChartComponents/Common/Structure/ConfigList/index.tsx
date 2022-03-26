@@ -57,7 +57,7 @@ export type TConfigListItemProps = {
 const ConfigListItem = (props: TConfigListItemProps) => {
   const {
     label,
-    labelProps: { className, style, title, level } = {},
+    labelProps: { className, style, title, level = 1 } = {},
     placeholder,
     children,
     disabled,

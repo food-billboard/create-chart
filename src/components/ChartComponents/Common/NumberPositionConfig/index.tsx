@@ -59,8 +59,9 @@ export const InputNumber = (props: {
 const NumberPositionConfig = (props: {
   value: PositionValue;
   onChange: (value: PositionValue) => void;
+  level?: any;
 }) => {
-  const { value, onChange } = props;
+  const { value, onChange, level } = props;
   const { left, top, right, bottom } = value;
 
   const onKeyChange = useCallback(
@@ -74,7 +75,12 @@ const NumberPositionConfig = (props: {
   );
 
   return (
-    <Item label="位置">
+    <Item
+      label="位置"
+      labelProps={{
+        level,
+      }}
+    >
       <FullForm label="上">
         <InputNumber value={top} onChange={onKeyChange.bind(null, 'top')} />
       </FullForm>

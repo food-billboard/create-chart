@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useMemo } from 'react';
+import { ReactNode, useCallback, useMemo, Children, cloneElement } from 'react';
 import {
   Collapse as AntCollapse,
   CollapsePanelProps,
@@ -16,6 +16,7 @@ import Switch from '../Switch';
 import styles from './index.less';
 
 const { Panel: AntPanel } = AntCollapse;
+const { Item } = WrapperConfigList;
 
 // 重写样式的折叠列表
 
@@ -105,10 +106,11 @@ export type SingleCollapseProps = {
   parent?: TCollapseProps;
   child: TCollapsePanelProps;
   children?: ReactNode;
+  level?: number;
 };
 
 export const SingleCollapse = (props: SingleCollapseProps) => {
-  const { parent = {}, child, children } = props;
+  const { parent = {}, child, children, level = 1 } = props;
 
   const { value, visibleRender } = child;
 
@@ -119,16 +121,43 @@ export const SingleCollapse = (props: SingleCollapseProps) => {
     return 'disabled';
   }, [visibleRender, value]);
 
+  const realChildren = useMemo(() => {
+    const realLevel = level + 1;
+    return Children.map(children, (child: any) => {
+      try {
+        // @ts-ignore
+        if (child.type.name === Item.name) {
+          return cloneElement(child, {
+            labelProps: {
+              ...(child.props.labelProps || {}),
+              level: realLevel,
+            },
+          });
+        } else {
+          return cloneElement(child, {
+            level: realLevel,
+          });
+        }
+      } catch (err) {
+        return child;
+      }
+    });
+  }, [children, level]);
+
   return (
     <Collapse
       collapsible={collapsible}
       {...parent}
-      className={classnames(parent.className, {
-        [styles['design-config-collapse-single-disabled']]:
-          collapsible === 'disabled',
-      })}
+      className={classnames(
+        parent.className,
+        styles['design-config-collapse-single'],
+        {
+          [styles['design-config-collapse-single-disabled']]:
+            collapsible === 'disabled',
+        },
+      )}
     >
-      <Panel {...child}>{children}</Panel>
+      <Panel {...child}>{realChildren}</Panel>
     </Collapse>
   );
 };

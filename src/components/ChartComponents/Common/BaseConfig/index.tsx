@@ -7,6 +7,7 @@ import ConfigList from '../Structure/ConfigList';
 import Opacity from '../Opacity';
 import HalfForm from '../Structure/HalfForm';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+import styles from './index.less';
 
 const { Item } = ConfigList;
 
@@ -52,7 +53,7 @@ const BaseConfig = (props: {
   );
 
   return (
-    <div>
+    <div className={styles['component-design-config-base']}>
       <ConfigList>
         <Item label="图表尺寸">
           <HalfForm>

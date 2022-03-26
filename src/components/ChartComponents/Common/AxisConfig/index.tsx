@@ -113,6 +113,7 @@ const AxisConfig = (props: AxisConfigProps) => {
             header: '文本',
             key: 'textStyle',
           }}
+          level={3}
         >
           <FontConfigList
             value={pick(axisLabel!, [
@@ -146,6 +147,7 @@ const AxisConfig = (props: AxisConfigProps) => {
             header: '文字',
             key: 'font',
           }}
+          level={3}
         >
           <FontConfigList
             value={nameTextStyle}

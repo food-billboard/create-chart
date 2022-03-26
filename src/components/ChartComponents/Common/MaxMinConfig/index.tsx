@@ -9,11 +9,13 @@ const MaxMinConfig = (props: {
   onChange: (value: { max: number; min: number }) => void;
   label?: ReactNode;
   subLabel?: [ReactNode, ReactNode];
+  level?: any;
 }) => {
-  const { value, onChange, label, subLabel } = props;
+  const { value, onChange, label, subLabel, level } = props;
 
   return (
     <CenterPositionConfig
+      level={level}
       value={{
         left: value.min,
         top: value.max,

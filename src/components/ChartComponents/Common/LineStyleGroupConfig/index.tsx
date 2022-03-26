@@ -1,5 +1,4 @@
 import { useCallback, useMemo, ReactNode } from 'react';
-import { Select } from 'antd';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import ConfigList, { TConfigListItemProps } from '../Structure/ConfigList';
 import LineStyle from '../LineStyleSelect';
@@ -16,8 +15,9 @@ const LineStyleGroupConfig = (props: {
   ignore?: (keyof ComponentData.ComponentLineGroupConfig)[];
   children?: ReactNode;
   collapseProps?: SingleCollapseProps;
+  level?: any;
 }) => {
-  const { ignore, children, value, onChange, collapseProps } = props;
+  const { ignore, children, value, onChange, collapseProps, level } = props;
 
   const { type, width, color } = value;
 
@@ -83,6 +83,7 @@ const LineStyleGroupConfig = (props: {
         header: '线条样式',
         key: 'lineStyle',
       }}
+      level={level}
       {...collapseProps}
     >
       {typeConfig}

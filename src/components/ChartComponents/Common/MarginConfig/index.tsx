@@ -12,6 +12,7 @@ const MarginConfig = (props: {
   value?: ComponentData.TComponentMarginConfig;
   defaultValue?: ComponentData.TComponentMarginConfig;
   onChange?: (value: ComponentData.TComponentMarginConfig) => void;
+  level?: any;
 }) => {
   const [value, setValue] =
     useControllableValue<ComponentData.TComponentMarginConfig>(props, {
@@ -24,6 +25,7 @@ const MarginConfig = (props: {
     });
 
   const { left, top, right, bottom } = value;
+  const { level } = props;
 
   const onChange = useCallback(
     (key: keyof ComponentData.TComponentMarginConfig, changeValue: any) => {
@@ -36,7 +38,7 @@ const MarginConfig = (props: {
   );
 
   return (
-    <Item label="边距">
+    <Item label="边距" labelProps={{ level }}>
       <HalfForm label="左">
         <InputNumber
           value={left}

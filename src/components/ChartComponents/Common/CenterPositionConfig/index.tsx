@@ -15,10 +15,11 @@ export type CenterPositionConfigProps = {
   onChange: (value: PositionValue) => void;
   parentLabel?: ReactNode;
   subLabel?: [ReactNode, ReactNode];
+  level?: any;
 };
 
 const CenterPositionConfig = (props: CenterPositionConfigProps) => {
-  const { value, onChange, parentLabel, subLabel } = props;
+  const { value, onChange, parentLabel, subLabel, level } = props;
   const { left, top } = value;
 
   const onKeyChange = useCallback(
@@ -32,7 +33,12 @@ const CenterPositionConfig = (props: CenterPositionConfigProps) => {
   );
 
   return (
-    <Item label={parentLabel || '位置'}>
+    <Item
+      label={parentLabel || '位置'}
+      labelProps={{
+        level,
+      }}
+    >
       <HalfForm label={subLabel?.[0] || '左'}>
         <InputNumber value={left} onChange={onKeyChange.bind(null, 'left')} />
       </HalfForm>

@@ -87,6 +87,7 @@ const FontConfig = (props: {
   onChange?: (value: ComponentData.TFontConfig) => void;
   ignore?: (keyof ComponentData.TFontConfig)[];
   children?: ReactNode;
+  level?: any;
 }) => {
   const [value, setValue] = useControllableValue<ComponentData.TFontConfig>(
     props,
@@ -103,7 +104,7 @@ const FontConfig = (props: {
       },
     },
   );
-  const { ignore, children } = props;
+  const { ignore, children, level } = props;
 
   const { fontSize, fontWeight, fontFamily, color } = value || {};
 
@@ -191,7 +192,7 @@ const FontConfig = (props: {
   }, [ignore, color, onChange]);
 
   return (
-    <Item label="文本">
+    <Item label="文本" labelProps={{ level }}>
       {fontFamilyConfig}
       {fontWeightConfig}
       {fontSizeConfig}
@@ -208,6 +209,7 @@ export const FontConfigList = (props: {
   labelProps?: TConfigListItemProps['labelProps'];
   ignore?: (keyof ComponentData.TFontConfig)[];
   children?: ReactNode;
+  level?: any;
 }) => {
   const [value, setValue] = useControllableValue<ComponentData.TFontConfig>(
     props,
@@ -225,11 +227,15 @@ export const FontConfigList = (props: {
     },
   );
 
-  const { ignore, children } = props;
+  const { ignore, children, level } = props;
 
   const { fontSize, fontWeight, fontFamily, color } = value || {};
 
-  const { labelProps = { level: 2 } } = props;
+  const { labelProps: perLabelProps = { level: 2 } } = props;
+  const labelProps = {
+    ...perLabelProps,
+    level: level ?? perLabelProps.level,
+  };
 
   const onChange = useCallback(
     (key: keyof ComponentData.TFontConfig, changeValue: any) => {

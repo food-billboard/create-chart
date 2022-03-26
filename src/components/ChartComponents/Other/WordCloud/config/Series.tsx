@@ -51,6 +51,7 @@ const SeriesConfig = (props: {
         {...(textStyle as any)}
         onChange={onKeyChange.bind(null, 'textStyle')}
         ignore={['color', 'fontSize']}
+        level={1}
       >
         <Collapse
           child={{

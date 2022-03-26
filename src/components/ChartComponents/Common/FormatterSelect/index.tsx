@@ -10,10 +10,16 @@ const { Item } = ConfigList;
 const FormatterSelect = (props: {
   value?: string;
   onChange?: (value: any) => void;
+  level?: any;
 }) => {
+  const { level, ...nextProps } = props;
+
   return (
     <Item
       label="内容格式"
+      labelProps={{
+        level,
+      }}
       placeholder={
         <IconTooltip
           title={
@@ -31,7 +37,7 @@ const FormatterSelect = (props: {
       }
     >
       <FullForm>
-        <Input {...props} />
+        <Input {...nextProps} />
       </FullForm>
     </Item>
   );

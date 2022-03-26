@@ -64,14 +64,18 @@ const LegendConfig = (props: LegendConfigProps) => {
   const typeConfig = useMemo(() => {
     if (!needType) return null;
     return (
-      <Select value={value} onChange={onChange} className="w-100">
-        <Select.Option key="plain" value="plain">
-          普通图例
-        </Select.Option>
-        <Select.Option key="scroll" value="scroll">
-          可滚动翻页的图例
-        </Select.Option>
-      </Select>
+      <Item label="类型">
+        <FullForm>
+          <Select value={value} onChange={onChange} className="w-100">
+            <Select.Option key="plain" value="plain">
+              普通图例
+            </Select.Option>
+            <Select.Option key="scroll" value="scroll">
+              可滚动翻页的图例
+            </Select.Option>
+          </Select>
+        </FullForm>
+      </Item>
     );
   }, [needType]);
 

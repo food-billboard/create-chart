@@ -43,8 +43,9 @@ const POSITION_MAP = [
 const LabelPositionConfig = (props: {
   value: ComponentData.ComponentLabelPosition;
   onChange: (value: ComponentData.ComponentLabelPosition) => void;
+  level?: any;
 }) => {
-  const { value, onChange } = props;
+  const { value, onChange, level } = props;
 
   const list = useMemo(() => {
     return POSITION_MAP.map((item) => {
@@ -58,7 +59,7 @@ const LabelPositionConfig = (props: {
   }, []);
 
   return (
-    <Item label="位置">
+    <Item label="位置" labelProps={{ level }}>
       <FullForm>
         <Select value={value} onChange={onChange as any} className="w-100">
           {list}

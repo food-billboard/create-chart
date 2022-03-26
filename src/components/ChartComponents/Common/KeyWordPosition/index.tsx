@@ -53,8 +53,9 @@ const POSITION_HORIZONTAL_MAP = [
 const LabelPositionConfig = (props: {
   value: ComponentData.KeyWordPositionType;
   onChange: (value: ComponentData.KeyWordPositionType) => void;
+  level?: any;
 }) => {
-  const { value, onChange: propsOnChange } = props;
+  const { value, onChange: propsOnChange, level } = props;
   const { left, top } = value;
 
   const verticalList = useMemo(() => {
@@ -94,7 +95,7 @@ const LabelPositionConfig = (props: {
   );
 
   return (
-    <Item label="位置">
+    <Item label="位置" labelProps={{ level }}>
       <HalfForm label="水平">
         <RadioGroup onChange={onChange.bind(null, 'left')} value={left}>
           {horizontalList}
