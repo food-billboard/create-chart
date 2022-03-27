@@ -12,6 +12,7 @@ import classnames from 'classnames';
 import { history } from 'umi';
 import { getScreenList } from '@/services';
 import { goDesign } from '@/utils/tool';
+import Avatar from './components/Avatar';
 import List from './components/ScreenList';
 import styles from './index.less';
 
@@ -78,6 +79,9 @@ function ScreenList() {
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['home']}>
           <Menu.Item key={'home'}>首页</Menu.Item>
         </Menu>
+        <div className={styles['screen-page-avatar']}>
+          <Avatar />
+        </div>
       </Header>
       <Content
         className={styles['screen-page-content']}

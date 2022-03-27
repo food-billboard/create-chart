@@ -1,9 +1,11 @@
 import { ConnectState } from '@/models/connect';
 
 export const mapStateToProps = (state: ConnectState) => {
-  return {};
+  return {
+    userInfo: state.user.currentUser,
+  };
 };
 
 export const mapDispatchToProps = (dispatch: any) => ({
-  getUserInfo: () => dispatch({ type: 'user/getUserInfo' }),
+  logout: () => dispatch({ type: 'user/logout' }),
 });

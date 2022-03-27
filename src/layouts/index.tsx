@@ -4,14 +4,18 @@ import { Empty } from 'antd';
 import isMobileJudge from 'is-mobile';
 import Loading from '@/components/PageLoading';
 import IntroductionButton from '@/components/IntroductionButton';
-import { getUserInfo } from '@/services';
 import { dispatchLogin } from '@/utils/request';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
-const LoginWrapper = (props: { children: ReactNode; location: any }) => {
+const LoginWrapper = (props: {
+  children: ReactNode;
+  location: any;
+  getUserInfo: () => Promise<any>;
+}) => {
   const {
     children,
     location: { pathname },
+    getUserInfo,
   } = props;
 
   const [fetchLoading, setFetchLoading] = useState<boolean>(true);
