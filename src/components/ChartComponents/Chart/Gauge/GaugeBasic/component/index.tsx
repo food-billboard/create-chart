@@ -91,6 +91,7 @@ const GaugeBasic = (props: {
       pointer,
       title,
       detail,
+      axisLine,
       ...nextSeries
     } = series;
     const { animation: show, animationDuration, animationEasing } = animation;
@@ -100,6 +101,13 @@ const GaugeBasic = (props: {
       center: center.map((item) => `${item}%`),
       radius: radius + '%',
       type: 'gauge',
+      axisLine: {
+        ...axisLine,
+        lineStyle: {
+          ...axisLine.lineStyle,
+          color: [[1, getRgbaString(axisLine.lineStyle.color)]],
+        },
+      },
       progress: {
         ...progress,
         itemStyle: {
@@ -108,7 +116,10 @@ const GaugeBasic = (props: {
       },
       splitLine: {
         ...splitLine,
-        color: getRgbaString(splitLine.color),
+        lineStyle: {
+          width: splitLine.width,
+          color: getRgbaString(splitLine.color),
+        },
       },
       axisLabel: {
         ...axisLabel,

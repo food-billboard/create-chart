@@ -65,10 +65,14 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TGaugeBasicConfig> =
           show: true,
           lineStyle: {
             width: 10,
+            color: {
+              ...ThemeUtil.generateNextColor4CurrentTheme(0),
+              a: 0.3,
+            },
           },
         },
         progress: {
-          show: false,
+          show: true,
           color: ThemeUtil.generateNextColor4CurrentTheme(0),
           width: 10,
         },
@@ -102,7 +106,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TGaugeBasicConfig> =
           },
         },
         title: {
-          show: true,
+          show: false,
           offsetCenter: [0, 20],
           ...DEFAULT_FONT_CONFIG,
         },

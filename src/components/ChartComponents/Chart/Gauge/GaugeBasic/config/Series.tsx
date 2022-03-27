@@ -62,7 +62,7 @@ const SeriesConfig = (props: {
           key: 'axisLine',
           visibleRender: true,
           value: axisLine.show,
-          onChange: () =>
+          onChange: (value) =>
             onKeyChange('axisLine', {
               ...axisLine,
               show: value,
@@ -72,12 +72,28 @@ const SeriesConfig = (props: {
         <Item label="线条">
           <FullForm>
             <InputNumber
+              className="w-100"
               value={axisLine.lineStyle.width}
               onChange={(value) => {
                 onKeyChange('axisLine', {
                   ...axisLine,
                   lineStyle: {
                     width: value,
+                  },
+                });
+              }}
+            />
+          </FullForm>
+        </Item>
+        <Item label="颜色">
+          <FullForm>
+            <CompatColorSelect
+              value={axisLine.lineStyle.color}
+              onChange={(value) => {
+                onKeyChange('axisLine', {
+                  ...axisLine,
+                  lineStyle: {
+                    color: value,
                   },
                 });
               }}
@@ -134,6 +150,7 @@ const SeriesConfig = (props: {
         <Item label="宽度">
           <FullForm>
             <InputNumber
+              className="w-100"
               value={splitLine.width}
               onChange={(value) => {
                 onKeyChange('splitLine', {
@@ -158,6 +175,7 @@ const SeriesConfig = (props: {
         <Item label="长度">
           <FullForm>
             <InputNumber
+              className="w-100"
               value={splitLine.length}
               onChange={(value) => {
                 onKeyChange('splitLine', {
@@ -336,6 +354,7 @@ const SeriesConfig = (props: {
         <Item label="距离">
           <FullForm>
             <InputNumber
+              className="w-100"
               value={axisLabel.distance}
               onChange={(value) => {
                 onKeyChange('axisLabel', {

@@ -11,6 +11,7 @@ export type TGaugeBasicConfig = {
       show: boolean;
       lineStyle: {
         width: number;
+        color: ComponentData.TColorConfig;
       };
     };
     progress: {

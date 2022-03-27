@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { InputNumber as AntInputNumber } from 'antd';
 import { InputNumberProps } from 'antd/es/input-number';
+import classnames from 'classnames';
 
 const InputNumber = (
   props: InputNumberProps & {
@@ -13,6 +14,7 @@ const InputNumber = (
     onChange: propsOnChange,
     onBlur: propsOnBlur,
     triggerOnChangeInOnChange = false,
+    className,
   } = props;
 
   const [stateValue, setStateValue] = useState<number | string>(
@@ -44,6 +46,7 @@ const InputNumber = (
   return (
     <AntInputNumber
       {...props}
+      className={classnames('w-100', className)}
       onChange={onChange}
       onBlur={onBlur}
       value={stateValue}
