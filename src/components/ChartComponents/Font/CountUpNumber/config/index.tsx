@@ -1,12 +1,10 @@
 import { Component } from 'react';
 import { Tabs, Select } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import IconTooltip from '@/components/IconTooltip';
 import Input from '@/components/ChartComponents/Common/Input';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';

@@ -121,10 +121,11 @@ const CountUpNumberBasic = (props: {
         decimal,
         useEasing: true,
         easingFn: EASING_FN_MAP[animation.easingFn],
+        decimalPlaces: round.length,
       },
     );
     chartInstance.current.start();
-  }, [animation, addonBefore, thousands, addonAfter, decimal]);
+  }, [animation, addonBefore, thousands, addonAfter, decimal, round]);
 
   useDeepCompareEffect(() => {
     chartInstance.current?.update(calculateValue);
@@ -145,7 +146,7 @@ const CountUpNumberBasic = (props: {
         id={chartId.current}
         onClick={onClick}
       >
-        {finalValue.value || ''}
+        {calculateValue || ''}
       </div>
       <FetchFragment
         url={requestUrl}

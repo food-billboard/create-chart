@@ -5,13 +5,10 @@ import {
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
 } from '../../Common/Constants/defaultConfig';
-import { getText } from '@/utils/constants';
 import { TTitleConfig } from './type';
 
-const [DEFAULT_NAME_LABEL] = getText(1);
-
 const DEFAULT_VALUE = {
-  value: DEFAULT_NAME_LABEL,
+  value: '我是一个标题',
 };
 
 const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTitleConfig> = {
@@ -78,7 +75,7 @@ const DefaultConfig: ComponentData.TComponentData<TTitleConfig> =
     BASIC_DEFAULT_CONFIG,
     {
       style: {
-        width: 100,
+        width: 180,
         height: 40,
       },
     },

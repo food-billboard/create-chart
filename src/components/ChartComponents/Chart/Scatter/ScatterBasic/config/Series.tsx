@@ -66,6 +66,29 @@ const SeriesConfig = (props: {
           const { color, borderColor, borderType, borderWidth } = target;
           return (
             <>
+              <Item label="颜色">
+                <FullForm>
+                  <CompatColorSelect
+                    value={color}
+                    onChange={(value) => {
+                      const newItemStyle = [...itemStyle];
+                      newItemStyle.splice(index, 1, {
+                        ...target,
+                        color: value,
+                      } as any);
+                      onChange({
+                        config: {
+                          options: {
+                            series: {
+                              itemStyle: newItemStyle,
+                            },
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </FullForm>
+              </Item>
               <LineStyleGroupConfig
                 collapseProps={{
                   child: {
@@ -97,29 +120,6 @@ const SeriesConfig = (props: {
                   });
                 }}
               />
-              <Item label="颜色">
-                <FullForm>
-                  <CompatColorSelect
-                    value={color}
-                    onChange={(value) => {
-                      const newItemStyle = [...itemStyle];
-                      newItemStyle.splice(index, 1, {
-                        ...target,
-                        color: value,
-                      } as any);
-                      onChange({
-                        config: {
-                          options: {
-                            series: {
-                              itemStyle: newItemStyle,
-                            },
-                          },
-                        },
-                      });
-                    }}
-                  />
-                </FullForm>
-              </Item>
             </>
           );
         }}

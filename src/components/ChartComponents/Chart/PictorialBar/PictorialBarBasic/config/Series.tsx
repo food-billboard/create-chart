@@ -129,7 +129,7 @@ const SeriesConfig = (props: {
 
   const symbolRotateConfig = useMemo(() => {
     return (
-      <Item label="旋转">
+      <Item label="旋转（deg）">
         <FullForm>
           <AngleSelect
             value={symbolRotate}

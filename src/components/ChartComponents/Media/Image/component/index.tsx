@@ -63,6 +63,7 @@ const ImageBasic = (props: {
         backgroundImage: `url(${finalValue.value || ''})`,
         backgroundRepeatX: x ? 'repeat' : 'no-repeat',
         backgroundRepeatY: y ? 'repeat' : 'no-repeat',
+        backgroundSize: !x && !y ? '100% 100%' : '',
       };
     return {
       backgroundColor: finalValue.value,

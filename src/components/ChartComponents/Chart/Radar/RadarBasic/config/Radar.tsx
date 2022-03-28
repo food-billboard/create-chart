@@ -11,6 +11,7 @@ import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import { TRadarBasicConfig } from '../type';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 
 const { Item } = ConfigList;
 
@@ -157,17 +158,33 @@ const RadarConfig = (props: {
           value: splitArea.show,
         }}
       >
-        <Item label="颜色">
-          <CompatColorSelect
-            value={splitArea.areaStyle.color}
-            onChange={(value) => {
-              onKeyChange('splitArea', {
-                areaStyle: {
-                  color: value,
-                },
-              });
-            }}
-          />
+        <Item label="区域一颜色">
+          <FullForm>
+            <CompatColorSelect
+              value={splitArea.areaStyle.color[0]}
+              onChange={(value) => {
+                onKeyChange('splitArea', {
+                  areaStyle: {
+                    color: [value, splitArea.areaStyle.color[1]],
+                  },
+                });
+              }}
+            />
+          </FullForm>
+        </Item>
+        <Item label="区域二颜色">
+          <FullForm>
+            <CompatColorSelect
+              value={splitArea.areaStyle.color[1]}
+              onChange={(value) => {
+                onKeyChange('splitArea', {
+                  areaStyle: {
+                    color: [splitArea.areaStyle.color[0], value],
+                  },
+                });
+              }}
+            />
+          </FullForm>
         </Item>
       </Collapse>
     );

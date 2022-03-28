@@ -23,7 +23,8 @@ const VideoBasic = (props: {
   const {
     config: { options },
   } = value;
-  const { controls, loop, autoplay, muted } = options;
+  const { controls, loop, autoplay: opAutoplay, muted } = options;
+  const { screenType } = global;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -43,6 +44,10 @@ const VideoBasic = (props: {
     },
     requestRef,
   );
+
+  const autoplay = useMemo(() => {
+    return screenType === 'edit' ? false : opAutoplay;
+  }, [opAutoplay, screenType]);
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {

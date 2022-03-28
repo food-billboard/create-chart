@@ -10,6 +10,7 @@ import {
   DEFAULT_ANIMATION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getName, getNumberValue } from '@/utils/constants';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { TRadarBasicConfig } from './type';
 
 const MIN = 20;
@@ -87,7 +88,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRadarBasicConfig> =
         splitNumber: 5,
         shape: 'polygon',
         axisLine: {
-          show: true,
+          show: false,
           lineStyle: {
             color: {
               r: 33,
@@ -113,12 +114,18 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRadarBasicConfig> =
         splitArea: {
           show: true,
           areaStyle: {
-            color: {
-              r: 250,
-              g: 250,
-              b: 250,
-              a: 0.3,
-            },
+            color: [
+              {
+                ...ThemeUtil.generateNextColor4CurrentTheme(0),
+                a: 0.3,
+              },
+              {
+                r: 250,
+                g: 250,
+                b: 250,
+                a: 0,
+              },
+            ],
           },
         },
       },

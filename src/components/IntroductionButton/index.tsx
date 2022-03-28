@@ -34,7 +34,7 @@ const IntroductionButton = () => {
         }}
         style={{
           right: 0,
-          bottom: 50,
+          top: 260,
         }}
         icon={<SmileOutlined />}
         event={'hover'}

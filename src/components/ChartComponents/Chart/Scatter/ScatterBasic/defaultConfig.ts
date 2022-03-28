@@ -74,7 +74,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TScatterBasicConfig>
       series: {
         itemStyle: [],
         symbol: 'circle',
-        symbolSize: 10,
+        symbolSize: 6,
       },
     },
   };

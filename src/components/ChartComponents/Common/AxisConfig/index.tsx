@@ -91,7 +91,7 @@ const AxisConfig = (props: AxisConfigProps) => {
           onChange: onAxisLabelChange.bind(null, 'show'),
         }}
       >
-        <Item label="旋转">
+        <Item label="旋转（deg）">
           <FullForm>
             <AngleSelect
               value={axisLabel!.rotate || 0}

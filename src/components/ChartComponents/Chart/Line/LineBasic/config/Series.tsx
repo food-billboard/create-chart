@@ -8,7 +8,6 @@ import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSe
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
-import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';

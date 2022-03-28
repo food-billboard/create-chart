@@ -30,7 +30,7 @@ export type TRadarBasicConfig = {
     splitArea: {
       show: boolean;
       areaStyle: {
-        color: ComponentData.TColorConfig;
+        color: [ComponentData.TColorConfig, ComponentData.TColorConfig];
       };
     };
   };

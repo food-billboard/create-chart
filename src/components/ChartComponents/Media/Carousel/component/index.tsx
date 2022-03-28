@@ -66,13 +66,11 @@ const CarouselBasic = (props: {
   }, [className]);
 
   const imageList = useMemo(() => {
-    console.log(height, 2222);
-    return finalValue.map((item: any) => {
+    return finalValue.map((item: any, index: number) => {
       const { value, name } = item;
       return (
-        <div>
+        <div key={name || index}>
           <img
-            key={name}
             src={value}
             onClick={onClick.bind(null, item)}
             style={{

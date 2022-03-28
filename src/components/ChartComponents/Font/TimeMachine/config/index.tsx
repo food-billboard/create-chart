@@ -11,6 +11,7 @@ import ComponentOptionConfig, {
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import IconTooltip from '@/components/IconTooltip';
+import SingleDefineSelect from '@/components/ChartComponents/Common/SingleDefineSelect';
 import Input from '@/components/ChartComponents/Common/Input';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
@@ -92,13 +93,22 @@ class Config extends Component<
                 }
               >
                 <FullForm>
-                  <Input
+                  <SingleDefineSelect
                     value={icon.value}
                     onChange={(value) => {
                       this.onKeyChange('icon', {
                         value,
                       });
                     }}
+                    options={[
+                      'bi-alarm',
+                      'bi-arrow-through-heart',
+                      'bi-award',
+                      'bi-balloon',
+                      'bi-balloon-heart',
+                      'bi-bell',
+                      'bi-boombox',
+                    ].map((item) => ({ label: item, value: item }))}
                   />
                 </FullForm>
               </Item>

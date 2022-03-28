@@ -4,10 +4,7 @@ import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
 import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
 import { TSunBurstBasicConfig } from '../type';
 
@@ -50,7 +47,7 @@ const SeriesConfig = (props: {
     );
   }, [nodeClick, onKeyChange]);
 
-  const radiusConfig = useCallback(() => {
+  const radiusConfig = useMemo(() => {
     return (
       <Item label="大小">
         <FullForm>

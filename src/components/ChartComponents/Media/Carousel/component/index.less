@@ -1,2 +1,10 @@
 .component-media-carousel {
+  :global {
+    .slick-dots {
+      margin: 0;
+      li button::before {
+        display: none;
+      }
+    }
+  }
 }

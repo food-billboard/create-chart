@@ -44,7 +44,7 @@ const SeriesConfig = (props: {
         onChange={onKeyChange.bind(null, 'label')}
         ignore={['position']}
       >
-        <Item label="位置">
+        <Item label="位置（%）">
           <FullForm>
             <Select
               className="w-100"
@@ -162,7 +162,7 @@ const SeriesConfig = (props: {
 
   const radiusConfig = useMemo(() => {
     return (
-      <Item label="饼图大小">
+      <Item label="饼图大小（%）">
         <FullForm>
           <InputNumber
             max={100}

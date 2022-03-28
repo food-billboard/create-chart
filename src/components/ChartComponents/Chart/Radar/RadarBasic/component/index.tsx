@@ -119,7 +119,9 @@ const RadarBasic = (props: {
         ...splitArea,
         areaStyle: {
           ...splitArea.areaStyle,
-          color: getRgbaString(splitArea.areaStyle.color),
+          color: splitArea.areaStyle.color.map((item) => {
+            return getRgbaString(item);
+          }),
         },
       },
       indicator: xAxisKeys.map((item: any) => {

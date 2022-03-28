@@ -6,8 +6,8 @@ import ComponentOptionConfig, {
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
+import SingleDefineSelect from '@/components/ChartComponents/Common/SingleDefineSelect';
 import IconTooltip from '@/components/IconTooltip';
-import Input from '@/components/ChartComponents/Common/Input';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import OrientSelect from '@/components/ChartComponents/Common/OrientSelect';
@@ -152,59 +152,26 @@ class Config extends Component<
                 }
               >
                 <FullForm>
-                  <Select
-                    value={animation.value ? [animation.value] : []}
-                    className="w-100"
+                  <SingleDefineSelect
+                    value={animation.value}
                     onChange={(value) => {
-                      const [target] = value.slice(-1);
                       this.onKeyChange('animation', {
-                        value: target || '',
+                        value: value || '',
                       });
                     }}
-                    mode="tags"
                     options={[
-                      {
-                        label: 'animate__bounce',
-                        value: 'animate__bounce',
-                      },
-                      {
-                        label: 'animate__flash',
-                        value: 'animate__flash',
-                      },
-                      {
-                        label: 'animate__rubberBand',
-                        value: 'animate__rubberBand',
-                      },
-                      {
-                        label: 'animate__heartBeat',
-                        value: 'animate__heartBeat',
-                      },
-                      {
-                        label: 'animate__wobble',
-                        value: 'animate__wobble',
-                      },
-                      {
-                        label: 'animate__pulse',
-                        value: 'animate__pulse',
-                      },
-                      {
-                        label: 'animate__backInDown',
-                        value: 'animate__backInDown',
-                      },
-                      {
-                        label: 'animate__backInRight',
-                        value: 'animate__backInRight',
-                      },
-                      {
-                        label: 'animate__bounceIn',
-                        value: 'animate__bounceIn',
-                      },
-                      {
-                        label: 'animate__fadeInDown',
-                        value: 'animate__fadeInDown',
-                      },
-                    ]}
-                  ></Select>
+                      'animate__bounce',
+                      'animate__flash',
+                      'animate__rubberBand',
+                      'animate__heartBeat',
+                      'animate__wobble',
+                      'animate__pulse',
+                      'animate__backInDown',
+                      'animate__backInRight',
+                      'animate__bounceIn',
+                      'animate__fadeInDown',
+                    ].map((item) => ({ label: item, value: item }))}
+                  />
                 </FullForm>
               </Item>
               <Item label="速度">
