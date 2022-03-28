@@ -40,6 +40,7 @@ const AxisConfig = (props: {
           type="yAxis"
           value={yAxis}
           onChange={onKeyChange.bind(null, 'yAxis')}
+          ignore={[]}
         />
       </Tabs.TabPane>
     </Tabs>

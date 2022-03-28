@@ -1,4 +1,4 @@
-import { omit } from 'lodash';
+import { omit, merge } from 'lodash';
 import { mergeWithoutArray } from '@/utils';
 import {
   BASIC_DEFAULT_CONFIG,
@@ -102,7 +102,20 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TLineBasicConfig> =
     options: {
       legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
       xAxis: DEFAULT_X_AXIS_CONFIG,
-      yAxis: DEFAULT_Y_AXIS_CONFIG,
+      yAxis: merge({}, DEFAULT_Y_AXIS_CONFIG, {
+        splitLine: {
+          show: true,
+          lineStyle: {
+            width: 1,
+            type: 'solid' as any,
+            color: {
+              r: 204,
+              g: 204,
+              b: 204,
+            },
+          },
+        },
+      }),
       tooltip: DEFAULT_TOOLTIP_CONFIG,
       animation: {
         ...DEFAULT_ANIMATION_CONFIG,

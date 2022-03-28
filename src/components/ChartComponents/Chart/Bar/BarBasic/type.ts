@@ -1,7 +1,12 @@
 export type TBarBasicConfig = {
   legend: Omit<ComponentData.ComponentLegend, 'type'>;
   xAxis: ComponentData.ComponentXAxis;
-  yAxis: ComponentData.ComponentYAxis;
+  yAxis: ComponentData.ComponentYAxis & {
+    splitLine: {
+      show: boolean;
+      lineStyle: ComponentData.ComponentLineGroupConfig;
+    };
+  };
   tooltip: ComponentData.ComponentTooltip;
   series: {
     showBackground: boolean;

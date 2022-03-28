@@ -95,14 +95,26 @@ const Header = (props: {
         }),
       };
       const method = _id ? putScreen : postScreen;
-      await method(params as any);
+      const result = await method(params as any);
       message.success('保存成功');
+      setScreen?.({
+        _id: result as string,
+      });
     } catch (err) {
       message.info('保存失败，请重试');
     } finally {
       setFetchLoading(false);
     }
-  }, [components, description, fetchLoading, _id, name, poster, screenData]);
+  }, [
+    components,
+    description,
+    fetchLoading,
+    _id,
+    name,
+    poster,
+    screenData,
+    setScreen,
+  ]);
 
   const extra = useMemo(() => {
     const previewButton = (

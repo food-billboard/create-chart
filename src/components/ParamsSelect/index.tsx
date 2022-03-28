@@ -57,7 +57,7 @@ const ParamsSelect = (
 
   return (
     <Select
-      mode="multiple"
+      mode="tags"
       allowClear
       className={classnames('w-100', className)}
       placeholder="选择全局参数"

@@ -1,5 +1,6 @@
 import { ReactNode, useCallback, useMemo } from 'react';
 import { pick } from 'lodash';
+import LineStyleGroupConfig from '../LineStyleGroupConfig';
 import ConfigList from '../Structure/ConfigList';
 import YAxisPosition from './YAxisPosition';
 import XAxisPosition from './XAxisPosition';
@@ -24,8 +25,8 @@ export type AxisConfigProps = {
 };
 
 const AxisConfig = (props: AxisConfigProps) => {
-  const { type, ignore = [], value, onChange, children } = props;
-  const { position, axisLabel, name, nameTextStyle } = value;
+  const { type, ignore = ['splitLine'], value, onChange, children } = props;
+  const { position, axisLabel, name, nameTextStyle, splitLine } = value;
 
   const onKeyChange = useCallback(
     (key: string, value: any) => {
@@ -56,7 +57,11 @@ const AxisConfig = (props: AxisConfigProps) => {
   }, [ignore]);
 
   const needName = useMemo(() => {
-    return ignore.includes('name');
+    return !ignore.includes('name');
+  }, [ignore]);
+
+  const needSplitLine = useMemo(() => {
+    return !ignore.includes('splitLine');
   }, [ignore]);
 
   const positionConfig = useMemo(() => {
@@ -130,6 +135,7 @@ const AxisConfig = (props: AxisConfigProps) => {
   }, [needAxisLabel, axisLabel, onAxisLabelChange, onKeyChange]);
 
   const nameConfig = useMemo(() => {
+    if (!needName) return null;
     return (
       <Collapse
         child={{
@@ -158,11 +164,39 @@ const AxisConfig = (props: AxisConfigProps) => {
     );
   }, [needName, name, nameTextStyle, onKeyChange]);
 
+  const splitLineConfig = useMemo(() => {
+    if (!needSplitLine) return null;
+    return (
+      <LineStyleGroupConfig
+        value={splitLine?.lineStyle!}
+        onChange={(value) => {
+          onKeyChange('splitLine', {
+            lineStyle: value,
+          });
+        }}
+        collapseProps={{
+          child: {
+            header: '分隔线',
+            key: 'splitLine',
+            visibleRender: true,
+            value: splitLine?.show,
+            onChange: (value) => {
+              onKeyChange('splitLine', {
+                show: value,
+              });
+            },
+          },
+        }}
+      />
+    );
+  }, [splitLine, needSplitLine, onKeyChange]);
+
   return (
     <ConfigList>
       {positionConfig}
       {axisLabelConfig}
       {nameConfig}
+      {splitLineConfig}
       {children}
     </ConfigList>
   );

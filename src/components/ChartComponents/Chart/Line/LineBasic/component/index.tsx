@@ -166,6 +166,7 @@ const LineBasic = (props: {
     const {
       axisLabel: yAxisLabel,
       nameTextStyle: yNameTextStyle,
+      splitLine,
       ...nextYAxis
     } = yAxis;
     const series = getSeries();
@@ -205,7 +206,11 @@ const LineBasic = (props: {
           {
             ...nextYAxis,
             splitLine: {
-              show: false,
+              ...splitLine,
+              lineStyle: {
+                ...splitLine.lineStyle,
+                color: getRgbaString(splitLine.lineStyle.color),
+              },
             },
             axisLabel: {
               ...yAxisLabel,
