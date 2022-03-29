@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { Button, Drawer, Table, Modal } from 'antd';
 import { connect } from 'dva';
+import { nanoid } from 'nanoid';
 import CodeViewer from '@/components/CodeView';
 import ParamsSelect from '@/components/ParamsSelect';
 import FocusWrapper from '@/components/FocusWrapper';
@@ -57,6 +58,20 @@ const CallbackList = (props: {
     setVisible(true);
   }, []);
 
+  const copyData = useCallback(
+    (value: ComponentData.TFilterConfig) => {
+      setCallbackData?.([
+        ...callback,
+        {
+          ...value,
+          id: nanoid(),
+          editable: false,
+        },
+      ]);
+    },
+    [setCallbackData, callback],
+  );
+
   const columns = useMemo(() => {
     return [
       {
@@ -85,7 +100,7 @@ const CallbackList = (props: {
         title: '关联参数',
         key: 'params',
         dataIndex: 'params',
-        width: 100,
+        width: 150,
         render: (value: string[], record: ComponentData.TFilterConfig) => {
           return (
             <ParamsSelect
@@ -101,14 +116,27 @@ const CallbackList = (props: {
         dataIndex: 'op',
         render: (_: any, record: ComponentData.TFilterConfig) => {
           return (
-            <Button type="link" onClick={deleteData.bind(null, record)}>
-              删除
-            </Button>
+            <>
+              <Button
+                key="delete"
+                type="link"
+                onClick={deleteData.bind(null, record)}
+              >
+                删除
+              </Button>
+              <Button
+                key="copy"
+                type="link"
+                onClick={copyData.bind(null, record)}
+              >
+                复制
+              </Button>
+            </>
           );
         },
       },
     ];
-  }, [updateCallback, deleteData]);
+  }, [updateCallback, deleteData, copyData]);
 
   return (
     <FocusWrapper>
@@ -181,6 +209,7 @@ const CallbackManage = forwardRef<CallbackManageRef, CallbackManageProps>(
         footer={footer}
         title="回调管理"
         placement="left"
+        width={520}
       >
         <WrapperCallbackList />
       </Drawer>

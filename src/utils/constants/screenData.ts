@@ -1,3 +1,49 @@
+import { nanoid } from 'nanoid';
+
+export const DEFAULT_FILTER_LIST: ComponentData.TFilterConfig[] = [
+  {
+    id: nanoid(),
+    name: '取前几项',
+    code: `
+      // 起始的索引
+      const start = 0 
+      // 结束的索引
+      const end = 10
+      return data.slice(start, end)
+    `,
+    editable: false,
+    params: [],
+  },
+  {
+    id: nanoid(),
+    name: '排序(小 -> 大)',
+    code: `
+      // 排序的字段
+      const sortKey = 'x'
+
+      return data.sort((a, b) => {
+        return a[sortKey] - b[sortKey]
+      })
+    `,
+    editable: false,
+    params: [],
+  },
+  {
+    id: nanoid(),
+    name: '排序(大 -> 小)',
+    code: `
+      // 排序的字段
+      const sortKey = 'x'
+
+      return data.sort((a, b) => {
+        return b[sortKey] - a[sortKey]
+      })
+    `,
+    editable: false,
+    params: [],
+  },
+];
+
 const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
   name: '大屏名称',
   description: '',
@@ -17,7 +63,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           b: 36,
         },
       },
-      filter: [],
+      filter: DEFAULT_FILTER_LIST,
       params: [],
       constants: [],
     },
