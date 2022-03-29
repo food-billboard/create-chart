@@ -1,4 +1,4 @@
-import { Component, useMemo, useCallback } from 'react';
+import { Component, useMemo, useCallback, useState } from 'react';
 import { Tree as AntTree } from 'antd';
 import { connect } from 'dva';
 import type { DataNode } from 'antd/es/tree';
@@ -11,6 +11,7 @@ import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 export type TreeProps = {
+  iconMode: boolean;
   components: ComponentData.TComponentData[];
   select: string[];
   setSelect: (value: string[]) => void;
@@ -78,6 +79,8 @@ class TreeClass extends Component<TreeProps> {
               update={() => this.forceUpdate()}
               isLeaf={isLeaf}
               disabled={disabled}
+              isExpend
+              iconMode
             />
           ),
           key: id,
@@ -189,7 +192,9 @@ class TreeClass extends Component<TreeProps> {
 }
 
 const TreeFunction = (props: TreeProps) => {
-  const { components, setSelect, setComponentAll, select } = props;
+  const { components, setSelect, setComponentAll, select, iconMode } = props;
+
+  const [expendKeys, setExpendKeys] = useState<string[]>([]);
 
   const forceUpdate = useUpdate();
 
@@ -236,6 +241,10 @@ const TreeFunction = (props: TreeProps) => {
     [setSelect],
   );
 
+  const onExpend = useCallback((keys) => {
+    setExpendKeys(keys);
+  }, []);
+
   const getTreeData: (
     components: ComponentData.TComponentData[],
   ) => DataNode[] = useCallback(
@@ -246,6 +255,7 @@ const TreeFunction = (props: TreeProps) => {
           const { path, ...nextEntry } = entry;
           const { id, type, components } = nextEntry;
           const isLeaf = type === EComponentType.COMPONENT;
+          const isExpend = !isLeaf && expendKeys.includes(id);
 
           return {
             title: (
@@ -255,6 +265,8 @@ const TreeFunction = (props: TreeProps) => {
                 update={forceUpdate}
                 isLeaf={isLeaf}
                 disabled={disabled}
+                isExpend={isExpend}
+                iconMode={iconMode}
               />
             ),
             key: id,
@@ -268,7 +280,7 @@ const TreeFunction = (props: TreeProps) => {
         true,
       );
     },
-    [forceUpdate],
+    [forceUpdate, expendKeys, iconMode],
   );
 
   const onDrop = useCallback(
@@ -350,7 +362,7 @@ const TreeFunction = (props: TreeProps) => {
 
   const treeData = useMemo(() => {
     return getTreeData(components);
-  }, [components]);
+  }, [components, expendKeys, iconMode]);
 
   return (
     <AntTree.DirectoryTree
@@ -366,6 +378,7 @@ const TreeFunction = (props: TreeProps) => {
       expandAction={false}
       defaultExpandedKeys={[]}
       className={styles['layer-manage-content']}
+      onExpand={onExpend}
     />
   );
 };

@@ -1,7 +1,8 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useMemo } from 'react';
 import { Space } from 'antd';
 import { connect } from 'dva';
 import classnames from 'classnames';
+import { FolderOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import ContextMenu from '@/components/ContextMenu';
 import { ActionItemType } from '@/components/ContextMenu/action.map';
 import VisibleEditor from './Visible';
@@ -17,6 +18,8 @@ const ListItem = ({
   update,
   isLeaf,
   disabled,
+  isExpend,
+  iconMode,
 }: {
   value: ComponentData.TComponentData;
   setComponent?: ComponentMethod.SetComponentMethod;
@@ -24,6 +27,8 @@ const ListItem = ({
   update?: () => void;
   isLeaf: boolean;
   disabled?: boolean;
+  isExpend: boolean;
+  iconMode: boolean;
 }) => {
   const {
     id,
@@ -31,6 +36,7 @@ const ListItem = ({
       attr: { visible, lock },
     },
     icon,
+    parent,
   } = value;
 
   const editRef = useRef<NameEditorRefProps>(null);
@@ -70,6 +76,26 @@ const ListItem = ({
     [disabled],
   );
 
+  const treeNodeIcon = useMemo(() => {
+    if (!iconMode) return null;
+    if (isLeaf) {
+      return (
+        <div
+          className={classnames(styles['design-page-layer-item-icon'], 'm-r-8')}
+        >
+          <img src={icon} />
+        </div>
+      );
+    }
+    return (
+      <div
+        className={classnames(styles['design-page-layer-item-icon'], 'm-r-8')}
+      >
+        {isExpend ? <FolderOpenOutlined /> : <FolderOutlined />}
+      </div>
+    );
+  }, [isLeaf, icon, isExpend, iconMode]);
+
   return (
     <ContextMenu
       actionIgnore={['undo', 'redo']}
@@ -80,6 +106,10 @@ const ListItem = ({
       <div
         className={classnames(
           styles['design-page-layer-item'],
+          {
+            [styles['design-page-layer-item-mode-icon']]: iconMode,
+            [styles['design-page-layer-item-mode-list']]: !iconMode,
+          },
           'dis-flex',
           'p-lr-4',
           {
@@ -88,16 +118,7 @@ const ListItem = ({
         )}
         onClick={handleSelect}
       >
-        {isLeaf && (
-          <div
-            className={classnames(
-              styles['design-page-layer-item-icon'],
-              'm-r-8',
-            )}
-          >
-            <img src={icon} />
-          </div>
-        )}
+        {treeNodeIcon}
         <div className={classnames(styles['design-page-layer-item-name'])}>
           <NameEditor
             value={value}
@@ -118,7 +139,11 @@ const ListItem = ({
               visible={visible}
               onChange={commonSetComponent}
             />
-            <LockEditor lock={lock} onChange={commonSetComponent} />
+            <LockEditor
+              disabled={!!parent}
+              lock={lock}
+              onChange={commonSetComponent}
+            />
           </Space>
         </div>
       </div>

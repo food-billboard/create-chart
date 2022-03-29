@@ -1,10 +1,4 @@
-import {
-  useState,
-  forwardRef,
-  useCallback,
-  useMemo,
-  useImperativeHandle,
-} from 'react';
+import { useState, forwardRef, useCallback, useImperativeHandle } from 'react';
 import classnames from 'classnames';
 import { Button } from 'antd';
 import FocusWrapper from '@/components/FocusWrapper';
@@ -27,6 +21,7 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
     const { onClose: propsOnClose } = props;
 
     const [visible, setVisible] = useState<boolean>(false);
+    const [iconMode, setIconMode] = useState<boolean>(true);
 
     const onClose = useCallback(() => {
       setVisible(false);
@@ -36,14 +31,6 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
     const open = useCallback(() => {
       setVisible(true);
     }, []);
-
-    const footer = useMemo(() => {
-      return (
-        <div className="ali-r">
-          <Button onClick={onClose}>关闭</Button>
-        </div>
-      );
-    }, [onClose]);
 
     useImperativeHandle(
       ref,
@@ -67,26 +54,17 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
         }}
       >
         <div className={styles['design-layer-manage-content']}>
-          <Header onBack={onClose} />
-          <LayerList />
+          <Header
+            onBack={onClose}
+            iconMode={iconMode}
+            onIconModeChange={(value) => {
+              setIconMode(value);
+            }}
+          />
+          <LayerList iconMode={iconMode} />
         </div>
       </FocusWrapper>
     );
-
-    // return (
-    //   <Drawer
-    //     mask={false}
-    //     visible={visible}
-    //     maskClosable={false}
-    //     onClose={onClose}
-    //     footer={footer}
-    //     title="图层"
-    //     placement="left"
-    //     className="design-layer-drawer"
-    //   >
-    //     <LayerList />
-    //   </Drawer>
-    // );
   },
 );
 

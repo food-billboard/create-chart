@@ -1,4 +1,18 @@
 .layer-manage-content {
+  div[class^='design-page-layer-item-mode-icon'] {
+    :global {
+      .ant-tree-switcher {
+        line-height: 48px;
+      }
+    }
+  }
+  div[class^='design-page-layer-item-mode-list'] {
+    :global {
+      .ant-tree-switcher {
+        line-height: 28px;
+      }
+    }
+  }
   :global {
     .ant-tree-treenode {
       overflow: hidden;
@@ -6,9 +20,6 @@
     .ant-tree-node-content-wrapper {
       overflow: hidden;
       padding: 0;
-    }
-    .ant-tree-switcher {
-      line-height: 48px;
     }
   }
 }
