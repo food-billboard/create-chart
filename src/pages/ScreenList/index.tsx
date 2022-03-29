@@ -8,8 +8,8 @@ import {
   Button,
   Empty,
 } from 'antd';
+import { useUpdateEffect } from 'ahooks';
 import classnames from 'classnames';
-import { history } from 'umi';
 import { getScreenList } from '@/services';
 import { goDesign } from '@/utils/tool';
 import Avatar from './components/Avatar';
@@ -40,12 +40,12 @@ function ScreenList() {
     if (fetchLoading.current) return;
     fetchLoading.current = true;
 
-    const { currPage, content } = params;
+    const { currPage: paramsCurrentPage, content: paramsContent } = params;
 
     try {
       const res = await getScreenList({
-        currPage: (currPage || 1) - 1,
-        content,
+        currPage: ((paramsCurrentPage ?? currPage) || 1) - 1,
+        content: paramsContent ?? searchData,
       });
       const { total, list } = res.data.res;
       setTotal(total);
@@ -71,6 +71,19 @@ function ScreenList() {
       currPage,
     });
   }, [currPage]);
+
+  useEffect(() => {
+    const event = (e: any) => {
+      const isHidden = e.target.webkitHidden;
+      if (!isHidden) {
+        fetchData({});
+      }
+    };
+    document.addEventListener('visibilitychange', event);
+    return () => {
+      document.removeEventListener('visibilitychange', event);
+    };
+  }, []);
 
   return (
     <Layout className={styles['screen-page']}>
