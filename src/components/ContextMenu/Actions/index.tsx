@@ -12,3 +12,4 @@ export { default as PasteAction } from './Paste';
 export { default as EditNameAction } from './EditName';
 export { default as NextOrderAction } from './NextOrder';
 export { default as PrevOrderAction } from './PrevOrder';
+export { default as RecoverDefaultAction } from './RecoverDefault';

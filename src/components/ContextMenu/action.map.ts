@@ -13,6 +13,7 @@ import {
   EditNameAction,
   NextOrderAction,
   PrevOrderAction,
+  RecoverDefaultAction,
 } from './Actions';
 
 export type ActionItemType =
@@ -29,7 +30,8 @@ export type ActionItemType =
   | 'lock'
   | 'edit_name'
   | 'next_order'
-  | 'prev_order';
+  | 'prev_order'
+  | 'recover_default';
 
 export type ActionItem = {
   type: ActionItemType;
@@ -92,6 +94,10 @@ export const DEFAULT_ACTION_LIST: ActionItem[] = [
   {
     type: 'edit_name',
     children: EditNameAction,
+  },
+  {
+    type: 'recover_default',
+    children: RecoverDefaultAction,
   },
 ];
 
