@@ -19,7 +19,6 @@ const LoginWrapper = (props: {
   } = props;
 
   const [fetchLoading, setFetchLoading] = useState<boolean>(true);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   const fetchUserInfo = async () => {
     setFetchLoading(true);
@@ -34,20 +33,7 @@ const LoginWrapper = (props: {
 
   useEffect(() => {
     fetchUserInfo();
-    setIsMobile(isMobileJudge());
   }, [pathname]);
-
-  if (isMobile)
-    return (
-      <Empty
-        description="请在电脑端使用"
-        style={{
-          position: 'relative',
-          top: '50%',
-          transform: 'translateY(-50%)',
-        }}
-      />
-    );
 
   if (fetchLoading) return <Loading />;
 
@@ -69,6 +55,22 @@ const GlobalLayout = (props: any) => {
     children,
     location: { pathname },
   } = props;
+
+  const isMobile = useMemo(() => {
+    return isMobileJudge();
+  }, [pathname]);
+
+  if (isMobile)
+    return (
+      <Empty
+        description="请在电脑端使用"
+        style={{
+          position: 'relative',
+          top: '50%',
+          transform: 'translateY(-50%)',
+        }}
+      />
+    );
 
   // 分享页不用管登录
   if (pathname === '/share') return children;
