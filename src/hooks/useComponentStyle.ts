@@ -1,5 +1,9 @@
 import { CSSProperties, useMemo } from 'react';
 import { merge } from 'lodash';
+import ThemeUtil from '@/utils/Assist/Theme';
+import ColorSelect from '@/components/ColorSelect';
+
+const { getRgbaString } = ColorSelect;
 
 export const useComponentStyle: (
   value: ComponentData.TComponentData,
@@ -37,6 +41,9 @@ export const useComponentStyle: (
         borderWidth: (1 / scale) * 100,
         zIndex: isSelect ? 4 : zIndex,
         pointerEvents: lock ? 'none' : 'unset',
+        borderColor: isSelect
+          ? getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0))
+          : 'transparent',
       },
       style,
     );

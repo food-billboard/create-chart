@@ -5,9 +5,13 @@ import arrayMove from 'array-move';
 import { useComponentPath, useIdPathMap } from '@/hooks';
 import { IGlobalModelState } from '@/models/connect';
 import { getComponentDefaultConfigByType } from '@/components/ChartComponents';
+import ColorSelect from '@/components/ColorSelect';
 import { mergeWithoutArray } from '../../tool';
 import { EComponentType, EComponentSelfType } from '../../index';
 import { DEFAULT_CONFIG } from '../../constants/screenData';
+import ThemeUtil from '../Theme';
+
+const { getRgbaString } = ColorSelect;
 
 // 组件数据修改操作
 class ComponentUtil {
@@ -356,6 +360,7 @@ export const getComponentStyleInScreenType: (
   }
   return {
     pointerEvents: 'none',
+    borderColor: getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0)),
   };
 };
 
