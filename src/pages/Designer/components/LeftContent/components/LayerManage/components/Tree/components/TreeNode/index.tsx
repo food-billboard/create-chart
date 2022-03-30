@@ -20,6 +20,7 @@ const ListItem = ({
   disabled,
   isExpend,
   iconMode,
+  isSelect,
 }: {
   value: ComponentData.TComponentData;
   setComponent?: ComponentMethod.SetComponentMethod;
@@ -29,6 +30,7 @@ const ListItem = ({
   disabled?: boolean;
   isExpend: boolean;
   iconMode: boolean;
+  isSelect: boolean;
 }) => {
   const {
     id,
@@ -109,12 +111,12 @@ const ListItem = ({
           {
             [styles['design-page-layer-item-mode-icon']]: iconMode,
             [styles['design-page-layer-item-mode-list']]: !iconMode,
+            [styles['design-page-layer-item-disabled']]: !!disabled,
+            [styles['design-page-layer-item-lock']]: !!lock,
+            [styles['design-page-layer-item-select']]: !!isSelect,
           },
           'dis-flex',
           'p-lr-4',
-          {
-            [styles['design-page-layer-item-disabled']]: !!disabled,
-          },
         )}
         onClick={handleSelect}
       >

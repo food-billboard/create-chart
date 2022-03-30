@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import { connect } from 'dva';
 import IconTooltip from '@/components/IconTooltip';
-import { getComponent, isComponentDisabled } from '@/utils/Assist/Component';
+import { getComponent } from '@/utils/Assist/Component';
 import ConfigComponent from './ConfigComponent';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';
@@ -42,15 +42,8 @@ const ComponentConfig = (props: {
     return component?.name;
   }, [component]);
 
-  const disabled = isComponentDisabled(id);
-
   return (
-    <div
-      className={styles['design-config-component']}
-      style={{
-        pointerEvents: disabled ? 'none' : 'unset',
-      }}
-    >
+    <div className={styles['design-config-component']}>
       <ConfigWrapper
         hasBack={hasBack}
         onBack={onBack}

@@ -5,6 +5,7 @@ let ID_PATH_MAP: {
     id: string;
     path: string;
     disabled?: boolean;
+    lock?: boolean;
   };
 } = {};
 
@@ -52,13 +53,14 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
         ? `${path}.${index.toString()}`
         : index.toString();
 
-      const curComponentDisabled = disabled || !!cur.config.attr.lock;
+      const curComponentDisabled = disabled; // * 这里不需要再去判断lock || !!cur.config.attr.lock;
 
       // id path map
       componentPathMap[cur.id] = {
         id: cur.id,
         path: currentPath,
         disabled: curComponentDisabled,
+        lock: !!cur.config.attr.lock,
       };
 
       if (customReturn) {

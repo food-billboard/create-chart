@@ -1,10 +1,17 @@
+@disable-opacity: 0.4;
+@lock-opacity: 0.5;
+@default-opacity: 0.8;
+
 .design-page-layer-item {
   width: 100%;
   justify-content: space-between;
   align-items: center;
   z-index: 9999;
-  opacity: 1;
   visibility: visible;
+  opacity: @default-opacity;
+  &:hover {
+    opacity: 1;
+  }
   &-name {
     flex: 1;
     text-align: left;
@@ -51,7 +58,14 @@
   }
 }
 .design-page-layer-item-disabled {
+  opacity: @disable-opacity;
   & * {
     cursor: default;
   }
+}
+.design-page-layer-item-lock {
+  opacity: @lock-opacity;
+}
+.design-page-layer-item-select {
+  opacity: 1;
 }

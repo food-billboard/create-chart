@@ -81,6 +81,7 @@ class TreeClass extends Component<TreeProps> {
               disabled={disabled}
               isExpend
               iconMode
+              isSelect
             />
           ),
           key: id,
@@ -256,6 +257,7 @@ const TreeFunction = (props: TreeProps) => {
           const { id, type, components } = nextEntry;
           const isLeaf = type === EComponentType.COMPONENT;
           const isExpend = !isLeaf && expendKeys.includes(id);
+          const isSelect = select.includes(id);
 
           return {
             title: (
@@ -267,6 +269,7 @@ const TreeFunction = (props: TreeProps) => {
                 disabled={disabled}
                 isExpend={isExpend}
                 iconMode={iconMode}
+                isSelect={isSelect}
               />
             ),
             key: id,
@@ -280,7 +283,7 @@ const TreeFunction = (props: TreeProps) => {
         true,
       );
     },
-    [forceUpdate, expendKeys, iconMode],
+    [forceUpdate, expendKeys, iconMode, select],
   );
 
   const onDrop = useCallback(
@@ -362,7 +365,7 @@ const TreeFunction = (props: TreeProps) => {
 
   const treeData = useMemo(() => {
     return getTreeData(components);
-  }, [components, expendKeys, iconMode]);
+  }, [components, expendKeys, iconMode, select]);
 
   return (
     <AntTree.DirectoryTree
