@@ -1,45 +1,17 @@
 import { useEffect, useState, useCallback, ReactNode, useMemo } from 'react';
-import { Button } from 'antd';
 import { connect } from 'dva';
-import { useScroll } from 'ahooks';
 import classnames from 'classnames';
-import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { BackgroundConfigRender } from '@/components/DesignerBackground';
 import { mergeWithoutArray, sleep } from '@/utils/tool';
 import ClipboardComponent from '../Clipboard';
 import AbsorbGuideLine from './components/AbsorbGuideLine';
 import Ruler from './components/Ruler';
+import GuideLineButton from './components/GuideLineButton';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import { wrapperId, subWrapperId } from './constants';
 import styles from './index.less';
 
 const RIGHT_BOTTOM_PADDING = 200;
-
-const GuideLineButton = (props: { show: boolean; onClick?: any }) => {
-  const { show, onClick } = props;
-
-  const { left, top } = useScroll(document.querySelector(`#${wrapperId}`)) || {
-    left: 0,
-    top: 0,
-  };
-
-  const guideLineShowIcon = useMemo(() => {
-    return show ? <EyeOutlined /> : <EyeInvisibleOutlined />;
-  }, [show]);
-
-  return (
-    <Button
-      onClick={onClick}
-      type="link"
-      className={classnames('pos-ab', styles['designer-page-main-guide-btn'])}
-      style={{
-        left,
-        top,
-      }}
-      icon={guideLineShowIcon}
-    ></Button>
-  );
-};
 
 const PanelWrapper = (props: {
   scale: number;
@@ -48,7 +20,7 @@ const PanelWrapper = (props: {
   children: ReactNode;
   guideLineList?: ComponentData.TGuideLineConfigItem[];
   guideLineShow?: boolean;
-  setGuideLine?: (value: ComponentData.TGuideLineConfig) => void;
+  setGuideLine: (value: ComponentData.TGuideLineConfig) => void;
 }) => {
   const {
     scale: originScale,
@@ -126,7 +98,8 @@ const PanelWrapper = (props: {
           <GuideLineButton
             onClick={wrapperSetGuideLine.bind(null, { show: !guideLineShow })}
             show={!!guideLineShow}
-          ></GuideLineButton>
+            setGuideLine={setGuideLine}
+          />
 
           <AbsorbGuideLine size={size} />
           <ClipboardComponent>{children}</ClipboardComponent>
