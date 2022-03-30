@@ -75,13 +75,21 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
     );
   }, [options, disabled, scrollDisabled]);
 
+  // * 调两次因为有时候不生效
+  const multiFormat = (editor?: any) => {
+    formatData(editor);
+    sleep(100).then((_) => {
+      formatData(editor);
+    });
+  };
+
   const formatIfNeed = useCallback(
     (editor: any, type: 'mount' | 'blur') => {
       const needUpdate = autoFormat === true || !!(autoFormat as any)?.[type];
 
       if (needUpdate) {
         sleep(200).then((_) => {
-          formatData(editor);
+          multiFormat(editor);
         });
       }
     },
@@ -130,11 +138,11 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
     ref,
     () => {
       return {
-        format: formatData,
+        format: multiFormat,
         setValue,
       };
     },
-    [editorRef, formatData],
+    [editorRef],
   );
 
   return (
