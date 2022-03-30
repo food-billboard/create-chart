@@ -28,6 +28,7 @@ export type RenderComponentProps = {
   path?: string;
   screenType: ComponentData.ScreenType;
   timestamps?: number;
+  hoverSelect: string;
 };
 
 const OnlyClickDiv = (props: {
@@ -78,6 +79,7 @@ const RenderComponent = memo(
       path,
       screenType,
       timestamps,
+      hoverSelect,
     } = props;
 
     const {
@@ -88,7 +90,10 @@ const RenderComponent = memo(
       },
     } = value;
 
-    const isSelect = useIsComponentChildrenSelect([value], select);
+    const isSelect = useIsComponentChildrenSelect(
+      [value],
+      [...select, hoverSelect],
+    );
 
     // 是否响应鼠标事件
     const pointerDisabled = useMemo(() => {

@@ -17,6 +17,7 @@ interface IGlobalModelState {
   components: ComponentData.TScreenData['components'];
   guideLine: ComponentData.TGuideLineConfig;
   select: string[];
+  hoverSelect: string;
   componentSelect: ComponentData.TComponentData<any> | null;
   history: TUndoHistory;
   theme: ThemeMap;

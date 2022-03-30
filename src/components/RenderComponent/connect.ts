@@ -3,6 +3,7 @@ import { ConnectState } from '@/models/connect';
 export const mapStateToProps = (state: ConnectState) => {
   return {
     select: state.global.select || [],
+    hoverSelect: state.global.hoverSelect || '',
     scale: state.global.scale,
     screenType: state.global.screenType,
   };

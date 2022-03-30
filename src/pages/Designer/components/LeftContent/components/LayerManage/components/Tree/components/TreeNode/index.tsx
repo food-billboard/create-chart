@@ -1,8 +1,9 @@
-import { useCallback, useRef, useMemo } from 'react';
+import { useCallback, useRef, useMemo, useEffect } from 'react';
 import { Space } from 'antd';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import { FolderOutlined, FolderOpenOutlined } from '@ant-design/icons';
+import { useHover } from 'ahooks';
 import ContextMenu from '@/components/ContextMenu';
 import { ActionItemType } from '@/components/ContextMenu/action.map';
 import VisibleEditor from './Visible';
@@ -21,9 +22,11 @@ const ListItem = ({
   isExpend,
   iconMode,
   isSelect,
+  setHoverSelect,
 }: {
   value: ComponentData.TComponentData;
   setComponent?: ComponentMethod.SetComponentMethod;
+  setHoverSelect: (value: string) => void;
   path: string;
   update?: () => void;
   isLeaf: boolean;
@@ -42,6 +45,9 @@ const ListItem = ({
   } = value;
 
   const editRef = useRef<NameEditorRefProps>(null);
+  const listItemRef = useRef<any>();
+
+  const isHover = useHover(listItemRef);
 
   const setComponent = useCallback(
     (value: ComponentMethod.SetComponentMethodParamsData) => {
@@ -98,6 +104,14 @@ const ListItem = ({
     );
   }, [isLeaf, icon, isExpend, iconMode]);
 
+  useEffect(() => {
+    if (isHover) {
+      setHoverSelect(id);
+    } else {
+      setHoverSelect('');
+    }
+  }, [isHover, id, setHoverSelect]);
+
   return (
     <ContextMenu
       actionIgnore={['undo', 'redo']}
@@ -119,6 +133,7 @@ const ListItem = ({
           'p-lr-4',
         )}
         onClick={handleSelect}
+        ref={listItemRef}
       >
         {treeNodeIcon}
         <div className={classnames(styles['design-page-layer-item-name'])}>

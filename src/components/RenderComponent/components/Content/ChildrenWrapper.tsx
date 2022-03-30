@@ -11,12 +11,23 @@ const ChildrenWrapper = (props: {
   children?: ReactNode;
   value: ComponentData.TComponentData;
   select: string[];
+  hoverSelect: string;
   borderNone?: boolean;
   screenType: ComponentData.ScreenType;
 }) => {
-  const { value, select, children, borderNone = false, screenType } = props;
+  const {
+    value,
+    select,
+    children,
+    borderNone = false,
+    screenType,
+    hoverSelect,
+  } = props;
 
-  const isSelect = useIsComponentChildrenSelect([value], select);
+  const isSelect = useIsComponentChildrenSelect(
+    [value],
+    [...select, hoverSelect],
+  );
 
   const componentScreenTypeStyle = useMemo(() => {
     return getComponentStyleInScreenType(screenType);
