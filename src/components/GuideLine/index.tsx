@@ -17,6 +17,7 @@ class GuideLine extends Component<
     onMouseMove?: () => void;
     onDoubleClick?: () => void;
     lineStyle?: 'dashed' | 'solid';
+    scale: number;
   } & ComponentData.TGuideLineConfigItem
 > {
   flag = false;
@@ -42,8 +43,16 @@ class GuideLine extends Component<
   };
 
   onMouseMove = (e: any) => {
-    const { disabled, style, onChange, type, id, lineStyle, onMouseMove } =
-      this.props;
+    const {
+      disabled,
+      style,
+      onChange,
+      type,
+      id,
+      lineStyle,
+      onMouseMove,
+      scale,
+    } = this.props;
     if (!this.flag || disabled) return;
     if (this.times <= 5) {
       this.times++;
@@ -55,10 +64,12 @@ class GuideLine extends Component<
       let changeStyle: Partial<ComponentData.TGuideLineConfigItem['style']> =
         {};
       if (type === 'horizontal') {
-        changeStyle.top = top + evt.clientY - this.startY;
+        const moveDistance = evt.clientY - this.startY;
+        changeStyle.top = top + moveDistance / scale;
         this.startY = evt.clientY;
       } else {
-        changeStyle.left = left + evt.clientX - this.startX;
+        const moveDistance = evt.clientX - this.startX;
+        changeStyle.left = left + moveDistance / scale;
         this.startX = evt.clientX;
       }
       const newItem: ComponentData.TGuideLineConfigItem = {
@@ -87,8 +98,22 @@ class GuideLine extends Component<
     this.props.onDoubleClick?.();
   };
 
+  get guideLineStyle() {
+    const { style, type, scale } = this.props;
+    if (type === 'vertical') {
+      return {
+        ...style,
+        left: style?.left * scale || 0,
+      };
+    }
+    return {
+      ...style,
+      top: style?.top * scale || 0,
+    };
+  }
+
   render() {
-    const { style = {}, type, lineStyle = 'dashed', className } = this.props;
+    const { type, lineStyle = 'dashed', className } = this.props;
 
     return (
       <div
@@ -96,7 +121,7 @@ class GuideLine extends Component<
           styles[`ruler-guide-line-wrapper-${type}`],
           className,
         )}
-        style={style}
+        style={this.guideLineStyle}
         onMouseDown={this.onMouseDown}
         onDoubleClick={this.onDoubleClick}
       >

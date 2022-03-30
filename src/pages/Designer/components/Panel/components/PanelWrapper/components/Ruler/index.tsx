@@ -98,8 +98,10 @@ const Ruler = (props: {
       const { x, y } = scroll;
       if (direction === 'vertical') {
         positionStyle.left = clientX - left + scrollLeft - x;
+        positionStyle.left = positionStyle.left / scale;
       } else {
         positionStyle.top = clientY - top + scrollTop - y;
+        positionStyle.top = positionStyle.top / scale;
       }
       const newItem: ComponentData.TGuideLineConfigItem = {
         type: direction,
@@ -124,6 +126,7 @@ const Ruler = (props: {
       wrapperSetGuideLine,
       getSubWrapperStyle,
       getWrapperScroll,
+      scale,
     ],
   );
 
@@ -235,10 +238,11 @@ const Ruler = (props: {
           onDoubleClick={deleteGuideLine.bind(this, index)}
           onMouseMove={onMouseMove.bind(null, item, index)}
           key={item.id}
+          scale={scale}
         />
       );
     },
-    [onMoveEnd, onGuidelinePositionChange],
+    [onMoveEnd, onGuidelinePositionChange, scale],
   );
 
   const guideLineListDoms = useMemo(() => {
