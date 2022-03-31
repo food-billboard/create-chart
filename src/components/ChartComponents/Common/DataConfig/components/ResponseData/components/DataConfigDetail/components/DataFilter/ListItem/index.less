@@ -52,6 +52,20 @@
         width: 150px;
       }
     }
+    &-action-right {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+      &-info {
+        margin-left: 1em;
+        & > span {
+          color: @primary-color;
+          padding: 0.1em;
+          font-weight: bold;
+        }
+      }
+    }
     :global {
       .ant-checkbox-wrapper {
         margin-right: 4px;

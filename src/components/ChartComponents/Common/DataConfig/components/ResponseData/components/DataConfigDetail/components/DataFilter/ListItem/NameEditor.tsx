@@ -60,17 +60,18 @@ const NameEditor = (props: {
           <div className="text-ellipsis" title={inputValue}>
             {inputValue}
           </div>
-          {isHover && (
-            <Button
-              className="h-a"
-              type="link"
-              icon={<EditFilled />}
-              onClick={(e) => {
-                stop(e);
-                setEditable(true);
-              }}
-            ></Button>
-          )}
+          <Button
+            className="h-a"
+            type="link"
+            style={{
+              visibility: isHover ? 'visible' : 'hidden',
+            }}
+            icon={<EditFilled />}
+            onClick={(e) => {
+              stop(e);
+              setEditable(true);
+            }}
+          ></Button>
         </>
       )}
     </div>

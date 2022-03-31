@@ -10,10 +10,11 @@ import {
 } from '@ant-design/icons';
 import { SortableHandle, SortableElement } from 'react-sortable-hoc';
 import CodeEditor from '@/components/CodeEditor';
-import NameEditor from './NameEditor';
 import ParamsSelect from '@/components/ParamsSelect';
-import styles from './index.less';
 import IconTooltip from '@/components/IconTooltip';
+import { ComponentNumber } from '@/pages/Designer/components/LeftContent/components/CallbackManage';
+import NameEditor from './NameEditor';
+import styles from './index.less';
 
 export type TOnChangeType = (
   action: 'delete' | 'update',
@@ -146,16 +147,30 @@ const DataFilter = (props: {
           isHover={isHover}
         />
         <div
-          style={{
-            flex: 1,
-            visibility: isHover ? 'visible' : 'hidden',
-            textAlign: 'right',
-          }}
+          className={
+            styles['design-config-data-filter-list-item-header-action-right']
+          }
         >
+          <div
+            className={
+              styles[
+                'design-config-data-filter-list-item-header-action-right-info'
+              ]
+            }
+          >
+            共有
+            <span>
+              <ComponentNumber id={id} />
+            </span>
+            个组价使用
+          </div>
           <Button
             className="h-a"
             type="link"
             icon={<DeleteOutlined />}
+            style={{
+              visibility: isHover ? 'visible' : 'hidden',
+            }}
             onClick={(e) => {
               stop(e);
               onComponentChange('id', 'delete', null);

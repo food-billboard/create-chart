@@ -5,14 +5,15 @@ import {
   useMemo,
   useImperativeHandle,
 } from 'react';
-import { Button, Drawer, Table, Modal } from 'antd';
+import { Button, Drawer, Table, Modal, Tooltip, Popconfirm, Empty } from 'antd';
 import { connect } from 'dva';
 import { nanoid } from 'nanoid';
+import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import CodeViewer from '@/components/CodeView';
 import ParamsSelect from '@/components/ParamsSelect';
 import FocusWrapper from '@/components/FocusWrapper';
+import { useIdPathMap } from '@/hooks';
 import { mapStateToProps, mapDispatchToProps } from './connect';
-
 export interface CallbackManageRef {
   open: () => void;
 }
@@ -20,6 +21,83 @@ export interface CallbackManageRef {
 export interface CallbackManageProps {
   onClose?: () => void;
 }
+
+const ComponentList = (props: {
+  id: string;
+  setSelect: (value: string[]) => void;
+}) => {
+  const { id, setSelect } = props;
+  const idPathMap = useIdPathMap();
+
+  const list = useMemo(() => {
+    return Object.values(idPathMap).reduce<any>((acc, cur) => {
+      const { filter, id: componentId, name } = cur;
+
+      if (
+        filter?.show &&
+        filter?.value.some((item) => item.id === id && !item.disabled)
+      ) {
+        acc.push(
+          <Button
+            type="link"
+            onClick={() => {
+              setSelect([componentId]);
+            }}
+            key={componentId}
+          >
+            {name}
+          </Button>,
+        );
+      }
+
+      return acc;
+    }, []);
+  }, [idPathMap, id, setSelect]);
+
+  return (
+    <div
+      style={{
+        maxHeight: 200,
+        overflow: 'auto',
+      }}
+    >
+      {list.length ? list : <Empty description="暂无组件" />}
+    </div>
+  );
+};
+
+const ComponentListWrapper = connect(
+  () => ({}),
+  (dispatch) => {
+    return {
+      setSelect: (value: string[]) =>
+        dispatch({ type: 'global/setSelect', value }),
+    };
+  },
+)(ComponentList);
+
+export const ComponentNumber = (props: { id: string }) => {
+  const { id } = props;
+
+  const idPathMap = useIdPathMap();
+
+  const count = useMemo(() => {
+    return Object.values(idPathMap).reduce((acc, cur) => {
+      const { filter } = cur;
+
+      if (
+        filter?.show &&
+        filter?.value.some((item) => item.id === id && !item.disabled)
+      ) {
+        acc++;
+      }
+
+      return acc;
+    }, 0);
+  }, [idPathMap, id]);
+
+  return <>{count || 0}</>;
+};
 
 const CallbackList = (props: {
   callback?: ComponentData.TFilterConfig[];
@@ -111,19 +189,29 @@ const CallbackList = (props: {
         },
       },
       {
+        title: '使用组件',
+        key: 'use',
+        dataIndex: 'use',
+        width: 50,
+        render: (_: any, record: ComponentData.TFilterConfig) => {
+          return <ComponentNumber id={record.id} />;
+        },
+      },
+      {
         title: '操作',
         key: 'op',
         dataIndex: 'op',
         render: (_: any, record: ComponentData.TFilterConfig) => {
           return (
             <>
-              <Button
-                key="delete"
-                type="link"
-                onClick={deleteData.bind(null, record)}
+              <Popconfirm
+                title="是否确定删除此过滤器？"
+                onConfirm={deleteData.bind(null, record)}
               >
-                删除
-              </Button>
+                <Button key="delete" type="link" style={{ paddingLeft: 0 }}>
+                  删除
+                </Button>
+              </Popconfirm>
               <Button
                 key="copy"
                 type="link"
@@ -142,12 +230,30 @@ const CallbackList = (props: {
     <FocusWrapper>
       <Table
         dataSource={callback}
-        rowKey={() => Math.random()}
+        rowKey={(record) => record.id}
         columns={columns}
         pagination={false}
         scroll={{ y: '70vh' }}
         bordered
         size="small"
+        expandable={{
+          expandedRowRender: (record) => {
+            return <ComponentListWrapper id={record.id} />;
+          },
+          expandIcon: ({ record, expanded, expandable, onExpand }) => {
+            if (!expandable) return null;
+            if (expanded) {
+              return (
+                <MinusSquareOutlined onClick={onExpand.bind(null, record)} />
+              );
+            }
+            return (
+              <Tooltip title="查看使用的组件">
+                <PlusSquareOutlined onClick={onExpand.bind(null, record)} />
+              </Tooltip>
+            );
+          },
+        }}
       />
       <Modal
         title="过滤函数"
@@ -209,7 +315,7 @@ const CallbackManage = forwardRef<CallbackManageRef, CallbackManageProps>(
         footer={footer}
         title="回调管理"
         placement="left"
-        width={520}
+        width={620}
       >
         <WrapperCallbackList />
       </Drawer>

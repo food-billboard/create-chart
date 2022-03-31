@@ -150,7 +150,11 @@ const ConstantList = (props: {
         dataIndex: 'op',
         render: (_: any, record: ComponentData.TConstants) => {
           return (
-            <Button type="link" onClick={deleteData.bind(null, record)}>
+            <Button
+              style={{ paddingLeft: 0 }}
+              type="link"
+              onClick={deleteData.bind(null, record)}
+            >
               删除
             </Button>
           );
