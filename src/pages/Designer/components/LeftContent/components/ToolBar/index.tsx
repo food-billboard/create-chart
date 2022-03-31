@@ -7,6 +7,7 @@ import {
   CallbackIcon,
   ConstantIcon,
   TCommonProps,
+  LocalConfigIcon,
 } from './action.map';
 import styles from './index.less';
 
@@ -31,6 +32,7 @@ const ToolBar = (props: TCommonProps) => {
       <GuideLineIcon {...nextProps} />
       <CallbackIcon {...nextProps} />
       <ConstantIcon {...nextProps} />
+      <LocalConfigIcon {...nextProps} />
     </div>
   );
 };

@@ -8,12 +8,13 @@ import {
   ShrinkOutlined,
   BorderOuterOutlined,
   GlobalOutlined,
+  MacCommandOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
 import { connect } from 'dva';
 import CallbackManage, { CallbackManageRef } from '../CallbackManage';
 import ConstantManage, { ConstantManageRef } from '../ConstantManage';
-import LayerManage, { LayerManageRef } from '../LayerManage';
+import LocalConfigMange, { LocalConfigManageRef } from '../LocalConfigMange';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -24,7 +25,14 @@ const commonClass: string = classnames(
 
 export type TCommonProps = {
   onClick?: (
-    type: 'undo' | 'redo' | 'layer' | 'guideline' | 'callback' | 'constant',
+    type:
+      | 'undo'
+      | 'redo'
+      | 'layer'
+      | 'guideline'
+      | 'callback'
+      | 'constant'
+      | 'localConfig',
   ) => void;
 };
 
@@ -216,6 +224,33 @@ export const ConstantIcon = (props: TCommonProps) => {
         onClick={handleOpen}
       />
       <ConstantManage ref={constantRef} />
+    </>
+  );
+};
+
+// 本地配置管理
+export const LocalConfigIcon = (props: TCommonProps) => {
+  const { onClick } = props;
+
+  const localConfigRef = useRef<LocalConfigManageRef>(null);
+
+  const handleOpen = useCallback(() => {
+    localConfigRef.current?.open();
+    onClick?.('localConfig');
+  }, [onClick]);
+
+  return (
+    <>
+      <MacCommandOutlined
+        title="本地配置管理"
+        className={classnames(
+          commonClass,
+          'c-po',
+          styles['design-left-tool-icon-hover'],
+        )}
+        onClick={handleOpen}
+      />
+      <LocalConfigMange ref={localConfigRef} />
     </>
   );
 };
