@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <svg class="--path"
+  version="1.1" 
+  xmlns="http://www.w3.org/2000/svg" 
+  xmlns:xlink="http://www.w3.org/1999/xlink"><path class="--curve" d="M0,4 L0,8 C0,12 2,12 5,12" style="transform: translateX(45%);"></path><line class="--curve" x1="48%" x2="98%" y1="12" y2="12"></line><path class="--curve" d="M0,4 L0,8 C0,12 2,12 5,12" style="transform: translate(100%, 24px) scale(-1, -1);"></path><circle class="--cap" r="4" cx="45%" cy="0"></circle></svg>

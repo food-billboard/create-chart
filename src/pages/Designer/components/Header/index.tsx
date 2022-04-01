@@ -1,6 +1,5 @@
 import { useMemo, useState, useCallback } from 'react';
 import { PageHeader, Input, Button, message } from 'antd';
-import { history } from 'umi';
 import { SendOutlined, FundOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
 import classnames from 'classnames';
@@ -39,6 +38,7 @@ const Header = (props: {
         />
       );
     }
+
     return (
       <div
         className={classnames(
