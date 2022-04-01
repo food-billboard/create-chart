@@ -1,8 +1,21 @@
+@import '~antd/es/style/themes/default.less';
+
 .component-rule-tree-header {
   &-action {
+    &-and,
+    &-or {
+      width: 90%;
+      height: 24px;
+      background-color: @component-background;
+      text-align: center;
+      line-height: 24px;
+    }
     &-and {
     }
     &-or {
+    }
+    &-active {
+      background-color: @primary-color;
     }
   }
   &-connect {

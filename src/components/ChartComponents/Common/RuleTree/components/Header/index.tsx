@@ -1,11 +1,16 @@
 import { useMemo } from 'react';
+import classnames from 'classnames';
 import OuterConnectLeft from '../OuterConnectLeft';
 import OuterConnectRight from '../OuterConnectRight';
 import InnerConnectLeft from '../InnerConnectLeft';
 import InnerConnectRight from '../InnerConnectRight';
 import styles from './index.less';
 
-const RuleHeader = (props: { isTop?: boolean; value: 'and' | 'or' }) => {
+const RuleHeader = (props: {
+  isTop?: boolean;
+  value: 'and' | 'or';
+  onChange: (value: 'and' | 'or') => void;
+}) => {
   const { isTop = false, value } = props;
 
   const connectLeft = useMemo(() => {
@@ -21,16 +26,52 @@ const RuleHeader = (props: { isTop?: boolean; value: 'and' | 'or' }) => {
   return (
     <div className={styles['component-rule-tree-header']}>
       <div className={styles['component-rule-tree-header-action']}>
-        <div className={styles['component-rule-tree-header-action-and']}></div>
-        <div className={styles['component-rule-tree-header-action-or']}></div>
+        <div
+          className={classnames(
+            styles['component-rule-tree-header-action-and'],
+            {
+              [styles['component-rule-tree-header-action-active']]:
+                value === 'and',
+            },
+          )}
+        >
+          并且
+        </div>
+        <div
+          className={classnames(
+            styles['component-rule-tree-header-action-or'],
+            {
+              [styles['component-rule-tree-header-action-active']]:
+                value === 'or',
+            },
+          )}
+        >
+          或者
+        </div>
       </div>
       <div className={styles['component-rule-tree-header-connect']}>
         <div
-          className={styles['component-rule-tree-header-connect-left']}
-        ></div>
+          className={classnames(
+            styles['component-rule-tree-header-connect-left'],
+            {
+              [styles['component-rule-tree-header-connect-active']]:
+                value === 'and',
+            },
+          )}
+        >
+          {connectLeft}
+        </div>
         <div
-          className={styles['component-rule-tree-header-connect-right']}
-        ></div>
+          className={classnames(
+            styles['component-rule-tree-header-connect-right'],
+            {
+              [styles['component-rule-tree-header-connect-active']]:
+                value === 'or',
+            },
+          )}
+        >
+          {connectRight}
+        </div>
       </div>
     </div>
   );

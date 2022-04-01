@@ -339,6 +339,48 @@ declare namespace ComponentData {
     textStyle: TFontConfig;
   };
 
+  export type ComponentRuleConditionItem = {
+    id: string;
+    type: 'or' | 'and';
+    next: boolean;
+    rule: ComponentRuleConditionItemRule[];
+  };
+
+  export type ComponentRuleConditionItemRule = {
+    id: string;
+    params: string;
+    condition:
+      | 'less-then'
+      | 'great-then'
+      | 'equal'
+      | 'not-less-then'
+      | 'not-great-then'
+      | 'include';
+    value: string;
+  };
+
+  // condition type
+  export type ComponentRuleCondition = {
+    id: string;
+    type: 'or' | 'and';
+    rule: ComponentRuleConditionItem[];
+  };
+
+  // condition
+  export type ComponentCondition = {
+    id: string;
+    action: 'visible' | 'hidden' | 'ease-in-out';
+    type: 'code' | 'condition';
+    value: {
+      code?: {
+        relation: string[];
+        // 使用到的参数
+        code: string;
+      };
+      condition?: ComponentRuleCondition;
+    };
+  };
+
   export type ComponentChartAnimationConfig = {
     animation: boolean;
     animationEasing: ChartAnimationType;
