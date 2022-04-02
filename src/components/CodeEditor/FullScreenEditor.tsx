@@ -12,8 +12,15 @@ const FullScreenEditor = (props: {
   onConfirm?: (value: string) => void;
   onCancel?: () => void;
   language?: string;
+  action?: boolean;
 }) => {
-  const { onConfirm, value, onCancel: propsOnCancel, language } = props;
+  const {
+    onConfirm,
+    value,
+    onCancel: propsOnCancel,
+    language,
+    action = true,
+  } = props;
 
   const [stateCode, setStateCode] = useState<string>(value || '');
   const [visible, setVisible] = useState<boolean>(false);
@@ -56,11 +63,13 @@ const FullScreenEditor = (props: {
             autoFormat
           />
           <div className={styles['component-code-editor-action']}>
-            <Typesetting
-              onClick={() => {
-                return editorContentRef.current?.format();
-              }}
-            />
+            {action && (
+              <Typesetting
+                onClick={() => {
+                  return editorContentRef.current?.format();
+                }}
+              />
+            )}
           </div>
         </FocusWrapper>
       </Modal>

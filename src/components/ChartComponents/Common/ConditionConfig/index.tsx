@@ -31,8 +31,9 @@ const ConditionConfig = (props: ConditionConfigProps) => {
   const conditionList = useMemo(() => {
     return (
       <MultipleSeriesConfig
-        buttonLabel="新增条件"
+        buttonLabel="新增条件项"
         counter={value.length}
+        seriesLabel={(index) => `条件${index + 1}`}
         renderContent={(index) => {
           const item = value[index];
           const {
@@ -70,7 +71,7 @@ const ConditionConfig = (props: ConditionConfigProps) => {
                 </FullForm>
               </Item>
               {type === 'condition' && (
-                <div className="p-16">
+                <div className="p-lr-8 m-tb-4">
                   <RuleTree
                     value={condition!}
                     onChange={(newCondition) => {

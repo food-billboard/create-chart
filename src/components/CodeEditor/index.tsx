@@ -20,10 +20,17 @@ import styles from './index.less';
 export type EditorRef = InternalEditorRef;
 export type EditorProps = InternalEditorProps & {
   action?: boolean | ('full-screen' | 'copy' | 'typesetting')[];
+  fullScreenAction?: boolean;
 };
 
 const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
-  const { onChange: propsOnChange, action = true, language, onBlur } = props;
+  const {
+    onChange: propsOnChange,
+    action = true,
+    language,
+    onBlur,
+    fullScreenAction,
+  } = props;
 
   const [code, setCode] = useState<string>(
     props?.value ?? props?.defaultValue ?? '',
@@ -53,6 +60,7 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
         value={code}
         onConfirm={onValueChange}
         language={language}
+        action={fullScreenAction}
       />
     );
     const copy = <ClipboardAction value={code} />;
