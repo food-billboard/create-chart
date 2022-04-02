@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, CSSProperties } from 'react';
 import classnames from 'classnames';
 import OuterConnectLeft from '../OuterConnectLeft';
 import OuterConnectRight from '../OuterConnectRight';
@@ -10,8 +10,10 @@ const RuleHeader = (props: {
   isTop?: boolean;
   value: 'and' | 'or';
   onChange: (value: 'and' | 'or') => void;
+  className?: string;
+  style?: CSSProperties;
 }) => {
-  const { isTop = false, value } = props;
+  const { isTop = false, value, className, style, onChange } = props;
 
   const connectLeft = useMemo(() => {
     if (isTop) return <OuterConnectLeft />;
@@ -24,7 +26,10 @@ const RuleHeader = (props: {
   }, [isTop]);
 
   return (
-    <div className={styles['component-rule-tree-header']}>
+    <div
+      className={classnames(styles['component-rule-tree-header'], className)}
+      style={style}
+    >
       <div className={styles['component-rule-tree-header-action']}>
         <div
           className={classnames(
@@ -34,6 +39,7 @@ const RuleHeader = (props: {
                 value === 'and',
             },
           )}
+          onClick={onChange.bind(null, 'and')}
         >
           并且
         </div>
@@ -45,6 +51,7 @@ const RuleHeader = (props: {
                 value === 'or',
             },
           )}
+          onClick={onChange.bind(null, 'or')}
         >
           或者
         </div>

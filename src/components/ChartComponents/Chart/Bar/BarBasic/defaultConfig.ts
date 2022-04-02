@@ -10,6 +10,7 @@ import {
   DEFAULT_TOOLTIP_CONFIG,
   DEFAULT_FONT_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
+  DEFAULT_CONDITION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue } from '@/utils/constants';
 import { TBarBasicConfig } from './type';
@@ -131,6 +132,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBarBasicConfig> = {
       barGap: 1,
       barWidth: 'auto',
     },
+    condition: [DEFAULT_CONDITION_CONFIG()],
   },
 };
 

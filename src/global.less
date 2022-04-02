@@ -455,25 +455,54 @@ body {
 // react-split-pane ------end
 
 .component-rule-tree-curve {
-  stroke: @primary-color;
-
   fill: transparent;
-  stroke: red;
+  stroke: rgb(115, 124, 128);
   stroke-width: 2;
 }
 
 .component-rule-tree-cap {
-  fill: @primary-color;
-
-  stroke: yellow;
+  stroke: @component-background;
   stroke-width: 1px;
-  fill: red;
+  fill: rgb(115, 124, 128);
 }
 
 .component-rule-tree-path {
   width: 100%;
   height: 24px;
-  position: absolute;
-  top: 24px;
   overflow: visible;
+}
+
+.component-rule-tree-connect {
+  position: relative;
+  &::before,
+  &::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: 1px solid black;
+    background-color: @primary-color;
+    position: absolute;
+    left: 50%;
+    box-sizing: content-box;
+    z-index: 1;
+  }
+  &::before {
+    top: 0;
+    transform: translateX(-50%) translateY(-50%);
+  }
+  &::after {
+    bottom: 0;
+    transform: translateX(-50%) translateY(50%);
+  }
+}
+.component-rule-tree-connect-no-before {
+  &::before {
+    display: none;
+  }
+}
+.component-rule-tree-connect-no-after {
+  &::after {
+    display: none;
+  }
 }

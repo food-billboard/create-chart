@@ -1,9 +1,30 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, CSSProperties } from 'react';
 import { Select } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { nanoid } from 'nanoid';
+import classnames from 'classnames';
+import { DeleteOutlined, PlusCircleTwoTone } from '@ant-design/icons';
+import { DEFAULT_CONDITION_CONFIG_ITEM_RULE_VALUE } from '../../../Constants/defaultConfig';
 import Input from '../../../Input';
-import InnerConnect from '../InnerConnect';
+import Header from '../Header';
 import styles from './index.less';
+
+const ConnectLine = (props: { className?: string; style?: CSSProperties }) => {
+  const { style, className } = props;
+  return (
+    <div
+      className={classnames(
+        styles['component-rule-tree-condition-connect'],
+        className,
+      )}
+      style={style}
+    ></div>
+  );
+};
+
+const COMMON_CONDITION_ITEM_CLASS = classnames(
+  'm-lr-4',
+  styles['component-rule-tree-condition-item-form'],
+);
 
 const ConditionItem = (props: {
   value: ComponentData.ComponentRuleConditionItemRule;
@@ -11,23 +32,40 @@ const ConditionItem = (props: {
   onDelete: () => void;
   first: boolean;
   last: boolean;
+  single: boolean;
 }) => {
-  const { value, onChange, onDelete, first, last } = props;
+  const { value, onChange, onDelete, first, last, single } = props;
   const { params, condition, value: conditionValue } = value;
 
   return (
-    <div className={styles['component-rule-tree-condition-item']}>
+    <div
+      className={classnames(
+        styles['component-rule-tree-condition-item'],
+        'design-config-format-font-size',
+        {
+          'component-rule-tree-connect': !single,
+          'component-rule-tree-connect-no-after': last || single,
+          'component-rule-tree-connect-no-before': first && single,
+        },
+      )}
+    >
       <Input
         value={params}
+        style={{
+          height: 24,
+        }}
         onChange={(newParams) => {
           onChange({
             ...value,
             params: newParams as any,
           });
         }}
+        className={COMMON_CONDITION_ITEM_CLASS}
       />
       <Select
+        className={COMMON_CONDITION_ITEM_CLASS}
         value={condition}
+        style={{ width: 74, minWidth: 74 }}
         onChange={(condition) => {
           onChange({
             ...value,
@@ -62,6 +100,7 @@ const ConditionItem = (props: {
         ]}
       />
       <Input
+        className={COMMON_CONDITION_ITEM_CLASS}
         value={conditionValue}
         onChange={(conditionValue) => {
           onChange({
@@ -69,8 +108,19 @@ const ConditionItem = (props: {
             value: conditionValue as any,
           });
         }}
+        style={{
+          height: 24,
+        }}
       />
-      <DeleteOutlined onClick={onDelete} className="c-po" />
+      <DeleteOutlined
+        onClick={onDelete}
+        className={classnames('m-lr-4', 'c-po')}
+      />
+      {!last && !single && (
+        <ConnectLine
+          className={styles['component-rule-tree-condition-connect-inner']}
+        />
+      )}
     </div>
   );
 };
@@ -80,23 +130,58 @@ const Condition = (props: {
   onChange: (value: ComponentData.ComponentRuleConditionItem) => void;
 }) => {
   const { value, onChange } = props;
-  const { rule } = value;
+  const { rule, type } = value;
 
   const counter = rule.length;
 
-  const handleAdd = useCallback(() => {}, []);
+  const handleAdd = useCallback(() => {
+    const newRuleItem: ComponentData.ComponentRuleConditionItemRule = {
+      ...DEFAULT_CONDITION_CONFIG_ITEM_RULE_VALUE(),
+    };
+    const newRule = [...rule, newRuleItem];
+
+    onChange({
+      ...value,
+      rule: newRule,
+    });
+  }, [onChange, rule, value]);
 
   const hasRule = useMemo(() => {
-    return true;
-  }, []);
+    return counter !== 1;
+  }, [counter]);
 
   const RuleNode = useMemo(() => {
     if (!hasRule) return null;
-    return <div></div>;
-  }, [hasRule]);
+    return (
+      <Header
+        value={type}
+        onChange={(newType) => {
+          onChange({
+            ...value,
+            type: newType,
+          });
+        }}
+        className={classnames(styles['component-rule-tree-condition-header'])}
+      />
+    );
+  }, [hasRule, type, onChange, value]);
+
+  const addButton = useMemo(() => {
+    return (
+      <PlusCircleTwoTone
+        className={styles['component-rule-tree-condition-add']}
+        onClick={handleAdd}
+      />
+    );
+  }, [handleAdd]);
 
   return (
-    <div className={styles['component-rule-tree-condition']}>
+    <div
+      className={classnames(
+        styles['component-rule-tree-condition'],
+        'component-rule-tree-connect',
+      )}
+    >
       {RuleNode}
       {rule.map((item, index) => {
         const { id } = item;
@@ -106,6 +191,7 @@ const Condition = (props: {
             value={item}
             first={index === 0}
             last={index + 1 === counter}
+            single={counter === 1}
             onChange={(newRuleItem) => {
               const newRule = [...rule];
               newRule.splice(index, 1, newRuleItem);
@@ -125,6 +211,8 @@ const Condition = (props: {
           />
         );
       })}
+      {addButton}
+      <ConnectLine />
     </div>
   );
 };

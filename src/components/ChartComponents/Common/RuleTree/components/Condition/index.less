@@ -1,8 +1,47 @@
+@import '~antd/es/style/themes/default.less';
+
 .component-rule-tree-condition {
+  border: 1px solid @primary-color;
+  padding: 12px;
+  padding-bottom: 0;
+  margin-bottom: 16px;
+  &-header {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+  }
+  &-connect {
+    position: absolute;
+    left: 50%;
+    bottom: -16px;
+    height: 12px;
+    width: 2px;
+    background: @primary-color;
+    transform: translateX(-1px);
+  }
+  &-connect-inner {
+    display: block;
+    bottom: -8px;
+    height: 8px;
+  }
   &-item {
     padding: 4px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 12px;
+    background-color: rgb(115, 124, 128);
+    &-form {
+      background-color: @layout-header-background;
+    }
+  }
+  &-add {
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 1;
   }
 }

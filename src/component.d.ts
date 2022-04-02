@@ -342,7 +342,6 @@ declare namespace ComponentData {
   export type ComponentRuleConditionItem = {
     id: string;
     type: 'or' | 'and';
-    next: boolean;
     rule: ComponentRuleConditionItemRule[];
   };
 
@@ -369,15 +368,15 @@ declare namespace ComponentData {
   // condition
   export type ComponentCondition = {
     id: string;
-    action: 'visible' | 'hidden' | 'ease-in-out';
+    action: 'visible' | 'hidden' | 'ease-in-out' | 'ease-in' | 'ease-out';
     type: 'code' | 'condition';
     value: {
-      code?: {
+      code: {
         relation: string[];
         // 使用到的参数
         code: string;
       };
-      condition?: ComponentRuleCondition;
+      condition: ComponentRuleCondition;
     };
   };
 

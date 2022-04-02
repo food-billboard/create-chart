@@ -1,9 +1,12 @@
 import { ReactNode, useCallback, useMemo } from 'react';
-import { Select } from 'antd';
-import { nanoid } from 'nanoid';
+import { Radio, Select } from 'antd';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
+import CodeEditor from './components/CodeEditor';
+import { DEFAULT_CONDITION_CONFIG } from '../Constants/defaultConfig';
 import ConfigList from '../Structure/ConfigList';
 import FullForm from '../Structure/FullForm';
+
+import RuleTree from '../RuleTree';
 
 const { Item } = ConfigList;
 
@@ -28,6 +31,7 @@ const ConditionConfig = (props: ConditionConfigProps) => {
   const conditionList = useMemo(() => {
     return (
       <MultipleSeriesConfig
+        buttonLabel="新增条件"
         counter={value.length}
         renderContent={(index) => {
           const item = value[index];
@@ -35,14 +39,14 @@ const ConditionConfig = (props: ConditionConfigProps) => {
             id,
             action,
             type,
-            relation,
-            condition: { code, condition },
+            value: { condition, code },
           } = item;
           return (
             <>
               <Item label="条件类型">
                 <FullForm>
-                  <Select
+                  <Radio.Group
+                    className="w-100"
                     value={type}
                     options={[
                       {
@@ -54,12 +58,85 @@ const ConditionConfig = (props: ConditionConfigProps) => {
                         value: 'code',
                       },
                     ]}
-                    onChange={(value) => {
+                    onChange={(e) => {
                       const newValue = [...value];
                       newValue.splice(index, 1, {
                         ...item,
-                        type: value,
+                        type: e.target.value,
                       } as any);
+                      onChange?.(newValue);
+                    }}
+                  />
+                </FullForm>
+              </Item>
+              {type === 'condition' && (
+                <div className="p-16">
+                  <RuleTree
+                    value={condition!}
+                    onChange={(newCondition) => {
+                      const newValue = [...value];
+                      newValue.splice(index, 1, {
+                        ...item,
+                        value: {
+                          code,
+                          condition: newCondition,
+                        },
+                      });
+                      onChange?.(newValue);
+                    }}
+                  />
+                </div>
+              )}
+              {type === 'code' && (
+                <CodeEditor
+                  value={item.value.code}
+                  onChange={(code) => {
+                    const newValue = [...value];
+                    newValue.splice(index, 1, {
+                      ...item,
+                      value: {
+                        code,
+                        condition,
+                      },
+                    });
+                    onChange?.(newValue);
+                  }}
+                />
+              )}
+              <Item label="条件">
+                <FullForm>
+                  <Select
+                    className="w-100"
+                    value={action}
+                    options={[
+                      {
+                        label: '显示',
+                        value: 'visible',
+                      },
+                      {
+                        label: '隐藏',
+                        value: 'hidden',
+                      },
+                      {
+                        label: '渐隐',
+                        value: 'ease-out',
+                      },
+                      {
+                        label: '渐显',
+                        value: 'ease-in',
+                      },
+                      {
+                        label: '渐隐渐现',
+                        value: 'ease-in-out',
+                      },
+                    ]}
+                    onChange={(action) => {
+                      const newValue = [...value];
+                      newValue.splice(index, 1, {
+                        ...item,
+                        action,
+                      } as any);
+                      onChange?.(newValue);
                     }}
                   />
                 </FullForm>
@@ -68,24 +145,13 @@ const ConditionConfig = (props: ConditionConfigProps) => {
           );
         }}
         onAdd={() => {
-          const newValue = [
-            ...value,
-            {
-              id: nanoid(),
-              action: 'hidden',
-              type: 'condition',
-              relation: [],
-              condition: {
-                code: '',
-                condition: [],
-              },
-            },
-          ];
+          const newValue = [...value, { ...DEFAULT_CONDITION_CONFIG() }];
+          onChange?.(newValue);
         }}
         onRemove={(index) => {
           const newValue = [...value];
-
           newValue.splice(index, 1);
+          onChange?.(newValue);
         }}
         max={3}
       />

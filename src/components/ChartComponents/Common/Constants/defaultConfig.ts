@@ -1,4 +1,5 @@
 import { omit } from 'lodash';
+import { nanoid } from 'nanoid';
 
 export const BASIC_DEFAULT_CONFIG: ComponentData.TBaseConfig = {
   style: {
@@ -136,3 +137,52 @@ export const DEFAULT_LABEL_CONFIG: ComponentData.ComponentSeriesLabelConfig = {
   ...DEFAULT_FONT_CONFIG,
   show: true,
 };
+
+// condition rule item value
+export const DEFAULT_CONDITION_CONFIG_ITEM_RULE_VALUE: () => ComponentData.ComponentRuleConditionItemRule =
+  () => ({
+    id: nanoid(),
+    params: '',
+    condition: 'equal',
+    value: '',
+  });
+
+// condition rule item
+export const DEFAULT_CONDITION_CONFIG_ITEM_RULE: () => ComponentData.ComponentRuleConditionItem =
+  () => ({
+    id: nanoid(),
+    type: 'and',
+    rule: [
+      {
+        ...DEFAULT_CONDITION_CONFIG_ITEM_RULE_VALUE(),
+      },
+    ],
+  });
+
+// condition
+export const DEFAULT_CONDITION_CONFIG: () => ComponentData.ComponentCondition =
+  () => ({
+    id: nanoid(),
+    action: 'hidden',
+    type: 'condition',
+    value: {
+      code: {
+        relation: [],
+        code: `
+        // 可从参数中获取相关数据
+        // 在这里添加逻辑
+        // 返回true | false 表示是否符合条件
+        return true 
+      `,
+      },
+      condition: {
+        id: nanoid(),
+        type: 'and',
+        rule: [
+          {
+            ...DEFAULT_CONDITION_CONFIG_ITEM_RULE(),
+          },
+        ],
+      },
+    },
+  });

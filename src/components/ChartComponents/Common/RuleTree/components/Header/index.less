@@ -2,13 +2,18 @@
 
 .component-rule-tree-header {
   &-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     &-and,
     &-or {
-      width: 90%;
+      width: 45%;
       height: 24px;
-      background-color: @component-background;
+      background-color: rgb(115, 124, 128);
       text-align: center;
       line-height: 24px;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.7);
     }
     &-and {
     }
@@ -16,12 +21,30 @@
     }
     &-active {
       background-color: @primary-color;
+      color: white;
+    }
+    &-and:not(&-active):hover,
+    &-or:not(&-active):hover {
+      background-color: @primary-color;
+      color: white;
     }
   }
   &-connect {
+    display: flex;
+    align-items: center;
     &-left {
     }
     &-right {
+    }
+    &-active {
+      :global {
+        .component-rule-tree-curve {
+          stroke: @primary-color;
+        }
+        .component-rule-tree-cap {
+          fill: @primary-color;
+        }
+      }
     }
   }
 }

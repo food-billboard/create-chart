@@ -1,11 +1,9 @@
 import { useCallback } from 'react';
 import { Button } from 'antd';
-import { uniqueId } from 'lodash';
+import { DEFAULT_CONDITION_CONFIG_ITEM_RULE } from '../Constants/defaultConfig';
 import Header from './components/Header';
 import Condition from './components/Condition';
-
-const RULE_OUTER_ID = 'RULE_OUTER_ID';
-export const RULE_INNER_ID = 'RULE_INNER_ID';
+import styles from './index.less';
 
 const RuleTree = (props: {
   value: ComponentData.ComponentRuleCondition;
@@ -16,17 +14,7 @@ const RuleTree = (props: {
 
   const handleAdd = useCallback(() => {
     const newRule: ComponentData.ComponentRuleConditionItem = {
-      id: uniqueId(RULE_OUTER_ID),
-      type: 'and',
-      rule: [
-        {
-          id: uniqueId(RULE_OUTER_ID),
-          params: '',
-          condition: 'less-then',
-          value: '',
-        },
-      ],
-      next: false,
+      ...DEFAULT_CONDITION_CONFIG_ITEM_RULE(),
     };
     onChange({
       ...value,
@@ -35,7 +23,7 @@ const RuleTree = (props: {
   }, [value, onChange]);
 
   return (
-    <div>
+    <div className={styles['component-rule-tree']}>
       <Header
         isTop
         value={type}
@@ -52,12 +40,12 @@ const RuleTree = (props: {
           <Condition
             value={item}
             key={id}
-            onChange={(value) => {
+            onChange={(newRuleItem) => {
               const newRule = [...rule];
-              if (!value.rule.length) {
+              if (!newRuleItem.rule.length) {
                 newRule.splice(index, 1);
               } else {
-                newRule.splice(index, 1, value);
+                newRule.splice(index, 1, newRuleItem);
               }
               onChange({
                 ...value,
@@ -67,9 +55,11 @@ const RuleTree = (props: {
           />
         );
       })}
-      <Button block type="primary" onClick={handleAdd}>
-        新增条件
-      </Button>
+      <div className={styles['component-rule-tree-add']}>
+        <Button block type="primary" onClick={handleAdd}>
+          新增条件
+        </Button>
+      </div>
     </div>
   );
 };
