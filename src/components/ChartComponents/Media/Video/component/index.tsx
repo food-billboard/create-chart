@@ -1,7 +1,10 @@
 import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
+import {
+  useComponent,
+  useCondition,
+} from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -23,7 +26,7 @@ const VideoBasic = (props: {
   const {
     config: { options },
   } = value;
-  const { controls, loop, autoplay: opAutoplay, muted } = options;
+  const { controls, loop, autoplay: opAutoplay, muted, condition } = options;
   const { screenType } = global;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -37,6 +40,7 @@ const VideoBasic = (props: {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
+    onCondition,
   } = useComponent<TVideoConfig>(
     {
       component: value,
@@ -44,6 +48,12 @@ const VideoBasic = (props: {
     },
     requestRef,
   );
+
+  const {
+    onCondition: propsOnCondition,
+    style: conditionStyle,
+    className: conditionClassName,
+  } = useCondition(onCondition);
 
   const autoplay = useMemo(() => {
     return screenType === 'edit' ? false : opAutoplay;
@@ -62,8 +72,12 @@ const VideoBasic = (props: {
   }, [syncInteractiveAction, finalValue]);
 
   const componentClassName = useMemo(() => {
-    return classnames(className, styles['component-media-video']);
-  }, [className]);
+    return classnames(
+      className,
+      styles['component-media-video'],
+      conditionClassName,
+    );
+  }, [className, conditionClassName]);
 
   return (
     <>
@@ -75,6 +89,7 @@ const VideoBasic = (props: {
             height: '100%',
           },
           style,
+          conditionStyle,
         )}
         id={chartId.current}
         onClick={onClick}
@@ -92,7 +107,9 @@ const VideoBasic = (props: {
         ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
+        reCondition={propsOnCondition}
         componentFilter={componentFilter}
+        componentCondition={condition}
       />
     </>
   );

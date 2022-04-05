@@ -21,4 +21,5 @@ export type TCountUpNumberConfig = {
     easingFn: 'easeOutExpo' | 'outQuintic' | 'outCubic';
   };
   decimal: string;
+  condition: ComponentData.ComponentCondition[];
 };

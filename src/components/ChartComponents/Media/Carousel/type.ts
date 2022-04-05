@@ -7,4 +7,5 @@ export type TCarouselConfig = {
   };
   // easing: string
   fade: boolean;
+  condition: ComponentData.ComponentCondition[];
 };

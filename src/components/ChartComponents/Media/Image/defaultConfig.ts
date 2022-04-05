@@ -3,6 +3,7 @@ import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
+  DEFAULT_CONDITION_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ColorSelect from '@/components/ColorSelect';
@@ -57,6 +58,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TImageConfig> = {
       x: false,
       y: false,
     },
+    condition: [DEFAULT_CONDITION_CONFIG()],
   },
 };
 

@@ -9,6 +9,7 @@ import {
 import { get, isEqual } from 'lodash';
 import { useUpdateEffect } from 'ahooks';
 import FilterDataUtil from '@/utils/Assist/FilterData';
+import VariableStringUtil from '@/utils/Assist/VariableString';
 import { mergeWithoutArray } from '@/utils';
 import { TFetchFragmentRef } from '@/components/ChartComponents/Common/FetchFragment';
 import { ComponentProps } from '../type';
@@ -160,6 +161,66 @@ export function useComponent<P extends object = {}>(
 
   // * --------------------交互相关--------------------
 
+  // 条件判断
+  const getConditionResult: (
+    params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
+    condition: ComponentData.ComponentCondition,
+  ) => ComponentData.ComponentConditionActionType | false = useCallback(
+    (globalParams, constants, condition) => {
+      const { type, action, value } = condition;
+      const { code, condition: valueCondition } = value;
+      let result: boolean = false;
+      if (type === 'code') {
+        const { code: dealCode } = code;
+        // 代码执行
+        let filterFunction = new Function('data', dealCode);
+        try {
+          result = filterFunction(
+            value,
+            VariableStringUtil.getAllGlobalParams(globalParams, constants),
+          );
+        } catch (err) {
+          console.error(err);
+          result = false;
+        }
+      } else {
+        const { type, rule } = valueCondition;
+        const method = type === 'and' ? 'every' : 'some';
+        result = rule[method]((item) => {
+          const { rule, type } = item;
+          const method = type === 'and' ? 'every' : 'some';
+          return rule[method]((item) => {
+            const { params, value, condition } = item;
+            if (!params) return false;
+            const target = globalParams.find((item) => item.id === params);
+            if (!target) return false;
+
+            switch (condition) {
+              case 'equal':
+                return target.value == value;
+              case 'great-then':
+                return target.value! > value;
+              case 'include':
+                return target.value?.includes(value);
+              case 'less-then':
+                return target.value! < value;
+              case 'not-great-then':
+                return target.value! <= value;
+              case 'not-less-then':
+                return target.value! >= value;
+            }
+
+            return false;
+          });
+        });
+      }
+
+      return result ? action : false;
+    },
+    [],
+  );
+
   // 同步基础事件的数据到全局参数
   const syncInteractiveAction = useCallback(
     (
@@ -237,6 +298,15 @@ export function useComponent<P extends object = {}>(
     [syncInteractiveAction, baseInteractive],
   );
 
+  // 外部调用条件判断
+  const outerGetConditionResult = useCallback(
+    (condition: ComponentData.ComponentCondition) => {
+      const { params = [], constants = [] } = requestRef.current || {};
+      return getConditionResult(params, constants, condition);
+    },
+    [getConditionResult],
+  );
+
   // * --------------------其他--------------------
 
   // 取消定时器
@@ -257,6 +327,7 @@ export function useComponent<P extends object = {}>(
   return {
     request: outerRequest,
     getValue: outerGetValue,
+    onCondition: outerGetConditionResult,
     syncInteractiveAction: outerSyncInteractiveAction,
     requestUrl,
     componentFilter,

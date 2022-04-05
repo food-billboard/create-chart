@@ -12,6 +12,7 @@ import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import OrientSelect from '@/components/ChartComponents/Common/OrientSelect';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import ConditionConfig from './Condition';
 import { TTitleConfig } from '../type';
 
 const { TabPane } = Tabs;
@@ -56,7 +57,7 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: { textStyle, align, orient, animation },
+        options: { textStyle, align, orient, animation, condition },
       },
     } = value;
 
@@ -294,6 +295,14 @@ class Config extends Component<
                 </Select>
               </Item>
             </Collapse>
+          </ConfigList>
+        </TabPane>
+        <TabPane key="3" tab={<Tab>条件</Tab>}>
+          <ConfigList level={1}>
+            <ConditionConfig
+              value={condition}
+              onChange={this.onKeyChange.bind(null, 'condition')}
+            />
           </ConfigList>
         </TabPane>
       </ComponentOptionConfig>

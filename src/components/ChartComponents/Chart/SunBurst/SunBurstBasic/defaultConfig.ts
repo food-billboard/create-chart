@@ -6,6 +6,7 @@ import {
   DEFAULT_TOOLTIP_CONFIG,
   DEFAULT_FONT_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
+  DEFAULT_CONDITION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getName, getNumberValue } from '@/utils/constants';
 import { TSunBurstBasicConfig } from './type';
@@ -80,6 +81,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TSunBurstBasicConfig
       },
     },
     options: {
+      condition: [DEFAULT_CONDITION_CONFIG()],
       tooltip: DEFAULT_TOOLTIP_CONFIG,
       animation: {
         ...DEFAULT_ANIMATION_CONFIG,

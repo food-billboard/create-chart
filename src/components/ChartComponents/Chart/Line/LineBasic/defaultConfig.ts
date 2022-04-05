@@ -10,6 +10,7 @@ import {
   DEFAULT_TOOLTIP_CONFIG,
   DEFAULT_FONT_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
+  DEFAULT_CONDITION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue, getSeries } from '@/utils/constants';
 import { TLineBasicConfig } from './type';
@@ -100,6 +101,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TLineBasicConfig> =
       },
     },
     options: {
+      condition: [DEFAULT_CONDITION_CONFIG()],
       legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
       xAxis: DEFAULT_X_AXIS_CONFIG,
       yAxis: merge({}, DEFAULT_Y_AXIS_CONFIG, {

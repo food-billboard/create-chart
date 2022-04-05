@@ -9,4 +9,5 @@ export type TSunBurstBasicConfig = {
     nodeClick: false | 'rootToNode';
   };
   animation: ComponentData.ComponentChartAnimationConfig;
+  condition: ComponentData.ComponentCondition[];
 };

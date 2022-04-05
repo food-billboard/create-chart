@@ -6,6 +6,7 @@ import {
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_TOOLTIP_CONFIG,
   DEFAULT_FONT_CONFIG,
+  DEFAULT_CONDITION_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { getName, getNumberValue } from '@/utils/constants';
 import { TWordCloudBasicConfig } from './type';
@@ -67,6 +68,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TWordCloudBasicConfi
       },
     },
     options: {
+      condition: [DEFAULT_CONDITION_CONFIG()],
       tooltip: DEFAULT_TOOLTIP_CONFIG,
       series: {
         textStyle: {

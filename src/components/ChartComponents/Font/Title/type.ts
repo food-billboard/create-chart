@@ -16,4 +16,5 @@ export type TTitleConfig = {
     delay: `animate__delay-${2 | 3 | 4 | 5}s`;
     repeat: `animate__repeat-${1 | 2 | 3}` | 'animate__infinite';
   };
+  condition: ComponentData.ComponentCondition[];
 };

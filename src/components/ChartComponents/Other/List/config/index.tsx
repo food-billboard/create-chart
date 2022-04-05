@@ -16,6 +16,7 @@ import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSe
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import IconTooltip from '@/components/IconTooltip';
 import { DEFAULT_FONT_CONFIG } from '../../../Common/Constants/defaultConfig';
+import ConditionConfig from './Condition';
 import { TListConfig } from '../type';
 
 const { TabPane } = Tabs;
@@ -39,7 +40,7 @@ class Config extends Component<
     const {
       config: {
         data: { filter: { map = [] } = {} } = {},
-        options: { global, header, index, columns },
+        options: { global, header, index, columns, condition },
       },
     } = value;
 
@@ -671,6 +672,14 @@ class Config extends Component<
                 />
               </Collapse>
             </Collapse>
+          </ConfigList>
+        </TabPane>
+        <TabPane key="5" tab={<Tab>条件</Tab>}>
+          <ConfigList level={1}>
+            <ConditionConfig
+              value={condition}
+              onChange={this.onKeyChange.bind(null, 'condition')}
+            />
           </ConfigList>
         </TabPane>
       </ComponentOptionConfig>

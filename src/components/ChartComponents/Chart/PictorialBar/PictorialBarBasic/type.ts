@@ -20,4 +20,5 @@ export type TPictorialBarBasicConfig = {
     symbolColor: ComponentData.TColorConfig;
   };
   animation: ComponentData.ComponentChartAnimationConfig;
+  condition: ComponentData.ComponentCondition[];
 };

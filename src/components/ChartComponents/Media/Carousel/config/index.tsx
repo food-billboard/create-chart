@@ -13,11 +13,11 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import ColorSelect from '@/components/ColorSelect';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import { PositionConfig } from '@/components/ChartComponents/Common/PositionConfig';
 import RadioGroup, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import ConditionConfig from './Condition';
 import { TCarouselConfig } from '../type';
 
 const { TabPane } = Tabs;
@@ -42,7 +42,7 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: { speed, dot, autoplay, fade },
+        options: { speed, dot, autoplay, fade, condition },
       },
     } = value;
 
@@ -118,6 +118,14 @@ class Config extends Component<
                 />
               </FullForm>
             </Item>
+          </ConfigList>
+        </TabPane>
+        <TabPane key="2" tab={<Tab>条件</Tab>}>
+          <ConfigList level={1}>
+            <ConditionConfig
+              value={condition}
+              onChange={this.onKeyChange.bind(null, 'condition')}
+            />
           </ConfigList>
         </TabPane>
       </ComponentOptionConfig>

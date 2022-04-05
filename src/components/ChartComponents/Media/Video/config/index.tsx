@@ -5,6 +5,7 @@ import ComponentOptionConfig, {
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ConditionConfig from './Condition';
 import { TVideoConfig } from '../type';
 
 const { TabPane } = Tabs;
@@ -27,7 +28,7 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: { autoplay, loop, muted, controls },
+        options: { autoplay, loop, muted, controls, condition },
       },
     } = value;
 
@@ -67,6 +68,14 @@ class Config extends Component<
                 />
               </FullForm>
             </Item>
+          </ConfigList>
+        </TabPane>
+        <TabPane key="2" tab={<Tab>条件</Tab>}>
+          <ConfigList level={1}>
+            <ConditionConfig
+              value={condition}
+              onChange={this.onKeyChange.bind(null, 'condition')}
+            />
           </ConfigList>
         </TabPane>
       </ComponentOptionConfig>

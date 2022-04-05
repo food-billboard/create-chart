@@ -1,7 +1,10 @@
 import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
+import {
+  useComponent,
+  useCondition,
+} from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -26,7 +29,7 @@ const TitleBasic = (props: {
   const {
     config: { options },
   } = value;
-  const { animation, ...nextOptions } = options;
+  const { animation, condition, ...nextOptions } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -39,6 +42,7 @@ const TitleBasic = (props: {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
+    onCondition,
   } = useComponent<TTitleConfig>(
     {
       component: value,
@@ -46,6 +50,12 @@ const TitleBasic = (props: {
     },
     requestRef,
   );
+
+  const {
+    onCondition: propsOnCondition,
+    style: conditionStyle,
+    className: conditionClassName,
+  } = useCondition(onCondition);
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -89,8 +99,9 @@ const TitleBasic = (props: {
       repeat,
       value,
       speed,
+      conditionClassName,
     );
-  }, [className, animation]);
+  }, [className, animation, conditionClassName]);
 
   return (
     <>
@@ -103,6 +114,7 @@ const TitleBasic = (props: {
           },
           style,
           componentStyle,
+          conditionStyle,
         )}
         id={chartId.current}
         onClick={onClick}
@@ -114,7 +126,9 @@ const TitleBasic = (props: {
         ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
+        reCondition={propsOnCondition}
         componentFilter={componentFilter}
+        componentCondition={condition}
       />
     </>
   );

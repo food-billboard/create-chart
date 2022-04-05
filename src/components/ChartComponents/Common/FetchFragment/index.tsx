@@ -11,9 +11,11 @@ export type TFetchFragmentProps = {
   screenType: ComponentData.ScreenType;
   url: string;
   componentFilter: ComponentData.TComponentFilterConfig[];
+  componentCondition: ComponentData.ComponentCondition[];
 
   reFetchData: () => Promise<any>;
   reGetValue: () => void;
+  reCondition: (condition: ComponentData.ComponentCondition) => void;
 };
 
 export type TFetchFragmentRef = {
@@ -29,9 +31,11 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
       filter,
       constants,
       componentFilter,
+      componentCondition,
       url,
       reFetchData,
       reGetValue,
+      reCondition,
       screenType,
     } = props;
 
@@ -41,12 +45,14 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
         {
           url,
           componentFilter,
+          componentCondition,
           onFetch: async () => {
             return reFetchData();
           },
           onFilter: async () => {
             return reGetValue();
           },
+          onCondition: reCondition,
         },
         filter,
         params,

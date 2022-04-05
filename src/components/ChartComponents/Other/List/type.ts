@@ -48,4 +48,5 @@ export type TListConfig = {
       };
     }[];
   };
+  condition: ComponentData.ComponentCondition[];
 };

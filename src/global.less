@@ -454,6 +454,8 @@ body {
 }
 // react-split-pane ------end
 
+// component rule tree -----start
+
 .component-rule-tree-curve {
   fill: transparent;
   stroke: rgb(115, 124, 128);
@@ -506,3 +508,37 @@ body {
     display: none;
   }
 }
+
+// component rule tree -----end
+
+// component condition -----start
+.component-condition-visible {
+}
+.component-condition-hidden {
+  display: none;
+}
+.component-condition-ease-in-out {
+  animation-name: condition-ease-in-out;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+}
+@keyframes condition-ease-in-out {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+// component condition -----start

@@ -1,7 +1,10 @@
 import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
+import {
+  useComponent,
+  useCondition,
+} from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -23,7 +26,7 @@ const ImageBasic = (props: {
   const {
     config: { options },
   } = value;
-  const { type, content, repeat } = options;
+  const { type, content, repeat, condition } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -36,6 +39,7 @@ const ImageBasic = (props: {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
+    onCondition,
   } = useComponent<TImageConfig>(
     {
       component: value,
@@ -43,6 +47,12 @@ const ImageBasic = (props: {
     },
     requestRef,
   );
+
+  const {
+    onCondition: propsOnCondition,
+    style: conditionStyle,
+    className: conditionClassName,
+  } = useCondition(onCondition);
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -71,8 +81,12 @@ const ImageBasic = (props: {
   }, [type, content, finalValue, repeat]);
 
   const componentClassName = useMemo(() => {
-    return classnames(className, styles['component-media-image']);
-  }, [className]);
+    return classnames(
+      className,
+      styles['component-media-image'],
+      conditionClassName,
+    );
+  }, [className, conditionClassName]);
 
   return (
     <>
@@ -85,6 +99,7 @@ const ImageBasic = (props: {
           },
           style,
           componentStyle,
+          conditionStyle,
         )}
         id={chartId.current}
         onClick={onClick}
@@ -94,7 +109,9 @@ const ImageBasic = (props: {
         ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
+        reCondition={propsOnCondition}
         componentFilter={componentFilter}
+        componentCondition={condition}
       />
     </>
   );

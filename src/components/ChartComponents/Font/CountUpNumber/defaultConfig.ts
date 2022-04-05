@@ -4,6 +4,7 @@ import {
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
+  DEFAULT_CONDITION_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { getNumberValue } from '@/utils/constants';
 import { TCountUpNumberConfig } from './type';
@@ -50,6 +51,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TCountUpNumberConfig
       },
     },
     options: {
+      condition: [DEFAULT_CONDITION_CONFIG()],
       textStyle: {
         ...DEFAULT_FONT_CONFIG,
         fontSize: 24,

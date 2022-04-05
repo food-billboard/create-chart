@@ -9,6 +9,7 @@ import {
   DEFAULT_Y_AXIS_CONFIG,
   DEFAULT_TOOLTIP_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
+  DEFAULT_CONDITION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue } from '@/utils/constants';
 import { TBoxPlotBasicConfig } from './type';
@@ -104,6 +105,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBoxPlotBasicConfig>
         boxWidth: [7, 50],
         itemStyle: [],
       },
+      condition: [DEFAULT_CONDITION_CONFIG()],
     },
   };
 

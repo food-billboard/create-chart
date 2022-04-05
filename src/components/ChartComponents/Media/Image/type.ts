@@ -5,4 +5,5 @@ export type TImageConfig = {
     x: boolean;
     y: boolean;
   };
+  condition: ComponentData.ComponentCondition[];
 };

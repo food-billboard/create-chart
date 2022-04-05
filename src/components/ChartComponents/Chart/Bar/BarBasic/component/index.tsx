@@ -1,6 +1,7 @@
 import { CSSProperties, useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
+import classnames from 'classnames';
 import { useDeepUpdateEffect } from '@/hooks';
 import {
   useComponent,
@@ -8,6 +9,7 @@ import {
   useChartValueMapField,
   useComponentResize,
   useAnimationChange,
+  useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -33,7 +35,8 @@ const BarBasic = (props: {
     config: { options },
   } = value;
 
-  const { legend, series, xAxis, yAxis, tooltip, animation } = options;
+  const { legend, series, xAxis, yAxis, tooltip, animation, condition } =
+    options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -51,6 +54,7 @@ const BarBasic = (props: {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
+    onCondition,
   } = useComponent<TBarBasicConfig>(
     {
       component: value,
@@ -58,6 +62,12 @@ const BarBasic = (props: {
     },
     requestRef,
   );
+
+  const {
+    onCondition: propsOnCondition,
+    style: conditionStyle,
+    className: conditionClassName,
+  } = useCondition(onCondition);
 
   const { seriesKeys, xAxisKeys, yAxisValues } = useChartValueMapField(
     processedValue,
@@ -255,13 +265,14 @@ const BarBasic = (props: {
   return (
     <>
       <div
-        className={className}
+        className={classnames(className, conditionClassName)}
         style={merge(
           {
             width: '100%',
             height: '100%',
           },
           style,
+          conditionStyle,
         )}
         id={chartId.current}
       ></div>
@@ -270,7 +281,9 @@ const BarBasic = (props: {
         ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
+        reCondition={propsOnCondition}
         componentFilter={componentFilter}
+        componentCondition={condition}
       />
     </>
   );

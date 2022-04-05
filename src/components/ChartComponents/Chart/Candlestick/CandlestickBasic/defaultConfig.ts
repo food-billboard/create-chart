@@ -10,6 +10,7 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
   DEFAULT_LABEL_CONFIG,
+  DEFAULT_CONDITION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue } from '@/utils/constants';
 import { TCandlestickBasicConfig } from './type';
@@ -72,6 +73,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TCandlestickBasicCon
     options: {
       xAxis: DEFAULT_X_AXIS_CONFIG,
       yAxis: DEFAULT_Y_AXIS_CONFIG,
+      condition: [DEFAULT_CONDITION_CONFIG()],
       tooltip: {
         ...DEFAULT_TOOLTIP_CONFIG,
       },

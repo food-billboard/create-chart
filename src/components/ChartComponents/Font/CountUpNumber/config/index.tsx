@@ -9,6 +9,7 @@ import Input from '@/components/ChartComponents/Common/Input';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import ConditionConfig from './Condition';
 import { TCountUpNumberConfig } from '../type';
 
 const { TabPane } = Tabs;
@@ -39,6 +40,7 @@ class Config extends Component<
           round,
           decimal,
           thousands,
+          condition,
         },
       },
     } = value;
@@ -217,6 +219,14 @@ class Config extends Component<
                 })}
               </Select>
             </Item>
+          </ConfigList>
+        </TabPane>
+        <TabPane key="4" tab={<Tab>条件</Tab>}>
+          <ConfigList level={1}>
+            <ConditionConfig
+              value={condition}
+              onChange={this.onKeyChange.bind(null, 'condition')}
+            />
           </ConfigList>
         </TabPane>
       </ComponentOptionConfig>

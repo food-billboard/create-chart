@@ -8,6 +8,7 @@ import {
   DEFAULT_Y_AXIS_CONFIG,
   DEFAULT_TOOLTIP_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
+  DEFAULT_CONDITION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { getDate, getNumberValue } from '@/utils/constants';
@@ -70,6 +71,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TPictorialBarBasicCo
       },
     },
     options: {
+      condition: [DEFAULT_CONDITION_CONFIG()],
       xAxis: {
         ...omit(DEFAULT_X_AXIS_CONFIG, ['position']),
         max: 200,

@@ -1,9 +1,12 @@
-import { CSSProperties, useMemo, useRef, useCallback, useEffect } from 'react';
+import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import { uniqueId, merge, round as mathRound } from 'lodash';
 import classnames from 'classnames';
 import { CountUp } from 'countup.js';
 import { useDeepCompareEffect } from 'ahooks';
-import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
+import {
+  useComponent,
+  useCondition,
+} from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -49,6 +52,7 @@ const CountUpNumberBasic = (props: {
     thousands,
     round,
     decimal,
+    condition,
     ...nextOptions
   } = options;
 
@@ -64,6 +68,7 @@ const CountUpNumberBasic = (props: {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
+    onCondition,
   } = useComponent<TCountUpNumberConfig>(
     {
       component: value,
@@ -71,6 +76,12 @@ const CountUpNumberBasic = (props: {
     },
     requestRef,
   );
+
+  const {
+    onCondition: propsOnCondition,
+    style: conditionStyle,
+    className: conditionClassName,
+  } = useCondition(onCondition);
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -105,8 +116,9 @@ const CountUpNumberBasic = (props: {
       className,
       'dis-flex',
       styles['component-font-count-up-number'],
+      conditionClassName,
     );
-  }, [className]);
+  }, [className, conditionClassName]);
 
   useDeepCompareEffect(() => {
     chartInstance.current = new CountUp(
@@ -142,6 +154,7 @@ const CountUpNumberBasic = (props: {
           },
           style,
           componentStyle,
+          conditionStyle,
         )}
         id={chartId.current}
         onClick={onClick}
@@ -153,7 +166,9 @@ const CountUpNumberBasic = (props: {
         ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
+        reCondition={propsOnCondition}
         componentFilter={componentFilter}
+        componentCondition={condition}
       />
     </>
   );

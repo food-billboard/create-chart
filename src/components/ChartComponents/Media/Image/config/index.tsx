@@ -19,6 +19,7 @@ import RadioGroup, {
 import ImageUpload from '@/components/ImageUpload';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import ThemeUtil from '@/utils/Assist/Theme';
+import ConditionConfig from './Condition';
 import { TImageConfig } from '../type';
 
 const { TabPane } = Tabs;
@@ -107,7 +108,7 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: { type, content, repeat },
+        options: { type, content, repeat, condition },
       },
     } = value;
 
@@ -169,6 +170,14 @@ class Config extends Component<
                 </HalfForm>
               </Item>
             )}
+          </ConfigList>
+        </TabPane>
+        <TabPane key="2" tab={<Tab>条件</Tab>}>
+          <ConfigList level={1}>
+            <ConditionConfig
+              value={condition}
+              onChange={this.onKeyChange.bind(null, 'condition')}
+            />
           </ConfigList>
         </TabPane>
       </ComponentOptionConfig>

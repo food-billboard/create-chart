@@ -7,6 +7,7 @@ import {
   DEFAULT_LEGEND_CONFIG,
   DEFAULT_FONT_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
+  DEFAULT_CONDITION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { getDate, getNumberValue, getSeries } from '@/utils/constants';
@@ -70,6 +71,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TParallelBasicConfig
       },
     },
     options: {
+      condition: [DEFAULT_CONDITION_CONFIG()],
       legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
       animation: {
         ...DEFAULT_ANIMATION_CONFIG,

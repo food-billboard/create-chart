@@ -28,6 +28,7 @@ class FilterData {
     }
   }
 
+  // 过滤器执行
   getPipeFilterValue(
     value: ComponentData.TComponentApiDataConfig,
     filter: ComponentData.TFilterConfig[],
@@ -217,27 +218,35 @@ export class CompareFilterUtil {
       url,
       onFilter,
       onFetch,
+      onCondition,
+      componentCondition,
     }: {
       componentFilter: ComponentData.TComponentFilterConfig[];
+      componentCondition: ComponentData.ComponentCondition[];
       url: string;
       onFilter: () => Promise<any>;
       onFetch: () => Promise<any>;
+      onCondition: (condition: ComponentData.ComponentCondition) => void;
     },
     filter: ComponentData.TFilterConfig[],
     defaultValue: ComponentData.TParams[],
   ) {
     this.prevParams = defaultValue;
+    this.condition = componentCondition;
     this.onFetch = onFetch;
     this.onFilter = onFilter;
+    this.onCondition = onCondition;
     this.initComponentFilter(filter, componentFilter);
-    this.initParamsMap(url, this.filter);
+    this.initParamsMap(url, this.filter, this.condition);
   }
 
   onFilter;
   onFetch;
+  onCondition;
 
   // 组件过滤函数的集合
   filter: TFilterData[] = [];
+  condition;
   mapParams: {
     [variable: string]: {
       action: Function[];
@@ -259,6 +268,7 @@ export class CompareFilterUtil {
     }
   }
 
+  // 过滤器初始化
   initComponentFilter(
     filter: ComponentData.TFilterConfig[],
     componentFilter: ComponentData.TComponentFilterConfig[],
@@ -283,7 +293,44 @@ export class CompareFilterUtil {
     }, []);
   }
 
-  initParamsMap(url: string, filter: TFilterData[]) {
+  // 条件参数初始化
+  initComponentCondition(condition: ComponentData.ComponentCondition[]) {
+    return condition.reduce<
+      {
+        variables: string[];
+        action: any;
+      }[]
+    >((acc, cur) => {
+      const { type, value } = cur;
+      const { code, condition } = value;
+      if (type === 'code') {
+        const { relation } = code;
+        acc.push({
+          variables: relation,
+          action: this.onCondition.bind(this, cur),
+        });
+      } else {
+        let variables = condition.rule.reduce<string[]>((acc, item) => {
+          item.rule.forEach((item) => {
+            if (!acc.includes(item.params)) acc.push(item.params);
+          });
+          return acc;
+        }, []);
+        acc.push({
+          variables,
+          action: this.onCondition.bind(this, cur),
+        });
+      }
+      return acc;
+    }, []);
+  }
+
+  // 参数初始化
+  initParamsMap(
+    url: string,
+    filter: TFilterData[],
+    condition: ComponentData.ComponentCondition[],
+  ) {
     [
       {
         action: this.onFetch,
@@ -296,6 +343,7 @@ export class CompareFilterUtil {
           variables: params,
         };
       }),
+      ...this.initComponentCondition(condition),
     ].forEach((item) => {
       const { action, variables } = item;
 

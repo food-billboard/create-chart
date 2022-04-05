@@ -1,6 +1,7 @@
 import { CSSProperties, useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
+import classnames from 'classnames';
 import { useDeepUpdateEffect } from '@/hooks';
 import {
   useComponent,
@@ -8,6 +9,7 @@ import {
   useChartValueMapField,
   useComponentResize,
   useAnimationChange,
+  useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -33,7 +35,8 @@ const ScatterBasic = (props: {
     config: { options },
   } = value;
 
-  const { legend, series, tooltip, animation, xAxis, yAxis } = options;
+  const { legend, series, tooltip, animation, xAxis, yAxis, condition } =
+    options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -50,6 +53,7 @@ const ScatterBasic = (props: {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
+    onCondition,
   } = useComponent<TScatterBasicConfig>(
     {
       component: value,
@@ -57,6 +61,12 @@ const ScatterBasic = (props: {
     },
     requestRef,
   );
+
+  const {
+    onCondition: propsOnCondition,
+    style: conditionStyle,
+    className: conditionClassName,
+  } = useCondition(onCondition);
 
   const { xAxisKeys, yAxisValues, seriesKeys } = useChartValueMapField(
     processedValue,
@@ -232,13 +242,14 @@ const ScatterBasic = (props: {
   return (
     <>
       <div
-        className={className}
+        className={classnames(className, conditionClassName)}
         style={merge(
           {
             width: '100%',
             height: '100%',
           },
           style,
+          conditionStyle,
         )}
         id={chartId.current}
       ></div>
@@ -247,7 +258,9 @@ const ScatterBasic = (props: {
         ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
+        reCondition={propsOnCondition}
         componentFilter={componentFilter}
+        componentCondition={condition}
       />
     </>
   );

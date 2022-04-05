@@ -8,6 +8,7 @@ import TooltipConfig from './Tooltip';
 import AxisConfig from './Axis';
 import SeriesConfig from './Series';
 import AnimationConfig from './Animation';
+import ConditionConfig from './Condition';
 import { TPictorialBarBasicConfig } from '../type';
 
 const { TabPane } = Tabs;
@@ -19,7 +20,7 @@ class Config extends Component<
     const { value, onChange } = this.props;
     const {
       config: {
-        options: { series, xAxis, yAxis, tooltip, animation },
+        options: { series, xAxis, yAxis, tooltip, animation, condition },
       },
     } = value;
 
@@ -49,6 +50,11 @@ class Config extends Component<
         <TabPane key={'4'} tab={<Tab>动画</Tab>}>
           <ConfigList level={1}>
             <AnimationConfig value={animation} onChange={onChange} />
+          </ConfigList>
+        </TabPane>
+        <TabPane key="5" tab={<Tab>条件</Tab>}>
+          <ConfigList level={1}>
+            <ConditionConfig value={condition} onChange={onChange} />
           </ConfigList>
         </TabPane>
       </ComponentOptionConfig>

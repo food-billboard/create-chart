@@ -1,8 +1,11 @@
 import { CSSProperties, useMemo, useRef, useCallback } from 'react';
-import { uniqueId } from 'lodash';
+import { merge, uniqueId } from 'lodash';
 import classnames from 'classnames';
 import Slider from 'react-slick';
-import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
+import {
+  useComponent,
+  useCondition,
+} from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -39,6 +42,7 @@ const ListBasic = (props: {
     index,
     columns: { data, margin, even, odd },
     header,
+    condition,
   } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -52,6 +56,7 @@ const ListBasic = (props: {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
+    onCondition,
   } = useComponent<TListConfig>(
     {
       component: value,
@@ -59,6 +64,12 @@ const ListBasic = (props: {
     },
     requestRef,
   );
+
+  const {
+    onCondition: propsOnCondition,
+    style: conditionStyle,
+    className: conditionClassName,
+  } = useCondition(onCondition);
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -99,8 +110,12 @@ const ListBasic = (props: {
   }, [contentHeight, column, margin]);
 
   const componentClassName = useMemo(() => {
-    return classnames(className, styles['component-other-list']);
-  }, [className, animation]);
+    return classnames(
+      className,
+      styles['component-other-list'],
+      conditionClassName,
+    );
+  }, [className, animation, conditionClassName]);
 
   // 列表行
   const listItem = useCallback(
@@ -285,7 +300,11 @@ const ListBasic = (props: {
 
   return (
     <>
-      <div className={componentClassName} style={style} id={chartId.current}>
+      <div
+        className={componentClassName}
+        style={merge(style, conditionStyle)}
+        id={chartId.current}
+      >
         {headerDom}
         {listContent}
       </div>
@@ -294,7 +313,9 @@ const ListBasic = (props: {
         ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
+        reCondition={propsOnCondition}
         componentFilter={componentFilter}
+        componentCondition={condition}
       />
     </>
   );

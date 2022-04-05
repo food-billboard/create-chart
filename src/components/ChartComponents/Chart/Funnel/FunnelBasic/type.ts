@@ -23,4 +23,5 @@ export type TFunnelBasicConfig = {
     };
   };
   animation: ComponentData.ComponentChartAnimationConfig;
+  condition: ComponentData.ComponentCondition[];
 };

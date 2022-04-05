@@ -365,10 +365,18 @@ declare namespace ComponentData {
     rule: ComponentRuleConditionItem[];
   };
 
+  // condition action type
+  export type ComponentConditionActionType =
+    | 'visible'
+    | 'hidden'
+    | 'ease-in-out'
+    | 'ease-in'
+    | 'ease-out';
+
   // condition
   export type ComponentCondition = {
     id: string;
-    action: 'visible' | 'hidden' | 'ease-in-out' | 'ease-in' | 'ease-out';
+    action: ComponentConditionActionType;
     type: 'code' | 'condition';
     value: {
       code: {

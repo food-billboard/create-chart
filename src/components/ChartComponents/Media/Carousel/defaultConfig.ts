@@ -3,6 +3,7 @@ import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
+  DEFAULT_CONDITION_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { getName } from '@/utils/constants/defaultValue';
 import { TCarouselConfig } from './type';
@@ -54,6 +55,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TCarouselConfig> = {
     },
   },
   options: {
+    condition: [DEFAULT_CONDITION_CONFIG()],
     speed: 500,
     autoplay: true,
     dot: {

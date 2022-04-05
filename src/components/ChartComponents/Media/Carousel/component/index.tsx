@@ -2,7 +2,10 @@ import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import { Carousel } from 'antd';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
+import {
+  useComponent,
+  useCondition,
+} from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -27,7 +30,7 @@ const CarouselBasic = (props: {
       style: { height },
     },
   } = value;
-  const { dot, speed, autoplay, fade } = options;
+  const { dot, speed, autoplay, fade, condition } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -40,6 +43,7 @@ const CarouselBasic = (props: {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
+    onCondition,
   } = useComponent<TCarouselConfig>(
     {
       component: value,
@@ -47,6 +51,12 @@ const CarouselBasic = (props: {
     },
     requestRef,
   );
+
+  const {
+    onCondition: propsOnCondition,
+    style: conditionStyle,
+    className: conditionClassName,
+  } = useCondition(onCondition);
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -62,8 +72,12 @@ const CarouselBasic = (props: {
   );
 
   const componentClassName = useMemo(() => {
-    return classnames(className, styles['component-media-carousel']);
-  }, [className]);
+    return classnames(
+      className,
+      styles['component-media-carousel'],
+      conditionClassName,
+    );
+  }, [className, conditionClassName]);
 
   const imageList = useMemo(() => {
     return finalValue.map((item: any, index: number) => {
@@ -93,6 +107,7 @@ const CarouselBasic = (props: {
             height: '100%',
           },
           style,
+          conditionStyle,
         )}
         id={chartId.current}
       >
@@ -115,7 +130,9 @@ const CarouselBasic = (props: {
         ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
+        reCondition={propsOnCondition}
         componentFilter={componentFilter}
+        componentCondition={condition}
       />
     </>
   );
