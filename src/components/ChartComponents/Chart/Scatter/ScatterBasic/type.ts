@@ -1,6 +1,8 @@
 export type TScatterBasicConfig = {
   legend: Omit<ComponentData.ComponentLegend, 'type'>;
-  tooltip: ComponentData.ComponentTooltip;
+  tooltip: ComponentData.ComponentTooltip & {
+    animation: ComponentData.ComponentTooltipAnimation;
+  };
   xAxis: ComponentData.ComponentXAxis;
   yAxis: ComponentData.ComponentYAxis;
   series: {

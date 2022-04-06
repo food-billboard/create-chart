@@ -7,7 +7,9 @@ export type TBarBasicConfig = {
       lineStyle: ComponentData.ComponentLineGroupConfig;
     };
   };
-  tooltip: ComponentData.ComponentTooltip;
+  tooltip: ComponentData.ComponentTooltip & {
+    animation: ComponentData.ComponentTooltipAnimation;
+  };
   series: {
     showBackground: boolean;
     backgroundStyle: {

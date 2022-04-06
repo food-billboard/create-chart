@@ -10,6 +10,7 @@ import {
   DEFAULT_X_AXIS_CONFIG,
   DEFAULT_Y_AXIS_CONFIG,
   DEFAULT_CONDITION_CONFIG,
+  DEFAULT_TOOLTIP_ANIMATION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue } from '@/utils/constants';
 import { TScatterBasicConfig } from './type';
@@ -64,6 +65,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TScatterBasicConfig>
       legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
       tooltip: {
         ...DEFAULT_TOOLTIP_CONFIG,
+        animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
         show: false,
       },
       xAxis: DEFAULT_X_AXIS_CONFIG,

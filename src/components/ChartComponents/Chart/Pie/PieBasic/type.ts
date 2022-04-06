@@ -1,6 +1,8 @@
 export type TPieBasicConfig = {
   legend: Omit<ComponentData.ComponentLegend, 'type'>;
-  tooltip: ComponentData.ComponentTooltip;
+  tooltip: ComponentData.ComponentTooltip & {
+    animation: ComponentData.ComponentTooltipAnimation;
+  };
   series: {
     label: Omit<ComponentData.ComponentSeriesLabelConfig, 'position'> & {
       formatter: string;

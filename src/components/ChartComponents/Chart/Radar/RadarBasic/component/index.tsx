@@ -10,6 +10,7 @@ import {
   useComponentResize,
   useAnimationChange,
   useCondition,
+  useChartComponentTooltip,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -29,7 +30,7 @@ const RadarBasic = (props: {
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
-  const { screenTheme } = global;
+  const { screenTheme, screenType } = global;
 
   const {
     id,
@@ -238,6 +239,8 @@ const RadarBasic = (props: {
       },
       true,
     );
+    screenType !== 'edit' &&
+      useChartComponentTooltip(chartInstance.current!, series);
   };
 
   useChartComponentResize(chartInstance.current!);

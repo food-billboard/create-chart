@@ -7,7 +7,9 @@ export type TLineBasicConfig = {
       lineStyle: ComponentData.ComponentLineGroupConfig;
     };
   };
-  tooltip: ComponentData.ComponentTooltip;
+  tooltip: ComponentData.ComponentTooltip & {
+    animation: ComponentData.ComponentTooltipAnimation;
+  };
   series: {
     smooth: boolean;
     label: ComponentData.ComponentSeriesLabelConfig & {

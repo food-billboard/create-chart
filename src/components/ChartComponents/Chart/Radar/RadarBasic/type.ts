@@ -1,6 +1,8 @@
 export type TRadarBasicConfig = {
   legend: Omit<ComponentData.ComponentLegend, 'type'>;
-  tooltip: ComponentData.ComponentTooltip;
+  tooltip: ComponentData.ComponentTooltip & {
+    animation: ComponentData.ComponentTooltipAnimation;
+  };
   radar: {
     center: [number, number];
     radius: number;

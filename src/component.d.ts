@@ -388,6 +388,11 @@ declare namespace ComponentData {
     };
   };
 
+  export type ComponentTooltipAnimation = {
+    speed: number;
+    show: boolean;
+  };
+
   export type ComponentChartAnimationConfig = {
     animation: boolean;
     animationEasing: ChartAnimationType;

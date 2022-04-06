@@ -123,6 +123,13 @@ export const DEFAULT_TOOLTIP_CONFIG: ComponentData.ComponentTooltip = {
   },
 };
 
+// tooltip animation
+export const DEFAULT_TOOLTIP_ANIMATION_CONFIG: ComponentData.ComponentTooltipAnimation =
+  {
+    show: false,
+    speed: 5000,
+  };
+
 // animation
 export const DEFAULT_ANIMATION_CONFIG: ComponentData.ComponentChartAnimationConfig =
   {

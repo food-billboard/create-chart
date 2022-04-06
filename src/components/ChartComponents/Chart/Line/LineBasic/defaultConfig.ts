@@ -11,6 +11,7 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
   DEFAULT_CONDITION_CONFIG,
+  DEFAULT_TOOLTIP_ANIMATION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue, getSeries } from '@/utils/constants';
 import { TLineBasicConfig } from './type';
@@ -118,7 +119,10 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TLineBasicConfig> =
           },
         },
       }),
-      tooltip: DEFAULT_TOOLTIP_CONFIG,
+      tooltip: {
+        ...DEFAULT_TOOLTIP_CONFIG,
+        animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+      },
       animation: {
         ...DEFAULT_ANIMATION_CONFIG,
         animationDuration: 2000,

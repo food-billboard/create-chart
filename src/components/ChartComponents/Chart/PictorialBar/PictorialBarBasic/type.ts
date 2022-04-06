@@ -5,7 +5,9 @@ export type TPictorialBarBasicConfig = {
     max: number;
   };
   yAxis: CommonAxisConfig;
-  tooltip: ComponentData.ComponentTooltip;
+  tooltip: ComponentData.ComponentTooltip & {
+    animation: ComponentData.ComponentTooltipAnimation;
+  };
   series: {
     spirit: {
       show: boolean;

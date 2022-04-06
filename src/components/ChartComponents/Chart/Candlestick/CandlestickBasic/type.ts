@@ -23,7 +23,9 @@ export type markLineTypeConfig = {
 export type TCandlestickBasicConfig = {
   xAxis: ComponentData.ComponentXAxis;
   yAxis: ComponentData.ComponentYAxis;
-  tooltip: ComponentData.ComponentTooltip;
+  tooltip: ComponentData.ComponentTooltip & {
+    animation: ComponentData.ComponentTooltipAnimation;
+  };
   series: {
     barWidth: number;
     itemStyle: {

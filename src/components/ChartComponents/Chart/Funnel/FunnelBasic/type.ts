@@ -1,6 +1,8 @@
 export type TFunnelBasicConfig = {
   legend: Omit<ComponentData.ComponentLegend, 'type'>;
-  tooltip: ComponentData.ComponentTooltip;
+  tooltip: ComponentData.ComponentTooltip & {
+    animation: ComponentData.ComponentTooltipAnimation;
+  };
   series: ComponentData.PositionType & {
     min: number;
     max: number;

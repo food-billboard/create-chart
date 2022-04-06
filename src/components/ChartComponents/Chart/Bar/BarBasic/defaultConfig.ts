@@ -11,6 +11,7 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
   DEFAULT_CONDITION_CONFIG,
+  DEFAULT_TOOLTIP_ANIMATION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue } from '@/utils/constants';
 import { TBarBasicConfig } from './type';
@@ -99,7 +100,10 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBarBasicConfig> = {
         },
       },
     }),
-    tooltip: DEFAULT_TOOLTIP_CONFIG,
+    tooltip: {
+      ...DEFAULT_TOOLTIP_CONFIG,
+      animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+    },
     animation: {
       ...DEFAULT_ANIMATION_CONFIG,
       animationDuration: 2000,
