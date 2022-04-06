@@ -127,7 +127,7 @@ const ConditionConfig = (props: ConditionConfigProps) => {
                         value: 'ease-in',
                       },
                       {
-                        label: '渐隐渐现',
+                        label: '渐隐渐显',
                         value: 'ease-in-out',
                       },
                     ]}

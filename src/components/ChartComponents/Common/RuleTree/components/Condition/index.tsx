@@ -1,8 +1,8 @@
 import { useCallback, useMemo, CSSProperties } from 'react';
 import { Select } from 'antd';
-import { nanoid } from 'nanoid';
 import classnames from 'classnames';
 import { DeleteOutlined, PlusCircleTwoTone } from '@ant-design/icons';
+import { ParamsSelectSingle } from '@/components/ParamsSelect';
 import { DEFAULT_CONDITION_CONFIG_ITEM_RULE_VALUE } from '../../../Constants/defaultConfig';
 import Input from '../../../Input';
 import Header from '../Header';
@@ -49,7 +49,7 @@ const ConditionItem = (props: {
         },
       )}
     >
-      <Input
+      <ParamsSelectSingle
         value={params}
         style={{
           height: 24,

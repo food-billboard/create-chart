@@ -1,21 +1,23 @@
 import { useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { connect } from 'dva';
 import { useUpdateEffect } from 'ahooks';
+import { noop } from 'lodash';
 import { CompareFilterUtil } from '@/utils/Assist/FilterData';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 export type TFetchFragmentProps = {
+  id: string;
   params: ComponentData.TParams[];
   filter: ComponentData.TFilterConfig[];
   constants: ComponentData.TConstants[];
   screenType: ComponentData.ScreenType;
   url: string;
   componentFilter: ComponentData.TComponentFilterConfig[];
-  componentCondition: ComponentData.ComponentCondition[];
+  componentCondition?: ComponentData.ComponentCondition[];
 
   reFetchData: () => Promise<any>;
   reGetValue: () => void;
-  reCondition: (condition: ComponentData.ComponentCondition) => void;
+  reCondition?: (condition: ComponentData.ComponentCondition) => void;
 };
 
 export type TFetchFragmentRef = {
@@ -31,11 +33,12 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
       filter,
       constants,
       componentFilter,
-      componentCondition,
+      componentCondition = [],
       url,
       reFetchData,
       reGetValue,
-      reCondition,
+      reCondition = noop,
+      id,
       screenType,
     } = props;
 
@@ -44,8 +47,10 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
       new CompareFilterUtil(
         {
           url,
+          id,
           componentFilter,
           componentCondition,
+          componentConstants: constants,
           onFetch: async () => {
             return reFetchData();
           },
@@ -53,6 +58,10 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
             return reGetValue();
           },
           onCondition: reCondition,
+          onHashChange: () => {
+            // * 可能存在hash值手动更改的情况
+            filterUtil.current?.compare(params);
+          },
         },
         filter,
         params,
@@ -63,6 +72,12 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
     useUpdateEffect(() => {
       filterUtil.current?.compare(params);
     }, [params]);
+
+    useEffect(() => {
+      componentCondition.forEach((condition) => {
+        reCondition(condition);
+      });
+    }, [componentCondition, reCondition]);
 
     useImperativeHandle(
       ref,

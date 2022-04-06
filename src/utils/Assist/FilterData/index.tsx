@@ -210,22 +210,46 @@ const filterUtil = new FilterData();
 type TFilterData = ComponentData.TFilterConfig &
   ComponentData.TComponentFilterConfig;
 
+function hashChangeListenerBind() {
+  let bind = false;
+  let list: any = {};
+  return function (id: string, callback: any) {
+    list[id] = callback;
+    if (bind) return;
+    bind = true;
+    window.addEventListener('hashchange', (e) => {
+      VariableStringUtil.getAllUrlParams();
+      Object.values(list).forEach((item: any) => {
+        item(e);
+      });
+    });
+  };
+}
+
+const hashChangeListenerBindFunc = hashChangeListenerBind();
+
 // 检查变更并更新
 export class CompareFilterUtil {
   constructor(
     {
+      id,
       componentFilter,
+      componentCondition,
+      componentConstants,
       url,
       onFilter,
       onFetch,
       onCondition,
-      componentCondition,
+      onHashChange,
     }: {
       componentFilter: ComponentData.TComponentFilterConfig[];
       componentCondition: ComponentData.ComponentCondition[];
+      componentConstants: ComponentData.TConstants[];
       url: string;
+      id: string;
       onFilter: () => Promise<any>;
       onFetch: () => Promise<any>;
+      onHashChange: (e: any) => void;
       onCondition: (condition: ComponentData.ComponentCondition) => void;
     },
     filter: ComponentData.TFilterConfig[],
@@ -233,11 +257,14 @@ export class CompareFilterUtil {
   ) {
     this.prevParams = defaultValue;
     this.condition = componentCondition;
+    this.constants = componentConstants;
     this.onFetch = onFetch;
     this.onFilter = onFilter;
     this.onCondition = onCondition;
     this.initComponentFilter(filter, componentFilter);
     this.initParamsMap(url, this.filter, this.condition);
+    // hash 值改变监听
+    hashChangeListenerBindFunc(id, onHashChange);
   }
 
   onFilter;
@@ -247,10 +274,15 @@ export class CompareFilterUtil {
   // 组件过滤函数的集合
   filter: TFilterData[] = [];
   condition;
+  constants;
   mapParams: {
     [variable: string]: {
       action: Function[];
-      index: number;
+      index: {
+        type: 'params' | 'constants' | 'href';
+        value: any;
+        getValue: (params?: ComponentData.TParams[]) => any;
+      };
       value?: string;
     };
   } = {};
@@ -325,6 +357,80 @@ export class CompareFilterUtil {
     }, []);
   }
 
+  // 生成关联参数的索引获取
+  getParamsOrigin(variable: string) {
+    // params
+    const paramsIndex = this.prevParams.findIndex(
+      (param) => param.id === variable,
+    );
+
+    // constants
+    const constantsIndex = this.constants.findIndex(
+      (constant) => constant.id === variable,
+    );
+
+    // href
+    const hrefParams = VariableStringUtil.getAllUrlParams();
+    const hrefIndex = hrefParams[variable];
+
+    // href
+    if (hrefIndex !== undefined) {
+      return {
+        index: {
+          type: 'href',
+          value: variable,
+          getValue: () => {
+            const hrefParams = VariableStringUtil.getAllUrlParams();
+            return hrefParams[variable];
+          },
+        },
+        value: hrefIndex,
+      };
+    }
+    // params
+    else if (!!~paramsIndex) {
+      const target = this.prevParams[paramsIndex];
+      return {
+        index: {
+          type: 'params',
+          value: paramsIndex,
+          getValue: (params: ComponentData.TParams[]) => {
+            return params[paramsIndex].value;
+          },
+        },
+        value: target.value,
+      };
+    }
+    // constants
+    else if (!!~constantsIndex) {
+      const target = this.constants[constantsIndex];
+      return {
+        index: {
+          type: 'constants',
+          value: constantsIndex,
+          getValue: () => {
+            return this.constants[constantsIndex].value;
+          },
+        },
+        value: target.value,
+      };
+    }
+    // unknown 暂时取href
+    else {
+      return {
+        index: {
+          type: 'href',
+          value: variable,
+          getValue: () => {
+            const hrefParams = VariableStringUtil.getAllUrlParams();
+            return hrefParams[variable];
+          },
+        },
+        value: hrefIndex,
+      };
+    }
+  }
+
   // 参数初始化
   initParamsMap(
     url: string,
@@ -346,22 +452,14 @@ export class CompareFilterUtil {
       ...this.initComponentCondition(condition),
     ].forEach((item) => {
       const { action, variables } = item;
-
       variables.forEach((variable) => {
         if (this.mapParams[variable]) {
           this.mapParams[variable].action.push(action);
         } else {
-          const index = this.prevParams.findIndex(
-            (param) => param.id === variable,
-          );
-          const target = this.prevParams[index];
-          if (!!~index) {
-            this.mapParams[variable] = {
-              index,
-              action: [action],
-              value: target.value,
-            };
-          }
+          this.mapParams[variable] = {
+            ...(this.getParamsOrigin(variable) as any),
+            action: [action],
+          };
         }
       });
     });
@@ -374,10 +472,11 @@ export class CompareFilterUtil {
       const [variable, value] = param;
       const { action, index, value: prevValue } = value;
 
-      const currentTarget = params[index];
+      // 当前的值
+      const currentTargetValue = index.getValue(params);
 
-      if (prevValue !== currentTarget.value) {
-        this.mapParams[variable].value = currentTarget.value;
+      if (prevValue !== currentTargetValue) {
+        this.mapParams[variable].value = currentTargetValue;
 
         action.forEach((actionData) => {
           if (!actionList.includes(actionData)) actionList.push(actionData);

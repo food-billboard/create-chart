@@ -1,5 +1,4 @@
 import Mustache from 'mustache';
-import { nanoid } from 'nanoid';
 import { getPageQuery } from '../../tool';
 
 class VariableStringUtil {
@@ -85,7 +84,7 @@ class VariableStringUtil {
         acc.push({
           key,
           value,
-          id: nanoid(),
+          id: key,
           description: `来源于url地址:${key}`,
         });
         return acc;

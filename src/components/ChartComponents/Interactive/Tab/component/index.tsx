@@ -31,6 +31,7 @@ const TabBasic = (props: {
   const { className, style, value, global } = props;
 
   const {
+    id,
     config: { options },
   } = value;
   const { active, base, loop } = options;
@@ -164,6 +165,7 @@ const TabBasic = (props: {
         {domList}
       </div>
       <FetchFragment
+        id={id}
         url={requestUrl}
         ref={requestRef}
         reFetchData={request}

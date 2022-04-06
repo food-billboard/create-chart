@@ -34,6 +34,7 @@ const WordCloudBasic = (props: {
 
   const {
     config: { options },
+    id,
   } = value;
 
   const { series, tooltip, condition } = options;
@@ -211,6 +212,7 @@ const WordCloudBasic = (props: {
         id={chartId.current}
       ></div>
       <FetchFragment
+        id={id}
         url={requestUrl}
         ref={requestRef}
         reFetchData={request}

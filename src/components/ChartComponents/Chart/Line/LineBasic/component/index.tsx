@@ -32,6 +32,7 @@ const LineBasic = (props: {
   const { screenTheme } = global;
 
   const {
+    id,
     config: { options },
   } = value;
 
@@ -291,6 +292,7 @@ const LineBasic = (props: {
         id={chartId.current}
       ></div>
       <FetchFragment
+        id={id}
         url={requestUrl}
         ref={requestRef}
         reFetchData={request}

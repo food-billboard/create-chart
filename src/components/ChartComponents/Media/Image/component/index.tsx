@@ -24,6 +24,7 @@ const ImageBasic = (props: {
   const { className, style, value, global } = props;
 
   const {
+    id,
     config: { options },
   } = value;
   const { type, content, repeat, condition } = options;
@@ -105,6 +106,7 @@ const ImageBasic = (props: {
         onClick={onClick}
       ></div>
       <FetchFragment
+        id={id}
         url={requestUrl}
         ref={requestRef}
         reFetchData={request}

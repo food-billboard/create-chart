@@ -15,18 +15,24 @@ export const useCondition = (
       switch (result) {
         case 'ease-in':
           setClassName('animate__fadeIn animate__animated');
+          setStyle({});
           break;
         case 'ease-in-out':
           setClassName('component-condition-ease-in-out');
+          setStyle({});
           break;
         case 'ease-out':
           setClassName('animate__fadeOut animate__animated');
+          setStyle({});
           break;
         case 'hidden':
           setClassName('component-condition-hidden');
+          setStyle({});
           break;
         case 'visible':
-          break;
+        default:
+          setClassName('');
+          setStyle({});
       }
 
       return result;

@@ -168,16 +168,16 @@ export function useComponent<P extends object = {}>(
     condition: ComponentData.ComponentCondition,
   ) => ComponentData.ComponentConditionActionType | false = useCallback(
     (globalParams, constants, condition) => {
+      if (screenType === 'edit') return false;
       const { type, action, value } = condition;
       const { code, condition: valueCondition } = value;
       let result: boolean = false;
       if (type === 'code') {
         const { code: dealCode } = code;
         // 代码执行
-        let filterFunction = new Function('data', dealCode);
+        let conditionFunction = new Function('data', dealCode);
         try {
-          result = filterFunction(
-            value,
+          result = conditionFunction(
             VariableStringUtil.getAllGlobalParams(globalParams, constants),
           );
         } catch (err) {
@@ -193,7 +193,11 @@ export function useComponent<P extends object = {}>(
           return rule[method]((item) => {
             const { params, value, condition } = item;
             if (!params) return false;
-            const target = globalParams.find((item) => item.id === params);
+            const allParams = VariableStringUtil.getAllGlobalParams4Array(
+              globalParams,
+              constants,
+            );
+            const target = allParams.find((item) => item.id === params);
             if (!target) return false;
 
             switch (condition) {
@@ -218,7 +222,7 @@ export function useComponent<P extends object = {}>(
 
       return result ? action : false;
     },
-    [],
+    [screenType],
   );
 
   // 同步基础事件的数据到全局参数

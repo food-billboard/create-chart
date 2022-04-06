@@ -43,6 +43,7 @@ const CountUpNumberBasic = (props: {
   const { className, style, value, global } = props;
 
   const {
+    id,
     config: { options },
   } = value;
   const {
@@ -162,6 +163,7 @@ const CountUpNumberBasic = (props: {
         {calculateValue || ''}
       </div>
       <FetchFragment
+        id={id}
         url={requestUrl}
         ref={requestRef}
         reFetchData={request}

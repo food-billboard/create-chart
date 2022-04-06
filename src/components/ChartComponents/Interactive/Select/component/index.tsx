@@ -26,6 +26,7 @@ const SelectBasic = (props: {
   const { className, style, value, global } = props;
 
   const {
+    id,
     config: { options },
   } = value;
   const {
@@ -228,6 +229,7 @@ const SelectBasic = (props: {
         ></Select>
       </div>
       <FetchFragment
+        id={id}
         url={requestUrl}
         ref={requestRef}
         reFetchData={request}

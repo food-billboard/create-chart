@@ -32,6 +32,7 @@ const ListBasic = (props: {
   const { screenType } = global;
 
   const {
+    id,
     config: {
       options,
       style: { height },
@@ -309,6 +310,7 @@ const ListBasic = (props: {
         {listContent}
       </div>
       <FetchFragment
+        id={id}
         url={requestUrl}
         ref={requestRef}
         reFetchData={request}

@@ -29,6 +29,7 @@ const CarouselBasic = (props: {
       options,
       style: { height },
     },
+    id,
   } = value;
   const { dot, speed, autoplay, fade, condition } = options;
 
@@ -126,6 +127,7 @@ const CarouselBasic = (props: {
         </Carousel>
       </div>
       <FetchFragment
+        id={id}
         url={requestUrl}
         ref={requestRef}
         reFetchData={request}

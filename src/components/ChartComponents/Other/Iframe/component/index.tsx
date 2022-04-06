@@ -19,7 +19,7 @@ const IframeBasic = (props: {
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
-  const { screenTheme } = global;
+  const { id } = value;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -66,6 +66,7 @@ const IframeBasic = (props: {
         />
       </div>
       <FetchFragment
+        id={id}
         url={requestUrl}
         ref={requestRef}
         reFetchData={request}

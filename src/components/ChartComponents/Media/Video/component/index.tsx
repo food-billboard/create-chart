@@ -24,6 +24,7 @@ const VideoBasic = (props: {
   const { className, style, value, global } = props;
 
   const {
+    id,
     config: { options },
   } = value;
   const { controls, loop, autoplay: opAutoplay, muted, condition } = options;
@@ -103,6 +104,7 @@ const VideoBasic = (props: {
         />
       </div>
       <FetchFragment
+        id={id}
         url={requestUrl}
         ref={requestRef}
         reFetchData={request}
