@@ -4,3 +4,4 @@ export * from './useChartValueMap';
 export * from './useComponentResize';
 export * from './useAnimationChange';
 export * from './useCondition';
+export * from './useChartComponentTooltip';

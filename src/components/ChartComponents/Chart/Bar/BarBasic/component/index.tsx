@@ -10,6 +10,7 @@ import {
   useComponentResize,
   useAnimationChange,
   useCondition,
+  useChartComponentTooltip,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -29,7 +30,7 @@ const BarBasic = (props: {
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
-  const { screenTheme } = global;
+  const { screenTheme, screenType } = global;
 
   const {
     id,
@@ -100,7 +101,6 @@ const BarBasic = (props: {
       },
     );
     chartInstance.current = chart;
-
     setOption();
   };
 
@@ -145,7 +145,7 @@ const BarBasic = (props: {
             name: item,
           };
         })
-      : baseSeries;
+      : [baseSeries];
 
     return realSeries;
   };
@@ -168,7 +168,8 @@ const BarBasic = (props: {
       splitLine,
       ...nextYAxis
     } = yAxis;
-    const series = getSeries();
+
+    const realSeries = getSeries();
 
     chartInstance.current?.setOption({
       grid: {
@@ -182,7 +183,7 @@ const BarBasic = (props: {
           color: getRgbaString(legendTextStyle.color),
         },
       },
-      series,
+      series: realSeries,
       xAxis: [
         {
           ...nextXAxis,
@@ -233,6 +234,9 @@ const BarBasic = (props: {
         },
       },
     });
+
+    screenType !== 'edit' &&
+      useChartComponentTooltip(chartInstance.current!, realSeries);
   };
 
   useChartComponentResize(chartInstance.current!);
