@@ -1,19 +1,30 @@
+import { useEffect } from 'react';
 import { ConfigProvider } from 'antd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import SplitPane from 'react-split-pane';
+import { connect } from 'dva';
 import FetchScreenComponent from '@/components/FetchScreenComponent';
 import Header from './components/Header';
 import LeftContent from './components/LeftContent';
 import RightContent from './components/RightContent';
 import Panel from './components/Panel';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
-const Designer = () => {
+const Designer = (props: {
+  setScreenType: (value: ComponentData.ScreenType) => void;
+}) => {
+  const { setScreenType } = props;
+
   const preventDefaultContextMenu = (e: any) => {
     e.preventDefault();
     return false;
   };
+
+  useEffect(() => {
+    setScreenType('edit');
+  }, [setScreenType]);
 
   return (
     <ConfigProvider componentSize="small">
@@ -35,4 +46,4 @@ const Designer = () => {
   );
 };
 
-export default Designer;
+export default connect(mapStateToProps, mapDispatchToProps)(Designer);

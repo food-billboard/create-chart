@@ -130,7 +130,10 @@ const RadarBasic = (props: {
         ...splitArea,
         areaStyle: {
           ...splitArea.areaStyle,
-          color: splitArea.areaStyle.color.map((item) => {
+          color: (Array.isArray(splitArea.areaStyle.color)
+            ? splitArea.areaStyle.color
+            : [splitArea.areaStyle.color]
+          ).map((item) => {
             return getRgbaString(item);
           }),
         },

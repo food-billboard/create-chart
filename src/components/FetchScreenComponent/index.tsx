@@ -5,6 +5,7 @@ import { get } from 'lodash';
 import { history } from 'umi';
 import { DEFAULT_SCREEN_DATA } from '@/utils/constants';
 import { getScreenDetail } from '@/services';
+import { mergeComponentDefaultConfig } from '../ChartComponents';
 import { autoFitScale } from '../../pages/Designer/components/Panel/components/ToolBar/components/Scale';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
@@ -38,7 +39,8 @@ const FetchScreenComponent = (props: {
           ...nextData,
           _id: id,
         });
-        setComponentAll(componentsList);
+        const mergedComponentList = mergeComponentDefaultConfig(componentsList);
+        setComponentAll(mergedComponentList);
       } catch (err) {
         message.info('数据获取失败');
       }

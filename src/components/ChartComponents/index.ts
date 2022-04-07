@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { mergeWithoutArray } from '@/utils/tool';
 // Chart
 import BarBasic from './Chart/Bar/BarBasic';
 import LineBasic from './Chart/Line/LineBasic';
@@ -83,4 +84,21 @@ export function getComponentConfigComponentByType(
   componentType: ComponentData.TComponentSelfType,
 ) {
   return COMPONENT_MAP.get(componentType)?.configComponent;
+}
+
+export function mergeComponentDefaultConfig(
+  components: ComponentData.TComponentData[] | ComponentData.TComponentData,
+) {
+  const realComponents = Array.isArray(components) ? components : [components];
+  return realComponents.map((component) => {
+    const { componentType } = component;
+    const defaultConfig = getComponentDefaultConfigByType(componentType);
+    return mergeWithoutArray(
+      {},
+      {
+        config: defaultConfig,
+      },
+      component,
+    );
+  });
 }
