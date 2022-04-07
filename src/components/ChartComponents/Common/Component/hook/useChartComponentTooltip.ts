@@ -8,14 +8,14 @@ export type TooltipOptions = {
 
 const DEFAULT_OPTIONS: TooltipOptions = {
   interval: 2000,
-  loopSeries: false,
+  loopSeries: true,
   seriesIndex: 1,
 };
 
 export const useChartComponentTooltip = (
   chart: echarts.ECharts,
   series: any,
-  options?: TooltipOptions,
+  options?: Partial<TooltipOptions>,
 ) => {
   let dataIndex: number = 0;
   let seriesIndex: number = 0;
@@ -132,7 +132,7 @@ export const useChartComponentTooltip = (
       lastShowDataIndex = dataIndex;
       dataIndex = (dataIndex + 1) % dataLength;
       if (loopSeries && dataIndex === 0) {
-        dataIndex = (seriesIndex + 1) % seriesLength;
+        seriesIndex = (seriesIndex + 1) % seriesLength;
       }
 
       first = false;

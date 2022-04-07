@@ -153,6 +153,7 @@ const PictorialBar = (props: {
     const {
       backgroundColor,
       textStyle: tooltipTextStyle,
+      animation,
       ...nextTooltip
     } = tooltip;
     const {
@@ -218,7 +219,10 @@ const PictorialBar = (props: {
       },
     });
     screenType !== 'edit' &&
-      useChartComponentTooltip(chartInstance.current!, series);
+      animation.show &&
+      useChartComponentTooltip(chartInstance.current!, series, {
+        interval: animation.speed,
+      });
   };
 
   useChartComponentResize(chartInstance.current!);

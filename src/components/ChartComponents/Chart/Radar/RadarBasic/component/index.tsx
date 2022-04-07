@@ -200,7 +200,7 @@ const RadarBasic = (props: {
       animationDurationUpdate: animationDuration,
     };
 
-    return baseSeries;
+    return [baseSeries];
   };
 
   const setOption = () => {
@@ -208,6 +208,7 @@ const RadarBasic = (props: {
     const {
       backgroundColor,
       textStyle: tooltipTextStyle,
+      animation,
       ...nextTooltip
     } = tooltip;
 
@@ -240,7 +241,10 @@ const RadarBasic = (props: {
       true,
     );
     screenType !== 'edit' &&
-      useChartComponentTooltip(chartInstance.current!, series);
+      animation.show &&
+      useChartComponentTooltip(chartInstance.current!, series, {
+        interval: animation.speed,
+      });
   };
 
   useChartComponentResize(chartInstance.current!);

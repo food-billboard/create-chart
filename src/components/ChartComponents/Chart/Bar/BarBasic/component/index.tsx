@@ -155,6 +155,7 @@ const BarBasic = (props: {
     const {
       backgroundColor,
       textStyle: tooltipTextStyle,
+      animation,
       ...nextTooltip
     } = tooltip;
     const {
@@ -236,7 +237,10 @@ const BarBasic = (props: {
     });
 
     screenType !== 'edit' &&
-      useChartComponentTooltip(chartInstance.current!, realSeries);
+      animation.show &&
+      useChartComponentTooltip(chartInstance.current!, realSeries, {
+        interval: animation.speed,
+      });
   };
 
   useChartComponentResize(chartInstance.current!);

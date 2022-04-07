@@ -38,7 +38,7 @@ const AxisConfig = (props: {
           type="xAxis"
           value={xAxis}
           onChange={onKeyChange.bind(null, 'xAxis')}
-          ignore={['position']}
+          ignore={['position', 'splitLine']}
         >
           <Item label="最大值">
             <FullForm>
@@ -60,7 +60,7 @@ const AxisConfig = (props: {
           type="yAxis"
           value={yAxis}
           onChange={onKeyChange.bind(null, 'yAxis')}
-          ignore={['position']}
+          ignore={['position', 'splitLine']}
         />
       </Tabs.TabPane>
     </Tabs>

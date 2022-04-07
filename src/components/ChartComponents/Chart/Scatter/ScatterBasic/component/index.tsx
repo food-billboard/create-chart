@@ -131,7 +131,7 @@ const ScatterBasic = (props: {
             name: item,
           };
         })
-      : baseSeries;
+      : [baseSeries];
 
     return realSeries;
   };
@@ -141,6 +141,7 @@ const ScatterBasic = (props: {
     const {
       backgroundColor,
       textStyle: tooltipTextStyle,
+      animation,
       ...nextTooltip
     } = tooltip;
     const {
@@ -217,7 +218,10 @@ const ScatterBasic = (props: {
       true,
     );
     screenType !== 'edit' &&
-      useChartComponentTooltip(chartInstance.current!, series);
+      animation.show &&
+      useChartComponentTooltip(chartInstance.current!, series, {
+        interval: animation.speed,
+      });
   };
 
   useChartComponentResize(chartInstance.current!);
