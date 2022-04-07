@@ -2,15 +2,48 @@
 
 .design-layer-manage-wrapper {
   height: 100%;
-  transition-property: padding, width;
-  transition-duration: 0.5s, 0.5s;
   flex: 1;
   flex-shrink: 0;
   overflow-y: auto;
   overflow-x: hidden;
   border-top: 1px solid @border-color-base;
-  &-content {
+  position: relative;
+  .design-layer-manage-content {
+    position: relative;
     min-height: 100%;
     width: 100%;
+    &-cover {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      left: 0;
+      top: 0;
+    }
+  }
+}
+.design-layer-manage-wrapper-transition {
+  transition-property: padding, width;
+  transition-duration: 0.5s, 0.5s;
+}
+.design-layer-manage-resize {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  padding: 0 2px;
+  cursor: col-resize;
+  box-sizing: content-box;
+  opacity: 0.4;
+  transition: opacity 0.3s;
+  &:hover {
+    opacity: 1;
+  }
+  &-content {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: 2px;
   }
 }

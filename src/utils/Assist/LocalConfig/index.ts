@@ -10,6 +10,7 @@ export class LocalConfig extends EventEmitter {
   }
 
   static CONFIG_KEY_BACKGROUND = 'CONFIG_KEY_BACKGROUND';
+  static CONFIG_KEY_LAYER_WIDTH = 'CONFIG_KEY_LAYER_WIDTH';
 
   loading = false;
   store;

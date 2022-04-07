@@ -11,6 +11,7 @@ import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 export type TreeProps = {
+  disabled?: boolean;
   iconMode: boolean;
   components: ComponentData.TComponentData[];
   select: string[];
@@ -193,7 +194,8 @@ class TreeClass extends Component<TreeProps> {
 }
 
 const TreeFunction = (props: TreeProps) => {
-  const { components, setSelect, setComponentAll, select, iconMode } = props;
+  const { components, setSelect, setComponentAll, select, iconMode, disabled } =
+    props;
 
   const [expendKeys, setExpendKeys] = useState<string[]>([]);
 
@@ -382,6 +384,7 @@ const TreeFunction = (props: TreeProps) => {
       defaultExpandedKeys={[]}
       className={styles['layer-manage-content']}
       onExpand={onExpend}
+      disabled={!!disabled}
     />
   );
 };

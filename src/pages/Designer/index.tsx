@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { ConfigProvider } from 'antd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import SplitPane from 'react-split-pane';
 import { connect } from 'dva';
 import FetchScreenComponent from '@/components/FetchScreenComponent';
 import Header from './components/Header';

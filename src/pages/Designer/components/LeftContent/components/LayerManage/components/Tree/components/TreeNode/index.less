@@ -9,9 +9,6 @@
   z-index: 9999;
   visibility: visible;
   opacity: @default-opacity;
-  &:hover {
-    opacity: 1;
-  }
   &-name {
     flex: 1;
     text-align: left;
@@ -32,6 +29,11 @@
   }
   &:hover &-action {
     visibility: visible;
+  }
+}
+.design-page-layer-item-hover {
+  &:hover {
+    opacity: 1;
   }
 }
 .design-page-layer-item-mode-icon {

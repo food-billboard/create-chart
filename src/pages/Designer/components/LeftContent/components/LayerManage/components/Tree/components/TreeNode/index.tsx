@@ -123,6 +123,7 @@ const ListItem = ({
         className={classnames(
           styles['design-page-layer-item'],
           {
+            [styles['design-page-layer-item-hover']]: !disabled,
             [styles['design-page-layer-item-mode-icon']]: iconMode,
             [styles['design-page-layer-item-mode-list']]: !iconMode,
             [styles['design-page-layer-item-disabled']]: !!disabled,

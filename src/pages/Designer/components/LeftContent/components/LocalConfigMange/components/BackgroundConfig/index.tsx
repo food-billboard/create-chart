@@ -6,7 +6,6 @@ import IconTooltip from '@/components/IconTooltip';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import { useLocalStorage } from '@/hooks';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
-import ThemeUtil from '@/utils/Assist/Theme';
 
 const { Item } = ConfigList;
 

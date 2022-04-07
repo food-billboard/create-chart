@@ -13,6 +13,7 @@ const LeftContent = () => {
   const layerRef = useRef<LayerManageRef>(null);
 
   const handleClick = useCallback((type) => {
+    // * 图层按钮
     if (type === 'layer') {
       const visible = layerRef.current?.visible;
       visible ? layerRef.current?.close() : layerRef.current?.open();
