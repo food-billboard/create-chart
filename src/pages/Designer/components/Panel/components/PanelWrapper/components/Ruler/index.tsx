@@ -6,6 +6,7 @@ import { useMouse, useHover } from 'ahooks';
 import { nanoid } from 'nanoid';
 import GuideLine from '@/components/GuideLine';
 import ComponentRuler from '@/components/Ruler';
+import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants';
 import { wrapperId, subWrapperId } from '../../constants';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import { AbsorbUtil } from '../AbsorbGuideLine/utils';
@@ -28,9 +29,18 @@ const Ruler = (props: {
   size: { width: number; height: number };
   guideLineList: ComponentData.TGuideLineConfigItem[];
   wrapperSetGuideLine: (value: Partial<ComponentData.TGuideLineConfig>) => void;
+  width: number;
+  height: number;
 }) => {
-  const { guideLineShow, size, guideLineList, wrapperSetGuideLine, scale } =
-    props;
+  const {
+    guideLineShow,
+    size,
+    guideLineList,
+    wrapperSetGuideLine,
+    scale,
+    width,
+    height,
+  } = props;
 
   const [mouseHorizontalGuideLine, setMouseHorizontalGuideLine] =
     useState<ComponentData.TGuideLineConfigItem>();
@@ -179,6 +189,13 @@ const Ruler = (props: {
     [guideLineList, wrapperSetGuideLine],
   );
 
+  const guideLineLimit = useMemo(() => {
+    return {
+      width: width * scale + PANEL_ABSOLUTE_POSITION.left,
+      height: height * scale + PANEL_ABSOLUTE_POSITION.top,
+    };
+  }, [width, height, scale]);
+
   const onMoveEnd = useCallback(
     (item: ComponentData.TGuideLineConfigItem, index: number) => {
       // close the disabled
@@ -186,18 +203,20 @@ const Ruler = (props: {
 
       const {
         type,
-        style: { left, top },
+        style: { left: originLeft, top: originTop },
       } = item;
       let change = false;
       const newGuideList = [...guideLineList];
+      const left = originLeft * scale;
+      const top = originTop * scale;
 
       if (type === 'horizontal') {
-        if (top <= 30 || top >= size.height) {
+        if (top <= 30 || top >= guideLineLimit.height) {
           newGuideList.splice(index, 1);
           change = true;
         }
       } else {
-        if (left <= 30 || left >= size.width) {
+        if (left <= 30 || left >= guideLineLimit.width) {
           newGuideList.splice(index, 1);
           change = true;
         }
@@ -209,12 +228,16 @@ const Ruler = (props: {
         AbsorbUtil.onGuideLineMoveEnd();
       }
     },
-    [guideLineList, size, wrapperSetGuideLine],
+    [guideLineList, guideLineLimit, wrapperSetGuideLine, scale],
   );
 
-  const onMoveStart = useCallback(() => {
-    disabledMouseGuideLine.current = true;
-  }, []);
+  const onMoveStart = useCallback(
+    (value: ComponentData.TGuideLineConfigItem, index: number) => {
+      disabledMouseGuideLine.current = true;
+      AbsorbUtil.onGuideLineMoveStart(value, index);
+    },
+    [],
+  );
 
   const onMouseMove = useCallback(
     (value: ComponentData.TGuideLineConfigItem, index: number) => {
@@ -234,7 +257,7 @@ const Ruler = (props: {
           {...item}
           onChange={onGuidelinePositionChange.bind(this, index)}
           onMouseUp={onMoveEnd.bind(this, item, index)}
-          onMouseDown={onMoveStart}
+          onMouseDown={onMoveStart.bind(null, item, index)}
           onDoubleClick={deleteGuideLine.bind(this, index)}
           onMouseMove={onMouseMove.bind(null, item, index)}
           key={item.id}
@@ -296,18 +319,15 @@ const Ruler = (props: {
         style={{ width: size.width }}
       >
         <div
-          className={classnames(
-            styles['designer-page-main-horizontal-ruler-prefix'],
-            'dis-flex',
-            'pos-ab',
-          )}
+          className={styles['designer-page-main-horizontal-ruler-prefix']}
         ></div>
         <ComponentRuler
           type="horizontal"
-          width={size.width - 70}
+          width={size.width}
           height={30}
           zoom={scale}
           unit={scale > 0.5 ? 50 : 100}
+          style={{ display: 'inline-block' }}
         />
       </div>
       <div

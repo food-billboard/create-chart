@@ -94,6 +94,8 @@ const PanelWrapper = (props: {
             size={size}
             wrapperSetGuideLine={wrapperSetGuideLine}
             scale={scale}
+            width={width}
+            height={height}
           />
           <GuideLineButton
             onClick={wrapperSetGuideLine.bind(null, { show: !guideLineShow })}

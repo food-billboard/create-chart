@@ -1,5 +1,5 @@
 import { uniqueId, debounce, pick, get, merge } from 'lodash';
-import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants';
+import { PANEL_ABSOLUTE_POSITION, GUIDE_LINE_PADDING } from '@/utils/constants';
 
 type PositionData = {
   width: number;
@@ -35,7 +35,7 @@ type NearlyData = {
     | 'vertical' /*垂直中间*/;
 };
 
-const NEARLY_RANGE = 20;
+const NEARLY_RANGE = 15;
 
 class AbsorbUtilClass {
   components: ComponentData.TComponentData[] = [];
@@ -65,6 +65,11 @@ class AbsorbUtilClass {
       type: ActionType;
       action: Function;
     };
+  } = {};
+
+  // 触发后延迟触发
+  dispatchDelayMap: {
+    [key: string]: number;
   } = {};
 
   // 注册
@@ -115,7 +120,7 @@ class AbsorbUtilClass {
     return value.reduce<any>((acc, cur) => {
       const { type, value } = cur;
       if (type === 'left') {
-        acc.left = comparePosition.left - comparePosition.width;
+        acc.left = comparePosition.left - targetPosition.width;
       } else if (type === 'top') {
         acc.top = comparePosition.top;
       } else if (type === 'bottom') {
@@ -179,11 +184,12 @@ class AbsorbUtilClass {
           target.left + target.width / 2 - origin.left - origin.width / 2,
         ),
       },
-    ].filter(
-      (item) =>
+    ].filter((item) => {
+      return (
         item.value <= NEARLY_RANGE &&
-        !ignore.includes(item.type as NearlyData['type']),
-    ) as NearlyData[];
+        !ignore.includes(item.type as NearlyData['type'])
+      );
+    }) as NearlyData[];
   }
 
   // 组件信息
@@ -194,13 +200,6 @@ class AbsorbUtilClass {
       'width',
       'height',
     ]);
-    return Object.entries(
-      pick(get(component, 'config.style'), ['left', 'top', 'width', 'height']),
-    ).reduce<PositionData>((acc, cur) => {
-      const [key, value] = cur;
-      acc[key as keyof PositionData] = (value || 0) * this.scale;
-      return acc;
-    }, {} as any);
   }
 
   // 辅助线信息
@@ -217,19 +216,44 @@ class AbsorbUtilClass {
     );
     return Object.entries({
       ...nextPosition,
-      left: left - PANEL_ABSOLUTE_POSITION.left,
-      top: top - PANEL_ABSOLUTE_POSITION.top,
+      left:
+        (left * this.scale -
+          PANEL_ABSOLUTE_POSITION.left +
+          GUIDE_LINE_PADDING +
+          1) /
+        this.scale,
+      top:
+        (top * this.scale -
+          PANEL_ABSOLUTE_POSITION.top +
+          GUIDE_LINE_PADDING +
+          1) /
+        this.scale,
     }).reduce<PositionData>((acc, cur) => {
       const [key, value] = cur;
-      acc[key as keyof PositionData] = value / this.scale;
+      acc[key as keyof PositionData] = value;
       return acc;
     }, {} as any);
   }
 
+  // 辅助线移动开始
+  onGuideLineMoveStart(
+    value: ComponentData.TGuideLineConfigItem,
+    index: number,
+  ) {
+    this.dispatchDelayMap[value.id] = 0;
+  }
+
   // 辅助线移动
-  _onGuideLineMove(value: ComponentData.TGuideLineConfigItem, index: number) {
-    // ! 暂时先不考虑辅助线了
-    return;
+  onGuideLineMove(value: ComponentData.TGuideLineConfigItem, index: number) {
+    // 10-20 不可移动
+
+    if (this.dispatchDelayMap[value.id] < 20) {
+      this.dispatchDelayMap[value.id]++;
+      if (this.dispatchDelayMap[value.id] > 10) {
+        return;
+      }
+    }
+
     const { type } = value;
 
     let nearlyComponent!: ComponentData.TComponentData;
@@ -260,9 +284,15 @@ class AbsorbUtilClass {
       let changeStyle: any = {};
 
       if (type === 'horizontal') {
-        changeStyle.top = top / this.scale + PANEL_ABSOLUTE_POSITION.top;
+        changeStyle.top =
+          ((top - guideLineInfo.height - GUIDE_LINE_PADDING) * this.scale +
+            PANEL_ABSOLUTE_POSITION.top) /
+          this.scale;
       } else {
-        changeStyle.left = left / this.scale + PANEL_ABSOLUTE_POSITION.left;
+        changeStyle.left =
+          ((left - guideLineInfo.width - GUIDE_LINE_PADDING) * this.scale +
+            PANEL_ABSOLUTE_POSITION.left) /
+          this.scale;
       }
 
       this.dispatchAction(
@@ -273,15 +303,14 @@ class AbsorbUtilClass {
         index,
         this.guideLine,
       );
+      if (this.dispatchDelayMap[value.id] >= 20) {
+        this.dispatchDelayMap[value.id] = 0;
+      }
     }
   }
 
-  onGuideLineMove = debounce(this._onGuideLineMove, 50);
-
   // 辅助线移动结束
   onGuideLineMoveEnd() {
-    // ! 暂时先不考虑辅助线了
-    return;
     this.dispatchAction('end');
   }
 

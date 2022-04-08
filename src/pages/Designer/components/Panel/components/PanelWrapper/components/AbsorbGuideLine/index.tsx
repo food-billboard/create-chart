@@ -63,9 +63,9 @@ const AbsorbGuideLine = (props: {
 
   const domList = useMemo(() => {
     return absorbGuideLine.map((line) => {
-      return <GuideLine {...line} disabled key={line.id} />;
+      return <GuideLine scale={scale} {...line} disabled key={line.id} />;
     });
-  }, [absorbGuideLine]);
+  }, [absorbGuideLine, scale]);
 
   useEffect(() => {
     const registerId4Component = AbsorbUtil.register(
