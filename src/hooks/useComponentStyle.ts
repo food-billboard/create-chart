@@ -1,5 +1,6 @@
 import { CSSProperties, useMemo } from 'react';
 import { merge } from 'lodash';
+import { useHover } from 'ahooks';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ColorSelect from '@/components/ColorSelect';
 
@@ -11,6 +12,7 @@ export const useComponentStyle: (
     isSelect: boolean;
     style: CSSProperties;
     scale: number;
+    query: string;
   },
 ) => CSSProperties = (value, options) => {
   const {
@@ -19,7 +21,9 @@ export const useComponentStyle: (
       attr: { visible, lock },
     },
   } = value;
-  const { isSelect, style, scale } = options;
+  const { isSelect, style, scale, query } = options;
+
+  const isHover = useHover(document.querySelector(query));
 
   const styles = useMemo(() => {
     const {
@@ -41,13 +45,14 @@ export const useComponentStyle: (
         borderWidth: (1 / scale) * 100,
         zIndex: isSelect ? 4 : zIndex,
         pointerEvents: lock ? 'none' : 'unset',
-        borderColor: isSelect
-          ? getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0))
-          : 'transparent',
+        borderColor:
+          isSelect || isHover
+            ? getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0))
+            : 'transparent',
       },
       style,
     );
-  }, [componentStyle, style, visible, scale, isSelect, lock]);
+  }, [componentStyle, style, visible, scale, isSelect, lock, isHover]);
 
   return styles;
 };

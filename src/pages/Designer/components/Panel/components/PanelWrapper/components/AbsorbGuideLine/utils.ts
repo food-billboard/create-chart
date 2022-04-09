@@ -1,4 +1,4 @@
-import { uniqueId, debounce, pick, get, merge } from 'lodash';
+import { uniqueId, pick, get, merge } from 'lodash';
 import { PANEL_ABSOLUTE_POSITION, GUIDE_LINE_PADDING } from '@/utils/constants';
 
 type PositionData = {
@@ -314,9 +314,12 @@ class AbsorbUtilClass {
     this.dispatchAction('end');
   }
 
-  commonComponentMove(id: string, data: PositionData) {
-    // ! 暂时先不考虑组件了
-    return;
+  // 组件与辅助线
+  commonComponentMove(
+    id: string,
+    data: PositionData,
+    changeType: 'size' | 'position',
+  ) {
     let nearlyGuideLine!: ComponentData.TGuideLineConfigItem;
     let nearlyData: NearlyData[] = [];
 
@@ -328,17 +331,6 @@ class AbsorbUtilClass {
           ? ['bottom', 'top', 'horizontal', 'vertical']
           : ['left', 'right', 'horizontal', 'vertical'],
       );
-      // // 辅助线判断的时候只有左右或上下的距离
-      // let realRange: any;
-      // if (guideLine.type === 'vertical') {
-      //   realRange = range.filter(
-      //     (item) => item.type === 'left' || item.type === 'right',
-      //   );
-      // } else {
-      //   realRange = range.filter(
-      //     (item) => item.type === 'top' || item.type === 'bottom',
-      //   );
-      // }
 
       if (this.rangeCompare(range, nearlyData)) {
         nearlyData = range;
@@ -353,44 +345,117 @@ class AbsorbUtilClass {
         data,
       );
 
+      let realChangeStyle: any = {};
+      // 更改的样式分类
+      if (changeType === 'position') {
+        realChangeStyle = changeStyle;
+      } else {
+        if (changeStyle.left) {
+          realChangeStyle.width = data.width + changeStyle.left - data.left;
+        } else if (changeStyle.top) {
+          realChangeStyle.height = data.height + changeStyle.top - data.top;
+        }
+      }
+
       this.dispatchAction(
         'component',
         id,
         {
           config: {
-            style: changeStyle,
+            style: realChangeStyle,
           },
         },
         this.components,
       );
+      return true;
     }
+    return false;
+  }
+
+  // 组件与组件
+  commonComponentEachMove(
+    id: string,
+    data: PositionData,
+    changeType: 'size' | 'position',
+  ) {
+    let nearlyComponent!: ComponentData.TComponentData;
+    let nearlyData: NearlyData[] = [];
+
+    this.components.forEach((component) => {
+      const range = this.getEachRange(data, this.getComponentInfo(component));
+
+      if (this.rangeCompare(range, nearlyData)) {
+        nearlyData = range;
+        nearlyComponent = component;
+      }
+    });
+
+    if (nearlyComponent) {
+      const changeStyle = this.getNeedToChangeStyle(
+        nearlyData,
+        this.getComponentInfo(nearlyComponent),
+        data,
+      );
+
+      let realChangeStyle: any = {};
+      // 更改的样式分类
+      if (changeType === 'position') {
+        realChangeStyle = changeStyle;
+      } else {
+        if (changeStyle.left) {
+          realChangeStyle.width = data.width + changeStyle.left - data.left;
+        } else if (changeStyle.top) {
+          realChangeStyle.height = data.height + changeStyle.top - data.top;
+        }
+      }
+
+      this.dispatchAction(
+        'component',
+        id,
+        {
+          config: {
+            style: realChangeStyle,
+          },
+        },
+        this.components,
+      );
+      return true;
+    }
+    return false;
   }
 
   // 组件调整大小
-  _onComponentResizing(id: string, data: PositionData) {
-    this.commonComponentMove(id, data);
+  onComponentResizing(id: string, data: PositionData) {
+    let nearly = false;
+    if (this.guideLine.show) {
+      nearly = this.commonComponentMove(id, data, 'size');
+    }
+    // ! 暂时不要组件吸附了
+    if (false) {
+      this.commonComponentEachMove(id, data, 'size');
+    }
   }
-
-  onComponentResizing = debounce(this._onComponentResizing, 50);
 
   // 组件调整大小完成
   onComponentResized() {
-    if (!this.guideLine.show) return;
-    this.dispatchAction('end');
+    if (this.guideLine.show) this.dispatchAction('end');
   }
 
   // 组件拖拽
-  _onComponentDrag(id: string, data: PositionData) {
-    if (!this.guideLine.show) return;
-    this.commonComponentMove(id, data);
+  onComponentDrag(id: string, data: PositionData) {
+    let nearly = false;
+    if (this.guideLine.show) {
+      nearly = this.commonComponentMove(id, data, 'position');
+    }
+    // ! 暂时不要组件吸附了
+    if (false) {
+      this.commonComponentEachMove(id, data, 'position');
+    }
   }
-
-  onComponentDrag = debounce(this._onComponentDrag, 50);
 
   // 组件拖拽完成
   onComponentDragEnd() {
-    if (!this.guideLine.show) return;
-    this.dispatchAction('end');
+    if (this.guideLine.show) this.dispatchAction('end');
   }
 }
 
