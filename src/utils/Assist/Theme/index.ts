@@ -10,6 +10,10 @@ class ThemeUtil {
     [WonderlandTheme.themeName]: WonderlandTheme.theme,
   };
 
+  get currentThemeColorLength() {
+    return this.currentThemeColor.length;
+  }
+
   // 初始化
   init() {
     Object.entries(this.themeDataSource).forEach((theme) => {

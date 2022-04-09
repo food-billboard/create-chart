@@ -14,6 +14,7 @@ import SunBurstBasic from './Chart/SunBurst/SunBurstBasic';
 import PictorialBarBasic from './Chart/PictorialBar/PictorialBarBasic';
 import ParallelBasic from './Chart/Parallel/ParallelBasic';
 import CandlestickBasic from './Chart/Candlestick/CandlestickBasic';
+import RadialBar from './Chart/Bar/RadialBar';
 // other
 import WordCloud from './Other/WordCloud';
 import Iframe from './Other/Iframe';
@@ -63,6 +64,7 @@ COMPONENT_MAP.set(PictorialBarBasic.type, PictorialBarBasic);
 COMPONENT_MAP.set(ParallelBasic.type, ParallelBasic);
 COMPONENT_MAP.set(CandlestickBasic.type, CandlestickBasic);
 COMPONENT_MAP.set(List.type, List);
+COMPONENT_MAP.set(RadialBar.type, RadialBar);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

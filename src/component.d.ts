@@ -98,7 +98,8 @@ declare namespace ComponentData {
     | 'PICTORIAL_BAR_BASIC'
     | 'PARALLEL_BASIC'
     | 'CANDLESTICK_BASIC'
-    | 'LIST';
+    | 'LIST'
+    | 'RADIAL_BAR';
 
   // 基础组件属性
   export type TBaseConfig = {
@@ -247,11 +248,28 @@ declare namespace ComponentData {
     bottom: number;
   };
 
+  // 线性渐变配置
+  export type TLinearGradientPosition = {
+    startX: number;
+    startY: number;
+    endX: number;
+    endY: number;
+  };
+
+  // 径向渐变配置
+  export type TRadialGradientPosition = {
+    x: number;
+    y: number;
+    r: number;
+  };
+
   // 渐变色配置
   export type TGradientColorConfig = {
     start: TColorConfig;
     end: TColorConfig;
-    direction: number;
+    linearPosition: TLinearGradientPosition;
+    radialPosition: TRadialGradientPosition;
+    type: 'radial' | 'linear';
   };
 
   // 颜色配置

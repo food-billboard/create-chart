@@ -1,5 +1,42 @@
 import { omit } from 'lodash';
 import { nanoid } from 'nanoid';
+import ThemeUtil from '@/utils/Assist/Theme';
+
+export const DEFAULT_RADIAL_CONFIG: Pick<
+  ComponentData.TGradientColorConfig,
+  'type' | 'linearPosition' | 'radialPosition'
+> = {
+  type: 'linear',
+  linearPosition: {
+    startX: 0,
+    startY: 0,
+    endX: 1,
+    endY: 1,
+  },
+  radialPosition: {
+    x: 0.5,
+    y: 0.5,
+    r: 5,
+  },
+};
+
+export const DEFAULT_THEME_RADIAL_COLOR_LIST: ComponentData.TGradientColorConfig[] =
+  new Array(ThemeUtil.currentThemeColorLength).fill(0).map((_, index) => {
+    return {
+      ...DEFAULT_RADIAL_CONFIG,
+      linearPosition: {
+        startX: 0.6,
+        startY: 0,
+        endX: 0.4,
+        endY: 1,
+      },
+      start: ThemeUtil.generateNextColor4CurrentTheme(index),
+      end: {
+        ...ThemeUtil.generateNextColor4CurrentTheme(index),
+        a: 0.2,
+      },
+    };
+  });
 
 export const BASIC_DEFAULT_CONFIG: ComponentData.TBaseConfig = {
   style: {

@@ -16,7 +16,9 @@ const ColorGradientSelect = (props: {
       defaultValue: DEFAULT_GRADIENT_COLOR,
     });
 
-  const { start, end, direction } = value;
+  const { start, end } = value;
+  // ! 这里要改
+  const direction = 0;
 
   const onDirectionChange = useCallback(
     (direction) => {

@@ -50,6 +50,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: BarBasic,
             description: '',
           },
+          {
+            type: 'RADIAL_BAR',
+            title: '渐变柱形图',
+            icon: BarBasic,
+            description: '',
+          },
         ],
       },
       {
