@@ -101,7 +101,8 @@ declare namespace ComponentData {
     | 'LIST'
     | 'RADIAL_BAR'
     | 'RADIAL_LINE'
-    | 'PROGRESS_BAR';
+    | 'PROGRESS_BAR'
+    | 'NIGHTINGALE_PIE';
 
   // 基础组件属性
   export type TBaseConfig = {

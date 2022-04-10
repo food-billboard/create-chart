@@ -92,6 +92,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: PieBasic,
             description: '',
           },
+          {
+            type: 'NIGHTINGALE_PIE',
+            title: '玫瑰图',
+            icon: PieBasic,
+            description: '',
+          },
         ],
       },
       {

@@ -17,6 +17,7 @@ import CandlestickBasic from './Chart/Candlestick/CandlestickBasic';
 import RadialBar from './Chart/Bar/RadialBar';
 import RadialLine from './Chart/Line/RadialLine';
 import ProgressBar from './Chart/Bar/ProgressBar';
+import NightingalePie from './Chart/Pie/NightingalePie';
 // other
 import WordCloud from './Other/WordCloud';
 import Iframe from './Other/Iframe';
@@ -69,6 +70,7 @@ COMPONENT_MAP.set(List.type, List);
 COMPONENT_MAP.set(RadialBar.type, RadialBar);
 COMPONENT_MAP.set(RadialLine.type, RadialLine);
 COMPONENT_MAP.set(ProgressBar.type, ProgressBar);
+COMPONENT_MAP.set(NightingalePie.type, NightingalePie);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);
