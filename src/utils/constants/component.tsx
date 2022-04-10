@@ -68,6 +68,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: LineBasic,
             description: '',
           },
+          {
+            type: 'RADIAL_LINE',
+            title: '渐变折线图',
+            icon: LineBasic,
+            description: '',
+          },
         ],
       },
       {

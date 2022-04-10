@@ -9,8 +9,8 @@ import InputNumber from '../InputNumber';
 const { Item } = ConfigList;
 
 const LineStyleGroupConfig = (props: {
-  value: ComponentData.ComponentLineGroupConfig;
-  onChange: (value: ComponentData.ComponentLineGroupConfig) => void;
+  value: Partial<ComponentData.ComponentLineGroupConfig>;
+  onChange: (value: Partial<ComponentData.ComponentLineGroupConfig>) => void;
   labelProps?: TConfigListItemProps['labelProps'];
   ignore?: (keyof ComponentData.ComponentLineGroupConfig)[];
   children?: ReactNode;
@@ -42,7 +42,7 @@ const LineStyleGroupConfig = (props: {
     return (
       <Item label="类型" labelProps={labelProps}>
         <FullForm>
-          <LineStyle value={type} onChange={onKeyChange.bind(null, 'type')} />
+          <LineStyle value={type!} onChange={onKeyChange.bind(null, 'type')} />
         </FullForm>
       </Item>
     );
