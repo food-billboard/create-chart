@@ -44,7 +44,7 @@ const AnimationConfig = (props: AnimationConfigProps) => {
   const animationEasingConfig = useMemo(() => {
     if (!needAnimationEasing) return null;
     return (
-      <Item label="排列方式">
+      <Item label="动画类型">
         <FullForm>
           <ChartAnimationTypeSelect
             value={animationEasing!}
@@ -58,7 +58,7 @@ const AnimationConfig = (props: AnimationConfigProps) => {
   const animationDurationConfig = useMemo(() => {
     if (!needAnimationDuration) return null;
     return (
-      <Item label="间距">
+      <Item label="动画时间">
         <FullForm>
           <InputNumber
             className="w-100"

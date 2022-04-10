@@ -56,6 +56,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: BarBasic,
             description: '',
           },
+          {
+            type: 'PROGRESS_BAR',
+            title: '进度条',
+            icon: BarBasic,
+            description: '',
+          },
         ],
       },
       {

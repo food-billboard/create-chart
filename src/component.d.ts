@@ -100,7 +100,8 @@ declare namespace ComponentData {
     | 'CANDLESTICK_BASIC'
     | 'LIST'
     | 'RADIAL_BAR'
-    | 'RADIAL_LINE';
+    | 'RADIAL_LINE'
+    | 'PROGRESS_BAR';
 
   // 基础组件属性
   export type TBaseConfig = {

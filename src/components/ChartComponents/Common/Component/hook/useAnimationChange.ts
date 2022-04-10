@@ -16,6 +16,7 @@ export function useAnimationChange(
       animationEasing !== animationConfigRef.current?.animationEasing ||
       animationDuration !== animationConfigRef.current?.animationDuration
     ) {
+      animationConfigRef.current = animationConfig;
       instance?.clear();
       setOption();
     }
