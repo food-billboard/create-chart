@@ -80,6 +80,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: LineBasic,
             description: '',
           },
+          {
+            type: 'RADIAL_STACK_LINE',
+            title: '渐变堆叠面积图',
+            icon: LineBasic,
+            description: '',
+          },
         ],
       },
       {
