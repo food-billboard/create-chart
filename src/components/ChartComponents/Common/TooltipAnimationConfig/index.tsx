@@ -9,10 +9,11 @@ const { Item } = ConfigList;
 export type TooltipAnimationConfigProps = {
   value: ComponentData.ComponentTooltipAnimation;
   onChange?: (value: any) => void;
+  level?: number;
 };
 
 const TooltipAnimationConfig = (props: TooltipAnimationConfigProps) => {
-  const { value, onChange } = props;
+  const { value, onChange, level = 1 } = props;
   const { speed, show } = value;
 
   const onKeyChange = useCallback(
@@ -50,6 +51,7 @@ const TooltipAnimationConfig = (props: TooltipAnimationConfigProps) => {
       parent={{
         activeKey: ['tooltip-animation'],
       }}
+      level={level}
     >
       {speedConfig}
     </Collapse>

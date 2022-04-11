@@ -104,6 +104,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: PieBasic,
             description: '',
           },
+          {
+            type: 'CIRCLE_PIE',
+            title: '环形图',
+            icon: PieBasic,
+            description: '',
+          },
         ],
       },
       {

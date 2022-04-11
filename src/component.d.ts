@@ -104,7 +104,8 @@ declare namespace ComponentData {
     | 'PROGRESS_BAR'
     | 'NIGHTINGALE_PIE'
     | 'RADIAL_STACK_LINE'
-    | 'CLOCK_GAUGE';
+    | 'CLOCK_GAUGE'
+    | 'CIRCLE_PIE';
 
   // 基础组件属性
   export type TBaseConfig = {
