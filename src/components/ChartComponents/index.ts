@@ -26,6 +26,7 @@ import HorizontalBar from './Chart/Bar/HorizontalBar';
 import WordCloud from './Other/WordCloud';
 import Iframe from './Other/Iframe';
 import List from './Other/List';
+import WaterBall from './Other/WaterBall';
 // font
 import Title from './Font/Title';
 import TimeMachine from './Font/TimeMachine';
@@ -79,6 +80,7 @@ COMPONENT_MAP.set(RadialStackLine.type, RadialStackLine);
 COMPONENT_MAP.set(ClockGauge.type, ClockGauge);
 COMPONENT_MAP.set(CirclePie.type, CirclePie);
 COMPONENT_MAP.set(HorizontalBar.type, HorizontalBar);
+COMPONENT_MAP.set(WaterBall.type, WaterBall);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

@@ -3197,6 +3197,11 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
+echarts-liquidfill@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmmirror.com/echarts-liquidfill/-/echarts-liquidfill-3.1.0.tgz#4ec70f3697382d0404c95fff9f3e8dd85c8377da"
+  integrity sha512-5Dlqs/jTsdTUAsd+K5LPLLTgrbbNORUSBQyk8PSy1Mg2zgHDWm83FmvA4s0ooNepCJojFYRITTQ4GU1UUSKYLw==
+
 echarts-wordcloud@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmmirror.com/echarts-wordcloud/-/echarts-wordcloud-2.0.0.tgz#52ef817895801ffe9e99dd1bacab7686b2dec04a"

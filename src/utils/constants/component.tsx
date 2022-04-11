@@ -341,6 +341,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: ListBasic,
             description: '',
           },
+          {
+            type: 'WATER_BALL',
+            title: '水球',
+            icon: WordCloudBasic,
+            description: '',
+          },
         ],
       },
     ],
