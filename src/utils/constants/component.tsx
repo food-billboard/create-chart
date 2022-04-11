@@ -62,6 +62,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: BarBasic,
             description: '',
           },
+          {
+            type: 'HORIZONTAL_BAR',
+            title: '横向柱形图',
+            icon: BarBasic,
+            description: '',
+          },
         ],
       },
       {
