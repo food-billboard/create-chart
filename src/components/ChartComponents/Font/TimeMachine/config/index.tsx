@@ -21,7 +21,6 @@ import RadioGroup, {
 } from '@/components/ChartComponents/Common/IconRadio';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { CompatColorSelect } from '@/components/ColorSelect';
-import ConditionConfig from './Condition';
 import { TTimeMachineConfig } from '../type';
 
 const { TabPane } = Tabs;
@@ -44,7 +43,7 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: { textStyle, icon, formatter, condition },
+        options: { textStyle, icon, formatter },
       },
     } = value;
 
@@ -190,14 +189,6 @@ class Config extends Component<
                 />
               </FullForm>
             </Item>
-          </ConfigList>
-        </TabPane>
-        <TabPane key="2" tab={<Tab>条件</Tab>}>
-          <ConfigList level={1}>
-            <ConditionConfig
-              value={condition}
-              onChange={this.onKeyChange.bind(null, 'condition')}
-            />
           </ConfigList>
         </TabPane>
       </ComponentOptionConfig>

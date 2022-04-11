@@ -6,41 +6,35 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
-import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
-import { TGaugeBasicConfig } from '../type';
+import { TClockGaugeConfig } from '../type';
 
 const { Item } = ConfigList;
 
 const SeriesConfig = (props: {
-  value: TGaugeBasicConfig['series'];
-  onChange: ComponentData.ComponentConfigProps<TGaugeBasicConfig>['onChange'];
+  value: TClockGaugeConfig['series'];
+  onChange: ComponentData.ComponentConfigProps<TClockGaugeConfig>['onChange'];
 }) => {
   const { value, onChange } = props;
   const {
-    max,
-    min,
-    splitNumber,
     center,
     radius,
-    startAngle,
-    endAngle,
     axisLine,
-    progress,
     splitLine,
     axisTick,
     axisLabel,
-    pointer,
-    title,
-    detail,
+    minuteAnchor,
+    secondAnchor,
+    hourPointer,
+    minutePointer,
+    secondPointer,
   } = value;
 
   const onKeyChange = useCallback(
-    (key: keyof TGaugeBasicConfig['series'], value: any) => {
+    (key: keyof TClockGaugeConfig['series'], value: any) => {
       onChange({
         config: {
           options: {
@@ -60,13 +54,6 @@ const SeriesConfig = (props: {
         child={{
           header: '轴线',
           key: 'axisLine',
-          visibleRender: true,
-          value: axisLine.show,
-          onChange: (value) =>
-            onKeyChange('axisLine', {
-              ...axisLine,
-              show: value,
-            }),
         }}
       >
         <Item label="线条">
@@ -104,47 +91,12 @@ const SeriesConfig = (props: {
     );
   }, [axisLine, onKeyChange]);
 
-  const progressConfig = useMemo(() => {
-    return (
-      <LineStyleGroupConfig
-        collapseProps={{
-          child: {
-            header: '当前进度',
-            key: 'progress',
-            visibleRender: true,
-            onChange: (value) => {
-              onKeyChange('progress', {
-                show: value,
-              });
-            },
-            value: progress.show,
-          },
-        }}
-        ignore={['type']}
-        value={
-          {
-            color: progress.color,
-            width: progress.width,
-          } as any
-        }
-        onChange={onKeyChange.bind(null, 'progress')}
-      />
-    );
-  }, [progress, onKeyChange]);
-
   const splitLineConfig = useMemo(() => {
     return (
       <Collapse
         child={{
           header: '分隔线',
           key: 'splitLine',
-          visibleRender: true,
-          onChange: (value) => {
-            onKeyChange('splitLine', {
-              show: value,
-            });
-          },
-          value: splitLine.show,
         }}
       >
         <Item label="宽度">
@@ -189,27 +141,6 @@ const SeriesConfig = (props: {
     );
   }, [splitLine, onKeyChange]);
 
-  const minMaxConfig = useMemo(() => {
-    return (
-      <MaxMinConfig
-        label="数值范围"
-        value={{
-          max,
-          min,
-        }}
-        onChange={(value) => {
-          onChange({
-            config: {
-              options: {
-                series: value,
-              },
-            },
-          });
-        }}
-      />
-    );
-  }, [min, max, onKeyChange]);
-
   const radiusConfig = useMemo(() => {
     return (
       <Item label="大小">
@@ -223,45 +154,6 @@ const SeriesConfig = (props: {
       </Item>
     );
   }, [radius, onKeyChange]);
-
-  const minMaxAngleConfig = useMemo(() => {
-    return (
-      <MaxMinConfig
-        label="角度范围"
-        subLabel={['起始', '结束']}
-        value={{
-          max: endAngle,
-          min: startAngle,
-        }}
-        onChange={(value) => {
-          onChange({
-            config: {
-              options: {
-                series: {
-                  startAngle: value.min,
-                  endAngle: value.max,
-                },
-              },
-            },
-          });
-        }}
-      />
-    );
-  }, [startAngle, endAngle, onKeyChange]);
-
-  const splitNumberConfig = useMemo(() => {
-    return (
-      <Item label="刻度段数">
-        <FullForm>
-          <InputNumber
-            value={splitNumber}
-            onChange={onKeyChange.bind(null, 'splitNumber')}
-            className="w-100"
-          />
-        </FullForm>
-      </Item>
-    );
-  }, [splitNumber, onKeyChange]);
 
   const centerConfig = useMemo(() => {
     return (
@@ -305,19 +197,6 @@ const SeriesConfig = (props: {
             />
           </FullForm>
         </Item>
-        <Item label="分隔段数">
-          <FullForm>
-            <InputNumber
-              value={axisTick.splitNumber}
-              onChange={(value) => {
-                onKeyChange('axisTick', {
-                  splitNumber: value,
-                });
-              }}
-              className="w-100"
-            />
-          </FullForm>
-        </Item>
         <LineStyleGroupConfig
           collapseProps={{
             child: {
@@ -325,6 +204,7 @@ const SeriesConfig = (props: {
               key: 'axisTick_lineStyle',
             },
           }}
+          ignore={['type']}
           value={axisTick.lineStyle}
           onChange={(value) => {
             onKeyChange('axisTick', {
@@ -390,163 +270,231 @@ const SeriesConfig = (props: {
         child={{
           header: '指针',
           key: 'pointer',
-          visibleRender: true,
-          onChange: (value) => {
-            onKeyChange('pointer', {
-              show: value,
-            });
-          },
-          value: pointer.show,
-        }}
-      >
-        <Item label="尺寸">
-          <HalfForm label="长度">
-            <InputNumber
-              value={pointer.length}
-              onChange={(value) => {
-                onKeyChange('pointer', {
-                  length: value,
-                });
-              }}
-            />
-          </HalfForm>
-          <HalfForm label="宽度">
-            <InputNumber
-              value={pointer.width}
-              onChange={(value) => {
-                onKeyChange('pointer', {
-                  width: value,
-                });
-              }}
-            />
-          </HalfForm>
-        </Item>
-        <Item label="颜色">
-          <FullForm>
-            <CompatColorSelect
-              value={pointer.itemStyle.color}
-              onChange={(value) => {
-                onKeyChange('pointer', {
-                  itemStyle: {
-                    color: value,
-                  },
-                });
-              }}
-            />
-          </FullForm>
-        </Item>
-      </Collapse>
-    );
-  }, [pointer, onKeyChange]);
-
-  const titleConfig = useMemo(() => {
-    return (
-      <Collapse
-        child={{
-          header: '标题',
-          key: 'title',
-          visibleRender: true,
-          onChange: (value) => {
-            onKeyChange('title', {
-              show: value,
-            });
-          },
-          value: title.show,
         }}
       >
         <Collapse
           child={{
-            header: '文字',
-            key: 'font',
+            header: '时针',
+            key: 'hourPointer',
           }}
         >
-          <FontConfigList
-            value={pick(title, [
-              'color',
-              'fontSize',
-              'fontWeight',
-              'fontFamily',
-            ])}
-            onChange={onKeyChange.bind(null, 'title')}
-          />
+          <Item label="尺寸">
+            <HalfForm label="长度">
+              <InputNumber
+                value={hourPointer.length}
+                onChange={(value) => {
+                  onKeyChange('hourPointer', {
+                    length: value,
+                  });
+                }}
+              />
+            </HalfForm>
+            <HalfForm label="宽度">
+              <InputNumber
+                value={hourPointer.width}
+                onChange={(value) => {
+                  onKeyChange('hourPointer', {
+                    width: value,
+                  });
+                }}
+              />
+            </HalfForm>
+          </Item>
+          <Item label="颜色">
+            <FullForm>
+              <CompatColorSelect
+                value={hourPointer.itemStyle.color}
+                onChange={(value) => {
+                  onKeyChange('hourPointer', {
+                    itemStyle: {
+                      color: value,
+                    },
+                  });
+                }}
+              />
+            </FullForm>
+          </Item>
         </Collapse>
-        <CenterPositionConfig
-          value={{
-            left: title.offsetCenter[0],
-            top: title.offsetCenter[1],
+        <Collapse
+          child={{
+            header: '分针',
+            key: 'minutePointer',
           }}
-          onChange={(value) => {
-            onKeyChange('title', {
-              offsetCenter: [value.left, value.top],
-            });
+        >
+          <Item label="尺寸">
+            <HalfForm label="长度">
+              <InputNumber
+                value={minutePointer.length}
+                onChange={(value) => {
+                  onKeyChange('minutePointer', {
+                    length: value,
+                  });
+                }}
+              />
+            </HalfForm>
+            <HalfForm label="宽度">
+              <InputNumber
+                value={minutePointer.width}
+                onChange={(value) => {
+                  onKeyChange('minutePointer', {
+                    width: value,
+                  });
+                }}
+              />
+            </HalfForm>
+          </Item>
+          <Item label="颜色">
+            <FullForm>
+              <CompatColorSelect
+                value={minutePointer.itemStyle.color}
+                onChange={(value) => {
+                  onKeyChange('minutePointer', {
+                    itemStyle: {
+                      color: value,
+                    },
+                  });
+                }}
+              />
+            </FullForm>
+          </Item>
+        </Collapse>
+        <Collapse
+          child={{
+            header: '秒针',
+            key: 'secondPointer',
           }}
-        />
+        >
+          <Item label="尺寸">
+            <HalfForm label="长度">
+              <InputNumber
+                value={secondPointer.length}
+                onChange={(value) => {
+                  onKeyChange('secondPointer', {
+                    length: value,
+                  });
+                }}
+              />
+            </HalfForm>
+            <HalfForm label="宽度">
+              <InputNumber
+                value={secondPointer.width}
+                onChange={(value) => {
+                  onKeyChange('secondPointer', {
+                    width: value,
+                  });
+                }}
+              />
+            </HalfForm>
+          </Item>
+          <Item label="颜色">
+            <FullForm>
+              <CompatColorSelect
+                value={secondPointer.itemStyle.color}
+                onChange={(value) => {
+                  onKeyChange('secondPointer', {
+                    itemStyle: {
+                      color: value,
+                    },
+                  });
+                }}
+              />
+            </FullForm>
+          </Item>
+        </Collapse>
       </Collapse>
     );
-  }, [title, onKeyChange]);
+  }, [minutePointer, secondPointer, hourPointer, onKeyChange]);
 
-  const detailConfig = useMemo(() => {
+  const anchorConfig = useMemo(() => {
     return (
       <Collapse
         child={{
-          header: '详情',
-          key: 'detail',
-          visibleRender: true,
-          onChange: (value) => {
-            onKeyChange('detail', {
-              show: value,
-            });
-          },
-          value: detail.show,
+          header: '固定点',
+          key: 'anchor',
         }}
       >
         <Collapse
           child={{
-            header: '文字',
-            key: 'font',
+            header: '外框',
+            key: 'minuteAnchor',
           }}
         >
-          <FontConfigList
-            value={pick(detail, [
-              'color',
-              'fontSize',
-              'fontWeight',
-              'fontFamily',
-            ])}
-            onChange={onKeyChange.bind(null, 'detail')}
-          />
+          <Item label="大小">
+            <FullForm>
+              <InputNumber
+                value={minuteAnchor.itemStyle.borderWidth}
+                onChange={(value) => {
+                  onKeyChange('minuteAnchor', {
+                    itemStyle: {
+                      borderWidth: value,
+                    },
+                  });
+                }}
+              />
+            </FullForm>
+          </Item>
+          <Item label="颜色">
+            <FullForm>
+              <CompatColorSelect
+                value={minuteAnchor.itemStyle.borderColor}
+                onChange={(value) => {
+                  onKeyChange('minuteAnchor', {
+                    itemStyle: {
+                      borderColor: value,
+                    },
+                  });
+                }}
+              />
+            </FullForm>
+          </Item>
         </Collapse>
-        <Item label="动画">
-          <FullForm>
-            <Switch
-              checked={detail.valueAnimation}
-              onChange={(value) => {
-                onKeyChange('detail', {
-                  valueAnimation: value,
-                });
-              }}
-            />
-          </FullForm>
-        </Item>
+        <Collapse
+          child={{
+            header: '内框',
+            key: 'secondAnchor',
+          }}
+        >
+          <Item label="大小">
+            <FullForm>
+              <InputNumber
+                value={secondAnchor.size}
+                onChange={(value) => {
+                  onKeyChange('secondAnchor', {
+                    size: value,
+                  });
+                }}
+              />
+            </FullForm>
+          </Item>
+          <Item label="颜色">
+            <FullForm>
+              <CompatColorSelect
+                value={secondAnchor.itemStyle.color}
+                onChange={(value) => {
+                  onKeyChange('secondAnchor', {
+                    itemStyle: {
+                      color: value,
+                    },
+                  });
+                }}
+              />
+            </FullForm>
+          </Item>
+        </Collapse>
       </Collapse>
     );
-  }, [detail, onKeyChange]);
+  }, [minutePointer, secondPointer, hourPointer, onKeyChange]);
 
   return (
     <ConfigList>
-      {minMaxConfig}
-      {minMaxAngleConfig}
-      {splitNumberConfig}
       {centerConfig}
       {radiusConfig}
       {axisLineConfig}
-      {progressConfig}
       {splitLineConfig}
       {axisTickConfig}
       {axisLabelConfig}
       {pointerConfig}
-      {titleConfig}
-      {detailConfig}
+      {anchorConfig}
     </ConfigList>
   );
 };

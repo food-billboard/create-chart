@@ -19,6 +19,7 @@ import RadialLine from './Chart/Line/RadialLine';
 import ProgressBar from './Chart/Bar/ProgressBar';
 import NightingalePie from './Chart/Pie/NightingalePie';
 import RadialStackLine from './Chart/Line/RadialStackLine';
+import ClockGauge from './Chart/Gauge/ClockGauge';
 // other
 import WordCloud from './Other/WordCloud';
 import Iframe from './Other/Iframe';
@@ -73,6 +74,7 @@ COMPONENT_MAP.set(RadialLine.type, RadialLine);
 COMPONENT_MAP.set(ProgressBar.type, ProgressBar);
 COMPONENT_MAP.set(NightingalePie.type, NightingalePie);
 COMPONENT_MAP.set(RadialStackLine.type, RadialStackLine);
+COMPONENT_MAP.set(ClockGauge.type, ClockGauge);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

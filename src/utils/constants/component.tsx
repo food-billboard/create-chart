@@ -164,6 +164,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: GaugeBasic,
             description: '',
           },
+          {
+            type: 'CLOCK_GAUGE',
+            title: '时钟',
+            icon: GaugeBasic,
+            description: '',
+          },
         ],
       },
       {
