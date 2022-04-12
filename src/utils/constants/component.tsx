@@ -63,6 +63,12 @@ export const COMPONENT_TYPE_LIST = [
             description: '',
           },
           {
+            type: 'RANK_BAR',
+            title: '排名',
+            icon: BarBasic,
+            description: '',
+          },
+          {
             type: 'HORIZONTAL_BAR',
             title: '横向柱形图',
             icon: BarBasic,

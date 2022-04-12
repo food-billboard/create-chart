@@ -1,0 +1,381 @@
+import { CSSProperties, useEffect, useRef } from 'react';
+import { init } from 'echarts';
+import { uniqueId, merge } from 'lodash';
+import classnames from 'classnames';
+import { useDeepUpdateEffect } from '@/hooks';
+import {
+  useComponent,
+  useChartComponentResize,
+  useChartValueMapField,
+  useComponentResize,
+  useAnimationChange,
+  useCondition,
+  useChartComponentTooltip,
+} from '@/components/ChartComponents/Common/Component/hook';
+import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
+import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
+import ColorSelect from '@/components/ColorSelect';
+import FetchFragment, {
+  TFetchFragmentRef,
+} from '@/components/ChartComponents/Common/FetchFragment';
+import { TRankBarConfig } from '../type';
+
+const { getRgbaString } = ColorSelect;
+
+const CHART_ID = 'RANK_BAR';
+
+const RankBar = (props: {
+  className?: string;
+  style?: CSSProperties;
+  value: ComponentData.TComponentData<TRankBarConfig>;
+  global: ComponentProps['global'];
+}) => {
+  const { className, style, value, global } = props;
+  const { screenTheme, screenType } = global;
+
+  const {
+    id,
+    config: { options },
+  } = value;
+
+  const { series, yAxis, tooltip, animation, condition } = options;
+
+  const chartId = useRef<string>(uniqueId(CHART_ID));
+  const chartInstance = useRef<echarts.ECharts>();
+  const requestRef = useRef<TFetchFragmentRef>(null);
+
+  useComponentResize(value, () => {
+    chartInstance?.current?.resize();
+  });
+
+  const {
+    request,
+    syncInteractiveAction,
+    getValue,
+    requestUrl,
+    componentFilter,
+    value: processedValue = [],
+    componentFilterMap,
+    onCondition,
+  } = useComponent<TRankBarConfig>(
+    {
+      component: value,
+      global,
+    },
+    requestRef,
+  );
+
+  const {
+    onCondition: propsOnCondition,
+    style: conditionStyle,
+    className: conditionClassName,
+  } = useCondition(onCondition);
+
+  const { xAxisKeys, yAxisValues } = useChartValueMapField(processedValue, {
+    map: componentFilterMap,
+    fields: {
+      seriesKey: 's',
+      xAxisKeyKey: 'name',
+      yAxisValue: 'value',
+    },
+  });
+
+  const onClick = (params: any) => {
+    const { seriesName, name, data } = params;
+    syncInteractiveAction('click', {
+      x: name,
+      y: data,
+      s: seriesName,
+    });
+  };
+
+  const initChart = () => {
+    const chart = init(
+      document.querySelector(`#${chartId.current!}`)!,
+      screenTheme,
+      {
+        renderer: 'canvas',
+      },
+    );
+    chartInstance.current = chart;
+    setOption();
+  };
+
+  const getSeries = () => {
+    const { itemStyle, label, backgroundStyle, borderRadius, ...nextSeries } =
+      series;
+    const { animation: show, animationDuration, animationEasing } = animation;
+    const { color, defaultColor, ...nextItemStyle } = itemStyle;
+
+    const commonStyle = {
+      ...nextSeries,
+      type: 'bar',
+      animation: show,
+      animationEasing,
+      animationEasingUpdate: animationEasing,
+      animationDuration,
+      animationDurationUpdate: animationDuration,
+    };
+
+    const baseSeries = {
+      ...commonStyle,
+      label: {
+        ...label,
+        show: label.position !== 'deep-top' ? label.show : false,
+        color: getRgbaString(label.color),
+        formatter: label.formatter,
+        position: label.position === 'center' ? 'inside' : 'right',
+      },
+      zlevel: 1,
+      itemStyle: {
+        ...nextItemStyle,
+        borderRadius,
+      },
+      data: yAxisValues._defaultValue_.map((item: any, index: number) => {
+        return {
+          value: item,
+          itemStyle: {
+            color:
+              radialGradientColor(color[index]) ||
+              radialGradientColor(defaultColor) ||
+              'auto',
+          },
+        };
+      }),
+      emphasis: {
+        focus: 'series',
+      },
+    };
+
+    return [
+      baseSeries,
+      {
+        ...commonStyle,
+        itemStyle: {
+          barBorderRadius: borderRadius,
+          color: getRgbaString({
+            ...backgroundStyle.color,
+            a: backgroundStyle.show ? backgroundStyle.color.a : 0,
+          }),
+        },
+        barGap: '-100%',
+        data: new Array(xAxisKeys.length).fill(
+          Math.max(...yAxisValues._defaultValue_) || 0,
+        ),
+      },
+    ];
+  };
+
+  const setOption = () => {
+    const {
+      backgroundColor,
+      textStyle: tooltipTextStyle,
+      animation,
+      ...nextTooltip
+    } = tooltip;
+    const { textStyle, rankIcon, ...nextYAxis } = yAxis;
+    const {
+      label,
+      itemStyle: { color, defaultColor },
+    } = series;
+    const { show, position, ...nextLabel } = label;
+
+    const realSeries = getSeries();
+    const colorLength = color.length;
+
+    const baseRankIconStyle = {
+      ...rankIcon.textStyle,
+      color: getRgbaString(rankIcon.textStyle.color),
+      align: 'center',
+      borderRadius: rankIcon.textStyle.fontSize * 2,
+      width: rankIcon.textStyle.fontSize * 2,
+      height: rankIcon.textStyle.fontSize * 2,
+    };
+
+    chartInstance.current?.setOption(
+      {
+        grid: {
+          show: false,
+          left:
+            textStyle.fontSize *
+              Math.max(...xAxisKeys.map((item: any) => item.length)) +
+            100,
+        },
+        legend: {
+          show: false,
+        },
+        series: realSeries,
+        xAxis: [
+          {
+            type: 'value',
+            splitLine: {
+              show: false,
+            },
+            axisLabel: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+          },
+        ],
+        yAxis: [
+          {
+            ...nextYAxis,
+            type: 'category',
+            inverse: true,
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
+            },
+            data: xAxisKeys,
+            axisLabel: {
+              ...textStyle,
+              align: 'left',
+              margin: 100,
+              color: getRgbaString(textStyle.color),
+              formatter: function (value: any, index: number) {
+                let realIndex = index + 1;
+                let rankIconText = '';
+                if (rankIcon.show) {
+                  if (!rankIcon.showBackground) {
+                    rankIconText = `{rankNoBg|${realIndex}}  `;
+                  } else if (realIndex > colorLength) {
+                    rankIconText = `{rank|${realIndex}}  `;
+                  } else {
+                    rankIconText = `{rank${realIndex}|${realIndex}}  `;
+                  }
+                }
+
+                return `${rankIconText}${value}`;
+              },
+              rich: new Array(colorLength + 1).fill(0).reduce(
+                (acc, cur, index) => {
+                  const key =
+                    colorLength === index ? 'rank' : `rank${index + 1}`;
+                  const targetColor = color[index] || defaultColor;
+                  acc[key] = {
+                    ...baseRankIconStyle,
+                    backgroundColor: getRgbaString(targetColor.start),
+                  };
+                  return acc;
+                },
+                {
+                  rankNoBg: {
+                    ...baseRankIconStyle,
+                  },
+                },
+              ),
+            },
+          },
+          ...(show && position === 'deep-top'
+            ? [
+                {
+                  type: 'category',
+                  inverse: true,
+                  axisTick: 'none',
+                  axisLine: 'none',
+                  show: true,
+                  axisLabel: {
+                    textStyle: {
+                      ...nextLabel,
+                      color: getRgbaString(label.color),
+                      formatter: label.formatter,
+                    },
+                  },
+                  data: yAxisValues._defaultValue_,
+                },
+              ]
+            : []),
+        ],
+        tooltip: {
+          ...nextTooltip,
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow',
+          },
+          backgroundColor: getRgbaString(backgroundColor),
+          textStyle: {
+            ...tooltipTextStyle,
+            color: getRgbaString(tooltipTextStyle.color),
+          },
+        },
+      },
+      true,
+    );
+
+    screenType !== 'edit' &&
+      animation.show &&
+      useChartComponentTooltip(chartInstance.current!, realSeries, {
+        interval: animation.speed,
+      });
+  };
+
+  useChartComponentResize(chartInstance.current!);
+
+  useEffect(() => {
+    initChart();
+    return () => {
+      chartInstance.current?.dispose();
+    };
+  }, [screenTheme]);
+
+  useEffect(() => {
+    chartInstance.current?.off('click');
+    chartInstance.current?.on('click', onClick);
+  }, [syncInteractiveAction]);
+
+  // 数据发生变化时
+  useDeepUpdateEffect(() => {
+    setOption();
+    chartInstance.current?.resize();
+  }, [processedValue]);
+
+  // 配置发生变化时
+  useDeepUpdateEffect(() => {
+    setOption();
+    chartInstance.current?.resize();
+  }, [options]);
+
+  useAnimationChange(chartInstance.current!, animation, setOption);
+
+  return (
+    <>
+      <div
+        className={classnames(className, conditionClassName)}
+        style={merge(
+          {
+            width: '100%',
+            height: '100%',
+          },
+          style,
+          conditionStyle,
+        )}
+        id={chartId.current}
+      ></div>
+      <FetchFragment
+        id={id}
+        url={requestUrl}
+        ref={requestRef}
+        reFetchData={request}
+        reGetValue={getValue}
+        reCondition={propsOnCondition}
+        componentFilter={componentFilter}
+        componentCondition={condition}
+      />
+    </>
+  );
+};
+
+const WrapperRankBar: typeof RankBar & {
+  id: ComponentData.TComponentSelfType;
+} = RankBar as any;
+
+WrapperRankBar.id = CHART_ID;
+
+export default WrapperRankBar;

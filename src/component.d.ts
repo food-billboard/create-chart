@@ -107,7 +107,8 @@ declare namespace ComponentData {
     | 'CLOCK_GAUGE'
     | 'CIRCLE_PIE'
     | 'HORIZONTAL_BAR'
-    | 'WATER_BALL';
+    | 'WATER_BALL'
+    | 'RANK_BAR';
 
   // 基础组件属性
   export type TBaseConfig = {
