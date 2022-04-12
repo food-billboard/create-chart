@@ -74,6 +74,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: BarBasic,
             description: '',
           },
+          {
+            type: 'CACHET_BAR',
+            title: '胶囊图',
+            icon: BarBasic,
+            description: '',
+          },
         ],
       },
       {

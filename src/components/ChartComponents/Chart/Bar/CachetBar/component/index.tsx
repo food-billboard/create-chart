@@ -1,0 +1,354 @@
+import { CSSProperties, useEffect, useRef } from 'react';
+import { init } from 'echarts';
+import { uniqueId, merge } from 'lodash';
+import classnames from 'classnames';
+import { useDeepUpdateEffect } from '@/hooks';
+import {
+  useComponent,
+  useChartComponentResize,
+  useChartValueMapField,
+  useComponentResize,
+  useAnimationChange,
+  useCondition,
+  useChartComponentTooltip,
+} from '@/components/ChartComponents/Common/Component/hook';
+import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
+import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
+import ColorSelect from '@/components/ColorSelect';
+import FetchFragment, {
+  TFetchFragmentRef,
+} from '@/components/ChartComponents/Common/FetchFragment';
+import { TCachetBarConfig } from '../type';
+
+const { getRgbaString } = ColorSelect;
+
+const CHART_ID = 'CACHET_BAR';
+
+const CachetBar = (props: {
+  className?: string;
+  style?: CSSProperties;
+  value: ComponentData.TComponentData<TCachetBarConfig>;
+  global: ComponentProps['global'];
+}) => {
+  const { className, style, value, global } = props;
+  const { screenTheme, screenType } = global;
+
+  const {
+    id,
+    config: { options },
+  } = value;
+
+  const { legend, series, xAxis, yAxis, tooltip, animation, condition } =
+    options;
+
+  const chartId = useRef<string>(uniqueId(CHART_ID));
+  const chartInstance = useRef<echarts.ECharts>();
+  const requestRef = useRef<TFetchFragmentRef>(null);
+
+  useComponentResize(value, () => {
+    chartInstance?.current?.resize();
+  });
+
+  const {
+    request,
+    syncInteractiveAction,
+    getValue,
+    requestUrl,
+    componentFilter,
+    value: processedValue = [],
+    componentFilterMap,
+    onCondition,
+  } = useComponent<TCachetBarConfig>(
+    {
+      component: value,
+      global,
+    },
+    requestRef,
+  );
+
+  const {
+    onCondition: propsOnCondition,
+    style: conditionStyle,
+    className: conditionClassName,
+  } = useCondition(onCondition);
+
+  const { seriesKeys, xAxisKeys, yAxisValues } = useChartValueMapField(
+    processedValue,
+    {
+      map: componentFilterMap,
+      fields: {
+        seriesKey: 's',
+        xAxisKeyKey: 'x',
+        yAxisValue: 'y',
+      },
+    },
+  );
+
+  const onClick = (params: any) => {
+    const { seriesName, name, data } = params;
+    syncInteractiveAction('click', {
+      x: name,
+      y: data,
+      s: seriesName,
+    });
+  };
+
+  const initChart = () => {
+    const chart = init(
+      document.querySelector(`#${chartId.current!}`)!,
+      screenTheme,
+      {
+        renderer: 'canvas',
+      },
+    );
+    chartInstance.current = chart;
+    setOption();
+  };
+
+  const getSeries = () => {
+    let max = Math.max(...(yAxisValues._defaultValue_ || []));
+    const { itemStyle, label, backgroundStyle, borderRadius, ...nextSeries } =
+      series;
+    const { animation: show, animationDuration, animationEasing } = animation;
+    const baseSeries = {
+      ...nextSeries,
+      label: {
+        ...label,
+        position: 'inside',
+        color: getRgbaString(label.color),
+      },
+      xAxisIndex: 1,
+      type: 'bar',
+      itemStyle: {
+        ...itemStyle,
+        borderRadius,
+        color: radialGradientColor(itemStyle.color[0]) || 'auto',
+      },
+      data: yAxisValues._defaultValue_,
+      emphasis: {
+        focus: 'series',
+      },
+      animation: show,
+      animationEasing,
+      animationEasingUpdate: animationEasing,
+      animationDuration,
+      animationDurationUpdate: animationDuration,
+    };
+
+    const realSeries = seriesKeys.length
+      ? seriesKeys.map((item: any, index: number) => {
+          max = Math.max(...yAxisValues[item], max);
+
+          return {
+            ...baseSeries,
+            itemStyle: {
+              ...itemStyle,
+              color: radialGradientColor(itemStyle.color[index]) || 'auto',
+            },
+            data: yAxisValues[item] || [],
+            name: item,
+          };
+        })
+      : [baseSeries];
+
+    return {
+      series: realSeries,
+      max: max + 10,
+    };
+  };
+
+  const setOption = () => {
+    const { textStyle: legendTextStyle, ...nextLegend } = legend;
+    const {
+      backgroundColor,
+      textStyle: tooltipTextStyle,
+      animation,
+      ...nextTooltip
+    } = tooltip;
+    const {
+      axisLabel: xAxisLabel,
+      nameTextStyle: xNameTextStyle,
+      ...nextXAxis
+    } = xAxis;
+    const {
+      axisLabel: yAxisLabel,
+      nameTextStyle: yNameTextStyle,
+      ...nextYAxis
+    } = yAxis;
+    const { barWidth, backgroundStyle } = series;
+
+    const { series: realSeries, max } = getSeries();
+
+    chartInstance.current?.setOption({
+      grid: {
+        show: false,
+      },
+      legend: {
+        ...nextLegend,
+        data: seriesKeys,
+        textStyle: {
+          ...legendTextStyle,
+          color: getRgbaString(legendTextStyle.color),
+        },
+      },
+      series: [
+        {
+          data: new Array(xAxisKeys?.length || 1).fill(max),
+          type: 'bar',
+          xAxisIndex: 0,
+          silent: true,
+          itemStyle: {
+            color: getRgbaString(backgroundStyle.backgroundColor),
+            borderColor: getRgbaString(backgroundStyle.borderColor),
+            borderRadius: [
+              backgroundStyle.borderRadius,
+              backgroundStyle.borderRadius,
+              0,
+              0,
+            ],
+            borderWidth: backgroundStyle.borderWidth,
+          },
+          barWidth: ((seriesKeys.length || 1) + 1) * barWidth,
+          tooltip: {
+            show: false,
+          },
+        },
+        ...realSeries,
+      ],
+      xAxis: [
+        {
+          data: new Array(xAxisKeys?.length || 1).fill(max),
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
+          },
+          position: 'bottom',
+        },
+        {
+          ...nextXAxis,
+          position: 'bottom',
+          splitLine: {
+            show: false,
+          },
+          data: xAxisKeys,
+          axisLabel: {
+            ...xAxisLabel,
+            color: getRgbaString(xAxisLabel.color),
+          },
+          nameTextStyle: {
+            ...xNameTextStyle,
+            color: getRgbaString(xNameTextStyle.color),
+          },
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: getRgbaString(backgroundStyle.borderColor),
+            },
+          },
+        },
+      ],
+      yAxis: [
+        {
+          ...nextYAxis,
+          axisLabel: {
+            ...yAxisLabel,
+            color: getRgbaString(yAxisLabel.color),
+          },
+          splitLine: {
+            show: false,
+          },
+          nameTextStyle: {
+            ...yNameTextStyle,
+            color: getRgbaString(yNameTextStyle.color),
+          },
+        },
+      ],
+      tooltip: {
+        ...nextTooltip,
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
+        },
+        backgroundColor: getRgbaString(backgroundColor),
+        textStyle: {
+          ...tooltipTextStyle,
+          color: getRgbaString(tooltipTextStyle.color),
+        },
+      },
+    });
+
+    screenType !== 'edit' &&
+      animation.show &&
+      useChartComponentTooltip(chartInstance.current!, realSeries, {
+        interval: animation.speed,
+      });
+  };
+
+  useChartComponentResize(chartInstance.current!);
+
+  useEffect(() => {
+    initChart();
+    return () => {
+      chartInstance.current?.dispose();
+    };
+  }, [screenTheme]);
+
+  useEffect(() => {
+    chartInstance.current?.off('click');
+    chartInstance.current?.on('click', onClick);
+  }, [syncInteractiveAction]);
+
+  // 数据发生变化时
+  useDeepUpdateEffect(() => {
+    setOption();
+    chartInstance.current?.resize();
+  }, [processedValue]);
+
+  // 配置发生变化时
+  useDeepUpdateEffect(() => {
+    setOption();
+    chartInstance.current?.resize();
+  }, [options]);
+
+  useAnimationChange(chartInstance.current!, animation, setOption);
+
+  return (
+    <>
+      <div
+        className={classnames(className, conditionClassName)}
+        style={merge(
+          {
+            width: '100%',
+            height: '100%',
+          },
+          style,
+          conditionStyle,
+        )}
+        id={chartId.current}
+      ></div>
+      <FetchFragment
+        id={id}
+        url={requestUrl}
+        ref={requestRef}
+        reFetchData={request}
+        reGetValue={getValue}
+        reCondition={propsOnCondition}
+        componentFilter={componentFilter}
+        componentCondition={condition}
+      />
+    </>
+  );
+};
+
+const WrapperCachetBar: typeof CachetBar & {
+  id: ComponentData.TComponentSelfType;
+} = CachetBar as any;
+
+WrapperCachetBar.id = CHART_ID;
+
+export default WrapperCachetBar;
