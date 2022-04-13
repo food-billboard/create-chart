@@ -20,6 +20,14 @@ export const DEFAULT_RADIAL_CONFIG: Pick<
   },
 };
 
+export const DEFAULT_THEME_COLOR_LIST: ComponentData.TColorConfig[] = new Array(
+  ThemeUtil.currentThemeColorLength,
+)
+  .fill(0)
+  .map((_, index) => {
+    return ThemeUtil.generateNextColor4CurrentTheme(index);
+  });
+
 export const DEFAULT_THEME_RADIAL_COLOR_LIST: ComponentData.TGradientColorConfig[] =
   new Array(ThemeUtil.currentThemeColorLength).fill(0).map((_, index) => {
     return {

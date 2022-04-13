@@ -128,6 +128,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: PieBasic,
             description: '',
           },
+          {
+            type: 'PERCENT_PIE',
+            title: '百分比图',
+            icon: PieBasic,
+            description: '',
+          },
         ],
       },
       {

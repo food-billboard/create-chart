@@ -109,7 +109,8 @@ declare namespace ComponentData {
     | 'HORIZONTAL_BAR'
     | 'WATER_BALL'
     | 'RANK_BAR'
-    | 'CACHET_BAR';
+    | 'CACHET_BAR'
+    | 'PERCENT_PIE';
 
   // 基础组件属性
   export type TBaseConfig = {

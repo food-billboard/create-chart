@@ -7,7 +7,6 @@ import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
 import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import { TCirclePieConfig } from '../type';
 

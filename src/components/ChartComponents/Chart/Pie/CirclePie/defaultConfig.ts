@@ -117,7 +117,6 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TCirclePieConfig> =
             b: 255,
           },
         },
-        center: [50, 50],
         radius: [50, 60],
         itemStyle: {
           color: [],

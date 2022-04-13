@@ -4,20 +4,20 @@ import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/
 import Input from '@/components/ChartComponents/Common/Input';
 import OrientSelect from '@/components/ChartComponents/Common/OrientSelect';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { TCirclePieConfig } from '../type';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
+import { TPercentPieConfig } from '../type';
 
 const { Item } = ConfigList;
 
 const StatisticsConfig = (props: {
-  value: TCirclePieConfig['statistics'];
-  onChange: ComponentData.ComponentConfigProps<TCirclePieConfig>['onChange'];
+  value: TPercentPieConfig['statistics'];
+  onChange: ComponentData.ComponentConfigProps<TPercentPieConfig>['onChange'];
 }) => {
   const { value, onChange } = props;
-  const { show, align, textStyle, addonBefore, addonAfter } = value;
+  const { show, textStyle, addonAfter } = value;
 
   const onKeyChange = useCallback(
-    (key: keyof TCirclePieConfig['statistics'], value: any) => {
+    (key: keyof TPercentPieConfig['statistics'], value: any) => {
       onChange({
         config: {
           options: {
@@ -47,66 +47,6 @@ const StatisticsConfig = (props: {
       </Collapse>
     );
   }, [textStyle, onKeyChange]);
-
-  const alignConfig = useMemo(() => {
-    return (
-      <Item label="对齐方式">
-        <FullForm>
-          <OrientSelect
-            value={align}
-            onChange={onKeyChange.bind(null, 'align')}
-          />
-        </FullForm>
-      </Item>
-    );
-  }, [align, onKeyChange]);
-
-  const addonBeforeConfig = useMemo(() => {
-    return (
-      <Collapse
-        child={{
-          header: '前缀',
-          key: 'addonBefore',
-          visibleRender: true,
-          value: addonBefore.show,
-          onChange: (value) => {
-            onKeyChange('addonBefore', {
-              show: value,
-            });
-          },
-        }}
-      >
-        <Item label="内容">
-          <FullForm>
-            <Input
-              value={addonBefore.value}
-              onChange={(value) => {
-                onKeyChange('addonBefore', {
-                  value,
-                });
-              }}
-            />
-          </FullForm>
-        </Item>
-        <Collapse
-          child={{
-            header: '文字',
-            key: 'textStyle',
-          }}
-          level={2}
-        >
-          <FontConfigList
-            value={addonBefore.textStyle}
-            onChange={(value) => {
-              onKeyChange('addonBefore', {
-                textStyle: value,
-              });
-            }}
-          />
-        </Collapse>
-      </Collapse>
-    );
-  }, [addonBefore, onKeyChange, onChange]);
 
   const addonAfterConfig = useMemo(() => {
     return (
@@ -169,9 +109,7 @@ const StatisticsConfig = (props: {
           activeKey: ['statistics'],
         }}
       >
-        {alignConfig}
         {textStyleConfig}
-        {addonBeforeConfig}
         {addonAfterConfig}
       </Collapse>
     </ConfigList>
