@@ -66,7 +66,11 @@ const LegendConfig = (props: LegendConfigProps) => {
     return (
       <Item label="类型">
         <FullForm>
-          <Select value={value} onChange={onChange} className="w-100">
+          <Select
+            value={type}
+            onChange={onKeyChange.bind(null, 'type')}
+            className="w-100"
+          >
             <Select.Option key="plain" value="plain">
               普通图例
             </Select.Option>
@@ -77,7 +81,7 @@ const LegendConfig = (props: LegendConfigProps) => {
         </FullForm>
       </Item>
     );
-  }, [needType]);
+  }, [needType, type]);
 
   const orientConfig = useMemo(() => {
     if (!needOrient) return null;

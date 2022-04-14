@@ -25,6 +25,7 @@ import HorizontalBar from './Chart/Bar/HorizontalBar';
 import RankBar from './Chart/Bar/RankBar';
 import CachetBar from './Chart/Bar/CachetBar';
 import PercentPie from './Chart/Pie/PercentPie';
+import StackBar from './Chart/Bar/StackBar';
 // other
 import WordCloud from './Other/WordCloud';
 import Iframe from './Other/Iframe';
@@ -87,6 +88,7 @@ COMPONENT_MAP.set(WaterBall.type, WaterBall);
 COMPONENT_MAP.set(RankBar.type, RankBar);
 COMPONENT_MAP.set(CachetBar.type, CachetBar);
 COMPONENT_MAP.set(PercentPie.type, PercentPie);
+COMPONENT_MAP.set(StackBar.type, StackBar);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

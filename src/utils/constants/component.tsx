@@ -80,6 +80,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: BarBasic,
             description: '',
           },
+          {
+            type: 'STACK_BAR',
+            title: '堆叠柱形图',
+            icon: BarBasic,
+            description: '',
+          },
         ],
       },
       {
