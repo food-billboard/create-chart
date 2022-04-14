@@ -86,6 +86,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: BarBasic,
             description: '',
           },
+          {
+            type: 'NEGATIVE_BAR',
+            title: '正负轴柱形图',
+            icon: BarBasic,
+            description: '',
+          },
         ],
       },
       {
