@@ -98,6 +98,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: BarBasic,
             description: '',
           },
+          {
+            type: 'LINE_BAR',
+            title: '折线柱形图',
+            icon: BarBasic,
+            description: '',
+          },
         ],
       },
       {

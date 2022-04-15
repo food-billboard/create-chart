@@ -28,6 +28,7 @@ import PercentPie from './Chart/Pie/PercentPie';
 import StackBar from './Chart/Bar/StackBar';
 import NegativeBar from './Chart/Bar/NegativeBar';
 import PercentBar from './Chart/Bar/PercentBar';
+import LineBar from './Chart/Bar/LineBar';
 // other
 import WordCloud from './Other/WordCloud';
 import Iframe from './Other/Iframe';
@@ -93,6 +94,7 @@ COMPONENT_MAP.set(PercentPie.type, PercentPie);
 COMPONENT_MAP.set(StackBar.type, StackBar);
 COMPONENT_MAP.set(NegativeBar.type, NegativeBar);
 COMPONENT_MAP.set(PercentBar.type, PercentBar);
+COMPONENT_MAP.set(LineBar.type, LineBar);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

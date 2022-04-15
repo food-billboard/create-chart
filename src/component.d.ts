@@ -113,7 +113,8 @@ declare namespace ComponentData {
     | 'PERCENT_PIE'
     | 'STACK_BAR'
     | 'NEGATIVE_BAR'
-    | 'PERCENT_BAR';
+    | 'PERCENT_BAR'
+    | 'LINE_BAR';
 
   // 基础组件属性
   export type TBaseConfig = {
