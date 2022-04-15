@@ -67,6 +67,18 @@ export async function sleep(time: number = 1000) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
+// 计算字符长度
+export function stringLength(string: string) {
+  return new Array(string.length).fill(0).reduce((acc, cur, index) => {
+    if (string.charCodeAt(index) > 127 || string.charCodeAt(index) === 94) {
+      acc += 2;
+    } else {
+      acc++;
+    }
+    return acc;
+  }, 0);
+}
+
 // 特殊合并，取消array相加
 export function mergeWithoutArray(...args: any[]) {
   // @ts-ignore

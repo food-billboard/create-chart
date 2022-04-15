@@ -92,6 +92,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: BarBasic,
             description: '',
           },
+          {
+            type: 'PERCENT_BAR',
+            title: '百分比柱图',
+            icon: BarBasic,
+            description: '',
+          },
         ],
       },
       {
