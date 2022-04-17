@@ -354,7 +354,20 @@ export const COMPONENT_TYPE_LIST = [
     type: 'map',
     title: '地图',
     icon: <CompassOutlined className={classnames(commonClass)} />,
-    children: [],
+    children: [
+      {
+        type: 'map-basic',
+        title: '基础地图',
+        children: [
+          {
+            type: 'SCATTER_MAP',
+            title: '标记地图',
+            icon: ImageBasic,
+            description: '',
+          },
+        ],
+      },
+    ],
   },
   {
     type: 'other',

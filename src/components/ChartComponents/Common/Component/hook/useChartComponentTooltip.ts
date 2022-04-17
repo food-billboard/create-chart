@@ -18,7 +18,7 @@ export const useChartComponentTooltip = (
   options?: Partial<TooltipOptions>,
 ) => {
   let dataIndex: number = 0;
-  let seriesIndex: number = 0;
+  let seriesIndex: number = options?.seriesIndex || 0;
   let chartType: string = '';
   let dataLength: number = 0;
   let lastShowSeriesIndex = 0;
@@ -77,6 +77,7 @@ export const useChartComponentTooltip = (
   const autoShowTip = () => {
     function showTip() {
       let currSeries = series[seriesIndex];
+
       if (
         !series ||
         series.length === 0 ||

@@ -45,6 +45,8 @@ import Carousel from './Media/Carousel';
 // interactive
 import Tab from './Interactive/Tab';
 import Select from './Interactive/Select';
+// map
+import ScatterMap from './Map/ScatterMap';
 
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
@@ -95,6 +97,7 @@ COMPONENT_MAP.set(StackBar.type, StackBar);
 COMPONENT_MAP.set(NegativeBar.type, NegativeBar);
 COMPONENT_MAP.set(PercentBar.type, PercentBar);
 COMPONENT_MAP.set(LineBar.type, LineBar);
+COMPONENT_MAP.set(ScatterMap.type, ScatterMap);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);
