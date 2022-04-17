@@ -38,6 +38,7 @@ import WaterBall from './Other/WaterBall';
 import Title from './Font/Title';
 import TimeMachine from './Font/TimeMachine';
 import CountUpNumber from './Font/CountUpNumber';
+import FontCarousel from './Font/FontCarousel';
 // media
 import Image from './Media/Image';
 import Video from './Media/Video';
@@ -98,6 +99,7 @@ COMPONENT_MAP.set(NegativeBar.type, NegativeBar);
 COMPONENT_MAP.set(PercentBar.type, PercentBar);
 COMPONENT_MAP.set(LineBar.type, LineBar);
 COMPONENT_MAP.set(ScatterMap.type, ScatterMap);
+COMPONENT_MAP.set(FontCarousel.type, FontCarousel);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

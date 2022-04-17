@@ -115,7 +115,8 @@ declare namespace ComponentData {
     | 'NEGATIVE_BAR'
     | 'PERCENT_BAR'
     | 'LINE_BAR'
-    | 'SCATTER_MAP';
+    | 'SCATTER_MAP'
+    | 'FONT_CAROUSEL';
 
   // 基础组件属性
   export type TBaseConfig = {

@@ -315,6 +315,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: CountUpNumberBasic,
             description: '',
           },
+          {
+            type: 'FONT_CAROUSEL',
+            title: '跑马灯',
+            icon: CountUpNumberBasic,
+            description: '',
+          },
         ],
       },
     ],

@@ -41,7 +41,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTitleConfig> = {
           map: '',
           description: '数据值',
           id: 'value',
-          type: 'number',
+          type: 'string',
         },
       ],
     },
