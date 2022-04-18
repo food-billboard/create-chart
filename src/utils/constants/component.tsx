@@ -104,6 +104,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: BarBasic,
             description: '',
           },
+          {
+            type: 'ZEBRA_BAR',
+            title: '斑马图',
+            icon: BarBasic,
+            description: '',
+          },
         ],
       },
       {

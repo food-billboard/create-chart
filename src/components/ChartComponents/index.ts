@@ -29,6 +29,7 @@ import StackBar from './Chart/Bar/StackBar';
 import NegativeBar from './Chart/Bar/NegativeBar';
 import PercentBar from './Chart/Bar/PercentBar';
 import LineBar from './Chart/Bar/LineBar';
+import ZebraBar from './Chart/Bar/ZebraBar';
 // other
 import WordCloud from './Other/WordCloud';
 import Iframe from './Other/Iframe';
@@ -102,6 +103,7 @@ COMPONENT_MAP.set(LineBar.type, LineBar);
 COMPONENT_MAP.set(ScatterMap.type, ScatterMap);
 COMPONENT_MAP.set(FontCarousel.type, FontCarousel);
 COMPONENT_MAP.set(Text.type, Text);
+COMPONENT_MAP.set(ZebraBar.type, ZebraBar);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

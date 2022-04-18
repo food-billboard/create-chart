@@ -117,7 +117,8 @@ declare namespace ComponentData {
     | 'LINE_BAR'
     | 'SCATTER_MAP'
     | 'FONT_CAROUSEL'
-    | 'TEXT';
+    | 'TEXT'
+    | 'ZEBRA_BAR';
 
   // 基础组件属性
   export type TBaseConfig = {
