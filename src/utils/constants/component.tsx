@@ -304,6 +304,12 @@ export const COMPONENT_TYPE_LIST = [
             description: '',
           },
           {
+            type: 'TEXT',
+            title: '多行文本',
+            icon: TitleBasic,
+            description: '',
+          },
+          {
             type: 'TIME_MACHINE',
             title: '时间器',
             icon: TimeMachineBasic,

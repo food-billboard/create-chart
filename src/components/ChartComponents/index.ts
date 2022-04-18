@@ -39,6 +39,7 @@ import Title from './Font/Title';
 import TimeMachine from './Font/TimeMachine';
 import CountUpNumber from './Font/CountUpNumber';
 import FontCarousel from './Font/FontCarousel';
+import Text from './Font/Text';
 // media
 import Image from './Media/Image';
 import Video from './Media/Video';
@@ -100,6 +101,7 @@ COMPONENT_MAP.set(PercentBar.type, PercentBar);
 COMPONENT_MAP.set(LineBar.type, LineBar);
 COMPONENT_MAP.set(ScatterMap.type, ScatterMap);
 COMPONENT_MAP.set(FontCarousel.type, FontCarousel);
+COMPONENT_MAP.set(Text.type, Text);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);
