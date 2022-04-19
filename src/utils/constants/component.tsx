@@ -110,6 +110,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: BarBasic,
             description: '',
           },
+          {
+            type: 'WATER_FALL_BAR',
+            title: '瀑布图',
+            icon: BarBasic,
+            description: '',
+          },
         ],
       },
       {

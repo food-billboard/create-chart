@@ -119,7 +119,8 @@ declare namespace ComponentData {
     | 'FONT_CAROUSEL'
     | 'TEXT'
     | 'ZEBRA_BAR'
-    | 'TREE_BASIC';
+    | 'TREE_BASIC'
+    | 'WATER_FALL_BAR';
 
   // 基础组件属性
   export type TBaseConfig = {
