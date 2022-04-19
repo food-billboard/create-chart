@@ -17,16 +17,16 @@ import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
-import { TScatterBasicConfig } from '../type';
+import { TBubbleScatterConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
 
-const CHART_ID = 'SCATTER_BASIC';
+const CHART_ID = 'BUBBLE_SCATTER';
 
-const ScatterBasic = (props: {
+const BubbleScatter = (props: {
   className?: string;
   style?: CSSProperties;
-  value: ComponentData.TComponentData<TScatterBasicConfig>;
+  value: ComponentData.TComponentData<TBubbleScatterConfig>;
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
@@ -37,8 +37,7 @@ const ScatterBasic = (props: {
     config: { options },
   } = value;
 
-  const { legend, series, tooltip, animation, xAxis, yAxis, condition } =
-    options;
+  const { series, tooltip, animation, xAxis, condition, title } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -56,7 +55,7 @@ const ScatterBasic = (props: {
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TScatterBasicConfig>(
+  } = useComponent<TBubbleScatterConfig>(
     {
       component: value,
       global,
@@ -70,17 +69,19 @@ const ScatterBasic = (props: {
     className: conditionClassName,
   } = useCondition(onCondition);
 
-  const { xAxisKeys, yAxisValues, seriesKeys } = useChartValueMapField(
-    processedValue,
-    {
-      map: componentFilterMap,
-      fields: {
-        seriesKey: 's',
-        xAxisKeyKey: 'name',
-        yAxisValue: 'value',
-      },
+  const {
+    value: realValue,
+    seriesKeys,
+    xAxisKeys,
+    yAxisValues,
+  } = useChartValueMapField(processedValue, {
+    map: componentFilterMap,
+    fields: {
+      seriesKey: 's',
+      xAxisKeyKey: 'x',
+      yAxisValue: 'y',
     },
-  );
+  });
 
   const initChart = () => {
     const chart = init(
@@ -96,27 +97,72 @@ const ScatterBasic = (props: {
   };
 
   const getSeries = () => {
-    const { itemStyle, ...nextSeries } = series;
+    const { itemStyle, symbolSize } = series;
     const { animation: show, animationDuration, animationEasing } = animation;
+    const { axisLabel, axisTick, axisLine, nameTextStyle, ...nextXAxis } =
+      xAxis;
+
+    const baseTitle: any = {
+      show: title.show,
+      textBaseline: 'middle',
+      text: title.defaultValue,
+      top: '50%',
+      textStyle: {
+        ...title.textStyle,
+        color: getRgbaString(title.textStyle.color),
+      },
+    };
+
+    const baseAxis: any = {
+      ...nextXAxis,
+      bottom: '20%',
+      type: 'category',
+      boundaryGap: false,
+      axisLabel: {
+        ...axisLabel,
+        color: getRgbaString(axisLabel.color),
+      },
+      splitLine: {
+        show: false,
+      },
+      data: xAxisKeys,
+      axisTick: {
+        ...axisTick,
+        lineStyle: {
+          ...axisTick.lineStyle,
+          color: getRgbaString(axisTick.lineStyle.color),
+        },
+      },
+      axisLine: {
+        ...axisLine,
+        lineStyle: {
+          ...axisLine.lineStyle,
+          color: getRgbaString(axisLine.lineStyle.color),
+        },
+      },
+      nameTextStyle: {
+        ...nameTextStyle,
+        color: getRgbaString(nameTextStyle.color),
+      },
+    };
 
     const baseSeries = {
-      ...nextSeries,
       type: 'scatter',
       itemStyle: {
-        ...(itemStyle[0] || {}),
-        color: getRgbaString(itemStyle[0]?.color) || 'auto',
+        color: getRgbaString(itemStyle.color[0]) || 'auto',
       },
+      symbolSize: function (dataItem: any) {
+        return dataItem[1] * symbolSize;
+      },
+      singleAxisIndex: 0,
+      zlevel: 1,
+      coordinateSystem: 'singleAxis',
       data: yAxisValues._defaultValue_,
       animation: show,
       animationEasing,
       animationEasingUpdate: animationEasing,
       animationDuration,
       animationDurationUpdate: animationDuration,
-      emphasis: {
-        focus: 'series',
-        blurScope: 'coordinateSystem',
-        scale: true,
-      },
     };
 
     const realSeries = seriesKeys.length
@@ -124,8 +170,8 @@ const ScatterBasic = (props: {
           return {
             ...baseSeries,
             itemStyle: {
-              ...(itemStyle[index] || {}),
-              color: getRgbaString(itemStyle[index]?.color) || 'auto',
+              ...itemStyle,
+              color: getRgbaString(itemStyle.color[index]) || 'auto',
             },
             data: yAxisValues[item],
             name: item,
@@ -133,78 +179,34 @@ const ScatterBasic = (props: {
         })
       : [baseSeries];
 
-    return realSeries;
+    return {
+      series: realSeries,
+      title: baseTitle,
+      axis: [baseAxis],
+    };
   };
 
   const setOption = () => {
-    const { textStyle: legendTextStyle, ...nextLegend } = legend;
     const {
       backgroundColor,
       textStyle: tooltipTextStyle,
       animation,
       ...nextTooltip
     } = tooltip;
-    const {
-      axisLabel: xAxisLabel,
-      nameTextStyle: xNameTextStyle,
-      ...nextXAxis
-    } = xAxis;
-    const {
-      axisLabel: yAxisLabel,
-      nameTextStyle: yNameTextStyle,
-      ...nextYAxis
-    } = yAxis;
 
-    const series = getSeries();
+    const { series, axis, title } = getSeries();
 
     chartInstance.current?.setOption(
       {
         grid: {
           show: false,
         },
-        legend: {
-          ...nextLegend,
-          textStyle: {
-            ...legendTextStyle,
-            color: getRgbaString(legendTextStyle.color),
-          },
+        title,
+        yAxis: {
+          show: false,
         },
-        xAxis: [
-          {
-            ...nextXAxis,
-            scale: true,
-            splitLine: {
-              show: false,
-            },
-            axisLabel: {
-              ...xAxisLabel,
-              color: getRgbaString(xAxisLabel.color),
-            },
-            data: xAxisKeys,
-            nameTextStyle: {
-              ...xNameTextStyle,
-              color: getRgbaString(xNameTextStyle.color),
-            },
-          },
-        ],
-        yAxis: [
-          {
-            ...nextYAxis,
-            scale: true,
-            splitLine: {
-              show: false,
-            },
-            axisLabel: {
-              ...yAxisLabel,
-              color: getRgbaString(yAxisLabel.color),
-            },
-            nameTextStyle: {
-              ...yNameTextStyle,
-              color: getRgbaString(yNameTextStyle.color),
-            },
-          },
-        ],
         series,
+        singleAxis: axis,
         tooltip: {
           ...nextTooltip,
           trigger: 'item',
@@ -275,10 +277,10 @@ const ScatterBasic = (props: {
   );
 };
 
-const WrapperScatterBasic: typeof ScatterBasic & {
+const WrapperBubbleScatter: typeof BubbleScatter & {
   id: ComponentData.TComponentSelfType;
-} = ScatterBasic as any;
+} = BubbleScatter as any;
 
-WrapperScatterBasic.id = CHART_ID;
+WrapperBubbleScatter.id = CHART_ID;
 
-export default WrapperScatterBasic;
+export default WrapperBubbleScatter;

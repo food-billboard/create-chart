@@ -120,7 +120,8 @@ declare namespace ComponentData {
     | 'TEXT'
     | 'ZEBRA_BAR'
     | 'TREE_BASIC'
-    | 'WATER_FALL_BAR';
+    | 'WATER_FALL_BAR'
+    | 'BUBBLE_SCATTER';
 
   // 基础组件属性
   export type TBaseConfig = {

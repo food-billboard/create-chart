@@ -204,6 +204,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: ScatterBasic,
             description: '',
           },
+          {
+            type: 'BUBBLE_SCATTER',
+            title: '单轴气泡图',
+            icon: ScatterBasic,
+            description: '',
+          },
         ],
       },
       {
