@@ -31,6 +31,28 @@ import IframeBasic from '../../../public/components/iframe.jpg';
 import ListBasic from '../../../public/components/list-basic.png';
 import TabBasic from '../../../public/components/tab-basic.jpg';
 import SelectBasic from '../../../public/components/select-basic.jpg';
+import CachetBar from '../../../public/components/cachet-bar.png';
+import CirclePie from '../../../public/components/circle-pie.png';
+import ClockGauge from '../../../public/components/clock-gauge.png';
+import HorizontalBar from '../../../public/components/horizontal-bar.png';
+import LineBar from '../../../public/components/line-bar.png';
+import NegativeBar from '../../../public/components/negative-bar.png';
+import NightingalePie from '../../../public/components/nightingale-pie.png';
+import PercentBar from '../../../public/components/percent-bar.png';
+import ProgressBar from '../../../public/components/progress-bar.png';
+import RadialBar from '../../../public/components/radial-bar.png';
+import RadialLine from '../../../public/components/radial-line.png';
+import RadialStackLine from '../../../public/components/radial-stack-line.png';
+import RankBar from '../../../public/components/rank-bar.png';
+import StackBar from '../../../public/components/stack-bar.png';
+import Tree from '../../../public/components/tree.png';
+import WaterFallBar from '../../../public/components/waterfall-bar.png';
+import ZebraBar from '../../../public/components/zebra-bar.png';
+import TextCarousel from '../../../public/components/text-carousel.jpg';
+import Text from '../../../public/components/text.jpg';
+import PercentPie from '../../../public/components/percent-pie.jpg';
+import WaterBall from '../../../public/components/water-ball.jpg';
+import ScatterMap from '../../../public/components/scatter-map.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -53,67 +75,67 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'RADIAL_BAR',
             title: '渐变柱形图',
-            icon: BarBasic,
+            icon: RadialBar,
             description: '',
           },
           {
             type: 'PROGRESS_BAR',
             title: '进度条',
-            icon: BarBasic,
+            icon: ProgressBar,
             description: '',
           },
           {
             type: 'RANK_BAR',
             title: '排名',
-            icon: BarBasic,
+            icon: RankBar,
             description: '',
           },
           {
             type: 'HORIZONTAL_BAR',
             title: '横向柱形图',
-            icon: BarBasic,
+            icon: HorizontalBar,
             description: '',
           },
           {
             type: 'CACHET_BAR',
             title: '胶囊图',
-            icon: BarBasic,
+            icon: CachetBar,
             description: '',
           },
           {
             type: 'STACK_BAR',
             title: '堆叠柱形图',
-            icon: BarBasic,
+            icon: StackBar,
             description: '',
           },
           {
             type: 'NEGATIVE_BAR',
             title: '正负轴柱形图',
-            icon: BarBasic,
+            icon: NegativeBar,
             description: '',
           },
           {
             type: 'PERCENT_BAR',
             title: '百分比柱图',
-            icon: BarBasic,
+            icon: PercentBar,
             description: '',
           },
           {
             type: 'LINE_BAR',
             title: '折线柱形图',
-            icon: BarBasic,
+            icon: LineBar,
             description: '',
           },
           {
             type: 'ZEBRA_BAR',
             title: '斑马图',
-            icon: BarBasic,
+            icon: ZebraBar,
             description: '',
           },
           {
             type: 'WATER_FALL_BAR',
             title: '瀑布图',
-            icon: BarBasic,
+            icon: WaterFallBar,
             description: '',
           },
         ],
@@ -131,13 +153,13 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'RADIAL_LINE',
             title: '渐变折线图',
-            icon: LineBasic,
+            icon: RadialLine,
             description: '',
           },
           {
             type: 'RADIAL_STACK_LINE',
             title: '渐变堆叠面积图',
-            icon: LineBasic,
+            icon: RadialStackLine,
             description: '',
           },
         ],
@@ -155,19 +177,19 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'NIGHTINGALE_PIE',
             title: '玫瑰图',
-            icon: PieBasic,
+            icon: NightingalePie,
             description: '',
           },
           {
             type: 'CIRCLE_PIE',
             title: '环形图',
-            icon: PieBasic,
+            icon: CirclePie,
             description: '',
           },
           {
             type: 'PERCENT_PIE',
             title: '百分比图',
-            icon: PieBasic,
+            icon: PercentPie,
             description: '',
           },
         ],
@@ -233,7 +255,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'CLOCK_GAUGE',
             title: '时钟',
-            icon: GaugeBasic,
+            icon: ClockGauge,
             description: '',
           },
         ],
@@ -305,7 +327,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'TREE_BASIC',
             title: '基础关系图',
-            icon: CandlestickBasic,
+            icon: Tree,
             description: '',
           },
         ],
@@ -330,7 +352,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'TEXT',
             title: '多行文本',
-            icon: TitleBasic,
+            icon: Text,
             description: '',
           },
           {
@@ -348,7 +370,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'FONT_CAROUSEL',
             title: '跑马灯',
-            icon: CountUpNumberBasic,
+            icon: TextCarousel,
             description: '',
           },
         ],
@@ -398,7 +420,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'SCATTER_MAP',
             title: '标记地图',
-            icon: ImageBasic,
+            icon: ScatterMap,
             description: '',
           },
         ],
@@ -435,7 +457,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'WATER_BALL',
             title: '水球',
-            icon: WordCloudBasic,
+            icon: WaterBall,
             description: '',
           },
         ],
