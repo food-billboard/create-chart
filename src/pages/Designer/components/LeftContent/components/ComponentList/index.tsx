@@ -64,6 +64,7 @@ const ComponentList = (props: { type: string }) => {
         'zero-scrollbar',
       )}
       bordered={false}
+      ghost
       defaultActiveKey={defaultActiveKey}
       expandIcon={({ isActive }) => (
         <CaretRightOutlined rotate={isActive ? 90 : 0} />
