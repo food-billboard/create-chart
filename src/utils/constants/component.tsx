@@ -292,6 +292,18 @@ export const COMPONENT_TYPE_LIST = [
           },
         ],
       },
+      {
+        type: 'tree',
+        title: '关系图',
+        children: [
+          {
+            type: 'TREE_BASIC',
+            title: '基础关系图',
+            icon: CandlestickBasic,
+            description: '',
+          },
+        ],
+      },
     ],
   },
   {

@@ -118,7 +118,8 @@ declare namespace ComponentData {
     | 'SCATTER_MAP'
     | 'FONT_CAROUSEL'
     | 'TEXT'
-    | 'ZEBRA_BAR';
+    | 'ZEBRA_BAR'
+    | 'TREE_BASIC';
 
   // 基础组件属性
   export type TBaseConfig = {
