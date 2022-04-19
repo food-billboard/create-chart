@@ -49,7 +49,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TSelectConfig> = {
           map: '',
           description: '数据值',
           id: 'value',
-          type: 'number',
+          type: 'string',
         },
       ],
     },

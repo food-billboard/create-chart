@@ -81,11 +81,10 @@ const RankBar = (props: {
   });
 
   const onClick = (params: any) => {
-    const { seriesName, name, data } = params;
+    const { seriesName, value } = params;
     syncInteractiveAction('click', {
-      x: name,
-      y: data,
-      s: seriesName,
+      value,
+      name: seriesName,
     });
   };
 
@@ -152,7 +151,7 @@ const RankBar = (props: {
       {
         ...commonStyle,
         itemStyle: {
-          barBorderRadius: borderRadius,
+          borderRadius,
           color: getRgbaString({
             ...backgroundStyle.color,
             a: backgroundStyle.show ? backgroundStyle.color.a : 0,
@@ -162,6 +161,7 @@ const RankBar = (props: {
         data: new Array(xAxisKeys.length).fill(
           Math.max(...yAxisValues._defaultValue_) || 0,
         ),
+        silent: true,
       },
     ];
   };
@@ -282,11 +282,9 @@ const RankBar = (props: {
                   axisLine: 'none',
                   show: true,
                   axisLabel: {
-                    textStyle: {
-                      ...nextLabel,
-                      color: getRgbaString(label.color),
-                      formatter: label.formatter,
-                    },
+                    ...nextLabel,
+                    color: getRgbaString(label.color),
+                    formatter: label.formatter,
                   },
                   data: yAxisValues._defaultValue_,
                 },

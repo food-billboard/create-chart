@@ -95,11 +95,12 @@ const ScatterMap = (props: {
   });
 
   const onClick = (params: any) => {
-    const { seriesName, name, data } = params;
+    const { data } = params;
+    const { name, value } = data;
     syncInteractiveAction('click', {
-      x: name,
-      y: data,
-      s: seriesName,
+      name: name,
+      value: value[2],
+      center: value.slice(0, 2),
     });
   };
 
@@ -144,6 +145,7 @@ const ScatterMap = (props: {
         label: {
           show: false,
         },
+        silent: true,
       },
       {
         ...nextScatter,
@@ -209,6 +211,7 @@ const ScatterMap = (props: {
             shadowColor: getRgbaString(itemStyle.emphasis.shadowColor),
           },
         },
+        silent: true,
       },
       series,
       tooltip: {

@@ -80,10 +80,10 @@ const FunnelBasic = (props: {
   });
 
   const onClick = (params: any) => {
-    const { name, data } = params;
+    const { name, value } = params;
     syncInteractiveAction('click', {
       name: name,
-      value: data,
+      value,
     });
   };
 

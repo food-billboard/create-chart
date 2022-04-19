@@ -131,7 +131,7 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRankBarConfig> = {
           g: 255,
           b: 255,
         },
-        formatter: '{c}',
+        formatter: '{value}',
         position: 'deep-top',
       },
       borderRadius: 30,

@@ -81,11 +81,10 @@ const WaterFallBar = (props: {
   });
 
   const onClick = (params: any) => {
-    const { seriesName, name, data } = params;
+    const { name, value } = params;
     syncInteractiveAction('click', {
       x: name,
-      y: data,
-      s: seriesName,
+      y: value,
     });
   };
 
@@ -138,6 +137,7 @@ const WaterFallBar = (props: {
             color: 'transparent',
           },
         },
+        silent: true,
         data: yAxisValues._defaultValue_.reduce(
           (acc: any, cur: any, index: number) => {
             const [target] = acc.slice(-1);

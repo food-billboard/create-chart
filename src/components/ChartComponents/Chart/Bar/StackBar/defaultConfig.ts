@@ -65,11 +65,6 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TStackBarConfig> = {
             variable: '',
             description: '系列',
           },
-          {
-            key: 'stack',
-            variable: '',
-            description: '不同系列的同级',
-          },
         ],
       },
     ],

@@ -77,7 +77,7 @@ const ZebraBar = (props: {
     {
       map: componentFilterMap,
       fields: {
-        seriesKey: 's',
+        seriesKey: '',
         xAxisKeyKey: 'x',
         yAxisValue: 'y',
       },
@@ -85,11 +85,10 @@ const ZebraBar = (props: {
   );
 
   const onClick = (params: any) => {
-    const { seriesName, name, data } = params;
+    const { seriesName, name, value } = params;
     syncInteractiveAction('click', {
       x: name,
-      y: data,
-      s: seriesName,
+      y: value,
     });
   };
 
@@ -112,7 +111,6 @@ const ZebraBar = (props: {
       ...nextSeries,
       symbolRepeat: 'fixed',
       symbolMargin: [space.margin, 0],
-      silent: true,
       symbolClip: true,
       label: {
         ...label,
@@ -135,21 +133,7 @@ const ZebraBar = (props: {
       z: 1,
     };
 
-    const realSeries = seriesKeys.length
-      ? seriesKeys.map((item: any, index: number) => {
-          return {
-            ...baseSeries,
-            itemStyle: {
-              ...itemStyle,
-              color: getRgbaString(itemStyle.color[index]) || 'auto',
-            },
-            data: yAxisValues[item] || [],
-            name: item,
-          };
-        })
-      : [baseSeries];
-
-    return realSeries;
+    return [baseSeries];
   };
 
   const setOption = () => {

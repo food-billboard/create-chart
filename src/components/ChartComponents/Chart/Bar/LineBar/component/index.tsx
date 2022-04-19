@@ -139,10 +139,10 @@ const LineBar = (props: {
   });
 
   const onClick = (params: any) => {
-    const { seriesName, name, data } = params;
+    const { seriesName, name, value } = params;
     syncInteractiveAction('click', {
       x: name,
-      y: data,
+      y: value,
       s: seriesName,
     });
   };
@@ -168,6 +168,7 @@ const LineBar = (props: {
           ...label,
           color: getRgbaString(label.color),
         },
+        triggerLineEvent: true,
         type: 'line',
         yAxisIndex: 1,
         symbolSize: 0,

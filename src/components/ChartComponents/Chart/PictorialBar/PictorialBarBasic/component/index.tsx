@@ -80,11 +80,10 @@ const PictorialBar = (props: {
   });
 
   const onClick = (params: any) => {
-    const { seriesName, name, data } = params;
+    const { name, data } = params;
     syncInteractiveAction('click', {
-      x: name,
-      y: data,
-      s: seriesName,
+      name,
+      value,
     });
   };
 

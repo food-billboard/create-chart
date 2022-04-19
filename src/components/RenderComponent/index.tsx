@@ -104,7 +104,7 @@ const RenderComponent = memo(
       isSelect,
       scale,
       style,
-      query: '#render-component-wrapper',
+      query: `div[data-id="${id}"]`,
     });
 
     const handleSelect = useCallback(
@@ -151,7 +151,6 @@ const RenderComponent = memo(
       >
         <ComponentWrapper
           style={baseStyle}
-          id="render-component-wrapper"
           className={classnames(className, 'react-select-to', {
             [styles['render-component-wrapper']]:
               !isSelect && screenType !== 'preview',

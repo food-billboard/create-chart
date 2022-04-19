@@ -80,11 +80,10 @@ const PercentBar = (props: {
   });
 
   const onClick = (params: any) => {
-    const { seriesName, name, data } = params;
+    const { seriesName, value } = params;
     syncInteractiveAction('click', {
-      x: name,
-      y: data,
-      s: seriesName,
+      value: value,
+      name: seriesName,
     });
   };
 

@@ -62,6 +62,13 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTabConfig> = {
     filter: {
       map: [
         {
+          field: 'name',
+          map: '',
+          description: '数据名',
+          id: 'value',
+          type: 'string',
+        },
+        {
           field: 'value',
           map: '',
           description: '数据值',

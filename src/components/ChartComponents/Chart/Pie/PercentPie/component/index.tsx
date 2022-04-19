@@ -148,7 +148,6 @@ const PercentPie = (props: {
               fill: 'transparent',
               lineWidth: lineStyle.line.width,
             },
-            silent: true,
           };
         },
         data: [0],
@@ -173,7 +172,6 @@ const PercentPie = (props: {
               stroke: getRgbaString(lineStyle.color[0].point),
               fill: getRgbaString(lineStyle.color[0].point),
             },
-            silent: true,
           };
         },
         data: [0],
@@ -197,7 +195,6 @@ const PercentPie = (props: {
               fill: 'transparent',
               lineWidth: lineStyle.line.width,
             },
-            silent: true,
           };
         },
         data: [0],
@@ -222,7 +219,6 @@ const PercentPie = (props: {
               stroke: getRgbaString(lineStyle.color[1].point),
               fill: getRgbaString(lineStyle.color[1].point),
             },
-            silent: true,
           };
         },
         data: [0],
@@ -246,7 +242,6 @@ const PercentPie = (props: {
               fill: 'transparent',
               lineWidth: lineStyle.line.width,
             },
-            silent: true,
           };
         },
         data: [0],
@@ -271,7 +266,6 @@ const PercentPie = (props: {
               stroke: getRgbaString(lineStyle.color[2].point),
               fill: getRgbaString(lineStyle.color[2].point),
             },
-            silent: true,
           };
         },
         data: [0],
@@ -295,7 +289,6 @@ const PercentPie = (props: {
               fill: 'transparent',
               lineWidth: lineStyle.line.width,
             },
-            silent: true,
           };
         },
         data: [0],
@@ -320,7 +313,6 @@ const PercentPie = (props: {
               stroke: getRgbaString(lineStyle.color[3].point),
               fill: getRgbaString(lineStyle.color[3].point),
             },
-            silent: true,
           };
         },
         data: [0],
@@ -329,7 +321,6 @@ const PercentPie = (props: {
         name: CHART_ID,
         type: 'pie',
         radius: radius.outer.map((item) => `${item}%`),
-        silent: true,
         clockwise: true,
         startAngle: 90,
         z: 0,
@@ -339,11 +330,9 @@ const PercentPie = (props: {
             value: finalValue.value || 0,
             name: '',
             itemStyle: {
-              normal: {
-                color: {
-                  // 完成的圆环的颜色
-                  colorStops: colorSteps,
-                },
+              color: {
+                // 完成的圆环的颜色
+                colorStops: colorSteps,
               },
             },
           },
@@ -351,14 +340,10 @@ const PercentPie = (props: {
             value: 100 - finalValue.value || 0,
             name: '',
             label: {
-              normal: {
-                show: false,
-              },
+              show: false,
             },
             itemStyle: {
-              normal: {
-                color: getRgbaString(backgroundColor),
-              },
+              color: getRgbaString(backgroundColor),
             },
           },
         ],
@@ -367,7 +352,6 @@ const PercentPie = (props: {
         name: CHART_ID,
         type: 'pie',
         radius: radius.inner.map((item) => `${item}%`),
-        silent: true,
         clockwise: true,
         startAngle: 270,
         z: 0,
@@ -377,11 +361,9 @@ const PercentPie = (props: {
             value: finalValue.value || 0,
             name: '',
             itemStyle: {
-              normal: {
-                color: {
-                  // 完成的圆环的颜色
-                  colorStops: colorSteps,
-                },
+              color: {
+                // 完成的圆环的颜色
+                colorStops: colorSteps,
               },
             },
           },
@@ -389,14 +371,10 @@ const PercentPie = (props: {
             value: 100 - finalValue.value || 0,
             name: '',
             label: {
-              normal: {
-                show: false,
-              },
+              show: false,
             },
             itemStyle: {
-              normal: {
-                color: getRgbaString(backgroundColor),
-              },
+              color: getRgbaString(backgroundColor),
             },
           },
         ],
