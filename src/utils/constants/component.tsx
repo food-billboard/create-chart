@@ -26,7 +26,7 @@ import CountUpNumberBasic from '../../../public/components/count-up-number.jpg';
 import ImageBasic from '../../../public/components/image-basic.jpg';
 import VideoBasic from '../../../public/components/video-basic.jpg';
 import CarouselBasic from '../../../public/components/carousel-basic.jpg';
-import WordCloudBasic from '../../../public/components/word-cloud.jpg';
+import WordCloudBasic from '../../../public/components/word-cloud.png';
 import IframeBasic from '../../../public/components/iframe.jpg';
 import ListBasic from '../../../public/components/list-basic.png';
 import TabBasic from '../../../public/components/tab-basic.jpg';
@@ -50,9 +50,10 @@ import WaterFallBar from '../../../public/components/waterfall-bar.png';
 import ZebraBar from '../../../public/components/zebra-bar.png';
 import TextCarousel from '../../../public/components/text-carousel.jpg';
 import Text from '../../../public/components/text.jpg';
-import PercentPie from '../../../public/components/percent-pie.jpg';
-import WaterBall from '../../../public/components/water-ball.jpg';
-import ScatterMap from '../../../public/components/scatter-map.jpg';
+import PercentPie from '../../../public/components/percent-pie.png';
+import WaterBall from '../../../public/components/water-ball.png';
+import ScatterMap from '../../../public/components/scatter-map.png';
+import BubbleScatter from '../../../public/components/bubble-scatter.png';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -207,7 +208,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'BUBBLE_SCATTER',
             title: '单轴气泡图',
-            icon: ScatterBasic,
+            icon: BubbleScatter,
             description: '',
           },
         ],
