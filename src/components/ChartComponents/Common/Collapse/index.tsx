@@ -32,8 +32,15 @@ export type TCollapsePanelProps = Exclude<CollapsePanelProps, 'extra'> & {
 };
 
 const Panel = (props: TCollapsePanelProps) => {
-  const { value, onChange, children, visibleRender, header, ...nextProps } =
-    props;
+  const {
+    value,
+    onChange,
+    children,
+    visibleRender,
+    header,
+    extra,
+    ...nextProps
+  } = props;
 
   const visibleRenderClick = useCallback(
     (status: boolean, e: any) => {
@@ -67,10 +74,13 @@ const Panel = (props: TCollapsePanelProps) => {
     return (
       <>
         <PlaceHolder>{realVisibleRender}</PlaceHolder>
-        {header}
+        <span className={styles['design-config-collapse-single-main']}>
+          {header}
+        </span>
+        <PlaceHolder>{extra}</PlaceHolder>
       </>
     );
-  }, [realVisibleRender, header]);
+  }, [realVisibleRender, header, extra]);
 
   return (
     <AntPanel {...nextProps} header={realHeader}>
