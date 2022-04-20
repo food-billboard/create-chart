@@ -1,4 +1,3 @@
-import { omit } from 'lodash';
 import { mergeWithoutArray } from '@/utils';
 import {
   BASIC_DEFAULT_CONFIG,
@@ -15,13 +14,12 @@ import { getDate, getNumberValue } from '@/utils/constants';
 import { TBubbleScatterConfig } from './type';
 
 const DEFAULT_NAME_LABEL = getDate(20);
-const DEFAULT_DATE_MAX_VALUE = getNumberValue(20, 5, 10);
-const DEFAULT_DATE_MIN_VALUE = getNumberValue(20, 1, 4);
+const DEFAULT_DATE_VALUE = getNumberValue(20, 1, 10);
 
 const DEFAULT_VALUE = DEFAULT_NAME_LABEL.map((item, index) => {
   return {
-    x: item,
-    y: [DEFAULT_DATE_MIN_VALUE[index], DEFAULT_DATE_MAX_VALUE[index]],
+    name: item,
+    value: DEFAULT_DATE_VALUE[index],
   };
 });
 
@@ -37,18 +35,18 @@ const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBubbleScatterConfig
       filter: {
         map: [
           {
-            field: 'x',
+            field: 'name',
             map: '',
-            description: 'x轴',
-            id: 'x',
+            description: '名称',
+            id: 'name',
             type: 'string',
           },
           {
-            field: 'y',
+            field: 'value',
             map: '',
-            description: 'y轴',
-            id: 'y',
-            type: 'number[]',
+            description: '数值',
+            id: 'value',
+            type: 'number',
           },
           {
             field: 's',

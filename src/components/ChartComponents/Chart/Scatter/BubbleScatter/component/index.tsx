@@ -69,19 +69,17 @@ const BubbleScatter = (props: {
     className: conditionClassName,
   } = useCondition(onCondition);
 
-  const {
-    value: realValue,
-    seriesKeys,
-    xAxisKeys,
-    yAxisValues,
-  } = useChartValueMapField(processedValue, {
-    map: componentFilterMap,
-    fields: {
-      seriesKey: 's',
-      xAxisKeyKey: 'x',
-      yAxisValue: 'y',
+  const { seriesKeys, xAxisKeys, yAxisValues } = useChartValueMapField(
+    processedValue,
+    {
+      map: componentFilterMap,
+      fields: {
+        seriesKey: 's',
+        xAxisKeyKey: 'name',
+        yAxisValue: 'value',
+      },
     },
-  });
+  );
 
   const initChart = () => {
     const chart = init(
@@ -152,10 +150,10 @@ const BubbleScatter = (props: {
         color: getRgbaString(itemStyle.color[0]) || 'auto',
       },
       symbolSize: function (dataItem: any) {
-        return dataItem[1] * symbolSize;
+        return dataItem * symbolSize;
       },
+      symbol: 'circle',
       singleAxisIndex: 0,
-      zlevel: 1,
       coordinateSystem: 'singleAxis',
       data: yAxisValues._defaultValue_,
       animation: show,
