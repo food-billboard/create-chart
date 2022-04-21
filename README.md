@@ -6,8 +6,8 @@
 ### 当前版本(1.1)😈    
 
 ### changelog  
-[1.1](https://github.com/food-billboard/create-chart/blob/main/public/1.1.md)  
-[1.0](https://github.com/food-billboard/create-chart/blob/main/public/1.0.md)  
+[1.1](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.1.md)  
+[1.0](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.0.md)  
 
 ### 目录结构  
 - `/list` 大屏列表
