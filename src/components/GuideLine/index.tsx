@@ -1,4 +1,4 @@
-import { Component, CSSProperties } from 'react';
+import { Component, CSSProperties, useMemo } from 'react';
 import { merge, throttle } from 'lodash';
 import classnames from 'classnames';
 import ThemeUtil from '@/utils/Assist/Theme';
@@ -27,6 +27,7 @@ class GuideLine extends Component<
   startY = 0;
 
   onMouseDown = (e: any) => {
+    e?.stopPropagation();
     const { disabled, onMouseDown } = this.props;
     if (disabled) return;
     this.flag = true;
@@ -118,7 +119,7 @@ class GuideLine extends Component<
   }
 
   render() {
-    const { type, lineStyle = 'dashed', className } = this.props;
+    const { type, lineStyle = 'dashed', className, style, scale } = this.props;
 
     return (
       <div
@@ -130,6 +131,16 @@ class GuideLine extends Component<
         onMouseDown={this.onMouseDown}
         onDoubleClick={this.onDoubleClick}
       >
+        <div
+          className={styles[`ruler-guide-line-flag-${type}`]}
+          style={{
+            backgroundColor: getRgbaString(
+              ThemeUtil.generateNextColor4CurrentTheme(0),
+            ),
+          }}
+        >
+          {(style?.left ?? style?.top - 70).toFixed(0) || 0}
+        </div>
         <div
           className={styles[`ruler-guide-line-${type}`]}
           style={{

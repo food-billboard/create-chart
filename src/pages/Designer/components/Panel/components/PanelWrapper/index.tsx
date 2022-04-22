@@ -1,4 +1,11 @@
-import { useEffect, useState, useCallback, ReactNode, useMemo } from 'react';
+import {
+  useEffect,
+  useState,
+  useCallback,
+  ReactNode,
+  useMemo,
+  useRef,
+} from 'react';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import { BackgroundConfigRender } from '@/components/DesignerBackground';
@@ -10,6 +17,7 @@ import GuideLineButton from './components/GuideLineButton';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import { wrapperId, subWrapperId } from './constants';
 import styles from './index.less';
+import { number } from 'echarts';
 
 const RIGHT_BOTTOM_PADDING = 200;
 
@@ -21,6 +29,7 @@ const PanelWrapper = (props: {
   guideLineList?: ComponentData.TGuideLineConfigItem[];
   guideLineShow?: boolean;
   setGuideLine: (value: ComponentData.TGuideLineConfig) => void;
+  setSelect: (value: string[]) => void;
 }) => {
   const {
     scale: originScale,
@@ -30,13 +39,35 @@ const PanelWrapper = (props: {
     guideLineList = [],
     guideLineShow,
     setGuideLine,
+    setSelect,
   } = props;
 
   const [size, setSize] = useState({ width: 0, height: 0 });
 
+  const clickPosition = useRef<number>(0);
+
   const scale = useMemo(() => {
     return originScale / 100;
   }, [originScale]);
+
+  const onMouseMove = () => {
+    clickPosition.current++;
+  };
+
+  const onMouseUp = () => {
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+    if (clickPosition.current < 2) {
+      setSelect([]);
+    }
+  };
+
+  const onMouseDown = (e: any) => {
+    if (e.target.id !== subWrapperId) return;
+    clickPosition.current = 0;
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
 
   const wrapperSetGuideLine = useCallback(
     (value: Partial<ComponentData.TGuideLineConfig>) => {
@@ -88,6 +119,7 @@ const PanelWrapper = (props: {
         <div
           id={subWrapperId}
           className={classnames(styles['designer-page-main-sub'], 'pos-re')}
+          onMouseDown={onMouseDown}
           // style={size}
         >
           <Ruler
