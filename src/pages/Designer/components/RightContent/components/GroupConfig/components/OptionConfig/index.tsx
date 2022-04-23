@@ -1,13 +1,14 @@
 import { useCallback } from 'react';
 import { Tabs } from 'antd';
 import { connect } from 'dva';
+import { merge } from 'lodash';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import { getPath } from '@/utils/Assist/Component';
 import KeyWordPosition from './components/KeyWordPosition';
-import { merge } from 'lodash';
+import ConditionConfig from './components/ConditionConfig';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const { TabPane } = Tabs;
@@ -18,17 +19,34 @@ const OrientConfig = (props: {
 }) => {
   const { component, setComponent } = props;
 
+  const {
+    id,
+    config: { options },
+  } = component;
+
+  const onChange = useCallback(
+    (value: SuperPartial<ComponentData.TComponentData>) => {
+      const componentPath = getPath(id);
+
+      setComponent({
+        value,
+        id,
+        path: componentPath,
+        action: 'update',
+      });
+    },
+    [setComponent, id],
+  );
+
   const onOrientChange = useCallback(
     (value) => {
       const {
         components,
-        id,
         config: {
           style: { width, height },
         },
       } = component;
       let newComponents: ComponentData.TComponentData[] = [];
-      const componentPath = getPath(id);
 
       newComponents = components.map((component) => {
         const {
@@ -78,13 +96,8 @@ const OrientConfig = (props: {
         });
       });
 
-      setComponent({
-        value: {
-          components: newComponents,
-        },
-        id,
-        path: componentPath,
-        action: 'update',
+      onChange({
+        components: newComponents,
       });
     },
     [component, setComponent],
@@ -99,7 +112,13 @@ const OrientConfig = (props: {
       </TabPane>
       <TabPane key="6" tab={<Tab>条件</Tab>}>
         <ConfigList level={1}>
-          {/* <ConditionConfig value={condition} onChange={onChange} /> */}
+          <ConditionConfig
+            value={
+              ((options as any)?.condition ||
+                []) as ComponentData.ComponentCondition[]
+            }
+            onChange={onChange}
+          />
         </ConfigList>
       </TabPane>
     </ComponentOptionConfig>

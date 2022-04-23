@@ -6,6 +6,7 @@ import { useComponentPath, useIdPathMap } from '@/hooks';
 import { IGlobalModelState } from '@/models/connect';
 import { getComponentDefaultConfigByType } from '@/components/ChartComponents';
 import ColorSelect from '@/components/ColorSelect';
+import { DEFAULT_CONDITION_CONFIG } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { mergeWithoutArray } from '../../tool';
 import { EComponentType, EComponentSelfType } from '../../index';
 import { DEFAULT_CONFIG } from '../../constants/screenData';
@@ -304,6 +305,9 @@ export const createGroupComponent = (
       componentType: EComponentSelfType.GROUP_COMPONENT,
       config: {
         ...DEFAULT_CONFIG,
+        options: {
+          condition: [DEFAULT_CONDITION_CONFIG()],
+        },
       },
     },
     component,

@@ -5,3 +5,4 @@ export * from './useComponentResize';
 export * from './useAnimationChange';
 export * from './useCondition';
 export * from './useChartComponentTooltip';
+export * from './useGroupComponent';
