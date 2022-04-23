@@ -56,8 +56,8 @@ function ScreenList() {
     }
   };
 
-  const onChange = useCallback(() => {
-    fetchData({
+  const onChange = useCallback(async () => {
+    await fetchData({
       currPage,
     });
   }, [currPage]);

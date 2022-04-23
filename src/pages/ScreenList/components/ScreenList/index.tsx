@@ -1,10 +1,10 @@
 import { useRef, useCallback } from 'react';
 import { Row, Col, Button, Switch, message, Modal } from 'antd';
-import { history } from 'umi';
 import {
   SendOutlined,
   DeleteOutlined,
   FolderViewOutlined,
+  CopyOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
 import {
@@ -55,10 +55,28 @@ const ScreenList = (props: {
     [onChange],
   );
 
+  // 复制
+  const copyScreenMethod = useCallback(
+    async (value, e) => {
+      e.stopPropagation();
+      fetchLoading.current = true;
+      try {
+        // TODO
+        await onChange?.();
+      } catch (err) {
+        message.info('操作失败');
+      } finally {
+        fetchLoading.current = false;
+      }
+    },
+    [onChange],
+  );
+
   // 预览
   const previewScreenMethod = useCallback(async (value, e) => {
     e.stopPropagation();
     if (fetchLoading.current) return;
+    fetchLoading.current = true;
     try {
       await previewScreen({ _id: value._id });
       goPreview(value._id);
@@ -73,6 +91,7 @@ const ScreenList = (props: {
   const shareScreenMethod = useCallback(async (value, e) => {
     e.stopPropagation();
     if (fetchLoading.current) return;
+    fetchLoading.current = true;
     shareSettingRef.current?.open(value._id);
   }, []);
 
@@ -200,6 +219,15 @@ const ScreenList = (props: {
                     >
                       预览
                     </Button>
+                    <Button
+                      size="small"
+                      icon={<CopyOutlined />}
+                      type="link"
+                      onClick={copyScreenMethod.bind(null, item)}
+                      style={{ paddingLeft: 0 }}
+                    >
+                      复制
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -207,7 +235,11 @@ const ScreenList = (props: {
           );
         })}
       </Row>
-      <ShareSetting onOk={onShareOk} ref={shareSettingRef} />
+      <ShareSetting
+        onOk={onShareOk}
+        onCancel={() => (fetchLoading.current = false)}
+        ref={shareSettingRef}
+      />
     </div>
   );
 };
