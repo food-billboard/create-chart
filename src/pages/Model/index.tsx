@@ -1,14 +1,14 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { Pagination, Input, Button, Empty } from 'antd';
 import classnames from 'classnames';
-import { getScreenList } from '@/services';
+import { getScreenModelList } from '@/services';
 import { goDesign } from '@/utils/tool';
 import List from './components/List';
 import styles from './index.less';
 
 const { Search } = Input;
 
-function ScreenList() {
+function ScreenModelList() {
   const [currPage, setCurrPage] = useState<number>(1);
   const [total, setTotal] = useState<number>(0);
   const [searchData, setSearchData] = useState<string>('');
@@ -32,7 +32,7 @@ function ScreenList() {
     const { currPage: paramsCurrentPage, content: paramsContent } = params;
 
     try {
-      const res = await getScreenList({
+      const res = await getScreenModelList({
         currPage: ((paramsCurrentPage ?? currPage) || 1) - 1,
         content: paramsContent ?? searchData,
       });
@@ -119,4 +119,4 @@ function ScreenList() {
   );
 }
 
-export default ScreenList;
+export default ScreenModelList;

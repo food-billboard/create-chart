@@ -2,7 +2,7 @@ import request from '../utils/request';
 
 // 新增大屏
 export const postScreenModel = (data: API_SCREEN.TAddScreenParams) => {
-  return request('/api/screen/model/list', {
+  return request('/api/screen/model', {
     method: 'POST',
     data,
   });
@@ -10,7 +10,7 @@ export const postScreenModel = (data: API_SCREEN.TAddScreenParams) => {
 
 // 修改大屏
 export const putScreenModel = (data: API_SCREEN.TEditScreenParams) => {
-  return request('/api/screen/model/list', {
+  return request('/api/screen/model', {
     method: 'PUT',
     data,
   });
@@ -26,7 +26,7 @@ export const getScreenModelDetail = (params: API_SCREEN.TGetScreenDetail) => {
 
 // 大屏列表
 export const getScreenModelList = (params: API_SCREEN.TGetScreenListParams) => {
-  return request<any>('/api/screen/model/list', {
+  return request<any>('/api/screen/model', {
     method: 'GET',
     params,
     origin: true,
@@ -35,7 +35,7 @@ export const getScreenModelList = (params: API_SCREEN.TGetScreenListParams) => {
 
 // 大屏删除
 export const deleteScreenModel = (params: API_SCREEN.TDeleteScreenParams) => {
-  return request('/api/screen/model/list', {
+  return request('/api/screen/model', {
     method: 'DELETE',
     params,
   });
