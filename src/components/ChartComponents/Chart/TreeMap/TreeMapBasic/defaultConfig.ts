@@ -27,133 +27,134 @@ function generateList(count = 10): any {
 
 const DEFAULT_VALUE = generateList();
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTreeMapBasicConfig> =
-  {
-    interactive: {
-      base: [
-        {
-          type: 'click',
-          name: '当点击项时',
-          show: false,
-          fields: [
-            {
-              key: 'name',
-              variable: '',
-              description: '数据项',
-            },
-            {
-              key: 'value',
-              variable: '',
-              description: '数据值',
-            },
-          ],
-        },
-      ],
-    },
-    data: {
-      request: {
-        value: DEFAULT_VALUE,
-      },
-      filter: {
-        map: [
+export default () => {
+  const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTreeMapBasicConfig> =
+    {
+      interactive: {
+        base: [
           {
-            field: 'name',
-            map: '',
-            description: '数据项',
-            id: 'name',
-            type: 'string',
-          },
-          {
-            field: 'value',
-            map: '',
-            description: '数据值',
-            id: 'value',
-            type: 'number',
-          },
-          {
-            field: 'children',
-            map: '',
-            description: '子项',
-            id: 'children',
-            type: 'array[]',
+            type: 'click',
+            name: '当点击项时',
+            show: false,
+            fields: [
+              {
+                key: 'name',
+                variable: '',
+                description: '数据项',
+              },
+              {
+                key: 'value',
+                variable: '',
+                description: '数据值',
+              },
+            ],
           },
         ],
       },
-    },
-    options: {
-      condition: [DEFAULT_CONDITION_CONFIG()],
-      tooltip: DEFAULT_TOOLTIP_CONFIG,
-      animation: {
-        ...DEFAULT_ANIMATION_CONFIG,
-        animationDuration: 2000,
-        animationEasing: 'quadraticInOut',
+      data: {
+        request: {
+          value: DEFAULT_VALUE,
+        },
+        filter: {
+          map: [
+            {
+              field: 'name',
+              map: '',
+              description: '数据项',
+              id: 'name',
+              type: 'string',
+            },
+            {
+              field: 'value',
+              map: '',
+              description: '数据值',
+              id: 'value',
+              type: 'number',
+            },
+            {
+              field: 'children',
+              map: '',
+              description: '子项',
+              id: 'children',
+              type: 'array[]',
+            },
+          ],
+        },
       },
-      series: {
-        nodeClick: 'zoomToNode',
-        // 黄金比例
-        squareRatio: 0.5 * (1 + Math.sqrt(5)),
-        label: {
-          show: true,
-          formatter: '{b}',
-          ...DEFAULT_FONT_CONFIG,
-          color: {
-            r: 255,
-            g: 255,
-            b: 255,
-          },
+      options: {
+        condition: [DEFAULT_CONDITION_CONFIG()],
+        tooltip: DEFAULT_TOOLTIP_CONFIG,
+        animation: {
+          ...DEFAULT_ANIMATION_CONFIG,
+          animationDuration: 2000,
+          animationEasing: 'quadraticInOut',
         },
-        upperLabel: {
-          show: false,
-          position: 'inside',
-          formatter: '{b}',
-          ...DEFAULT_FONT_CONFIG,
-          color: {
-            r: 255,
-            g: 255,
-            b: 255,
+        series: {
+          nodeClick: 'zoomToNode',
+          // 黄金比例
+          squareRatio: 0.5 * (1 + Math.sqrt(5)),
+          label: {
+            show: true,
+            formatter: '{b}',
+            ...DEFAULT_FONT_CONFIG,
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+            },
           },
-        },
-        breadcrumb: {
-          show: true,
-          left: 'center',
-          top: 'bottom',
-          height: 22,
-          itemStyle: {
-            textStyle: {
-              ...DEFAULT_FONT_CONFIG,
+          upperLabel: {
+            show: false,
+            position: 'inside',
+            formatter: '{b}',
+            ...DEFAULT_FONT_CONFIG,
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+            },
+          },
+          breadcrumb: {
+            show: true,
+            left: 'center',
+            top: 'bottom',
+            height: 22,
+            itemStyle: {
+              textStyle: {
+                ...DEFAULT_FONT_CONFIG,
+                color: {
+                  r: 255,
+                  g: 255,
+                  b: 255,
+                },
+              },
               color: {
-                r: 255,
-                g: 255,
-                b: 255,
+                r: 0,
+                g: 0,
+                b: 0,
+                a: 0.7,
               },
             },
-            color: {
-              r: 0,
-              g: 0,
-              b: 0,
-              a: 0.7,
-            },
           },
         },
       },
-    },
-  };
+    };
 
-const DefaultConfig: ComponentData.TComponentData<TTreeMapBasicConfig> =
-  mergeWithoutArray(
-    {},
-    {
-      data: BASIC_DEFAULT_DATA_CONFIG,
-      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
-    },
-    BASIC_DEFAULT_CONFIG,
-    {
-      style: {
-        width: 400,
-        height: 400,
+  const DefaultConfig: ComponentData.TComponentData<TTreeMapBasicConfig> =
+    mergeWithoutArray(
+      {},
+      {
+        data: BASIC_DEFAULT_DATA_CONFIG,
+        interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
       },
-    },
-    CUSTOM_CONFIG,
-  );
-
-export default DefaultConfig;
+      BASIC_DEFAULT_CONFIG,
+      {
+        style: {
+          width: 400,
+          height: 400,
+        },
+      },
+      CUSTOM_CONFIG,
+    );
+  return DefaultConfig;
+};

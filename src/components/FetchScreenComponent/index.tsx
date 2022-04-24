@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { message } from 'antd';
 import { get } from 'lodash';
 import { history } from 'umi';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { DEFAULT_SCREEN_DATA } from '@/utils/constants';
 import { getScreenDetail } from '@/services';
 import { mergeComponentDefaultConfig } from '../ChartComponents';
@@ -39,6 +40,7 @@ const FetchScreenComponent = (props: {
           ...nextData,
           _id: id,
         });
+        ThemeUtil.initCurrentThemeData(nextData.config.attr.theme);
         const mergedComponentList = mergeComponentDefaultConfig(componentsList);
         setComponentAll(mergedComponentList);
       } catch (err) {

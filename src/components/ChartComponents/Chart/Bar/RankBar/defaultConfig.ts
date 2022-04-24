@@ -23,138 +23,145 @@ const DEFAULT_VALUE = DEFAULT_DATE_LABEL.map((item, index) => {
   };
 });
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRankBarConfig> = {
-  interactive: {
-    base: [
-      {
-        type: 'click',
-        name: '当点击项时',
-        show: false,
-        fields: [
+export default () => {
+  const DEFAULT_THEME_RADIAL_COLOR_LIST_DATA =
+    DEFAULT_THEME_RADIAL_COLOR_LIST();
+
+  const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRankBarConfig> =
+    {
+      interactive: {
+        base: [
           {
-            key: 'name',
-            variable: '',
-            description: '名称',
-          },
-          {
-            key: 'value',
-            variable: '',
-            description: '值',
+            type: 'click',
+            name: '当点击项时',
+            show: false,
+            fields: [
+              {
+                key: 'name',
+                variable: '',
+                description: '名称',
+              },
+              {
+                key: 'value',
+                variable: '',
+                description: '值',
+              },
+            ],
           },
         ],
       },
-    ],
-  },
-  data: {
-    request: {
-      value: DEFAULT_VALUE,
-    },
-    filter: {
-      map: [
-        {
-          field: 'name',
-          map: '',
-          description: '名称',
-          id: 'name',
-          type: 'string',
+      data: {
+        request: {
+          value: DEFAULT_VALUE,
         },
-        {
-          field: 'value',
-          map: '',
-          description: '值',
-          id: 'value',
-          type: 'number',
-        },
-      ],
-    },
-  },
-  options: {
-    yAxis: {
-      textStyle: {
-        ...DEFAULT_FONT_CONFIG,
-        fontSize: 16,
-      },
-      rankIcon: {
-        show: true,
-        textStyle: {
-          ...DEFAULT_FONT_CONFIG,
-          fontWeight: 'bold',
-          fontSize: 16,
-        },
-        showBackground: true,
-      },
-    },
-    tooltip: {
-      ...DEFAULT_TOOLTIP_CONFIG,
-      animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
-    },
-    animation: {
-      ...DEFAULT_ANIMATION_CONFIG,
-      animationDuration: 2000,
-      animationEasing: 'quadraticInOut',
-    },
-    series: {
-      backgroundStyle: {
-        show: true,
-        color: {
-          r: 5,
-          g: 50,
-          b: 95,
-          a: 0.7,
-        },
-      },
-      itemStyle: {
-        color: DEFAULT_THEME_RADIAL_COLOR_LIST.slice(0, 3).map((item) => {
-          return {
-            ...item,
-            end: {
-              ...item.end,
-              a: 0.4,
+        filter: {
+          map: [
+            {
+              field: 'name',
+              map: '',
+              description: '名称',
+              id: 'name',
+              type: 'string',
             },
-          };
-        }),
-        defaultColor: {
-          ...DEFAULT_THEME_RADIAL_COLOR_LIST[3],
-          end: {
-            ...DEFAULT_THEME_RADIAL_COLOR_LIST[3].end,
-            a: 0.6,
+            {
+              field: 'value',
+              map: '',
+              description: '值',
+              id: 'value',
+              type: 'number',
+            },
+          ],
+        },
+      },
+      options: {
+        yAxis: {
+          textStyle: {
+            ...DEFAULT_FONT_CONFIG,
+            fontSize: 16,
+          },
+          rankIcon: {
+            show: true,
+            textStyle: {
+              ...DEFAULT_FONT_CONFIG,
+              fontWeight: 'bold',
+              fontSize: 16,
+            },
+            showBackground: true,
           },
         },
-      },
-      barWidth: 24,
-      label: {
-        show: true,
-        ...DEFAULT_FONT_CONFIG,
-        fontSize: 16,
-        color: {
-          r: 255,
-          g: 255,
-          b: 255,
+        tooltip: {
+          ...DEFAULT_TOOLTIP_CONFIG,
+          animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
         },
-        formatter: '{value}',
-        position: 'deep-top',
+        animation: {
+          ...DEFAULT_ANIMATION_CONFIG,
+          animationDuration: 2000,
+          animationEasing: 'quadraticInOut',
+        },
+        series: {
+          backgroundStyle: {
+            show: true,
+            color: {
+              r: 5,
+              g: 50,
+              b: 95,
+              a: 0.7,
+            },
+          },
+          itemStyle: {
+            color: DEFAULT_THEME_RADIAL_COLOR_LIST_DATA.slice(0, 3).map(
+              (item) => {
+                return {
+                  ...item,
+                  end: {
+                    ...item.end,
+                    a: 0.4,
+                  },
+                };
+              },
+            ),
+            defaultColor: {
+              ...DEFAULT_THEME_RADIAL_COLOR_LIST_DATA[3],
+              end: {
+                ...DEFAULT_THEME_RADIAL_COLOR_LIST_DATA[3].end,
+                a: 0.6,
+              },
+            },
+          },
+          barWidth: 24,
+          label: {
+            show: true,
+            ...DEFAULT_FONT_CONFIG,
+            fontSize: 16,
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+            },
+            formatter: '{value}',
+            position: 'deep-top',
+          },
+          borderRadius: 30,
+        },
+        condition: [DEFAULT_CONDITION_CONFIG()],
       },
-      borderRadius: 30,
-    },
-    condition: [DEFAULT_CONDITION_CONFIG()],
-  },
+    };
+
+  const DefaultConfig: ComponentData.TComponentData<TRankBarConfig> =
+    mergeWithoutArray(
+      {},
+      {
+        data: BASIC_DEFAULT_DATA_CONFIG,
+        interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
+      },
+      BASIC_DEFAULT_CONFIG,
+      {
+        style: {
+          width: 800,
+          height: 600,
+        },
+      },
+      CUSTOM_CONFIG,
+    );
+  return DefaultConfig;
 };
-
-const DefaultConfig: ComponentData.TComponentData<TRankBarConfig> =
-  mergeWithoutArray(
-    {},
-    {
-      data: BASIC_DEFAULT_DATA_CONFIG,
-      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
-    },
-    BASIC_DEFAULT_CONFIG,
-    {
-      style: {
-        width: 800,
-        height: 600,
-      },
-    },
-    CUSTOM_CONFIG,
-  );
-
-export default DefaultConfig;

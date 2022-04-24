@@ -12,6 +12,7 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import ConfigWrapper from '@/components/ChartComponents/Common/ConfigWrapper';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import CoverSelect from '@/components/CoverSelect';
+import ThemeConfig from './components/ThemeConfig';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -27,7 +28,7 @@ const GlobalConfig = (props: {
   const {
     config: {
       style: { width, height },
-      attr: { poster },
+      attr: { poster, theme },
     },
     description,
     poster: cover,
@@ -99,6 +100,12 @@ const GlobalConfig = (props: {
                   onChange={onValueChange.bind(null, 'poster')}
                 />
               </FullForm>
+            </Item>
+            <Item label="主题">
+              <ThemeConfig
+                value={theme}
+                onChange={onValueChange.bind(null, 'config.attr.theme')}
+              />
             </Item>
           </ConfigList>
         </Tabs.TabPane>

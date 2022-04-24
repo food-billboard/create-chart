@@ -37,117 +37,118 @@ const DEFAULT_VALUE = [
   },
 ];
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTreeBasicConfig> =
-  {
-    interactive: {
-      base: [
-        {
-          type: 'click',
-          name: '当点击项时',
-          show: false,
-          fields: [
-            {
-              key: 'name',
-              variable: '',
-              description: '数据项',
-            },
-            {
-              key: 'value',
-              variable: '',
-              description: '数据值',
-            },
-          ],
-        },
-      ],
-    },
-    data: {
-      request: {
-        value: DEFAULT_VALUE,
-      },
-      filter: {
-        map: [
+export default () => {
+  const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTreeBasicConfig> =
+    {
+      interactive: {
+        base: [
           {
-            field: 'name',
-            map: '',
-            description: '数据项',
-            id: 'name',
-            type: 'string',
-          },
-          {
-            field: 'value',
-            map: '',
-            description: '数据值',
-            id: 'value',
-            type: 'number',
-          },
-          {
-            field: 'children',
-            map: '',
-            description: '子节点',
-            id: 'children',
-            type: 'array[]',
+            type: 'click',
+            name: '当点击项时',
+            show: false,
+            fields: [
+              {
+                key: 'name',
+                variable: '',
+                description: '数据项',
+              },
+              {
+                key: 'value',
+                variable: '',
+                description: '数据值',
+              },
+            ],
           },
         ],
       },
-    },
-    options: {
-      condition: [DEFAULT_CONDITION_CONFIG()],
-      tooltip: {
-        ...DEFAULT_TOOLTIP_CONFIG,
-        animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+      data: {
+        request: {
+          value: DEFAULT_VALUE,
+        },
+        filter: {
+          map: [
+            {
+              field: 'name',
+              map: '',
+              description: '数据项',
+              id: 'name',
+              type: 'string',
+            },
+            {
+              field: 'value',
+              map: '',
+              description: '数据值',
+              id: 'value',
+              type: 'number',
+            },
+            {
+              field: 'children',
+              map: '',
+              description: '子节点',
+              id: 'children',
+              type: 'array[]',
+            },
+          ],
+        },
       },
-      animation: {
-        ...DEFAULT_ANIMATION_CONFIG,
-        animationDuration: 2000,
-        animationEasing: 'quadraticInOut',
-      },
-      series: {
-        layout: 'radial',
-        orient: 'LR',
-        symbol: 'circle',
-        symbolSize: '-20',
-        defaultSymbolSize: 70,
-        label: {
-          show: true,
-          formatter: '{b}',
-          ...DEFAULT_FONT_CONFIG,
-          color: {
-            r: 255,
-            g: 255,
-            b: 255,
+      options: {
+        condition: [DEFAULT_CONDITION_CONFIG()],
+        tooltip: {
+          ...DEFAULT_TOOLTIP_CONFIG,
+          animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+        },
+        animation: {
+          ...DEFAULT_ANIMATION_CONFIG,
+          animationDuration: 2000,
+          animationEasing: 'quadraticInOut',
+        },
+        series: {
+          layout: 'radial',
+          orient: 'LR',
+          symbol: 'circle',
+          symbolSize: '-20',
+          defaultSymbolSize: 70,
+          label: {
+            show: true,
+            formatter: '{b}',
+            ...DEFAULT_FONT_CONFIG,
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+            },
+          },
+          labelLayout: {
+            hideOverlap: false,
+            // moveOverlap: 'shiftX',
+            // draggable: true
+          },
+          itemStyle: {
+            color: DEFAULT_THEME_COLOR_LIST(),
+          },
+          lineStyle: {
+            width: 1,
+            curveness: 0.5,
           },
         },
-        labelLayout: {
-          hideOverlap: false,
-          // moveOverlap: 'shiftX',
-          // draggable: true
-        },
-        itemStyle: {
-          color: DEFAULT_THEME_COLOR_LIST,
-        },
-        lineStyle: {
-          width: 1,
-          curveness: 0.5,
+      },
+    };
+
+  const DefaultConfig: ComponentData.TComponentData<TTreeBasicConfig> =
+    mergeWithoutArray(
+      {},
+      {
+        data: BASIC_DEFAULT_DATA_CONFIG,
+        interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
+      },
+      BASIC_DEFAULT_CONFIG,
+      {
+        style: {
+          width: 600,
+          height: 600,
         },
       },
-    },
-  };
-
-const DefaultConfig: ComponentData.TComponentData<TTreeBasicConfig> =
-  mergeWithoutArray(
-    {},
-    {
-      data: BASIC_DEFAULT_DATA_CONFIG,
-      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
-    },
-    BASIC_DEFAULT_CONFIG,
-    {
-      style: {
-        width: 600,
-        height: 600,
-      },
-    },
-    CUSTOM_CONFIG,
-  );
-
-export default DefaultConfig;
+      CUSTOM_CONFIG,
+    );
+  return DefaultConfig;
+};

@@ -26,112 +26,113 @@ const DEFAULT_VALUE = DEFAULT_DATE_LABEL.map((item, index) => {
   };
 });
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TWaterFallBarConfig> =
-  {
-    interactive: {
-      base: [
-        {
-          type: 'click',
-          name: '当点击项时',
-          show: false,
-          fields: [
-            {
-              key: 'x',
-              variable: '',
-              description: 'x轴',
-            },
-            {
-              key: 'y',
-              variable: '',
-              description: 'y轴',
-            },
-          ],
-        },
-      ],
-    },
-    data: {
-      request: {
-        value: DEFAULT_VALUE,
-      },
-      filter: {
-        map: [
+export default () => {
+  const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TWaterFallBarConfig> =
+    {
+      interactive: {
+        base: [
           {
-            field: 'x',
-            map: '',
-            description: 'x轴',
-            id: 'x',
-            type: 'string',
-          },
-          {
-            field: 'y',
-            map: '',
-            description: 'y轴',
-            id: 'y',
-            type: 'number',
+            type: 'click',
+            name: '当点击项时',
+            show: false,
+            fields: [
+              {
+                key: 'x',
+                variable: '',
+                description: 'x轴',
+              },
+              {
+                key: 'y',
+                variable: '',
+                description: 'y轴',
+              },
+            ],
           },
         ],
       },
-    },
-    options: {
-      xAxis: DEFAULT_X_AXIS_CONFIG,
-      yAxis: merge({}, DEFAULT_Y_AXIS_CONFIG, {
-        splitLine: {
-          show: false,
-          lineStyle: {
-            width: 1,
-            type: 'solid' as any,
-            color: {
-              r: 204,
-              g: 204,
-              b: 204,
+      data: {
+        request: {
+          value: DEFAULT_VALUE,
+        },
+        filter: {
+          map: [
+            {
+              field: 'x',
+              map: '',
+              description: 'x轴',
+              id: 'x',
+              type: 'string',
+            },
+            {
+              field: 'y',
+              map: '',
+              description: 'y轴',
+              id: 'y',
+              type: 'number',
+            },
+          ],
+        },
+      },
+      options: {
+        xAxis: DEFAULT_X_AXIS_CONFIG,
+        yAxis: merge({}, DEFAULT_Y_AXIS_CONFIG, {
+          splitLine: {
+            show: false,
+            lineStyle: {
+              width: 1,
+              type: 'solid' as any,
+              color: {
+                r: 204,
+                g: 204,
+                b: 204,
+              },
             },
           },
+        }),
+        tooltip: {
+          ...DEFAULT_TOOLTIP_CONFIG,
+          animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
         },
-      }),
-      tooltip: {
-        ...DEFAULT_TOOLTIP_CONFIG,
-        animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
-      },
-      animation: {
-        ...DEFAULT_ANIMATION_CONFIG,
-        animationDuration: 2000,
-        animationEasing: 'quadraticInOut',
-      },
-      series: {
-        label: {
-          show: false,
-          position: 'inside',
-          ...DEFAULT_FONT_CONFIG,
-          color: {
-            r: 255,
-            g: 255,
-            b: 255,
+        animation: {
+          ...DEFAULT_ANIMATION_CONFIG,
+          animationDuration: 2000,
+          animationEasing: 'quadraticInOut',
+        },
+        series: {
+          label: {
+            show: false,
+            position: 'inside',
+            ...DEFAULT_FONT_CONFIG,
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+            },
           },
+          itemStyle: {
+            color: DEFAULT_THEME_RADIAL_COLOR_LIST()[0],
+          },
+          barWidth: 20,
         },
-        itemStyle: {
-          color: DEFAULT_THEME_RADIAL_COLOR_LIST[0],
+        condition: [DEFAULT_CONDITION_CONFIG()],
+      },
+    };
+
+  const DefaultConfig: ComponentData.TComponentData<TWaterFallBarConfig> =
+    mergeWithoutArray(
+      {},
+      {
+        data: BASIC_DEFAULT_DATA_CONFIG,
+        interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
+      },
+      BASIC_DEFAULT_CONFIG,
+      {
+        style: {
+          width: 400,
+          height: 400,
         },
-        barWidth: 20,
       },
-      condition: [DEFAULT_CONDITION_CONFIG()],
-    },
-  };
-
-const DefaultConfig: ComponentData.TComponentData<TWaterFallBarConfig> =
-  mergeWithoutArray(
-    {},
-    {
-      data: BASIC_DEFAULT_DATA_CONFIG,
-      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
-    },
-    BASIC_DEFAULT_CONFIG,
-    {
-      style: {
-        width: 400,
-        height: 400,
-      },
-    },
-    CUSTOM_CONFIG,
-  );
-
-export default DefaultConfig;
+      CUSTOM_CONFIG,
+    );
+  return DefaultConfig;
+};

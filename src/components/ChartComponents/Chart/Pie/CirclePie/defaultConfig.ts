@@ -24,128 +24,129 @@ const DEFAULT_VALUE = DEFAULT_NAME_LABEL.map((item, index) => {
   };
 });
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TCirclePieConfig> =
-  {
-    interactive: {
-      base: [
-        {
-          type: 'click',
-          name: '当点击项时',
-          show: false,
-          fields: [
-            {
-              key: 'name',
-              variable: '',
-              description: '数据项',
-            },
-            {
-              key: 'value',
-              variable: '',
-              description: '数据值',
-            },
-          ],
-        },
-      ],
-    },
-    data: {
-      request: {
-        value: DEFAULT_VALUE,
-      },
-      filter: {
-        map: [
+export default () => {
+  const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TCirclePieConfig> =
+    {
+      interactive: {
+        base: [
           {
-            field: 'name',
-            map: '',
-            description: '数据项',
-            id: 'name',
-            type: 'string',
-          },
-          {
-            field: 'value',
-            map: '',
-            description: '数据值',
-            id: 'value',
-            type: 'number',
+            type: 'click',
+            name: '当点击项时',
+            show: false,
+            fields: [
+              {
+                key: 'name',
+                variable: '',
+                description: '数据项',
+              },
+              {
+                key: 'value',
+                variable: '',
+                description: '数据值',
+              },
+            ],
           },
         ],
       },
-    },
-    options: {
-      condition: [DEFAULT_CONDITION_CONFIG()],
-      legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
-      tooltip: {
-        ...DEFAULT_TOOLTIP_CONFIG,
-        animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
-      },
-      animation: {
-        ...DEFAULT_ANIMATION_CONFIG,
-        animationDuration: 2000,
-        animationEasing: 'quadraticInOut',
-      },
-      statistics: {
-        show: true,
-        align: 'horizontal',
-        textStyle: {
-          ...DEFAULT_FONT_CONFIG,
-          fontSize: 40,
+      data: {
+        request: {
+          value: DEFAULT_VALUE,
         },
-        addonBefore: {
+        filter: {
+          map: [
+            {
+              field: 'name',
+              map: '',
+              description: '数据项',
+              id: 'name',
+              type: 'string',
+            },
+            {
+              field: 'value',
+              map: '',
+              description: '数据值',
+              id: 'value',
+              type: 'number',
+            },
+          ],
+        },
+      },
+      options: {
+        condition: [DEFAULT_CONDITION_CONFIG()],
+        legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
+        tooltip: {
+          ...DEFAULT_TOOLTIP_CONFIG,
+          animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+        },
+        animation: {
+          ...DEFAULT_ANIMATION_CONFIG,
+          animationDuration: 2000,
+          animationEasing: 'quadraticInOut',
+        },
+        statistics: {
           show: true,
-          value: '共',
+          align: 'horizontal',
           textStyle: {
             ...DEFAULT_FONT_CONFIG,
-            fontSize: 30,
+            fontSize: 40,
+          },
+          addonBefore: {
+            show: true,
+            value: '共',
+            textStyle: {
+              ...DEFAULT_FONT_CONFIG,
+              fontSize: 30,
+            },
+          },
+          addonAfter: {
+            show: true,
+            value: '人',
+            textStyle: {
+              ...DEFAULT_FONT_CONFIG,
+              fontSize: 30,
+            },
           },
         },
-        addonAfter: {
-          show: true,
-          value: '人',
-          textStyle: {
+        series: {
+          label: {
+            show: true,
+            formatter: '{b}: {c}',
             ...DEFAULT_FONT_CONFIG,
-            fontSize: 30,
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+            },
+          },
+          radius: [50, 60],
+          itemStyle: {
+            color: [],
+          },
+          labelLine: {
+            show: true,
+            length: 15,
+            length2: 15,
+            smooth: false,
           },
         },
       },
-      series: {
-        label: {
-          show: true,
-          formatter: '{b}: {c}',
-          ...DEFAULT_FONT_CONFIG,
-          color: {
-            r: 255,
-            g: 255,
-            b: 255,
-          },
-        },
-        radius: [50, 60],
-        itemStyle: {
-          color: [],
-        },
-        labelLine: {
-          show: true,
-          length: 15,
-          length2: 15,
-          smooth: false,
+    };
+
+  const DefaultConfig: ComponentData.TComponentData<TCirclePieConfig> =
+    mergeWithoutArray(
+      {},
+      {
+        data: BASIC_DEFAULT_DATA_CONFIG,
+        interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
+      },
+      BASIC_DEFAULT_CONFIG,
+      {
+        style: {
+          width: 400,
+          height: 400,
         },
       },
-    },
-  };
-
-const DefaultConfig: ComponentData.TComponentData<TCirclePieConfig> =
-  mergeWithoutArray(
-    {},
-    {
-      data: BASIC_DEFAULT_DATA_CONFIG,
-      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
-    },
-    BASIC_DEFAULT_CONFIG,
-    {
-      style: {
-        width: 400,
-        height: 400,
-      },
-    },
-    CUSTOM_CONFIG,
-  );
-
-export default DefaultConfig;
+      CUSTOM_CONFIG,
+    );
+  return DefaultConfig;
+};

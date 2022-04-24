@@ -8,10 +8,8 @@ import {
   DEFAULT_X_AXIS_CONFIG,
   DEFAULT_Y_AXIS_CONFIG,
   DEFAULT_TOOLTIP_CONFIG,
-  DEFAULT_FONT_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
   DEFAULT_CONDITION_CONFIG,
-  DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_THEME_RADIAL_COLOR_LIST,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue, getSeries } from '@/utils/constants';
@@ -44,98 +42,99 @@ const DEFAULT_VALUE = DEFAULT_SERIES.reduce<any>((acc, cur) => {
   return acc;
 }, []);
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRadialStackLineConfig> =
-  {
-    interactive: {
-      base: [
-        {
-          type: 'click',
-          name: '当点击项时',
-          show: false,
-          fields: [
-            {
-              key: 'x',
-              variable: '',
-              description: 'x轴',
-            },
-            {
-              key: 'y',
-              variable: '',
-              description: 'y轴',
-            },
-            {
-              key: 's',
-              variable: '',
-              description: '系列',
-            },
-          ],
-        },
-      ],
-    },
-    data: {
-      request: {
-        value: DEFAULT_VALUE,
-      },
-      filter: {
-        map: [
+export default () => {
+  const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRadialStackLineConfig> =
+    {
+      interactive: {
+        base: [
           {
-            field: 'x',
-            map: '',
-            description: 'x轴',
-            id: 'x',
-            type: 'string',
-          },
-          {
-            field: 'y',
-            map: '',
-            description: 'y轴',
-            id: 'y',
-            type: 'number',
-          },
-          {
-            field: 's',
-            map: '',
-            description: '系列',
-            id: 's',
-            type: 'string',
+            type: 'click',
+            name: '当点击项时',
+            show: false,
+            fields: [
+              {
+                key: 'x',
+                variable: '',
+                description: 'x轴',
+              },
+              {
+                key: 'y',
+                variable: '',
+                description: 'y轴',
+              },
+              {
+                key: 's',
+                variable: '',
+                description: '系列',
+              },
+            ],
           },
         ],
       },
-    },
-    options: {
-      condition: [DEFAULT_CONDITION_CONFIG()],
-      legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
-      xAxis: DEFAULT_X_AXIS_CONFIG,
-      yAxis: DEFAULT_Y_AXIS_CONFIG,
-      tooltip: DEFAULT_TOOLTIP_CONFIG,
-      animation: {
-        ...DEFAULT_ANIMATION_CONFIG,
-        animationDuration: 2000,
-        animationEasing: 'quadraticInOut',
-      },
-      series: {
-        areaStyle: {
-          color: DEFAULT_THEME_RADIAL_COLOR_LIST,
+      data: {
+        request: {
+          value: DEFAULT_VALUE,
+        },
+        filter: {
+          map: [
+            {
+              field: 'x',
+              map: '',
+              description: 'x轴',
+              id: 'x',
+              type: 'string',
+            },
+            {
+              field: 'y',
+              map: '',
+              description: 'y轴',
+              id: 'y',
+              type: 'number',
+            },
+            {
+              field: 's',
+              map: '',
+              description: '系列',
+              id: 's',
+              type: 'string',
+            },
+          ],
         },
       },
-    },
-  };
-
-const DefaultConfig: ComponentData.TComponentData<TRadialStackLineConfig> =
-  mergeWithoutArray(
-    {},
-    {
-      data: BASIC_DEFAULT_DATA_CONFIG,
-      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
-    },
-    BASIC_DEFAULT_CONFIG,
-    {
-      style: {
-        width: 400,
-        height: 400,
+      options: {
+        condition: [DEFAULT_CONDITION_CONFIG()],
+        legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
+        xAxis: DEFAULT_X_AXIS_CONFIG,
+        yAxis: DEFAULT_Y_AXIS_CONFIG,
+        tooltip: DEFAULT_TOOLTIP_CONFIG,
+        animation: {
+          ...DEFAULT_ANIMATION_CONFIG,
+          animationDuration: 2000,
+          animationEasing: 'quadraticInOut',
+        },
+        series: {
+          areaStyle: {
+            color: DEFAULT_THEME_RADIAL_COLOR_LIST(),
+          },
+        },
       },
-    },
-    CUSTOM_CONFIG,
-  );
+    };
 
-export default DefaultConfig;
+  const DefaultConfig: ComponentData.TComponentData<TRadialStackLineConfig> =
+    mergeWithoutArray(
+      {},
+      {
+        data: BASIC_DEFAULT_DATA_CONFIG,
+        interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
+      },
+      BASIC_DEFAULT_CONFIG,
+      {
+        style: {
+          width: 400,
+          height: 400,
+        },
+      },
+      CUSTOM_CONFIG,
+    );
+  return DefaultConfig;
+};

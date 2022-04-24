@@ -28,154 +28,155 @@ const DEFAULT_VALUE = DEFAULT_NAME_LABEL.map((item, index) => {
   };
 });
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRadarBasicConfig> =
-  {
-    interactive: {
-      base: [],
-    },
-    data: {
-      request: {
-        value: DEFAULT_VALUE,
+export default () => {
+  const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRadarBasicConfig> =
+    {
+      interactive: {
+        base: [],
       },
-      filter: {
-        map: [
-          {
-            field: 'name',
-            map: '',
-            description: '数据项',
-            id: 'name',
-            type: 'string',
-          },
-          {
-            field: 'value',
-            map: '',
-            description: '数据值',
-            id: 'value',
-            type: 'number',
-          },
-          {
-            field: 'max',
-            map: '',
-            description: '最大值',
-            id: 'max',
-            type: 'number',
-          },
-          {
-            field: 's',
-            map: '',
-            description: '系列',
-            id: 's',
-            type: 'string',
-          },
-        ],
-      },
-    },
-    options: {
-      condition: [DEFAULT_CONDITION_CONFIG()],
-      legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
-      tooltip: {
-        ...DEFAULT_TOOLTIP_CONFIG,
-        animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
-      },
-      animation: {
-        ...DEFAULT_ANIMATION_CONFIG,
-        animationDuration: 2000,
-        animationEasing: 'quadraticInOut',
-      },
-      radar: {
-        center: [50, 50],
-        radius: 75,
-        axisName: {
-          show: true,
-          formatter: '{value}',
-          ...DEFAULT_FONT_CONFIG,
+      data: {
+        request: {
+          value: DEFAULT_VALUE,
         },
-        axisNameGap: 15,
-        splitNumber: 5,
-        shape: 'polygon',
-        axisLine: {
-          show: false,
-          lineStyle: {
-            color: {
-              r: 33,
-              g: 33,
-              b: 33,
+        filter: {
+          map: [
+            {
+              field: 'name',
+              map: '',
+              description: '数据项',
+              id: 'name',
+              type: 'string',
             },
-            width: 1,
-            type: 'solid',
-          },
-        },
-        splitLine: {
-          show: true,
-          lineStyle: {
-            color: {
-              r: 204,
-              g: 204,
-              b: 204,
+            {
+              field: 'value',
+              map: '',
+              description: '数据值',
+              id: 'value',
+              type: 'number',
             },
-            width: 1,
-            type: 'solid',
+            {
+              field: 'max',
+              map: '',
+              description: '最大值',
+              id: 'max',
+              type: 'number',
+            },
+            {
+              field: 's',
+              map: '',
+              description: '系列',
+              id: 's',
+              type: 'string',
+            },
+          ],
+        },
+      },
+      options: {
+        condition: [DEFAULT_CONDITION_CONFIG()],
+        legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
+        tooltip: {
+          ...DEFAULT_TOOLTIP_CONFIG,
+          animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+        },
+        animation: {
+          ...DEFAULT_ANIMATION_CONFIG,
+          animationDuration: 2000,
+          animationEasing: 'quadraticInOut',
+        },
+        radar: {
+          center: [50, 50],
+          radius: 75,
+          axisName: {
+            show: true,
+            formatter: '{value}',
+            ...DEFAULT_FONT_CONFIG,
+          },
+          axisNameGap: 15,
+          splitNumber: 5,
+          shape: 'polygon',
+          axisLine: {
+            show: false,
+            lineStyle: {
+              color: {
+                r: 33,
+                g: 33,
+                b: 33,
+              },
+              width: 1,
+              type: 'solid',
+            },
+          },
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: {
+                r: 204,
+                g: 204,
+                b: 204,
+              },
+              width: 1,
+              type: 'solid',
+            },
+          },
+          splitArea: {
+            show: true,
+            areaStyle: {
+              color: [
+                {
+                  ...ThemeUtil.generateNextColor4CurrentTheme(0),
+                  a: 0.3,
+                },
+                {
+                  r: 250,
+                  g: 250,
+                  b: 250,
+                  a: 0,
+                },
+              ],
+            },
           },
         },
-        splitArea: {
-          show: true,
+        series: {
+          label: {
+            show: false,
+            position: 'top',
+            distance: 5,
+            formatter: '{b}: {c}',
+            ...DEFAULT_FONT_CONFIG,
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+            },
+          },
+          itemStyle: {
+            color: [],
+          },
+          symbol: 'circle',
+          symbolSize: 4,
+          lineStyle: [],
           areaStyle: {
-            color: [
-              {
-                ...ThemeUtil.generateNextColor4CurrentTheme(0),
-                a: 0.3,
-              },
-              {
-                r: 250,
-                g: 250,
-                b: 250,
-                a: 0,
-              },
-            ],
+            color: [],
           },
         },
       },
-      series: {
-        label: {
-          show: false,
-          position: 'top',
-          distance: 5,
-          formatter: '{b}: {c}',
-          ...DEFAULT_FONT_CONFIG,
-          color: {
-            r: 255,
-            g: 255,
-            b: 255,
-          },
-        },
-        itemStyle: {
-          color: [],
-        },
-        symbol: 'circle',
-        symbolSize: 4,
-        lineStyle: [],
-        areaStyle: {
-          color: [],
+    };
+
+  const DefaultConfig: ComponentData.TComponentData<TRadarBasicConfig> =
+    mergeWithoutArray(
+      {},
+      {
+        data: BASIC_DEFAULT_DATA_CONFIG,
+        interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
+      },
+      BASIC_DEFAULT_CONFIG,
+      {
+        style: {
+          width: 400,
+          height: 400,
         },
       },
-    },
-  };
-
-const DefaultConfig: ComponentData.TComponentData<TRadarBasicConfig> =
-  mergeWithoutArray(
-    {},
-    {
-      data: BASIC_DEFAULT_DATA_CONFIG,
-      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
-    },
-    BASIC_DEFAULT_CONFIG,
-    {
-      style: {
-        width: 400,
-        height: 400,
-      },
-    },
-    CUSTOM_CONFIG,
-  );
-
-export default DefaultConfig;
+      CUSTOM_CONFIG,
+    );
+  return DefaultConfig;
+};

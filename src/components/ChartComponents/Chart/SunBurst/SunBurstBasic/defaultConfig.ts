@@ -27,100 +27,101 @@ function generateList(count = 10): any {
 
 const DEFAULT_VALUE = generateList();
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TSunBurstBasicConfig> =
-  {
-    interactive: {
-      base: [
-        {
-          type: 'click',
-          name: '当点击项时',
-          show: false,
-          fields: [
-            {
-              key: 'name',
-              variable: '',
-              description: '数据项',
-            },
-            {
-              key: 'value',
-              variable: '',
-              description: '数据值',
-            },
-          ],
-        },
-      ],
-    },
-    data: {
-      request: {
-        value: DEFAULT_VALUE,
-      },
-      filter: {
-        map: [
+export default () => {
+  const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TSunBurstBasicConfig> =
+    {
+      interactive: {
+        base: [
           {
-            field: 'name',
-            map: '',
-            description: '数据项',
-            id: 'name',
-            type: 'string',
-          },
-          {
-            field: 'value',
-            map: '',
-            description: '数据值',
-            id: 'value',
-            type: 'number',
-          },
-          {
-            field: 'children',
-            map: '',
-            description: '子项',
-            id: 'children',
-            type: 'array[]',
+            type: 'click',
+            name: '当点击项时',
+            show: false,
+            fields: [
+              {
+                key: 'name',
+                variable: '',
+                description: '数据项',
+              },
+              {
+                key: 'value',
+                variable: '',
+                description: '数据值',
+              },
+            ],
           },
         ],
       },
-    },
-    options: {
-      condition: [DEFAULT_CONDITION_CONFIG()],
-      tooltip: DEFAULT_TOOLTIP_CONFIG,
-      animation: {
-        ...DEFAULT_ANIMATION_CONFIG,
-        animationDuration: 2000,
-        animationEasing: 'quadraticInOut',
-      },
-      series: {
-        center: [50, 50],
-        radius: 75,
-        label: {
-          show: true,
-          formatter: '{b}',
-          ...DEFAULT_FONT_CONFIG,
-          color: {
-            r: 255,
-            g: 255,
-            b: 255,
-          },
+      data: {
+        request: {
+          value: DEFAULT_VALUE,
         },
-        nodeClick: 'rootToNode',
+        filter: {
+          map: [
+            {
+              field: 'name',
+              map: '',
+              description: '数据项',
+              id: 'name',
+              type: 'string',
+            },
+            {
+              field: 'value',
+              map: '',
+              description: '数据值',
+              id: 'value',
+              type: 'number',
+            },
+            {
+              field: 'children',
+              map: '',
+              description: '子项',
+              id: 'children',
+              type: 'array[]',
+            },
+          ],
+        },
       },
-    },
-  };
-
-const DefaultConfig: ComponentData.TComponentData<TSunBurstBasicConfig> =
-  mergeWithoutArray(
-    {},
-    {
-      data: BASIC_DEFAULT_DATA_CONFIG,
-      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
-    },
-    BASIC_DEFAULT_CONFIG,
-    {
-      style: {
-        width: 400,
-        height: 400,
+      options: {
+        condition: [DEFAULT_CONDITION_CONFIG()],
+        tooltip: DEFAULT_TOOLTIP_CONFIG,
+        animation: {
+          ...DEFAULT_ANIMATION_CONFIG,
+          animationDuration: 2000,
+          animationEasing: 'quadraticInOut',
+        },
+        series: {
+          center: [50, 50],
+          radius: 75,
+          label: {
+            show: true,
+            formatter: '{b}',
+            ...DEFAULT_FONT_CONFIG,
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+            },
+          },
+          nodeClick: 'rootToNode',
+        },
       },
-    },
-    CUSTOM_CONFIG,
-  );
+    };
 
-export default DefaultConfig;
+  const DefaultConfig: ComponentData.TComponentData<TSunBurstBasicConfig> =
+    mergeWithoutArray(
+      {},
+      {
+        data: BASIC_DEFAULT_DATA_CONFIG,
+        interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
+      },
+      BASIC_DEFAULT_CONFIG,
+      {
+        style: {
+          width: 400,
+          height: 400,
+        },
+      },
+      CUSTOM_CONFIG,
+    );
+  return DefaultConfig;
+};

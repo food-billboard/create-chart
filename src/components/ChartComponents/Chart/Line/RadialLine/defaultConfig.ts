@@ -45,146 +45,149 @@ const DEFAULT_VALUE = DEFAULT_SERIES.reduce<any>((acc, cur) => {
   return acc;
 }, []);
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRadialLineConfig> =
-  {
-    interactive: {
-      base: [
-        {
-          type: 'click',
-          name: '当点击项时',
-          show: false,
-          fields: [
-            {
-              key: 'x',
-              variable: '',
-              description: 'x轴',
-            },
-            {
-              key: 'y',
-              variable: '',
-              description: 'y轴',
-            },
-            {
-              key: 's',
-              variable: '',
-              description: '系列',
-            },
-          ],
-        },
-      ],
-    },
-    data: {
-      request: {
-        value: DEFAULT_VALUE,
-      },
-      filter: {
-        map: [
+export default () => {
+  const DEFAULT_THEME_RADIAL_COLOR_LIST_DATA =
+    DEFAULT_THEME_RADIAL_COLOR_LIST();
+  const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRadialLineConfig> =
+    {
+      interactive: {
+        base: [
           {
-            field: 'x',
-            map: '',
-            description: 'x轴',
-            id: 'x',
-            type: 'string',
-          },
-          {
-            field: 'y',
-            map: '',
-            description: 'y轴',
-            id: 'y',
-            type: 'number',
-          },
-          {
-            field: 's',
-            map: '',
-            description: '系列',
-            id: 's',
-            type: 'string',
+            type: 'click',
+            name: '当点击项时',
+            show: false,
+            fields: [
+              {
+                key: 'x',
+                variable: '',
+                description: 'x轴',
+              },
+              {
+                key: 'y',
+                variable: '',
+                description: 'y轴',
+              },
+              {
+                key: 's',
+                variable: '',
+                description: '系列',
+              },
+            ],
           },
         ],
       },
-    },
-    options: {
-      condition: [DEFAULT_CONDITION_CONFIG()],
-      legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
-      xAxis: DEFAULT_X_AXIS_CONFIG,
-      yAxis: merge({}, DEFAULT_Y_AXIS_CONFIG, {
-        splitLine: {
-          show: false,
-          lineStyle: {
-            width: 1,
-            type: 'solid' as any,
-            color: {
-              r: 204,
-              g: 204,
-              b: 204,
+      data: {
+        request: {
+          value: DEFAULT_VALUE,
+        },
+        filter: {
+          map: [
+            {
+              field: 'x',
+              map: '',
+              description: 'x轴',
+              id: 'x',
+              type: 'string',
+            },
+            {
+              field: 'y',
+              map: '',
+              description: 'y轴',
+              id: 'y',
+              type: 'number',
+            },
+            {
+              field: 's',
+              map: '',
+              description: '系列',
+              id: 's',
+              type: 'string',
+            },
+          ],
+        },
+      },
+      options: {
+        condition: [DEFAULT_CONDITION_CONFIG()],
+        legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
+        xAxis: DEFAULT_X_AXIS_CONFIG,
+        yAxis: merge({}, DEFAULT_Y_AXIS_CONFIG, {
+          splitLine: {
+            show: false,
+            lineStyle: {
+              width: 1,
+              type: 'solid' as any,
+              color: {
+                r: 204,
+                g: 204,
+                b: 204,
+              },
             },
           },
+        }),
+        tooltip: {
+          ...DEFAULT_TOOLTIP_CONFIG,
+          animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
         },
-      }),
-      tooltip: {
-        ...DEFAULT_TOOLTIP_CONFIG,
-        animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
-      },
-      animation: {
-        ...DEFAULT_ANIMATION_CONFIG,
-        animationDuration: 2000,
-        animationEasing: 'quadraticInOut',
-      },
-      series: {
-        smooth: false,
-        label: {
-          show: false,
-          position: 'inside',
-          rotate: 0,
-          ...DEFAULT_FONT_CONFIG,
-          color: {
-            r: 255,
-            g: 255,
-            b: 255,
+        animation: {
+          ...DEFAULT_ANIMATION_CONFIG,
+          animationDuration: 2000,
+          animationEasing: 'quadraticInOut',
+        },
+        series: {
+          smooth: false,
+          label: {
+            show: false,
+            position: 'inside',
+            rotate: 0,
+            ...DEFAULT_FONT_CONFIG,
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+            },
           },
-        },
-        itemStyle: {
-          color: DEFAULT_THEME_RADIAL_COLOR_LIST.map((_, index) => {
-            return ThemeUtil.generateNextColor4CurrentTheme(index);
-          }),
-          decal: DEFAULT_THEME_RADIAL_COLOR_LIST.map((_, index) => {
-            return DEFAULT_DECAL;
-          }) as any,
-        },
-        areaStyle: {
-          color: DEFAULT_THEME_RADIAL_COLOR_LIST.map((_, index) => {
+          itemStyle: {
+            color: DEFAULT_THEME_RADIAL_COLOR_LIST_DATA.map((_, index) => {
+              return ThemeUtil.generateNextColor4CurrentTheme(index);
+            }),
+            decal: DEFAULT_THEME_RADIAL_COLOR_LIST_DATA.map((_, index) => {
+              return DEFAULT_DECAL;
+            }) as any,
+          },
+          areaStyle: {
+            color: DEFAULT_THEME_RADIAL_COLOR_LIST_DATA.map((_, index) => {
+              return {
+                ...ThemeUtil.generateNextColor4CurrentTheme(index),
+                a: 0,
+              };
+            }),
+          },
+          lineStyle: DEFAULT_THEME_RADIAL_COLOR_LIST_DATA.map((item) => {
             return {
-              ...ThemeUtil.generateNextColor4CurrentTheme(index),
-              a: 0,
+              color: item,
+              width: 1,
+              type: 'solid',
             };
           }),
         },
-        lineStyle: DEFAULT_THEME_RADIAL_COLOR_LIST.map((item) => {
-          return {
-            color: item,
-            width: 1,
-            type: 'solid',
-          };
-        }),
       },
-    },
-  };
+    };
 
-const DefaultConfig: ComponentData.TComponentData<TRadialLineConfig> =
-  mergeWithoutArray(
-    {},
-    {
-      data: BASIC_DEFAULT_DATA_CONFIG,
-      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
-    },
-    BASIC_DEFAULT_CONFIG,
-    {
-      style: {
-        width: 400,
-        height: 400,
+  const DefaultConfig: ComponentData.TComponentData<TRadialLineConfig> =
+    mergeWithoutArray(
+      {},
+      {
+        data: BASIC_DEFAULT_DATA_CONFIG,
+        interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
       },
-    },
-    CUSTOM_CONFIG,
-  );
-
-export default DefaultConfig;
+      BASIC_DEFAULT_CONFIG,
+      {
+        style: {
+          width: 400,
+          height: 400,
+        },
+      },
+      CUSTOM_CONFIG,
+    );
+  return DefaultConfig;
+};

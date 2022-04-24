@@ -43,124 +43,125 @@ const DEFAULT_VALUE = DEFAULT_DATE_LABEL.map((item) => {
   };
 });
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TCandlestickBasicConfig> =
-  {
-    interactive: {
-      base: [],
-    },
-    data: {
-      request: {
-        value: DEFAULT_VALUE,
+export default () => {
+  const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TCandlestickBasicConfig> =
+    {
+      interactive: {
+        base: [],
       },
-      filter: {
-        map: [
-          {
-            field: 'x',
-            map: '',
-            description: 'x轴',
-            id: 'x',
-            type: 'string',
-          },
-          {
-            field: 'y',
-            map: '',
-            description: 'y轴',
-            id: 'y',
-            type: 'number[]',
-          },
-        ],
-      },
-    },
-    options: {
-      xAxis: DEFAULT_X_AXIS_CONFIG,
-      yAxis: DEFAULT_Y_AXIS_CONFIG,
-      condition: [DEFAULT_CONDITION_CONFIG()],
-      tooltip: {
-        ...DEFAULT_TOOLTIP_CONFIG,
-        animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
-      },
-      animation: {
-        ...DEFAULT_ANIMATION_CONFIG,
-        animationDuration: 2000,
-        animationEasing: 'quadraticInOut',
-      },
-      series: {
-        barWidth: 10,
-        itemStyle: {
-          color: {
-            r: 233,
-            g: 85,
-            b: 88,
-          },
-          color0: {
-            r: 76,
-            g: 177,
-            b: 101,
-          },
-          borderWidth: 1,
-          borderType: 'solid',
-          borderColor: {
-            r: 233,
-            g: 85,
-            b: 88,
-          },
-          borderColor0: {
-            r: 76,
-            g: 177,
-            b: 101,
-          },
+      data: {
+        request: {
+          value: DEFAULT_VALUE,
         },
-        markPoint: ['max', 'min', 'average'].reduce((counter, current) => {
-          counter[current] = {
-            show: false,
-            symbol: 'pin',
-            symbolSize: 50,
-            symbolRotate: 0,
-            label: {
-              show: true,
-              distance: 5,
-              formatter: '{b}: {@score}',
-              ...DEFAULT_FONT_CONFIG,
-              position: 'inside',
+        filter: {
+          map: [
+            {
+              field: 'x',
+              map: '',
+              description: 'x轴',
+              id: 'x',
+              type: 'string',
             },
-            itemStyle: {
-              color: {
-                r: 233,
-                g: 85,
-                b: 88,
+            {
+              field: 'y',
+              map: '',
+              description: 'y轴',
+              id: 'y',
+              type: 'number[]',
+            },
+          ],
+        },
+      },
+      options: {
+        xAxis: DEFAULT_X_AXIS_CONFIG,
+        yAxis: DEFAULT_Y_AXIS_CONFIG,
+        condition: [DEFAULT_CONDITION_CONFIG()],
+        tooltip: {
+          ...DEFAULT_TOOLTIP_CONFIG,
+          animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+        },
+        animation: {
+          ...DEFAULT_ANIMATION_CONFIG,
+          animationDuration: 2000,
+          animationEasing: 'quadraticInOut',
+        },
+        series: {
+          barWidth: 10,
+          itemStyle: {
+            color: {
+              r: 233,
+              g: 85,
+              b: 88,
+            },
+            color0: {
+              r: 76,
+              g: 177,
+              b: 101,
+            },
+            borderWidth: 1,
+            borderType: 'solid',
+            borderColor: {
+              r: 233,
+              g: 85,
+              b: 88,
+            },
+            borderColor0: {
+              r: 76,
+              g: 177,
+              b: 101,
+            },
+          },
+          markPoint: ['max', 'min', 'average'].reduce((counter, current) => {
+            counter[current] = {
+              show: false,
+              symbol: 'pin',
+              symbolSize: 50,
+              symbolRotate: 0,
+              label: {
+                show: true,
+                distance: 5,
+                formatter: '{b}: {@score}',
+                ...DEFAULT_FONT_CONFIG,
+                position: 'inside',
               },
-            },
-          };
-          return counter;
-        }, {} as any),
-        markLine: {
-          data: ['max', 'min', 'average', 'median'].reduce(
-            (counter, current) => {
-              counter[current] = DEFAULT_MARK_LINE_ITEM_CONFIG;
-              return counter;
-            },
-            {} as any,
-          ),
+              itemStyle: {
+                color: {
+                  r: 233,
+                  g: 85,
+                  b: 88,
+                },
+              },
+            };
+            return counter;
+          }, {} as any),
+          markLine: {
+            data: ['max', 'min', 'average', 'median'].reduce(
+              (counter, current) => {
+                counter[current] = DEFAULT_MARK_LINE_ITEM_CONFIG;
+                return counter;
+              },
+              {} as any,
+            ),
+          },
         },
       },
-    },
-  };
+    };
 
-const DefaultConfig: ComponentData.TComponentData<TCandlestickBasicConfig> =
-  mergeWithoutArray(
-    {},
-    {
-      data: BASIC_DEFAULT_DATA_CONFIG,
-      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
-    },
-    BASIC_DEFAULT_CONFIG,
-    {
-      style: {
-        width: 400,
-        height: 400,
+  const DefaultConfig: ComponentData.TComponentData<TCandlestickBasicConfig> =
+    mergeWithoutArray(
+      {},
+      {
+        data: BASIC_DEFAULT_DATA_CONFIG,
+        interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
       },
-    },
-    CUSTOM_CONFIG,
-  );
-
-export default DefaultConfig;
+      BASIC_DEFAULT_CONFIG,
+      {
+        style: {
+          width: 400,
+          height: 400,
+        },
+      },
+      CUSTOM_CONFIG,
+    );
+  return DefaultConfig;
+};

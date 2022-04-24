@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid';
+import Theme from '../../theme/wonderland.project.json';
 
 export const DEFAULT_FILTER_LIST: ComponentData.TFilterConfig[] = [
   {
@@ -66,6 +67,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
       filter: DEFAULT_FILTER_LIST,
       params: [],
       constants: [],
+      theme: Theme.themeName,
     },
     flag: {
       type: 'PC',

@@ -11,7 +11,6 @@ export type TUndoHistory = {
   isRedoDisabled: boolean;
 };
 interface IGlobalModelState {
-  screenTheme: string;
   screenType: ComponentData.ScreenType;
   screenData: Exclude<ComponentData.TScreenData, 'components'>;
   components: ComponentData.TScreenData['components'];

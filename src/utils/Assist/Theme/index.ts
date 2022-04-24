@@ -1,6 +1,7 @@
 import { registerTheme } from 'echarts';
 import color from 'color';
 import WonderlandTheme from '../../../theme/wonderland.project.json';
+import ShineTheme from '../../../theme/shine.project.json';
 
 class ThemeUtil {
   currentTheme!: string;
@@ -8,6 +9,7 @@ class ThemeUtil {
 
   themeDataSource = {
     [WonderlandTheme.themeName]: WonderlandTheme.theme,
+    [ShineTheme.themeName]: ShineTheme.theme,
   };
 
   get currentThemeColorLength() {
@@ -16,15 +18,13 @@ class ThemeUtil {
 
   // 初始化
   init() {
-    Object.entries(this.themeDataSource).forEach((theme) => {
-      const [key, value] = theme;
-      registerTheme(key, value);
-    });
     this.initCurrentThemeData(WonderlandTheme.themeName);
   }
 
   // 设置当前的色调
   initCurrentThemeData(themeName: string) {
+    if (!themeName || this.currentTheme === themeName) return;
+    registerTheme(themeName, this.themeDataSource[themeName]);
     const theme = this.themeDataSource[themeName];
     this.currentTheme = themeName;
     this.currentThemeColor = theme.color;

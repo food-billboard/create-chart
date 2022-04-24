@@ -20,31 +20,30 @@ export const DEFAULT_RADIAL_CONFIG: Pick<
   },
 };
 
-export const DEFAULT_THEME_COLOR_LIST: ComponentData.TColorConfig[] = new Array(
-  ThemeUtil.currentThemeColorLength,
-)
-  .fill(0)
-  .map((_, index) => {
-    return ThemeUtil.generateNextColor4CurrentTheme(index);
-  });
+export const DEFAULT_THEME_COLOR_LIST: () => ComponentData.TColorConfig[] =
+  () =>
+    new Array(ThemeUtil.currentThemeColorLength).fill(0).map((_, index) => {
+      return ThemeUtil.generateNextColor4CurrentTheme(index);
+    });
 
-export const DEFAULT_THEME_RADIAL_COLOR_LIST: ComponentData.TGradientColorConfig[] =
-  new Array(ThemeUtil.currentThemeColorLength).fill(0).map((_, index) => {
-    return {
-      ...DEFAULT_RADIAL_CONFIG,
-      linearPosition: {
-        startX: 0.6,
-        startY: 0,
-        endX: 0.4,
-        endY: 1,
-      },
-      start: ThemeUtil.generateNextColor4CurrentTheme(index),
-      end: {
-        ...ThemeUtil.generateNextColor4CurrentTheme(index),
-        a: 0.2,
-      },
-    };
-  });
+export const DEFAULT_THEME_RADIAL_COLOR_LIST: () => ComponentData.TGradientColorConfig[] =
+  () =>
+    new Array(ThemeUtil.currentThemeColorLength).fill(0).map((_, index) => {
+      return {
+        ...DEFAULT_RADIAL_CONFIG,
+        linearPosition: {
+          startX: 0.6,
+          startY: 0,
+          endX: 0.4,
+          endY: 1,
+        },
+        start: ThemeUtil.generateNextColor4CurrentTheme(index),
+        end: {
+          ...ThemeUtil.generateNextColor4CurrentTheme(index),
+          a: 0.2,
+        },
+      };
+    });
 
 export const BASIC_DEFAULT_CONFIG: ComponentData.TBaseConfig = {
   style: {

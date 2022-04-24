@@ -14,74 +14,76 @@ const DEFAULT_VALUE = new Array(3).fill({
     'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
 });
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TCarouselConfig> = {
-  interactive: {
-    base: [
-      {
-        type: 'click',
-        name: '当点击项时',
-        show: false,
-        fields: [
+export default () => {
+  const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TCarouselConfig> =
+    {
+      interactive: {
+        base: [
           {
-            key: 'value',
-            variable: '',
-            description: '数据值',
+            type: 'click',
+            name: '当点击项时',
+            show: false,
+            fields: [
+              {
+                key: 'value',
+                variable: '',
+                description: '数据值',
+              },
+            ],
           },
         ],
       },
-    ],
-  },
-  data: {
-    request: {
-      value: DEFAULT_VALUE,
-    },
-    filter: {
-      map: [
-        {
-          field: 'name',
-          map: '',
-          description: '数据项',
-          id: 'name',
-          type: 'string',
+      data: {
+        request: {
+          value: DEFAULT_VALUE,
         },
-        {
-          field: 'value',
-          map: '',
-          description: '数据值',
-          id: 'value',
-          type: 'string',
+        filter: {
+          map: [
+            {
+              field: 'name',
+              map: '',
+              description: '数据项',
+              id: 'name',
+              type: 'string',
+            },
+            {
+              field: 'value',
+              map: '',
+              description: '数据值',
+              id: 'value',
+              type: 'string',
+            },
+          ],
         },
-      ],
-    },
-  },
-  options: {
-    condition: [DEFAULT_CONDITION_CONFIG()],
-    speed: 500,
-    autoplay: true,
-    dot: {
-      show: true,
-      position: 'bottom',
-    },
-    // easing: 'linear',
-    fade: false,
-  },
-};
-
-const DefaultConfig: ComponentData.TComponentData<TCarouselConfig> =
-  mergeWithoutArray(
-    {},
-    {
-      data: BASIC_DEFAULT_DATA_CONFIG,
-      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
-    },
-    BASIC_DEFAULT_CONFIG,
-    {
-      style: {
-        width: 400,
-        height: 250,
       },
-    },
-    CUSTOM_CONFIG,
-  );
+      options: {
+        condition: [DEFAULT_CONDITION_CONFIG()],
+        speed: 500,
+        autoplay: true,
+        dot: {
+          show: true,
+          position: 'bottom',
+        },
+        // easing: 'linear',
+        fade: false,
+      },
+    };
 
-export default DefaultConfig;
+  const DefaultConfig: ComponentData.TComponentData<TCarouselConfig> =
+    mergeWithoutArray(
+      {},
+      {
+        data: BASIC_DEFAULT_DATA_CONFIG,
+        interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
+      },
+      BASIC_DEFAULT_CONFIG,
+      {
+        style: {
+          width: 400,
+          height: 250,
+        },
+      },
+      CUSTOM_CONFIG,
+    );
+  return DefaultConfig;
+};

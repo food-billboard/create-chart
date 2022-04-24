@@ -23,130 +23,131 @@ const DEFAULT_VALUE = DEFAULT_NAME_LABEL.map((item, index) => {
   };
 });
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBubbleScatterConfig> =
-  {
-    interactive: {
-      base: [],
-    },
-    data: {
-      request: {
-        value: DEFAULT_VALUE,
+export default () => {
+  const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TBubbleScatterConfig> =
+    {
+      interactive: {
+        base: [],
       },
-      filter: {
-        map: [
-          {
-            field: 'name',
-            map: '',
-            description: '名称',
-            id: 'name',
-            type: 'string',
-          },
-          {
-            field: 'value',
-            map: '',
-            description: '数值',
-            id: 'value',
-            type: 'number',
-          },
-          {
-            field: 's',
-            map: '',
-            description: '系列',
-            id: 's',
-            type: 'number',
-          },
-        ],
-      },
-    },
-    options: {
-      condition: [DEFAULT_CONDITION_CONFIG()],
-      tooltip: {
-        ...DEFAULT_TOOLTIP_CONFIG,
-        animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
-        show: false,
-      },
-      xAxis: {
-        left: 150,
-        axisLabel: {
-          ...DEFAULT_FONT_CONFIG,
-          show: true,
-          rotate: 0,
-          margin: 8,
-          formatter: '{value}',
+      data: {
+        request: {
+          value: DEFAULT_VALUE,
         },
-        axisTick: {
+        filter: {
+          map: [
+            {
+              field: 'name',
+              map: '',
+              description: '名称',
+              id: 'name',
+              type: 'string',
+            },
+            {
+              field: 'value',
+              map: '',
+              description: '数值',
+              id: 'value',
+              type: 'number',
+            },
+            {
+              field: 's',
+              map: '',
+              description: '系列',
+              id: 's',
+              type: 'number',
+            },
+          ],
+        },
+      },
+      options: {
+        condition: [DEFAULT_CONDITION_CONFIG()],
+        tooltip: {
+          ...DEFAULT_TOOLTIP_CONFIG,
+          animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+          show: false,
+        },
+        xAxis: {
+          left: 150,
+          axisLabel: {
+            ...DEFAULT_FONT_CONFIG,
+            show: true,
+            rotate: 0,
+            margin: 8,
+            formatter: '{value}',
+          },
+          axisTick: {
+            show: true,
+            lineStyle: {
+              color: {
+                r: 255,
+                g: 255,
+                b: 255,
+              },
+              width: 1,
+              type: 'solid',
+            },
+          },
+          axisLine: {
+            show: true,
+            symbol: 'none',
+            symbolSize: [10, 15],
+            lineStyle: {
+              color: {
+                r: 255,
+                g: 255,
+                b: 255,
+              },
+              width: 1,
+              type: 'solid',
+            },
+          },
+          name: '',
+          nameTextStyle: DEFAULT_FONT_CONFIG,
+          nameGap: 15,
+        },
+        title: {
           show: true,
-          lineStyle: {
+          textStyle: {
+            ...DEFAULT_FONT_CONFIG,
+            fontWeight: 'bold',
+            fontSize: 20,
             color: {
               r: 255,
               g: 255,
               b: 255,
             },
-            width: 1,
-            type: 'solid',
           },
+          defaultValue: '默认标题',
         },
-        axisLine: {
-          show: true,
-          symbol: 'none',
-          symbolSize: [10, 15],
-          lineStyle: {
-            color: {
-              r: 255,
-              g: 255,
-              b: 255,
-            },
-            width: 1,
-            type: 'solid',
+        animation: {
+          ...DEFAULT_ANIMATION_CONFIG,
+          animationDuration: 2000,
+          animationEasing: 'quadraticInOut',
+        },
+        series: {
+          itemStyle: {
+            color: DEFAULT_THEME_COLOR_LIST(),
           },
+          symbolSize: 6,
         },
-        name: '',
-        nameTextStyle: DEFAULT_FONT_CONFIG,
-        nameGap: 15,
       },
-      title: {
-        show: true,
-        textStyle: {
-          ...DEFAULT_FONT_CONFIG,
-          fontWeight: 'bold',
-          fontSize: 20,
-          color: {
-            r: 255,
-            g: 255,
-            b: 255,
-          },
-        },
-        defaultValue: '默认标题',
-      },
-      animation: {
-        ...DEFAULT_ANIMATION_CONFIG,
-        animationDuration: 2000,
-        animationEasing: 'quadraticInOut',
-      },
-      series: {
-        itemStyle: {
-          color: DEFAULT_THEME_COLOR_LIST,
-        },
-        symbolSize: 6,
-      },
-    },
-  };
+    };
 
-const DefaultConfig: ComponentData.TComponentData<TBubbleScatterConfig> =
-  mergeWithoutArray(
-    {},
-    {
-      data: BASIC_DEFAULT_DATA_CONFIG,
-      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
-    },
-    BASIC_DEFAULT_CONFIG,
-    {
-      style: {
-        width: 800,
-        height: 120,
+  const DefaultConfig: ComponentData.TComponentData<TBubbleScatterConfig> =
+    mergeWithoutArray(
+      {},
+      {
+        data: BASIC_DEFAULT_DATA_CONFIG,
+        interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
       },
-    },
-    CUSTOM_CONFIG,
-  );
-
-export default DefaultConfig;
+      BASIC_DEFAULT_CONFIG,
+      {
+        style: {
+          width: 800,
+          height: 120,
+        },
+      },
+      CUSTOM_CONFIG,
+    );
+  return DefaultConfig;
+};

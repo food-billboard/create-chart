@@ -57,7 +57,7 @@ import ScatterMap from './Map/ScatterMap';
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
   {
-    defaultConfig: object;
+    defaultConfig: () => object;
     configComponent: ReactNode;
     render: ReactNode;
   }
@@ -118,7 +118,7 @@ export function getComponentByType(component: ComponentData.TComponentData) {
 export function getComponentDefaultConfigByType(
   componentType: ComponentData.TComponentSelfType,
 ) {
-  return COMPONENT_MAP.get(componentType)?.defaultConfig || {};
+  return COMPONENT_MAP.get(componentType)?.defaultConfig() || {};
 }
 
 export function getComponentRenderByType(

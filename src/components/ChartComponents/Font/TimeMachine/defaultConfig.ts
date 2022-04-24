@@ -8,55 +8,56 @@ import {
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TTimeMachineConfig } from './type';
 
-const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTimeMachineConfig> =
-  {
-    interactive: {
-      base: [],
-    },
-    data: {
-      request: {
-        value: {
-          value: Date.now().toString(),
+export default () => {
+  const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TTimeMachineConfig> =
+    {
+      interactive: {
+        base: [],
+      },
+      data: {
+        request: {
+          value: {
+            value: Date.now().toString(),
+          },
+          valueType: 'object',
         },
-        valueType: 'object',
+        filter: {
+          map: [],
+        },
+        disabled: true,
       },
-      filter: {
-        map: [],
+      options: {
+        textStyle: {
+          ...DEFAULT_FONT_CONFIG,
+          fontSize: 24,
+        },
+        icon: {
+          show: false,
+          value: 'bi-clock',
+          position: 'before',
+          size: 24,
+          color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          margin: 4,
+        },
+        formatter: 'YYYY-MM-DD HH:mm:ss',
       },
-      disabled: true,
-    },
-    options: {
-      textStyle: {
-        ...DEFAULT_FONT_CONFIG,
-        fontSize: 24,
-      },
-      icon: {
-        show: false,
-        value: 'bi-clock',
-        position: 'before',
-        size: 24,
-        color: ThemeUtil.generateNextColor4CurrentTheme(0),
-        margin: 4,
-      },
-      formatter: 'YYYY-MM-DD HH:mm:ss',
-    },
-  };
+    };
 
-const DefaultConfig: ComponentData.TComponentData<TTimeMachineConfig> =
-  mergeWithoutArray(
-    {},
-    {
-      data: BASIC_DEFAULT_DATA_CONFIG,
-      interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
-    },
-    BASIC_DEFAULT_CONFIG,
-    {
-      style: {
-        width: 300,
-        height: 40,
+  const DefaultConfig: ComponentData.TComponentData<TTimeMachineConfig> =
+    mergeWithoutArray(
+      {},
+      {
+        data: BASIC_DEFAULT_DATA_CONFIG,
+        interactive: BASIC_DEFAULT_INTERACTIVE_CONFIG,
       },
-    },
-    CUSTOM_CONFIG,
-  );
-
-export default DefaultConfig;
+      BASIC_DEFAULT_CONFIG,
+      {
+        style: {
+          width: 300,
+          height: 40,
+        },
+      },
+      CUSTOM_CONFIG,
+    );
+  return DefaultConfig;
+};
