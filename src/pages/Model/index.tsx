@@ -3,7 +3,7 @@ import { Pagination, Input, Button, Empty } from 'antd';
 import classnames from 'classnames';
 import { getScreenList } from '@/services';
 import { goDesign } from '@/utils/tool';
-import List from './components/ScreenList';
+import List from './components/List';
 import styles from './index.less';
 
 const { Search } = Input;
@@ -45,8 +45,8 @@ function ScreenList() {
     }
   };
 
-  const onChange = useCallback(async () => {
-    await fetchData({
+  const onChange = useCallback(() => {
+    fetchData({
       currPage,
     });
   }, [currPage]);
@@ -78,17 +78,17 @@ function ScreenList() {
     <>
       <div
         className={classnames(
-          styles['screen-page-content-main-header'],
+          styles['screen-page-content-main-model-header'],
           'animate__fadeInDown',
           'animate__animated',
           'animate__delay-1s',
         )}
       >
-        自己做的数据可视化大屏
+        自己做的数据可视化大屏模板
       </div>
       <div
         className={classnames(
-          styles['screen-page-content-main-action'],
+          styles['screen-page-content-main-model-action'],
           'm-tb-16',
           'dis-flex',
         )}
@@ -109,10 +109,10 @@ function ScreenList() {
           </Button>
         </div>
       </div>
-      <div className={styles['screen-page-content-main-list']}>
+      <div className={styles['screen-page-content-main-model-list']}>
         {list.length ? <List value={list} onChange={onChange} /> : <Empty />}
       </div>
-      <div className={styles['screen-page-content-main-pagination']}>
+      <div className={styles['screen-page-content-main-model-pagination']}>
         <Pagination current={currPage} onChange={onPageChange} total={total} />
       </div>
     </>

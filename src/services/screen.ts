@@ -59,6 +59,14 @@ export const previewScreenValid = (params: API_SCREEN.TPreviewScreenParams) => {
   });
 };
 
+// 大屏复制
+export const copyScreen = (data: { _id: string }) => {
+  return request('/api/screen/copy', {
+    method: 'POST',
+    data,
+  });
+};
+
 // 大屏设置有效时间
 // 分享
 // 设置公共或加密

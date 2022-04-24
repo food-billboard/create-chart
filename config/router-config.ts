@@ -13,6 +13,10 @@ export default [
         component: '@/pages/Designer',
       },
       {
+        path: '/model',
+        component: '@/pages/Model',
+      },
+      {
         path: '/share',
         component: '@/pages/Share',
       },

@@ -1,0 +1,42 @@
+.screen-page {
+  height: 100vh;
+  overflow: hidden;
+  :global {
+    .ant-layout-header {
+      position: relative;
+    }
+  }
+  &-logo {
+    background-image: url('../../public/icons/icon-128x128.png');
+    float: left;
+    width: 31px;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+    background-size: cover;
+  }
+  &-avatar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 31px;
+    height: 100%;
+    margin-right: 24px;
+  }
+  &-content {
+    display: flex;
+    flex-direction: column;
+  }
+  &-content-main {
+    background-color: black;
+    flex: 1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+  }
+}

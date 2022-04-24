@@ -1,22 +1,14 @@
 import { useRef, useCallback } from 'react';
 import { Row, Col, Button, Switch, message, Modal } from 'antd';
-import {
-  SendOutlined,
-  DeleteOutlined,
-  FolderViewOutlined,
-  CopyOutlined,
-} from '@ant-design/icons';
+import { DeleteOutlined, FolderViewOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import {
-  deleteScreen,
-  previewScreen,
-  shareScreen,
-  enableScreen,
-  disabledScreen,
-  copyScreen,
+  deleteScreenModel,
+  previewScreenModel,
+  enableScreenModel,
+  disabledScreenModel,
 } from '@/services';
 import { goDesign, goPreview } from '@/utils/tool';
-import ShareSetting, { ShareSettingRef } from './ShareSetting';
 import styles from './index.less';
 
 const COL_SPAN = {
@@ -33,7 +25,6 @@ const ScreenList = (props: {
   const { value, onChange } = props;
 
   const fetchLoading = useRef<boolean>(false);
-  const shareSettingRef = useRef<ShareSettingRef>(null);
 
   // 启用 | 禁用
   const onEnabledChange = useCallback(
@@ -42,9 +33,9 @@ const ScreenList = (props: {
       if (fetchLoading.current) return;
       try {
         if (value) {
-          await enableScreen({ _id: target._id });
+          await enableScreenModel({ _id: target._id });
         } else {
-          await disabledScreen({ _id: target._id });
+          await disabledScreenModel({ _id: target._id });
         }
         onChange?.();
       } catch (err) {
@@ -62,37 +53,13 @@ const ScreenList = (props: {
     goDesign(_id);
   }, []);
 
-  // 复制
-  const copyScreenMethod = useCallback(
-    async (value: any, e) => {
-      e.stopPropagation();
-      fetchLoading.current = true;
-      try {
-        const response: any = await copyScreen({ _id: value._id });
-        await onChange?.();
-        Modal.confirm({
-          title: '提示',
-          content: '复制成功，是否跳转编辑？',
-          onOk: () => {
-            handleEdit({ _id: response[0] });
-          },
-        });
-      } catch (err) {
-        message.info('操作失败');
-      } finally {
-        fetchLoading.current = false;
-      }
-    },
-    [onChange, handleEdit],
-  );
-
   // 预览
   const previewScreenMethod = useCallback(async (value, e) => {
     e.stopPropagation();
     if (fetchLoading.current) return;
     fetchLoading.current = true;
     try {
-      await previewScreen({ _id: value._id });
+      await previewScreenModel({ _id: value._id });
       goPreview(value._id);
     } catch (err) {
       message.info('操作失败');
@@ -100,29 +67,6 @@ const ScreenList = (props: {
       fetchLoading.current = false;
     }
   }, []);
-
-  // 分享
-  const shareScreenMethod = useCallback(async (value, e) => {
-    e.stopPropagation();
-    if (fetchLoading.current) return;
-    fetchLoading.current = true;
-    shareSettingRef.current?.open(value._id);
-  }, []);
-
-  // 确定分享参数
-  const onShareOk = useCallback(
-    async (value) => {
-      try {
-        await shareScreen(value);
-        onChange?.();
-      } catch (err) {
-        message.info('操作失败');
-      } finally {
-        fetchLoading.current = false;
-      }
-    },
-    [onChange],
-  );
 
   // 删除
   const deleteScreenMethod = useCallback(
@@ -134,7 +78,7 @@ const ScreenList = (props: {
         content: '是否确定删除？',
         onOk: async () => {
           try {
-            await deleteScreen({
+            await deleteScreenModel({
               _id: value._id,
             });
             onChange?.();
@@ -170,15 +114,6 @@ const ScreenList = (props: {
                   }}
                 >
                   <div>
-                    {enable && (
-                      <Button
-                        size="small"
-                        type="link"
-                        icon={<SendOutlined />}
-                        title={'分享'}
-                        onClick={shareScreenMethod.bind(null, item)}
-                      ></Button>
-                    )}
                     {!enable && (
                       <Button
                         size="small"
@@ -227,15 +162,6 @@ const ScreenList = (props: {
                     >
                       预览
                     </Button>
-                    <Button
-                      size="small"
-                      icon={<CopyOutlined />}
-                      type="link"
-                      onClick={copyScreenMethod.bind(null, item)}
-                      style={{ paddingLeft: 0 }}
-                    >
-                      复制
-                    </Button>
                   </div>
                 </div>
               </div>
@@ -243,11 +169,6 @@ const ScreenList = (props: {
           );
         })}
       </Row>
-      <ShareSetting
-        onOk={onShareOk}
-        onCancel={() => (fetchLoading.current = false)}
-        ref={shareSettingRef}
-      />
     </div>
   );
 };
