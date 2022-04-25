@@ -51,7 +51,7 @@ const Designer = (props: {
           <RightContent />
         </div>
       </div>
-      <FetchScreenComponent />
+      <FetchScreenComponent ref={requestRef} />
     </ConfigProvider>
   );
 };

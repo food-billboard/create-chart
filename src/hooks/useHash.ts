@@ -2,7 +2,9 @@ import { useEffect, useRef } from 'react';
 import { useUpdateEffect } from 'ahooks';
 import queryString from 'query-string';
 
-export const useHash = () => {
+export const useHash = (
+  onHashChange?: (hash: string, prevHash: string) => void,
+) => {
   const hashData = useRef<string>(location.hash);
   const prevHashData = useRef<string>(location.hash);
 
@@ -14,6 +16,7 @@ export const useHash = () => {
       prevHashData.current = hashData.current;
     }
     hashData.current = hash;
+    onHashChange?.(hashData.current, prevHashData.current);
   };
 
   useEffect(() => {
@@ -35,8 +38,6 @@ export const useIsModelHash = () => {
 };
 
 export const useHashChangeReload = (reload: any) => {
-  const { prevHash, hash } = useHash();
-
   const isDesigner = (hash: string) => {
     return hash.startsWith('#/designer') || hash.startsWith('#/model-designer');
   };
@@ -54,7 +55,7 @@ export const useHashChangeReload = (reload: any) => {
     return queryString.parse(query).id;
   };
 
-  useUpdateEffect(() => {
+  useHash((hash, prevHash) => {
     const hashData = {
       isDesigner: isDesigner(hash),
       isPreview: isPreview(hash),
@@ -75,5 +76,5 @@ export const useHashChangeReload = (reload: any) => {
     ) {
       reload?.();
     }
-  }, [prevHash, hash]);
+  });
 };

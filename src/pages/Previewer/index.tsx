@@ -26,7 +26,6 @@ function Previewer(props: {
     const { id } = history.location.query || {};
     if (!id) return;
     try {
-      console.log(isModel, 2222);
       const method = isModel ? previewScreenModelValid : previewScreenValid;
       const result = await method({
         _id: id as string,
