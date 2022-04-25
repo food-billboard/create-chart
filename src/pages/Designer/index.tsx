@@ -1,9 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { ConfigProvider } from 'antd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { connect } from 'dva';
-import FetchScreenComponent from '@/components/FetchScreenComponent';
+import { useHashChangeReload } from '@/hooks';
+import FetchScreenComponent, {
+  FetchScreenComponentRef,
+} from '@/components/FetchScreenComponent';
 import Header from './components/Header';
 import LeftContent from './components/LeftContent';
 import RightContent from './components/RightContent';
@@ -16,10 +19,18 @@ const Designer = (props: {
 }) => {
   const { setScreenType } = props;
 
+  const requestRef = useRef<FetchScreenComponentRef>(null);
+
   const preventDefaultContextMenu = (e: any) => {
     e.preventDefault();
     return false;
   };
+
+  const reload = async () => {
+    requestRef.current?.reload();
+  };
+
+  useHashChangeReload(reload);
 
   useEffect(() => {
     setScreenType('edit');

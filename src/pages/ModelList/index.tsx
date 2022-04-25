@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { Pagination, Input, Button, Empty } from 'antd';
 import classnames from 'classnames';
 import { getScreenModelList } from '@/services';
-import { goDesign } from '@/utils/tool';
+import { goDesignModel } from '@/utils/tool';
 import List from './components/List';
 import styles from './index.less';
 
@@ -52,7 +52,7 @@ function ScreenModelList() {
   }, [currPage]);
 
   const handleAdd = useCallback(() => {
-    goDesign();
+    goDesignModel();
   }, []);
 
   useEffect(() => {

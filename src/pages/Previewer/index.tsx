@@ -4,7 +4,8 @@ import { history } from 'umi';
 import { message } from 'antd';
 import FetchScreenComponent from '@/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
-import { previewScreenValid } from '@/services';
+import { previewScreenValid, previewScreenModelValid } from '@/services';
+import { useIsModelHash, useHashChangeReload } from '@/hooks';
 import useResize from '../Share/useResize';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
@@ -19,11 +20,15 @@ function Previewer(props: {
 
   const [needFetch, setNeedFetch] = useState<boolean>(false);
 
+  const isModel = useIsModelHash();
+
   const fetchValid = async () => {
     const { id } = history.location.query || {};
     if (!id) return;
     try {
-      const result = await previewScreenValid({
+      console.log(isModel, 2222);
+      const method = isModel ? previewScreenModelValid : previewScreenValid;
+      const result = await method({
         _id: id as string,
       });
       if (!result) {
@@ -35,6 +40,13 @@ function Previewer(props: {
       message.info('操作失败');
     }
   };
+
+  const reload = async () => {
+    setNeedFetch(false);
+    await fetchValid();
+  };
+
+  useHashChangeReload(reload);
 
   const scale = useResize(width, height, setScale);
 

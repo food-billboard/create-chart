@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { history } from 'umi';
 import { message } from 'antd';
 import FetchScreenComponent from '@/components/FetchScreenComponent';
+import { useHashChangeReload } from '@/hooks';
 import {
   shareScreenHeartbeat,
   shareScreenGet,
@@ -87,12 +88,22 @@ function Share(props: {
     return !!data;
   }, []);
 
+  const reload = async () => {
+    setNeedFetch(false);
+    fetchValidInfo();
+  };
+
+  useHashChangeReload(reload);
+
   useEffect(() => {
     setScreenType('preview');
   }, [setScreenType]);
 
   useEffect(() => {
     fetchValidInfo();
+    return () => {
+      clearInterval(timerRef.current);
+    };
   }, []);
 
   return (

@@ -4,9 +4,17 @@ import { SendOutlined, FundOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import FocusWrapper from '@/components/FocusWrapper';
-import { previewScreen, postScreen, putScreen } from '@/services';
+import {
+  previewScreen,
+  postScreen,
+  putScreen,
+  previewScreenModel,
+  postScreenModel,
+  putScreenModel,
+} from '@/services';
 import { captureCover, captureCoverAndUpload } from '@/utils/captureCover';
-import { goPreview } from '@/utils/tool';
+import { goPreview, goPreviewModel } from '@/utils/tool';
+import { useIsModelHash } from '@/hooks';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -55,18 +63,23 @@ const Header = (props: {
     );
   }, [editMode, name, setScreen]);
 
+  const isModel = useIsModelHash();
+
   const handlePreview = useCallback(async () => {
     if (fetchLoading) return;
     setFetchLoading(true);
     try {
-      await previewScreen({ _id: _id as string });
-      goPreview(_id as string);
+      // 大屏预览或模板预览
+      const requestMethod = isModel ? previewScreenModel : previewScreen;
+      const linkMethod = isModel ? goPreviewModel : goPreview;
+      await requestMethod({ _id: _id as string });
+      linkMethod(_id as string);
     } catch (err) {
       message.info('操作失败');
     } finally {
       setFetchLoading(false);
     }
-  }, [_id, fetchLoading]);
+  }, [_id, fetchLoading, isModel]);
 
   const handleStore = useCallback(async () => {
     if (fetchLoading) return;
@@ -94,7 +107,16 @@ const Header = (props: {
           components,
         }),
       };
-      const method = _id ? putScreen : postScreen;
+      let method: any;
+      // 模板
+      if (isModel) {
+        method = _id ? putScreenModel : postScreenModel;
+      }
+      // 大屏
+      else {
+        method = _id ? putScreen : postScreen;
+      }
+
       const result = await method(params as any);
       message.success('保存成功');
       setScreen?.({
@@ -114,6 +136,7 @@ const Header = (props: {
     poster,
     screenData,
     setScreen,
+    isModel,
   ]);
 
   const extra = useMemo(() => {

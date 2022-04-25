@@ -95,6 +95,13 @@ export const getShare = (id: string) => {
   return url;
 };
 
+// 模板预览
+export function goPreviewModel(id: string) {
+  const { origin, pathname } = new URL(location.href);
+  const url = origin + pathname + '#/model-preview?id=' + id;
+  window.open(url, '_blank');
+}
+
 // 预览
 export function goPreview(id: string) {
   const { origin, pathname } = new URL(location.href);
@@ -112,6 +119,14 @@ export function goShare(id: string) {
 export function goDesign(id?: string) {
   const { origin, pathname } = new URL(location.href);
   const baseUrl = origin + pathname + '#/designer';
+  const url = id ? baseUrl + '?id=' + id : baseUrl;
+  window.open(url, '_blank');
+}
+
+// 模板设计页面
+export function goDesignModel(id?: string) {
+  const { origin, pathname } = new URL(location.href);
+  const baseUrl = origin + pathname + '#/model-designer';
   const url = id ? baseUrl + '?id=' + id : baseUrl;
   window.open(url, '_blank');
 }

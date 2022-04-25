@@ -5,3 +5,4 @@ export * from './useResponseData';
 export * from './useComponentStyle';
 export * from './useDeepUpdateEffect';
 export * from './useLocalStorage';
+export * from './useHash';

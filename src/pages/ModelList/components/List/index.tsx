@@ -8,7 +8,7 @@ import {
   enableScreenModel,
   disabledScreenModel,
 } from '@/services';
-import { goDesign, goPreview } from '@/utils/tool';
+import { goDesignModel, goPreviewModel } from '@/utils/tool';
 import styles from './index.less';
 
 const COL_SPAN = {
@@ -50,7 +50,7 @@ const ScreenList = (props: {
   // 编辑
   const handleEdit = useCallback((value) => {
     const { _id } = value;
-    goDesign(_id);
+    goDesignModel(_id);
   }, []);
 
   // 预览
@@ -60,7 +60,7 @@ const ScreenList = (props: {
     fetchLoading.current = true;
     try {
       await previewScreenModel({ _id: value._id });
-      goPreview(value._id);
+      goPreviewModel(value._id);
     } catch (err) {
       message.info('操作失败');
     } finally {

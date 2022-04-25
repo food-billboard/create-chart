@@ -13,8 +13,12 @@ export default [
         component: '@/pages/Designer',
       },
       {
+        path: '/model-designer',
+        component: '@/pages/Designer',
+      },
+      {
         path: '/model',
-        component: '@/pages/Model',
+        component: '@/pages/ModelList',
       },
       {
         path: '/share',
@@ -22,6 +26,10 @@ export default [
       },
       {
         path: '/preview',
+        component: '@/pages/Previewer',
+      },
+      {
+        path: '/model-preview',
         component: '@/pages/Previewer',
       },
       {
