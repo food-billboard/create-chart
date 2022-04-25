@@ -13,12 +13,14 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import ColorSelect, { CompatColorSelect } from '@/components/ColorSelect';
 import IconTooltip from '@/components/IconTooltip';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import RadioGroup, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
 import ImageUpload from '@/components/ImageUpload';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import ThemeUtil from '@/utils/Assist/Theme';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import ConditionConfig from './Condition';
 import { TImageConfig } from '../type';
 
@@ -108,7 +110,7 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: { type, content, repeat, condition },
+        options: { type, content, repeat, condition, preview },
       },
     } = value;
 
@@ -147,28 +149,68 @@ class Config extends Component<
               </FullForm>
             </Item>
             {type === 'image' && (
-              <Item label="重复">
-                <HalfForm label="x">
-                  <Switch
-                    checked={repeat.x}
-                    onChange={(value) => {
-                      this.onKeyChange('repeat', {
-                        x: value,
-                      });
-                    }}
-                  />
-                </HalfForm>
-                <HalfForm label="y">
-                  <Switch
-                    checked={repeat.y}
-                    onChange={(value) => {
-                      this.onKeyChange('repeat', {
-                        y: value,
-                      });
-                    }}
-                  />
-                </HalfForm>
-              </Item>
+              <>
+                <Item label="预览">
+                  <FullForm>
+                    <Switch
+                      checked={preview.show}
+                      onChange={(value) =>
+                        this.onKeyChange('preview', {
+                          show: value,
+                        })
+                      }
+                    />
+                  </FullForm>
+                </Item>
+                {/* <Collapse
+                  child={{
+                    header: '预览',
+                    key: 'preview',
+                    visibleRender: true,
+                    value: preview.show,
+                    onChange: value => {
+                      this.onKeyChange('preview', {
+                        show: value
+                      })
+                    }
+                  }}
+                >
+                  <Item
+                    label='放大比例'
+                  >
+                    <FullForm>
+                      <InputNumber
+                        value={preview.rate}
+                        onChange={value => this.onKeyChange('preview', {
+                          rate: value
+                        })}
+                      />
+                    </FullForm>
+                  </Item>
+                </Collapse> */}
+                <Item label="重复">
+                  <HalfForm label="x">
+                    <Switch
+                      checked={repeat.x}
+                      onChange={(value) => {
+                        this.onKeyChange('repeat', {
+                          x: value,
+                        });
+                      }}
+                    />
+                  </HalfForm>
+                  <HalfForm label="y">
+                    <Switch
+                      checked={repeat.y}
+                      onChange={(value) => {
+                        this.onKeyChange('repeat', {
+                          y: value,
+                        });
+                      }}
+                    />
+                  </HalfForm>
+                </Item>
+              </>
             )}
           </ConfigList>
         </TabPane>

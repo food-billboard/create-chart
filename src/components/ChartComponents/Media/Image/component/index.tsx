@@ -1,5 +1,6 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
+import { CSSProperties, useMemo, useRef, useCallback, useState } from 'react';
 import { uniqueId, merge } from 'lodash';
+import { Image } from 'antd';
 import classnames from 'classnames';
 import {
   useComponent,
@@ -23,11 +24,16 @@ const ImageBasic = (props: {
 }) => {
   const { className, style, value, global } = props;
 
+  const [visible, setVisible] = useState<boolean>(false);
+
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { width, height },
+    },
   } = value;
-  const { type, content, repeat, condition } = options;
+  const { type, content, repeat, condition, preview } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -62,10 +68,13 @@ const ImageBasic = (props: {
   }, [processedValue, componentFilterMap]);
 
   const onClick = useCallback(() => {
+    if (preview.show && finalValue.value) {
+      setVisible(true);
+    }
     syncInteractiveAction('click', {
       value: finalValue.value,
     });
-  }, [syncInteractiveAction, finalValue]);
+  }, [syncInteractiveAction, finalValue, preview]);
 
   const componentStyle = useMemo(() => {
     const { x, y } = repeat;
@@ -105,6 +114,15 @@ const ImageBasic = (props: {
         id={chartId.current}
         onClick={onClick}
       ></div>
+      <Image
+        preview={{
+          visible: visible,
+          onVisibleChange: (value) => {
+            setVisible(value);
+          },
+          src: finalValue.value || '',
+        }}
+      />
       <FetchFragment
         id={id}
         url={requestUrl}

@@ -59,6 +59,9 @@ export default () => {
         x: false,
         y: false,
       },
+      preview: {
+        show: false,
+      },
       condition: [DEFAULT_CONDITION_CONFIG()],
     },
   };
