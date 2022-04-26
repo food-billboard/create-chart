@@ -247,6 +247,10 @@ export default {
       const components = get(state, 'components');
 
       let newComponents = action.payload;
+      newComponents =
+        typeof newComponents === 'function'
+          ? newComponents(components)
+          : newComponents;
 
       // ! 使用这种方法强制刷新
       newComponents = arrayMove(newComponents, 0, 0);

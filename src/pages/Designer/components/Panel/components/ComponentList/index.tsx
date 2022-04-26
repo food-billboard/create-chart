@@ -19,9 +19,15 @@ const ComponentList = (props: {
       const path = getPath(item.id);
 
       // * 暂时这样处理防止 组 内更新下面不刷新
-      const isGroupComponent = isGroupComponentFunc(item);
-      const props: any = {};
-      if (isGroupComponent) props.timestamps = Date.now();
+      // ! 这里先不用了，因为要多个组件共同拖拽
+      // const isGroupComponent = isGroupComponentFunc(item);
+      // const props: any = {};
+      // if (isGroupComponent) props.timestamps = Date.now();
+
+      // * 多组件共同拖拽
+      const props: any = {
+        timestamps: Date.now(),
+      };
 
       return (
         <RenderComponent

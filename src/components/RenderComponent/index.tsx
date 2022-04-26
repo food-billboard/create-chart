@@ -25,6 +25,13 @@ export type RenderComponentProps = {
   scale: number;
   setSelect?: (value: string[]) => void;
   setComponent?: ComponentMethod.SetComponentMethod;
+  setComponentAll: (
+    value:
+      | ComponentData.TComponentData[]
+      | ((
+          value: ComponentData.TComponentData[],
+        ) => ComponentData.TComponentData[]),
+  ) => void;
   path?: string;
   screenType: ComponentData.ScreenType;
   timestamps?: number;
@@ -80,6 +87,7 @@ const RenderComponent = memo(
       screenType,
       timestamps,
       hoverSelect,
+      setComponentAll,
     } = props;
 
     const {
@@ -165,8 +173,10 @@ const RenderComponent = memo(
             x: componentStyle.left,
             y: componentStyle.top,
           }}
+          select={select}
           pointerDisabled={pointerDisabled}
           setComponent={setComponent}
+          setComponentAll={setComponentAll}
           scale={scale / 100}
           componentId={id}
           isSelect={isSelect}
