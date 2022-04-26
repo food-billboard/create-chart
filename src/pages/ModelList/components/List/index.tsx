@@ -49,7 +49,8 @@ const ScreenList = (props: {
 
   // 编辑
   const handleEdit = useCallback((value) => {
-    const { _id } = value;
+    const { _id, enable } = value;
+    if (enable) return;
     goDesignModel(_id);
   }, []);
 
