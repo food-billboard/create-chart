@@ -1,10 +1,14 @@
 import request from '../utils/request';
+import { SCREEN_MODEL_VERSION } from '../utils/constants';
 
 // 新增大屏
 export const postScreenModel = (data: API_SCREEN.TAddScreenParams) => {
   return request('/api/screen/model', {
     method: 'POST',
-    data,
+    data: {
+      ...data,
+      version: SCREEN_MODEL_VERSION,
+    },
   });
 };
 
@@ -12,7 +16,10 @@ export const postScreenModel = (data: API_SCREEN.TAddScreenParams) => {
 export const putScreenModel = (data: API_SCREEN.TEditScreenParams) => {
   return request('/api/screen/model', {
     method: 'PUT',
-    data,
+    data: {
+      ...data,
+      version: SCREEN_MODEL_VERSION,
+    },
   });
 };
 

@@ -1,4 +1,5 @@
 import request from '../utils/request';
+import { SCREEN_VERSION } from '../utils/constants';
 
 const { REACT_APP_ENV } = process.env;
 
@@ -6,7 +7,10 @@ const { REACT_APP_ENV } = process.env;
 export const postScreen = (data: API_SCREEN.TAddScreenParams) => {
   return request('/api/screen/list', {
     method: 'POST',
-    data,
+    data: {
+      ...data,
+      version: SCREEN_VERSION,
+    },
   });
 };
 
@@ -14,7 +18,10 @@ export const postScreen = (data: API_SCREEN.TAddScreenParams) => {
 export const putScreen = (data: API_SCREEN.TEditScreenParams) => {
   return request('/api/screen/list', {
     method: 'PUT',
-    data,
+    data: {
+      ...data,
+      version: SCREEN_VERSION,
+    },
   });
 };
 
