@@ -1,5 +1,9 @@
 export type TCountUpNumberConfig = {
   textStyle: ComponentData.TFontConfig;
+  align: {
+    vertical: 'flex-start' | 'flex-end' | 'center';
+    horizontal: 'flex-start' | 'flex-end' | 'center';
+  };
   addonBefore: {
     show: boolean;
     content: string;

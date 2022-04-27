@@ -60,6 +60,7 @@ export default () => {
         condition: [DEFAULT_CONDITION_CONFIG()],
         speed: 500,
         autoplay: true,
+        pauseOnHover: true,
         dot: {
           show: true,
           position: 'bottom',

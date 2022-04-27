@@ -9,6 +9,7 @@ import Input from '@/components/ChartComponents/Common/Input';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import TextAlignConfig from '@/components/ChartComponents/Common/TextAlignConfig';
 import ConditionConfig from './Condition';
 import { TCountUpNumberConfig } from '../type';
 
@@ -41,6 +42,7 @@ class Config extends Component<
           decimal,
           thousands,
           condition,
+          align,
         },
       },
     } = value;
@@ -54,10 +56,17 @@ class Config extends Component<
                 header: '文字样式',
                 key: 'textStyle',
               }}
+              parent={{
+                defaultActiveKey: ['textStyle'],
+              }}
             >
               <FontConfigList
                 value={textStyle}
                 onChange={this.onKeyChange.bind(null, 'textStyle')}
+              />
+              <TextAlignConfig
+                value={align}
+                onChange={this.onKeyChange.bind(null, 'align')}
               />
             </Collapse>
           </ConfigList>

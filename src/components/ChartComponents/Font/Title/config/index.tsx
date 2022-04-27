@@ -11,7 +11,7 @@ import IconTooltip from '@/components/IconTooltip';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import OrientSelect from '@/components/ChartComponents/Common/OrientSelect';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import TextAlignConfig from '@/components/ChartComponents/Common/TextAlignConfig';
 import ConditionConfig from './Condition';
 import { TTitleConfig } from '../type';
 
@@ -21,28 +21,6 @@ const { Item } = ConfigList;
 class Config extends Component<
   ComponentData.ComponentConfigProps<TTitleConfig>
 > {
-  alignOptions = [
-    {
-      value: 'flex-start',
-      label: 'start',
-    },
-    {
-      value: 'center',
-      label: 'center',
-    },
-    {
-      value: 'flex-end',
-      label: 'end',
-    },
-  ].map((item) => {
-    const { value, label } = item;
-    return (
-      <Select.Option key={value} value={value}>
-        {label}
-      </Select.Option>
-    );
-  });
-
   onKeyChange = (key: keyof TTitleConfig, value: any) => {
     this.props.onChange({
       config: {
@@ -76,34 +54,10 @@ class Config extends Component<
                 onChange={this.onKeyChange.bind(null, 'textStyle')}
               />
             </Collapse>
-            <Item label="对齐方式">
-              <HalfForm label="水平">
-                <Select
-                  value={align.horizontal}
-                  onChange={(value) => {
-                    this.onKeyChange('align', {
-                      horizontal: value,
-                    });
-                  }}
-                  className="w-100"
-                >
-                  {this.alignOptions}
-                </Select>
-              </HalfForm>
-              <HalfForm label="垂直">
-                <Select
-                  value={align.vertical}
-                  onChange={(value) => {
-                    this.onKeyChange('align', {
-                      vertical: value,
-                    });
-                  }}
-                  className="w-100"
-                >
-                  {this.alignOptions}
-                </Select>
-              </HalfForm>
-            </Item>
+            <TextAlignConfig
+              value={align}
+              onChange={this.onKeyChange.bind(this, 'align')}
+            />
             <Item label="文字方向">
               <OrientSelect
                 value={orient === 'lr' ? 'horizontal' : 'vertical'}

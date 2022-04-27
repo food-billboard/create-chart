@@ -42,7 +42,7 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: { speed, dot, autoplay, fade, condition },
+        options: { speed, dot, autoplay, fade, condition, pauseOnHover },
       },
     } = value;
 
@@ -67,6 +67,16 @@ class Config extends Component<
                 />
               </FullForm>
             </Item>
+            {autoplay && (
+              <Item label="移入停止">
+                <FullForm>
+                  <Switch
+                    checked={pauseOnHover}
+                    onChange={this.onKeyChange.bind(this, 'pauseOnHover')}
+                  />
+                </FullForm>
+              </Item>
+            )}
             <Collapse
               child={{
                 header: '指示点',

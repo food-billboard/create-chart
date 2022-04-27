@@ -10,16 +10,16 @@ import {
   DEFAULT_ANIMATION_CONFIG,
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+  DEFAULT_THEME_COLOR_LIST,
 } from '../../../Common/Constants/defaultConfig';
 import { getName, getNumberValue } from '@/utils/constants';
-import ThemeUtil from '@/utils/Assist/Theme';
 import { TRadarBasicConfig } from './type';
 
 const MIN = 20;
 const MAX = 100;
 
-const DEFAULT_NAME_LABEL = getName(5);
-const DEFAULT_DATE_VALUE = getNumberValue(5, MIN, MAX);
+const DEFAULT_NAME_LABEL = getName(7);
+const DEFAULT_DATE_VALUE = getNumberValue(7, MIN, MAX);
 
 const DEFAULT_VALUE = DEFAULT_NAME_LABEL.map((item, index) => {
   return {
@@ -29,6 +29,7 @@ const DEFAULT_VALUE = DEFAULT_NAME_LABEL.map((item, index) => {
 });
 
 export default () => {
+  const DEFAULT_THEME_COLOR_LIST_DATA = DEFAULT_THEME_COLOR_LIST();
   const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TRadarBasicConfig> =
     {
       interactive: {
@@ -97,11 +98,7 @@ export default () => {
           axisLine: {
             show: false,
             lineStyle: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
+              color: DEFAULT_THEME_COLOR_LIST_DATA[0],
               width: 1,
               type: 'solid',
             },
@@ -119,18 +116,16 @@ export default () => {
             },
           },
           splitArea: {
-            show: true,
+            show: false,
             areaStyle: {
               color: [
                 {
-                  ...ThemeUtil.generateNextColor4CurrentTheme(0),
+                  ...DEFAULT_THEME_COLOR_LIST_DATA[0],
                   a: 0.3,
                 },
                 {
-                  r: 250,
-                  g: 250,
-                  b: 250,
-                  a: 0,
+                  ...DEFAULT_THEME_COLOR_LIST_DATA[1],
+                  a: 0.3,
                 },
               ],
             },

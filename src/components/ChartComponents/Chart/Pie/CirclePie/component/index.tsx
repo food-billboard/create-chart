@@ -134,7 +134,18 @@ const CirclePie = (props: {
       animationDurationUpdate: animationDuration,
     };
 
-    return [baseSeries];
+    return [
+      {
+        ...baseSeries,
+        labelLine: {
+          show: false,
+        },
+        radius: [`${radius[0] - 5}%`, `${radius[0] - 2}%`],
+        silent: true,
+        label: { show: false },
+      },
+      baseSeries,
+    ];
   };
 
   const setOption = () => {
@@ -208,6 +219,7 @@ const CirclePie = (props: {
       animation.show &&
       useChartComponentTooltip(chartInstance.current!, series, {
         interval: animation.speed,
+        loopSeries: false,
       });
   };
 

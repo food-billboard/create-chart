@@ -57,6 +57,10 @@ export default () => {
           ...DEFAULT_FONT_CONFIG,
           fontSize: 24,
         },
+        align: {
+          horizontal: 'flex-start',
+          vertical: 'center',
+        },
         animation: {
           duration: 2,
           easingFn: 'easeOutExpo',

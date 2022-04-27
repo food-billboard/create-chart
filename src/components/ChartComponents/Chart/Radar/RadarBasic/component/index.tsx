@@ -18,6 +18,7 @@ import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
+import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TRadarBasicConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
@@ -154,6 +155,7 @@ const RadarBasic = (props: {
     const { animation: show, animationDuration, animationEasing } = animation;
     const { color, ...nextItemStyle } = itemStyle;
     const { color: areaColor, ...nextAreaStyle } = areaStyle;
+    const DEFAULT_THEME_COLOR_LIST_DATA = DEFAULT_THEME_COLOR_LIST();
 
     const baseSeries = {
       ...nextSeries,
@@ -171,11 +173,17 @@ const RadarBasic = (props: {
               },
               areaStyle: {
                 ...nextAreaStyle,
-                color: getRgbaString(areaColor[index]) || 'transparent',
+                color: getRgbaString(areaColor[index]) || 'auto',
               },
               lineStyle: {
                 ...(lineStyle[index] || {}),
-                color: getRgbaString(lineStyle[index]?.color),
+                color: getRgbaString(
+                  lineStyle[index]?.color || {
+                    ...(DEFAULT_THEME_COLOR_LIST_DATA[index] ||
+                      DEFAULT_THEME_COLOR_LIST_DATA[0]),
+                    a: 0.3,
+                  },
+                ),
               },
               value: yAxisValues[item] || [],
               name: item,
@@ -189,7 +197,12 @@ const RadarBasic = (props: {
               },
               areaStyle: {
                 ...nextAreaStyle,
-                color: getRgbaString(areaColor[0]) || 'transparent',
+                color: getRgbaString(
+                  areaColor[0] || {
+                    ...DEFAULT_THEME_COLOR_LIST_DATA[0],
+                    a: 0.3,
+                  },
+                ),
               },
               lineStyle: {
                 ...(lineStyle[0] || {}),

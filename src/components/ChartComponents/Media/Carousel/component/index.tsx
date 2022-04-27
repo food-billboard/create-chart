@@ -31,7 +31,7 @@ const CarouselBasic = (props: {
     },
     id,
   } = value;
-  const { dot, speed, autoplay, fade, condition } = options;
+  const { dot, speed, autoplay, fade, condition, pauseOnHover } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -122,6 +122,7 @@ const CarouselBasic = (props: {
             width: '100%',
             height: '100%',
           }}
+          pauseOnFocus={pauseOnHover}
         >
           {imageList}
         </Carousel>

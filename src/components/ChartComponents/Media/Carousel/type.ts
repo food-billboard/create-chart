@@ -5,6 +5,7 @@ export type TCarouselConfig = {
     show: boolean;
     position: 'top' | 'bottom' | 'left' | 'right';
   };
+  pauseOnHover: boolean;
   // easing: string
   fade: boolean;
   condition: ComponentData.ComponentCondition[];

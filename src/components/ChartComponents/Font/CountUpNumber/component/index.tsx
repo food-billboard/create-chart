@@ -104,9 +104,11 @@ const CountUpNumberBasic = (props: {
   }, [syncInteractiveAction, finalValue]);
 
   const componentStyle = useMemo(() => {
-    const { textStyle } = nextOptions;
+    const { textStyle, align } = nextOptions;
     let baseStyle: CSSProperties = {
       ...textStyle,
+      alignItems: align.vertical,
+      justifyContent: align.horizontal,
       color: getRgbaString(textStyle.color),
     };
     return baseStyle;
