@@ -417,6 +417,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: CarouselBasic,
             description: '',
           },
+          {
+            type: 'PICTURE_WALL',
+            title: '照片墙',
+            icon: CarouselBasic,
+            description: '',
+          },
         ],
       },
     ],

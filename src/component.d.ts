@@ -122,7 +122,8 @@ declare namespace ComponentData {
     | 'TREE_BASIC'
     | 'WATER_FALL_BAR'
     | 'BUBBLE_SCATTER'
-    | 'LOOP_TEXT';
+    | 'LOOP_TEXT'
+    | 'PICTURE_WALL';
 
   // 基础组件属性
   export type TBaseConfig = {

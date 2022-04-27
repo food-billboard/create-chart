@@ -49,6 +49,7 @@ import LoopText from './Font/LoopText';
 import Image from './Media/Image';
 import Video from './Media/Video';
 import Carousel from './Media/Carousel';
+import PictureWall from './Media/PictureWall';
 // interactive
 import Tab from './Interactive/Tab';
 import Select from './Interactive/Select';
@@ -112,6 +113,7 @@ COMPONENT_MAP.set(TreeBasic.type, TreeBasic);
 COMPONENT_MAP.set(WaterFallBar.type, WaterFallBar);
 COMPONENT_MAP.set(BubbleScatter.type, BubbleScatter);
 COMPONENT_MAP.set(LoopText.type, LoopText);
+COMPONENT_MAP.set(PictureWall.type, PictureWall);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);
