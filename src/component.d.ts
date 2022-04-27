@@ -189,6 +189,7 @@ declare namespace ComponentData {
     lineStyle?: 'solid' | 'dashed';
     id: string;
   };
+
   export type TGuideLineConfig = {
     show: boolean;
     value: TGuideLineConfigItem[];
@@ -346,6 +347,13 @@ declare namespace ComponentData {
     orient: OrientType;
     itemGap: number;
     textStyle: TFontConfig;
+    align: 'auto' | 'left' | 'right';
+    itemStyle?: {
+      itemWidth: number;
+      itemHeight: number;
+      icon: ComponentSymbol;
+      sizeIgnore: boolean;
+    };
   } & KeyWordPositionType;
 
   // 网格

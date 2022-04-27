@@ -9,6 +9,7 @@ import {
   useComponentResize,
   useAnimationChange,
   useCondition,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { useDeepUpdateEffect } from '@/hooks';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
@@ -37,7 +38,7 @@ const ParallelBasic = (props: {
   } = value;
 
   const { legend, series, animation, parallel, parallelAxis, condition } =
-    options;
+    useChartPerConfig<TParallelBasicConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -141,7 +142,6 @@ const ParallelBasic = (props: {
   };
 
   const setOption = () => {
-    const { textStyle: legendTextStyle, ...nextLegend } = legend;
     const {
       areaSelectStyle,
       nameTextStyle,
@@ -190,12 +190,8 @@ const ParallelBasic = (props: {
           };
         }),
         legend: {
-          ...nextLegend,
+          ...legend,
           data: seriesKeys,
-          textStyle: {
-            ...legendTextStyle,
-            color: getRgbaString(legendTextStyle.color),
-          },
         },
         series,
       },

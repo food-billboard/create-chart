@@ -11,6 +11,7 @@ import {
   useAnimationChange,
   useCondition,
   useChartComponentTooltip,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -37,7 +38,8 @@ const RadarBasic = (props: {
     config: { options },
   } = value;
 
-  const { legend, series, tooltip, animation, radar, condition } = options;
+  const { legend, series, tooltip, animation, radar, condition } =
+    useChartPerConfig<TRadarBasicConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -207,13 +209,7 @@ const RadarBasic = (props: {
   };
 
   const setOption = () => {
-    const { textStyle: legendTextStyle, ...nextLegend } = legend;
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      animation,
-      ...nextTooltip
-    } = tooltip;
+    const { animation, ...nextTooltip } = tooltip;
 
     const series = getSeries();
     const radar = getRadar();
@@ -224,22 +220,9 @@ const RadarBasic = (props: {
           show: false,
         },
         radar,
-        legend: {
-          ...nextLegend,
-          textStyle: {
-            ...legendTextStyle,
-            color: getRgbaString(legendTextStyle.color),
-          },
-        },
+        legend,
         series,
-        tooltip: {
-          ...nextTooltip,
-          backgroundColor: getRgbaString(backgroundColor),
-          textStyle: {
-            ...tooltipTextStyle,
-            color: getRgbaString(tooltipTextStyle.color),
-          },
-        },
+        tooltip: nextTooltip,
       },
       true,
     );

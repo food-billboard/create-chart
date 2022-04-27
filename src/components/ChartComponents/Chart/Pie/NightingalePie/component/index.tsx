@@ -11,6 +11,7 @@ import {
   useAnimationChange,
   useCondition,
   useChartComponentTooltip,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -37,7 +38,8 @@ const NightingalePie = (props: {
     config: { options },
   } = value;
 
-  const { legend, series, tooltip, animation, condition } = options;
+  const { legend, series, tooltip, animation, condition } =
+    useChartPerConfig<TNightingaleConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -137,13 +139,7 @@ const NightingalePie = (props: {
   };
 
   const setOption = () => {
-    const { textStyle: legendTextStyle, ...nextLegend } = legend;
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      animation,
-      ...nextTooltip
-    } = tooltip;
+    const { animation, ...nextTooltip } = tooltip;
 
     const series = getSeries();
 
@@ -152,22 +148,11 @@ const NightingalePie = (props: {
         grid: {
           show: false,
         },
-        legend: {
-          ...nextLegend,
-          textStyle: {
-            ...legendTextStyle,
-            color: getRgbaString(legendTextStyle.color),
-          },
-        },
+        legend,
         series,
         tooltip: {
           ...nextTooltip,
           trigger: 'item',
-          backgroundColor: getRgbaString(backgroundColor),
-          textStyle: {
-            ...tooltipTextStyle,
-            color: getRgbaString(tooltipTextStyle.color),
-          },
         },
       },
       true,

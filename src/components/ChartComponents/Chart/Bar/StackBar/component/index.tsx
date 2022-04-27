@@ -11,6 +11,7 @@ import {
   useAnimationChange,
   useCondition,
   useChartComponentTooltip,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -38,7 +39,7 @@ const StackBar = (props: {
   } = value;
 
   const { legend, series, xAxis, yAxis, tooltip, animation, condition } =
-    options;
+    useChartPerConfig<TStackBarConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -185,24 +186,7 @@ const StackBar = (props: {
   };
 
   const setOption = () => {
-    const { textStyle: legendTextStyle, ...nextLegend } = legend;
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      animation,
-      ...nextTooltip
-    } = tooltip;
-    const {
-      axisLabel: xAxisLabel,
-      nameTextStyle: xNameTextStyle,
-      ...nextXAxis
-    } = xAxis;
-    const {
-      axisLabel: yAxisLabel,
-      nameTextStyle: yNameTextStyle,
-      splitLine,
-      ...nextYAxis
-    } = yAxis;
+    const { animation, ...nextTooltip } = tooltip;
 
     const realSeries = getSeries();
 
@@ -211,61 +195,25 @@ const StackBar = (props: {
         show: false,
       },
       legend: {
-        ...nextLegend,
+        ...legend,
         data: Object.keys(seriesKeys),
-        textStyle: {
-          ...legendTextStyle,
-          color: getRgbaString(legendTextStyle.color),
-        },
       },
       series: realSeries,
       xAxis: [
         {
-          ...nextXAxis,
+          ...xAxis,
           splitLine: {
             show: false,
           },
           data: xAxisKeys,
-          axisLabel: {
-            ...xAxisLabel,
-            color: getRgbaString(xAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...xNameTextStyle,
-            color: getRgbaString(xNameTextStyle.color),
-          },
         },
       ],
-      yAxis: [
-        {
-          ...nextYAxis,
-          splitLine: {
-            ...splitLine,
-            lineStyle: {
-              ...splitLine.lineStyle,
-              color: getRgbaString(splitLine.lineStyle.color),
-            },
-          },
-          axisLabel: {
-            ...yAxisLabel,
-            color: getRgbaString(yAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...yNameTextStyle,
-            color: getRgbaString(yNameTextStyle.color),
-          },
-        },
-      ],
+      yAxis: [yAxis],
       tooltip: {
         ...nextTooltip,
         trigger: 'axis',
         axisPointer: {
           type: 'shadow',
-        },
-        backgroundColor: getRgbaString(backgroundColor),
-        textStyle: {
-          ...tooltipTextStyle,
-          color: getRgbaString(tooltipTextStyle.color),
         },
       },
     });

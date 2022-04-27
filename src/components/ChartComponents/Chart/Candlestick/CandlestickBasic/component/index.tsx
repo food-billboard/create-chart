@@ -11,6 +11,7 @@ import {
   useAnimationChange,
   useCondition,
   useChartComponentTooltip,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -37,7 +38,8 @@ const CandlestickBasic = (props: {
     config: { options },
   } = value;
 
-  const { series, xAxis, yAxis, tooltip, animation, condition } = options;
+  const { series, xAxis, yAxis, tooltip, animation, condition } =
+    useChartPerConfig<TCandlestickBasicConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -158,22 +160,7 @@ const CandlestickBasic = (props: {
   };
 
   const setOption = () => {
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      animation,
-      ...nextTooltip
-    } = tooltip;
-    const {
-      axisLabel: xAxisLabel,
-      nameTextStyle: xNameTextStyle,
-      ...nextXAxis
-    } = xAxis;
-    const {
-      axisLabel: yAxisLabel,
-      nameTextStyle: yNameTextStyle,
-      ...nextYAxis
-    } = yAxis;
+    const { animation, ...nextTooltip } = tooltip;
     const series = getSeries();
 
     chartInstance.current?.setOption(
@@ -183,41 +170,12 @@ const CandlestickBasic = (props: {
         },
         series,
         xAxis: {
-          ...nextXAxis,
-          splitLine: {
-            show: false,
-          },
+          ...xAxis,
           data: xAxisKeys,
-          axisLabel: {
-            ...xAxisLabel,
-            color: getRgbaString(xAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...xNameTextStyle,
-            color: getRgbaString(xNameTextStyle.color),
-          },
         },
-        yAxis: {
-          ...nextYAxis,
-          splitLine: {
-            show: false,
-          },
-          axisLabel: {
-            ...yAxisLabel,
-            color: getRgbaString(yAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...yNameTextStyle,
-            color: getRgbaString(yNameTextStyle.color),
-          },
-        },
+        yAxis,
         tooltip: {
           ...nextTooltip,
-          backgroundColor: getRgbaString(backgroundColor),
-          textStyle: {
-            ...tooltipTextStyle,
-            color: getRgbaString(tooltipTextStyle.color),
-          },
           axisPointer: {
             type: 'cross',
           },

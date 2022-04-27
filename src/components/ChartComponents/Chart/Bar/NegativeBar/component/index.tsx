@@ -11,6 +11,7 @@ import {
   useAnimationChange,
   useCondition,
   useChartComponentTooltip,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -38,7 +39,7 @@ const NegativeBar = (props: {
   } = value;
 
   const { legend, series, xAxis, yAxis, tooltip, animation, condition } =
-    options;
+    useChartPerConfig<TNegativeBarConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -184,24 +185,7 @@ const NegativeBar = (props: {
   };
 
   const setOption = () => {
-    const { textStyle: legendTextStyle, ...nextLegend } = legend;
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      animation,
-      ...nextTooltip
-    } = tooltip;
-    const {
-      splitLine,
-      axisLabel: xAxisLabel,
-      nameTextStyle: xNameTextStyle,
-      ...nextXAxis
-    } = xAxis;
-    const {
-      axisLabel: yAxisLabel,
-      nameTextStyle: yNameTextStyle,
-      ...nextYAxis
-    } = yAxis;
+    const { animation, ...nextTooltip } = tooltip;
 
     const realSeries = getSeries();
 
@@ -210,56 +194,29 @@ const NegativeBar = (props: {
         show: false,
       },
       legend: {
-        ...nextLegend,
+        ...legend,
         data: seriesKeys,
-        textStyle: {
-          ...legendTextStyle,
-          color: getRgbaString(legendTextStyle.color),
-        },
       },
       series: realSeries,
       xAxis: [
         {
-          ...nextXAxis,
+          ...xAxis,
           type: 'value',
-          splitLine: {
-            ...splitLine,
-            lineStyle: {
-              ...splitLine.lineStyle,
-              color: getRgbaString(splitLine.lineStyle.color),
-            },
-          },
           axisLine: {
             show: true,
           },
           axisTick: {
             show: false,
           },
-          axisLabel: {
-            ...xAxisLabel,
-            color: getRgbaString(xAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...xNameTextStyle,
-            color: getRgbaString(xNameTextStyle.color),
-          },
         },
       ],
       yAxis: [
         {
-          ...nextYAxis,
+          ...yAxis,
           type: 'category',
           data: xAxisKeys,
           axisTick: {
             show: false,
-          },
-          axisLabel: {
-            ...yAxisLabel,
-            color: getRgbaString(yAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...yNameTextStyle,
-            color: getRgbaString(yNameTextStyle.color),
           },
         },
       ],
@@ -268,11 +225,6 @@ const NegativeBar = (props: {
         trigger: 'axis',
         axisPointer: {
           type: 'shadow',
-        },
-        backgroundColor: getRgbaString(backgroundColor),
-        textStyle: {
-          ...tooltipTextStyle,
-          color: getRgbaString(tooltipTextStyle.color),
         },
       },
     });

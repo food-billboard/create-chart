@@ -107,6 +107,13 @@ export const DEFAULT_LEGEND_CONFIG: ComponentData.ComponentLegend = {
   textStyle: DEFAULT_FONT_CONFIG,
   left: 'center',
   top: 'bottom',
+  align: 'auto',
+  itemStyle: {
+    itemWidth: 14,
+    itemHeight: 14,
+    icon: 'rect',
+    sizeIgnore: true,
+  },
 };
 
 // grid

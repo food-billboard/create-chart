@@ -11,6 +11,7 @@ import {
   useAnimationChange,
   useCondition,
   useChartComponentTooltip,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
@@ -39,7 +40,7 @@ const CachetBar = (props: {
   } = value;
 
   const { legend, series, xAxis, yAxis, tooltip, animation, condition } =
-    options;
+    useChartPerConfig<TCachetBarConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -158,23 +159,7 @@ const CachetBar = (props: {
   };
 
   const setOption = () => {
-    const { textStyle: legendTextStyle, ...nextLegend } = legend;
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      animation,
-      ...nextTooltip
-    } = tooltip;
-    const {
-      axisLabel: xAxisLabel,
-      nameTextStyle: xNameTextStyle,
-      ...nextXAxis
-    } = xAxis;
-    const {
-      axisLabel: yAxisLabel,
-      nameTextStyle: yNameTextStyle,
-      ...nextYAxis
-    } = yAxis;
+    const { animation, ...nextTooltip } = tooltip;
     const { barWidth, backgroundStyle } = series;
 
     const { series: realSeries, max } = getSeries();
@@ -184,12 +169,8 @@ const CachetBar = (props: {
         show: false,
       },
       legend: {
-        ...nextLegend,
+        ...legend,
         data: seriesKeys,
-        textStyle: {
-          ...legendTextStyle,
-          color: getRgbaString(legendTextStyle.color),
-        },
       },
       series: [
         {
@@ -230,20 +211,9 @@ const CachetBar = (props: {
           position: 'bottom',
         },
         {
-          ...nextXAxis,
+          ...xAxis,
           position: 'bottom',
-          splitLine: {
-            show: false,
-          },
           data: xAxisKeys,
-          axisLabel: {
-            ...xAxisLabel,
-            color: getRgbaString(xAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...xNameTextStyle,
-            color: getRgbaString(xNameTextStyle.color),
-          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -252,32 +222,12 @@ const CachetBar = (props: {
           },
         },
       ],
-      yAxis: [
-        {
-          ...nextYAxis,
-          axisLabel: {
-            ...yAxisLabel,
-            color: getRgbaString(yAxisLabel.color),
-          },
-          splitLine: {
-            show: false,
-          },
-          nameTextStyle: {
-            ...yNameTextStyle,
-            color: getRgbaString(yNameTextStyle.color),
-          },
-        },
-      ],
+      yAxis: [yAxis],
       tooltip: {
         ...nextTooltip,
         trigger: 'axis',
         axisPointer: {
           type: 'shadow',
-        },
-        backgroundColor: getRgbaString(backgroundColor),
-        textStyle: {
-          ...tooltipTextStyle,
-          color: getRgbaString(tooltipTextStyle.color),
         },
       },
     });

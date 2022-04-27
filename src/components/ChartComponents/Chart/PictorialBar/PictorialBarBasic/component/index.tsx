@@ -11,6 +11,7 @@ import {
   useAnimationChange,
   useCondition,
   useChartComponentTooltip,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -37,7 +38,8 @@ const PictorialBar = (props: {
     config: { options },
   } = value;
 
-  const { series, xAxis, yAxis, tooltip, animation, condition } = options;
+  const { series, xAxis, yAxis, tooltip, animation, condition } =
+    useChartPerConfig<TPictorialBarBasicConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -149,22 +151,7 @@ const PictorialBar = (props: {
   };
 
   const setOption = () => {
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      animation,
-      ...nextTooltip
-    } = tooltip;
-    const {
-      axisLabel: xAxisLabel,
-      nameTextStyle: xNameTextStyle,
-      ...nextXAxis
-    } = xAxis;
-    const {
-      axisLabel: yAxisLabel,
-      nameTextStyle: yNameTextStyle,
-      ...nextYAxis
-    } = yAxis;
+    const { animation, ...nextTooltip } = tooltip;
     const series = getSeries();
 
     chartInstance.current?.setOption({
@@ -172,50 +159,17 @@ const PictorialBar = (props: {
         show: false,
       },
       series,
-      xAxis: [
-        {
-          ...nextXAxis,
-          splitLine: {
-            show: false,
-          },
-          axisLabel: {
-            ...xAxisLabel,
-            color: getRgbaString(xAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...xNameTextStyle,
-            color: getRgbaString(xNameTextStyle.color),
-          },
-        },
-      ],
+      xAxis: [xAxis],
       yAxis: [
         {
-          ...nextYAxis,
+          ...yAxis,
           inverse: true,
           data: xAxisKeys,
-          splitLine: {
-            show: false,
-          },
           axisTick: { show: false },
           axisLine: { show: false },
-          axisLabel: {
-            ...yAxisLabel,
-            color: getRgbaString(yAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...yNameTextStyle,
-            color: getRgbaString(yNameTextStyle.color),
-          },
         },
       ],
-      tooltip: {
-        ...nextTooltip,
-        backgroundColor: getRgbaString(backgroundColor),
-        textStyle: {
-          ...tooltipTextStyle,
-          color: getRgbaString(tooltipTextStyle.color),
-        },
-      },
+      tooltip: nextTooltip,
     });
     screenType !== 'edit' &&
       animation.show &&

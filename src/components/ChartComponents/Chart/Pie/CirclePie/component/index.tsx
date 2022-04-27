@@ -11,6 +11,7 @@ import {
   useAnimationChange,
   useCondition,
   useChartComponentTooltip,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -37,7 +38,8 @@ const CirclePie = (props: {
     config: { options },
   } = value;
 
-  const { legend, series, tooltip, animation, condition, statistics } = options;
+  const { legend, series, tooltip, animation, condition, statistics } =
+    useChartPerConfig<TCirclePieConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -136,14 +138,8 @@ const CirclePie = (props: {
   };
 
   const setOption = () => {
-    const { textStyle: legendTextStyle, ...nextLegend } = legend;
     const { show, align, addonBefore, addonAfter, textStyle } = statistics;
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      animation,
-      ...nextTooltip
-    } = tooltip;
+    const { animation, ...nextTooltip } = tooltip;
 
     const chartSeries = getSeries();
 
@@ -153,13 +149,7 @@ const CirclePie = (props: {
           show: false,
         },
         legend: [
-          {
-            ...nextLegend,
-            textStyle: {
-              ...legendTextStyle,
-              color: getRgbaString(legendTextStyle.color),
-            },
-          },
+          legend,
           {
             show,
             selectedMode: false,
@@ -210,11 +200,6 @@ const CirclePie = (props: {
         tooltip: {
           ...nextTooltip,
           trigger: 'item',
-          backgroundColor: getRgbaString(backgroundColor),
-          textStyle: {
-            ...tooltipTextStyle,
-            color: getRgbaString(tooltipTextStyle.color),
-          },
         },
       },
       true,

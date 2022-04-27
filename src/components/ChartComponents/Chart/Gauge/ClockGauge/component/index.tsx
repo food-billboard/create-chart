@@ -6,6 +6,7 @@ import { useDeepUpdateEffect } from '@/hooks';
 import {
   useChartComponentResize,
   useComponentResize,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -30,7 +31,7 @@ const ClockGauge = (props: {
     config: { options },
   } = value;
 
-  const { series } = options;
+  const { series } = useChartPerConfig<TClockGaugeConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();

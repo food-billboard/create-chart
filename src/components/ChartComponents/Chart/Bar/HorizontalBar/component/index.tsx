@@ -11,6 +11,7 @@ import {
   useAnimationChange,
   useCondition,
   useChartComponentTooltip,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -38,7 +39,7 @@ const HorizontalBar = (props: {
   } = value;
 
   const { legend, series, xAxis, yAxis, tooltip, animation, condition } =
-    options;
+    useChartPerConfig<THorizontalBarConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -149,23 +150,7 @@ const HorizontalBar = (props: {
   };
 
   const setOption = () => {
-    const { textStyle: legendTextStyle, ...nextLegend } = legend;
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      animation,
-      ...nextTooltip
-    } = tooltip;
-    const {
-      axisLabel: xAxisLabel,
-      nameTextStyle: xNameTextStyle,
-      ...nextXAxis
-    } = xAxis;
-    const {
-      axisLabel: yAxisLabel,
-      nameTextStyle: yNameTextStyle,
-      ...nextYAxis
-    } = yAxis;
+    const { animation, ...nextTooltip } = tooltip;
 
     const realSeries = getSeries();
 
@@ -174,48 +159,25 @@ const HorizontalBar = (props: {
         show: false,
       },
       legend: {
-        ...nextLegend,
+        ...legend,
         data: seriesKeys,
-        textStyle: {
-          ...legendTextStyle,
-          color: getRgbaString(legendTextStyle.color),
-        },
       },
       series: realSeries,
       xAxis: [
         {
-          ...nextXAxis,
+          ...xAxis,
           type: 'value',
-          splitLine: {
-            show: false,
-          },
           axisLine: {
             show: true,
-          },
-          axisLabel: {
-            ...xAxisLabel,
-            color: getRgbaString(xAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...xNameTextStyle,
-            color: getRgbaString(xNameTextStyle.color),
           },
         },
       ],
       yAxis: [
         {
-          ...nextYAxis,
+          ...yAxis,
           type: 'category',
           inverse: true,
           data: xAxisKeys,
-          axisLabel: {
-            ...yAxisLabel,
-            color: getRgbaString(yAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...yNameTextStyle,
-            color: getRgbaString(yNameTextStyle.color),
-          },
         },
       ],
       tooltip: {
@@ -223,11 +185,6 @@ const HorizontalBar = (props: {
         trigger: 'axis',
         axisPointer: {
           type: 'shadow',
-        },
-        backgroundColor: getRgbaString(backgroundColor),
-        textStyle: {
-          ...tooltipTextStyle,
-          color: getRgbaString(tooltipTextStyle.color),
         },
       },
     });

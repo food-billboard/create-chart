@@ -11,6 +11,7 @@ import {
   useAnimationChange,
   useCondition,
   useChartComponentTooltip,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
@@ -38,7 +39,8 @@ const WaterFallBar = (props: {
     config: { options },
   } = value;
 
-  const { series, xAxis, yAxis, tooltip, animation, condition } = options;
+  const { series, xAxis, yAxis, tooltip, animation, condition } =
+    useChartPerConfig<TWaterFallBarConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -157,23 +159,7 @@ const WaterFallBar = (props: {
   };
 
   const setOption = () => {
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      animation,
-      ...nextTooltip
-    } = tooltip;
-    const {
-      axisLabel: xAxisLabel,
-      nameTextStyle: xNameTextStyle,
-      ...nextXAxis
-    } = xAxis;
-    const {
-      axisLabel: yAxisLabel,
-      nameTextStyle: yNameTextStyle,
-      splitLine,
-      ...nextYAxis
-    } = yAxis;
+    const { animation, ...nextTooltip } = tooltip;
 
     const realSeries = getSeries();
 
@@ -184,51 +170,16 @@ const WaterFallBar = (props: {
       series: realSeries,
       xAxis: [
         {
-          ...nextXAxis,
-          splitLine: {
-            show: false,
-          },
+          ...xAxis,
           data: xAxisKeys,
-          axisLabel: {
-            ...xAxisLabel,
-            color: getRgbaString(xAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...xNameTextStyle,
-            color: getRgbaString(xNameTextStyle.color),
-          },
         },
       ],
-      yAxis: [
-        {
-          ...nextYAxis,
-          splitLine: {
-            ...splitLine,
-            lineStyle: {
-              ...splitLine.lineStyle,
-              color: getRgbaString(splitLine.lineStyle.color),
-            },
-          },
-          axisLabel: {
-            ...yAxisLabel,
-            color: getRgbaString(yAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...yNameTextStyle,
-            color: getRgbaString(yNameTextStyle.color),
-          },
-        },
-      ],
+      yAxis: [yAxis],
       tooltip: {
         ...nextTooltip,
         trigger: 'axis',
         axisPointer: {
           type: 'shadow',
-        },
-        backgroundColor: getRgbaString(backgroundColor),
-        textStyle: {
-          ...tooltipTextStyle,
-          color: getRgbaString(tooltipTextStyle.color),
         },
       },
     });

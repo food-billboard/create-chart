@@ -11,6 +11,7 @@ import {
   useAnimationChange,
   useCondition,
   useChartComponentTooltip,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -37,7 +38,8 @@ const BubbleScatter = (props: {
     config: { options },
   } = value;
 
-  const { series, tooltip, animation, xAxis, condition, title } = options;
+  const { series, tooltip, animation, xAxis, condition, title } =
+    useChartPerConfig<TBubbleScatterConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -97,8 +99,7 @@ const BubbleScatter = (props: {
   const getSeries = () => {
     const { itemStyle, symbolSize } = series;
     const { animation: show, animationDuration, animationEasing } = animation;
-    const { axisLabel, axisTick, axisLine, nameTextStyle, ...nextXAxis } =
-      xAxis;
+    const { axisTick, axisLine, ...nextXAxis } = xAxis;
 
     const baseTitle: any = {
       show: title.show,
@@ -116,13 +117,6 @@ const BubbleScatter = (props: {
       bottom: '20%',
       type: 'category',
       boundaryGap: false,
-      axisLabel: {
-        ...axisLabel,
-        color: getRgbaString(axisLabel.color),
-      },
-      splitLine: {
-        show: false,
-      },
       data: xAxisKeys,
       axisTick: {
         ...axisTick,
@@ -137,10 +131,6 @@ const BubbleScatter = (props: {
           ...axisLine.lineStyle,
           color: getRgbaString(axisLine.lineStyle.color),
         },
-      },
-      nameTextStyle: {
-        ...nameTextStyle,
-        color: getRgbaString(nameTextStyle.color),
       },
     };
 
@@ -185,12 +175,7 @@ const BubbleScatter = (props: {
   };
 
   const setOption = () => {
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      animation,
-      ...nextTooltip
-    } = tooltip;
+    const { animation, ...nextTooltip } = tooltip;
 
     const { series, axis, title } = getSeries();
 
@@ -208,11 +193,6 @@ const BubbleScatter = (props: {
         tooltip: {
           ...nextTooltip,
           trigger: 'item',
-          backgroundColor: getRgbaString(backgroundColor),
-          textStyle: {
-            ...tooltipTextStyle,
-            color: getRgbaString(tooltipTextStyle.color),
-          },
         },
       },
       true,

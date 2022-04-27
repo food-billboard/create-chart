@@ -11,6 +11,7 @@ import {
   useAnimationChange,
   useCondition,
   useChartComponentTooltip,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
@@ -47,7 +48,7 @@ const LineBar = (props: {
     tooltip,
     animation,
     condition,
-  } = options;
+  } = useChartPerConfig<TLineBarConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -249,28 +250,7 @@ const LineBar = (props: {
   };
 
   const setOption = () => {
-    const { textStyle: legendTextStyle, ...nextLegend } = legend;
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      animation,
-      ...nextTooltip
-    } = tooltip;
-    const {
-      axisLabel: xAxisLabel,
-      nameTextStyle: xNameTextStyle,
-      ...nextXAxis
-    } = xAxis;
-    const {
-      axisLabel: yAxisLabel,
-      nameTextStyle: yNameTextStyle,
-      ...nextYAxis
-    } = yAxis;
-    const {
-      axisLabel: yAxis2Label,
-      nameTextStyle: y2NameTextStyle,
-      ...nextYAxis2
-    } = yAxis2;
+    const { animation, ...nextTooltip } = tooltip;
 
     const realSeries = getSeries();
 
@@ -279,17 +259,13 @@ const LineBar = (props: {
         show: false,
       },
       legend: {
-        ...nextLegend,
+        ...legend,
         data: seriesKeys,
-        textStyle: {
-          ...legendTextStyle,
-          color: getRgbaString(legendTextStyle.color),
-        },
       },
       series: realSeries,
       xAxis: [
         {
-          ...nextXAxis,
+          ...xAxis,
           splitLine: {
             show: false,
           },
@@ -303,24 +279,12 @@ const LineBar = (props: {
             show: false,
           },
           data: xAxisKeys,
-          axisLabel: {
-            ...xAxisLabel,
-            color: getRgbaString(xAxisLabel.color),
-          },
-          nameTextStyle: {
-            ...xNameTextStyle,
-            color: getRgbaString(xNameTextStyle.color),
-          },
         },
       ],
       yAxis: [
         {
-          ...nextYAxis,
+          ...yAxis,
           type: 'value',
-          axisLabel: {
-            ...yAxisLabel,
-            color: getRgbaString(yAxisLabel.color),
-          },
           axisLine: {
             show: false,
           },
@@ -331,19 +295,11 @@ const LineBar = (props: {
             show: false,
           },
           position: 'left',
-          nameTextStyle: {
-            ...yNameTextStyle,
-            color: getRgbaString(yNameTextStyle.color),
-          },
         },
         {
-          ...nextYAxis2,
+          ...yAxis2,
           type: 'value',
           position: 'right',
-          axisLabel: {
-            ...yAxis2Label,
-            color: getRgbaString(yAxis2Label.color),
-          },
           axisTick: {
             show: false,
           },
@@ -353,10 +309,6 @@ const LineBar = (props: {
           splitLine: {
             show: false,
           },
-          nameTextStyle: {
-            ...yNameTextStyle,
-            color: getRgbaString(y2NameTextStyle.color),
-          },
         },
       ],
       tooltip: {
@@ -364,11 +316,6 @@ const LineBar = (props: {
         trigger: 'axis',
         axisPointer: {
           type: 'shadow',
-        },
-        backgroundColor: getRgbaString(backgroundColor),
-        textStyle: {
-          ...tooltipTextStyle,
-          color: getRgbaString(tooltipTextStyle.color),
         },
       },
     });

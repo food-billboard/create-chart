@@ -10,6 +10,7 @@ import {
   useComponentResize,
   useAnimationChange,
   useCondition,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -36,7 +37,8 @@ const GaugeBasic = (props: {
     config: { options },
   } = value;
 
-  const { series, animation, condition } = options;
+  const { series, animation, condition } =
+    useChartPerConfig<TGaugeBasicConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();

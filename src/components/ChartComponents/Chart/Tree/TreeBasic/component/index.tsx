@@ -11,6 +11,7 @@ import {
   useAnimationChange,
   useCondition,
   useChartComponentTooltip,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
@@ -37,7 +38,8 @@ const TreeBasic = (props: {
     config: { options },
   } = value;
 
-  const { series, tooltip, animation, condition } = options;
+  const { series, tooltip, animation, condition } =
+    useChartPerConfig<TTreeBasicConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -200,12 +202,7 @@ const TreeBasic = (props: {
   };
 
   const setOption = () => {
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      animation,
-      ...nextTooltip
-    } = tooltip;
+    const { animation, ...nextTooltip } = tooltip;
 
     const series = getSeries();
 
@@ -218,11 +215,6 @@ const TreeBasic = (props: {
         tooltip: {
           ...nextTooltip,
           trigger: 'item',
-          backgroundColor: getRgbaString(backgroundColor),
-          textStyle: {
-            ...tooltipTextStyle,
-            color: getRgbaString(tooltipTextStyle.color),
-          },
         },
       },
       true,

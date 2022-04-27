@@ -9,6 +9,7 @@ import {
   useComponentResize,
   useAnimationChange,
   useCondition,
+  useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
@@ -37,7 +38,8 @@ const ProgressBar = (props: {
     config: { options },
   } = value;
 
-  const { series, yAxis, tooltip, animation, condition } = options;
+  const { series, yAxis, tooltip, animation, condition } =
+    useChartPerConfig<TProgressBarConfig>(options, ['yAxis']);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -125,11 +127,7 @@ const ProgressBar = (props: {
   };
 
   const setOption = () => {
-    const {
-      backgroundColor,
-      textStyle: tooltipTextStyle,
-      ...nextTooltip
-    } = tooltip;
+    const { ...nextTooltip } = tooltip;
     const { axisLabel: yAxisLabel } = yAxis;
 
     const realSeries = getSeries();
@@ -173,11 +171,6 @@ const ProgressBar = (props: {
       tooltip: {
         ...nextTooltip,
         trigger: 'axis',
-        backgroundColor: getRgbaString(backgroundColor),
-        textStyle: {
-          ...tooltipTextStyle,
-          color: getRgbaString(tooltipTextStyle.color),
-        },
       },
     });
   };
