@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Tabs } from 'antd';
+import { Switch, Tabs } from 'antd';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
@@ -29,7 +29,7 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: { margin, maxCount, columnCount },
+        options: { margin, maxCount, columnCount, preview },
       },
     } = value;
 
@@ -72,6 +72,18 @@ class Config extends Component<
                   }}
                 />
               </HalfForm>
+            </Item>
+            <Item label="预览">
+              <FullForm>
+                <Switch
+                  checked={preview.show}
+                  onChange={(value) => {
+                    this.onKeyChange('preview', {
+                      show: value,
+                    });
+                  }}
+                />
+              </FullForm>
             </Item>
           </ConfigList>
         </TabPane>

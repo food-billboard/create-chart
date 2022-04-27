@@ -36,6 +36,9 @@ export default () => {
         maxCount: 9,
         columnCount: 3,
         margin: [0, 0],
+        preview: {
+          show: true,
+        },
       },
     };
 

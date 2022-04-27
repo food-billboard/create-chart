@@ -8,7 +8,6 @@ const CHART_CONFIG_MAP = {
     const {
       backgroundColor,
       textStyle: tooltipTextStyle,
-      animation,
       ...nextTooltip
     } = value;
     return {

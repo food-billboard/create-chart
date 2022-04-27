@@ -29,7 +29,7 @@ const PictureWall = (props: {
     },
     id,
   } = value;
-  const { maxCount, margin, columnCount } = options;
+  const { maxCount, margin, columnCount, preview } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -82,6 +82,7 @@ const PictureWall = (props: {
   }, [finalValue, height, maxCount, columnCount, margin]);
 
   useEffect(() => {
+    if (!preview.show) return;
     const element = document.getElementById(chartId.current) as HTMLElement;
 
     if (!element) return;
@@ -97,7 +98,7 @@ const PictureWall = (props: {
     return () => {
       viewer?.destroy();
     };
-  }, []);
+  }, [preview]);
 
   return (
     <>
