@@ -380,6 +380,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: TextCarousel,
             description: '',
           },
+          {
+            type: 'LOOP_TEXT',
+            title: '轮播文字',
+            icon: TextCarousel,
+            description: '',
+          },
         ],
       },
     ],

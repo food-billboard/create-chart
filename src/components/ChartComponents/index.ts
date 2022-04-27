@@ -44,6 +44,7 @@ import TimeMachine from './Font/TimeMachine';
 import CountUpNumber from './Font/CountUpNumber';
 import FontCarousel from './Font/FontCarousel';
 import Text from './Font/Text';
+import LoopText from './Font/LoopText';
 // media
 import Image from './Media/Image';
 import Video from './Media/Video';
@@ -110,6 +111,7 @@ COMPONENT_MAP.set(ZebraBar.type, ZebraBar);
 COMPONENT_MAP.set(TreeBasic.type, TreeBasic);
 COMPONENT_MAP.set(WaterFallBar.type, WaterFallBar);
 COMPONENT_MAP.set(BubbleScatter.type, BubbleScatter);
+COMPONENT_MAP.set(LoopText.type, LoopText);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

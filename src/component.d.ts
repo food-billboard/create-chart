@@ -13,7 +13,7 @@ declare namespace ComponentData {
     map: string;
     description: string;
     id: string;
-    type: 'number' | 'string' | 'number[]' | 'array[]';
+    type: 'number' | 'string' | 'number[]' | 'array[]' | 'string[]';
   };
 
   // 组件数据过滤
@@ -121,7 +121,8 @@ declare namespace ComponentData {
     | 'ZEBRA_BAR'
     | 'TREE_BASIC'
     | 'WATER_FALL_BAR'
-    | 'BUBBLE_SCATTER';
+    | 'BUBBLE_SCATTER'
+    | 'LOOP_TEXT';
 
   // 基础组件属性
   export type TBaseConfig = {

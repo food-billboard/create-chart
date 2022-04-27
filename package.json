@@ -68,6 +68,7 @@
     "react-slick": "^0.28.1",
     "react-sortable-hoc": "^2.0.0",
     "react-syntax-highlighter": "^15.4.5",
+    "react-text-loop-next": "^0.0.3",
     "react-tiny-fab": "^4.0.4",
     "react-undo-component": "^1.0.1",
     "slick-carousel": "^1.8.1",
