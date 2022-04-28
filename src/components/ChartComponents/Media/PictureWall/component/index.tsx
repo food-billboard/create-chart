@@ -61,7 +61,6 @@ const PictureWall = (props: {
 
   const imageList = useMemo(() => {
     const rate = Math.ceil(maxCount / columnCount);
-    const unitHeight = Math.floor((height - margin[1] * (rate + 1)) / rate);
     return finalValue.slice(0, maxCount).map((item: any, index: number) => {
       return (
         <img
@@ -70,7 +69,7 @@ const PictureWall = (props: {
           style={{
             marginTop: margin[1],
             marginLeft: margin[0],
-            height: unitHeight,
+            height: `calc( (100% - ${margin[1] * (rate + 1)}px) / ${rate} )`,
             width: `calc( ( 100% - ${
               margin[0] * (columnCount + 1)
             }px ) / ${columnCount} )`,
@@ -93,7 +92,6 @@ const PictureWall = (props: {
         viewer.zoomTo(1);
       },
       url: 'src',
-      // title: [4, (image: any, imageData: any) => `${image.alt} (${imageData.naturalWidth} × ${imageData.naturalHeight})`],
     });
     return () => {
       viewer?.destroy();
