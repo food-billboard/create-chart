@@ -123,7 +123,8 @@ declare namespace ComponentData {
     | 'WATER_FALL_BAR'
     | 'BUBBLE_SCATTER'
     | 'LOOP_TEXT'
-    | 'PICTURE_WALL';
+    | 'PICTURE_WALL'
+    | 'STATE_CARD';
 
   // 基础组件属性
   export type TBaseConfig = {

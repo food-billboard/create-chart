@@ -38,6 +38,7 @@ import WordCloud from './Other/WordCloud';
 import Iframe from './Other/Iframe';
 import List from './Other/List';
 import WaterBall from './Other/WaterBall';
+import StateCard from './Other/StateCard';
 // font
 import Title from './Font/Title';
 import TimeMachine from './Font/TimeMachine';
@@ -114,6 +115,7 @@ COMPONENT_MAP.set(WaterFallBar.type, WaterFallBar);
 COMPONENT_MAP.set(BubbleScatter.type, BubbleScatter);
 COMPONENT_MAP.set(LoopText.type, LoopText);
 COMPONENT_MAP.set(PictureWall.type, PictureWall);
+COMPONENT_MAP.set(StateCard.type, StateCard);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

@@ -206,7 +206,7 @@ const ListBasic = (props: {
         </div>
       );
     },
-    [data, listItemHeight, index, onItemClick],
+    [data, listItemHeight, index, onItemClick, margin],
   );
 
   // 列表内容

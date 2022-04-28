@@ -479,6 +479,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: WaterBall,
             description: '',
           },
+          {
+            type: 'STATE_CARD',
+            title: '状态卡片',
+            icon: WaterBall,
+            description: '',
+          },
         ],
       },
     ],
