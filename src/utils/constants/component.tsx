@@ -386,6 +386,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: TextCarousel,
             description: '',
           },
+          {
+            type: 'ICON',
+            title: '图标',
+            icon: TextCarousel,
+            description: '',
+          },
         ],
       },
     ],

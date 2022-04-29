@@ -46,6 +46,7 @@ import CountUpNumber from './Font/CountUpNumber';
 import FontCarousel from './Font/FontCarousel';
 import Text from './Font/Text';
 import LoopText from './Font/LoopText';
+import Icon from './Font/Icon';
 // media
 import Image from './Media/Image';
 import Video from './Media/Video';
@@ -116,6 +117,7 @@ COMPONENT_MAP.set(BubbleScatter.type, BubbleScatter);
 COMPONENT_MAP.set(LoopText.type, LoopText);
 COMPONENT_MAP.set(PictureWall.type, PictureWall);
 COMPONENT_MAP.set(StateCard.type, StateCard);
+COMPONENT_MAP.set(Icon.type, Icon);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

@@ -11,11 +11,11 @@ import ComponentOptionConfig, {
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import IconTooltip from '@/components/IconTooltip';
-import SingleDefineSelect from '@/components/ChartComponents/Common/SingleDefineSelect';
 import Input from '@/components/ChartComponents/Common/Input';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
 import RadioGroup, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
@@ -75,43 +75,14 @@ class Config extends Component<
                 },
               }}
             >
-              <Item
-                label="图标名称"
-                placeholder={
-                  <IconTooltip
-                    title={
-                      <>
-                        可以参考
-                        <a target="_blank" href="https://icons.bootcss.com/">
-                          这里
-                        </a>
-                      </>
-                    }
-                  >
-                    <InfoCircleOutlined />
-                  </IconTooltip>
-                }
-              >
-                <FullForm>
-                  <SingleDefineSelect
-                    value={icon.value}
-                    onChange={(value) => {
-                      this.onKeyChange('icon', {
-                        value,
-                      });
-                    }}
-                    options={[
-                      'bi-alarm',
-                      'bi-arrow-through-heart',
-                      'bi-award',
-                      'bi-balloon',
-                      'bi-balloon-heart',
-                      'bi-bell',
-                      'bi-boombox',
-                    ].map((item) => ({ label: item, value: item }))}
-                  />
-                </FullForm>
-              </Item>
+              <BootstrapIconSelect
+                value={icon.value}
+                onChange={(value) => {
+                  this.onKeyChange('icon', {
+                    value,
+                  });
+                }}
+              />
               <Item label="定位">
                 <HalfForm label="位置">
                   <RadioGroup

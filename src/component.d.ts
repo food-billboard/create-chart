@@ -124,7 +124,8 @@ declare namespace ComponentData {
     | 'BUBBLE_SCATTER'
     | 'LOOP_TEXT'
     | 'PICTURE_WALL'
-    | 'STATE_CARD';
+    | 'STATE_CARD'
+    | 'ICON';
 
   // 基础组件属性
   export type TBaseConfig = {
