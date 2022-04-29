@@ -516,6 +516,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: SelectBasic,
             description: '',
           },
+          {
+            type: 'STEPS',
+            title: '步骤条',
+            icon: SelectBasic,
+            description: '',
+          },
         ],
       },
     ],

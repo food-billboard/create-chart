@@ -5,7 +5,7 @@ import Input from '@/components/ChartComponents/Common/Input';
 import MapTable from '../../../MapTable';
 
 function fieldTypeToString(
-  type: 'string' | 'number' | 'number[]' | 'array[]' | 'string[]',
+  type: 'string' | 'number' | 'number[]' | 'array[]' | 'string[]' | 'boolean',
 ) {
   if (type === 'string') {
     return '字符型字段';
@@ -15,6 +15,8 @@ function fieldTypeToString(
     return '数值型数组字段';
   } else if (type === 'string[]') {
     return '字符型数组字段';
+  } else if (type === 'boolean') {
+    return '布尔型字段';
   } else {
     return '数组子项';
   }

@@ -13,7 +13,7 @@ declare namespace ComponentData {
     map: string;
     description: string;
     id: string;
-    type: 'number' | 'string' | 'number[]' | 'array[]' | 'string[]';
+    type: 'number' | 'string' | 'number[]' | 'array[]' | 'string[]' | 'boolean';
   };
 
   // 组件数据过滤
@@ -125,7 +125,8 @@ declare namespace ComponentData {
     | 'LOOP_TEXT'
     | 'PICTURE_WALL'
     | 'STATE_CARD'
-    | 'ICON';
+    | 'ICON'
+    | 'STEPS';
 
   // 基础组件属性
   export type TBaseConfig = {

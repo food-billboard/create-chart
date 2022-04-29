@@ -1,0 +1,17 @@
+.component-interactive-steps {
+  align-items: center;
+  justify-content: center;
+  :global {
+    .rc-steps-item-title {
+      color: currentColor !important;
+      &::after {
+        background: currentColor !important;
+      }
+    }
+    .rc-steps-item-tail {
+      &::after {
+        background-color: currentColor !important;
+      }
+    }
+  }
+}

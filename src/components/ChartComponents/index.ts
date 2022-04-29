@@ -55,6 +55,7 @@ import PictureWall from './Media/PictureWall';
 // interactive
 import Tab from './Interactive/Tab';
 import Select from './Interactive/Select';
+import Steps from './Interactive/Steps';
 // map
 import ScatterMap from './Map/ScatterMap';
 
@@ -118,6 +119,7 @@ COMPONENT_MAP.set(LoopText.type, LoopText);
 COMPONENT_MAP.set(PictureWall.type, PictureWall);
 COMPONENT_MAP.set(StateCard.type, StateCard);
 COMPONENT_MAP.set(Icon.type, Icon);
+COMPONENT_MAP.set(Steps.type, Steps);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);
