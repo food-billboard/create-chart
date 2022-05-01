@@ -7135,16 +7135,7 @@ rc-slider@~9.7.4:
     rc-util "^5.16.1"
     shallowequal "^1.1.0"
 
-rc-steps@^4.1.4:
-  version "4.1.4"
-  resolved "https://registry.npmmirror.com/rc-steps/-/rc-steps-4.1.4.tgz#0ba82db202d59ca52d0693dc9880dd145b19dc23"
-  integrity sha512-qoCqKZWSpkh/b03ASGx1WhpKnuZcRWmvuW+ZUu4mvMdfvFzVxblTwUM+9aBd0mlEUFmt6GW8FXhMpHkK3Uzp3w==
-  dependencies:
-    "@babel/runtime" "^7.10.2"
-    classnames "^2.2.3"
-    rc-util "^5.0.1"
-
-rc-steps@~4.1.0:
+rc-steps@^4.1.4, rc-steps@~4.1.0:
   version "4.1.4"
   resolved "https://registry.npmmirror.com/rc-steps/download/rc-steps-4.1.4.tgz#0ba82db202d59ca52d0693dc9880dd145b19dc23"
   integrity sha1-C6gtsgLVnKUtBpPcmIDdFFsZ3CM=

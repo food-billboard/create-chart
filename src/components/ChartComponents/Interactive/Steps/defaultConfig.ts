@@ -5,24 +5,63 @@ import {
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
 } from '../../Common/Constants/defaultConfig';
-import { getName } from '@/utils/constants';
+import { getName, getText } from '@/utils/constants';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TStepsConfig } from './type';
 
-const DEFAULT_NAME_LABEL = getName(3);
+const DEFAULT_TITLE_LABEL = getName(3);
+const DEFAULT_SUB_TITLE_LABEL = getName(3);
+const DEFAULT_DESCRIPTION = getText(3, 20, 30);
+const DEFAULT_STATUS = ['finish', 'finish', 'wait'];
 
-const DEFAULT_VALUE = DEFAULT_NAME_LABEL.map((item) => ({
-  name: item,
-  value: item,
+const DEFAULT_VALUE = DEFAULT_TITLE_LABEL.map((item, index) => ({
+  title: item,
+  subTitle: DEFAULT_SUB_TITLE_LABEL[index],
+  description: DEFAULT_DESCRIPTION[index],
+  status: DEFAULT_STATUS[index],
 }));
+
+export const DEFAULT_ICON = {
+  wait: 'bi-emoji-neutral',
+  finish: 'bi-emoji-smile',
+  error: 'bi-emoji-frown',
+  process: 'bi-emoji-wink',
+};
 
 export default () => {
   const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TStepsConfig> = {
     interactive: {
       base: [
         {
-          type: 'select',
-          name: '当选中项时',
+          type: 'click',
+          name: '当点击项时',
+          show: false,
+          fields: [
+            {
+              key: 'title',
+              variable: '',
+              description: '标题',
+            },
+            {
+              key: 'subTitle',
+              variable: '',
+              description: '副标题',
+            },
+            {
+              key: 'description',
+              variable: '',
+              description: '描述',
+            },
+            {
+              key: 'status',
+              variable: '',
+              description: '状态',
+            },
+          ],
+        },
+        {
+          type: 'carousel',
+          name: '当轮播改变时',
           show: false,
           fields: [
             {
@@ -73,7 +112,7 @@ export default () => {
             field: 'description',
             map: '',
             description: '描述',
-            id: 'title',
+            id: 'description',
             type: 'string',
           },
           {
@@ -90,16 +129,18 @@ export default () => {
       click: {
         show: false,
       },
+      defaultCurrent: 1,
+      carousel: {
+        show: false,
+        loop: true,
+        speed: 5000,
+      },
       direction: 'horizontal',
       labelPlacement: 'vertical',
-      icons: [
-        {
-          wait: 'bi-emoji-neutral',
-          finish: 'bi-emoji-smile',
-          error: 'bi-emoji-frown',
-          progress: 'bi-emoji-wink',
-        },
-      ],
+      size: 96,
+      icons: new Array(3).fill({
+        ...DEFAULT_ICON,
+      }),
       style: {
         finish: {
           textStyle: {
@@ -110,7 +151,7 @@ export default () => {
             color: ThemeUtil.generateNextColor4CurrentTheme(0),
           },
         },
-        progress: {
+        process: {
           textStyle: {
             ...DEFAULT_FONT_CONFIG,
             color: ThemeUtil.generateNextColor4CurrentTheme(0),
@@ -168,8 +209,8 @@ export default () => {
       BASIC_DEFAULT_CONFIG,
       {
         style: {
-          width: 300,
-          height: 100,
+          width: 900,
+          height: 300,
         },
       },
       CUSTOM_CONFIG,

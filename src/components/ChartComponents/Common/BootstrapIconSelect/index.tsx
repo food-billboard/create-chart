@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import IconTooltip from '@/components/IconTooltip';
-import ConfigList from '../Structure/ConfigList';
+import ConfigList, { TConfigListItemProps } from '../Structure/ConfigList';
 import SingleDefineSelect from '../SingleDefineSelect';
 import FullForm from '../Structure/FullForm';
 
@@ -11,8 +11,9 @@ const BootstrapIconSelect = (props: {
   value: string;
   onChange?: (value: string) => void;
   level?: any;
+  itemProps?: TConfigListItemProps;
 }) => {
-  const { value, onChange, level } = props;
+  const { value, onChange, level, itemProps } = props;
 
   const options = useMemo(() => {
     return [
@@ -44,6 +45,7 @@ const BootstrapIconSelect = (props: {
         </IconTooltip>
       }
       labelProps={{ level }}
+      {...(itemProps || {})}
     >
       <FullForm>
         <SingleDefineSelect

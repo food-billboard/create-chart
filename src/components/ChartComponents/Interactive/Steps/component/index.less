@@ -1,6 +1,11 @@
 .component-interactive-steps {
   align-items: center;
   justify-content: center;
+  &-step-process {
+    animation: component_interactive_steps_process 1s linear infinite;
+    transform-origin: center center;
+    display: block;
+  }
   :global {
     .rc-steps-item-title {
       color: currentColor !important;
@@ -13,5 +18,13 @@
         background-color: currentColor !important;
       }
     }
+  }
+}
+@keyframes component_interactive_steps_process {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

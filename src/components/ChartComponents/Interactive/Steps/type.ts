@@ -2,13 +2,20 @@ export type TStepsConfig = {
   click: {
     show: boolean;
   };
+  defaultCurrent: number;
+  carousel: {
+    show: boolean;
+    loop: boolean;
+    speed: number;
+  };
+  size: number;
   direction: 'horizontal' | 'vertical';
   labelPlacement: 'horizontal' | 'vertical';
   icons: {
     wait: string;
     finish: string;
     error: string;
-    progress: string;
+    process: string;
   }[];
   style: {
     finish: {
@@ -17,7 +24,7 @@ export type TStepsConfig = {
         color: ComponentData.TColorConfig;
       };
     };
-    progress: {
+    process: {
       textStyle: ComponentData.TFontConfig;
       lineStyle: {
         color: ComponentData.TColorConfig;

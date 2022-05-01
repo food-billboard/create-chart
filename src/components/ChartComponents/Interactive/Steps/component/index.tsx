@@ -1,7 +1,13 @@
-import { CSSProperties, useMemo, useRef, useCallback, useState } from 'react';
+import {
+  CSSProperties,
+  useMemo,
+  useRef,
+  useCallback,
+  useState,
+  useEffect,
+} from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import RcSteps, { Step as RcStep } from 'rc-steps';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
@@ -9,7 +15,9 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
+import RcSteps, { Step as RcStep } from './components/RcSteps';
 import { TStepsConfig } from '../type';
+import { DEFAULT_ICON } from '../defaultConfig';
 import 'rc-steps/assets/index.css';
 import styles from './index.less';
 
@@ -24,18 +32,28 @@ const Steps = (props: {
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
+  const { screenType } = global;
 
   const {
     id,
     config: { options },
   } = value;
-  const {} = options;
+  const {
+    defaultCurrent,
+    carousel,
+    labelPlacement,
+    direction,
+    click,
+    icons,
+    style: stepStyle,
+    size,
+  } = options;
 
-  const [activeSelect, setActiveSelect] = useState<number>(0);
-  const [selectOpen, setSelectOpen] = useState<boolean>(false);
+  const [activeStep, setActiveStep] = useState<number>(defaultCurrent || 0);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
+  const timerRef = useRef<any>();
 
   const {
     request,
@@ -60,20 +78,153 @@ const Steps = (props: {
   }, [processedValue, componentFilterMap]);
 
   const onClick = useCallback(
-    (item: any) => {
-      syncInteractiveAction('select', item);
-      setActiveSelect(item);
+    (item: any, index: number) => {
+      syncInteractiveAction('click', item);
+      setActiveStep(index);
+      clearInterval(timerRef.current);
+      if (screenType === 'edit' && carousel.show) return;
+      timerRef.current = setInterval(carouselChange, carousel.speed);
     },
-    [syncInteractiveAction],
+    [syncInteractiveAction, screenType, carousel],
   );
+
+  const onChange = (change: (prev: number) => number) => {
+    new Promise((resolve) => {
+      setActiveStep((prev) => {
+        const newTarget = change(prev);
+        const target = finalValue[newTarget];
+        resolve(target);
+        return newTarget;
+      });
+    }).then((data) => {
+      syncInteractiveAction('carousel', data);
+    });
+  };
+
+  const carouselChange = () => {
+    onChange((prev) => {
+      let nextIndex = prev + 1;
+      if (finalValue.length === nextIndex) {
+        if (!carousel.loop) {
+          clearInterval(timerRef.current);
+          nextIndex = prev;
+        } else {
+          nextIndex = 0;
+        }
+      }
+      return nextIndex;
+    });
+  };
+
+  const isInteractive = useMemo(() => {
+    return click.show || carousel.show;
+  }, [click, carousel]);
+
+  const stepList = useMemo(() => {
+    return finalValue.map((item: any, index: number) => {
+      const { status, title, subTitle, description } = item;
+      const { textStyle, lineStyle } =
+        (stepStyle as any)[status] || stepStyle.wait;
+      const icon: any = icons[index] || DEFAULT_ICON;
+      let statusTextStyle = {
+        ...textStyle,
+        color: getRgbaString(textStyle.color),
+      };
+      let statusColor = getRgbaString(lineStyle.color);
+      let statusIcon = icon[status];
+      let statusKey = status;
+
+      if (isInteractive) {
+        if (activeStep > index) {
+          statusKey = 'finish';
+        } else if (activeStep == index) {
+          statusKey = status === 'wait' ? 'finish' : status;
+        } else {
+          statusKey = 'wait';
+        }
+        statusTextStyle = {
+          ...(stepStyle as any)[statusKey].textStyle,
+          color: getRgbaString((stepStyle as any)[statusKey].textStyle.color),
+        };
+        statusColor = getRgbaString(
+          (stepStyle as any)[statusKey].lineStyle.color,
+        );
+        statusIcon = icon[statusKey];
+      }
+
+      return (
+        <RcStep
+          key={index}
+          size={size}
+          direction={direction}
+          style={{
+            color: statusColor,
+            cursor: isInteractive ? 'pointer' : 'default',
+          }}
+          title={<span style={statusTextStyle}>{title}</span>}
+          subTitle={<span style={statusTextStyle}>{subTitle}</span>}
+          description={<span style={statusTextStyle}>{description}</span>}
+          icon={
+            <i
+              style={{
+                fontSize: size + 'px',
+                color: statusTextStyle.color,
+              }}
+              className={classnames(statusIcon, 'bi', {
+                [styles['component-interactive-steps-step-process']]:
+                  statusKey === 'process',
+              })}
+            ></i>
+          }
+          status={isInteractive ? undefined : status || 'wait'}
+          onClick={click.show ? onClick.bind(null, item, index) : undefined}
+        />
+      );
+    });
+  }, [
+    finalValue,
+    stepStyle,
+    icons,
+    click,
+    size,
+    direction,
+    isInteractive,
+    activeStep,
+  ]);
 
   const componentClassName = useMemo(() => {
     return classnames(
       'dis-flex',
       className,
-      styles['component-interactive-select'],
+      styles['component-interactive-steps'],
     );
   }, [className]);
+
+  const outerStatus = useMemo(() => {
+    if (!isInteractive) return undefined;
+    const status = finalValue[activeStep]?.status;
+    return status === 'error' ? 'error' : 'finish';
+  }, [isInteractive, finalValue, activeStep]);
+
+  useEffect(() => {
+    setActiveStep(defaultCurrent);
+  }, [defaultCurrent]);
+
+  useEffect(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = false;
+    }
+    if (screenType === 'edit' || !carousel.show) return;
+    timerRef.current = setInterval(carouselChange, carousel.speed);
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = false;
+      }
+    };
+  }, [screenType, carousel]);
 
   return (
     <>
@@ -88,53 +239,13 @@ const Steps = (props: {
         )}
         id={chartId.current}
       >
-        <RcSteps onChange={onClick} current={3}>
-          <RcStep
-            title="2222"
-            subTitle="3333"
-            description="44444"
-            icon="normal"
-            icons={{
-              error: 'error',
-              finish: 'finish',
-            }}
-            status="error"
-            tailContent="shab22222i"
-          />
-          <RcStep
-            title="2222"
-            subTitle="3333"
-            description="44444"
-            icon="normal"
-            icons={{
-              error: 'error',
-              finish: 'finish',
-            }}
-            status="finish"
-            tailContent="shab22222i"
-          />
-          <RcStep
-            title="2222"
-            subTitle="3333"
-            description="44444"
-            icon="normal"
-            icons={{
-              error: 'error',
-              finish: 'finish',
-            }}
-            status="process"
-          />
-          <RcStep
-            title="2222"
-            subTitle="3333"
-            description="44444"
-            icon="normal"
-            icons={{
-              error: 'error',
-              finish: 'finish',
-            }}
-            status="wait"
-          />
+        <RcSteps
+          current={activeStep}
+          labelPlacement={labelPlacement}
+          direction={direction}
+          status={outerStatus}
+        >
+          {stepList}
         </RcSteps>
       </div>
       <FetchFragment

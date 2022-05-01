@@ -1,15 +1,18 @@
 import { Component } from 'react';
-import { Tabs } from 'antd';
+import { Switch, Tabs } from 'antd';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import { CompatColorSelect } from '@/components/ColorSelect';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
+import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
+import OrientSelect from '@/components/ChartComponents/Common/OrientSelect';
+import { DEFAULT_ICON } from '../defaultConfig';
 import { TStepsConfig } from '../type';
 
 const { TabPane } = Tabs;
@@ -32,288 +35,344 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: {},
+        options: {
+          click,
+          defaultCurrent,
+          carousel,
+          direction,
+          labelPlacement,
+          icons,
+          style,
+          size,
+        },
       },
     } = value;
 
     return (
       <ComponentOptionConfig>
-        {/* <TabPane key={'1'} tab={<Tab>选择框</Tab>}>
+        <TabPane key={'1'} tab={<Tab>基础</Tab>}>
+          <ConfigList level={1}>
+            <Item label="图标大小">
+              <FullForm>
+                <InputNumber
+                  value={size}
+                  onChange={this.onKeyChange.bind(this, 'size')}
+                />
+              </FullForm>
+            </Item>
+            <Item label="步骤排列">
+              <FullForm>
+                <OrientSelect
+                  value={direction}
+                  onChange={this.onKeyChange.bind(this, 'direction')}
+                />
+              </FullForm>
+            </Item>
+            {direction === 'horizontal' && (
+              <Item label="文字排列">
+                <FullForm>
+                  <OrientSelect
+                    value={labelPlacement}
+                    onChange={this.onKeyChange.bind(this, 'labelPlacement')}
+                  />
+                </FullForm>
+              </Item>
+            )}
+          </ConfigList>
+        </TabPane>
+        <TabPane key={'2'} tab={<Tab>步骤图标</Tab>}>
+          <ConfigList level={1}>
+            <MultipleSeriesConfig
+              counter={icons.length}
+              renderContent={(index) => {
+                const target = icons[index];
+                return (
+                  <>
+                    <BootstrapIconSelect
+                      itemProps={{
+                        label: '等待图标',
+                      }}
+                      value={target.wait}
+                      onChange={(value) => {
+                        const newIcons = [...icons];
+                        newIcons.splice(index, 1, {
+                          ...target,
+                          wait: value,
+                        });
+                        this.onKeyChange('icons', newIcons);
+                      }}
+                    />
+                    <BootstrapIconSelect
+                      itemProps={{
+                        label: '执行图标',
+                      }}
+                      value={target.process}
+                      onChange={(value) => {
+                        const newIcons = [...icons];
+                        newIcons.splice(index, 1, {
+                          ...target,
+                          process: value,
+                        });
+                        this.onKeyChange('icons', newIcons);
+                      }}
+                    />
+                    <BootstrapIconSelect
+                      itemProps={{
+                        label: '完成图标',
+                      }}
+                      value={target.finish}
+                      onChange={(value) => {
+                        const newIcons = [...icons];
+                        newIcons.splice(index, 1, {
+                          ...target,
+                          finish: value,
+                        });
+                        this.onKeyChange('icons', newIcons);
+                      }}
+                    />
+                    <BootstrapIconSelect
+                      itemProps={{
+                        label: '错误图标',
+                      }}
+                      value={target.error}
+                      onChange={(value) => {
+                        const newIcons = [...icons];
+                        newIcons.splice(index, 1, {
+                          ...target,
+                          error: value,
+                        });
+                        this.onKeyChange('icons', newIcons);
+                      }}
+                    />
+                  </>
+                );
+              }}
+              onAdd={() => {
+                this.onKeyChange('icons', [
+                  ...icons,
+                  {
+                    ...DEFAULT_ICON,
+                  },
+                ]);
+              }}
+              onRemove={(index) => {
+                const newIcons = [...icons];
+
+                newIcons.splice(index, 1);
+
+                this.onKeyChange('icons', newIcons);
+              }}
+              max={8}
+            />
+          </ConfigList>
+        </TabPane>
+        <TabPane key={'3'} tab={<Tab>状态样式</Tab>}>
           <ConfigList level={1}>
             <Collapse
               child={{
-                key: 'active',
-                header: '内容',
+                header: '等待',
+                key: 'wait',
               }}
             >
               <Collapse
                 child={{
-                  key: 'active',
-                  header: '文本',
+                  header: '文字',
+                  key: 'textStyle',
                 }}
               >
                 <FontConfigList
-                  value={active.textStyle}
+                  value={style.wait.textStyle}
                   onChange={(value) => {
-                    this.onKeyChange('active', {
-                      textStyle: value,
+                    this.onKeyChange('style', {
+                      wait: {
+                        textStyle: value,
+                      },
                     });
                   }}
                 />
               </Collapse>
-              <Item label="背景颜色">
-                <FullForm>
-                  <CompatColorSelect
-                    value={active.backgroundColor}
-                    onChange={(value) => {
-                      this.onKeyChange('active', {
-                        backgroundColor: value,
-                      });
-                    }}
-                  />
-                </FullForm>
-              </Item>
               <LineStyleGroupConfig
-                value={active.border}
-                onChange={(value) => {
-                  this.onKeyChange('active', {
-                    border: value,
-                  });
-                }}
+                value={style.wait.lineStyle}
+                ignore={['type', 'width']}
+                onChange={(value) =>
+                  this.onKeyChange('style', {
+                    wait: {
+                      lineStyle: value,
+                    },
+                  })
+                }
               />
             </Collapse>
             <Collapse
               child={{
-                key: 'placeholder',
-                header: '占位符',
+                header: '执行中',
+                key: 'process',
               }}
             >
               <Collapse
                 child={{
-                  header: '文本',
+                  header: '文字',
                   key: 'textStyle',
-                }}
-                parent={{
-                  defaultActiveKey: ['textStyle'],
                 }}
               >
                 <FontConfigList
-                  value={placeholder.textStyle}
+                  value={style.process.textStyle}
                   onChange={(value) => {
-                    this.onKeyChange('placeholder', {
-                      textStyle: value,
+                    this.onKeyChange('style', {
+                      process: {
+                        textStyle: value,
+                      },
                     });
                   }}
                 />
               </Collapse>
+              <LineStyleGroupConfig
+                value={style.process.lineStyle}
+                ignore={['type', 'width']}
+                onChange={(value) =>
+                  this.onKeyChange('style', {
+                    process: {
+                      lineStyle: value,
+                    },
+                  })
+                }
+              />
             </Collapse>
             <Collapse
               child={{
-                header: '选择箭头',
-                key: 'indicator',
+                header: '完成',
+                key: 'finish',
               }}
             >
-              <Item label="大小">
-                <FullForm>
-                  <InputNumber
-                    value={indicator.fontSize}
-                    onChange={(value) => {
-                      this.onKeyChange('indicator', {
-                        fontSize: value,
-                      });
-                    }}
-                    className="w-100"
-                  />
-                </FullForm>
-              </Item>
-              <Item label="颜色">
-                <FullForm>
-                  <CompatColorSelect
-                    value={indicator.color}
-                    onChange={(value) => {
-                      this.onKeyChange('indicator', {
-                        color: value,
-                      });
-                    }}
-                  />
-                </FullForm>
-              </Item>
+              <Collapse
+                child={{
+                  header: '文字',
+                  key: 'textStyle',
+                }}
+              >
+                <FontConfigList
+                  value={style.finish.textStyle}
+                  onChange={(value) => {
+                    this.onKeyChange('style', {
+                      finish: {
+                        textStyle: value,
+                      },
+                    });
+                  }}
+                />
+              </Collapse>
+              <LineStyleGroupConfig
+                value={style.finish.lineStyle}
+                ignore={['type', 'width']}
+                onChange={(value) =>
+                  this.onKeyChange('style', {
+                    finish: {
+                      lineStyle: value,
+                    },
+                  })
+                }
+              />
+            </Collapse>
+            <Collapse
+              child={{
+                header: '错误',
+                key: 'error',
+              }}
+            >
+              <Collapse
+                child={{
+                  header: '文字',
+                  key: 'textStyle',
+                }}
+              >
+                <FontConfigList
+                  value={style.error.textStyle}
+                  onChange={(value) => {
+                    this.onKeyChange('style', {
+                      error: {
+                        textStyle: value,
+                      },
+                    });
+                  }}
+                />
+              </Collapse>
+              <LineStyleGroupConfig
+                value={style.error.lineStyle}
+                ignore={['type', 'width']}
+                onChange={(value) =>
+                  this.onKeyChange('style', {
+                    error: {
+                      lineStyle: value,
+                    },
+                  })
+                }
+              />
             </Collapse>
           </ConfigList>
         </TabPane>
-        <TabPane key={'2'} tab={<Tab>基础项样式</Tab>}>
+        <TabPane key={'4'} tab={<Tab>交互</Tab>}>
           <ConfigList level={1}>
-            <Collapse
-              child={{
-                header: '选中样式',
-                key: 'activeSelect',
-              }}
-            >
-              <Collapse
-                child={{
-                  header: '文本',
-                  key: 'textStyle',
-                }}
-              >
-                <FontConfigList
-                  value={activeSelect.textStyle}
+            <Item label="可点击">
+              <FullForm>
+                <Switch
+                  checked={click.show}
                   onChange={(value) => {
-                    this.onKeyChange('activeSelect', {
-                      textStyle: value,
+                    this.onKeyChange('click', {
+                      show: value,
                     });
                   }}
                 />
-              </Collapse>
-              <Item label="背景颜色">
-                <FullForm>
-                  <CompatColorSelect
-                    value={activeSelect.backgroundColor}
-                    onChange={(value) => {
-                      this.onKeyChange('activeSelect', {
-                        backgroundColor: value,
-                      });
-                    }}
-                  />
-                </FullForm>
-              </Item>
-            </Collapse>
-            <Collapse
-              child={{
-                header: '基础样式',
-                key: 'base',
-              }}
-            >
-              <Collapse
-                child={{
-                  header: '文本',
-                  key: 'textStyle',
-                }}
-              >
-                <FontConfigList
-                  value={base.textStyle}
-                  onChange={(value) => {
-                    this.onKeyChange('base', {
-                      textStyle: value,
-                    });
-                  }}
-                />
-                <Item label="背景颜色">
-                  <FullForm>
-                    <CompatColorSelect
-                      value={base.backgroundColor}
-                      onChange={(value) => {
-                        this.onKeyChange('base', {
-                          backgroundColor: value,
-                        });
-                      }}
-                    />
-                  </FullForm>
-                </Item>
-              </Collapse>
-            </Collapse>
-          </ConfigList>
-        </TabPane>
-        <TabPane key={'3'} tab={<Tab>移入项样式</Tab>}>
-          <ConfigList level={1}>
-            <Collapse
-              child={{
-                header: '基础移入样式',
-                key: 'baseHover',
-              }}
-            >
-              <Collapse
-                child={{
-                  header: '文本',
-                  key: 'textStyle',
-                }}
-              >
-                <FontConfigList
-                  value={baseHover.textStyle}
-                  onChange={(value) => {
-                    this.onKeyChange('baseHover', {
-                      textStyle: value,
-                    });
-                  }}
-                />
-              </Collapse>
-              <Item label="背景颜色">
-                <FullForm>
-                  <CompatColorSelect
-                    value={baseHover.backgroundColor}
-                    onChange={(value) => {
-                      this.onKeyChange('baseHover', {
-                        backgroundColor: value,
-                      });
-                    }}
-                  />
-                </FullForm>
-              </Item>
-            </Collapse>
-            <Collapse
-              child={{
-                header: '选中移入样式',
-                key: 'activeHover',
-              }}
-            >
-              <Collapse
-                child={{
-                  header: '文本',
-                  key: 'textStyle',
-                }}
-              >
-                <FontConfigList
-                  value={activeHover.textStyle}
-                  onChange={(value) => {
-                    this.onKeyChange('activeHover', {
-                      textStyle: value,
-                    });
-                  }}
-                />
-              </Collapse>
-              <Item label="背景颜色">
-                <FullForm>
-                  <CompatColorSelect
-                    value={activeHover.backgroundColor}
-                    onChange={(value) => {
-                      this.onKeyChange('activeHover', {
-                        backgroundColor: value,
-                      });
-                    }}
-                  />
-                </FullForm>
-              </Item>
-            </Collapse>
-          </ConfigList>
-        </TabPane>
-        <TabPane key={'4'} tab={<Tab>下拉列表</Tab>}>
-          <ConfigList level={1}>
-            <Item label="高度">
+              </FullForm>
+            </Item>
+            <Item label="初始索引">
               <FullForm>
                 <InputNumber
-                  value={menu.height}
-                  onChange={(value) => {
-                    this.onKeyChange('menu', {
-                      height: value,
-                    });
-                  }}
-                  className="w-100"
+                  min={0}
+                  value={defaultCurrent}
+                  onChange={this.onKeyChange.bind(this, 'defaultCurrent')}
                 />
               </FullForm>
             </Item>
-            <Item label="背景颜色">
-              <FullForm>
-                <CompatColorSelect
-                  value={menu.backgroundColor}
-                  onChange={(value) => {
-                    this.onKeyChange('menu', {
-                      backgroundColor: value,
-                    });
-                  }}
-                />
-              </FullForm>
-            </Item>
+            <Collapse
+              child={{
+                header: '轮播',
+                key: 'carousel',
+                visibleRender: true,
+                value: carousel.show,
+                onChange: (value) => {
+                  this.onKeyChange('carousel', {
+                    show: value,
+                  });
+                },
+              }}
+            >
+              <Item label="循环">
+                <FullForm>
+                  <Switch
+                    checked={carousel.loop}
+                    onChange={(value) => {
+                      this.onKeyChange('carousel', {
+                        loop: value,
+                      });
+                    }}
+                  />
+                </FullForm>
+              </Item>
+              <Item label="速度">
+                <FullForm>
+                  <InputNumber
+                    value={carousel.speed}
+                    onChange={(value) => {
+                      this.onKeyChange('carousel', {
+                        speed: value,
+                      });
+                    }}
+                  />
+                </FullForm>
+              </Item>
+            </Collapse>
           </ConfigList>
-        </TabPane> */}
+        </TabPane>
       </ComponentOptionConfig>
     );
   }
