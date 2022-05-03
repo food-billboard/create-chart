@@ -34,3 +34,11 @@ export function radialGradientColor(value: ComponentData.TGradientColorConfig) {
     commonStepColor,
   );
 }
+
+export function boxShadow(value: ComponentData.TBoxShadow) {
+  if (!value) return false;
+  const { hShadow, vShadow, blur, spread, color } = value;
+  return `${hShadow}px ${vShadow}px ${blur}px ${spread}px ${getRgbaString(
+    color,
+  )}`;
+}

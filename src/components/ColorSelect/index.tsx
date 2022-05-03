@@ -84,7 +84,7 @@ const ColorSelect = (props: TColorSelectProps) => {
 const WrapperColorSelect: typeof ColorSelect & {
   getOpacity: (color: ComponentData.TColorConfig) => number;
   getRgbaString: (color: ComponentData.TColorConfig) => string;
-  getHexString: (color: ComponentData.TColorConfig) => string;
+  getHexString: (color: ComponentData.TColorConfig, prefix?: boolean) => string;
 } = ColorSelect as any;
 
 WrapperColorSelect.getRgbaString = getRgbaString;
@@ -93,8 +93,14 @@ WrapperColorSelect.getHexString = getHexString;
 
 WrapperColorSelect.getOpacity = getOpacity;
 
-export const CompatColorSelect = (props: TColorSelectProps) => {
-  const { value: propsValue, defaultValue: propsDefaultValue } = props;
+export const CompatColorSelect = (
+  props: TColorSelectProps & { ignoreAlpha?: boolean },
+) => {
+  const {
+    value: propsValue,
+    defaultValue: propsDefaultValue,
+    ignoreAlpha = false,
+  } = props;
   const [value, onChange] = useControllableValue<ComponentData.TColorConfig>(
     props,
     {
@@ -175,14 +181,16 @@ export const CompatColorSelect = (props: TColorSelectProps) => {
         onChange={onInputColorChange}
         onBlur={onInputBlur}
       />
-      <InputNumber
-        max={100}
-        min={0}
-        step={1}
-        value={opacity * 100}
-        onChange={onOpacityChange}
-        onBlur={onOpacityBlur}
-      />
+      {!ignoreAlpha && (
+        <InputNumber
+          max={100}
+          min={0}
+          step={1}
+          value={opacity * 100}
+          onChange={onOpacityChange}
+          onBlur={onOpacityBlur}
+        />
+      )}
     </div>
   );
 };

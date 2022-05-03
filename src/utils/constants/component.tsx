@@ -522,6 +522,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: SelectBasic,
             description: '',
           },
+          {
+            type: 'SWITCH',
+            title: '开关',
+            icon: SelectBasic,
+            description: '',
+          },
         ],
       },
     ],

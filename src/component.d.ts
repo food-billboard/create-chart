@@ -126,7 +126,8 @@ declare namespace ComponentData {
     | 'PICTURE_WALL'
     | 'STATE_CARD'
     | 'ICON'
-    | 'STEPS';
+    | 'STEPS'
+    | 'SWITCH';
 
   // 基础组件属性
   export type TBaseConfig = {
@@ -343,6 +344,15 @@ declare namespace ComponentData {
     fontWeight: number | string;
     fontFamily: string;
     color: TColorConfig;
+  };
+
+  // 阴影
+  export type TBoxShadow = {
+    hShadow: number;
+    vShadow: number;
+    blur: number;
+    spread: number;
+    color: ComponentData.TColorConfig;
   };
 
   // 图例
