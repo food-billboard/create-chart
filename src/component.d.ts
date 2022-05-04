@@ -127,7 +127,8 @@ declare namespace ComponentData {
     | 'STATE_CARD'
     | 'ICON'
     | 'STEPS'
-    | 'SWITCH';
+    | 'SWITCH'
+    | 'INPUT';
 
   // 基础组件属性
   export type TBaseConfig = {

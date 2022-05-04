@@ -1,0 +1,26 @@
+.component-interactive-input {
+  &-main {
+    outline-style: none;
+    padding: 6px;
+    flex: 1;
+    &:focus {
+      outline: 0;
+    }
+    &::input-placeholder {
+      color: var(--placeholder-color);
+    }
+    &::-webkit-input-placeholder {
+      color: var(--placeholder-color);
+    }
+  }
+  &-button {
+    height: 100%;
+    &-content {
+      width: 100%;
+      height: 100%;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+    }
+  }
+}

@@ -57,6 +57,7 @@ import Tab from './Interactive/Tab';
 import Select from './Interactive/Select';
 import Steps from './Interactive/Steps';
 import Switch from './Interactive/Switch';
+import Input from './Interactive/Input';
 // map
 import ScatterMap from './Map/ScatterMap';
 
@@ -122,6 +123,7 @@ COMPONENT_MAP.set(StateCard.type, StateCard);
 COMPONENT_MAP.set(Icon.type, Icon);
 COMPONENT_MAP.set(Steps.type, Steps);
 COMPONENT_MAP.set(Switch.type, Switch);
+COMPONENT_MAP.set(Input.type, Input);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

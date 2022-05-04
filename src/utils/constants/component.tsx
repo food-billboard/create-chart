@@ -528,6 +528,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: SelectBasic,
             description: '',
           },
+          {
+            type: 'INPUT',
+            title: '输入框',
+            icon: SelectBasic,
+            description: '',
+          },
         ],
       },
     ],
