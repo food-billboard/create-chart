@@ -59,6 +59,7 @@ import Steps from './Interactive/Steps';
 import Switch from './Interactive/Switch';
 import Input from './Interactive/Input';
 import Checkbox from './Interactive/Checkbox';
+import Radio from './Interactive/Radio';
 // map
 import ScatterMap from './Map/ScatterMap';
 
@@ -126,6 +127,7 @@ COMPONENT_MAP.set(Steps.type, Steps);
 COMPONENT_MAP.set(Switch.type, Switch);
 COMPONENT_MAP.set(Input.type, Input);
 COMPONENT_MAP.set(Checkbox.type, Checkbox);
+COMPONENT_MAP.set(Radio.type, Radio);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import { Tabs } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
@@ -11,16 +10,15 @@ import { CompatColorSelect } from '@/components/ColorSelect';
 import Input from '@/components/ChartComponents/Common/Input';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import IconTooltip from '@/components/IconTooltip';
-import { TCheckboxConfig } from '../type';
+import { TRadioConfig } from '../type';
 
 const { TabPane } = Tabs;
 const { Item } = ConfigList;
 
 class Config extends Component<
-  ComponentData.ComponentConfigProps<TCheckboxConfig>
+  ComponentData.ComponentConfigProps<TRadioConfig>
 > {
-  onKeyChange = (key: keyof TCheckboxConfig, value: any) => {
+  onKeyChange = (key: keyof TRadioConfig, value: any) => {
     this.props.onChange({
       config: {
         options: {
@@ -36,7 +34,6 @@ class Config extends Component<
       config: {
         options: {
           borderColor,
-          borderRadius,
           backgroundColor,
           textStyle,
           defaultChecked,
@@ -64,14 +61,6 @@ class Config extends Component<
                 <CompatColorSelect
                   value={backgroundColor}
                   onChange={this.onKeyChange.bind(this, 'backgroundColor')}
-                />
-              </FullForm>
-            </Item>
-            <Item label="圆角">
-              <FullForm>
-                <InputNumber
-                  value={borderRadius}
-                  onChange={this.onKeyChange.bind(this, 'borderRadius')}
                 />
               </FullForm>
             </Item>
@@ -141,14 +130,7 @@ class Config extends Component<
         </TabPane>
         <TabPane key={'2'} tab={<Tab>交互</Tab>}>
           <ConfigList level={1}>
-            <Item
-              label="默认选中"
-              placeholder={
-                <IconTooltip title={`多个值使用','分隔`}>
-                  <InfoCircleOutlined />
-                </IconTooltip>
-              }
-            >
+            <Item label="默认选中">
               <FullForm>
                 <Input
                   value={defaultChecked}

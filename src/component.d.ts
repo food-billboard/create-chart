@@ -129,7 +129,8 @@ declare namespace ComponentData {
     | 'STEPS'
     | 'SWITCH'
     | 'INPUT'
-    | 'CHECKBOX';
+    | 'CHECKBOX'
+    | 'RADIO';
 
   // 基础组件属性
   export type TBaseConfig = {

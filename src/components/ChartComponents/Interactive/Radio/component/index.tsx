@@ -1,6 +1,6 @@
 import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react';
 import { uniqueId, merge } from 'lodash';
-import { Checkbox as AntCheckbox } from 'antd';
+import { Radio as AntRadio } from 'antd';
 import classnames from 'classnames';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
@@ -9,17 +9,17 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { TCheckboxConfig } from '../type';
+import { TRadioConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
 
-const CHART_ID = 'CHECKBOX';
+const CHART_ID = 'RADIO';
 
-const Checkbox = (props: {
+const Radio = (props: {
   className?: string;
   style?: CSSProperties;
-  value: ComponentData.TComponentData<TCheckboxConfig>;
+  value: ComponentData.TComponentData<TRadioConfig>;
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
@@ -32,7 +32,6 @@ const Checkbox = (props: {
     borderColor,
     backgroundColor,
     textStyle,
-    borderRadius,
     size,
     defaultChecked,
     active,
@@ -41,9 +40,7 @@ const Checkbox = (props: {
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
-  const [checkedValue, setCheckedValue] = useState<string[]>(() => {
-    return defaultChecked.split(',').map((item) => item.trim());
-  });
+  const [checkedValue, setCheckedValue] = useState<string>(defaultChecked);
 
   const {
     request,
@@ -53,8 +50,7 @@ const Checkbox = (props: {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
-    onCondition,
-  } = useComponent<TCheckboxConfig>(
+  } = useComponent<TRadioConfig>(
     {
       component: value,
       global,
@@ -69,22 +65,23 @@ const Checkbox = (props: {
   }, [processedValue, componentFilterMap]);
 
   const onChange = (value: any) => {
+    const target = value.target.value;
     syncInteractiveAction('change', {
-      value: value,
+      value: target,
     });
-    setCheckedValue(value);
+    setCheckedValue(target);
   };
 
   const componentClassName = useMemo(() => {
     return classnames(
       'dis-flex',
       className,
-      styles['component-interactive-checkbox'],
+      styles['component-interactive-radio'],
     );
   }, [className]);
 
   useEffect(() => {
-    setCheckedValue(defaultChecked.split(',').map((item) => item.trim()));
+    setCheckedValue(defaultChecked);
   }, [defaultChecked]);
 
   return (
@@ -100,32 +97,30 @@ const Checkbox = (props: {
         )}
         id={chartId.current}
       >
-        <AntCheckbox.Group
+        <AntRadio.Group
           value={checkedValue}
           onChange={onChange}
-          className={styles['component-interactive-checkbox-main']}
+          className={styles['component-interactive-radio-main']}
           style={{
             // @ts-ignore
-            '--component-checkbox-size': size + 'px',
-            '--component-checkbox-border-color': getRgbaString(borderColor),
-            '--component-checkbox-background-color':
+            '--component-radio-size': size + 'px',
+            '--component-radio-border-color': getRgbaString(borderColor),
+            '--component-radio-background-color':
               getRgbaString(backgroundColor),
-            '--component-checkbox-border-radius': borderRadius + 'px',
-            '--component-checkbox-checked-border-color': getRgbaString(
+            '--component-radio-checked-border-color': getRgbaString(
               active.borderColor,
             ),
-            '--component-checkbox-checked-background-color': getRgbaString(
+            '--component-radio-checked-background-color': getRgbaString(
               active.backgroundColor,
             ),
-            '--component-checkbox-checked-color': getRgbaString(check.color),
-            '--component-checkbox-checked-width': (size / 14) * 5 + 'px',
-            '--component-checkbox-checked-height': (size / 14) * 8 + 'px',
+            '--component-radio-checked-color': getRgbaString(check.color),
+            '--component-radio-checked-margin': -(size / 2) + 'px',
           }}
         >
           {(finalValue || []).map((item: any) => {
             const { name, value } = item;
             return (
-              <AntCheckbox
+              <AntRadio
                 key={value}
                 value={value}
                 style={{
@@ -134,10 +129,10 @@ const Checkbox = (props: {
                 }}
               >
                 {name}
-              </AntCheckbox>
+              </AntRadio>
             );
           })}
-        </AntCheckbox.Group>
+        </AntRadio.Group>
       </div>
       <FetchFragment
         id={id}
@@ -153,10 +148,10 @@ const Checkbox = (props: {
   );
 };
 
-const WrapperCheckbox: typeof Checkbox & {
+const WrapperRadio: typeof Radio & {
   id: ComponentData.TComponentSelfType;
-} = Checkbox as any;
+} = Radio as any;
 
-WrapperCheckbox.id = CHART_ID;
+WrapperRadio.id = CHART_ID;
 
-export default WrapperCheckbox;
+export default WrapperRadio;

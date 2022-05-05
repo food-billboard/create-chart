@@ -540,6 +540,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: SelectBasic,
             description: '',
           },
+          {
+            type: 'RADIO',
+            title: '单选',
+            icon: SelectBasic,
+            description: '',
+          },
         ],
       },
     ],
