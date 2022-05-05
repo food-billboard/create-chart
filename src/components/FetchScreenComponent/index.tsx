@@ -28,8 +28,15 @@ const FetchScreenComponent = forwardRef<
 
   const isModel = useIsModelHash();
 
-  const fetchData = async () => {
-    const { width, height } = get(DEFAULT_SCREEN_DATA, 'config.style');
+  const fetchData = async (isReload: boolean = false) => {
+    let width;
+    let height;
+    const { width: defaultWidth, height: defaultHeight } = get(
+      DEFAULT_SCREEN_DATA,
+      'config.style',
+    );
+    width = defaultWidth;
+    height = defaultHeight;
     const {
       location: { query },
     } = history;
@@ -51,12 +58,17 @@ const FetchScreenComponent = forwardRef<
           ...nextData,
           _id: id,
         });
+        width = nextData.config.style.width;
+        height = nextData.config.style.height;
         ThemeUtil.initCurrentThemeData(nextData.config.attr.theme);
         const mergedComponentList = mergeComponentDefaultConfig(componentsList);
         setComponentAll(mergedComponentList);
       } catch (err) {
         message.info('数据获取失败');
       }
+    } else if (isReload) {
+      setComponentAll([]);
+      setScreen(DEFAULT_SCREEN_DATA);
     }
 
     const result = autoFitScale(width, height);
@@ -67,7 +79,7 @@ const FetchScreenComponent = forwardRef<
     ref,
     () => {
       return {
-        reload: fetchData,
+        reload: fetchData.bind(null, true),
       };
     },
     [],

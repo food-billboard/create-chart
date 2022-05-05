@@ -148,10 +148,6 @@ const GlobalLayout = (props: any) => {
       />
     );
 
-  useHashChangeReload();
-
-  useEffect(() => {}, []);
-
   // 分享页不用管登录
   if (pathname === '/share') return children;
   if (
