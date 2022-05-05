@@ -18,7 +18,6 @@ import FilterDataUtil from '@/utils/Assist/FilterData';
 import RcSteps, { Step as RcStep } from './components/RcSteps';
 import { TStepsConfig } from '../type';
 import { DEFAULT_ICON } from '../defaultConfig';
-import 'rc-steps/assets/index.css';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;

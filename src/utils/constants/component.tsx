@@ -534,6 +534,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: SelectBasic,
             description: '',
           },
+          {
+            type: 'CHECKBOX',
+            title: '多选',
+            icon: SelectBasic,
+            description: '',
+          },
         ],
       },
     ],

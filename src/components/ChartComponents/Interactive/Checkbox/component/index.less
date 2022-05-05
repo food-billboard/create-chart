@@ -1,0 +1,33 @@
+.component-interactive-checkbox {
+  :global {
+    .ant-checkbox-checked:after {
+      animation: none;
+    }
+    .ant-checkbox-inner {
+      width: var(--component-checkbox-size);
+      height: var(--component-checkbox-size);
+      border-color: var(--component-checkbox-border-color);
+      background-color: var(--component-checkbox-background-color);
+      border-radius: var(--component-checkbox-border-radius);
+    }
+    .ant-checkbox-inner::after {
+      width: var(--component-checkbox-checked-width);
+      height: var(--component-checkbox-checked-height);
+    }
+    .ant-checkbox-wrapper:hover .ant-checkbox-inner,
+    .ant-checkbox:hover .ant-checkbox-inner,
+    .ant-checkbox-input:focus + .ant-checkbox-inner {
+      border-color: var(--component-checkbox-checked-border-color);
+    }
+    & .ant-checkbox-checked .ant-checkbox-inner {
+      border-color: var(--component-checkbox-checked-border-color);
+      background-color: var(--component-checkbox-checked-background-color);
+    }
+    .ant-checkbox-checked .ant-checkbox-inner::after {
+      border-color: var(--component-checkbox-checked-color);
+    }
+    .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+      margin-left: 0;
+    }
+  }
+}

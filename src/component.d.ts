@@ -128,7 +128,8 @@ declare namespace ComponentData {
     | 'ICON'
     | 'STEPS'
     | 'SWITCH'
-    | 'INPUT';
+    | 'INPUT'
+    | 'CHECKBOX';
 
   // 基础组件属性
   export type TBaseConfig = {
