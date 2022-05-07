@@ -110,6 +110,7 @@ const ProgressBar = (props: {
         color: getRgbaString(label.color),
         position: 'right',
       },
+      yAxisIndex: 0,
       type: 'bar',
       itemStyle: {
         ...itemStyle,
@@ -131,6 +132,8 @@ const ProgressBar = (props: {
     const { axisLabel: yAxisLabel } = yAxis;
 
     const realSeries = getSeries();
+
+    console.log(yAxisLabel, processedValue, 2222);
 
     chartInstance.current?.setOption({
       series: realSeries,
@@ -165,6 +168,9 @@ const ProgressBar = (props: {
           axisTick: 'none',
           axisLine: 'none',
           show: true,
+          axisLabel: {
+            show: false,
+          },
           data: [processedValue.value],
         },
       ],
