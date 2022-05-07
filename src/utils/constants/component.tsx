@@ -139,6 +139,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: WaterFallBar,
             description: '',
           },
+          {
+            type: 'POLAR_BAR',
+            title: '极坐标柱形图',
+            icon: WaterFallBar,
+            description: '',
+          },
         ],
       },
       {

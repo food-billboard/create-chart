@@ -130,7 +130,8 @@ declare namespace ComponentData {
     | 'SWITCH'
     | 'INPUT'
     | 'CHECKBOX'
-    | 'RADIO';
+    | 'RADIO'
+    | 'POLAR_BAR';
 
   // 基础组件属性
   export type TBaseConfig = {
