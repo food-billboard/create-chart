@@ -54,6 +54,17 @@ import PercentPie from '../../../public/components/percent-pie.png';
 import WaterBall from '../../../public/components/water-ball.png';
 import ScatterMap from '../../../public/components/scatter-map.png';
 import BubbleScatter from '../../../public/components/bubble-scatter.png';
+import PolarBar from '../../../public/components/polar-bar.png';
+import StepLine from '../../../public/components/step-line.png';
+import CarouselText from '../../../public/components/carousel-text.jpg';
+import Icon from '../../../public/components/icon.jpg';
+import Steps from '../../../public/components/steps.jpg';
+import Switch from '../../../public/components/switch.jpg';
+import Input from '../../../public/components/input.jpg';
+import Checkbox from '../../../public/components/checkbox.jpg';
+import Radio from '../../../public/components/radio.jpg';
+import StateCard from '../../../public/components/state-card.jpg';
+import PictureWall from '../../../public/components/picture-wall.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -142,7 +153,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'POLAR_BAR',
             title: '极坐标柱形图',
-            icon: WaterFallBar,
+            icon: PolarBar,
             description: '',
           },
         ],
@@ -172,7 +183,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'STEP_LINE',
             title: '阶梯图',
-            icon: RadialStackLine,
+            icon: StepLine,
             description: '',
           },
         ],
@@ -395,13 +406,13 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'LOOP_TEXT',
             title: '轮播文字',
-            icon: TextCarousel,
+            icon: CarouselText,
             description: '',
           },
           {
             type: 'ICON',
             title: '图标',
-            icon: TextCarousel,
+            icon: Icon,
             description: '',
           },
         ],
@@ -438,7 +449,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'PICTURE_WALL',
             title: '照片墙',
-            icon: CarouselBasic,
+            icon: PictureWall,
             description: '',
           },
         ],
@@ -500,7 +511,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'STATE_CARD',
             title: '状态卡片',
-            icon: WaterBall,
+            icon: StateCard,
             description: '',
           },
         ],
@@ -531,31 +542,31 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'STEPS',
             title: '步骤条',
-            icon: SelectBasic,
+            icon: Steps,
             description: '',
           },
           {
             type: 'SWITCH',
             title: '开关',
-            icon: SelectBasic,
+            icon: Switch,
             description: '',
           },
           {
             type: 'INPUT',
             title: '输入框',
-            icon: SelectBasic,
+            icon: Input,
             description: '',
           },
           {
             type: 'CHECKBOX',
             title: '多选',
-            icon: SelectBasic,
+            icon: Checkbox,
             description: '',
           },
           {
             type: 'RADIO',
             title: '单选',
-            icon: SelectBasic,
+            icon: Radio,
             description: '',
           },
         ],

@@ -137,7 +137,7 @@ export default () => {
       },
       direction: 'horizontal',
       labelPlacement: 'vertical',
-      size: 96,
+      size: 48,
       icons: new Array(3).fill({
         ...DEFAULT_ICON,
       }),
@@ -209,7 +209,7 @@ export default () => {
       BASIC_DEFAULT_CONFIG,
       {
         style: {
-          width: 900,
+          width: 600,
           height: 300,
         },
       },

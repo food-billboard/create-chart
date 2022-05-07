@@ -133,8 +133,6 @@ const ProgressBar = (props: {
 
     const realSeries = getSeries();
 
-    console.log(yAxisLabel, processedValue, 2222);
-
     chartInstance.current?.setOption({
       series: realSeries,
       xAxis: {
