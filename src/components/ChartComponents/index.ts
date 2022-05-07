@@ -34,6 +34,7 @@ import TreeBasic from './Chart/Tree/TreeBasic';
 import WaterFallBar from './Chart/Bar/WaterFallBar';
 import BubbleScatter from './Chart/Scatter/BubbleScatter';
 import PolarBar from './Chart/Bar/PolarBar';
+import StepLine from './Chart/Line/StepLine';
 // other
 import WordCloud from './Other/WordCloud';
 import Iframe from './Other/Iframe';
@@ -130,6 +131,7 @@ COMPONENT_MAP.set(Input.type, Input);
 COMPONENT_MAP.set(Checkbox.type, Checkbox);
 COMPONENT_MAP.set(Radio.type, Radio);
 COMPONENT_MAP.set(PolarBar.type, PolarBar);
+COMPONENT_MAP.set(StepLine.type, StepLine);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

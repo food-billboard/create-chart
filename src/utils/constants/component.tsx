@@ -169,6 +169,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: RadialStackLine,
             description: '',
           },
+          {
+            type: 'STEP_LINE',
+            title: '阶梯图',
+            icon: RadialStackLine,
+            description: '',
+          },
         ],
       },
       {
