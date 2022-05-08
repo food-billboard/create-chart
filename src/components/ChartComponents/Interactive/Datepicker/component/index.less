@@ -1,0 +1,147 @@
+.component-interactive-date-picker {
+  &-date,
+  &-year,
+  &-week,
+  &-month,
+  &-time {
+    :global {
+      // 头上的按钮
+      .ant-picker-header button {
+        color: var(--component-interactive-date-picker-arrow-color);
+      }
+      .ant-picker-header > button:hover {
+        color: var(--component-interactive-date-picker-arrow-color-active);
+      }
+
+      // 头部文字样式
+      .ant-picker-header-view .ant-picker-year-btn,
+      .ant-picker-header-view .ant-picker-month-btn {
+        font-size: var(--component-interactive-date-picker-header-font-size);
+        font-weight: var(
+          --component-interactive-date-picker-header-font-weight
+        );
+        font-family: var(
+          --component-interactive-date-picker-header-font-family
+        );
+        color: var(--component-interactive-date-picker-header-color);
+      }
+
+      // 上一下一月样式
+      .ant-picker-cell {
+        color: var(--component-interactive-date-picker-date-next-prev-color);
+        font-size: var(
+          --component-interactive-date-picker-date-next-prev-font-size
+        );
+        font-weight: var(
+          --component-interactive-date-picker-date-next-prev-font-weight
+        );
+        font-family: var(
+          --component-interactive-date-picker-date-next-prev-font-family
+        );
+        &:not(.ant-picker-cell-in-view) .ant-picker-cell-inner {
+          background-color: var(
+            --component-interactive-date-picker-date-next-prev-background-color
+          );
+        }
+      }
+
+      // 周 样式
+      .ant-picker-content th {
+        font-size: var(--component-interactive-date-picker-week-font-size);
+        font-weight: var(--component-interactive-date-picker-week-font-weight);
+        font-family: var(--component-interactive-date-picker-week-font-family);
+        color: var(--component-interactive-date-picker-week-color);
+      }
+
+      // 当前月样式
+      .ant-picker-cell-in-view {
+        font-size: var(--component-interactive-date-picker-date-font-size);
+        font-weight: var(--component-interactive-date-picker-date-font-weight);
+        font-family: var(--component-interactive-date-picker-date-font-family);
+        color: var(--component-interactive-date-picker-date-color);
+        &:hover {
+          font-size: var(
+            --component-interactive-date-picker-date-hover-font-size
+          );
+          font-weight: var(
+            --component-interactive-date-picker-date-hover-font-weight
+          );
+          font-family: var(
+            --component-interactive-date-picker-date-hover-font-family
+          );
+          color: var(--component-interactive-date-picker-date-hover-color);
+        }
+      }
+      .ant-picker-cell:hover:not(.ant-picker-cell-in-view)
+        .ant-picker-cell-inner,
+      .ant-picker-cell:hover:not(.ant-picker-cell-selected):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end):not(.ant-picker-cell-range-hover-start):not(.ant-picker-cell-range-hover-end)
+        .ant-picker-cell-inner {
+        background-color: var(
+          --component-interactive-date-picker-date-hover-background-color
+        );
+      }
+
+      // 选中样式
+      .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner,
+      .ant-picker-cell-in-view.ant-picker-cell-range-start
+        .ant-picker-cell-inner,
+      .ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner,
+      .ant-picker-time-panel-column
+        > li.ant-picker-time-panel-cell-selected
+        .ant-picker-time-panel-cell-inner,
+      .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner,
+      .ant-picker-cell-in-view.ant-picker-cell-range-start
+        .ant-picker-cell-inner,
+      .ant-picker-cell-in-view.ant-picker-cell-range-end
+        .ant-picker-cell-inner {
+        font-size: var(
+          --component-interactive-date-picker-date-active-font-size
+        );
+        font-weight: var(
+          --component-interactive-date-picker-date-active-font-weight
+        );
+        font-family: var(
+          --component-interactive-date-picker-date-active-font-family
+        );
+        color: var(--component-interactive-date-picker-date-active-color);
+        background-color: var(
+          --component-interactive-date-picker-date-active-background-color
+        );
+        border-radius: var(
+          --component-interactive-date-picker-date-border-radius
+        );
+      }
+
+      // 当日样式
+      .ant-picker-cell-in-view.ant-picker-cell-today
+        .ant-picker-cell-inner::before {
+        border-color: var(
+          --component-interactive-date-picker-date-active-background-color
+        );
+        border-radius: var(
+          --component-interactive-date-picker-date-border-radius
+        );
+      }
+
+      // 底部上边框
+      .ant-picker-panel .ant-picker-footer {
+        border-top-color: var(
+          --component-interactive-date-picker-date-active-background-color
+        );
+      }
+
+      // 顶部下边框
+      .ant-picker-header {
+        border-bottom-color: var(
+          --component-interactive-date-picker-date-active-background-color
+        );
+      }
+
+      .ant-picker-today-btn {
+        color: var(
+          --component-interactive-date-picker-date-active-background-color
+        );
+      }
+    }
+  }
+}

@@ -132,7 +132,8 @@ declare namespace ComponentData {
     | 'CHECKBOX'
     | 'RADIO'
     | 'POLAR_BAR'
-    | 'STEP_LINE';
+    | 'STEP_LINE'
+    | 'DATE_PICKER';
 
   // 基础组件属性
   export type TBaseConfig = {

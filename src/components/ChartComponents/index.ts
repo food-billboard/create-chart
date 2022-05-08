@@ -62,6 +62,7 @@ import Switch from './Interactive/Switch';
 import Input from './Interactive/Input';
 import Checkbox from './Interactive/Checkbox';
 import Radio from './Interactive/Radio';
+import Datepicker from './Interactive/Datepicker';
 // map
 import ScatterMap from './Map/ScatterMap';
 
@@ -132,6 +133,7 @@ COMPONENT_MAP.set(Checkbox.type, Checkbox);
 COMPONENT_MAP.set(Radio.type, Radio);
 COMPONENT_MAP.set(PolarBar.type, PolarBar);
 COMPONENT_MAP.set(StepLine.type, StepLine);
+COMPONENT_MAP.set(Datepicker.type, Datepicker);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

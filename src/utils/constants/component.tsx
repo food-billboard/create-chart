@@ -569,6 +569,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: Radio,
             description: '',
           },
+          {
+            type: 'DATE_PICKER',
+            title: '日期选择',
+            icon: SelectBasic,
+            description: '',
+          },
         ],
       },
     ],
