@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback, useState, useEffect } from 'react';
 import { Row, Collapse } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
@@ -12,16 +12,15 @@ const { Panel } = Collapse;
 const ComponentList = (props: { type: string }) => {
   const { type } = props;
 
+  const [activeKey, setActiveKey] = useState<string[]>([]);
+
   const target = useMemo(() => {
     return COMPONENT_TYPE_LIST.find((item) => item.type === type);
   }, [type]);
 
-  const defaultActiveKey = useMemo(() => {
-    if (!target?.children.length) return [];
-    const firstList = target.children.find((item) => !!item.children.length);
-    if (!firstList) return [];
-    return [firstList.type];
-  }, [target]);
+  const onCollapseChange = useCallback((key) => {
+    setActiveKey(key);
+  }, []);
 
   const list = useMemo(() => {
     if (!target?.children.length) return null;
@@ -55,6 +54,15 @@ const ComponentList = (props: { type: string }) => {
       />
     );
 
+  useEffect(() => {
+    if (target?.children.length) {
+      const firstList = target.children.find((item) => !!item.children.length);
+      if (firstList) {
+        setActiveKey([firstList.type]);
+      }
+    }
+  }, [target]);
+
   return (
     <Collapse
       className={classnames(
@@ -65,10 +73,11 @@ const ComponentList = (props: { type: string }) => {
       )}
       bordered={false}
       ghost
-      defaultActiveKey={defaultActiveKey}
+      activeKey={activeKey}
       expandIcon={({ isActive }) => (
         <CaretRightOutlined rotate={isActive ? 90 : 0} />
       )}
+      onChange={onCollapseChange}
     >
       {list}
     </Collapse>
