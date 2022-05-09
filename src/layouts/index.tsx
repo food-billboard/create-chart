@@ -7,7 +7,6 @@ import { history } from 'umi';
 import Loading from '@/components/PageLoading';
 import IntroductionButton from '@/components/IntroductionButton';
 import { dispatchLogin } from '@/utils/request';
-import { useHashChangeReload } from '@/hooks';
 import Avatar from './components/Avatar';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';

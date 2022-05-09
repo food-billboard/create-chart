@@ -68,7 +68,15 @@ export const useHashChangeReload = (reload: any) => {
       isModel: isModel(prevHash),
       id: getId(prevHash),
     };
+
     if (
+      (!prevHashData.isDesigner &&
+        prevHashData.isModel &&
+        hashData.isDesigner) ||
+      (!prevHashData.isModel && prevHashData.isDesigner && hashData.isModel)
+    ) {
+      window.location.reload();
+    } else if (
       hashData.id !== prevHashData.id ||
       hashData.isModel !== prevHashData.isModel ||
       hashData.isDesigner !== prevHashData.isDesigner ||
