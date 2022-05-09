@@ -3,9 +3,10 @@
 ## 介绍  
 这是一个基于[echarts](https://github.com/apache/echarts)数据可视化大屏项目📈。
 
-### 当前版本(1.1)😈    
+### 当前版本(1.2)😈    
 
 ### changelog  
+[1.2](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.2.md)  
 [1.1](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.1.md)  
 [1.0](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.0.md)  
 
@@ -17,6 +18,9 @@
 - `/designer` 设计器  
 - `/preview` 预览  
 - `/share` 分享  
+- `/model` 模板列表  
+- `/model-designer` 模板设计器   
+- `/model-preview` 模板预览  
 ### 功能 
 其中的一些细节功能可以自行操作了解   
 #### 图层  
