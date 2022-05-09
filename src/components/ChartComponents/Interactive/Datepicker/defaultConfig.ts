@@ -47,6 +47,22 @@ export default () => {
             color: ThemeUtil.generateNextColor4CurrentTheme(0),
           },
         },
+        input: {
+          textStyle: {
+            ...DEFAULT_FONT_CONFIG,
+          },
+          activeBorderColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+          borderColor: {
+            r: 67,
+            g: 67,
+            b: 67,
+          },
+        },
+        confirmBtn: {
+          textStyle: {
+            ...DEFAULT_FONT_CONFIG,
+          },
+        },
         yearAndMonthAndTime: {
           textStyle: {
             ...DEFAULT_FONT_CONFIG,

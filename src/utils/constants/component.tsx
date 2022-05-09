@@ -65,6 +65,7 @@ import Checkbox from '../../../public/components/checkbox.jpg';
 import Radio from '../../../public/components/radio.jpg';
 import StateCard from '../../../public/components/state-card.jpg';
 import PictureWall from '../../../public/components/picture-wall.jpg';
+import DatePicker from '../../../public/components/date-picker.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -572,7 +573,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'DATE_PICKER',
             title: '日期选择',
-            icon: SelectBasic,
+            icon: DatePicker,
             description: '',
           },
         ],

@@ -4,11 +4,19 @@ export type TDatePickerConfig = {
   format: string;
   filterDate: string;
   filterTime: string;
+  input: {
+    borderColor: ComponentData.TColorConfig;
+    activeBorderColor: ComponentData.TColorConfig;
+    textStyle: ComponentData.TFontConfig;
+  };
   arrow: {
     color: ComponentData.TColorConfig;
     active: {
       color: ComponentData.TColorConfig;
     };
+  };
+  confirmBtn: {
+    textStyle: ComponentData.TFontConfig;
   };
   yearAndMonthAndTime: {
     textStyle: ComponentData.TFontConfig;

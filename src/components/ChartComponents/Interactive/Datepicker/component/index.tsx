@@ -4,7 +4,6 @@ import {
   useRef,
   useState,
   useEffect,
-  Children,
   cloneElement,
 } from 'react';
 import { uniqueId, merge } from 'lodash';
@@ -45,6 +44,8 @@ const DatePicker = (props: {
     yearAndMonthAndTime,
     week,
     dateAndTime,
+    confirmBtn,
+    input,
   } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -80,13 +81,21 @@ const DatePicker = (props: {
   const DatePickerDom = useMemo(() => {
     const prefix = 'component-interactive-date-picker';
     const className = `${prefix}-${mode}`;
-    console.log(filterDateFunction());
     const commonProps: any = {
       className: classnames('w-100'),
+      style: {
+        [`--${prefix}-input-font-size`]: input.textStyle.fontSize + 'px',
+        [`--${prefix}-input-font-weight`]: input.textStyle.fontWeight,
+        [`--${prefix}-input-font-family`]: input.textStyle.fontFamily,
+        [`--${prefix}-input-color`]: getRgbaString(input.textStyle.color),
+        [`--${prefix}-input-border-color`]: getRgbaString(input.borderColor),
+        [`--${prefix}-input-active-border-color`]: getRgbaString(
+          input.activeBorderColor,
+        ),
+      },
       value: dateValue,
       format,
       onChange,
-      // open: true,
       disabledDate: filterDateFunction,
       disabledTime: filterTimeFunction,
       dropdownClassName: classnames(styles[className]),
@@ -165,6 +174,16 @@ const DatePicker = (props: {
               dateAndTime.disabled.backgroundColor,
             ),
 
+            [`--${prefix}-date-confirm-btn-font-size`]:
+              confirmBtn.textStyle.fontSize + 'px',
+            [`--${prefix}-date-confirm-btn-font-weight`]:
+              confirmBtn.textStyle.fontWeight,
+            [`--${prefix}-date-confirm-btn-font-family`]:
+              confirmBtn.textStyle.fontFamily,
+            [`--${prefix}-date-confirm-btn-color`]: getRgbaString(
+              confirmBtn.textStyle.color,
+            ),
+
             [`--${prefix}-date-next-prev-font-size`]:
               dateAndTime.prevAndNext.textStyle.fontSize + 'px',
             [`--${prefix}-date-next-prev-font-weight`]:
@@ -189,7 +208,18 @@ const DatePicker = (props: {
       case 'time':
         return <AntDatePicker showTime {...commonProps} />;
       case 'week':
-        return <WeekPicker {...commonProps} />;
+        return (
+          <WeekPicker
+            {...commonProps}
+            format={(value) => {
+              return `${moment(value)
+                .startOf('week')
+                .format(format)} ~ ${moment(value)
+                .endOf('week')
+                .format(format)}`;
+            }}
+          />
+        );
       case 'year':
         return <YearPicker {...commonProps} />;
     }
@@ -203,6 +233,8 @@ const DatePicker = (props: {
     dateAndTime,
     filterTimeFunction,
     filterDateFunction,
+    confirmBtn,
+    input,
   ]);
 
   const componentClassName = useMemo(() => {

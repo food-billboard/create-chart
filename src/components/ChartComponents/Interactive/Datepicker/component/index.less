@@ -1,4 +1,37 @@
 .component-interactive-date-picker {
+  :global {
+    .ant-picker-suffix,
+    .ant-picker-clear,
+    .ant-picker,
+    .ant-picker-input > input {
+      color: var(--component-interactive-date-picker-input-color);
+    }
+    .ant-picker-input > input {
+      &::input-placeholder {
+        color: var(--component-interactive-date-picker-input-color);
+        opacity: 0.5;
+      }
+      &::-webkit-input-placeholder {
+        color: var(--component-interactive-date-picker-input-color);
+        opacity: 0.5;
+      }
+    }
+    .ant-picker,
+    .ant-picker-input > input {
+      font-size: var(--component-interactive-date-picker-input-font-size);
+      font-weight: var(--component-interactive-date-picker-input-font-weight);
+      font-family: var(--component-interactive-date-picker-input-font-family);
+    }
+    .ant-picker {
+      border-color: var(--component-interactive-date-picker-input-border-color);
+    }
+    .ant-picker-focused {
+      box-shadow: none;
+      border-color: var(
+        --component-interactive-date-picker-input-active-border-color
+      );
+    }
+  }
   &-date,
   &-year,
   &-week,
@@ -59,23 +92,12 @@
         font-weight: var(--component-interactive-date-picker-date-font-weight);
         font-family: var(--component-interactive-date-picker-date-font-family);
         color: var(--component-interactive-date-picker-date-color);
-        &:hover {
-          font-size: var(
-            --component-interactive-date-picker-date-hover-font-size
-          );
-          font-weight: var(
-            --component-interactive-date-picker-date-hover-font-weight
-          );
-          font-family: var(
-            --component-interactive-date-picker-date-hover-font-family
-          );
-          color: var(--component-interactive-date-picker-date-hover-color);
-        }
       }
       .ant-picker-cell:hover:not(.ant-picker-cell-in-view)
         .ant-picker-cell-inner,
       .ant-picker-cell:hover:not(.ant-picker-cell-selected):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end):not(.ant-picker-cell-range-hover-start):not(.ant-picker-cell-range-hover-end)
-        .ant-picker-cell-inner {
+        .ant-picker-cell-inner,
+      .ant-picker-week-panel-row:hover td {
         background-color: var(
           --component-interactive-date-picker-date-hover-background-color
         );
@@ -137,8 +159,138 @@
         );
       }
 
-      .ant-picker-today-btn {
+      // 今天按钮 & 此刻按钮
+      .ant-picker-today-btn,
+      .ant-picker-now-btn {
         color: var(
+          --component-interactive-date-picker-date-active-background-color
+        );
+        &:hover {
+          color: var(
+            --component-interactive-date-picker-date-active-background-color
+          );
+        }
+      }
+
+      // 确认按钮
+      .ant-picker-ok .ant-btn {
+        background-color: var(
+          --component-interactive-date-picker-date-active-background-color
+        );
+        border-color: var(
+          --component-interactive-date-picker-date-active-background-color
+        );
+        color: var(--component-interactive-date-picker-date-confirm-btn-color);
+        font-size: var(
+          --component-interactive-date-picker-date-confirm-btn-font-size
+        );
+        font-weight: var(
+          --component-interactive-date-picker-date-confirm-btn-font-weight
+        );
+        font-family: var(
+          --component-interactive-date-picker-date-confirm-btn-font-family
+        );
+      }
+    }
+  }
+  &-time {
+    :global {
+      // 头部文字样式
+      .ant-picker-header-view {
+        font-size: var(--component-interactive-date-picker-header-font-size);
+        font-weight: var(
+          --component-interactive-date-picker-header-font-weight
+        );
+        font-family: var(
+          --component-interactive-date-picker-header-font-family
+        );
+        color: var(--component-interactive-date-picker-header-color);
+      }
+
+      // 时间部分的样式
+      .ant-picker-time-panel-column
+        > li.ant-picker-time-panel-cell
+        .ant-picker-time-panel-cell-inner {
+        font-size: var(--component-interactive-date-picker-date-font-size);
+        font-weight: var(--component-interactive-date-picker-date-font-weight);
+        font-family: var(--component-interactive-date-picker-date-font-family);
+        color: var(--component-interactive-date-picker-date-color);
+        &:hover {
+          font-size: var(
+            --component-interactive-date-picker-date-hover-font-size
+          );
+          font-weight: var(
+            --component-interactive-date-picker-date-hover-font-weight
+          );
+          font-family: var(
+            --component-interactive-date-picker-date-hover-font-family
+          );
+          color: var(--component-interactive-date-picker-date-hover-color);
+          background-color: var(
+            --component-interactive-date-picker-date-hover-background-color
+          );
+        }
+      }
+
+      // 选中时间
+      .ant-picker-time-panel-column
+        > li.ant-picker-time-panel-cell-selected
+        .ant-picker-time-panel-cell-inner {
+        font-size: var(
+          --component-interactive-date-picker-date-active-font-size
+        );
+        font-weight: var(
+          --component-interactive-date-picker-date-active-font-weight
+        );
+        font-family: var(
+          --component-interactive-date-picker-date-active-font-family
+        );
+        color: var(--component-interactive-date-picker-date-active-color);
+        background-color: var(
+          --component-interactive-date-picker-date-active-background-color
+        );
+        border-radius: var(
+          --component-interactive-date-picker-date-border-radius
+        );
+      }
+    }
+  }
+  &-date,
+  &-year,
+  &-month,
+  &-time {
+    :global {
+      // 当前月样式
+      .ant-picker-cell-in-view {
+        &:hover {
+          font-size: var(
+            --component-interactive-date-picker-date-hover-font-size
+          );
+          font-weight: var(
+            --component-interactive-date-picker-date-hover-font-weight
+          );
+          font-family: var(
+            --component-interactive-date-picker-date-hover-font-family
+          );
+          color: var(--component-interactive-date-picker-date-hover-color);
+        }
+      }
+      .ant-picker-cell-inner,
+      .ant-picker-time-panel-cell-inner {
+        background-color: var(
+          --component-interactive-date-picker-date-background-color
+        );
+        border-radius: var(
+          --component-interactive-date-picker-date-border-radius
+        ) !important;
+      }
+    }
+  }
+  &-week {
+    :global {
+      .ant-picker-week-panel-row-selected td,
+      .ant-picker-week-panel-row-selected:hover td {
+        background-color: var(
           --component-interactive-date-picker-date-active-background-color
         );
       }

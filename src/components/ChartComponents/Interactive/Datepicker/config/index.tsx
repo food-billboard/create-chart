@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Select, Tabs } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
@@ -11,6 +12,7 @@ import Input from '@/components/ChartComponents/Common/Input';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import CodeEditor from './components/CodeEditor';
+import IconTooltip from '@/components/IconTooltip';
 import { TDatePickerConfig } from '../type';
 
 const { TabPane } = Tabs;
@@ -43,6 +45,8 @@ class Config extends Component<
           yearAndMonthAndTime,
           week,
           dateAndTime,
+          confirmBtn,
+          input,
         },
       },
     } = value;
@@ -51,6 +55,52 @@ class Config extends Component<
       <ComponentOptionConfig>
         <TabPane key={'1'} tab={<Tab>样式</Tab>}>
           <ConfigList level={1}>
+            <Collapse
+              child={{
+                header: '输入框样式',
+                key: 'input',
+              }}
+            >
+              <Item label="边框颜色">
+                <FullForm>
+                  <CompatColorSelect
+                    value={input.borderColor}
+                    onChange={(value) => {
+                      this.onKeyChange('input', {
+                        borderColor: value,
+                      });
+                    }}
+                  />
+                </FullForm>
+              </Item>
+              <Item label="选中边框颜色">
+                <FullForm>
+                  <CompatColorSelect
+                    value={input.activeBorderColor}
+                    onChange={(value) => {
+                      this.onKeyChange('input', {
+                        activeBorderColor: value,
+                      });
+                    }}
+                  />
+                </FullForm>
+              </Item>
+              <Collapse
+                child={{
+                  header: '文字样式',
+                  key: 'textStyle',
+                }}
+              >
+                <FontConfigList
+                  value={input.textStyle}
+                  onChange={(value) =>
+                    this.onKeyChange('input', {
+                      textStyle: value,
+                    })
+                  }
+                />
+              </Collapse>
+            </Collapse>
             <Collapse
               child={{
                 header: '年月及时间文字',
@@ -312,6 +362,21 @@ class Config extends Component<
                 </FullForm>
               </Item>
             </Collapse>
+            <Collapse
+              child={{
+                key: 'confirmBtn',
+                header: '确认按钮',
+              }}
+            >
+              <FontConfigList
+                value={confirmBtn.textStyle}
+                onChange={(value) =>
+                  this.onKeyChange('confirmBtn', {
+                    textStyle: value,
+                  })
+                }
+              />
+            </Collapse>
           </ConfigList>
         </TabPane>
         <TabPane key={'2'} tab={<Tab>交互</Tab>}>
@@ -339,15 +404,34 @@ class Config extends Component<
                       label: '选择到时间',
                       value: 'time',
                     },
+                    {
+                      label: '选择到周',
+                      value: 'week',
+                    },
                   ]}
                 />
               </FullForm>
             </Item>
-            <Item label="显示格式">
+            <Item
+              label="显示格式"
+              placeholder={
+                <IconTooltip title="需要和选择的时间类型格式对应">
+                  <InfoCircleOutlined />
+                </IconTooltip>
+              }
+            >
               <FullForm>
                 <Input
                   value={format}
                   onChange={this.onKeyChange.bind(this, 'format')}
+                />
+              </FullForm>
+            </Item>
+            <Item label="初始选中">
+              <FullForm>
+                <Input
+                  value={defaultDate}
+                  onChange={this.onKeyChange.bind(this, 'defaultDate')}
                 />
               </FullForm>
             </Item>
@@ -366,14 +450,6 @@ class Config extends Component<
                   functionName="filterTime"
                   value={filterTime}
                   onChange={this.onKeyChange.bind(this, 'filterTime')}
-                />
-              </FullForm>
-            </Item>
-            <Item label="初始选中">
-              <FullForm>
-                <Input
-                  value={defaultDate}
-                  onChange={this.onKeyChange.bind(this, 'defaultDate')}
                 />
               </FullForm>
             </Item>
