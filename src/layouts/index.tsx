@@ -9,7 +9,6 @@ import { ConnectState } from '@/models/connect';
 import Loading from '@/components/PageLoading';
 import IntroductionButton from '@/components/IntroductionButton';
 import { dispatchLogin } from '@/utils/request';
-import { useHashChangeReload } from '@/hooks';
 import Avatar from './components/Avatar';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
@@ -179,11 +178,9 @@ const GlobalLayout = (props: any) => {
 
 const DocumentTitleSetWrapper = (props: any) => {
   const { screenName, ...nextProps } = props;
+  const { pathname } = nextProps.location || {};
 
   const reload = () => {
-    const {
-      location: { pathname },
-    } = nextProps;
     let title = '大屏设计器';
     if (pathname.startsWith('/login')) {
       title = '登录';
@@ -207,15 +204,13 @@ const DocumentTitleSetWrapper = (props: any) => {
     document.title = title;
   };
 
-  useHashChangeReload(reload);
-
   const dom = useMemo(() => {
     return <GlobalLayout {...nextProps} />;
   }, [nextProps]);
 
   useEffect(() => {
     reload();
-  }, [screenName]);
+  }, [screenName, pathname]);
 
   return dom;
 };

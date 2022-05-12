@@ -53,6 +53,7 @@ const ConditionItem = (props: {
         value={params}
         style={{
           height: 24,
+          width: 74,
         }}
         onChange={(newParams) => {
           onChange({
@@ -60,10 +61,10 @@ const ConditionItem = (props: {
             params: newParams as any,
           });
         }}
-        className={COMMON_CONDITION_ITEM_CLASS}
+        className={classnames(COMMON_CONDITION_ITEM_CLASS, 'dis-in-b')}
       />
       <Select
-        className={COMMON_CONDITION_ITEM_CLASS}
+        className={classnames(COMMON_CONDITION_ITEM_CLASS, 'dis-in-b')}
         value={condition}
         style={{ width: 74, minWidth: 74 }}
         onChange={(condition) => {
@@ -100,7 +101,7 @@ const ConditionItem = (props: {
         ]}
       />
       <Input
-        className={COMMON_CONDITION_ITEM_CLASS}
+        className={classnames(COMMON_CONDITION_ITEM_CLASS, 'dis-in-b')}
         value={conditionValue}
         onChange={(conditionValue) => {
           onChange({
@@ -110,6 +111,7 @@ const ConditionItem = (props: {
         }}
         style={{
           height: 24,
+          width: 53,
         }}
       />
       <DeleteOutlined
