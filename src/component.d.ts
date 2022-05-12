@@ -224,6 +224,7 @@ declare namespace ComponentData {
         filter: TFilterConfig[];
         params: TParams[];
         constants: TConstants[];
+        guideLine: TGuideLineConfig;
         theme: string;
       };
       flag: {

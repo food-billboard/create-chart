@@ -4,6 +4,7 @@ export const mapStateToProps = (state: ConnectState) => {
   return {
     screenData: state.global.screenData,
     components: state.global.components,
+    guideLine: state.global.guideLine,
   };
 };
 

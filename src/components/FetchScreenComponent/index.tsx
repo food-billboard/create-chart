@@ -22,9 +22,16 @@ const FetchScreenComponent = forwardRef<
     setScale?: (scale: number) => void;
     setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
     setComponentAll: (value: ComponentData.TComponentData[]) => void;
+    setGuideLine: (value: ComponentData.TGuideLineConfig) => void;
   }
 >((props, ref) => {
-  const { setScreen, setComponentAll, needFetch = true, setScale } = props;
+  const {
+    setScreen,
+    setComponentAll,
+    needFetch = true,
+    setScale,
+    setGuideLine,
+  } = props;
 
   const isModel = useIsModelHash();
 
@@ -58,6 +65,9 @@ const FetchScreenComponent = forwardRef<
           ...nextData,
           _id: id,
         });
+        setGuideLine(
+          nextData.config.attr.guideLine || { value: [], show: true },
+        );
         width = nextData.config.style.width;
         height = nextData.config.style.height;
         ThemeUtil.initCurrentThemeData(nextData.config.attr.theme);

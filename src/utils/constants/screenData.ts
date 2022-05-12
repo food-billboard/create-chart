@@ -68,6 +68,10 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
       params: [],
       constants: [],
       theme: Theme.themeName,
+      guideLine: {
+        show: true,
+        value: [],
+      },
     },
     flag: {
       type: 'PC',

@@ -19,11 +19,12 @@ import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const Header = (props: {
+  guideLine: ComponentData.TGuideLineConfig;
   screenData: Exclude<ComponentData.TScreenData, 'components'>;
   components: ComponentData.TComponentData[];
   setScreen?: (data: ComponentMethod.GlobalUpdateScreenDataParams) => void;
 }) => {
-  const { screenData, setScreen, components } = props;
+  const { screenData, setScreen, components, guideLine } = props;
   const { name, _id, description, poster } = screenData || {};
   const [editMode, setEditMode] = useState<boolean>(false);
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
@@ -103,6 +104,13 @@ const Header = (props: {
         flag: 'PC',
         data: JSON.stringify({
           ...screenData,
+          config: {
+            ...screenData.config,
+            attr: {
+              ...screenData.config.attr,
+              guideLine,
+            },
+          },
           poster: screenData.poster || coverPoster,
           components,
         }),
@@ -137,6 +145,7 @@ const Header = (props: {
     screenData,
     setScreen,
     isModel,
+    guideLine,
   ]);
 
   const extra = useMemo(() => {
