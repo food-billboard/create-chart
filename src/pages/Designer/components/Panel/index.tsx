@@ -16,7 +16,9 @@ const Panel = (props: { style?: CSSProperties; className?: string }) => {
         'dis-flex-column',
         className,
       )}
-      style={style}
+      style={{
+        ...style,
+      }}
     >
       <PanelWrapper>
         <ReactSelecto />

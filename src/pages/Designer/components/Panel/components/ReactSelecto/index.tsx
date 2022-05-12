@@ -3,11 +3,16 @@ import ReactSelecto from 'react-selecto';
 import { connect } from 'dva';
 import { BACKGROUND_ID } from '@/components/DesignerBackground';
 import { isComponentDisabled } from '@/utils/Assist/Component';
+import ThemeUtil from '@/utils/Assist/Theme';
+import ColorSelect from '@/components/ColorSelect';
 import { wrapperId } from '../PanelWrapper/constants';
 import { PANEL_ID } from '../Painter';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+import styles from './index.less';
 
 const VALID_SELECT_CONTAINER = [BACKGROUND_ID, wrapperId, PANEL_ID];
+
+const { getRgbaString } = ColorSelect;
 
 const Selecto = (props: {
   select: string[];
@@ -60,7 +65,7 @@ const Selecto = (props: {
     <ReactSelecto
       dragContainer={`#${wrapperId}`}
       selectableTargets={['.react-select-to']}
-      hitRate={100}
+      hitRate={10}
       selectByClick={true}
       selectFromInside={true}
       ratio={0}
@@ -71,4 +76,26 @@ const Selecto = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Selecto);
+const InternalSelecto = connect(mapStateToProps, mapDispatchToProps)(Selecto);
+
+const OuterSelecto = () => {
+  return (
+    <div
+      style={{
+        // @ts-ignore
+        '--react-select-to-border': getRgbaString(
+          ThemeUtil.generateNextColor4CurrentTheme(0),
+        ),
+        '--react-select-to-background': getRgbaString({
+          ...ThemeUtil.generateNextColor4CurrentTheme(0),
+          a: 0.4,
+        }),
+      }}
+      className={styles['react-select-to-wrapper']}
+    >
+      <InternalSelecto />
+    </div>
+  );
+};
+
+export default OuterSelecto;
