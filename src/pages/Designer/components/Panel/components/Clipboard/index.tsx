@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useRef, useMemo } from 'react';
+import { ReactNode, useCallback, useRef, useMemo, useState } from 'react';
 import { connect } from 'dva';
 import { message } from 'antd';
 import { useKeyPress } from 'ahooks';
@@ -7,6 +7,8 @@ import { paste } from '@/components/ContextMenu/Actions/Paste';
 import ConfirmModal, { ConfirmModalRef } from '@/components/ConfirmModal';
 import { deleteAction } from '@/components/ContextMenu/Actions/Delete';
 import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
+import { getComponent } from '@/utils/Assist/Component';
+import { sleep } from '@/utils';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const ClipboardComponent = (props: {
@@ -35,6 +37,9 @@ const ClipboardComponent = (props: {
     redo,
     screenType,
   } = props;
+
+  const [deleteModalContent, setDeleteModalContent] =
+    useState<string>('是否确定删除组件');
 
   const modalRef = useRef<ConfirmModalRef>(null);
 
@@ -80,7 +85,20 @@ const ClipboardComponent = (props: {
   useKeyPress(['backspace', 'delete'], () => {
     if (disabledKeyEvent || !CopyAndPasteUtil.isFocus() || !select.length)
       return;
-    modalRef.current?.open();
+
+    const deleteContent = `是否删除：`;
+    const componentList = select.map((item) => {
+      const target = getComponent(item, components);
+      return target.name;
+    });
+    setDeleteModalContent(
+      deleteContent +
+        componentList.slice(0, 10).join('，') +
+        `${componentList.length > 10 ? '等' : '这'}${
+          componentList.length
+        }个组件`,
+    );
+    sleep(100).then(modalRef.current?.open);
   });
 
   const handleDelete = useCallback(() => {
@@ -91,7 +109,7 @@ const ClipboardComponent = (props: {
     <>
       {children}
       <ConfirmModal onOk={handleDelete} ref={modalRef}>
-        是否确定删除组件
+        {deleteModalContent}
       </ConfirmModal>
     </>
   );
