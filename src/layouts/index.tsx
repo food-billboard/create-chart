@@ -3,10 +3,13 @@ import { connect } from 'dva';
 import { Empty, Layout as AntLayout, Menu, Breadcrumb } from 'antd';
 import classnames from 'classnames';
 import isMobileJudge from 'is-mobile';
+import { get } from 'lodash';
 import { history } from 'umi';
+import { ConnectState } from '@/models/connect';
 import Loading from '@/components/PageLoading';
 import IntroductionButton from '@/components/IntroductionButton';
 import { dispatchLogin } from '@/utils/request';
+import { useHashChangeReload } from '@/hooks';
 import Avatar from './components/Avatar';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
@@ -174,4 +177,54 @@ const GlobalLayout = (props: any) => {
   return <FetchLoginWrapper {...props} />;
 };
 
-export default GlobalLayout;
+const DocumentTitleSetWrapper = (props: any) => {
+  const { screenName, ...nextProps } = props;
+
+  const reload = () => {
+    const {
+      location: { pathname },
+    } = nextProps;
+    let title = '大屏设计器';
+    if (pathname.startsWith('/login')) {
+      title = '登录';
+    } else if (pathname.startsWith('/register')) {
+      title = '注册';
+    } else if (pathname.startsWith('/forget')) {
+      title = '忘记密码';
+    } else if (
+      pathname.startsWith('/model-preview') ||
+      pathname.startsWith('/model-designer') ||
+      pathname.startsWith('/preview') ||
+      pathname.startsWith('/share') ||
+      pathname.startsWith('/designer')
+    ) {
+      title = screenName;
+    } else if (pathname.startsWith('/model')) {
+      title = '大屏模板';
+    } else if (pathname === '/') {
+      title = '大屏列表';
+    }
+    document.title = title;
+  };
+
+  useHashChangeReload(reload);
+
+  const dom = useMemo(() => {
+    return <GlobalLayout {...nextProps} />;
+  }, [nextProps]);
+
+  useEffect(() => {
+    reload();
+  }, [screenName]);
+
+  return dom;
+};
+
+export default connect(
+  (state: ConnectState) => {
+    return {
+      screenName: get(state, 'global.screenData.name') || '大屏设计器',
+    };
+  },
+  () => ({}),
+)(DocumentTitleSetWrapper);
