@@ -4,17 +4,20 @@
     cursor: pointer;
     border-radius: 8px;
     overflow: hidden;
-    transform-origin: center center;
-    transition: transform 0.3s;
     margin-bottom: 24px;
-    &:hover {
-      transform: scale(1.1);
+    &:hover &-main {
+      transform: scale(1.2);
+    }
+    &-wrapper {
+      overflow: hidden;
     }
     &-main {
       background-size: cover;
       background-repeat: no-repeat;
       height: 150px;
       text-align: right;
+      transition: transform 0.3s;
+      transform-origin: center center;
     }
     &-footer {
       height: 50px;

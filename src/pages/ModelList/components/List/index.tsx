@@ -109,21 +109,25 @@ const ScreenList = (props: {
             <Col key={_id} {...COL_SPAN} onClick={handleEdit.bind(null, item)}>
               <div className={styles['screen-list-icon-content-item']}>
                 <div
-                  className={styles['screen-list-icon-content-item-main']}
-                  style={{
-                    backgroundImage: `url(${poster})`,
-                  }}
+                  className={styles['screen-list-icon-content-item-wrapper']}
                 >
-                  <div>
-                    {!enable && (
-                      <Button
-                        size="small"
-                        type="link"
-                        icon={<DeleteOutlined />}
-                        title="删除"
-                        onClick={deleteScreenMethod.bind(null, item)}
-                      ></Button>
-                    )}
+                  <div
+                    className={styles['screen-list-icon-content-item-main']}
+                    style={{
+                      backgroundImage: `url(${poster})`,
+                    }}
+                  >
+                    <div>
+                      {!enable && (
+                        <Button
+                          size="small"
+                          type="link"
+                          icon={<DeleteOutlined />}
+                          title="删除"
+                          onClick={deleteScreenMethod.bind(null, item)}
+                        ></Button>
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div className={styles['screen-list-icon-content-item-footer']}>
