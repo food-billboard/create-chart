@@ -119,19 +119,21 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
   };
 
   const formatData = (editor?: any) => {
-    const realEditorInstance = editor || editorRef;
-    if (!realEditorInstance) return;
-    if (disabled) {
-      realEditorInstance.updateOptions({ readOnly: false });
-      realEditorInstance
-        .getAction('editor.action.formatDocument')
-        .run()
-        .then(() => {
-          realEditorInstance.updateOptions({ readOnly: true });
-        });
-    } else {
-      realEditorInstance.getAction('editor.action.formatDocument').run();
-    }
+    try {
+      const realEditorInstance = editor || editorRef;
+      if (!realEditorInstance) return;
+      if (disabled) {
+        realEditorInstance.updateOptions({ readOnly: false });
+        realEditorInstance
+          .getAction('editor.action.formatDocument')
+          .run()
+          .then(() => {
+            realEditorInstance.updateOptions({ readOnly: true });
+          });
+      } else {
+        realEditorInstance.getAction('editor.action.formatDocument').run();
+      }
+    } catch (err) {}
   };
 
   useImperativeHandle(

@@ -28,8 +28,9 @@ const FullScreenEditor = (props: {
   const editorContentRef = useRef<EditorRef>(null);
 
   const handleFullScreen = useCallback(() => {
+    setStateCode(value);
     setVisible(true);
-  }, []);
+  }, [value]);
 
   const onOk = useCallback(() => {
     onConfirm?.(stateCode);
