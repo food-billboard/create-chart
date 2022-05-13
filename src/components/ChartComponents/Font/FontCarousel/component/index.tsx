@@ -1,11 +1,4 @@
-import {
-  CSSProperties,
-  useMemo,
-  useRef,
-  useCallback,
-  useState,
-  useEffect,
-} from 'react';
+import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import Marquee from 'react-fast-marquee';

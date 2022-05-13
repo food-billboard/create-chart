@@ -45,7 +45,6 @@ const LoopText = (props: {
 
   const {
     request,
-    syncInteractiveAction,
     getValue,
     requestUrl,
     componentFilter,
@@ -120,13 +119,14 @@ const LoopText = (props: {
         <TextLoop {...animation}>
           {(finalValue.value || [])
             .filter((item: any) => typeof item === 'string')
-            .map((item: any) => {
+            .map((item: any, index: number) => {
               return (
                 <span
                   style={{
                     ...textStyle,
                     color: getRgbaString(textStyle.color),
                   }}
+                  key={index}
                 >
                   {item}
                 </span>
