@@ -581,3 +581,22 @@ export const COMPONENT_TYPE_LIST = [
     ],
   },
 ];
+
+export const COMPONENT_ONLY_TYPE_LIST = COMPONENT_TYPE_LIST.reduce<
+  {
+    type: string;
+    title: string;
+    description: string;
+    icon: string;
+  }[]
+>((acc, cur) => {
+  const { children } = cur;
+  children.forEach((item) => {
+    if (item.children) {
+      item.children.forEach((item) => {
+        acc.push(item);
+      });
+    }
+  });
+  return acc;
+}, []);

@@ -158,6 +158,5 @@ export default () => {
       },
       CUSTOM_CONFIG,
     );
-
   return DefaultConfig;
 };

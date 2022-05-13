@@ -116,6 +116,8 @@ class ComponentUtil {
     parentPath: string,
     components: ComponentData.TComponentData[],
     newValue: SuperPartial<ComponentData.TComponentData<{}>>,
+    // 是否覆盖更新
+    cover = false,
   ) {
     let targetUpdateParentComponents = parentPath
       ? get(components, parentPath)
@@ -125,6 +127,7 @@ class ComponentUtil {
     targetUpdateParentComponents = targetUpdateParentComponents.map(
       (item: any) => {
         if (item.id === id) {
+          if (cover) return newValue;
           return mergeWithoutArray({}, item, newValue);
         }
         return item;
@@ -204,6 +207,16 @@ class ComponentUtil {
             parentPath,
             components,
             valueWithId,
+          );
+          break;
+        case 'cover_update':
+          components = this.updateComponent(
+            component,
+            path,
+            parentPath,
+            components,
+            valueWithId,
+            true,
           );
           break;
         case 'update':

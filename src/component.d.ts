@@ -555,7 +555,7 @@ declare namespace ComponentMethod {
     value: SuperPartial<ComponentData.TComponentData>;
     id: string;
     path: string;
-    action: 'add' | 'update' | 'delete' | 'move';
+    action: 'add' | 'update' | 'delete' | 'move' | 'cover_update';
     index?: number | 'last' | 'first' | 'next' | 'prev'; // * 移动时用，这里暂时只存在同级移动
   };
 
