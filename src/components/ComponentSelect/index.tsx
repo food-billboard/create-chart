@@ -11,7 +11,7 @@ import classnames from 'classnames';
 import ColorSelect from '@/components/ColorSelect';
 import { COMPONENT_ONLY_TYPE_LIST } from '@/utils/constants/component';
 import ThemeUtil from '@/utils/Assist/Theme';
-import FocusWrapper from '../FocusWrapper';
+import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
 import styles from './index.less';
 
 const { Search } = Input;
@@ -37,6 +37,7 @@ const ComponentSelect = forwardRef<
   const open = (select?: string) => {
     if (visible) return;
     setVisible(true);
+    CopyAndPasteUtil.forceFocus();
     setSelect(select || '');
   };
 
@@ -67,13 +68,18 @@ const ComponentSelect = forwardRef<
     });
   }, [filter, debouncedSearchValue, isIncludes]);
 
+  const close = useCallback(() => {
+    setVisible(false);
+    CopyAndPasteUtil.forceUnFocus();
+  }, []);
+
   const handleOk = useCallback(() => {
     onChange?.(
       select,
       select ? filterComponentList.find((item) => item.type === select) : {},
     );
-    setVisible(false);
-  }, [onChange, select, filterComponentList]);
+    close();
+  }, [onChange, select, filterComponentList, close]);
 
   const componentList = useMemo(() => {
     return filterComponentList.map((item) => {
@@ -129,22 +135,18 @@ const ComponentSelect = forwardRef<
         height: 500,
         overflowY: 'auto',
       }}
-      onCancel={() => {
-        setVisible(false);
-      }}
+      onCancel={close}
       onOk={handleOk}
       title="组件切换"
     >
-      <FocusWrapper force={visible}>
-        <Search
-          value={searchValue}
-          onChange={(value) => setSearchValue(value.target.value)}
-          className="w-100 m-b-24"
-        />
-        <div className={styles['component-select']}>
-          <Row gutter={24}>{componentList}</Row>
-        </div>
-      </FocusWrapper>
+      <Search
+        value={searchValue}
+        onChange={(value) => setSearchValue(value.target.value)}
+        className="w-100 m-b-24"
+      />
+      <div className={styles['component-select']}>
+        <Row gutter={24}>{componentList}</Row>
+      </div>
     </Modal>
   );
 });
