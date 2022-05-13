@@ -69,6 +69,7 @@ const SubGroup = (props: {
           conditionClassName,
         )}
         style={merge(childrenStyle, conditionStyle)}
+        data-id={id}
       >
         {children}
       </div>
