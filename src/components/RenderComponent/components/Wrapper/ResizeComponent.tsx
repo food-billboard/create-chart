@@ -1,8 +1,7 @@
 import {} from 'react';
-import styles from './index.less';
 
-const ResizeHandleComponent = () => {
-  return <div></div>;
+const ResizeHandleComponent = (props: any) => {
+  return <div {...props} data-id="any"></div>;
 };
 
 export default ResizeHandleComponent;

@@ -48,26 +48,37 @@ const Selecto = (props: {
     currentSelect.current = newSelect;
   }, []);
 
-  const handleDragStart = useCallback((e: any) => {
-    try {
-      const id = e.inputEvent.target.id;
-      if (VALID_SELECT_CONTAINER.includes(id)) {
-        setSelect?.([]);
-      } else {
+  const handleDragStart = useCallback(
+    (e: any) => {
+      try {
+        const id = e.inputEvent.target.id;
+        const componentId = e.inputEvent.target.dataset?.id;
+        const componentBorder = e.inputEvent.target.className.includes(
+          'react-select-to-border',
+        );
+        if (
+          VALID_SELECT_CONTAINER.includes(id) ||
+          (!select.includes(componentId) && !componentBorder)
+        ) {
+          setSelect?.([]);
+        } else {
+          e.stop();
+        }
+      } catch (err) {
         e.stop();
       }
-    } catch (err) {
-      e.stop();
-    }
-  }, []);
+    },
+    [select],
+  );
 
   return (
     <ReactSelecto
       dragContainer={`#${wrapperId}`}
       selectableTargets={['.react-select-to']}
       hitRate={10}
-      selectByClick={true}
-      selectFromInside={true}
+      toggleContinueSelect={'shift'}
+      selectByClick
+      selectFromInside
       ratio={0}
       onDragStart={handleDragStart}
       onSelectEnd={handleSelectEnd}

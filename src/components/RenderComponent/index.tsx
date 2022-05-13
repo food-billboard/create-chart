@@ -49,6 +49,7 @@ const OnlyClickDiv = (props: {
   const currentPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const onMouseDown = useCallback((e) => {
+    return;
     const { clientX, clientY } = e;
     currentPosition.current = {
       x: clientX,
@@ -58,6 +59,7 @@ const OnlyClickDiv = (props: {
 
   const onMouseUp = useCallback(
     (e) => {
+      return;
       const { clientX, clientY } = e;
       const { x, y } = currentPosition.current;
       if (Math.abs(x - clientX) < 5 && Math.abs(y - clientY) < 5) onClick?.(e);
@@ -115,15 +117,15 @@ const RenderComponent = memo(
       query: `div[data-id="${id}"]`,
     });
 
-    const handleSelect = useCallback(
-      (e: any) => {
-        e?.stopPropagation();
-        if (!pointerDisabled && !select?.includes(id)) {
-          setSelect?.([id]);
-        }
-      },
-      [setSelect, id, select, pointerDisabled],
-    );
+    // const handleSelect = useCallback(
+    //   (e: any) => {
+    //     e?.stopPropagation();
+    //     if (!pointerDisabled && !select?.includes(id)) {
+    //       setSelect?.([id]);
+    //     }
+    //   },
+    //   [setSelect, id, select, pointerDisabled],
+    // );
 
     const selectOnly = useCallback(() => {
       setSelect?.([id]);
@@ -191,7 +193,8 @@ const RenderComponent = memo(
                 'c-po': !isSelect,
               },
             )}
-            onClick={handleSelect}
+            data-id={id}
+            // onClick={handleSelect}
           >
             {content}
           </OnlyClickDiv>

@@ -1,6 +1,7 @@
 import { ReactNode, CSSProperties, Component } from 'react';
 import { Rnd, Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
 import { merge, debounce } from 'lodash';
+import ResizeHandleComponent from './ResizeComponent';
 import { isGroupComponent } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils';
 import { AbsorbUtil } from '@/pages/Designer/components/Panel/components/PanelWrapper/components/AbsorbGuideLine/utils';
@@ -334,7 +335,19 @@ class ComponentWrapper extends Component<
         onDragStop={this.onDragStop}
         onResize={this.onResize}
         onResizeStop={this.onResizeStop}
-        resizeHandleComponent={{}}
+        resizeHandleClasses={[
+          'left',
+          'top',
+          'right',
+          'bottom',
+          'topLeft',
+          'topRight',
+          'bottomLeft',
+          'bottomRight',
+        ].reduce<any>((acc, cur) => {
+          acc[cur] = 'react-select-to-border';
+          return acc;
+        }, {})}
         size={size}
         {...nextProps}
       >
