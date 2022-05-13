@@ -1,4 +1,4 @@
-import { Component, CSSProperties, useMemo } from 'react';
+import { Component, CSSProperties } from 'react';
 import { merge, throttle } from 'lodash';
 import classnames from 'classnames';
 import ThemeUtil from '@/utils/Assist/Theme';
@@ -19,6 +19,7 @@ class GuideLine extends Component<
     onDoubleClick?: () => void;
     lineStyle?: 'dashed' | 'solid';
     scale: number;
+    size: { width: number; height: number };
   } & ComponentData.TGuideLineConfigItem
 > {
   flag = false;
@@ -103,16 +104,18 @@ class GuideLine extends Component<
   };
 
   get guideLineStyle() {
-    const { style, type, scale } = this.props;
+    const { style, type, scale, size } = this.props;
     if (type === 'vertical') {
       return {
         ...style,
+        height: size.height,
         left: style?.left * scale || 0,
         padding: `0 ${GUIDE_LINE_PADDING}px`,
       };
     }
     return {
       ...style,
+      width: size.width,
       top: style?.top * scale || 0,
       padding: `${GUIDE_LINE_PADDING}px 0`,
     };
@@ -120,6 +123,7 @@ class GuideLine extends Component<
 
   render() {
     const { type, lineStyle = 'dashed', className, style, scale } = this.props;
+    const { left, top } = this.guideLineStyle;
 
     return (
       <div
@@ -139,7 +143,7 @@ class GuideLine extends Component<
             ),
           }}
         >
-          {(style?.left ?? style?.top - 70).toFixed(0) || 0}
+          {Math.ceil((Math.floor(left ?? top) - 30) / scale + 4) || 0}
         </div>
         <div
           className={styles[`ruler-guide-line-${type}`]}

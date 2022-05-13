@@ -17,7 +17,6 @@ import GuideLineButton from './components/GuideLineButton';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import { wrapperId, subWrapperId } from './constants';
 import styles from './index.less';
-import { number } from 'echarts';
 
 const RIGHT_BOTTOM_PADDING = 200;
 
@@ -85,7 +84,7 @@ const PanelWrapper = (props: {
     [setGuideLine, guideLineList, guideLineShow],
   );
 
-  const resize = useCallback(() => {
+  const resize = () => {
     const dom = document.querySelector(`#${wrapperId}`);
     if (!dom) return;
     let dw = dom.clientWidth;
@@ -95,7 +94,7 @@ const PanelWrapper = (props: {
     const newWidth = Math.max(dw, pw);
     const newHeight = Math.max(dh, ph);
     setSize({ width: newWidth, height: newHeight });
-  }, [height, width, scale]);
+  };
 
   useEffect(() => {
     sleep(100).then(resize);
@@ -103,7 +102,11 @@ const PanelWrapper = (props: {
     return () => {
       window.removeEventListener('resize', resize);
     };
-  }, [resize]);
+  }, []);
+
+  useEffect(() => {
+    resize();
+  }, [scale]);
 
   return (
     <div
@@ -120,7 +123,6 @@ const PanelWrapper = (props: {
           id={subWrapperId}
           className={classnames(styles['designer-page-main-sub'], 'pos-re')}
           onMouseDown={onMouseDown}
-          // style={size}
         >
           <Ruler
             size={size}
