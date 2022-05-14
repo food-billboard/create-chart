@@ -83,8 +83,13 @@ const TabBasic = (props: {
     (item: any, index: number) => {
       syncInteractiveAction('click', item);
       setActiveTab(index);
+      loopTimerRef.current && clearInterval(loopTimerRef.current);
+      const { show, speed } = loop;
+      if (show && screenType !== 'edit') {
+        loopTimerRef.current = setInterval(onTimerChange, speed);
+      }
     },
-    [syncInteractiveAction],
+    [syncInteractiveAction, loop, screenType],
   );
 
   const activeStyle = useMemo(() => {

@@ -193,10 +193,12 @@ const RankBar = (props: {
       {
         grid: {
           show: false,
+          top: 0,
+          bottom: 0,
           left:
             textStyle.fontSize *
               Math.max(...xAxisKeys.map((item: any) => item.length)) +
-            100,
+            60,
         },
         legend: {
           show: false,
@@ -282,6 +284,7 @@ const RankBar = (props: {
                     ...nextLabel,
                     color: getRgbaString(label.color),
                     formatter: label.formatter,
+                    margin: 0,
                   },
                   data: yAxisValues._defaultValue_,
                 },

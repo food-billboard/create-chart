@@ -11,10 +11,11 @@ import {
   DEFAULT_THEME_RADIAL_COLOR_LIST,
 } from '../../../Common/Constants/defaultConfig';
 import { getName, getNumberValue } from '@/utils/constants';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { TRankBarConfig } from './type';
 
-const DEFAULT_DATE_LABEL = getName(10);
-const DEFAULT_DATE_VALUE = getNumberValue(10);
+const DEFAULT_DATE_LABEL = getName(5);
+const DEFAULT_DATE_VALUE = getNumberValue(5);
 
 const DEFAULT_VALUE = DEFAULT_DATE_LABEL.map((item, index) => {
   return {
@@ -102,10 +103,8 @@ export default () => {
           backgroundStyle: {
             show: true,
             color: {
-              r: 5,
-              g: 50,
-              b: 95,
-              a: 0.7,
+              ...ThemeUtil.generateNextColor4CurrentTheme(0),
+              a: 0.3,
             },
           },
           itemStyle: {
@@ -128,7 +127,7 @@ export default () => {
               },
             },
           },
-          barWidth: 24,
+          barWidth: 12,
           label: {
             show: true,
             ...DEFAULT_FONT_CONFIG,
@@ -157,8 +156,8 @@ export default () => {
       BASIC_DEFAULT_CONFIG,
       {
         style: {
-          width: 800,
-          height: 600,
+          width: 300,
+          height: 300,
         },
       },
       CUSTOM_CONFIG,
