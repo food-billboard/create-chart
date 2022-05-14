@@ -25,6 +25,7 @@ const DEFAULT_VALUE = DEFAULT_NAME_LABEL.map((item, index) => {
   return {
     name: item,
     value: DEFAULT_DATE_VALUE[index],
+    max: MAX,
   };
 });
 

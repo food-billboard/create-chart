@@ -114,7 +114,7 @@ const WaterFallBar = (props: {
       type: 'bar',
       itemStyle: {
         ...itemStyle,
-        color: radialGradientColor(itemStyle.color) || 'auto',
+        color: radialGradientColor(itemStyle.color),
       },
       data: yAxisValues._defaultValue_,
       stack: 'water-fall',

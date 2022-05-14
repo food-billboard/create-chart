@@ -128,7 +128,7 @@ const NegativeBar = (props: {
         ...commonSeries,
         itemStyle: {
           ...itemStyle,
-          color: getRgbaString(itemStyle.color[0]) || 'auto',
+          color: getRgbaString(itemStyle.color[0]),
         },
         label: {
           ...label[0],
@@ -142,7 +142,7 @@ const NegativeBar = (props: {
         ...commonSeries,
         itemStyle: {
           ...itemStyle,
-          color: getRgbaString(itemStyle.color[1]) || 'auto',
+          color: getRgbaString(itemStyle.color[1]),
         },
         label: {
           ...label[1],
@@ -161,7 +161,7 @@ const NegativeBar = (props: {
               ...baseSeries[0],
               itemStyle: {
                 ...itemStyle,
-                color: getRgbaString(itemStyle.color[index * 2]) || 'auto',
+                color: getRgbaString(itemStyle.color[index * 2]),
               },
               data: (yAxisValues[item] || []).map((item: any) => item?.[0]),
               name: item,
@@ -171,7 +171,7 @@ const NegativeBar = (props: {
               ...baseSeries[1],
               itemStyle: {
                 ...itemStyle,
-                color: getRgbaString(itemStyle.color[index * 2 + 1]) || 'auto',
+                color: getRgbaString(itemStyle.color[index * 2 + 1]),
               },
               data: (yAxisValues[item] || []).map((item: any) => item?.[1]),
               name: item,

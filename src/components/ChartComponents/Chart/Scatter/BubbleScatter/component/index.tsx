@@ -137,7 +137,7 @@ const BubbleScatter = (props: {
     const baseSeries = {
       type: 'scatter',
       itemStyle: {
-        color: getRgbaString(itemStyle.color[0]) || 'auto',
+        color: getRgbaString(itemStyle.color[0]),
       },
       symbolSize: function (dataItem: any) {
         return dataItem * symbolSize;
@@ -159,7 +159,7 @@ const BubbleScatter = (props: {
             ...baseSeries,
             itemStyle: {
               ...itemStyle,
-              color: getRgbaString(itemStyle.color[index]) || 'auto',
+              color: getRgbaString(itemStyle.color[index]),
             },
             data: yAxisValues[item],
             name: item,

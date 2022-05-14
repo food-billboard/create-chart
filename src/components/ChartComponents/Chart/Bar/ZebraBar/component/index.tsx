@@ -121,7 +121,7 @@ const ZebraBar = (props: {
       type: 'pictorialBar',
       itemStyle: {
         ...itemStyle,
-        color: getRgbaString(itemStyle.color[0]) || 'auto',
+        color: getRgbaString(itemStyle.color[0]),
       },
       symbolSize: barWidth,
       data: yAxisValues._defaultValue_,

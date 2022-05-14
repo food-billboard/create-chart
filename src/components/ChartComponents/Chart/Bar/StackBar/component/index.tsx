@@ -147,9 +147,9 @@ const StackBar = (props: {
       },
       type: 'bar',
       itemStyle: {
-        color: getRgbaString(itemStyle[0]?.color) || 'auto',
+        color: getRgbaString(itemStyle[0]?.color),
       },
-      barWidth: itemStyle[0]?.barWidth || 'auto',
+      barWidth: itemStyle[0]?.barWidth,
       data: yAxisValues._defaultValue_,
       emphasis: {
         focus: 'series',
@@ -170,9 +170,9 @@ const StackBar = (props: {
           let base: any = {
             ...baseSeries,
             itemStyle: {
-              color: getRgbaString(itemStyle[index]?.color) || 'auto',
+              color: getRgbaString(itemStyle[index]?.color),
             },
-            barWidth: itemStyle[index]?.barWidth || 'auto',
+            barWidth: itemStyle[index]?.barWidth,
             data: yAxisValues[name] || [],
             name,
           };

@@ -105,7 +105,7 @@ const ScatterBasic = (props: {
       type: 'scatter',
       itemStyle: {
         ...(itemStyle[0] || {}),
-        color: getRgbaString(itemStyle[0]?.color) || 'auto',
+        color: getRgbaString(itemStyle[0]?.color),
       },
       data: yAxisValues._defaultValue_,
       animation: show,
@@ -126,7 +126,7 @@ const ScatterBasic = (props: {
             ...baseSeries,
             itemStyle: {
               ...(itemStyle[index] || {}),
-              color: getRgbaString(itemStyle[index]?.color) || 'auto',
+              color: getRgbaString(itemStyle[index]?.color),
             },
             data: yAxisValues[item],
             name: item,

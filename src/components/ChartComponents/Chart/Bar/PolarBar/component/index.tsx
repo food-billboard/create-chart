@@ -113,7 +113,7 @@ const PolarBar = (props: {
       type: 'bar',
       itemStyle: {
         ...itemStyle,
-        color: getRgbaString(itemStyle.color[0]) || 'auto',
+        color: getRgbaString(itemStyle.color[0]),
       },
       data: [yAxisValues._defaultValue_[0]],
       animation: show,
@@ -129,7 +129,7 @@ const PolarBar = (props: {
             ...baseSeries,
             itemStyle: {
               ...itemStyle,
-              color: getRgbaString(itemStyle.color[index]) || 'auto',
+              color: getRgbaString(itemStyle.color[index]),
             },
             data: [yAxisValues._defaultValue_[index] || 0],
             name: item,

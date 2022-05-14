@@ -174,11 +174,11 @@ const LineBar = (props: {
         yAxisIndex: 1,
         symbolSize: 0,
         areaStyle: {
-          color: radialGradientColor(itemStyle[0]?.line.areaColor) || 'auto',
+          color: radialGradientColor(itemStyle[0]?.line.areaColor),
         },
         lineStyle: {
           width: style.line.lineWidth,
-          color: getRgbaString(itemStyle[0]?.line.color) || 'auto',
+          color: getRgbaString(itemStyle[0]?.line.color),
         },
         smooth: style.line.smooth,
         data: y2AxisValues._defaultValue_,
@@ -200,7 +200,7 @@ const LineBar = (props: {
         },
         type: 'bar',
         itemStyle: {
-          color: radialGradientColor(itemStyle[0]?.bar.color) || 'auto',
+          color: radialGradientColor(itemStyle[0]?.bar.color),
           borderRadius: [style.bar.borderRadius, style.bar.borderRadius, 0, 0],
         },
         barWidth: style.bar.barWidth,
@@ -222,12 +222,11 @@ const LineBar = (props: {
             {
               ...baseSeries[0],
               areaStyle: {
-                color:
-                  radialGradientColor(itemStyle[0]?.line.areaColor) || 'auto',
+                color: radialGradientColor(itemStyle[0]?.line.areaColor),
               },
               lineStyle: {
                 width: style.line.lineWidth,
-                color: getRgbaString(itemStyle[0]?.line.color) || 'auto',
+                color: getRgbaString(itemStyle[0]?.line.color),
               },
               data: y2AxisValues[series2Keys[index] || item] || [],
               name: series2Keys[index] || item,
@@ -235,8 +234,7 @@ const LineBar = (props: {
             {
               ...baseSeries[1],
               itemStyle: {
-                color:
-                  radialGradientColor(itemStyle[index]?.bar.color) || 'auto',
+                color: radialGradientColor(itemStyle[index]?.bar.color),
               },
               data: yAxisValues[item] || [],
               name: item,

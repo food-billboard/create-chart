@@ -114,7 +114,7 @@ const ProgressBar = (props: {
       type: 'bar',
       itemStyle: {
         ...itemStyle,
-        color: radialGradientColor(itemStyle.color) || 'auto',
+        color: radialGradientColor(itemStyle.color),
       },
       data: [finalValue.value],
       animation: show,

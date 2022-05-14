@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef } from 'react';
+import { CSSProperties, useEffect, useMemo, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -72,17 +72,70 @@ const RadarBasic = (props: {
     className: conditionClassName,
   } = useCondition(onCondition);
 
-  const { xAxisKeys, yAxisValues, seriesKeys } = useChartValueMapField(
-    processedValue,
-    {
-      map: componentFilterMap,
-      fields: {
-        seriesKey: 's',
-        xAxisKeyKey: 'name',
-        yAxisValue: 'value',
-      },
+  const {
+    x: xAxisKeys,
+    y: yAxisValues,
+    s: seriesKeys,
+  } = useChartValueMapField(processedValue, {
+    map: componentFilterMap,
+    fields: {
+      seriesKey: 's',
+      xAxisKeyKey: 'name',
+      yAxisValue: 'value',
     },
-  );
+    formatMethod: (value) => {
+      return value.reduce(
+        (acc: any, cur: any) => {
+          const { name, value, s, max } = cur;
+
+          if (s && !acc.s.includes(s)) acc.s.push(s);
+          if (name && !acc.x.includes(name)) acc.x.push(name);
+
+          if (s) {
+            if (!acc.y[s]) acc.y[s] = [];
+            if (value !== undefined) {
+              acc.y[s].push({
+                value,
+                max,
+              });
+            }
+          } else {
+            if (value !== undefined) {
+              acc.y._defaultValue_.push({
+                value,
+                max,
+              });
+            }
+          }
+
+          return acc;
+        },
+        {
+          x: [],
+          y: {
+            _defaultValue_: [],
+          },
+          s: [],
+        },
+      );
+    },
+  });
+
+  const maxIndicator = useMemo(() => {
+    if (seriesKeys.length) {
+      const max = Math.max(
+        ...seriesKeys.reduce((acc: any, cur: any) => {
+          acc.push(...yAxisValues[cur].map((item: any) => item.value));
+          return acc;
+        }, []),
+      );
+      return yAxisValues[seriesKeys[0]].map((item: any) => item.max ?? max);
+    }
+    const max = Math.max(
+      ...yAxisValues._defaultValue_.map((item: any) => item.value),
+    );
+    return yAxisValues._defaultValue_.map((item: any) => item.max ?? max);
+  }, [seriesKeys, yAxisValues]);
 
   const initChart = () => {
     const chart = init(
@@ -141,10 +194,10 @@ const RadarBasic = (props: {
           }),
         },
       },
-      indicator: xAxisKeys.map((item: any) => {
+      indicator: xAxisKeys.map((item: any, index: number) => {
         return {
           name: item,
-          max: 200,
+          max: maxIndicator[index],
         };
       }),
     };
@@ -173,7 +226,7 @@ const RadarBasic = (props: {
               },
               areaStyle: {
                 ...nextAreaStyle,
-                color: getRgbaString(areaColor[index]) || 'auto',
+                color: getRgbaString(areaColor[index]),
               },
               lineStyle: {
                 ...(lineStyle[index] || {}),
@@ -185,7 +238,7 @@ const RadarBasic = (props: {
                   },
                 ),
               },
-              value: yAxisValues[item] || [],
+              value: (yAxisValues[item] || []).map((item: any) => item.value),
               name: item,
             };
           })
@@ -208,7 +261,7 @@ const RadarBasic = (props: {
                 ...(lineStyle[0] || {}),
                 color: getRgbaString(lineStyle[0]?.color),
               },
-              value: yAxisValues._defaultValue_,
+              value: yAxisValues._defaultValue_.map((item: any) => item.value),
             },
           ],
       animation: show,

@@ -158,7 +158,7 @@ const PercentBar = (props: {
       type: 'bar',
       stack: 'percent-bar',
       itemStyle: {
-        color: radialGradientColor(color) || 'auto',
+        color: radialGradientColor(color),
       },
       zlevel: 1,
       data: yAxisValues._defaultValue_,
@@ -185,7 +185,7 @@ const PercentBar = (props: {
         ...baseSeries,
         label: labelConfig(label),
         itemStyle: {
-          color: radialGradientColor(color) || 'auto',
+          color: radialGradientColor(color),
           borderRadius: borderRadiusConfig,
         },
         data: [yAxisValues._defaultValue_[index]],

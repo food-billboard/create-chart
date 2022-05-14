@@ -119,7 +119,7 @@ const HorizontalBar = (props: {
       type: 'bar',
       itemStyle: {
         ...itemStyle,
-        color: getRgbaString(itemStyle.color[0]) || 'auto',
+        color: getRgbaString(itemStyle.color[0]),
       },
       data: yAxisValues._defaultValue_,
       emphasis: {
@@ -138,7 +138,7 @@ const HorizontalBar = (props: {
             ...baseSeries,
             itemStyle: {
               ...itemStyle,
-              color: getRgbaString(itemStyle.color[index]) || 'auto',
+              color: getRgbaString(itemStyle.color[index]),
             },
             data: yAxisValues[item] || [],
             name: item,

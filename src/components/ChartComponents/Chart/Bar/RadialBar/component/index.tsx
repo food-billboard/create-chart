@@ -122,7 +122,7 @@ const RadialBar = (props: {
       type: 'bar',
       itemStyle: {
         ...itemStyle,
-        color: radialGradientColor(itemStyle.color[0]) || 'auto',
+        color: radialGradientColor(itemStyle.color[0]),
       },
       data: yAxisValues._defaultValue_,
       emphasis: {
@@ -141,7 +141,7 @@ const RadialBar = (props: {
             ...baseSeries,
             itemStyle: {
               ...itemStyle,
-              color: radialGradientColor(itemStyle.color[index]) || 'auto',
+              color: radialGradientColor(itemStyle.color[index]),
             },
             data: yAxisValues[item] || [],
             name: item,
