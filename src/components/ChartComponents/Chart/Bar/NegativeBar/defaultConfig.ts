@@ -89,7 +89,7 @@ export default () => {
       },
       options: {
         legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
-        xAxis: merge(DEFAULT_X_AXIS_CONFIG, {
+        xAxis: merge({}, DEFAULT_X_AXIS_CONFIG, {
           splitLine: {
             show: true,
             lineStyle: {
@@ -103,7 +103,9 @@ export default () => {
             },
           } as any,
         }),
-        yAxis: DEFAULT_Y_AXIS_CONFIG,
+        yAxis: {
+          ...DEFAULT_Y_AXIS_CONFIG,
+        },
         tooltip: {
           ...DEFAULT_TOOLTIP_CONFIG,
           animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,

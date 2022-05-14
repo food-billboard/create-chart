@@ -73,8 +73,12 @@ export default () => {
         },
       },
       options: {
-        xAxis: DEFAULT_X_AXIS_CONFIG,
-        yAxis: DEFAULT_Y_AXIS_CONFIG,
+        xAxis: {
+          ...DEFAULT_X_AXIS_CONFIG,
+        },
+        yAxis: {
+          ...DEFAULT_Y_AXIS_CONFIG,
+        },
         condition: [DEFAULT_CONDITION_CONFIG()],
         tooltip: {
           ...DEFAULT_TOOLTIP_CONFIG,

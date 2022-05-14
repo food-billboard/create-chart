@@ -72,6 +72,9 @@ const ChangeComponentWithData = (props: CommonActionType) => {
             options: {
               ...defaultConfig.options,
             },
+            interactive: {
+              ...defaultConfig.interactive,
+            },
           },
         },
         id: component.id,

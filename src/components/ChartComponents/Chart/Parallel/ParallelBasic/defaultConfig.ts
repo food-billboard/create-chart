@@ -95,7 +95,9 @@ export default () => {
             },
           },
           nameLocation: 'start',
-          nameTextStyle: DEFAULT_FONT_CONFIG,
+          nameTextStyle: {
+            ...DEFAULT_FONT_CONFIG,
+          },
           nameGap: 15,
           nameRotate: 0,
           axisLine: {

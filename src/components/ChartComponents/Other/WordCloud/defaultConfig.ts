@@ -70,7 +70,9 @@ export default () => {
       },
       options: {
         condition: [DEFAULT_CONDITION_CONFIG()],
-        tooltip: DEFAULT_TOOLTIP_CONFIG,
+        tooltip: {
+          ...DEFAULT_TOOLTIP_CONFIG,
+        },
         series: {
           textStyle: {
             ...omit(DEFAULT_FONT_CONFIG, ['fontSize', 'color']),

@@ -87,8 +87,12 @@ export default () => {
       },
       options: {
         legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
-        xAxis: DEFAULT_X_AXIS_CONFIG,
-        yAxis: DEFAULT_Y_AXIS_CONFIG,
+        xAxis: {
+          ...DEFAULT_X_AXIS_CONFIG,
+        },
+        yAxis: {
+          ...DEFAULT_Y_AXIS_CONFIG,
+        },
         tooltip: {
           ...DEFAULT_TOOLTIP_CONFIG,
           animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,

@@ -72,7 +72,6 @@ export default () => {
         b: 99,
       },
       defaultChecked: '',
-      borderRadius: 4,
       backgroundColor: {
         r: 255,
         g: 255,

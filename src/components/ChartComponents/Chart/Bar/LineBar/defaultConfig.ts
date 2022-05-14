@@ -120,7 +120,9 @@ export default () => {
       },
       options: {
         legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
-        xAxis: DEFAULT_X_AXIS_CONFIG,
+        xAxis: {
+          ...DEFAULT_X_AXIS_CONFIG,
+        },
         yAxis: omit(DEFAULT_Y_AXIS_CONFIG, 'position'),
         yAxis2: omit(DEFAULT_Y_AXIS_CONFIG, 'position'),
         tooltip: {

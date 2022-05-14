@@ -109,7 +109,9 @@ export default () => {
       options: {
         condition: [DEFAULT_CONDITION_CONFIG()],
         legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
-        xAxis: DEFAULT_X_AXIS_CONFIG,
+        xAxis: {
+          ...DEFAULT_X_AXIS_CONFIG,
+        },
         yAxis: merge({}, DEFAULT_Y_AXIS_CONFIG, {
           splitLine: {
             show: false,

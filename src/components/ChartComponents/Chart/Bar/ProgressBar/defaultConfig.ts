@@ -59,7 +59,9 @@ export default () => {
             value: '百分比',
           },
         },
-        tooltip: DEFAULT_TOOLTIP_CONFIG,
+        tooltip: {
+          ...DEFAULT_TOOLTIP_CONFIG,
+        },
         animation: {
           ...DEFAULT_ANIMATION_CONFIG,
           animationDuration: 2000,

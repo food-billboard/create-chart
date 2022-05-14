@@ -58,7 +58,6 @@ const CHART_CONFIG_MAP = {
         color: getRgbaString(xNameTextStyle.color),
       },
     };
-
     if (splitLine && splitLine.show) {
       base.splitLine = {
         ...splitLine,

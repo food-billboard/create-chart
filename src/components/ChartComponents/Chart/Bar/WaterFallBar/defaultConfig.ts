@@ -74,7 +74,9 @@ export default () => {
         },
       },
       options: {
-        xAxis: DEFAULT_X_AXIS_CONFIG,
+        xAxis: {
+          ...DEFAULT_X_AXIS_CONFIG,
+        },
         yAxis: merge({}, DEFAULT_Y_AXIS_CONFIG, {
           splitLine: {
             show: false,
