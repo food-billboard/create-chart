@@ -38,7 +38,7 @@ const BubbleScatter = (props: {
     config: { options },
   } = value;
 
-  const { series, tooltip, animation, xAxis, condition, title } =
+  const { series, tooltip, animation, xAxis, condition, title, grid } =
     useChartPerConfig<TBubbleScatterConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -114,7 +114,7 @@ const BubbleScatter = (props: {
 
     const baseAxis: any = {
       ...nextXAxis,
-      bottom: '20%',
+      ...grid,
       type: 'category',
       boundaryGap: false,
       data: xAxisKeys,
@@ -181,9 +181,6 @@ const BubbleScatter = (props: {
 
     chartInstance.current?.setOption(
       {
-        grid: {
-          show: false,
-        },
         title,
         yAxis: {
           show: false,

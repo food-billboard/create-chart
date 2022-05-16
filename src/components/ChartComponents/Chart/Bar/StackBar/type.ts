@@ -1,4 +1,5 @@
 export type TStackBarConfig = {
+  grid: ComponentData.ComponentGrid;
   legend: ComponentData.ComponentLegend;
   xAxis: ComponentData.ComponentXAxis;
   yAxis: ComponentData.ComponentYAxis & {

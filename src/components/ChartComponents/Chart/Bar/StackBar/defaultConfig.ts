@@ -13,6 +13,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_THEME_COLOR_LIST,
+  DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue, getSeries } from '@/utils/constants';
 import { TStackBarConfig } from './type';
@@ -109,6 +110,9 @@ export default () => {
         },
       },
       options: {
+        grid: {
+          ...DEFAULT_GRID_CONFIG,
+        },
         legend: DEFAULT_LEGEND_CONFIG,
         xAxis: DEFAULT_X_AXIS_CONFIG,
         yAxis: merge({}, DEFAULT_Y_AXIS_CONFIG, {

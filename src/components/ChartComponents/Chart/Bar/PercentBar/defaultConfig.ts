@@ -9,6 +9,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_RADIAL_CONFIG,
   DEFAULT_THEME_COLOR_LIST,
+  DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getName } from '@/utils/constants';
 import { TPercentBarConfig } from './type';
@@ -104,6 +105,10 @@ export default () => {
         },
       },
       options: {
+        grid: {
+          ...DEFAULT_GRID_CONFIG,
+          left: 40,
+        },
         tooltip: DEFAULT_TOOLTIP_CONFIG,
         animation: {
           ...DEFAULT_ANIMATION_CONFIG,

@@ -4,6 +4,14 @@ import ColorSelect from '@/components/ColorSelect';
 const { getRgbaString } = ColorSelect;
 
 const CHART_CONFIG_MAP = {
+  grid: (value: ComponentData.ComponentGrid & { [key: string]: any }) => {
+    const { backgroundColor, ...nextGrid } = value;
+    return {
+      borderWidth: 0,
+      ...nextGrid,
+      backgroundColor: getRgbaString(backgroundColor),
+    };
+  },
   tooltip: (value: ComponentData.ComponentTooltip & { [key: string]: any }) => {
     const {
       backgroundColor,

@@ -1,4 +1,5 @@
 export type TRankBarConfig = {
+  grid: ComponentData.ComponentGrid;
   yAxis: {
     textStyle: ComponentData.TFontConfig;
     rankIcon: {

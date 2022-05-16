@@ -1,4 +1,5 @@
 export type TBubbleScatterConfig = {
+  grid: Omit<ComponentData.ComponentGrid, 'backgroundColor'>;
   tooltip: ComponentData.ComponentTooltip & {
     animation: ComponentData.ComponentTooltipAnimation;
   };

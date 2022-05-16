@@ -39,7 +39,7 @@ const RadialLine = (props: {
     config: { options },
   } = value;
 
-  const { legend, series, xAxis, yAxis, tooltip, animation, condition } =
+  const { legend, series, xAxis, yAxis, tooltip, animation, condition, grid } =
     useChartPerConfig<TRadialLineConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -172,7 +172,7 @@ const RadialLine = (props: {
     chartInstance.current?.setOption(
       {
         grid: {
-          show: false,
+          ...grid,
         },
         legend: {
           ...legend,

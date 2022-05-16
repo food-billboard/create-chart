@@ -48,6 +48,7 @@ const LineBar = (props: {
     tooltip,
     animation,
     condition,
+    grid,
   } = useChartPerConfig<TLineBarConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -256,7 +257,7 @@ const LineBar = (props: {
 
     chartInstance.current?.setOption({
       grid: {
-        show: false,
+        ...grid,
       },
       legend: {
         ...legend,

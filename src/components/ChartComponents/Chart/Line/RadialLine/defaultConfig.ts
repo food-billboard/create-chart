@@ -13,6 +13,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_THEME_RADIAL_COLOR_LIST,
+  DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { getDate, getNumberValue, getSeries } from '@/utils/constants';
@@ -107,6 +108,9 @@ export default () => {
         },
       },
       options: {
+        grid: {
+          ...DEFAULT_GRID_CONFIG,
+        },
         condition: [DEFAULT_CONDITION_CONFIG()],
         legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
         xAxis: DEFAULT_X_AXIS_CONFIG,

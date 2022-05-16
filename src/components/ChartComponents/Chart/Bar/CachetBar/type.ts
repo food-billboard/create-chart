@@ -1,4 +1,5 @@
 export type TCachetBarConfig = {
+  grid: ComponentData.ComponentGrid;
   legend: Omit<ComponentData.ComponentLegend, 'type'>;
   xAxis: Omit<ComponentData.ComponentXAxis, 'position'>;
   yAxis: Omit<ComponentData.ComponentYAxis, 'position'>;

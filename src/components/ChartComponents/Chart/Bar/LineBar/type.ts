@@ -1,4 +1,5 @@
 export type TLineBarConfig = {
+  grid: ComponentData.ComponentGrid;
   legend: Omit<ComponentData.ComponentLegend, 'type'>;
   xAxis: ComponentData.ComponentXAxis;
   yAxis: Omit<ComponentData.ComponentYAxis, 'position'>;

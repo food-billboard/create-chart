@@ -38,7 +38,7 @@ const PictorialBar = (props: {
     config: { options },
   } = value;
 
-  const { series, xAxis, yAxis, tooltip, animation, condition } =
+  const { series, xAxis, yAxis, tooltip, animation, condition, grid } =
     useChartPerConfig<TPictorialBarBasicConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -156,7 +156,7 @@ const PictorialBar = (props: {
 
     chartInstance.current?.setOption({
       grid: {
-        show: false,
+        ...grid,
       },
       series,
       xAxis: [xAxis],

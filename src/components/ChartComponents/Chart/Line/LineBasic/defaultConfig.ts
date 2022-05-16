@@ -12,6 +12,7 @@ import {
   DEFAULT_ANIMATION_CONFIG,
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+  DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue, getSeries } from '@/utils/constants';
 import { TLineBasicConfig } from './type';
@@ -103,6 +104,9 @@ export default () => {
         },
       },
       options: {
+        grid: {
+          ...DEFAULT_GRID_CONFIG,
+        },
         condition: [DEFAULT_CONDITION_CONFIG()],
         legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
         xAxis: {

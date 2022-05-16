@@ -9,6 +9,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_THEME_RADIAL_COLOR_LIST,
+  DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getName, getNumberValue } from '@/utils/constants';
 import { TRankBarConfig } from './type';
@@ -74,6 +75,11 @@ export default () => {
         },
       },
       options: {
+        grid: {
+          ...DEFAULT_GRID_CONFIG,
+          left: 160,
+          right: 60,
+        },
         yAxis: {
           textStyle: {
             ...DEFAULT_FONT_CONFIG,
