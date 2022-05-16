@@ -21,6 +21,7 @@ export type markLineTypeConfig = {
 };
 
 export type TCandlestickBasicConfig = {
+  grid: ComponentData.ComponentGrid;
   xAxis: ComponentData.ComponentXAxis;
   yAxis: ComponentData.ComponentYAxis;
   tooltip: ComponentData.ComponentTooltip & {

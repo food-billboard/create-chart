@@ -1,4 +1,5 @@
 export type TScatterBasicConfig = {
+  grid: ComponentData.ComponentGrid;
   legend: Omit<ComponentData.ComponentLegend, 'type'>;
   tooltip: ComponentData.ComponentTooltip & {
     animation: ComponentData.ComponentTooltipAnimation;

@@ -38,7 +38,7 @@ const ScatterBasic = (props: {
     config: { options },
   } = value;
 
-  const { legend, series, tooltip, animation, xAxis, yAxis, condition } =
+  const { legend, series, tooltip, animation, xAxis, yAxis, condition, grid } =
     useChartPerConfig<TScatterBasicConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -145,7 +145,7 @@ const ScatterBasic = (props: {
     chartInstance.current?.setOption(
       {
         grid: {
-          show: false,
+          ...grid,
         },
         legend,
         xAxis: [

@@ -1,4 +1,5 @@
 export type TWaterFallBarConfig = {
+  grid: ComponentData.ComponentGrid;
   xAxis: ComponentData.ComponentXAxis;
   yAxis: ComponentData.ComponentYAxis & {
     splitLine: {

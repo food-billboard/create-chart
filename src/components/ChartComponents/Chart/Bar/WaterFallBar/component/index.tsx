@@ -39,7 +39,7 @@ const WaterFallBar = (props: {
     config: { options },
   } = value;
 
-  const { series, xAxis, yAxis, tooltip, animation, condition } =
+  const { series, xAxis, yAxis, tooltip, animation, condition, grid } =
     useChartPerConfig<TWaterFallBarConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -165,7 +165,7 @@ const WaterFallBar = (props: {
 
     chartInstance.current?.setOption({
       grid: {
-        show: false,
+        ...grid,
       },
       series: realSeries,
       xAxis: [

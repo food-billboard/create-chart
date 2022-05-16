@@ -118,11 +118,11 @@ export const DEFAULT_LEGEND_CONFIG: ComponentData.ComponentLegend = {
 
 // grid
 export const DEFAULT_GRID_CONFIG: ComponentData.ComponentGrid = {
-  left: 10,
-  top: 0,
-  right: 10,
-  bottom: 0,
-  show: false,
+  left: 60,
+  top: 40,
+  right: 40,
+  bottom: 60,
+  show: true,
   backgroundColor: {
     r: 0,
     g: 0,

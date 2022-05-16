@@ -38,7 +38,7 @@ const PercentBar = (props: {
     config: { options },
   } = value;
 
-  const { series, tooltip, animation, condition } =
+  const { series, tooltip, animation, condition, grid } =
     useChartPerConfig<TPercentBarConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -203,6 +203,9 @@ const PercentBar = (props: {
 
     chartInstance.current?.setOption(
       {
+        grid: {
+          ...grid,
+        },
         series: realSeries,
         xAxis: {
           show: false,

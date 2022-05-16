@@ -1,4 +1,5 @@
 export type TProgressBarConfig = {
+  grid: ComponentData.ComponentGrid;
   yAxis: {
     axisLabel: {
       show: boolean;

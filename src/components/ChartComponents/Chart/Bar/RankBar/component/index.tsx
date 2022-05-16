@@ -39,7 +39,7 @@ const RankBar = (props: {
     config: { options },
   } = value;
 
-  const { series, yAxis, tooltip, animation, condition } =
+  const { series, yAxis, tooltip, animation, condition, grid } =
     useChartPerConfig<TRankBarConfig>(options, ['yAxis']);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -192,13 +192,7 @@ const RankBar = (props: {
     chartInstance.current?.setOption(
       {
         grid: {
-          show: false,
-          top: 0,
-          bottom: 0,
-          left:
-            textStyle.fontSize *
-              Math.max(...xAxisKeys.map((item: any) => item.length)) +
-            60,
+          ...grid,
         },
         legend: {
           show: false,

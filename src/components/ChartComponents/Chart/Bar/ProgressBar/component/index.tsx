@@ -38,7 +38,7 @@ const ProgressBar = (props: {
     config: { options },
   } = value;
 
-  const { series, yAxis, tooltip, animation, condition } =
+  const { series, yAxis, tooltip, animation, condition, grid } =
     useChartPerConfig<TProgressBarConfig>(options, ['yAxis']);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -78,7 +78,7 @@ const ProgressBar = (props: {
     });
   }, [processedValue, componentFilterMap]);
 
-  const onClick = (params: any) => {
+  const onClick = () => {
     syncInteractiveAction('click', {
       value: finalValue.value,
     });
@@ -175,6 +175,9 @@ const ProgressBar = (props: {
       tooltip: {
         ...nextTooltip,
         trigger: 'axis',
+      },
+      grid: {
+        ...grid,
       },
     });
   };

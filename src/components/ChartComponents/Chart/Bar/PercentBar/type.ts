@@ -1,4 +1,5 @@
 export type TPercentBarConfig = {
+  grid: ComponentData.ComponentGrid;
   tooltip: ComponentData.ComponentTooltip;
   series: {
     itemStyle: {

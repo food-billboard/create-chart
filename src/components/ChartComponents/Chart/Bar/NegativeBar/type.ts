@@ -1,4 +1,5 @@
 export type TNegativeBarConfig = {
+  grid: ComponentData.ComponentGrid;
   legend: Omit<ComponentData.ComponentLegend, 'type'>;
   xAxis: ComponentData.ComponentXAxis & {
     splitLine: {

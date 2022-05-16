@@ -14,6 +14,7 @@ import {
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_RADIAL_CONFIG,
   DEFAULT_THEME_RADIAL_COLOR_LIST,
+  DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue } from '@/utils/constants';
 import { TRadialBarConfig } from './type';
@@ -88,6 +89,9 @@ export default () => {
         },
       },
       options: {
+        grid: {
+          ...DEFAULT_GRID_CONFIG,
+        },
         legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
         xAxis: DEFAULT_X_AXIS_CONFIG,
         yAxis: merge({}, DEFAULT_Y_AXIS_CONFIG, {

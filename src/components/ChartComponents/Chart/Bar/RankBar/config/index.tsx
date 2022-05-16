@@ -9,6 +9,7 @@ import AxisConfig from './Axis';
 import SeriesConfig from './Series';
 import AnimationConfig from './Animation';
 import ConditionConfig from './Condition';
+import GridConfig from './GridConfig';
 import { TRankBarConfig } from '../type';
 
 const { TabPane } = Tabs;
@@ -20,12 +21,17 @@ class Config extends Component<
     const { value, onChange } = this.props;
     const {
       config: {
-        options: { series, yAxis, tooltip, animation, condition },
+        options: { series, yAxis, tooltip, animation, condition, grid },
       },
     } = value;
 
     return (
       <ComponentOptionConfig>
+        <TabPane key={'1'} tab={<Tab>网格</Tab>}>
+          <ConfigList level={1}>
+            <GridConfig value={grid} onChange={onChange} />
+          </ConfigList>
+        </TabPane>
         <TabPane key={'2'} tab={<Tab>排名</Tab>}>
           <ConfigList level={1}>
             <AxisConfig value={yAxis} onChange={onChange} />

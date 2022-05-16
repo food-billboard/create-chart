@@ -1,3 +1,4 @@
+import { omit } from 'lodash';
 import { mergeWithoutArray } from '@/utils';
 import {
   BASIC_DEFAULT_CONFIG,
@@ -9,6 +10,7 @@ import {
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_FONT_CONFIG,
   DEFAULT_THEME_COLOR_LIST,
+  DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue } from '@/utils/constants';
 import { TBubbleScatterConfig } from './type';
@@ -60,6 +62,12 @@ export default () => {
         },
       },
       options: {
+        grid: {
+          ...omit(DEFAULT_GRID_CONFIG, ['backgroundColor']),
+          left: 160,
+          top: 29,
+          bottom: 30,
+        },
         condition: [DEFAULT_CONDITION_CONFIG()],
         tooltip: {
           ...DEFAULT_TOOLTIP_CONFIG,

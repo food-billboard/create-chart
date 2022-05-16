@@ -1,6 +1,7 @@
 type CommonAxisConfig = Omit<ComponentData.ComponentXAxis, 'position'>;
 
 export type TPictorialBarBasicConfig = {
+  grid: ComponentData.ComponentGrid;
   xAxis: CommonAxisConfig & {
     max: number;
   };

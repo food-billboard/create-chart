@@ -382,7 +382,7 @@ declare namespace ComponentData {
   export type ComponentGrid = {
     show: boolean;
     backgroundColor: TColorConfig;
-  } & PositionType;
+  } & TComponentMarginConfig;
 
   // xAxis
   export type ComponentXAxis = {

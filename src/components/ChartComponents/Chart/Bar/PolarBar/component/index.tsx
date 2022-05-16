@@ -146,39 +146,42 @@ const PolarBar = (props: {
 
     const realSeries = getSeries();
 
-    chartInstance.current?.setOption({
-      grid: {
-        show: false,
-      },
-      legend: {
-        ...legend,
-        data: xAxisKeys,
-      },
-      radiusAxis: {
-        type: 'category',
-        show: false,
-      },
-      polar: {
-        ...polar,
-        radius: polar.radius.map((item) => `${item}%`),
-      },
-      angleAxis: {
-        show: true,
-        ...nextAngleAxis,
-        axisLabel: {
-          ...axisLabel,
-          color: getRgbaString(axisLabel.color),
+    chartInstance.current?.setOption(
+      {
+        grid: {
+          show: false,
+        },
+        legend: {
+          ...legend,
+          data: xAxisKeys,
+        },
+        radiusAxis: {
+          type: 'category',
+          show: false,
+        },
+        polar: {
+          ...polar,
+          radius: polar.radius.map((item) => `${item}%`),
+        },
+        angleAxis: {
+          show: true,
+          ...nextAngleAxis,
+          axisLabel: {
+            ...axisLabel,
+            color: getRgbaString(axisLabel.color),
+          },
+        },
+        series: realSeries,
+        tooltip: {
+          ...nextTooltip,
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow',
+          },
         },
       },
-      series: realSeries,
-      tooltip: {
-        ...nextTooltip,
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow',
-        },
-      },
-    });
+      true,
+    );
   };
 
   useChartComponentResize(chartInstance.current!);

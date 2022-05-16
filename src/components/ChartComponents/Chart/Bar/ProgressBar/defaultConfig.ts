@@ -8,6 +8,7 @@ import {
   DEFAULT_ANIMATION_CONFIG,
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_RADIAL_CONFIG,
+  DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TProgressBarConfig } from './type';
@@ -52,6 +53,9 @@ export default () => {
         },
       },
       options: {
+        grid: {
+          ...DEFAULT_GRID_CONFIG,
+        },
         yAxis: {
           axisLabel: {
             show: true,

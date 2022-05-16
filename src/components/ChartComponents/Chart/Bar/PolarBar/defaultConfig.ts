@@ -9,7 +9,7 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
   DEFAULT_CONDITION_CONFIG,
-  DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+  DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getName, getNumberValue } from '@/utils/constants';
 import { TPolarBarConfig } from './type';

@@ -38,7 +38,7 @@ const LineBasic = (props: {
     config: { options },
   } = value;
 
-  const { legend, series, xAxis, yAxis, tooltip, animation, condition } =
+  const { legend, series, xAxis, yAxis, tooltip, animation, condition, grid } =
     useChartPerConfig<TLineBasicConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -171,7 +171,7 @@ const LineBasic = (props: {
     chartInstance.current?.setOption(
       {
         grid: {
-          show: false,
+          ...grid,
         },
         legend: {
           ...legend,

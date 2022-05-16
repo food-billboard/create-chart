@@ -12,6 +12,7 @@ import {
   DEFAULT_LABEL_CONFIG,
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+  DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue } from '@/utils/constants';
 import { TCandlestickBasicConfig } from './type';
@@ -78,6 +79,9 @@ export default () => {
         },
         yAxis: {
           ...DEFAULT_Y_AXIS_CONFIG,
+        },
+        grid: {
+          ...DEFAULT_GRID_CONFIG,
         },
         condition: [DEFAULT_CONDITION_CONFIG()],
         tooltip: {

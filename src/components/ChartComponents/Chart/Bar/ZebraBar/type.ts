@@ -1,4 +1,5 @@
 export type TZebraBarConfig = {
+  grid: ComponentData.ComponentGrid;
   legend: Omit<ComponentData.ComponentLegend, 'type'>;
   xAxis: ComponentData.ComponentXAxis;
   yAxis: ComponentData.ComponentYAxis;
