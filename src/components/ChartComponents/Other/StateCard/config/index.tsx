@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Tabs, Select, Switch } from 'antd';
+import { Tabs } from 'antd';
 import {
   InfoCircleOutlined,
   PicLeftOutlined,
@@ -18,14 +18,12 @@ import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/
 import Input from '@/components/ChartComponents/Common/Input';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
 import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import IconTooltip from '@/components/IconTooltip';
 import AngleSelect from '@/components/ChartComponents/Common/AngleSelect';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { DEFAULT_FONT_CONFIG } from '../../../Common/Constants/defaultConfig';
 import ConditionConfig from './Condition';
 import { TStateCardConfig } from '../type';
 
@@ -67,18 +65,6 @@ class Config extends Component<
                 />
               </FullForm>
             </Item>
-            <Collapse
-              child={{
-                header: '文字样式',
-                key: 'textStyle',
-              }}
-            >
-              <FontConfigList
-                value={textStyle}
-                onChange={this.onKeyChange.bind(this, 'textStyle')}
-              />
-            </Collapse>
-
             <Collapse
               child={{
                 header: '文字样式',

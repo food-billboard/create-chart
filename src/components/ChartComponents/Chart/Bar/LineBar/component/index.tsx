@@ -163,89 +163,87 @@ const LineBar = (props: {
 
   const getSeries = () => {
     const { itemStyle, label, style, ...nextSeries } = series;
-    const baseSeries = [
-      {
-        ...nextSeries,
-        label: {
-          ...label,
-          color: getRgbaString(label.color),
-        },
-        triggerLineEvent: true,
-        type: 'line',
-        yAxisIndex: 1,
-        symbolSize: 0,
-        areaStyle: {
-          color: radialGradientColor(itemStyle[0]?.line.areaColor),
-        },
-        lineStyle: {
-          width: style.line.lineWidth,
-          color: getRgbaString(itemStyle[0]?.line.color),
-        },
-        smooth: style.line.smooth,
-        data: y2AxisValues._defaultValue_,
-        emphasis: {
-          focus: 'series',
-        },
-        animation: animation.line.animation,
-        animationEasing: animation.line.animationEasing,
-        animationEasingUpdate: animation.line.animationEasing,
-        animationDuration: animation.bar.animationDuration,
-        animationDurationUpdate: animation.line.animationDuration,
+    const baseLineSeries = {
+      ...nextSeries,
+      label: {
+        ...label,
+        color: getRgbaString(label.color),
       },
-      {
-        ...nextSeries,
-        label: {
-          ...label,
-          position: 'inside',
-          color: getRgbaString(label.color),
-        },
-        type: 'bar',
-        itemStyle: {
-          color: radialGradientColor(itemStyle[0]?.bar.color),
-          borderRadius: [style.bar.borderRadius, style.bar.borderRadius, 0, 0],
-        },
-        barWidth: style.bar.barWidth,
-        data: yAxisValues._defaultValue_,
-        emphasis: {
-          focus: 'series',
-        },
-        animation: animation.bar.animation,
-        animationEasing: animation.bar.animationEasing,
-        animationEasingUpdate: animation.bar.animationEasing,
-        animationDuration: animation.bar.animationDuration,
-        animationDurationUpdate: animation.bar.animationDuration,
+      triggerLineEvent: true,
+      type: 'line',
+      yAxisIndex: 1,
+      symbolSize: 0,
+      areaStyle: {
+        color: radialGradientColor(itemStyle[0]?.line.areaColor),
       },
-    ];
-
-    const realSeries = seriesKeys.length
-      ? seriesKeys.reduce((acc: any, item: any, index: number) => {
-          acc.push(
-            {
-              ...baseSeries[0],
-              areaStyle: {
-                color: radialGradientColor(itemStyle[0]?.line.areaColor),
-              },
-              lineStyle: {
-                width: style.line.lineWidth,
-                color: getRgbaString(itemStyle[0]?.line.color),
-              },
-              data: y2AxisValues[series2Keys[index] || item] || [],
-              name: series2Keys[index] || item,
+      lineStyle: {
+        width: style.line.lineWidth,
+        color: getRgbaString(itemStyle[0]?.line.color),
+      },
+      smooth: style.line.smooth,
+      data: y2AxisValues._defaultValue_,
+      emphasis: {
+        focus: 'series',
+      },
+      animation: animation.line.animation,
+      animationEasing: animation.line.animationEasing,
+      animationEasingUpdate: animation.line.animationEasing,
+      animationDuration: animation.bar.animationDuration,
+      animationDurationUpdate: animation.line.animationDuration,
+    };
+    const baseBarSeries = {
+      ...nextSeries,
+      label: {
+        ...label,
+        position: 'inside',
+        color: getRgbaString(label.color),
+      },
+      type: 'bar',
+      itemStyle: {
+        color: radialGradientColor(itemStyle[0]?.bar.color),
+        borderRadius: [style.bar.borderRadius, style.bar.borderRadius, 0, 0],
+      },
+      barWidth: style.bar.barWidth,
+      data: yAxisValues._defaultValue_,
+      emphasis: {
+        focus: 'series',
+      },
+      animation: animation.bar.animation,
+      animationEasing: animation.bar.animationEasing,
+      animationEasingUpdate: animation.bar.animationEasing,
+      animationDuration: animation.bar.animationDuration,
+      animationDurationUpdate: animation.bar.animationDuration,
+    };
+    const realBarSeries = seriesKeys.length
+      ? seriesKeys.map((item: any, index: number) => {
+          return {
+            ...baseBarSeries,
+            itemStyle: {
+              color: radialGradientColor(itemStyle[index]?.bar.color),
             },
-            {
-              ...baseSeries[1],
-              itemStyle: {
-                color: radialGradientColor(itemStyle[index]?.bar.color),
-              },
-              data: yAxisValues[item] || [],
-              name: item,
+            data: yAxisValues[item] || [],
+            name: item,
+          };
+        })
+      : [baseBarSeries];
+    const realLineSeries = series2Keys.length
+      ? series2Keys.map((item: any, index: number) => {
+          return {
+            ...baseLineSeries,
+            areaStyle: {
+              color: radialGradientColor(itemStyle[0]?.line.areaColor),
             },
-          );
-          return acc;
-        }, [])
-      : baseSeries;
+            lineStyle: {
+              width: style.line.lineWidth,
+              color: getRgbaString(itemStyle[0]?.line.color),
+            },
+            data: y2AxisValues[series2Keys[index] || item] || [],
+            name: series2Keys[index] || item,
+          };
+        })
+      : [baseLineSeries];
 
-    return realSeries;
+    return [...realBarSeries, ...realLineSeries];
   };
 
   const setOption = () => {

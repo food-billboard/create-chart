@@ -21,6 +21,7 @@ const PictureWall = (props: {
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
+  const { screenType } = global;
 
   const {
     config: {
@@ -81,7 +82,7 @@ const PictureWall = (props: {
   }, [finalValue, height, maxCount, columnCount, margin]);
 
   useEffect(() => {
-    if (!preview.show) return;
+    if (!preview.show || screenType !== 'preview') return;
     const element = document.getElementById(chartId.current) as HTMLElement;
 
     if (!element) return;
@@ -96,7 +97,7 @@ const PictureWall = (props: {
     return () => {
       viewer?.destroy();
     };
-  }, [preview]);
+  }, [preview, screenType]);
 
   return (
     <>
