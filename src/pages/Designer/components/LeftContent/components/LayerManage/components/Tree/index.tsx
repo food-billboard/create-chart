@@ -217,7 +217,9 @@ const TreeFunction = (props: TreeProps) => {
           return (
             (judgeSelect.path.startsWith(path.path) ||
               path.path.startsWith(judgeSelect.path)) &&
-            path !== judgeSelect
+            path !== judgeSelect &&
+            // ? 下面这个判断不知道会不会有问题，再说吧👍
+            judgeSelect.path.split('.')[0] === path.path.split('.')[0]
           );
         });
 
