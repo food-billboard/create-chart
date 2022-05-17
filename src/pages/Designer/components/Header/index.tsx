@@ -84,6 +84,7 @@ const Header = (props: {
 
   const handleStore = useCallback(async () => {
     if (fetchLoading) return;
+    setFetchLoading(true);
 
     try {
       let coverPoster = poster;
@@ -157,6 +158,7 @@ const Header = (props: {
         type="link"
         onClick={handlePreview}
         icon={<FundOutlined />}
+        loading={fetchLoading}
       ></Button>
     );
     const storeButton = (
@@ -167,11 +169,12 @@ const Header = (props: {
         type="link"
         onClick={handleStore}
         icon={<SendOutlined />}
+        loading={fetchLoading}
       ></Button>
     );
     if (!_id) return [storeButton];
     return [previewButton, storeButton];
-  }, [handlePreview, handleStore, _id]);
+  }, [handlePreview, handleStore, _id, fetchLoading]);
 
   return (
     <FocusWrapper>

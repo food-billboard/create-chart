@@ -148,16 +148,16 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
           {!!disabled && (
             <div className={styles['design-layer-manage-content-cover']}></div>
           )}
+          <ResizeLine
+            value={stateLayerWidth}
+            onChange={setStateLayerWidth}
+            onResizeStart={setDisabled.bind(null, true)}
+            onResizeEnd={() => {
+              setLayerWidth(stateLayerWidth);
+              setDisabled(false);
+            }}
+          />
         </div>
-        <ResizeLine
-          value={stateLayerWidth}
-          onChange={setStateLayerWidth}
-          onResizeStart={setDisabled.bind(null, true)}
-          onResizeEnd={() => {
-            setLayerWidth(stateLayerWidth);
-            setDisabled(false);
-          }}
-        />
       </FocusWrapper>
     );
   },
