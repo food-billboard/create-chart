@@ -5,19 +5,25 @@
     border-radius: 8px;
     overflow: hidden;
     margin-bottom: 24px;
-    &:hover &-main {
+    &:hover &-main img {
       transform: scale(1.2);
     }
     &-wrapper {
       overflow: hidden;
     }
     &-main {
-      background-size: cover;
-      background-repeat: no-repeat;
       height: 150px;
       text-align: right;
-      transition: transform 0.3s;
-      transform-origin: center center;
+      position: relative;
+      img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        transition: transform 0.3s;
+        transform-origin: center center;
+      }
     }
     &-footer {
       height: 50px;

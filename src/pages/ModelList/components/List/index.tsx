@@ -111,12 +111,8 @@ const ScreenList = (props: {
                 <div
                   className={styles['screen-list-icon-content-item-wrapper']}
                 >
-                  <div
-                    className={styles['screen-list-icon-content-item-main']}
-                    style={{
-                      backgroundImage: `url(${poster})`,
-                    }}
-                  >
+                  <div className={styles['screen-list-icon-content-item-main']}>
+                    <img src={poster} />
                     <div>
                       {!enable && (
                         <Button
