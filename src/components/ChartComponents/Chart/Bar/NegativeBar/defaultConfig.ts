@@ -14,6 +14,7 @@ import {
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { getDate, getNumberValue } from '@/utils/constants';
 import { TNegativeBarConfig } from './type';
 
@@ -98,9 +99,8 @@ export default () => {
             show: true,
             lineStyle: {
               color: {
-                r: 255,
-                g: 255,
-                b: 255,
+                ...ThemeUtil.generateNextColor4CurrentTheme(0),
+                a: 0.4,
               },
               width: 1,
               type: 'solid',

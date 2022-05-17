@@ -136,7 +136,7 @@ export default () => {
           itemStyle: {
             color: DEFAULT_THEME_COLOR_LIST(),
           },
-          symbolSize: 6,
+          symbolSize: 3,
         },
       },
     };

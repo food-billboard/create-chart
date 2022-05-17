@@ -123,9 +123,8 @@ export default () => {
               width: 1,
               type: 'solid' as any,
               color: {
-                r: 204,
-                g: 204,
-                b: 204,
+                ...ThemeUtil.generateNextColor4CurrentTheme(0),
+                a: 0.4,
               },
             },
           },

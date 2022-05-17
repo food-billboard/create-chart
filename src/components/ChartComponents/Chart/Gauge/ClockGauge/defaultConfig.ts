@@ -35,7 +35,10 @@ export default () => {
             },
           },
           splitLine: {
-            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+            color: {
+              ...ThemeUtil.generateNextColor4CurrentTheme(0),
+              a: 0.4,
+            },
             width: 3,
             length: 10,
           },

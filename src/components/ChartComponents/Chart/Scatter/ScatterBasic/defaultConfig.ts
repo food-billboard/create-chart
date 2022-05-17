@@ -17,7 +17,7 @@ import { getDate, getNumberValue } from '@/utils/constants';
 import { TScatterBasicConfig } from './type';
 
 const DEFAULT_NAME_LABEL = getDate(100);
-const DEFAULT_DATE_VALUE = getNumberValue(100);
+const DEFAULT_DATE_VALUE = getNumberValue(100, 0, 20);
 
 const DEFAULT_VALUE = DEFAULT_NAME_LABEL.map((item, index) => {
   return {
@@ -34,7 +34,7 @@ export default () => {
       },
       data: {
         request: {
-          value: DEFAULT_VALUE,
+          value: [...DEFAULT_VALUE],
         },
         filter: {
           map: [
@@ -83,7 +83,7 @@ export default () => {
         series: {
           itemStyle: [],
           symbol: 'circle',
-          symbolSize: 6,
+          symbolSize: 1,
         },
       },
     };

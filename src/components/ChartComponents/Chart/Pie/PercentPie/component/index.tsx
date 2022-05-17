@@ -39,7 +39,7 @@ const PercentPie = (props: {
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
-  const { screenTheme } = global;
+  const { screenTheme, screenType } = global;
 
   const {
     id,
@@ -114,6 +114,11 @@ const PercentPie = (props: {
   const getSeries = () => {
     const { itemStyle, radius, backgroundColor } = series;
     const { color } = itemStyle;
+    const {
+      outer: [, outerRadius],
+    } = radius;
+    const innerLineRadius = (outerRadius + 8) / 100;
+    const outerLineRadius = (outerRadius + 8 + 5) / 100;
 
     const colorLength = color.length;
     const colorStepsNumber = 1 / colorLength;
@@ -141,7 +146,9 @@ const PercentPie = (props: {
             shape: {
               cx: api.getWidth() / 2,
               cy: api.getHeight() / 2,
-              r: (Math.min(api.getWidth(), api.getHeight()) / 2) * 0.6,
+              r:
+                (Math.min(api.getWidth(), api.getHeight()) / 2) *
+                innerLineRadius,
               startAngle: ((0 + angleRef.current) * Math.PI) / 180,
               endAngle: ((90 + angleRef.current) * Math.PI) / 180,
             },
@@ -161,7 +168,8 @@ const PercentPie = (props: {
         renderItem: function (params: any, api: any) {
           let x0 = api.getWidth() / 2;
           let y0 = api.getHeight() / 2;
-          let r = (Math.min(api.getWidth(), api.getHeight()) / 2) * 0.6;
+          let r =
+            (Math.min(api.getWidth(), api.getHeight()) / 2) * innerLineRadius;
           let point = getCirclePoint(x0, y0, r, 90 + angleRef.current);
           return {
             type: 'circle',
@@ -188,7 +196,9 @@ const PercentPie = (props: {
             shape: {
               cx: api.getWidth() / 2,
               cy: api.getHeight() / 2,
-              r: (Math.min(api.getWidth(), api.getHeight()) / 2) * 0.6,
+              r:
+                (Math.min(api.getWidth(), api.getHeight()) / 2) *
+                innerLineRadius,
               startAngle: ((180 + angleRef.current) * Math.PI) / 180,
               endAngle: ((270 + angleRef.current) * Math.PI) / 180,
             },
@@ -208,7 +218,8 @@ const PercentPie = (props: {
         renderItem: function (params: any, api: any) {
           let x0 = api.getWidth() / 2;
           let y0 = api.getHeight() / 2;
-          let r = (Math.min(api.getWidth(), api.getHeight()) / 2) * 0.6;
+          let r =
+            (Math.min(api.getWidth(), api.getHeight()) / 2) * innerLineRadius;
           let point = getCirclePoint(x0, y0, r, 180 + angleRef.current);
           return {
             type: 'circle',
@@ -235,7 +246,9 @@ const PercentPie = (props: {
             shape: {
               cx: api.getWidth() / 2,
               cy: api.getHeight() / 2,
-              r: (Math.min(api.getWidth(), api.getHeight()) / 2) * 0.65,
+              r:
+                (Math.min(api.getWidth(), api.getHeight()) / 2) *
+                outerLineRadius,
               startAngle: ((270 + -angleRef.current) * Math.PI) / 180,
               endAngle: ((40 + -angleRef.current) * Math.PI) / 180,
             },
@@ -255,7 +268,8 @@ const PercentPie = (props: {
         renderItem: function (params: any, api: any) {
           let x0 = api.getWidth() / 2;
           let y0 = api.getHeight() / 2;
-          let r = (Math.min(api.getWidth(), api.getHeight()) / 2) * 0.65;
+          let r =
+            (Math.min(api.getWidth(), api.getHeight()) / 2) * outerLineRadius;
           let point = getCirclePoint(x0, y0, r, 270 + -angleRef.current);
           return {
             type: 'circle',
@@ -282,7 +296,9 @@ const PercentPie = (props: {
             shape: {
               cx: api.getWidth() / 2,
               cy: api.getHeight() / 2,
-              r: (Math.min(api.getWidth(), api.getHeight()) / 2) * 0.65,
+              r:
+                (Math.min(api.getWidth(), api.getHeight()) / 2) *
+                outerLineRadius,
               startAngle: ((90 + -angleRef.current) * Math.PI) / 180,
               endAngle: ((220 + -angleRef.current) * Math.PI) / 180,
             },
@@ -302,7 +318,8 @@ const PercentPie = (props: {
         renderItem: function (params: any, api: any) {
           let x0 = api.getWidth() / 2;
           let y0 = api.getHeight() / 2;
-          let r = (Math.min(api.getWidth(), api.getHeight()) / 2) * 0.65;
+          let r =
+            (Math.min(api.getWidth(), api.getHeight()) / 2) * outerLineRadius;
           let point = getCirclePoint(x0, y0, r, 90 + -angleRef.current);
           return {
             type: 'circle',
@@ -327,6 +344,9 @@ const PercentPie = (props: {
         startAngle: 90,
         z: 0,
         zlevel: 0,
+        labelLine: {
+          show: false,
+        },
         data: [
           {
             value: finalValue.value || 0,
@@ -358,6 +378,9 @@ const PercentPie = (props: {
         startAngle: 270,
         z: 0,
         zlevel: 0,
+        labelLine: {
+          show: false,
+        },
         data: [
           {
             value: finalValue.value || 0,
@@ -453,6 +476,7 @@ const PercentPie = (props: {
 
   useEffect(() => {
     clearInterval(animationTimerRef.current);
+    if (screenType === 'edit') return;
     animationTimerRef.current = setInterval(() => {
       drawPieAnimation();
       setOption(false);
@@ -461,7 +485,7 @@ const PercentPie = (props: {
     return () => {
       clearInterval(animationTimerRef.current);
     };
-  }, [animation]);
+  }, [animation, screenType]);
 
   return (
     <>

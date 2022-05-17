@@ -14,6 +14,7 @@ import {
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { getDate, getNumberValue, getSeries } from '@/utils/constants';
 import { TStepLineConfig } from './type';
 
@@ -119,9 +120,8 @@ export default () => {
               width: 1,
               type: 'solid' as any,
               color: {
-                r: 204,
-                g: 204,
-                b: 204,
+                ...ThemeUtil.generateNextColor4CurrentTheme(0),
+                a: 0.4,
               },
             },
           },

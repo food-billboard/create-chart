@@ -97,17 +97,20 @@ const ScatterBasic = (props: {
   };
 
   const getSeries = () => {
-    const { itemStyle, ...nextSeries } = series;
+    const { itemStyle, symbolSize, ...nextSeries } = series;
     const { animation: show, animationDuration, animationEasing } = animation;
 
     const baseSeries = {
       ...nextSeries,
+      symbolSize: function (dataItem: any) {
+        return dataItem * symbolSize;
+      },
       type: 'scatter',
       itemStyle: {
         ...(itemStyle[0] || {}),
         color: getRgbaString(itemStyle[0]?.color),
       },
-      data: yAxisValues._defaultValue_,
+      data: [...yAxisValues._defaultValue_],
       animation: show,
       animationEasing,
       animationEasingUpdate: animationEasing,

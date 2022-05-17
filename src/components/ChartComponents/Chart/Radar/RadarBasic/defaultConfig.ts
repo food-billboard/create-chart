@@ -12,6 +12,7 @@ import {
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_THEME_COLOR_LIST,
 } from '../../../Common/Constants/defaultConfig';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { getName, getNumberValue } from '@/utils/constants';
 import { TRadarBasicConfig } from './type';
 
@@ -108,9 +109,8 @@ export default () => {
             show: true,
             lineStyle: {
               color: {
-                r: 204,
-                g: 204,
-                b: 204,
+                ...ThemeUtil.generateNextColor4CurrentTheme(0),
+                a: 0.4,
               },
               width: 1,
               type: 'solid',

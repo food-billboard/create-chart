@@ -102,10 +102,7 @@ const StateCard = (props: {
       return (
         <div key={currIndex}>
           <div
-            className={classnames(
-              'dis-flex',
-              styles['component-other-state-card-column'],
-            )}
+            className={classnames(styles['component-other-state-card-column'])}
             style={{
               marginTop: margin,
             }}
@@ -124,6 +121,7 @@ const StateCard = (props: {
                 transformOrigin: 'center center',
                 [stateIcon.position === 'start' ? 'marginRight' : 'marginLeft']:
                   stateIcon.margin,
+                float: stateIcon.position === 'start' ? 'left' : 'right',
               }}
             ></div>
 

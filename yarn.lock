@@ -2158,6 +2158,11 @@ bn.js@^5.0.0, bn.js@^5.1.1:
   resolved "https://registry.npm.taobao.org/bn.js/download/bn.js-5.2.0.tgz#358860674396c6997771a9d051fcc1b57d4ae002"
   integrity sha1-NYhgZ0OWxpl3canQUfzBtX1K4AI=
 
+bootstrap-icons@^1.8.2:
+  version "1.8.2"
+  resolved "https://registry.npmmirror.com/bootstrap-icons/-/bootstrap-icons-1.8.2.tgz#5984f3322ee2370fc48c8857f4a1f0320f659904"
+  integrity sha512-jhNjdPzvUqKOr9o0XhCZAZDWVeuOg6mJHtSj2bhiqfamZVg6ekMYNgG7pRY4GItbjIwrTaht3dNbXGbX3eJNLQ==
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.nlark.com/brace-expansion/download/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"

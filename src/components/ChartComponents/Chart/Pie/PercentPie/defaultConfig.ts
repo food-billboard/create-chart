@@ -84,7 +84,7 @@ export default () => {
         series: {
           radius: {
             inner: [32, 35],
-            outer: [52, 40],
+            outer: [40, 52],
           },
           itemStyle: {
             color: DEFAULT_THEME_COLOR_LIST_DATA,

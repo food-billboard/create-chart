@@ -98,6 +98,7 @@ export default () => {
         },
         tooltip: {
           ...DEFAULT_TOOLTIP_CONFIG,
+          formatter: '{b0}: {c0}',
           animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
         },
         animation: {
@@ -162,7 +163,7 @@ export default () => {
       BASIC_DEFAULT_CONFIG,
       {
         style: {
-          width: 300,
+          width: 400,
           height: 300,
         },
       },
