@@ -30,11 +30,22 @@ const Designer = (props: {
     requestRef.current?.reload();
   };
 
+  const closeAndPrompt = (event: any) => {
+    event.returnValue = '是否确定离开此网站';
+  };
+
   useHashChangeReload(reload);
 
   useEffect(() => {
     setScreenType('edit');
   }, [setScreenType]);
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', closeAndPrompt);
+    return () => {
+      window.removeEventListener('beforeunload', closeAndPrompt);
+    };
+  });
 
   return (
     <ConfigProvider componentSize="small">
