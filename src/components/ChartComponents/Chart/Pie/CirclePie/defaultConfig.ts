@@ -88,14 +88,14 @@ export default () => {
           align: 'horizontal',
           textStyle: {
             ...DEFAULT_FONT_CONFIG,
-            fontSize: 40,
+            fontSize: 24,
           },
           addonBefore: {
             show: true,
             value: '共',
             textStyle: {
               ...DEFAULT_FONT_CONFIG,
-              fontSize: 30,
+              fontSize: 24,
             },
           },
           addonAfter: {
@@ -103,7 +103,7 @@ export default () => {
             value: '人',
             textStyle: {
               ...DEFAULT_FONT_CONFIG,
-              fontSize: 30,
+              fontSize: 24,
             },
           },
         },

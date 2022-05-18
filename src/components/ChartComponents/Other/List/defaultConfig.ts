@@ -21,7 +21,6 @@ export default () => {
     textStyle: {
       ...DEFAULT_FONT_CONFIG,
       fontWeight: 'bolder',
-      fontSize: 18,
     },
   };
   const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TListConfig> = {
@@ -117,7 +116,6 @@ export default () => {
         radius: 50,
         textStyle: {
           ...DEFAULT_FONT_CONFIG,
-          fontSize: 14,
           fontWeight: 'bold',
         },
       },
@@ -143,7 +141,6 @@ export default () => {
             type: 'text',
             textStyle: {
               ...DEFAULT_FONT_CONFIG,
-              fontSize: 14,
               textAlign: 'center',
             },
             header: {
@@ -160,7 +157,6 @@ export default () => {
             type: 'text',
             textStyle: {
               ...DEFAULT_FONT_CONFIG,
-              fontSize: 14,
               textAlign: 'center',
             },
             header: {
@@ -177,7 +173,6 @@ export default () => {
             type: 'text',
             textStyle: {
               ...DEFAULT_FONT_CONFIG,
-              fontSize: 14,
               textAlign: 'center',
             },
             header: {

@@ -118,7 +118,7 @@ export default () => {
           textStyle: {
             ...DEFAULT_FONT_CONFIG,
             fontWeight: 'bold',
-            fontSize: 20,
+            fontSize: 24,
             color: {
               r: 255,
               g: 255,

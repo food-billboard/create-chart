@@ -70,14 +70,14 @@ export default () => {
           show: true,
           textStyle: {
             ...DEFAULT_FONT_CONFIG,
-            fontSize: 40,
+            fontSize: 24,
           },
           addonAfter: {
             show: true,
             value: '%',
             textStyle: {
               ...DEFAULT_FONT_CONFIG,
-              fontSize: 30,
+              fontSize: 24,
             },
           },
         },

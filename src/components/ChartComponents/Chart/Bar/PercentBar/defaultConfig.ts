@@ -31,7 +31,6 @@ export const DEFAULT_LABEL = {
       show: true,
       ...DEFAULT_FONT_CONFIG,
       fontWeight: 'bold',
-      fontSize: 14,
       color: {
         r: 255,
         g: 255,
@@ -42,7 +41,6 @@ export const DEFAULT_LABEL = {
       show: true,
       ...DEFAULT_FONT_CONFIG,
       fontWeight: 'bold',
-      fontSize: 14,
       color: {
         r: 255,
         g: 255,

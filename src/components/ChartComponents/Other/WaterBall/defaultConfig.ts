@@ -70,7 +70,7 @@ export default () => {
           label: {
             ...DEFAULT_FONT_CONFIG,
             fontWeight: 'bolder',
-            fontSize: 50,
+            fontSize: 24,
             show: true,
           },
           amplitude: 20, // 振幅

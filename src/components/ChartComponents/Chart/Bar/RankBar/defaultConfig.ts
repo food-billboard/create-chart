@@ -84,14 +84,12 @@ export default () => {
         yAxis: {
           textStyle: {
             ...DEFAULT_FONT_CONFIG,
-            fontSize: 16,
           },
           rankIcon: {
             show: true,
             textStyle: {
               ...DEFAULT_FONT_CONFIG,
               fontWeight: 'bold',
-              fontSize: 16,
             },
             showBackground: true,
           },
@@ -138,7 +136,6 @@ export default () => {
           label: {
             show: true,
             ...DEFAULT_FONT_CONFIG,
-            fontSize: 16,
             color: {
               r: 255,
               g: 255,

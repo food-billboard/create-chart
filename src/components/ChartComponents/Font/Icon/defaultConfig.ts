@@ -37,8 +37,8 @@ export default () => {
       BASIC_DEFAULT_CONFIG,
       {
         style: {
-          width: 100,
-          height: 100,
+          width: 48,
+          height: 48,
         },
       },
       CUSTOM_CONFIG,
