@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import isMobileJudge from 'is-mobile';
 import { get } from 'lodash';
 import { history } from 'umi';
+import { useGetUserInfo } from '@/hooks';
 import { ConnectState } from '@/models/connect';
 import Loading from '@/components/PageLoading';
 import IntroductionButton from '@/components/IntroductionButton';
@@ -149,6 +150,8 @@ const GlobalLayout = (props: any) => {
       />
     );
 
+  useGetUserInfo(location);
+
   // 分享页不用管登录
   if (pathname === '/share') return children;
   if (
@@ -176,6 +179,7 @@ const GlobalLayout = (props: any) => {
   return <FetchLoginWrapper {...props} />;
 };
 
+// 设置document title
 const DocumentTitleSetWrapper = (props: any) => {
   const { screenName, ...nextProps } = props;
   const { pathname } = nextProps.location || {};

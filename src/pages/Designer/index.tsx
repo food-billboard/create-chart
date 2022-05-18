@@ -41,6 +41,7 @@ const Designer = (props: {
   }, [setScreenType]);
 
   useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') return;
     window.addEventListener('beforeunload', closeAndPrompt);
     return () => {
       window.removeEventListener('beforeunload', closeAndPrompt);
