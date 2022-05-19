@@ -35,6 +35,7 @@ import WaterFallBar from './Chart/Bar/WaterFallBar';
 import BubbleScatter from './Chart/Scatter/BubbleScatter';
 import PolarBar from './Chart/Bar/PolarBar';
 import StepLine from './Chart/Line/StepLine';
+import PolarStackBar from './Chart/Bar/PolarStackBar';
 // other
 import WordCloud from './Other/WordCloud';
 import Iframe from './Other/Iframe';
@@ -134,6 +135,7 @@ COMPONENT_MAP.set(Radio.type, Radio);
 COMPONENT_MAP.set(PolarBar.type, PolarBar);
 COMPONENT_MAP.set(StepLine.type, StepLine);
 COMPONENT_MAP.set(Datepicker.type, Datepicker);
+COMPONENT_MAP.set(PolarStackBar.type, PolarStackBar);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

@@ -14,21 +14,21 @@ import {
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
-import ThemeUtil from '@/utils/Assist/Theme';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { DEFAULT_OPACITY } from '@/components/ChartComponents/Common/Constants/defaultConfig';
-import { TPolarBarConfig } from '../type';
+import ThemeUtil from '@/utils/Assist/Theme';
+import { TPolarStackBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
 
-const CHART_ID = 'POLAR_BAR';
+const CHART_ID = 'POLAR_STACK_BAR';
 
-const PolarBar = (props: {
+const PolarStackBar = (props: {
   className?: string;
   style?: CSSProperties;
-  value: ComponentData.TComponentData<TPolarBarConfig>;
+  value: ComponentData.TComponentData<TPolarStackBarConfig>;
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
@@ -40,7 +40,7 @@ const PolarBar = (props: {
   } = value;
 
   const { legend, series, polar, angleAxis, tooltip, animation, condition } =
-    useChartPerConfig<TPolarBarConfig>(options);
+    useChartPerConfig<TPolarStackBarConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -59,7 +59,7 @@ const PolarBar = (props: {
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TPolarBarConfig>(
+  } = useComponent<TPolarStackBarConfig>(
     {
       component: value,
       global,
@@ -73,14 +73,17 @@ const PolarBar = (props: {
     className: conditionClassName,
   } = useCondition(onCondition);
 
-  const { xAxisKeys, yAxisValues } = useChartValueMapField(processedValue, {
-    map: componentFilterMap,
-    fields: {
-      seriesKey: 's',
-      xAxisKeyKey: 'name',
-      yAxisValue: 'value',
+  const { xAxisKeys, yAxisValues, seriesKeys } = useChartValueMapField(
+    processedValue,
+    {
+      map: componentFilterMap,
+      fields: {
+        seriesKey: 'stack',
+        xAxisKeyKey: 'name',
+        yAxisValue: 'value',
+      },
     },
-  });
+  );
 
   const onClick = (params: any) => {
     const { name, data } = params;
@@ -117,7 +120,7 @@ const PolarBar = (props: {
         ...itemStyle,
         color: getRgbaString(itemStyle.color[0]),
       },
-      data: [yAxisValues._defaultValue_[0]],
+      data: yAxisValues._defaultValue_,
       animation: show,
       animationEasing,
       animationEasingUpdate: animationEasing,
@@ -125,16 +128,17 @@ const PolarBar = (props: {
       animationDurationUpdate: animationDuration,
     };
 
-    const realSeries = xAxisKeys.length
-      ? xAxisKeys.map((item: any, index: number) => {
+    const realSeries = seriesKeys.length
+      ? seriesKeys.map((item: any, index: number) => {
           return {
             ...baseSeries,
             itemStyle: {
               ...itemStyle,
               color: getRgbaString(itemStyle.color[index]),
             },
-            data: [yAxisValues._defaultValue_[index] || 0],
+            data: yAxisValues[item] || [],
             name: item,
+            stack: 'polar-stack',
           };
         })
       : [baseSeries];
@@ -155,24 +159,16 @@ const PolarBar = (props: {
         },
         legend: {
           ...legend,
-          data: xAxisKeys,
+          data: seriesKeys,
         },
         radiusAxis: {
-          type: 'category',
-          show: false,
-        },
-        polar: {
-          ...polar,
-          radius: polar.radius.map((item) => `${item}%`),
-        },
-        angleAxis: {
           show: true,
-          ...nextAngleAxis,
           axisLabel: {
             ...axisLabel,
             color: getRgbaString(axisLabel.color),
           },
           splitLine: {
+            show: true,
             lineStyle: {
               color: getRgbaString({
                 ...ThemeUtil.generateNextColor4CurrentTheme(0),
@@ -180,6 +176,20 @@ const PolarBar = (props: {
               }),
             },
           },
+        },
+        polar: {
+          ...polar,
+          radius: polar.radius.map((item) => `${item}%`),
+        },
+        angleAxis: {
+          show: true,
+          type: 'category',
+          ...nextAngleAxis,
+          axisLabel: {
+            ...axisLabel,
+            color: getRgbaString(axisLabel.color),
+          },
+          data: xAxisKeys,
         },
         series: realSeries,
         tooltip: {
@@ -250,10 +260,10 @@ const PolarBar = (props: {
   );
 };
 
-const WrapperPolarBar: typeof PolarBar & {
+const WrapperPolarStackBar: typeof PolarStackBar & {
   id: ComponentData.TComponentSelfType;
-} = PolarBar as any;
+} = PolarStackBar as any;
 
-WrapperPolarBar.id = CHART_ID;
+WrapperPolarStackBar.id = CHART_ID;
 
-export default WrapperPolarBar;
+export default WrapperPolarStackBar;

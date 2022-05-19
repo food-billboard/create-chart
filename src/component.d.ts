@@ -133,7 +133,8 @@ declare namespace ComponentData {
     | 'RADIO'
     | 'POLAR_BAR'
     | 'STEP_LINE'
-    | 'DATE_PICKER';
+    | 'DATE_PICKER'
+    | 'POLAR_STACK_BAR';
 
   // 基础组件属性
   export type TBaseConfig = {

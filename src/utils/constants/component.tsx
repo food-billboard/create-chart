@@ -66,6 +66,7 @@ import Radio from '../../../public/components/radio.jpg';
 import StateCard from '../../../public/components/state-card.jpg';
 import PictureWall from '../../../public/components/picture-wall.jpg';
 import DatePicker from '../../../public/components/date-picker.jpg';
+import PolarStackBar from '../../../public/components/polar-stack-bar.png';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -155,6 +156,12 @@ export const COMPONENT_TYPE_LIST = [
             type: 'POLAR_BAR',
             title: '极坐标柱形图',
             icon: PolarBar,
+            description: '',
+          },
+          {
+            type: 'POLAR_STACK_BAR',
+            title: '极坐标堆叠扇形柱图',
+            icon: PolarStackBar,
             description: '',
           },
         ],

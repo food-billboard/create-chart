@@ -2,6 +2,9 @@ import { omit } from 'lodash';
 import { nanoid } from 'nanoid';
 import ThemeUtil from '@/utils/Assist/Theme';
 
+// 默认的透明度
+export const DEFAULT_OPACITY = 0.4;
+
 export const DEFAULT_RADIAL_CONFIG: Pick<
   ComponentData.TGradientColorConfig,
   'type' | 'linearPosition' | 'radialPosition'
