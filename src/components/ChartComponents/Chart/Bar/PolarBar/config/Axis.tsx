@@ -33,7 +33,7 @@ const AxisConfig = (props: {
 
   const angleConfig = useMemo(() => {
     return (
-      <Item label="其实角度">
+      <Item label="起始角度">
         <FullForm>
           <AngleSelect
             value={startAngle}

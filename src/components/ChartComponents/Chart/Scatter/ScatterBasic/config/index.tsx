@@ -37,7 +37,7 @@ class Config extends Component<
 
     return (
       <ComponentOptionConfig>
-        <TabPane key={'1'} tab={<Tab>图例</Tab>}>
+        <TabPane key={'1'} tab={<Tab>网格</Tab>}>
           <ConfigList level={1}>
             <GridConfig value={grid} onChange={onChange} />
           </ConfigList>
