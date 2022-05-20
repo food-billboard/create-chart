@@ -59,13 +59,19 @@ const BaseConfig = (props: {
           <HalfForm>
             <InputNumber
               value={width}
-              onChange={onValueChange.bind(null, 'width')}
+              onChange={(value) => {
+                onValueChange('width', value >= 20 ? value : 20);
+              }}
+              min={20}
             />
           </HalfForm>
           <HalfForm>
             <InputNumber
               value={height}
-              onChange={onValueChange.bind(null, 'height')}
+              onChange={(value) => {
+                onValueChange('height', value >= 20 ? value : 20);
+              }}
+              min={20}
             />
           </HalfForm>
         </Item>

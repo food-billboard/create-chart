@@ -1,7 +1,10 @@
 import { ReactNode, CSSProperties, Component } from 'react';
 import { Rnd, Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
 import { merge, debounce } from 'lodash';
-import ResizeHandleComponent from './ResizeComponent';
+import {
+  MIN_COMPONENT_HEIGHT,
+  MIN_COMPONENT_WIDTH,
+} from '@/utils/constants/another';
 import { isGroupComponent } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils';
 import { AbsorbUtil } from '@/pages/Designer/components/Panel/components/PanelWrapper/components/AbsorbGuideLine/utils';
@@ -349,6 +352,8 @@ class ComponentWrapper extends Component<
           return acc;
         }, {})}
         size={size}
+        minWidth={MIN_COMPONENT_WIDTH}
+        minHeight={MIN_COMPONENT_HEIGHT}
         {...nextProps}
       >
         {children}
