@@ -13,14 +13,14 @@ const ChangeComponentWithData = (props: CommonActionType) => {
 
   const componentSelectRef = useRef<ComponentSelectRef>(null);
 
-  const canChange = useMemo(() => {
-    return select.length === 1;
-  }, [select]);
-
   // 组件数据
   const component = useMemo(() => {
     return getComponent(select[0], components);
   }, [select, components]);
+
+  const canChange = useMemo(() => {
+    return select.length === 1 && component.componentType !== 'GROUP_COMPONENT';
+  }, [select, component]);
 
   // 组件类型
   const componentType = useMemo(() => {
@@ -88,7 +88,7 @@ const ChangeComponentWithData = (props: CommonActionType) => {
   return (
     <>
       <div
-        key="change_component_width_data"
+        key="change_component_with_data"
         onClick={handleClick}
         style={{
           display: canChange ? 'block' : 'none',

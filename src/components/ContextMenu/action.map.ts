@@ -15,6 +15,7 @@ import {
   PrevOrderAction,
   RecoverDefaultAction,
   ChangeComponentWithData,
+  CopyComponentWithStyle,
 } from './Actions';
 
 export type ActionItemType =
@@ -33,7 +34,8 @@ export type ActionItemType =
   | 'next_order'
   | 'prev_order'
   | 'recover_default'
-  | 'change_component_width_data';
+  | 'change_component_with_data'
+  | 'copy_component_with_style';
 
 export type ActionItem = {
   type: ActionItemType;
@@ -86,8 +88,12 @@ export const DEFAULT_ACTION_LIST: ActionItem[] = [
     children: UnGroupAction,
   },
   {
-    type: 'change_component_width_data',
+    type: 'change_component_with_data',
     children: ChangeComponentWithData,
+  },
+  {
+    type: 'copy_component_with_style',
+    children: CopyComponentWithStyle,
   },
   {
     type: 'show',

@@ -14,3 +14,4 @@ export { default as NextOrderAction } from './NextOrder';
 export { default as PrevOrderAction } from './PrevOrder';
 export { default as RecoverDefaultAction } from './RecoverDefault';
 export { default as ChangeComponentWithData } from './ChangeComponentWithData';
+export { default as CopyComponentWithStyle } from './CopyComponentWithStyle';
