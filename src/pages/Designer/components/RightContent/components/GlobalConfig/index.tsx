@@ -28,7 +28,7 @@ const GlobalConfig = (props: {
   const {
     config: {
       style: { width, height },
-      attr: { poster, theme },
+      attr: { poster, theme, grid },
     },
     description,
     poster: cover,
@@ -98,6 +98,14 @@ const GlobalConfig = (props: {
                 <CoverSelect
                   value={cover}
                   onChange={onValueChange.bind(null, 'poster')}
+                />
+              </FullForm>
+            </Item>
+            <Item label="栅格">
+              <FullForm>
+                <InputNumber
+                  value={grid || 1}
+                  onChange={onValueChange.bind(null, 'config.attr.grid')}
                 />
               </FullForm>
             </Item>

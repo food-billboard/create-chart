@@ -36,6 +36,7 @@ export type RenderComponentProps = {
   screenType: ComponentData.ScreenType;
   timestamps?: number;
   hoverSelect: string;
+  grid: number;
 };
 
 const OnlyClickDiv = (props: {
@@ -90,6 +91,7 @@ const RenderComponent = memo(
       timestamps,
       hoverSelect,
       setComponentAll,
+      grid,
     } = props;
 
     const {
@@ -182,6 +184,7 @@ const RenderComponent = memo(
           scale={scale / 100}
           componentId={id}
           isSelect={isSelect}
+          grid={grid}
         >
           <OnlyClickDiv
             className={classnames(

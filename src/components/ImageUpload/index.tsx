@@ -4,7 +4,7 @@ import { useControllableValue } from 'ahooks';
 import classnames from 'classnames';
 import { nanoid } from 'nanoid';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { PlusOutlined, LinkOutlined } from '@ant-design/icons';
+import { FileImageOutlined, LinkOutlined } from '@ant-design/icons';
 import {
   UploadImage,
   createBaseUploadFile,
@@ -88,9 +88,9 @@ const PicturesWall = (
 
   const uploadButton = useMemo(() => {
     return (
-      <div>
-        <PlusOutlined />
-        <div style={{ marginTop: 8 }}>上传</div>
+      <div className={styles['component-image-upload-placeholder']}>
+        <FileImageOutlined />
+        <div style={{ marginTop: 8 }}>点击这里进行更改</div>
       </div>
     );
   }, []);
@@ -145,6 +145,7 @@ const PicturesWall = (
         className="w-100 m-b-4"
         ref={inputRef}
         prefix={<LinkOutlined />}
+        placeholder="请输入图片地址"
       />
       <Upload
         listType="picture-card"

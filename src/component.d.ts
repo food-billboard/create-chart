@@ -227,6 +227,7 @@ declare namespace ComponentData {
         constants: TConstants[];
         guideLine: TGuideLineConfig;
         theme: string;
+        grid: number;
       };
       flag: {
         type: 'PC' | 'H5';

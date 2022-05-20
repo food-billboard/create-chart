@@ -6,6 +6,7 @@ export const mapStateToProps = (state: ConnectState) => {
     hoverSelect: state.global.hoverSelect || '',
     scale: state.global.scale,
     screenType: state.global.screenType,
+    grid: state.global.screenData.config.attr.grid || 1,
   };
 };
 

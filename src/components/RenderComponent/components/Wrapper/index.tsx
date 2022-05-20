@@ -31,6 +31,7 @@ class ComponentWrapper extends Component<
     ) => void;
     componentId: string;
     isSelect: boolean;
+    grid: number;
   } & Partial<Props>
 > {
   state = {
@@ -331,6 +332,7 @@ class ComponentWrapper extends Component<
       size,
       isSelect,
       setComponentAll,
+      grid,
       ...nextProps
     } = this.props;
     const { lockAspectRatio } = this.state;
@@ -369,6 +371,8 @@ class ComponentWrapper extends Component<
           minWidth={MIN_COMPONENT_WIDTH}
           minHeight={MIN_COMPONENT_HEIGHT}
           lockAspectRatio={lockAspectRatio}
+          resizeGrid={[grid, grid]}
+          dragGrid={[grid, grid]}
           {...nextProps}
         >
           {children}
