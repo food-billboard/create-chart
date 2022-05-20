@@ -4,16 +4,20 @@ import LocalConfig from '@/utils/Assist/LocalConfig';
 export const useLocalStorage: <T>(
   key: string,
   defaultValue?: T,
-) => [T | undefined, (value: T) => Promise<void>] = <T>(
+) => [T | undefined, (value: T) => Promise<void>, boolean] = <T>(
   key: string,
   defaultValue?: T,
 ) => {
   const [value, setStateValue] = useState<T | undefined>(defaultValue);
+  const [initialDone, setInitialDone] = useState<boolean>(false);
 
-  const onChange = async () => {
+  const onChange = async (init = false) => {
     const result = await LocalConfig.getItem(key);
     if (result && !result.errMsg) {
       setStateValue(result.value ?? defaultValue);
+      init && setInitialDone(true);
+    } else {
+      init && setInitialDone(true);
     }
   };
 
@@ -26,12 +30,12 @@ export const useLocalStorage: <T>(
   }, []);
 
   useEffect(() => {
-    onChange();
+    onChange(true);
     LocalConfig.addListener('change', onChange);
     return () => {
       LocalConfig.removeListener('change', onChange);
     };
   }, []);
 
-  return [value, setValue];
+  return [value, setValue, initialDone];
 };

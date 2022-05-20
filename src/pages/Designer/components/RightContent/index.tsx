@@ -50,7 +50,11 @@ const RightContent = (props: {
 
   return (
     <FocusWrapper
-      className={classnames(styles['design-page-right'], 'normal-background')}
+      className={classnames(
+        styles['design-page-right'],
+        'normal-background',
+        'design-page-right',
+      )}
     >
       {children}
     </FocusWrapper>

@@ -128,10 +128,14 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
 
     return (
       <FocusWrapper
-        className={classnames(styles['design-layer-manage-wrapper'], {
-          'p-lr-8': visible,
-          [styles['design-layer-manage-wrapper-transition']]: !disabled,
-        })}
+        className={classnames(
+          'design-layer-manage-wrapper',
+          styles['design-layer-manage-wrapper'],
+          {
+            'p-lr-8': visible,
+            [styles['design-layer-manage-wrapper-transition']]: !disabled,
+          },
+        )}
         style={{
           width: visible ? stateLayerWidth : 0,
         }}

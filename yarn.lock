@@ -849,6 +849,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@popperjs/core@^2.9.2":
+  version "2.11.5"
+  resolved "https://registry.npmmirror.com/@popperjs/core/-/core-2.11.5.tgz#db5a11bf66bdab39569719555b0f76e138d7bd64"
+  integrity sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==
+
 "@qixian.cs/path-to-regexp@^6.1.0":
   version "6.1.0"
   resolved "https://registry.nlark.com/@qixian.cs/path-to-regexp/download/@qixian.cs/path-to-regexp-6.1.0.tgz#6b84ad01596332aba95fa29d2e70104698cd5c45"
@@ -7579,6 +7584,13 @@ react-selecto@^1.13.2:
   dependencies:
     selecto "~1.13.2"
 
+react-shepherd@^3.3.6:
+  version "3.3.6"
+  resolved "https://registry.npmmirror.com/react-shepherd/-/react-shepherd-3.3.6.tgz#e9886f8456a35b52c81dfbc53c9d2dbe4e853109"
+  integrity sha512-pYa6WuK+nHTwi1k/WFBSKj2WxQUCwGKjIxRVtAO9wDfRJwF6+hA9UVP7l0paGYaz4ZfU7ZxiOEsUFbXUyWs4xg==
+  dependencies:
+    shepherd.js "^8.3.1"
+
 react-side-effect@^2.1.0:
   version "2.1.1"
   resolved "https://registry.npm.taobao.org/react-side-effect/download/react-side-effect-2.1.1.tgz#66c5701c3e7560ab4822a4ee2742dee215d72eb3"
@@ -8317,6 +8329,15 @@ shellwords@^0.1.1:
   resolved "https://registry.npm.taobao.org/shellwords/download/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha1-1rkYHBpI05cyTISHHvvPxz/AZUs=
 
+shepherd.js@^8.3.1:
+  version "8.3.1"
+  resolved "https://registry.npmmirror.com/shepherd.js/-/shepherd.js-8.3.1.tgz#131eeefc5eb2bc44c9e23d0da139db46b2b55339"
+  integrity sha512-IhxZNhnK2m/pNTXudNfYrcwvcZNWkeYngQbQee8nC3xJ2GjeIatGqivhdZAMZ+LeogZvKMakB931d/V534uhrw==
+  dependencies:
+    "@popperjs/core" "^2.9.2"
+    deepmerge "^4.2.2"
+    smoothscroll-polyfill "^0.4.4"
+
 side-channel@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npm.taobao.org/side-channel/download/side-channel-1.0.4.tgz#efce5c8fdc104ee751b25c58d4290011fa5ea2cf"
@@ -8375,6 +8396,11 @@ slick-carousel@^1.8.1:
   version "1.8.1"
   resolved "https://registry.npmmirror.com/slick-carousel/-/slick-carousel-1.8.1.tgz#a4bfb29014887bb66ce528b90bd0cda262cc8f8d"
   integrity sha512-XB9Ftrf2EEKfzoQXt3Nitrt/IPbT+f1fgqBdoxO3W/+JYvtEOW6EgxnWfr9GH6nmULv7Y2tPmEX3koxThVmebA==
+
+smoothscroll-polyfill@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.npmmirror.com/smoothscroll-polyfill/-/smoothscroll-polyfill-0.4.4.tgz#3a259131dc6930e6ca80003e1cb03b603b69abf8"
+  integrity sha512-TK5ZA9U5RqCwMpfoMq/l1mrH0JAR7y7KRvOBx0n2869aLxch+gT9GhN3yUfjiw+d/DiF1mKo14+hd62JyMmoBg==
 
 snapdragon-node@^2.0.1:
   version "2.1.1"

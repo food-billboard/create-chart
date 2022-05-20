@@ -70,6 +70,7 @@ const ComponentList = (props: { type: string }) => {
         'border-r-8',
         'normal-background',
         'zero-scrollbar',
+        'design-left-component-list',
       )}
       bordered={false}
       ghost

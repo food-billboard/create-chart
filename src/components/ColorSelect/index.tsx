@@ -29,9 +29,13 @@ function getOpacity(prevColor: ComponentData.TColorConfig) {
 
 function getRgbaString(prevColor: ComponentData.TColorConfig) {
   if (!prevColor) return prevColor;
-  return `rgba(${color(omit(prevColor, 'a')).array().join(',')}, ${
-    prevColor.a ?? 1
-  })`;
+  try {
+    return `rgba(${color(omit(prevColor, 'a')).array().join(',')}, ${
+      prevColor.a ?? 1
+    })`;
+  } catch (err) {
+    return '';
+  }
 }
 
 function getHexString(prevColor: ComponentData.TColorConfig, prefix?: boolean) {

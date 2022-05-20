@@ -7,6 +7,7 @@ import { useHashChangeReload } from '@/hooks';
 import FetchScreenComponent, {
   FetchScreenComponentRef,
 } from '@/components/FetchScreenComponent';
+import ShepherdWrapper from './components/ShepherdWrapper';
 import Header from './components/Header';
 import LeftContent from './components/LeftContent';
 import RightContent from './components/RightContent';
@@ -50,19 +51,21 @@ const Designer = (props: {
 
   return (
     <ConfigProvider componentSize="small">
-      <div
-        className={styles['designer-page']}
-        onContextMenu={preventDefaultContextMenu}
-      >
-        <Header />
-        <div className={styles['designer-page-content']}>
-          <DndProvider backend={HTML5Backend}>
-            <LeftContent />
-            <Panel />
-          </DndProvider>
-          <RightContent />
+      <ShepherdWrapper>
+        <div
+          className={styles['designer-page']}
+          onContextMenu={preventDefaultContextMenu}
+        >
+          <Header />
+          <div className={styles['designer-page-content']}>
+            <DndProvider backend={HTML5Backend}>
+              <LeftContent />
+              <Panel />
+            </DndProvider>
+            <RightContent />
+          </div>
         </div>
-      </div>
+      </ShepherdWrapper>
       <FetchScreenComponent ref={requestRef} />
     </ConfigProvider>
   );
