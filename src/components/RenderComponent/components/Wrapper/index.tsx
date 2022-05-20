@@ -8,6 +8,7 @@ import {
 import { isGroupComponent } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils';
 import { AbsorbUtil } from '@/pages/Designer/components/Panel/components/PanelWrapper/components/AbsorbGuideLine/utils';
+import KeyActionComponent from './KeyActionComponent';
 
 class ComponentWrapper extends Component<
   {
@@ -32,6 +33,10 @@ class ComponentWrapper extends Component<
     isSelect: boolean;
   } & Partial<Props>
 > {
+  state = {
+    lockAspectRatio: false,
+  };
+
   get multiSelect() {
     const { select } = this.props;
     return (select?.length || 0) > 1;
@@ -305,6 +310,13 @@ class ComponentWrapper extends Component<
     }
   };
 
+  onLockAspectRatioChange = (value: boolean) => {
+    if (!this.resizeInfo.resize)
+      this.setState({
+        lockAspectRatio: value,
+      });
+  };
+
   render() {
     const {
       children,
@@ -321,43 +333,47 @@ class ComponentWrapper extends Component<
       setComponentAll,
       ...nextProps
     } = this.props;
+    const { lockAspectRatio } = this.state;
 
     return (
-      <Rnd
-        enableResizing={!pointerDisabled && isSelect}
-        disableDragging={pointerDisabled || !isSelect}
-        className={className}
-        style={merge({}, style)}
-        default={{
-          x: 0,
-          y: 0,
-          width: 320,
-          height: 200,
-        }}
-        onDrag={this.onDrag}
-        onDragStop={this.onDragStop}
-        onResize={this.onResize}
-        onResizeStop={this.onResizeStop}
-        resizeHandleClasses={[
-          'left',
-          'top',
-          'right',
-          'bottom',
-          'topLeft',
-          'topRight',
-          'bottomLeft',
-          'bottomRight',
-        ].reduce<any>((acc, cur) => {
-          acc[cur] = 'react-select-to-border';
-          return acc;
-        }, {})}
-        size={size}
-        minWidth={MIN_COMPONENT_WIDTH}
-        minHeight={MIN_COMPONENT_HEIGHT}
-        {...nextProps}
-      >
-        {children}
-      </Rnd>
+      <KeyActionComponent onChange={this.onLockAspectRatioChange}>
+        <Rnd
+          enableResizing={!pointerDisabled && isSelect}
+          disableDragging={pointerDisabled || !isSelect}
+          className={className}
+          style={merge({}, style)}
+          default={{
+            x: 0,
+            y: 0,
+            width: 320,
+            height: 200,
+          }}
+          onDrag={this.onDrag}
+          onDragStop={this.onDragStop}
+          onResize={this.onResize}
+          onResizeStop={this.onResizeStop}
+          resizeHandleClasses={[
+            'left',
+            'top',
+            'right',
+            'bottom',
+            'topLeft',
+            'topRight',
+            'bottomLeft',
+            'bottomRight',
+          ].reduce<any>((acc, cur) => {
+            acc[cur] = 'react-select-to-border';
+            return acc;
+          }, {})}
+          size={size}
+          minWidth={MIN_COMPONENT_WIDTH}
+          minHeight={MIN_COMPONENT_HEIGHT}
+          lockAspectRatio={lockAspectRatio}
+          {...nextProps}
+        >
+          {children}
+        </Rnd>
+      </KeyActionComponent>
     );
   }
 }
