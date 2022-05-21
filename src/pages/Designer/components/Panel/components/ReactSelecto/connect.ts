@@ -1,4 +1,3 @@
-import { get } from 'lodash';
 import { ConnectState } from '@/models/connect';
 
 export const mapStateToProps = (state: ConnectState) => {

@@ -97,15 +97,15 @@ const PanelWrapper = (props: {
   };
 
   useEffect(() => {
-    sleep(100).then(resize);
-    window.addEventListener('resize', resize);
-    return () => {
-      window.removeEventListener('resize', resize);
-    };
+    // sleep(100).then(resize);
+    // window.addEventListener('resize', resize);
+    // return () => {
+    //   window.removeEventListener('resize', resize);
+    // };
   }, []);
 
   useEffect(() => {
-    resize();
+    sleep(1000).then(resize);
   }, [scale]);
 
   return (
