@@ -5,34 +5,6 @@ export default [
     component: '@/layouts/index',
     routes: [
       {
-        path: '/',
-        component: '@/pages/ScreenList',
-      },
-      {
-        path: '/designer',
-        component: '@/pages/Designer',
-      },
-      {
-        path: '/model-designer',
-        component: '@/pages/Designer',
-      },
-      {
-        path: '/model',
-        component: '@/pages/ModelList',
-      },
-      {
-        path: '/share',
-        component: '@/pages/Share',
-      },
-      {
-        path: '/preview',
-        component: '@/pages/Previewer',
-      },
-      {
-        path: '/model-preview',
-        component: '@/pages/Previewer',
-      },
-      {
         path: '/register',
         component: '@/pages/Register',
       },
@@ -43,6 +15,40 @@ export default [
       {
         path: '/forget',
         component: '@/pages/Forget',
+      },
+      {
+        path: '/share',
+        component: '@/pages/Share',
+      },
+      {
+        path: '/',
+        component: '@/layouts/AuthLayout/index',
+        routes: [
+          {
+            path: '/',
+            component: '@/pages/ScreenList',
+          },
+          {
+            path: '/designer',
+            component: '@/pages/Designer',
+          },
+          {
+            path: '/model-designer',
+            component: '@/pages/Designer',
+          },
+          {
+            path: '/model',
+            component: '@/pages/ModelList',
+          },
+          {
+            path: '/preview',
+            component: '@/pages/Previewer',
+          },
+          {
+            path: '/model-preview',
+            component: '@/pages/Previewer',
+          },
+        ],
       },
     ],
   },
