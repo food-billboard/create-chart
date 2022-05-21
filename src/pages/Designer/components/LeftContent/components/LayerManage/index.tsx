@@ -11,7 +11,7 @@ import classnames from 'classnames';
 import { throttle } from 'lodash';
 import FocusWrapper from '@/components/FocusWrapper';
 import ColorSelect from '@/components/ColorSelect';
-import { useLocalStorage } from '@/hooks';
+import { useLocalStorage, useIsScrolling } from '@/hooks';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
 import { MAX_LAYER_WIDTH, MIN_LAYER_WIDTH } from '@/utils/constants';
 import ThemeUtil from '@/utils/Assist/Theme';
@@ -97,6 +97,9 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
     );
     const [stateLayerWidth, setStateLayerWidth] = useState<number>(layerWidth);
     const isDeal = useRef<boolean>(false);
+    const isScroll = useIsScrolling(
+      document.querySelector('.design-layer-manage-wrapper'),
+    );
 
     const onClose = useCallback(() => {
       setVisible(false);
@@ -149,7 +152,7 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
             }}
           />
           <LayerList iconMode={iconMode} disabled={disabled} />
-          {!!disabled && (
+          {(!!disabled || isScroll) && (
             <div className={styles['design-layer-manage-content-cover']}></div>
           )}
           <ResizeLine

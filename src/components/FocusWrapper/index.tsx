@@ -11,6 +11,7 @@ const FocusWrapper = (props: {
   className?: string;
   options?: Options;
   force?: boolean;
+  [key: string]: any;
 }) => {
   const { options = {}, force, ...nextProps } = props;
 

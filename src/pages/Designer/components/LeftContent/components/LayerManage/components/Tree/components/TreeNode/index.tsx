@@ -1,6 +1,7 @@
-import { useCallback, useRef, useMemo, useEffect } from 'react';
+import { useCallback, useRef, useMemo } from 'react';
 import { Space } from 'antd';
 import { connect } from 'dva';
+import { useDebounceEffect } from 'ahooks';
 import classnames from 'classnames';
 import { FolderOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import { useHover } from 'ahooks';
@@ -104,13 +105,17 @@ const ListItem = ({
     );
   }, [isLeaf, icon, isExpend, iconMode]);
 
-  useEffect(() => {
-    if (isHover) {
-      setHoverSelect(id);
-    } else {
-      setHoverSelect('');
-    }
-  }, [isHover, id, setHoverSelect]);
+  useDebounceEffect(
+    () => {
+      if (isHover) {
+        setHoverSelect(id);
+      } else {
+        setHoverSelect('');
+      }
+    },
+    [isHover, id, setHoverSelect],
+    { wait: 50 },
+  );
 
   return (
     <ContextMenu
