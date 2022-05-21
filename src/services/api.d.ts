@@ -138,4 +138,14 @@ declare namespace API_SCREEN {
     header: string;
     method: 'get' | 'post';
   };
+
+  export type TPreLeadInDataParams = {
+    _id: string;
+    type: 'screen' | 'model';
+  };
+
+  export type TPreExportDataParams = {
+    _id: string;
+    type: 'screen' | 'model';
+  };
 }

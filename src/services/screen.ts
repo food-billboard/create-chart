@@ -148,3 +148,19 @@ export const preRequestData = (data: API_SCREEN.TPreRequestDataParams) => {
     data,
   });
 };
+
+// 大屏导入
+export const postScreenLeadIn = (data: API_SCREEN.TPreLeadInDataParams) => {
+  return request('/api/screen/pre/leadin', {
+    method: 'POST',
+    data,
+  });
+};
+
+// 大屏导出
+export const postScreenExport = (data: API_SCREEN.TPreExportDataParams) => {
+  return request('/api/screen/pre/export', {
+    method: 'POST',
+    data,
+  });
+};

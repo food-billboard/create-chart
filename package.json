@@ -41,6 +41,7 @@
     "echarts-liquidfill": "^3.1.0",
     "echarts-wordcloud": "^2.0.0",
     "eventemitter3": "^4.0.7",
+    "file-saver": "^2.0.5",
     "html2canvas": "^1.4.0",
     "is-mobile": "^3.1.1",
     "json5": "^2.2.0",
@@ -81,6 +82,7 @@
   "devDependencies": {
     "@types/classnames": "^2.3.1",
     "@types/color": "^3.0.2",
+    "@types/file-saver": "^2.0.5",
     "@types/lodash": "^4.14.178",
     "@types/mockjs": "^1.0.6",
     "@types/mustache": "^4.1.2",

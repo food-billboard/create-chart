@@ -10,7 +10,7 @@ import {
 
 const UPLOAD_INSTANCE = new Upload();
 
-function exitDataFn(onResponse: Function) {
+export function exitDataFn(onResponse: Function) {
   return async function (params: {
     filename: string;
     md5: string;
@@ -33,7 +33,7 @@ function exitDataFn(onResponse: Function) {
   };
 }
 
-function uploadFn() {
+export function uploadFn() {
   return async function (data: any) {
     let response: any = {};
     const md5 = data.get('md5');

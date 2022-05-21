@@ -1,8 +1,9 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { Pagination, Input, Button, Empty } from 'antd';
+import { Pagination, Input, Button, Empty, Space } from 'antd';
 import classnames from 'classnames';
 import { getScreenList } from '@/services';
 import { goDesign } from '@/utils/tool';
+import { LeadIn } from '@/utils/Assist/LeadInAndOutput';
 import List from './components/ScreenList';
 import styles from './index.less';
 
@@ -55,6 +56,10 @@ function ScreenList() {
     goDesign();
   }, []);
 
+  const handleLeadIn = useCallback(async () => {
+    await LeadIn('screen');
+  }, []);
+
   useEffect(() => {
     fetchData({
       currPage,
@@ -104,9 +109,14 @@ function ScreenList() {
           })}
         />
         <div>
-          <Button type="primary" onClick={handleAdd}>
-            新建
-          </Button>
+          <Space>
+            <Button type="primary" onClick={handleLeadIn}>
+              导入
+            </Button>
+            <Button type="primary" onClick={handleAdd}>
+              新建
+            </Button>
+          </Space>
         </div>
       </div>
       <div className={styles['screen-page-content-main-list']}>

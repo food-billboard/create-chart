@@ -1,6 +1,10 @@
 import { useRef, useCallback } from 'react';
 import { Row, Col, Button, Switch, message, Modal } from 'antd';
-import { DeleteOutlined, FolderViewOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  FolderViewOutlined,
+  ExportOutlined,
+} from '@ant-design/icons';
 import classnames from 'classnames';
 import {
   deleteScreenModel,
@@ -9,6 +13,7 @@ import {
   disabledScreenModel,
 } from '@/services';
 import { goDesignModel, goPreviewModel } from '@/utils/tool';
+import { exportData } from '@/utils/Assist/LeadInAndOutput';
 import styles from './index.less';
 
 const COL_SPAN = {
@@ -94,6 +99,18 @@ const ScreenList = (props: {
     [onChange],
   );
 
+  // 导出
+  const handleExport = useCallback(
+    async (value: API_SCREEN.TGetScreenListData, e: any) => {
+      e.stopPropagation();
+      await exportData({
+        type: 'screen',
+        _id: value._id,
+      });
+    },
+    [],
+  );
+
   return (
     <div className={styles['screen-list-icon-content']}>
       <Row
@@ -114,6 +131,13 @@ const ScreenList = (props: {
                   <div className={styles['screen-list-icon-content-item-main']}>
                     <img src={poster} />
                     <div>
+                      <Button
+                        size="small"
+                        type="link"
+                        icon={<ExportOutlined />}
+                        title="导出"
+                        onClick={handleExport.bind(null, item)}
+                      ></Button>
                       {!enable && (
                         <Button
                           size="small"
