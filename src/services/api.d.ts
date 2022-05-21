@@ -131,4 +131,11 @@ declare namespace API_SCREEN {
     poster: string;
     components: any;
   };
+
+  export type TPreRequestDataParams = {
+    url: string;
+    body: string;
+    header: string;
+    method: 'get' | 'post';
+  };
 }

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Select } from 'antd';
+import { Checkbox, Select } from 'antd';
 import { merge } from 'lodash';
 import { connect } from 'dva';
 import { InfoCircleOutlined } from '@ant-design/icons';
@@ -30,7 +30,7 @@ export type ApiConfigProps = {
 const ApiConfig = (props: ApiConfigProps) => {
   const { onChange, value, params, constants } = props;
   const {
-    request: { method, url, headers, body },
+    request: { method, url, headers, body, serviceRequest },
   } = value;
 
   const onUrlChange = useCallback(
@@ -120,6 +120,20 @@ const ApiConfig = (props: ApiConfigProps) => {
           </SubForm>
         </>
       )}
+      <SubForm>
+        <Checkbox
+          checked={!!serviceRequest}
+          onChange={(e) => {
+            onChange?.({
+              request: {
+                serviceRequest: e.target.checked,
+              },
+            });
+          }}
+        >
+          服务端请求
+        </Checkbox>
+      </SubForm>
     </div>
   );
 };

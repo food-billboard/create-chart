@@ -74,6 +74,7 @@ export const BASIC_DEFAULT_DATA_CONFIG: ComponentData.TBaseConfig['data'] = {
       show: false,
       value: 5,
     },
+    serviceRequest: false,
     type: 'static',
     value: [],
     valueType: 'array',

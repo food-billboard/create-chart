@@ -1,5 +1,6 @@
 import json5 from 'json5';
 import mustache from 'mustache';
+import { preRequestData } from '@/services';
 import VariableStringUtil from '../VariableString';
 import request from '../../request';
 
@@ -175,7 +176,15 @@ class FilterData {
   ) {
     const {
       filter: {},
-      request: { method, url, headers, body, type, value: responseData },
+      request: {
+        method,
+        url,
+        headers,
+        body,
+        type,
+        value: responseData,
+        serviceRequest,
+      },
     } = value;
 
     if (type !== 'api' || !url) return responseData;
@@ -188,12 +197,24 @@ class FilterData {
     }
 
     try {
-      const result = await request(url, {
-        method,
-        data: realBody,
-        headers: realHeaders as any,
-        mis: false,
-      });
+      let result: any;
+
+      // 服务端代理请求
+      if (serviceRequest) {
+        result = await preRequestData({
+          method: method.toLowerCase() as any,
+          body: JSON.stringify(realBody),
+          header: JSON.stringify(realHeaders),
+          url,
+        });
+      } else {
+        result = await request(url, {
+          method,
+          data: realBody,
+          headers: realHeaders as any,
+          mis: false,
+        });
+      }
       return result;
     } catch (err) {
       console.error('-----------error generate start-----------');

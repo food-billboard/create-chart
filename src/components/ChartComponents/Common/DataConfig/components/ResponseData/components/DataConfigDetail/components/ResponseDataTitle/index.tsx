@@ -21,7 +21,7 @@ const ResponseDataTitle = (props: {
 
   const reRequestData = useCallback(async () => {
     const result: any = await FilterDataUtil.requestData(
-      props.value!,
+      value!,
       params,
       constants,
     );

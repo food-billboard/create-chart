@@ -29,6 +29,7 @@ declare namespace ComponentData {
       method: 'POST' | 'GET';
       headers: string;
       body: string;
+      serviceRequest: boolean;
       frequency: {
         show: boolean;
         value: number;

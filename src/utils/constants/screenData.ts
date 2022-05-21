@@ -64,6 +64,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           b: 36,
         },
       },
+      grid: 1,
       filter: DEFAULT_FILTER_LIST,
       params: [],
       constants: [],

@@ -140,3 +140,11 @@ export const disabledScreen = (params: API_SCREEN.TDisabledScreenParams) => {
     params,
   });
 };
+
+// 服务端代理数据请求
+export const preRequestData = (data: API_SCREEN.TPreRequestDataParams) => {
+  return request('/api/screen/pre/request', {
+    method: 'POST',
+    data,
+  });
+};
