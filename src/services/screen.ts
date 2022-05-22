@@ -162,5 +162,7 @@ export const postScreenExport = (data: API_SCREEN.TPreExportDataParams) => {
   return request('/api/screen/pre/export', {
     method: 'POST',
     data,
+    responseType: 'arraybuffer',
+    origin: true,
   });
 };

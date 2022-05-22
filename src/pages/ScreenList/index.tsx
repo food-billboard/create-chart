@@ -57,7 +57,7 @@ function ScreenList() {
   }, []);
 
   const handleLeadIn = useCallback(async () => {
-    await LeadIn('screen');
+    LeadIn('screen', fetchData.bind(null, {}));
   }, []);
 
   useEffect(() => {

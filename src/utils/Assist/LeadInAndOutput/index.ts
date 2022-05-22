@@ -52,7 +52,10 @@ export async function upload(file: File) {
 }
 
 // 导入
-export async function LeadIn(type: API_SCREEN.TPreLeadInDataParams['type']) {
+export async function LeadIn(
+  type: API_SCREEN.TPreLeadInDataParams['type'],
+  callback?: () => void,
+) {
   if (LEAD_IN_LOADING) return;
   const input = document.createElement('input');
   input.setAttribute('type', 'file');
@@ -77,9 +80,9 @@ export async function LeadIn(type: API_SCREEN.TPreLeadInDataParams['type']) {
         })
         .then((_) => {
           LEAD_IN_LOADING = false;
+          callback?.();
         });
     }
-    console.log(e.target?.files);
   });
   input.click();
 }
@@ -95,7 +98,13 @@ export async function exportData(params: {
 
   return postScreenExport(params)
     .then((value: any) => {
-      return saveAs(value);
+      const { headers } = value;
+      const disposition = headers['content-disposition'] || '';
+      const filename = disposition.replace(/.+filename=/, '');
+      return saveAs(
+        new Blob([value.data], { type: 'application/json' }),
+        decodeURIComponent(filename),
+      );
     })
     .catch((err) => {
       message.info('导出文件失败');
