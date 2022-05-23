@@ -135,7 +135,8 @@ declare namespace ComponentData {
     | 'POLAR_BAR'
     | 'STEP_LINE'
     | 'DATE_PICKER'
-    | 'POLAR_STACK_BAR';
+    | 'POLAR_STACK_BAR'
+    | 'STATE_LIST';
 
   // 基础组件属性
   export type TBaseConfig = {

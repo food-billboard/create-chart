@@ -522,6 +522,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: StateCard,
             description: '',
           },
+          {
+            type: 'STATE_LIST',
+            title: '状态列表',
+            icon: StateCard,
+            description: '',
+          },
         ],
       },
     ],

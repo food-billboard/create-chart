@@ -131,7 +131,7 @@ class Config extends Component<
                     </Item>
                     <Collapse
                       child={{
-                        header: '圆角',
+                        header: '圆点',
                         key: 'stateIcon',
                       }}
                     >

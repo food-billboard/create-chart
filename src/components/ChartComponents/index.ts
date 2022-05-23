@@ -42,6 +42,7 @@ import Iframe from './Other/Iframe';
 import List from './Other/List';
 import WaterBall from './Other/WaterBall';
 import StateCard from './Other/StateCard';
+import StateList from './Other/StateList';
 // font
 import Title from './Font/Title';
 import TimeMachine from './Font/TimeMachine';
@@ -136,6 +137,7 @@ COMPONENT_MAP.set(PolarBar.type, PolarBar);
 COMPONENT_MAP.set(StepLine.type, StepLine);
 COMPONENT_MAP.set(Datepicker.type, Datepicker);
 COMPONENT_MAP.set(PolarStackBar.type, PolarStackBar);
+COMPONENT_MAP.set(StateList.type, StateList);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);
