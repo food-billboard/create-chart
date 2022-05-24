@@ -63,7 +63,6 @@ export default () => {
           },
         ],
       },
-      disabled: true,
     },
     options: {
       borderColor: {

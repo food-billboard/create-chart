@@ -589,6 +589,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: DatePicker,
             description: '',
           },
+          {
+            type: 'RATE',
+            title: '评分',
+            icon: DatePicker,
+            description: '',
+          },
         ],
       },
     ],
