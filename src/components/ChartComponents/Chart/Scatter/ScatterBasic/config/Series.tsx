@@ -8,6 +8,7 @@ import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
+import BoxShadowConfig from '@/components/ChartComponents/Common/BoxShadowConfig';
 import { TScatterBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -63,7 +64,8 @@ const SeriesConfig = (props: {
         counter={counter}
         renderContent={(index) => {
           const target = itemStyle[index];
-          const { color, borderColor, borderType, borderWidth } = target;
+          const { color, borderColor, borderType, borderWidth, shadow } =
+            target;
           return (
             <>
               <Item label="颜色">
@@ -89,6 +91,26 @@ const SeriesConfig = (props: {
                   />
                 </FullForm>
               </Item>
+              <BoxShadowConfig
+                value={shadow}
+                ignore={['spread']}
+                onChange={(value) => {
+                  const newItemStyle = [...itemStyle];
+                  newItemStyle.splice(index, 1, {
+                    ...target,
+                    shadow: value,
+                  } as any);
+                  onChange({
+                    config: {
+                      options: {
+                        series: {
+                          itemStyle: newItemStyle,
+                        },
+                      },
+                    },
+                  });
+                }}
+              />
               <LineStyleGroupConfig
                 collapseProps={{
                   child: {
@@ -138,6 +160,17 @@ const SeriesConfig = (props: {
                       },
                       borderType: 'solid',
                       borderWidth: 0,
+                      shadow: {
+                        vShadow: 0,
+                        hShadow: 0,
+                        color: {
+                          r: 255,
+                          g: 255,
+                          b: 255,
+                          a: 0.3,
+                        },
+                        blur: 10,
+                      },
                     },
                   ],
                 },

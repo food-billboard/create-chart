@@ -51,7 +51,7 @@ const BoxShadowConfig = (props: {
   }, [ignore, vShadow, onKeyChange]);
 
   const hShadowConfig = useMemo(() => {
-    if (ignore?.includes('vShadow')) return null;
+    if (ignore?.includes('hShadow')) return null;
     return (
       <Item label="水平阴影" labelProps={labelProps}>
         <FullForm>
@@ -79,7 +79,7 @@ const BoxShadowConfig = (props: {
   }, [ignore, blur, onKeyChange]);
 
   const spreadConfig = useMemo(() => {
-    if (ignore?.includes('blur')) return null;
+    if (ignore?.includes('spread')) return null;
     return (
       <Item label="阴影大小" labelProps={labelProps}>
         <FullForm>

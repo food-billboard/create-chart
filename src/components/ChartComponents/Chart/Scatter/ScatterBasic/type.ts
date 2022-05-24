@@ -14,6 +14,7 @@ export type TScatterBasicConfig = {
       borderColor: ComponentData.TColorConfig;
       borderType: ComponentData.ComponentLineStyle;
       borderWidth: number;
+      shadow: Omit<ComponentData.TBoxShadow, 'spread'>;
     }[];
   };
   animation: ComponentData.ComponentChartAnimationConfig;

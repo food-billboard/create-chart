@@ -109,6 +109,10 @@ const ScatterBasic = (props: {
       itemStyle: {
         ...(itemStyle[0] || {}),
         color: getRgbaString(itemStyle[0]?.color),
+        shadowOffsetX: itemStyle[0]?.shadow.hShadow || 0,
+        shadowOffsetY: itemStyle[0]?.shadow.vShadow || 0,
+        shadowBlur: itemStyle[0]?.shadow.blur || 10,
+        shadowColor: getRgbaString(itemStyle[0]?.shadow.color),
       },
       data: [...yAxisValues._defaultValue_],
       animation: show,
@@ -130,6 +134,10 @@ const ScatterBasic = (props: {
             itemStyle: {
               ...(itemStyle[index] || {}),
               color: getRgbaString(itemStyle[index]?.color),
+              shadowOffsetX: itemStyle[index].shadow.hShadow,
+              shadowOffsetY: itemStyle[index].shadow.vShadow,
+              shadowBlur: itemStyle[index].shadow.blur,
+              shadowColor: getRgbaString(itemStyle[index].shadow.color),
             },
             data: yAxisValues[item],
             name: item,
