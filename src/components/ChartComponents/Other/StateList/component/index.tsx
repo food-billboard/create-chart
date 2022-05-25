@@ -142,10 +142,10 @@ const StateList = (props: {
 
   // 列表内容
   const valueList = useMemo(() => {
-    return finalValue.map((item: any, index: number) => {
+    return finalValue.slice(0, count).map((item: any, index: number) => {
       return listItem(item, index);
     });
-  }, [finalValue, listItem]);
+  }, [finalValue, listItem, count]);
 
   const listContent = useMemo(() => {
     return (

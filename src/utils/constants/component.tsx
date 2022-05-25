@@ -28,7 +28,7 @@ import VideoBasic from '../../../public/components/video-basic.jpg';
 import CarouselBasic from '../../../public/components/carousel-basic.jpg';
 import WordCloudBasic from '../../../public/components/word-cloud.png';
 import IframeBasic from '../../../public/components/iframe.jpg';
-import ListBasic from '../../../public/components/list-basic.png';
+import ListBasic from '../../../public/components/list-basic.jpg';
 import TabBasic from '../../../public/components/tab-basic.jpg';
 import SelectBasic from '../../../public/components/select-basic.jpg';
 import CachetBar from '../../../public/components/cachet-bar.png';

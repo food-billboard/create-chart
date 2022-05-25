@@ -118,7 +118,7 @@ export default () => {
           {
             field: 'status',
             map: '',
-            description: '状态',
+            description: '状态（wait process finish error）',
             id: 'status',
             type: 'string',
           },
