@@ -67,6 +67,8 @@ import StateCard from '../../../public/components/state-card.jpg';
 import PictureWall from '../../../public/components/picture-wall.jpg';
 import DatePicker from '../../../public/components/date-picker.jpg';
 import PolarStackBar from '../../../public/components/polar-stack-bar.png';
+import Rate from '../../../public/components/rate.jpg';
+import StateList from '../../../public/components/state-list.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -525,7 +527,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'STATE_LIST',
             title: '状态列表',
-            icon: StateCard,
+            icon: StateList,
             description: '',
           },
         ],
@@ -592,7 +594,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'RATE',
             title: '评分',
-            icon: DatePicker,
+            icon: Rate,
             description: '',
           },
         ],
