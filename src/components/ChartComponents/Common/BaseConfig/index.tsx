@@ -58,7 +58,7 @@ const BaseConfig = (props: {
         <Item label="图表尺寸">
           <HalfForm>
             <InputNumber
-              value={width}
+              value={Math.floor(width)}
               onChange={(value) => {
                 onValueChange('width', value >= 20 ? value : 20);
               }}
@@ -67,7 +67,7 @@ const BaseConfig = (props: {
           </HalfForm>
           <HalfForm>
             <InputNumber
-              value={height}
+              value={Math.floor(height)}
               onChange={(value) => {
                 onValueChange('height', value >= 20 ? value : 20);
               }}
@@ -78,13 +78,13 @@ const BaseConfig = (props: {
         <Item label="图表位置">
           <HalfForm>
             <InputNumber
-              value={left}
+              value={Math.floor(left)}
               onChange={onValueChange.bind(null, 'left')}
             />
           </HalfForm>
           <HalfForm>
             <InputNumber
-              value={top}
+              value={Math.floor(top)}
               onChange={onValueChange.bind(null, 'top')}
             />
           </HalfForm>

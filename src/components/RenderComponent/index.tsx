@@ -98,8 +98,9 @@ const RenderComponent = memo(
       id,
       config: {
         style: componentStyle,
-        attr: { lock },
+        attr: { lock, scaleX, scaleY },
       },
+      type,
     } = value;
 
     const isSelect = useIsComponentChildrenSelect(
@@ -162,6 +163,7 @@ const RenderComponent = memo(
         disabled={pointerDisabled}
       >
         <ComponentWrapper
+          type={type}
           style={baseStyle}
           className={classnames(className, 'react-select-to', {
             [styles['render-component-wrapper']]:
@@ -182,6 +184,10 @@ const RenderComponent = memo(
           setComponent={setComponent}
           setComponentAll={setComponentAll}
           scale={scale / 100}
+          componentScale={{
+            scaleX,
+            scaleY,
+          }}
           componentId={id}
           isSelect={isSelect}
           grid={grid}

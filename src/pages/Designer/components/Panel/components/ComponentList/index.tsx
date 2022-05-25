@@ -17,7 +17,6 @@ const ComponentList = (props: {
     useIdPathMap(true, components);
     return components.map((item, index) => {
       const path = getPath(item.id);
-
       // * 暂时这样处理防止 组 内更新下面不刷新
       // ! 这里先不用了，因为要多个组件共同拖拽
       // const isGroupComponent = isGroupComponentFunc(item);

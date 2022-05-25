@@ -1,6 +1,14 @@
-import { ReactNode, CSSProperties, Component } from 'react';
+import {
+  ReactNode,
+  CSSProperties,
+  useState,
+  useMemo,
+  useRef,
+  useEffect,
+} from 'react';
 import { Rnd, Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
-import { merge, debounce } from 'lodash';
+import { merge, throttle, get, omit } from 'lodash';
+import { useDeepCompareEffect } from 'ahooks';
 import {
   MIN_COMPONENT_HEIGHT,
   MIN_COMPONENT_WIDTH,
@@ -8,68 +16,291 @@ import {
 import { isGroupComponent } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils';
 import { AbsorbUtil } from '@/pages/Designer/components/Panel/components/PanelWrapper/components/AbsorbGuideLine/utils';
+import MultiComponentActionUtil, {
+  MultiComponentAction,
+} from '@/utils/Assist/MultiComponentAction';
 import KeyActionComponent from './KeyActionComponent';
 
-class ComponentWrapper extends Component<
-  {
-    children?: ReactNode;
-    className?: string;
-    style?: CSSProperties;
-    select?: string[];
-    pointerDisabled?: boolean;
-    setComponent: (
-      callback: (
-        value: ComponentData.TComponentData,
-      ) => SuperPartial<ComponentData.TComponentData>,
-    ) => void;
-    setComponentAll: (
-      value:
-        | ComponentData.TComponentData[]
-        | ((
-            value: ComponentData.TComponentData[],
-          ) => ComponentData.TComponentData[]),
-    ) => void;
-    componentId: string;
-    isSelect: boolean;
-    grid: number;
-  } & Partial<Props>
-> {
-  state = {
-    lockAspectRatio: false,
+type IProps = {
+  children?: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+  select?: string[];
+  pointerDisabled?: boolean;
+  setComponent: (
+    callback: (
+      value: ComponentData.TComponentData,
+    ) => SuperPartial<ComponentData.TComponentData>,
+  ) => void;
+  setComponentAll: (
+    value:
+      | ComponentData.TComponentData[]
+      | ((
+          value: ComponentData.TComponentData[],
+        ) => ComponentData.TComponentData[]),
+  ) => void;
+  componentId: string;
+  isSelect: boolean;
+  grid: number;
+} & Partial<Props>;
+
+const getComponentStyle = (position: any, size: any) => {
+  const newWidth = parseInt(size.style.width) || 20;
+  const newHeight = parseInt(size.style.height) || 20;
+  return {
+    width: newWidth,
+    height: newHeight,
+    left: position.x,
+    top: position.y,
+  };
+};
+
+const ComponentWrapper = (
+  props: IProps & {
+    dragMethod: any;
+    resizeMethod: any;
+  },
+) => {
+  const {
+    isSelect,
+    position,
+    propsOnDragStop,
+    setComponent,
+    onDragStop: propsOnDragStopMethod,
+    dragMethod,
+    size,
+    componentId,
+    onDrag: propsOnDrag,
+    propsOnResizeStop,
+    onResizeStop: propsOnResizeStopMethod,
+    resizeMethod,
+    onResize: propsOnResize,
+    pointerDisabled,
+    className,
+    style,
+    grid,
+    children,
+  } = props;
+
+  const isResizing = useRef<boolean>(false);
+  const [lockAspectRatio, setLockAspectRatio] = useState<boolean>(false);
+
+  const onDragStop: RndDragCallback = (event, data) => {
+    // * 未选中不触发事件
+    if (!isSelect) return;
+
+    const { x, y } = data;
+    const { x: prevX = 0, y: prevY = 0 } = position || {};
+
+    // * 点击不触发刷新
+    if (Math.abs(x - prevX) < 5 && Math.abs(y - prevY) < 5) return;
+    setComponent(dragMethod.bind(null, event, data, true));
+
+    propsOnDragStop?.();
+    propsOnDragStopMethod?.(event, data);
+    AbsorbUtil.onComponentDragEnd();
   };
 
-  get multiSelect() {
-    const { select } = this.props;
-    return (select?.length || 0) > 1;
-  }
+  const onDrag: RndDragCallback = (event, data) => {
+    // * 未选中不触发事件
+    if (!isSelect) return;
 
-  dragInfo = {
-    left: 0,
-    top: 0,
-    drag: false,
+    const { x, y } = data;
+
+    const left = Math.floor(x);
+    const top = Math.floor(y);
+
+    AbsorbUtil.onComponentDrag(componentId, {
+      ...(size as any),
+      left,
+      top,
+    });
+
+    propsOnDrag?.(event, data);
   };
 
-  resizeInfo = {
-    left: 0,
-    top: 0,
-    width: 0,
-    height: 0,
-    resize: false,
+  const onResizeStop: RndResizeCallback = (
+    e,
+    direction,
+    ref,
+    delta,
+    position,
+  ) => {
+    // * 未选中不触发事件
+    if (!isSelect) return;
+
+    const { width, height } = delta;
+    // * 点击不触发刷新
+    if (Math.abs(width) < 5 && Math.abs(height) < 5) return;
+
+    setComponent(
+      resizeMethod.bind(null, e, direction, ref, delta, position, true),
+    );
+
+    propsOnResizeStopMethod?.(e, direction, ref, delta, position);
+    propsOnResizeStop?.();
+    isResizing.current = false;
   };
 
-  getComponentStyle = (position: any, size: any) => {
-    const newWidth = parseInt(size.style.width) || 20;
-    const newHeight = parseInt(size.style.height) || 20;
-    return {
-      width: newWidth,
-      height: newHeight,
-      left: Math.floor(position.x),
-      top: Math.floor(position.y),
+  const onResize: RndResizeCallback = (e, direction, ref, delta, position) => {
+    // * 未选中不触发事件
+    if (!isSelect) return;
+
+    const { width, height } = delta;
+    // * 点击不触发刷新
+    if (Math.abs(width) < 5 && Math.abs(height) < 5) return;
+
+    AbsorbUtil.onComponentResizing(
+      componentId,
+      getComponentStyle(position, ref),
+    );
+
+    propsOnResize?.(e, direction, ref, delta, position);
+  };
+
+  const onLockAspectRatioChange = (value: boolean) => {
+    if (!isResizing.current) setLockAspectRatio(value);
+  };
+
+  return (
+    <KeyActionComponent onChange={onLockAspectRatioChange}>
+      <Rnd
+        enableResizing={!pointerDisabled && isSelect}
+        disableDragging={pointerDisabled || !isSelect}
+        className={className}
+        style={merge({}, style)}
+        default={{
+          x: 0,
+          y: 0,
+          width: 320,
+          height: 200,
+        }}
+        onDrag={onDrag}
+        onDragStop={onDragStop}
+        onResize={onResize}
+        onResizeStop={onResizeStop}
+        onResizeStart={(event, data, direction) => {
+          isResizing.current = true;
+          props.onResizeStart?.(event, data, direction);
+        }}
+        resizeHandleClasses={[
+          'left',
+          'top',
+          'right',
+          'bottom',
+          'topLeft',
+          'topRight',
+          'bottomLeft',
+          'bottomRight',
+        ].reduce<any>((acc, cur) => {
+          acc[cur] = 'react-select-to-border';
+          return acc;
+        }, {})}
+        minWidth={MIN_COMPONENT_WIDTH}
+        minHeight={MIN_COMPONENT_HEIGHT}
+        lockAspectRatio={lockAspectRatio}
+        resizeGrid={[grid, grid]}
+        dragGrid={[grid, grid]}
+        {...omit(props, [
+          'children',
+          'className',
+          'style',
+          'propsOnDragStop',
+          'propsOnResizeStop',
+          'select',
+          'pointerDisabled',
+          'setComponent',
+          'componentId',
+          'isSelect',
+          'setComponentAll',
+          'grid',
+          'isResizing',
+          'resizeMethod',
+          'dragMethod',
+          'onDrag',
+          'onDragStop',
+          'onResizeStop',
+          'onResize',
+        ])}
+      >
+        {children}
+      </Rnd>
+    </KeyActionComponent>
+  );
+};
+
+export default (
+  props: IProps & {
+    componentScale: {
+      scaleX?: number;
+      scaleY?: number;
     };
-  };
+    type: ComponentData.TComponentType;
+  },
+) => {
+  const [statePosition, _setStatePosition] = useState<IProps['position']>(
+    props.position,
+  );
+  const [stateSize, _setStateSize] = useState<IProps['size']>(props.size);
+  const [isDealing, setIsDealing] = useState<boolean>(false);
+
+  const setStatePosition = throttle(_setStatePosition, 100);
+  const setStateSize = throttle(_setStateSize, 100);
+
+  const { componentScale, type, ...nextProps } = props;
+  const {
+    position: propsPosition,
+    size: propsSize,
+    select,
+    componentId,
+    isSelect,
+    setComponent,
+  } = nextProps;
+
+  const dragInfo = useRef({
+    left: statePosition?.x || 0,
+    top: statePosition?.y || 0,
+    drag: false,
+    position: {
+      ...statePosition,
+    },
+  });
+
+  const resizeInfo = useRef({
+    left: statePosition?.x || 0,
+    top: statePosition?.y || 0,
+    width: stateSize?.width || 0,
+    height: stateSize?.height || 0,
+    resize: false,
+    position: {
+      ...statePosition,
+    },
+    size: {
+      ...stateSize,
+    },
+    scale: {
+      ...componentScale,
+    },
+  });
+
+  const multiSelect = useMemo(() => {
+    return (select?.length || 0) > 1;
+  }, [select]);
+
+  const position = useMemo(() => {
+    if (isDealing) {
+      return statePosition;
+    }
+    return propsPosition;
+  }, [propsPosition, statePosition, isDealing]);
+
+  const size = useMemo(() => {
+    if (isDealing) return stateSize;
+    return propsSize;
+  }, [propsSize, stateSize, isDealing]);
 
   // 调整大小方法
-  resizeMethod: any = (
+  const resizeMethod: any = (
     e: any,
     direction: any,
     ref: any,
@@ -77,29 +308,20 @@ class ComponentWrapper extends Component<
     position: any,
     isSelf: boolean,
     value: ComponentData.TComponentData,
+    outerResizeInfo: any,
   ) => {
-    const { position: componentPosition } = this.props;
+    const resizePositionX = (outerResizeInfo || resizeInfo.current).left;
+    const resizePositionY = (outerResizeInfo || resizeInfo.current).top;
+
     let newWidth = 0;
     let newHeight = 0;
-    let realDeltaX = componentPosition?.x
-      ? position.x - componentPosition.x
-      : 0;
-    let realDeltaY = componentPosition?.y
-      ? position.y - componentPosition.y
-      : 0;
-    let realDeltaWidth = delta.width;
-    let realDeltaHeight = delta.height;
-    const newStyle = this.getComponentStyle(position, ref);
-    let defaultChangeConfig: SuperPartial<ComponentData.TComponentData> = {};
+    let realDeltaX =
+      typeof resizePositionX === 'number' ? position.x - resizePositionX : 0;
+    let realDeltaY =
+      typeof resizePositionY === 'number' ? position.y - resizePositionY : 0;
 
-    if (this.resizeInfo.resize) {
-      const { x, y } = position;
-      const { left, top, width, height } = this.resizeInfo;
-      realDeltaX = x - left;
-      realDeltaY = y - top;
-      realDeltaWidth = newStyle.width - width;
-      realDeltaHeight = newStyle.height - height;
-    }
+    const newStyle = getComponentStyle(position, ref);
+    let defaultChangeConfig: SuperPartial<ComponentData.TComponentData> = {};
 
     if (isSelf) {
       const { width, height } = newStyle;
@@ -116,6 +338,13 @@ class ComponentWrapper extends Component<
           style: { width, height, left, top },
         },
       } = value;
+      let realDeltaWidth = outerResizeInfo
+        ? newStyle.width - outerResizeInfo.width
+        : 0;
+      let realDeltaHeight = outerResizeInfo
+        ? newStyle.height - outerResizeInfo.height
+        : 0;
+
       newWidth = width + realDeltaWidth;
       newHeight = height + realDeltaHeight;
       defaultChangeConfig = {
@@ -153,19 +382,20 @@ class ComponentWrapper extends Component<
   };
 
   // 拖拽方法
-  dragMethod: any = (event: any, data: any, isSelf: boolean, value: any) => {
+  const dragMethod: any = (
+    event: any,
+    data: any,
+    isSelf: boolean,
+    value: any,
+    outerDragInfo: any,
+  ) => {
     const { x, y, deltaX, deltaY } = data;
 
-    const left = Math.floor(x);
-    const top = Math.floor(y);
+    const left = x;
+    const top = y;
 
     let realDeltaX = deltaX;
     let realDeltaY = deltaY;
-
-    if (this.dragInfo.drag) {
-      realDeltaX = x - this.dragInfo.left;
-      realDeltaY = y - this.dragInfo.top;
-    }
 
     if (isSelf) {
       return {
@@ -189,197 +419,349 @@ class ComponentWrapper extends Component<
   };
 
   // 复合调整大小
-  multiOnResize: RndResizeCallback = (e, direction, ref, delta, position) => {
-    const { setComponentAll, componentId, select } = this.props;
-    const newStyle = this.getComponentStyle(position, ref);
-    setComponentAll((components) => {
-      return components.map((item) => {
-        const { id } = item;
-        if (componentId === id || !select?.includes(id)) return item;
-        return merge(
-          item,
-          this.resizeMethod(e, direction, ref, delta, position, false, item),
-        );
-      });
-    });
-    this.resizeInfo = {
-      resize: true,
+  const multiOnResize: RndResizeCallback = (
+    e,
+    direction,
+    ref,
+    delta,
+    position,
+  ) => {
+    const newStyle = getComponentStyle(position, ref);
+
+    resizeInfo.current.resize = true;
+
+    MultiComponentActionUtil.emit(
+      MultiComponentAction.RESIZE,
+      componentId,
+      e,
+      direction,
+      ref,
+      delta,
+      position,
+      resizeInfo.current,
+    );
+
+    resizeInfo.current = {
+      ...resizeInfo.current,
       ...newStyle,
     };
   };
 
   // 复合拖拽
-  multiOnDrag: RndDragCallback = (event, data) => {
-    const { setComponentAll, componentId, select } = this.props;
+  const multiOnDrag: RndDragCallback = (event, data) => {
     const { x, y } = data;
 
-    setComponentAll((components) => {
-      return components.map((item) => {
-        const { id } = item;
-        if (componentId === id || !select?.includes(id)) return item;
-        const result = merge(item, this.dragMethod(event, data, false, item));
-        return result;
-      });
-    });
+    dragInfo.current.drag = true;
 
-    this.dragInfo = {
-      drag: true,
+    MultiComponentActionUtil.emit(
+      MultiComponentAction.DRAG,
+      componentId,
+      event,
+      data,
+      dragInfo.current,
+    );
+
+    dragInfo.current = {
+      ...dragInfo.current,
       left: x,
       top: y,
     };
   };
 
-  debounceMultiOnResize = debounce(this.multiOnResize, 2);
-  debounceMultiOnDrag = debounce(this.multiOnDrag, 2);
-
-  onDragStop: RndDragCallback = (event, data) => {
-    const { isSelect, position, propsOnDragStop, setComponent } = this.props;
-    // * 未选中不触发事件
-    if (!isSelect) return;
-
-    const { x, y } = data;
-    const { x: prevX = 0, y: prevY = 0 } = position || {};
-
-    // * 点击不触发刷新
-    if (Math.abs(x - prevX) < 5 && Math.abs(y - prevY) < 5) return;
-
-    setComponent(this.dragMethod.bind(null, event, data, true));
-    propsOnDragStop?.();
-    AbsorbUtil.onComponentDragEnd();
-    this.dragInfo.drag = false;
+  const onRelationDragStart = (targetId: string) => {
+    if (!isSelect || componentId === targetId) return;
+    setIsDealing(true);
   };
 
-  onResizeStop: RndResizeCallback = (e, direction, ref, delta, position) => {
-    const { isSelect, setComponent, propsOnResizeStop } = this.props;
-    // * 未选中不触发事件
-    if (!isSelect) return;
-
-    const { width, height } = delta;
-    // * 点击不触发刷新
-    if (Math.abs(width) < 5 && Math.abs(height) < 5) return;
-
-    setComponent(
-      this.resizeMethod.bind(null, e, direction, ref, delta, position, true),
+  const onRelationDrag = (
+    targetId: string,
+    event: any,
+    data: any,
+    outerDragInfo: any,
+  ) => {
+    if (!isSelect || componentId === targetId) return;
+    const nextPosition = dragMethod(
+      event,
+      data,
+      false,
+      {
+        config: {
+          style: {
+            left: dragInfo.current.position?.x || 0,
+            top: dragInfo.current.position?.y || 0,
+          },
+        },
+      },
+      outerDragInfo,
     );
-    propsOnResizeStop?.();
-    this.resizeInfo.resize = false;
+    const nextState = {
+      x: get(nextPosition, 'config.style.left') || 0,
+      y: get(nextPosition, 'config.style.top') || 0,
+    };
+    dragInfo.current.position = {
+      ...nextState,
+    };
+
+    setStatePosition((prev) => ({ ...nextState }));
   };
 
-  onDrag: RndDragCallback = (event, data) => {
-    const { isSelect, position, size, componentId } = this.props;
-    // * 未选中不触发事件
-    if (!isSelect) return;
+  const onRelationDragStop = (targetId: string) => {
+    if (!isSelect || componentId === targetId) return;
+    setIsDealing(false);
 
-    const { x, y } = data;
-    // const { x: prevX = 0, y: prevY = 0 } = position || {};
-
-    // // * 点击不触发刷新
-    // if (Math.abs(x - prevX) < 5 && Math.abs(y - prevY) < 5) return;
-
-    const left = Math.floor(x);
-    const top = Math.floor(y);
-
-    AbsorbUtil.onComponentDrag(componentId, {
-      ...(size as any),
-      left,
-      top,
+    setComponent(() => {
+      const { x, y } = dragInfo.current.position;
+      return {
+        config: {
+          style: {
+            left: x || 0,
+            top: y || 0,
+          },
+        },
+      };
     });
-
-    // * 复合移动
-    if (this.multiSelect) {
-      this.debounceMultiOnDrag(event, data);
-    }
   };
 
-  onResize: RndResizeCallback = (e, direction, ref, delta, position) => {
-    const { isSelect, componentId } = this.props;
-    // * 未选中不触发事件
-    if (!isSelect) return;
+  const onRelationResizeStart = (targetId: string) => {
+    if (!isSelect || componentId === targetId) return;
+    setIsDealing(true);
+  };
 
-    const { width, height } = delta;
-    // * 点击不触发刷新
-    if (Math.abs(width) < 5 && Math.abs(height) < 5) return;
+  const onRelationResize = (
+    targetId: string,
+    e: any,
+    direction: any,
+    ref: any,
+    delta: any,
+    position: any,
+    outerResizeInfo: any,
+  ) => {
+    if (!isSelect || componentId === targetId) return;
 
-    AbsorbUtil.onComponentResizing(
-      componentId,
-      this.getComponentStyle(position, ref),
+    const { position: resizePosition, size, scale = {} } = resizeInfo.current;
+    const nextConfig = resizeMethod(
+      e,
+      direction,
+      ref,
+      delta,
+      position,
+      false,
+      {
+        config: {
+          style: {
+            left: resizePosition.x || 0,
+            top: resizePosition.y || 0,
+            width: size.width || 0,
+            height: size.height || 0,
+          },
+          attr: {
+            ...scale,
+          },
+        },
+        type,
+      },
+      outerResizeInfo,
     );
 
-    // * 复合尺寸修改
-    if (this.multiSelect) {
-      this.debounceMultiOnResize(e, direction, ref, delta, position);
-    }
-  };
-
-  onLockAspectRatioChange = (value: boolean) => {
-    if (!this.resizeInfo.resize)
-      this.setState({
-        lockAspectRatio: value,
-      });
-  };
-
-  render() {
     const {
-      children,
-      className,
-      style,
-      propsOnDragStop,
-      propsOnResizeStop,
-      select,
-      pointerDisabled,
-      setComponent,
-      componentId,
-      size,
-      isSelect,
-      setComponentAll,
-      grid,
-      ...nextProps
-    } = this.props;
-    const { lockAspectRatio } = this.state;
+      config: {
+        style: { left, top, width, height },
+        attr,
+      },
+    } = nextConfig;
+    resizeInfo.current = {
+      ...resizeInfo.current,
+      position: {
+        x: left,
+        y: top,
+      },
+      size: {
+        width,
+        height,
+      },
+      scale: {
+        scaleX: attr?.scaleX,
+        scaleY: attr?.scaleY,
+      },
+    };
 
-    return (
-      <KeyActionComponent onChange={this.onLockAspectRatioChange}>
-        <Rnd
-          enableResizing={!pointerDisabled && isSelect}
-          disableDragging={pointerDisabled || !isSelect}
-          className={className}
-          style={merge({}, style)}
-          default={{
-            x: 0,
-            y: 0,
-            width: 320,
-            height: 200,
-          }}
-          onDrag={this.onDrag}
-          onDragStop={this.onDragStop}
-          onResize={this.onResize}
-          onResizeStop={this.onResizeStop}
-          resizeHandleClasses={[
-            'left',
-            'top',
-            'right',
-            'bottom',
-            'topLeft',
-            'topRight',
-            'bottomLeft',
-            'bottomRight',
-          ].reduce<any>((acc, cur) => {
-            acc[cur] = 'react-select-to-border';
-            return acc;
-          }, {})}
-          size={size}
-          minWidth={MIN_COMPONENT_WIDTH}
-          minHeight={MIN_COMPONENT_HEIGHT}
-          lockAspectRatio={lockAspectRatio}
-          resizeGrid={[grid, grid]}
-          dragGrid={[grid, grid]}
-          {...nextProps}
-        >
-          {children}
-        </Rnd>
-      </KeyActionComponent>
-    );
-  }
-}
+    setStatePosition((prev) => ({
+      ...(resizeInfo.current.position as any),
+    }));
+    setStateSize((prev) => ({
+      ...(resizeInfo.current.size as any),
+    }));
+  };
 
-export default ComponentWrapper;
+  const onRelationResizeStop = (targetId: string) => {
+    if (!isSelect || componentId === targetId) return;
+    setIsDealing(false);
+    setComponent(() => {
+      const { x, y } = resizeInfo.current.position;
+      const { width, height } = resizeInfo.current.size;
+      const { scaleX, scaleY } = resizeInfo.current.scale;
+      return {
+        config: {
+          style: {
+            left: x || 0,
+            top: y || 0,
+            width: (width as number) || MIN_COMPONENT_WIDTH,
+            height: (height as number) || MIN_COMPONENT_HEIGHT,
+          },
+          attr: {
+            scaleX,
+            scaleY,
+          },
+        },
+      };
+    });
+  };
+
+  useDeepCompareEffect(() => {
+    setStatePosition(propsPosition);
+    resizeInfo.current = {
+      ...resizeInfo.current,
+      position: {
+        ...propsPosition,
+      },
+      left: propsPosition?.x ?? resizeInfo.current.left,
+      top: propsPosition?.y ?? resizeInfo.current.top,
+    };
+    dragInfo.current = {
+      ...dragInfo.current,
+      position: {
+        ...propsPosition,
+      },
+      left: propsPosition?.x ?? dragInfo.current.left,
+      top: propsPosition?.y ?? dragInfo.current.top,
+    };
+  }, [propsPosition]);
+
+  useDeepCompareEffect(() => {
+    setStateSize(propsSize);
+    resizeInfo.current = {
+      ...resizeInfo.current,
+      size: {
+        ...propsSize,
+      },
+      width: propsSize?.width ?? resizeInfo.current.width,
+      height: propsSize?.height ?? resizeInfo.current.height,
+    };
+  }, [propsSize]);
+
+  useDeepCompareEffect(() => {
+    resizeInfo.current = {
+      ...resizeInfo.current,
+      scale: {
+        ...componentScale,
+      },
+    };
+  }, [componentScale]);
+
+  useEffect(() => {
+    if (isSelect) {
+      MultiComponentActionUtil.addListener(
+        MultiComponentAction.DRAG_START,
+        onRelationDragStart,
+      );
+      MultiComponentActionUtil.addListener(
+        MultiComponentAction.DRAG,
+        onRelationDrag,
+      );
+      MultiComponentActionUtil.addListener(
+        MultiComponentAction.DRAG_STOP,
+        onRelationDragStop,
+      );
+      MultiComponentActionUtil.addListener(
+        MultiComponentAction.RESIZE_START,
+        onRelationResizeStart,
+      );
+      MultiComponentActionUtil.addListener(
+        MultiComponentAction.RESIZE,
+        onRelationResize,
+      );
+      MultiComponentActionUtil.addListener(
+        MultiComponentAction.RESIZE_STOP,
+        onRelationResizeStop,
+      );
+    }
+    return () => {
+      MultiComponentActionUtil.removeListener(
+        MultiComponentAction.DRAG_START,
+        onRelationDragStart,
+      );
+      MultiComponentActionUtil.removeListener(
+        MultiComponentAction.DRAG,
+        onRelationDrag,
+      );
+      MultiComponentActionUtil.removeListener(
+        MultiComponentAction.DRAG_STOP,
+        onRelationDragStop,
+      );
+      MultiComponentActionUtil.removeListener(
+        MultiComponentAction.RESIZE_START,
+        onRelationResizeStart,
+      );
+      MultiComponentActionUtil.removeListener(
+        MultiComponentAction.RESIZE,
+        onRelationResize,
+      );
+      MultiComponentActionUtil.removeListener(
+        MultiComponentAction.RESIZE_STOP,
+        onRelationResizeStop,
+      );
+    };
+  }, [isSelect]);
+
+  return (
+    <ComponentWrapper
+      {...nextProps}
+      resizeMethod={resizeMethod}
+      dragMethod={dragMethod}
+      onResizeStart={() => {
+        MultiComponentActionUtil.emit(
+          MultiComponentAction.RESIZE_START,
+          componentId,
+        );
+        resizeInfo.current.resize = true;
+      }}
+      onResizeStop={(...args) => {
+        MultiComponentActionUtil.emit(
+          MultiComponentAction.RESIZE_STOP,
+          componentId,
+        );
+        props.onResizeStop?.(...args);
+        resizeInfo.current.resize = false;
+      }}
+      onResize={(e, direction, ref, delta, position) => {
+        // * 复合尺寸修改
+        if (multiSelect) {
+          multiOnResize(e, direction, ref, delta, position);
+        }
+      }}
+      onDragStart={() => {
+        MultiComponentActionUtil.emit(
+          MultiComponentAction.DRAG_START,
+          componentId,
+        );
+        dragInfo.current.drag = true;
+      }}
+      onDragStop={(...args) => {
+        MultiComponentActionUtil.emit(
+          MultiComponentAction.DRAG_STOP,
+          componentId,
+        );
+        props.onDragStop?.(...args);
+        dragInfo.current.drag = false;
+      }}
+      onDrag={(event, data) => {
+        // * 复合移动
+        if (multiSelect) {
+          multiOnDrag(event, data);
+        }
+      }}
+      position={position}
+      size={size}
+    />
+  );
+};
