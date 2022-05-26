@@ -48,6 +48,7 @@ class GuideLine extends Component<
   };
 
   onMouseMove = (e: any) => {
+    e?.stopPropagation();
     const {
       disabled,
       style,
@@ -130,6 +131,7 @@ class GuideLine extends Component<
     return (
       <div
         className={classnames(
+          'ruler-guide-line',
           styles[`ruler-guide-line-wrapper-${type}`],
           className,
         )}

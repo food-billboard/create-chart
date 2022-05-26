@@ -57,9 +57,11 @@ const Selecto = (props: {
         const componentBorder = e.inputEvent.target.className.includes(
           'react-select-to-border',
         );
+        const guideLine =
+          e.inputEvent.target.className.includes('ruler-guide-line');
         if (
           VALID_SELECT_CONTAINER.includes(id) ||
-          (!select.includes(componentId) && !componentBorder)
+          (!select.includes(componentId) && !componentBorder && !guideLine)
         ) {
           setSelect?.([]);
         } else {

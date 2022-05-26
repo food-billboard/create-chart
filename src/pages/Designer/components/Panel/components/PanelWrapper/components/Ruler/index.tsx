@@ -109,11 +109,9 @@ const Ruler = (props: {
       if (direction === 'vertical') {
         positionStyle.left = clientX - left + scrollLeft - x;
         positionStyle.left = positionStyle.left / scale;
-        positionStyle.left = Math.floor(positionStyle.left);
       } else {
         positionStyle.top = clientY - top + scrollTop - y;
         positionStyle.top = positionStyle.top / scale;
-        positionStyle.top = Math.floor(positionStyle.top);
       }
       const newItem: ComponentData.TGuideLineConfigItem = {
         type: direction,
