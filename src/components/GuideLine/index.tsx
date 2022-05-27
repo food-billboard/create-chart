@@ -112,20 +112,20 @@ class GuideLine extends Component<
       return {
         ...style,
         height: size.height,
-        left: style?.left * scale || 0,
+        left: (style?.left * scale || 0) + 30 - GUIDE_LINE_PADDING,
         padding: `0 ${GUIDE_LINE_PADDING}px`,
       };
     }
     return {
       ...style,
       width: size.width,
-      top: style?.top * scale || 0,
+      top: (style?.top * scale || 0) + 30 - GUIDE_LINE_PADDING,
       padding: `${GUIDE_LINE_PADDING}px 0`,
     };
   }
 
   render() {
-    const { type, lineStyle = 'dashed', className, style, scale } = this.props;
+    const { type, lineStyle = 'dashed', className, scale } = this.props;
     const { left, top } = this.guideLineStyle;
 
     return (
@@ -147,7 +147,7 @@ class GuideLine extends Component<
             ),
           }}
         >
-          {Math.ceil((Math.floor(left ?? top) - 30) / scale + 4) || 0}
+          {Math.ceil(((left ?? top) - 30 + GUIDE_LINE_PADDING) / scale) || 0}
         </div>
         <div
           className={styles[`ruler-guide-line-${type}`]}

@@ -107,10 +107,10 @@ const Ruler = (props: {
       const { left: scrollLeft, top: scrollTop } = getWrapperScrollStyle();
       const { x, y } = scroll;
       if (direction === 'vertical') {
-        positionStyle.left = clientX - left + scrollLeft - x;
+        positionStyle.left = clientX - left + scrollLeft - x - 30;
         positionStyle.left = positionStyle.left / scale;
       } else {
-        positionStyle.top = clientY - top + scrollTop - y;
+        positionStyle.top = clientY - top + scrollTop - y - 30;
         positionStyle.top = positionStyle.top / scale;
       }
       const newItem: ComponentData.TGuideLineConfigItem = {
