@@ -20,8 +20,11 @@
     }
   }
   &-vertical-ruler {
-    width: 30px;
-    left: 0;
+    height: 30px;
+    position: relative;
+    left: 30px;
+    transform-origin: left top;
+    transform: rotateZ(90deg);
     &-prefix {
       height: 70px;
     }
