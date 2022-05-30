@@ -2,7 +2,7 @@ import { useRef, useState, useCallback, useEffect, useMemo } from 'react';
 import classnames from 'classnames';
 import { merge } from 'lodash';
 import { connect } from 'dva';
-import { useMouse, useHover } from 'ahooks';
+import { useMouse, useHover, useThrottleEffect } from 'ahooks';
 import { nanoid } from 'nanoid';
 import GuideLine from '@/components/GuideLine';
 import ComponentRuler from '@/components/Ruler';
@@ -291,9 +291,13 @@ const Ruler = (props: {
     mouseVerticalGuideLine,
   ]);
 
-  useEffect(() => {
-    setMousePosition();
-  }, [mousePosition]);
+  useThrottleEffect(
+    () => {
+      setMousePosition();
+    },
+    [mousePosition],
+    { wait: 20 },
+  );
 
   useEffect(() => {
     getWrapperScroll(true);

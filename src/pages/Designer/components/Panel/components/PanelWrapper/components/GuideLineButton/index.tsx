@@ -7,8 +7,14 @@ import {
 } from '@ant-design/icons';
 import { useScroll } from 'ahooks';
 import classnames from 'classnames';
+import { connect } from 'dva';
+import ColorSelect from '@/components/ColorSelect';
+import { ConnectState } from '@/models/connect';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { wrapperId } from '../../constants';
 import styles from './index.less';
+
+const { getRgbaString } = ColorSelect;
 
 const GuideLineButton = (props: {
   show: boolean;
@@ -55,6 +61,9 @@ const GuideLineButton = (props: {
         style={{
           left,
           top,
+          backgroundColor: getRgbaString(
+            ThemeUtil.generateNextColor4CurrentTheme(0),
+          ),
         }}
         icon={guideLineShowIcon}
       ></Button>
@@ -62,4 +71,11 @@ const GuideLineButton = (props: {
   );
 };
 
-export default GuideLineButton;
+export default connect(
+  (state: ConnectState) => {
+    return {
+      theme: state.global.screenData.config.attr.theme,
+    };
+  },
+  () => ({}),
+)(GuideLineButton);

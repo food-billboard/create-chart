@@ -1,9 +1,18 @@
 import { createRef, Component } from 'react';
 import ReactRuler, { RulerProps as BaseRulerProps } from '@scena/react-ruler';
+import { connect } from 'dva';
+import ColorSelect from '@/components/ColorSelect';
+import ThemeUtil from '@/utils/Assist/Theme';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 
 export type RulerProps = Partial<BaseRulerProps>;
 
-class Ruler extends Component<RulerProps> {
+const { getRgbaString } = ColorSelect;
+class Ruler extends Component<
+  RulerProps & {
+    theme: string;
+  }
+> {
   rulerRef = createRef<any>();
 
   resize = () => {
@@ -19,8 +28,19 @@ class Ruler extends Component<RulerProps> {
   };
 
   render() {
-    return <ReactRuler type="vertical" {...this.props} ref={this.rulerRef} />;
+    return (
+      <ReactRuler
+        backgroundColor={getRgbaString(
+          ThemeUtil.generateNextColor4CurrentTheme(0),
+        )}
+        lineColor={'rgba(255, 255, 255)'}
+        textColor={'rgba(255, 255, 255)'}
+        type="vertical"
+        {...this.props}
+        ref={this.rulerRef}
+      />
+    );
   }
 }
 
-export default Ruler;
+export default connect(mapStateToProps, mapDispatchToProps)(Ruler);
