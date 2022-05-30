@@ -59,7 +59,7 @@ const ComponentConfig = (props: {
           key="1"
         >
           <ConfigList>
-            <BaseConfig id={id} />
+            <BaseConfig id={id} isGroupComponent={false} />
             <ConfigList level={1}>
               <ConfigComponent component={component} id={id} />
             </ConfigList>

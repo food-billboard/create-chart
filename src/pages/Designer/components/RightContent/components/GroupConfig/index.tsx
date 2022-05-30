@@ -34,7 +34,7 @@ const GroupConfig = (props: {
     >
       <ConfigWrapper tabCounter={1} title={title}>
         <ConfigItem tab="组合配置" key="1">
-          <BaseConfig id={id} />
+          <BaseConfig isGroupComponent id={id} />
           <OptionConfig component={component} />
         </ConfigItem>
       </ConfigWrapper>

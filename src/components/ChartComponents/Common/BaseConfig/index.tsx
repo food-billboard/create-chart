@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from 'react';
-import { InputNumber } from 'antd';
 import { connect } from 'dva';
 import { get } from 'lodash';
 import { getComponent, getPath } from '@/utils/Assist/Component';
+import InputNumber from '../InputNumber';
 import ConfigList from '../Structure/ConfigList';
 import Opacity from '../Opacity';
 import HalfForm from '../Structure/HalfForm';
@@ -15,18 +15,22 @@ const { Item } = ConfigList;
 
 const BaseConfig = (props: {
   id: string;
+  isGroupComponent: boolean;
   components: ComponentData.TComponentData[];
   setComponent: ComponentMethod.SetComponentMethod;
 }) => {
-  const { id, components, setComponent } = props;
+  const { id, components, setComponent, isGroupComponent } = props;
 
-  const { width, height, left, top, opacity, rotate } = useMemo(() => {
+  const { style, attr } = useMemo(() => {
     const component: ComponentData.TComponentData = getComponent(
       id,
       components,
     );
-    return get(component, 'config.style') || {};
+    return get(component, 'config') || {};
   }, [components, id]);
+
+  const { width, height, left, top, opacity, rotate } = style;
+  const { scaleX, scaleY } = attr;
 
   const onValueChange = useCallback(
     (path: keyof ComponentData.TBaseConfig['style'], value: any) => {
@@ -52,6 +56,58 @@ const BaseConfig = (props: {
     [id],
   );
 
+  const onSizeChange = useCallback(
+    (key: 'width' | 'height', value) => {
+      const realValue = value >= 20 ? value : 20;
+      if (isGroupComponent) {
+        let changeState: any = {
+          style: {
+            [key]: realValue,
+          },
+        };
+        if (key === 'width') {
+          changeState = {
+            ...changeState,
+            attr: {
+              scaleX: (realValue / width) * (scaleX || 1),
+            },
+          };
+        } else {
+          changeState = {
+            ...changeState,
+            attr: {
+              scaleY: (realValue / height) * (scaleY || 1),
+            },
+          };
+        }
+
+        const componentPath = getPath(id);
+        setComponent({
+          value: {
+            config: {
+              ...changeState,
+            },
+          },
+          id,
+          path: componentPath,
+          action: 'update',
+        });
+      } else {
+        onValueChange(key, realValue);
+      }
+    },
+    [
+      onValueChange,
+      isGroupComponent,
+      width,
+      height,
+      scaleX,
+      scaleY,
+      id,
+      setComponent,
+    ],
+  );
+
   return (
     <div className={styles['component-design-config-base']}>
       <ConfigList>
@@ -59,18 +115,14 @@ const BaseConfig = (props: {
           <HalfForm>
             <InputNumber
               value={Math.floor(width)}
-              onChange={(value) => {
-                onValueChange('width', value >= 20 ? value : 20);
-              }}
+              onChange={onSizeChange.bind(null, 'width')}
               min={20}
             />
           </HalfForm>
           <HalfForm>
             <InputNumber
               value={Math.floor(height)}
-              onChange={(value) => {
-                onValueChange('height', value >= 20 ? value : 20);
-              }}
+              onChange={onSizeChange.bind(null, 'height')}
               min={20}
             />
           </HalfForm>
@@ -89,7 +141,7 @@ const BaseConfig = (props: {
             />
           </HalfForm>
         </Item>
-        <Item label="旋转角度">
+        <Item label="旋转">
           <HalfForm>
             <InputNumber
               value={rotate}
