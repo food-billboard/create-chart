@@ -31,17 +31,8 @@ const BaseConfig = (props: {
       return get(component, 'config.interactive.base');
     }, [component]);
 
-  if (!baseInteractive.length) {
-    return (
-      <div className={styles['design-config-interactive-base-empty']}>
-        <InfoCircleOutlined style={{ marginRight: 4 }} />
-        该组件无基础交互事件
-      </div>
-    );
-  }
-
   const { keys, domList } = useMemo(() => {
-    return baseInteractive.reduce<{
+    return (baseInteractive || []).reduce<{
       keys: string[];
       domList: ReactNode[];
     }>(
@@ -104,6 +95,15 @@ const BaseConfig = (props: {
       },
     );
   }, [onChange, baseInteractive]);
+
+  if (!baseInteractive.length) {
+    return (
+      <div className={styles['design-config-interactive-base-empty']}>
+        <InfoCircleOutlined style={{ marginRight: 4 }} />
+        该组件无基础交互事件
+      </div>
+    );
+  }
 
   return (
     <div className={styles['design-config-interactive-base']}>

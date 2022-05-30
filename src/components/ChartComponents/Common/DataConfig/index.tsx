@@ -23,6 +23,20 @@ const DataConfig = (props: {
 
   const isDisabled = !!component.config.data?.disabled;
 
+  const fieldMap = component.config?.data?.filter?.map || [];
+
+  const onValueChange = useCallback(
+    (value: ComponentMethod.SetComponentMethodParamsData['value']) => {
+      setComponent({
+        value,
+        id,
+        path: getPath(id),
+        action: 'update',
+      });
+    },
+    [setComponent, id],
+  );
+
   if (isDisabled) {
     return (
       <div
@@ -37,20 +51,6 @@ const DataConfig = (props: {
       </div>
     );
   }
-
-  const fieldMap = component.config?.data?.filter?.map || [];
-
-  const onValueChange = useCallback(
-    (value: ComponentMethod.SetComponentMethodParamsData['value']) => {
-      setComponent({
-        value,
-        id,
-        path: getPath(id),
-        action: 'update',
-      });
-    },
-    [setComponent, id],
-  );
 
   return (
     <div
