@@ -122,6 +122,10 @@ const PanelWrapper = (props: {
         <div
           id={subWrapperId}
           className={classnames(styles['designer-page-main-sub'], 'pos-re')}
+          style={{
+            width: width * scale,
+            height: height * scale,
+          }}
           onMouseDown={onMouseDown}
         >
           <Ruler

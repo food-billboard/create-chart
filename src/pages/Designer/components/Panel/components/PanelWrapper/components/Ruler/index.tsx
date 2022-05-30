@@ -338,7 +338,7 @@ const Ruler = (props: {
       <div
         ref={verticalRulerRef}
         style={{
-          width: size.height,
+          height: size.height,
         }}
         className={classnames(styles['designer-page-main-vertical-ruler'])}
         onClick={generateGuideLine.bind(
@@ -352,12 +352,11 @@ const Ruler = (props: {
         )}
       >
         <ComponentRuler
-          width={size.height}
-          height={30}
+          width={30}
+          height={size.height}
           zoom={scale}
           unit={scale > 0.5 ? 50 : 100}
-          type="horizontal"
-          direction="start"
+          type="vertical"
         />
       </div>
       {/* Ruler */}
