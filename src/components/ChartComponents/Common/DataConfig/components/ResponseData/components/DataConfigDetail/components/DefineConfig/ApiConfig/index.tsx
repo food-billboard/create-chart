@@ -1,9 +1,10 @@
 import { useCallback } from 'react';
-import { Checkbox, Select } from 'antd';
+import { Select } from 'antd';
 import { merge } from 'lodash';
 import { connect } from 'dva';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import IconTooltipBase from '@/components/IconTooltip';
+import Checkbox from '@/components/ChartComponents/Common/Checkbox';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import CodeEditor from '../SaveCodeEditor';
 import SubTitle, { SubForm } from '../../SubTitle';

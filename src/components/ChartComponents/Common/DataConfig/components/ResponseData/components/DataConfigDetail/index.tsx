@@ -1,4 +1,4 @@
-import { Drawer, Select, Checkbox } from 'antd';
+import { Drawer, Select, Checkbox as AntCheckbox } from 'antd';
 import {
   forwardRef,
   useCallback,
@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { useResponseData } from '@/hooks';
 import FocusWrapper from '@/components/FocusWrapper';
+import Checkbox from '@/components/ChartComponents/Common/Checkbox';
 import CodeViewer from '../CodeViewer';
 import Title from './components/NormalTitle';
 import ResponseDataTitle from './components/ResponseDataTitle';
@@ -144,9 +145,9 @@ const DataConfigDetail = forwardRef<
         />
 
         <Title visible={!!filterShow}>
-          <Checkbox checked={filterShow} onChange={onDataFilterOpenChange}>
+          <AntCheckbox checked={filterShow} onChange={onDataFilterOpenChange}>
             数据过滤器
-          </Checkbox>
+          </AntCheckbox>
         </Title>
         <DataFilter
           value={filterValue}
