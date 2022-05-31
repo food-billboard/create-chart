@@ -60,18 +60,14 @@ const SeriesConfig = (props: {
         {...(label as any)}
         onChange={onKeyChange.bind(null, 'label')}
       >
-        <Item label="旋转">
-          <FullForm>
-            <AngleSelect
-              value={label.rotate}
-              onChange={(value) => {
-                onKeyChange('label', {
-                  rotate: value,
-                });
-              }}
-            />
-          </FullForm>
-        </Item>
+        <AngleSelect
+          value={label.rotate}
+          onChange={(value) => {
+            onKeyChange('label', {
+              rotate: value,
+            });
+          }}
+        />
       </SeriesLabelConfig>
     );
   }, [label, onKeyChange]);

@@ -33,14 +33,11 @@ const AxisConfig = (props: {
 
   const angleConfig = useMemo(() => {
     return (
-      <Item label="起始角度">
-        <FullForm>
-          <AngleSelect
-            value={startAngle}
-            onChange={onKeyChange.bind(null, 'startAngle')}
-          />
-        </FullForm>
-      </Item>
+      <AngleSelect
+        value={startAngle}
+        onChange={onKeyChange.bind(null, 'startAngle')}
+        label="起始角度"
+      />
     );
   }, [startAngle, onKeyChange]);
 

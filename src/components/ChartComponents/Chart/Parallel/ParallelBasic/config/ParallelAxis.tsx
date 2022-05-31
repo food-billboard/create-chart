@@ -125,14 +125,10 @@ const ParallelAxisConfig = (props: {
             />
           </FullForm>
         </Item>
-        <Item label="旋转">
-          <FullForm>
-            <AngleSelect
-              value={nameRotate}
-              onChange={onKeyChange.bind(null, 'nameRotate')}
-            />
-          </FullForm>
-        </Item>
+        <AngleSelect
+          value={nameRotate}
+          onChange={onKeyChange.bind(null, 'nameRotate')}
+        />
       </Collapse>
     );
   }, [nameLocation, nameTextStyle, nameGap, nameRotate, onKeyChange]);
@@ -144,18 +140,14 @@ const ParallelAxisConfig = (props: {
         ignore={['position']}
         onChange={onKeyChange.bind(null, 'axisLabel')}
       >
-        <Item label="旋转">
-          <FullForm>
-            <AngleSelect
-              value={axisLabel.rotate}
-              onChange={(value) => {
-                onKeyChange('axisLabel', {
-                  rotate: value,
-                });
-              }}
-            />
-          </FullForm>
-        </Item>
+        <AngleSelect
+          value={axisLabel.rotate}
+          onChange={(value) => {
+            onKeyChange('axisLabel', {
+              rotate: value,
+            });
+          }}
+        />
         <Item label="间距">
           <FullForm>
             <InputNumber

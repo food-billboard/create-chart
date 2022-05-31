@@ -208,18 +208,14 @@ const SeriesConfig = (props: {
                 />
               </FullForm>
             </Item>
-            <Item label="旋转">
-              <FullForm>
-                <AngleSelect
-                  value={value.symbolRotate}
-                  onChange={(value) => {
-                    onChange({
-                      symbolRotate: value as number,
-                    });
-                  }}
-                />
-              </FullForm>
-            </Item>
+            <AngleSelect
+              value={value.symbolRotate}
+              onChange={(value) => {
+                onChange({
+                  symbolRotate: value as number,
+                });
+              }}
+            />
             <Item label="标注颜色">
               <FullForm>
                 <CompatColorSelect

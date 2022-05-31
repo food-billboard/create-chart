@@ -227,11 +227,15 @@ export const FontConfigList = (props: {
     },
   );
 
-  const { ignore, children, level } = props;
+  const {
+    ignore,
+    children,
+    level,
+    labelProps: perLabelProps = { level: 2 },
+  } = props;
 
   const { fontSize, fontWeight, fontFamily, color } = value || {};
 
-  const { labelProps: perLabelProps = { level: 2 } } = props;
   const labelProps = {
     ...perLabelProps,
     level: level ?? perLabelProps.level,

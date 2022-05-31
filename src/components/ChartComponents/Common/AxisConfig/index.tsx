@@ -96,14 +96,10 @@ const AxisConfig = (props: AxisConfigProps) => {
           onChange: onAxisLabelChange.bind(null, 'show'),
         }}
       >
-        <Item label="旋转（deg）">
-          <FullForm>
-            <AngleSelect
-              value={axisLabel!.rotate || 0}
-              onChange={onAxisLabelChange.bind(null, 'rotate')}
-            />
-          </FullForm>
-        </Item>
+        <AngleSelect
+          value={axisLabel!.rotate || 0}
+          onChange={onAxisLabelChange.bind(null, 'rotate')}
+        />
         <Item label="间距">
           <FullForm>
             <InputNumber

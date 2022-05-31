@@ -207,18 +207,14 @@ class Config extends Component<
                 />
               </FullForm>
             </Item>
-            <Item label="旋转">
-              <FullForm>
-                <AngleSelect
-                  value={stateIcon.rotate}
-                  onChange={(value) => {
-                    this.onKeyChange('stateIcon', {
-                      rotate: value,
-                    });
-                  }}
-                />
-              </FullForm>
-            </Item>
+            <AngleSelect
+              value={stateIcon.rotate}
+              onChange={(value) => {
+                this.onKeyChange('stateIcon', {
+                  rotate: value,
+                });
+              }}
+            />
             <Item label="间距">
               <FullForm>
                 <InputNumber

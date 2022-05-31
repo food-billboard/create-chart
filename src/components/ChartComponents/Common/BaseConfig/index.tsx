@@ -2,10 +2,12 @@ import { useCallback, useMemo } from 'react';
 import { connect } from 'dva';
 import { get } from 'lodash';
 import { getComponent, getPath } from '@/utils/Assist/Component';
+import AngleSelect from '../AngleSelect';
 import InputNumber from '../InputNumber';
 import ConfigList from '../Structure/ConfigList';
 import Opacity from '../Opacity';
 import HalfForm from '../Structure/HalfForm';
+import FullForm from '../Structure/FullForm';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -141,14 +143,10 @@ const BaseConfig = (props: {
             />
           </HalfForm>
         </Item>
-        <Item label="旋转">
-          <HalfForm>
-            <InputNumber
-              value={rotate}
-              onChange={onValueChange.bind(null, 'rotate')}
-            />
-          </HalfForm>
-        </Item>
+        <AngleSelect
+          value={rotate}
+          onChange={onValueChange.bind(null, 'rotate')}
+        />
         <Item label="不透明度">
           <HalfForm>
             <Opacity
