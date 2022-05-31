@@ -367,27 +367,37 @@ const TreeFunction = (props: TreeProps) => {
     [components, setComponentAll],
   );
 
+  const selectEmpty = useCallback(() => {
+    setSelect([]);
+  }, [setSelect]);
+
   const treeData = useMemo(() => {
     return getTreeData(components);
   }, [components, expendKeys, iconMode, select]);
 
   return (
-    <AntTree.DirectoryTree
-      onSelect={onSelect}
-      showIcon={false}
-      onDrop={onDrop}
-      treeData={treeData}
-      draggable={{
-        icon: false,
-      }}
-      multiple
-      selectedKeys={select}
-      expandAction={false}
-      defaultExpandedKeys={[]}
-      className={styles['layer-manage-content']}
-      onExpand={onExpend}
-      disabled={!!disabled}
-    />
+    <div className={styles['layer-manage']}>
+      <AntTree.DirectoryTree
+        onSelect={onSelect}
+        showIcon={false}
+        onDrop={onDrop}
+        treeData={treeData}
+        draggable={{
+          icon: false,
+        }}
+        multiple
+        selectedKeys={select}
+        expandAction={false}
+        defaultExpandedKeys={[]}
+        className={styles['layer-manage-content']}
+        onExpand={onExpend}
+        disabled={!!disabled}
+      />
+      <div
+        className={styles['layer-manage-placeholder']}
+        onClick={selectEmpty}
+      />
+    </div>
   );
 };
 
