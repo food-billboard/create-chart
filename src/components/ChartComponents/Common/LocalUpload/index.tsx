@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import { uniqueId } from 'lodash';
-import { Button, Image, Upload, Modal, message } from 'antd';
+import { Upload, Modal, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { getBase64 } from '@/components/ImageUpload';
+import { getBase64, UploadButton } from '@/components/ImageUpload';
 import styles from './index.less';
 
 const MAX_FILE_SIZE = 1021 * 5;
@@ -85,7 +85,9 @@ class LocalUpload extends Component<{
           beforeUpload={() => false}
           accept="image/*"
         >
-          {this.fileList.length >= 1 ? null : uploadButton}
+          {this.fileList.length >= 1 ? null : (
+            <UploadButton className={styles['component-local-upload-button']} />
+          )}
         </Upload>
         <Modal
           visible={previewVisible}

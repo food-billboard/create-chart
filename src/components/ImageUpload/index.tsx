@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, useRef, useEffect } from 'react';
+import { useCallback, CSSProperties, useState, useRef, useEffect } from 'react';
 import { Upload, Modal, UploadProps, message } from 'antd';
 import { useControllableValue } from 'ahooks';
 import classnames from 'classnames';
@@ -22,6 +22,24 @@ export function getBase64(file: File) {
     reader.onerror = (error) => reject(error);
   });
 }
+
+export const UploadButton = (props: {
+  className?: string;
+  style?: CSSProperties;
+}) => {
+  return (
+    <div
+      style={props.style}
+      className={classnames(
+        styles['component-image-upload-placeholder'],
+        props.className,
+      )}
+    >
+      <FileImageOutlined />
+      <div style={{ marginTop: 8 }}>点击这里进行更改</div>
+    </div>
+  );
+};
 
 const PicturesWall = (
   props: Partial<Exclude<UploadProps, 'fileList' | 'onChange'>> & {
@@ -85,15 +103,6 @@ const PicturesWall = (
     },
     [UploadImage, setInputValue, onRemove, value],
   );
-
-  const uploadButton = useMemo(() => {
-    return (
-      <div className={styles['component-image-upload-placeholder']}>
-        <FileImageOutlined />
-        <div style={{ marginTop: 8 }}>点击这里进行更改</div>
-      </div>
-    );
-  }, []);
 
   const onUrlChange = useCallback(
     (e) => {
@@ -161,7 +170,7 @@ const PicturesWall = (
         disabled={validLoading}
         {...nextProps}
       >
-        {value.length >= 1 ? null : uploadButton}
+        {value.length >= 1 ? null : <UploadButton />}
       </Upload>
       <Modal visible={previewVisible} footer={null} onCancel={handleCancel}>
         <img alt="background" style={{ width: '100%' }} src={previewImage} />
