@@ -12,10 +12,14 @@ export const copy = (
 const CopyAction = (props: CommonActionType) => {
   const { select, setClipboard, onClick } = props;
 
-  const handleClick = useCallback(() => {
-    copy(select, setClipboard);
-    onClick?.();
-  }, [setClipboard, select, onClick]);
+  const handleClick = useCallback(
+    (e: any) => {
+      e?.stopPropagation();
+      copy(select, setClipboard);
+      onClick?.();
+    },
+    [setClipboard, select, onClick],
+  );
 
   return (
     <div key="copy" onClick={handleClick}>

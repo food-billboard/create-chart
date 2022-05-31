@@ -33,7 +33,7 @@ export const deleteAction = (
 };
 
 const DeleteAction = (props: CommonActionType) => {
-  const { value, setComponent, select, onClick, setSelect } = props;
+  const { setComponent, select, onClick, setSelect } = props;
 
   const handleClick = useCallback(() => {
     deleteAction(select, setComponent, setSelect);

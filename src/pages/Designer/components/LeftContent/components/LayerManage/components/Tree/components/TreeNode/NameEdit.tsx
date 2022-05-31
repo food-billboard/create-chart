@@ -85,6 +85,7 @@ const NameEditor = forwardRef<
         onDoubleClick={changeEditState}
         className={classnames(
           'c-po',
+          'p-lr-4',
           styles['design-page-layer-item-name-basic'],
         )}
         title={name}

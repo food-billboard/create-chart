@@ -14,7 +14,11 @@ const CopyComponentWithStyle = (props: CommonActionType) => {
   }, [select, components]);
 
   const canChange = useMemo(() => {
-    return select.length === 1 && component.componentType !== 'GROUP_COMPONENT';
+    return (
+      !!component &&
+      select.length === 1 &&
+      component.componentType !== 'GROUP_COMPONENT'
+    );
   }, [select, component]);
 
   const handleClick = useCallback(() => {
