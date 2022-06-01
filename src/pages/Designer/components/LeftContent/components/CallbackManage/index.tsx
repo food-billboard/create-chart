@@ -25,9 +25,12 @@ export interface CallbackManageProps {
 const ComponentList = (props: {
   id: string;
   setSelect: (value: string[]) => void;
+  randomKey: number;
 }) => {
   const { id, setSelect } = props;
   const idPathMap = useIdPathMap();
+
+  const count = useComponentNumber(id);
 
   const list = useMemo(() => {
     return Object.values(idPathMap).reduce<any>((acc, cur) => {
@@ -52,7 +55,7 @@ const ComponentList = (props: {
 
       return acc;
     }, []);
-  }, [idPathMap, id, setSelect]);
+  }, [idPathMap, id, setSelect, count]);
 
   return (
     <div
@@ -76,9 +79,7 @@ const ComponentListWrapper = connect(
   },
 )(ComponentList);
 
-export const ComponentNumber = (props: { id: string }) => {
-  const { id } = props;
-
+function useComponentNumber(id: string) {
   const idPathMap = useIdPathMap();
 
   const count = useMemo(() => {
@@ -95,6 +96,12 @@ export const ComponentNumber = (props: { id: string }) => {
       return acc;
     }, 0);
   }, [idPathMap, id]);
+
+  return count || 0;
+}
+
+export const ComponentNumber = (props: { id: string }) => {
+  const count = useComponentNumber(props.id);
 
   return <>{count || 0}</>;
 };
@@ -238,7 +245,9 @@ const CallbackList = (props: {
         size="small"
         expandable={{
           expandedRowRender: (record) => {
-            return <ComponentListWrapper id={record.id} />;
+            return (
+              <ComponentListWrapper id={record.id} randomKey={Math.random()} />
+            );
           },
           expandIcon: ({ record, expanded, expandable, onExpand }) => {
             if (!expandable) return null;

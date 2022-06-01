@@ -305,8 +305,6 @@ class ComponentUtil {
     let components: ComponentData.TComponentData[] =
       get(state, 'components') || [];
 
-    console.log(changeComponents, 288888);
-
     changeComponents.forEach((component) => {
       const { value, action, id, path: componentPath, extra } = component;
 
