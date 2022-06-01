@@ -203,8 +203,8 @@ class FilterData {
       if (serviceRequest) {
         result = await preRequestData({
           method: method.toLowerCase() as any,
-          body: JSON.stringify(realBody),
-          header: JSON.stringify(realHeaders),
+          body: JSON.stringify(realBody) || '{}',
+          header: JSON.stringify(realHeaders) || '{}',
           url,
         });
       } else {
