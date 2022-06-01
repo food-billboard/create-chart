@@ -90,7 +90,6 @@ const RenderComponent = memo(
       screenType,
       timestamps,
       hoverSelect,
-      setComponentAll,
       grid,
     } = props;
 
@@ -182,7 +181,6 @@ const RenderComponent = memo(
           select={select}
           pointerDisabled={pointerDisabled}
           setComponent={setComponent}
-          setComponentAll={setComponentAll}
           scale={scale / 100}
           componentScale={{
             scaleX,

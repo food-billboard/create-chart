@@ -1,9 +1,7 @@
 import { CSSProperties } from 'react';
-import { set, get } from 'lodash';
+import { get } from 'lodash';
 import { nanoid } from 'nanoid';
-import arrayMove from 'array-move';
-import { useComponentPath, useIdPathMap } from '@/hooks';
-import { IGlobalModelState } from '@/models/connect';
+import { useIdPathMap } from '@/hooks';
 import { getComponentDefaultConfigByType } from '@/components/ChartComponents';
 import ColorSelect from '@/components/ColorSelect';
 import { DEFAULT_CONDITION_CONFIG } from '@/components/ChartComponents/Common/Constants/defaultConfig';
@@ -11,241 +9,11 @@ import { mergeWithoutArray } from '../../tool';
 import { EComponentType, EComponentSelfType } from '../../index';
 import { DEFAULT_CONFIG } from '../../constants/screenData';
 import ThemeUtil from '../Theme';
+import ComponentUtil, { getParentPath } from './ComponentUtil';
 
 const { getRgbaString } = ColorSelect;
 
-// 组件数据修改操作
-class ComponentUtil {
-  getRealIndex(
-    list: ComponentData.TComponentData[],
-    index: number | 'last' | 'first' | 'next' | 'prev',
-    currentIndex: number,
-  ) {
-    if (typeof index === 'number') return index;
-    if (index === 'first') return 0;
-    if (index === 'next')
-      return currentIndex + 1 >= list.length - 1
-        ? list.length - 1
-        : currentIndex + 1;
-    if (index === 'prev') return currentIndex - 1 <= 0 ? 0 : currentIndex - 1;
-    return list.length - 1;
-  }
-
-  addComponent(
-    value: ComponentMethod.SetComponentMethodParamsData,
-    path: string,
-    parentPath: string,
-    components: ComponentData.TComponentData[],
-    newValue: SuperPartial<ComponentData.TComponentData<{}>>,
-  ) {
-    const targetAddParentComponents = path ? get(components, path) : components;
-    targetAddParentComponents.push(newValue);
-    if (path) {
-      set(components, path, targetAddParentComponents);
-    } else {
-      components = targetAddParentComponents;
-    }
-    return components;
-  }
-
-  moveComponent(
-    value: ComponentMethod.SetComponentMethodParamsData,
-    path: string,
-    parentPath: string,
-    components: ComponentData.TComponentData[],
-    newValue: SuperPartial<ComponentData.TComponentData<{}>>,
-  ) {
-    const target = get(components, path);
-    const { id, index: targetIndex } = value;
-
-    // inner
-    if (target?.parent) {
-      const parent = get(components, parentPath);
-      const index = parent.findIndex((item: any) => item.id === id);
-      const realIndex = this.getRealIndex(parent, targetIndex!, index);
-
-      // set target new data
-      const newComponents = arrayMove(parent, index, realIndex);
-      const target = newComponents[realIndex];
-      newComponents[realIndex] = mergeWithoutArray(target, newValue);
-
-      set(components, parentPath, newComponents);
-    }
-    // outer
-    else {
-      const index = components.findIndex((item: any) => item.id === id);
-      const realIndex = this.getRealIndex(components, targetIndex!, index);
-
-      components = arrayMove(components, index, realIndex);
-
-      // set target new data
-      const target = components[realIndex];
-      components[realIndex] = mergeWithoutArray(target, newValue);
-    }
-
-    return components;
-  }
-
-  deleteComponent(
-    value: ComponentMethod.SetComponentMethodParamsData,
-    path: string,
-    parentPath: string,
-    components: ComponentData.TComponentData[],
-    newValue: SuperPartial<ComponentData.TComponentData<{}>>,
-  ) {
-    let targetDeleteParentComponents = parentPath
-      ? get(components, parentPath)
-      : components;
-    const { id } = value;
-
-    targetDeleteParentComponents = targetDeleteParentComponents.filter(
-      (item: any) => item.id !== id,
-    );
-    if (parentPath) {
-      set(components, parentPath, targetDeleteParentComponents);
-    } else {
-      components = targetDeleteParentComponents;
-    }
-
-    return components;
-  }
-
-  updateComponent(
-    value: ComponentMethod.SetComponentMethodParamsData,
-    path: string,
-    parentPath: string,
-    components: ComponentData.TComponentData[],
-    newValue: SuperPartial<ComponentData.TComponentData<{}>>,
-    // 是否覆盖更新
-    cover = false,
-  ) {
-    let targetUpdateParentComponents = parentPath
-      ? get(components, parentPath)
-      : components;
-    const { id } = value;
-
-    targetUpdateParentComponents = targetUpdateParentComponents.map(
-      (item: any) => {
-        if (item.id === id) {
-          if (cover) return newValue;
-          return mergeWithoutArray({}, item, newValue);
-        }
-        return item;
-      },
-    );
-    if (parentPath) {
-      set(components, parentPath, targetUpdateParentComponents);
-    } else {
-      components = targetUpdateParentComponents;
-    }
-
-    return components;
-  }
-
-  isAddParamsValid = (value: ComponentMethod.SetComponentMethodParamsData) => {
-    return value.action === 'add' || value.id;
-  };
-
-  isMoveParamsValid = (value: ComponentMethod.SetComponentMethodParamsData) => {
-    return (
-      value.action !== 'move' ||
-      typeof value.index === 'number' ||
-      value.index === 'last' ||
-      value.index === 'first' ||
-      value.index === 'prev' ||
-      value.index === 'next'
-    );
-  };
-
-  setComponent(state: IGlobalModelState, action: any) {
-    const { payload } = action;
-
-    let changeComponents: ComponentMethod.SetComponentMethodParamsData[] =
-      Array.isArray(payload) ? payload : [payload];
-
-    changeComponents = changeComponents.filter(
-      (item) =>
-        item.value &&
-        this.isAddParamsValid(item) &&
-        this.isMoveParamsValid(item),
-    );
-
-    let components: ComponentData.TComponentData[] =
-      get(state, 'components') || [];
-
-    changeComponents.forEach((component) => {
-      const { value, action, id } = component;
-
-      // * 为了防止上次操作导致components结构发生变化
-      // * 暂时设置每一次都刷新id-path-map
-      useComponentPath(components);
-      const idPathMap = useIdPathMap();
-      const targetPath = idPathMap[id];
-      if (!targetPath && action !== 'add') return;
-      const { path = '' } = targetPath || {};
-
-      const parentPath = getParentPath(path);
-      const valueWithId = {
-        ...value,
-        id,
-      };
-
-      switch (action) {
-        case 'add':
-          components = this.addComponent(
-            component,
-            path,
-            parentPath,
-            components,
-            valueWithId,
-          );
-          break;
-        case 'delete':
-          components = this.deleteComponent(
-            component,
-            path,
-            parentPath,
-            components,
-            valueWithId,
-          );
-          break;
-        case 'cover_update':
-          components = this.updateComponent(
-            component,
-            path,
-            parentPath,
-            components,
-            valueWithId,
-            true,
-          );
-          break;
-        case 'update':
-          components = this.updateComponent(
-            component,
-            path,
-            parentPath,
-            components,
-            valueWithId,
-          );
-          break;
-        case 'move':
-          components = this.moveComponent(
-            component,
-            path,
-            parentPath,
-            components,
-            valueWithId,
-          );
-          break;
-      }
-    });
-
-    // ! 使用这种方法强制刷新
-    components = arrayMove(components, 0, 0);
-
-    return components;
-  }
-}
+export { getParentPath } from './ComponentUtil';
 
 const componentUtil = new ComponentUtil();
 
@@ -325,13 +93,6 @@ export const createGroupComponent = (
     },
     component,
   );
-};
-
-// get parentPath
-export const getParentPath = (path: string) => {
-  const pathList = path.split('.');
-  const parentPath = pathList.slice(0, -1).join('.');
-  return parentPath;
 };
 
 export const getParentComponent = (

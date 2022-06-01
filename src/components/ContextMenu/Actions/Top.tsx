@@ -4,15 +4,7 @@ import { useIdPathMap } from '@/hooks';
 import { CommonActionType } from './type';
 
 const TopAction = (props: CommonActionType) => {
-  const {
-    value,
-    path,
-    setComponent,
-    setComponentAll,
-    components,
-    select,
-    onClick,
-  } = props;
+  const { value, path, setComponent, components, select, onClick } = props;
   const {
     id,
     config: {
@@ -74,7 +66,7 @@ const TopAction = (props: CommonActionType) => {
       }
       onClick();
     },
-    [isTop, id, path, components, setComponentAll, select, onClick],
+    [isTop, id, path, components, select, onClick],
   );
 
   return (

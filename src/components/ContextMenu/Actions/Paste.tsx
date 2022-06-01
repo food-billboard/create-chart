@@ -37,19 +37,24 @@ export const paste = ({
   sourceComponents,
   components,
   clipboard,
-  setComponentAll,
+  setComponent,
   setSelect,
   parent = '',
 }: {
   sourceComponents: ComponentData.TComponentData[];
   components: ComponentData.TComponentData[];
   clipboard: string[];
-  setComponentAll: (components: ComponentData.TComponentData[]) => void;
+  setComponent: (
+    components: ComponentData.TComponentData[],
+    generateComponents: ComponentData.TComponentData[],
+  ) => void;
   setSelect: (value: string[]) => void;
   parent?: string;
 }) => {
   const idPathMap = useIdPathMap();
   const newSelect: string[] = [];
+
+  let generateComponents: ComponentData.TComponentData[] = [];
 
   const newComponents = [
     ...components,
@@ -61,11 +66,13 @@ export const paste = ({
       const newComponent = coverPreviousId(component, parent);
       newSelect.push(newComponent.id);
       acc.push(newComponent);
+      generateComponents.push(newComponent);
       return acc;
     }, []),
   ];
 
-  setComponentAll(newComponents);
+  setComponent(newComponents, generateComponents);
+
   setSelect(newSelect);
 };
 
@@ -78,7 +85,6 @@ const PasteAction = (props: CommonActionType) => {
     value,
     setSelect,
     clipboard,
-    setComponentAll,
     path,
     setComponent,
   } = props;
@@ -103,81 +109,98 @@ const PasteAction = (props: CommonActionType) => {
     return isGroupComponentMethod({ type });
   };
 
-  const handleClick = useCallback(() => {
-    const parentPath = getParentPath(path);
-    const superParentPath = getParentPath(parentPath);
-    const parentComponent = getParentComponent(components, path);
-    const superParentComponent = getParentComponent(components, parentPath);
-    let parentId: string | undefined = '';
+  const handleClick = useCallback(
+    (e: any) => {
+      e?.stopPropagation();
+      const parentPath = getParentPath(path);
+      const superParentPath = getParentPath(parentPath);
+      const parentComponent = getParentComponent(components, path);
+      const superParentComponent = getParentComponent(components, parentPath);
+      let parentId: string | undefined = '';
 
-    const isGroupComponentClick = isGroupComponent();
+      const isGroupComponentClick = isGroupComponent();
 
-    // click croup component or component
-    let targetParentComponents;
-    if (isGroupComponentClick) {
-      targetParentComponents = currentComponents;
-      parentId = id;
-    } else {
-      targetParentComponents = parentComponent;
-      parentId = parent;
-    }
+      // click croup component or component
+      let targetParentComponents;
+      if (isGroupComponentClick) {
+        targetParentComponents = currentComponents;
+        parentId = id;
+      } else {
+        targetParentComponents = parentComponent;
+        parentId = parent;
+      }
 
-    paste({
-      setSelect,
-      components: targetParentComponents || components,
-      setComponentAll: (newComponents) => {
-        // group component
-        if (isGroupComponentClick) {
-          setComponent({
-            path,
-            action: 'update',
-            id,
-            value: {
-              components: newComponents.map((item) => ({
-                ...item,
-                parent: id,
-              })),
-            },
-          });
-        }
-        // inner component
-        else if (parentComponent) {
-          setComponent({
-            path: superParentPath,
-            action: 'update',
-            id: superParentComponent.id,
-            value: {
-              components: newComponents.map((item) => ({
-                ...item,
-                parent: superParentComponent.id,
-              })),
-            },
-          });
-        }
-        // outer component
-        else {
-          setComponentAll(newComponents);
-        }
-      },
+      const realComponents = targetParentComponents || components;
+
+      paste({
+        setSelect,
+        components: realComponents,
+        setComponent: (newComponents, generateComponents) => {
+          // group component
+          if (isGroupComponentClick) {
+            setComponent(
+              generateComponents.map((item, index) => {
+                return {
+                  value: {
+                    ...item,
+                    parent: id,
+                  },
+                  id: item.id,
+                  path: path + '.components',
+                  action: 'add',
+                };
+              }),
+            );
+          }
+          // inner component
+          else if (parentComponent) {
+            setComponent(
+              generateComponents.map((item) => {
+                return {
+                  value: {
+                    ...item,
+                    parent: superParentComponent.id,
+                  },
+                  id: item.id,
+                  path: parentPath,
+                  action: 'add',
+                };
+              }),
+            );
+          }
+          // outer component
+          else {
+            setComponent(
+              generateComponents.map((item) => {
+                return {
+                  value: item,
+                  id: item.id,
+                  action: 'add',
+                };
+              }),
+            );
+          }
+        },
+        clipboard,
+        sourceComponents: components,
+        parent: parentId,
+      });
+      onClick?.();
+    },
+    [
+      currentComponents,
+      id,
+      setClipboard,
       clipboard,
-      sourceComponents: components,
-      parent: parentId,
-    });
-    onClick?.();
-  }, [
-    currentComponents,
-    id,
-    setClipboard,
-    clipboard,
-    components,
-    onClick,
-    setSelect,
-    path,
-    setComponentAll,
-    setComponent,
-    type,
-    parent,
-  ]);
+      components,
+      onClick,
+      setSelect,
+      path,
+      setComponent,
+      type,
+      parent,
+    ],
+  );
 
   return (
     <div

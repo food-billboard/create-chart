@@ -32,13 +32,6 @@ type IProps = {
       value: ComponentData.TComponentData,
     ) => SuperPartial<ComponentData.TComponentData>,
   ) => void;
-  setComponentAll: (
-    value:
-      | ComponentData.TComponentData[]
-      | ((
-          value: ComponentData.TComponentData[],
-        ) => ComponentData.TComponentData[]),
-  ) => void;
   componentId: string;
   isSelect: boolean;
   grid: number;
@@ -212,7 +205,6 @@ const ComponentWrapper = (
           'setComponent',
           'componentId',
           'isSelect',
-          'setComponentAll',
           'grid',
           'isResizing',
           'resizeMethod',

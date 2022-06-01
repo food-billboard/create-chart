@@ -30,7 +30,6 @@ const ClipboardComponent = (props: {
     select,
     setClipboard,
     components,
-    setComponentAll,
     setComponent,
     setSelect,
     undo,
@@ -61,7 +60,17 @@ const ClipboardComponent = (props: {
       return;
     paste({
       components,
-      setComponentAll,
+      setComponent: (_, newComponents) => {
+        setComponent(
+          newComponents.map((item) => {
+            return {
+              value: item,
+              id: item.id,
+              action: 'add',
+            };
+          }),
+        );
+      },
       setSelect,
       clipboard,
       sourceComponents: components,

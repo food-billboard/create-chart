@@ -153,7 +153,8 @@ class GroupUtil {
     return components;
   };
 
-  deleteAndMoveComponent = ({
+  // ? 1.5 前版本
+  _deleteAndMoveComponent = ({
     select,
     components,
     clickTarget,
@@ -228,6 +229,67 @@ class GroupUtil {
     return newComponents;
   };
 
+  // ? 1.5
+  deleteAndMoveComponent = ({
+    select,
+    components,
+    clickTarget,
+    groupComponent,
+  }: {
+    select: string[];
+    components: ComponentData.TComponentData[];
+    clickTarget: ComponentData.TComponentData;
+    groupComponent: ComponentData.TComponentData;
+  }) => {
+    const actionComponents: ComponentMethod.SetComponentMethodParamsData[] = [];
+    let idPathMap: {
+      [key: string]: {
+        path: string;
+        id: string;
+      };
+    } = useIdPathMap();
+
+    function formatComponent(component: ComponentData.TComponentData) {
+      return mergeWithoutArray({}, component, {
+        parent: groupComponent.id,
+        config: {
+          style: {
+            left:
+              component.config.style.left - groupComponent.config.style.left,
+            top: component.config.style.top - groupComponent.config.style.top,
+          },
+        },
+      });
+    }
+
+    const needDealSelect = [...select];
+    const targetIdIndex = needDealSelect.indexOf(clickTarget.id);
+    needDealSelect.splice(targetIdIndex, 1);
+
+    groupComponent.components.push(formatComponent(clickTarget));
+
+    needDealSelect.forEach((selectId) => {
+      const { path } = idPathMap[selectId];
+
+      groupComponent.components.push(formatComponent(get(components, path)));
+
+      actionComponents.push({
+        value: {},
+        id: selectId,
+        action: 'delete',
+      });
+    });
+
+    actionComponents.push({
+      value: groupComponent,
+      id: clickTarget.id,
+      action: 'cover_update',
+    });
+
+    return actionComponents;
+  };
+
+  // 成组
   generateGroupConfig = ({
     select,
     components,
@@ -238,8 +300,7 @@ class GroupUtil {
     clickTarget: ComponentData.TComponentData;
   }) => {
     const idPathMap = useIdPathMap();
-    const { parent, id } = clickTarget;
-    const { path } = idPathMap[id] || {};
+    const { parent } = clickTarget;
 
     // 从group中抽出其left和top
     let formatSelectPositionMap: {
@@ -297,6 +358,7 @@ class GroupUtil {
             height: bottom - top,
           },
         },
+        components: [],
       });
 
       return this.deleteAndMoveComponent({
@@ -310,6 +372,7 @@ class GroupUtil {
     }
   };
 
+  // 取消成组
   splitGroupConfig = ({
     clickTarget,
     components,

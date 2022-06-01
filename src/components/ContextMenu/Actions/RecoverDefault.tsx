@@ -4,15 +4,7 @@ import { getComponentDefaultConfigByType } from '../../ChartComponents';
 import { CommonActionType } from './type';
 
 const RecoverDefaultAction = (props: CommonActionType) => {
-  const {
-    value,
-    path,
-    setComponent,
-    setComponentAll,
-    components,
-    select,
-    onClick,
-  } = props;
+  const { value, path, setComponent, components, select, onClick } = props;
   const { id, componentType } = value;
 
   const canRecover = useMemo(() => {
@@ -36,7 +28,7 @@ const RecoverDefaultAction = (props: CommonActionType) => {
       });
       onClick();
     },
-    [id, path, componentType, components, setComponentAll, select, onClick],
+    [id, path, componentType, components, select, onClick],
   );
 
   return (

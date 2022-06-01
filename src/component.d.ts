@@ -558,9 +558,18 @@ declare namespace ComponentData {
 declare namespace ComponentMethod {
   type SetComponentMethodParamsData = {
     value: SuperPartial<ComponentData.TComponentData>;
+    extra?: any;
     id: string;
-    path: string;
-    action: 'add' | 'update' | 'delete' | 'move' | 'cover_update';
+    path?: string;
+    action:
+      | 'add'
+      | 'update'
+      | 'delete'
+      | 'move'
+      | 'cover_update'
+      | 'group'
+      | 'un_group'
+      | 'drag';
     index?: number | 'last' | 'first' | 'next' | 'prev'; // * 移动时用，这里暂时只存在同级移动
   };
 

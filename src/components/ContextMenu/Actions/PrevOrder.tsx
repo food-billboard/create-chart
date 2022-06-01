@@ -4,15 +4,7 @@ import { useIdPathMap } from '@/hooks';
 import { CommonActionType } from './type';
 
 const PrevOrderAction = (props: CommonActionType) => {
-  const {
-    value,
-    path,
-    setComponent,
-    setComponentAll,
-    components,
-    select,
-    onClick,
-  } = props;
+  const { value, setComponent, select, onClick } = props;
   const { id } = value;
 
   const handleClick = useCallback(

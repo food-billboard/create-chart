@@ -1,25 +1,23 @@
 import { useCallback } from 'react';
 import { GroupOutlined } from '@ant-design/icons';
-import GroupUtil from '@/utils/Assist/Group';
 import { CommonActionType } from './type';
 
 const GroupAction = (props: CommonActionType) => {
-  const { value, setComponentAll, components, select, onClick } = props;
+  const { value, components, select, onClick, setComponent } = props;
 
   const handleClick = useCallback(
     (e: any) => {
       e.stopPropagation();
 
-      const newComponents = GroupUtil.generateGroupConfig({
-        select,
-        components,
-        clickTarget: value,
+      setComponent({
+        action: 'group',
+        id: [value.id, ...select.filter((item) => item !== value.id)].join(','),
+        value,
       });
 
-      newComponents && setComponentAll(newComponents);
       onClick();
     },
-    [components, setComponentAll, select, onClick],
+    [components, setComponent, select, onClick],
   );
 
   return (
