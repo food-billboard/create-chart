@@ -192,7 +192,7 @@ const CallbackList = (props: {
         title: '使用组件',
         key: 'use',
         dataIndex: 'use',
-        width: 50,
+        width: 100,
         render: (_: any, record: ComponentData.TFilterConfig) => {
           return <ComponentNumber id={record.id} />;
         },
@@ -315,7 +315,7 @@ const CallbackManage = forwardRef<CallbackManageRef, CallbackManageProps>(
         footer={footer}
         title="回调管理"
         placement="left"
-        width={620}
+        width={680}
       >
         <WrapperCallbackList />
       </Drawer>

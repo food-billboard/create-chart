@@ -69,9 +69,10 @@ const ShareSetting = forwardRef<
       _id: string;
     }) => void;
     onCancel?: () => void;
+    onCancelShare?: () => void;
   }
 >((props, ref) => {
-  const { onOk: propsOnOk, onCancel: propsOnCancel } = props;
+  const { onOk: propsOnOk, onCancel: propsOnCancel, onCancelShare } = props;
 
   const [visible, setVisible] = useState<boolean>(false);
   const [auth, setAuth] = useState<'PUBLIC' | 'PRIVATE'>('PUBLIC');
@@ -157,9 +158,11 @@ const ShareSetting = forwardRef<
         clear();
       } catch (err) {
         message.info('操作失败');
+      } finally {
+        onCancelShare?.();
       }
     },
-    [screenId, clear],
+    [screenId, clear, onCancelShare],
   );
 
   useImperativeHandle(

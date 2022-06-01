@@ -268,6 +268,7 @@ const ScreenList = (props: {
       <ShareSetting
         onOk={onShareOk}
         onCancel={() => (fetchLoading.current = false)}
+        onCancelShare={() => (fetchLoading.current = false)}
         ref={shareSettingRef}
       />
     </div>

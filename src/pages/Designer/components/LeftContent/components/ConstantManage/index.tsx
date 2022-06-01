@@ -232,6 +232,7 @@ const ConstantManage = forwardRef<ConstantManageRef, ConstantManageProps>(
         footer={footer}
         title="全局常量管理"
         placement="left"
+        width={520}
       >
         <WrapperConstantList />
       </Drawer>

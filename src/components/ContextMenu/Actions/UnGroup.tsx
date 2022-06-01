@@ -4,7 +4,7 @@ import { isGroupComponent } from '@/utils/Assist/Component';
 import { CommonActionType } from './type';
 
 const UnGroupAction = (props: CommonActionType) => {
-  const { onClick, value, components, select, setComponent } = props;
+  const { onClick, value, components, select, setComponent, setSelect } = props;
 
   const isUnGroup = useMemo(() => {
     return select.length === 1 && isGroupComponent(value);
@@ -13,14 +13,16 @@ const UnGroupAction = (props: CommonActionType) => {
   const handleClick = useCallback(
     (e: any) => {
       e.stopPropagation();
+      const components = value.components || [];
       setComponent({
         action: 'un_group',
         id: value.id,
         value,
       });
+      setSelect(components.map((item) => item.id));
       onClick?.();
     },
-    [onClick, setComponent, components, select, value],
+    [onClick, setComponent, components, select, setSelect, value],
   );
 
   return (
