@@ -247,7 +247,7 @@ const ScatterMap = (props: {
   useDeepUpdateEffect(() => {
     setOption();
     chartInstance.current?.resize();
-  }, [processedValue, options]);
+  }, [processedValue, options, realValue]);
 
   return (
     <>

@@ -245,7 +245,7 @@ const PercentBar = (props: {
   useDeepUpdateEffect(() => {
     setOption();
     chartInstance.current?.resize();
-  }, [processedValue, options]);
+  }, [processedValue, options, xAxisKeys, yAxisValues]);
 
   useAnimationChange(chartInstance.current!, animation, setOption);
 

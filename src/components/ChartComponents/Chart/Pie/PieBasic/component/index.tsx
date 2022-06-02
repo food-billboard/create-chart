@@ -179,7 +179,7 @@ const PieBasic = (props: {
   useDeepUpdateEffect(() => {
     setOption();
     chartInstance.current?.resize();
-  }, [processedValue]);
+  }, [processedValue, xAxisKeys, yAxisValues]);
 
   // 配置发生变化时
   useDeepUpdateEffect(() => {

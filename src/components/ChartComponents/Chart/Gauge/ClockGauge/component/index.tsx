@@ -1,7 +1,6 @@
-import { CSSProperties, useEffect, useRef, useState } from 'react';
+import { CSSProperties, useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
-import moment from 'moment';
 import { useDeepUpdateEffect } from '@/hooks';
 import {
   useChartComponentResize,
@@ -22,8 +21,6 @@ const ClockGauge = (props: {
   value: ComponentData.TComponentData<TClockGaugeConfig>;
   global: ComponentProps['global'];
 }) => {
-  const [stateValue, setStateValue] = useState<moment.Moment>(moment());
-
   const { className, style, value, global } = props;
   const { screenTheme } = global;
 
@@ -259,12 +256,6 @@ const ClockGauge = (props: {
       chartInstance.current?.dispose();
     };
   }, [screenTheme]);
-
-  // 数据发生变化时
-  useDeepUpdateEffect(() => {
-    setOption();
-    chartInstance.current?.resize();
-  }, [stateValue]);
 
   // 配置发生变化时
   useDeepUpdateEffect(() => {

@@ -342,7 +342,14 @@ const LineBar = (props: {
   useDeepUpdateEffect(() => {
     setOption();
     chartInstance.current?.resize();
-  }, [processedValue]);
+  }, [
+    processedValue,
+    seriesKeys,
+    xAxisKeys,
+    yAxisValues,
+    y2AxisValues,
+    series2Keys,
+  ]);
 
   // 配置发生变化时
   useDeepUpdateEffect(() => {

@@ -162,7 +162,7 @@ const SunBurstBasic = (props: {
   useDeepUpdateEffect(() => {
     setOption();
     chartInstance.current?.resize();
-  }, [processedValue]);
+  }, [processedValue, realValue]);
 
   // 配置发生变化时
   useDeepUpdateEffect(() => {
