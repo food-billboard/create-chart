@@ -4,6 +4,7 @@ import {
   DeleteOutlined,
   FolderViewOutlined,
   ExportOutlined,
+  BranchesOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
 import {
@@ -11,8 +12,9 @@ import {
   previewScreenModel,
   enableScreenModel,
   disabledScreenModel,
+  copyScreen,
 } from '@/services';
-import { goDesignModel, goPreviewModel } from '@/utils/tool';
+import { goDesignModel, goPreviewModel, goDesign } from '@/utils/tool';
 import { exportData } from '@/utils/Assist/LeadInAndOutput';
 import styles from './index.less';
 
@@ -111,6 +113,26 @@ const ScreenList = (props: {
     [],
   );
 
+  // 模板使用
+  const useModelMethod = useCallback(
+    async (value: any, e) => {
+      e.stopPropagation();
+      fetchLoading.current = true;
+      try {
+        const response: any = await copyScreen({
+          _id: value._id,
+          type: 'model',
+        });
+        goDesign(response[0]);
+      } catch (err) {
+        message.info('操作失败');
+      } finally {
+        fetchLoading.current = false;
+      }
+    },
+    [onChange, handleEdit],
+  );
+
   return (
     <div className={styles['screen-list-icon-content']}>
       <Row
@@ -187,6 +209,16 @@ const ScreenList = (props: {
                     >
                       预览
                     </Button>
+                    {enable && (
+                      <Button
+                        size="small"
+                        icon={<BranchesOutlined />}
+                        type="link"
+                        onClick={useModelMethod.bind(null, item)}
+                      >
+                        使用
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>

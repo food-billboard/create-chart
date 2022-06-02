@@ -215,7 +215,7 @@ export default {
     },
 
     setSelectData(state: any, action: any) {
-      set(state, 'select', action.payload);
+      state.select = [...action.payload];
       return state;
     },
 

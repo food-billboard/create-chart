@@ -71,7 +71,10 @@ const ScreenList = (props: {
       e.stopPropagation();
       fetchLoading.current = true;
       try {
-        const response: any = await copyScreen({ _id: value._id });
+        const response: any = await copyScreen({
+          _id: value._id,
+          type: 'screen',
+        });
         await onChange?.();
         Modal.confirm({
           title: '提示',

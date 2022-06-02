@@ -270,7 +270,6 @@ class ComponentUtil {
       }
     }
 
-    console.log(data, 29999);
     return data;
   }
 

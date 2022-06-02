@@ -66,8 +66,8 @@ export const previewScreenValid = (params: API_SCREEN.TPreviewScreenParams) => {
   });
 };
 
-// 大屏复制
-export const copyScreen = (data: { _id: string }) => {
+// 大屏复制 | 大屏模板使用
+export const copyScreen = (data: { _id: string; type: 'screen' | 'model' }) => {
   return request('/api/screen/copy', {
     method: 'POST',
     data,

@@ -1,7 +1,7 @@
 import request from '../utils/request';
 import { SCREEN_MODEL_VERSION } from '../utils/constants';
 
-// 新增大屏
+// 新增大屏模板
 export const postScreenModel = (data: API_SCREEN.TAddScreenParams) => {
   return request('/api/screen/model', {
     method: 'POST',
@@ -12,7 +12,7 @@ export const postScreenModel = (data: API_SCREEN.TAddScreenParams) => {
   });
 };
 
-// 修改大屏
+// 修改大屏模板
 export const putScreenModel = (data: API_SCREEN.TEditScreenParams) => {
   return request('/api/screen/model', {
     method: 'PUT',
@@ -23,7 +23,7 @@ export const putScreenModel = (data: API_SCREEN.TEditScreenParams) => {
   });
 };
 
-// 大屏详情
+// 大屏模板详情
 export const getScreenModelDetail = (params: API_SCREEN.TGetScreenDetail) => {
   return request<API_SCREEN.TScreenDetail>('/api/screen/model/detail', {
     method: 'GET',
@@ -31,7 +31,7 @@ export const getScreenModelDetail = (params: API_SCREEN.TGetScreenDetail) => {
   });
 };
 
-// 大屏列表
+// 大屏模板列表
 export const getScreenModelList = (params: API_SCREEN.TGetScreenListParams) => {
   return request<any>('/api/screen/model', {
     method: 'GET',
@@ -40,7 +40,7 @@ export const getScreenModelList = (params: API_SCREEN.TGetScreenListParams) => {
   });
 };
 
-// 大屏删除
+// 大屏模板删除
 export const deleteScreenModel = (params: API_SCREEN.TDeleteScreenParams) => {
   return request('/api/screen/model', {
     method: 'DELETE',
@@ -48,7 +48,7 @@ export const deleteScreenModel = (params: API_SCREEN.TDeleteScreenParams) => {
   });
 };
 
-// 大屏预览
+// 大屏模板预览
 export const previewScreenModel = (data: API_SCREEN.TPreviewScreenParams) => {
   return request('/api/screen/model/preview', {
     method: 'POST',
@@ -56,7 +56,7 @@ export const previewScreenModel = (data: API_SCREEN.TPreviewScreenParams) => {
   });
 };
 
-// 大屏预览验证
+// 大屏模板预览验证
 export const previewScreenModelValid = (
   params: API_SCREEN.TPreviewScreenParams,
 ) => {
@@ -66,7 +66,7 @@ export const previewScreenModelValid = (
   });
 };
 
-// 大屏启用
+// 大屏模板启用
 export const enableScreenModel = (data: API_SCREEN.TEnableScreenParams) => {
   return request('/api/screen/model/enable', {
     method: 'PUT',
@@ -74,7 +74,7 @@ export const enableScreenModel = (data: API_SCREEN.TEnableScreenParams) => {
   });
 };
 
-// 大屏禁用
+// 大屏模板禁用
 export const disabledScreenModel = (
   params: API_SCREEN.TDisabledScreenParams,
 ) => {

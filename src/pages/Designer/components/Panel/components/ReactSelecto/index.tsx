@@ -71,7 +71,7 @@ const Selecto = (props: {
         e.stop();
       }
     },
-    [select],
+    [select, setSelect],
   );
 
   return (
