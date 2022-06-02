@@ -4,6 +4,7 @@ import ComponentUtil, {
   getParentComponent,
   getParentPath,
   createGroupComponent,
+  isGroupComponent,
 } from '../Component';
 import { mergeWithoutArray } from '../../tool';
 
@@ -427,19 +428,34 @@ class GroupUtil {
               const {
                 config: {
                   style: { left: compLeft, top: compTop, width, height },
+                  attr: { scaleY: compScaleY = 1, scaleX: compScaleX = 1 },
                 },
               } = config;
 
-              const newConfig = mergeWithoutArray({}, config, {
-                config: {
-                  style: {
-                    left: compLeft * scaleX + left,
-                    top: compTop * scaleY + top,
-                    width: width * scaleX,
-                    height: height * scaleY,
+              const newConfig = mergeWithoutArray(
+                {},
+                config,
+                {
+                  config: {
+                    style: {
+                      left: compLeft * scaleX + left,
+                      top: compTop * scaleY + top,
+                      width: width * scaleX,
+                      height: height * scaleY,
+                    },
                   },
                 },
-              });
+                isGroupComponent(config)
+                  ? {
+                      config: {
+                        attr: {
+                          scaleY: compScaleY * scaleY,
+                          scaleX: compScaleX * scaleX,
+                        },
+                      },
+                    }
+                  : {},
+              );
               // * avoid undefined
               newConfig.parent = parent;
 

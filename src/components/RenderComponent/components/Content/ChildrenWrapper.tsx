@@ -10,6 +10,7 @@ import styles from '../../index.less';
 const ChildrenWrapper = (props: {
   children?: ReactNode;
   value: ComponentData.TComponentData;
+  parent: ComponentData.TComponentData | null;
   select: string[];
   hoverSelect: string;
   borderNone?: boolean;

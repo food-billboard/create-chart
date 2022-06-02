@@ -1,7 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { connect } from 'dva';
 import { ConnectState } from '@/models/connect';
 import { EComponentType } from '@/utils/constants';
+import { mergeWithoutArray } from '@/utils';
 import { ComponentProps } from '../../../ChartComponents/Common/Component/type';
 import ChildrenWrapper from './ChildrenWrapper';
 import SubGroup from './SubGroup';
@@ -16,39 +17,70 @@ const Content = (props: {
 }) => {
   const { component, setParams, screenType, timestamps, screenTheme } = props;
 
+  const getScale = useCallback((component?: ComponentData.TComponentData) => {
+    if (!component)
+      return {
+        scaleX: 1,
+        scaleY: 1,
+      };
+    return {
+      scaleX: component.config.attr.scaleX ?? 1,
+      scaleY: component.config.attr.scaleY ?? 1,
+    };
+  }, []);
+
   const children = useMemo(() => {
     const renderChildren: (
       value: ComponentData.TComponentData[],
+      parent: ComponentData.TComponentData | null,
       isOuter?: boolean,
-    ) => any = (value, isOuter = false) => {
+    ) => any = (value, parent = null, isOuter = false) => {
+      const { scaleX, scaleY } = getScale(parent || undefined);
+
       return value.map((component) => {
         const { type, id } = component;
+        const newComponent = mergeWithoutArray({}, component, {
+          config: {
+            style: {
+              width: component.config.style.width * scaleX,
+              height: component.config.style.height * scaleY,
+              left: component.config.style.left * scaleX,
+              top: component.config.style.top * scaleY,
+            },
+            attr: {
+              scaleX: (component.config.attr.scaleX ?? 1) * scaleX,
+              scaleY: (component.config.attr.scaleY ?? 1) * scaleY,
+            },
+          },
+        });
         if (type === EComponentType.GROUP_COMPONENT) {
           return (
             <ChildrenWrapper
-              value={component}
+              value={newComponent}
               key={component.id}
               borderNone={isOuter}
+              parent={parent}
             >
-              <SubGroup value={component} isOuter={isOuter}>
-                {renderChildren(component.components)}
+              <SubGroup value={newComponent} isOuter={isOuter}>
+                {renderChildren(newComponent.components, newComponent)}
               </SubGroup>
             </ChildrenWrapper>
           );
         }
 
-        const TargetComponent: any = getComponentByType(component)?.render;
+        const TargetComponent: any = getComponentByType(newComponent)?.render;
 
         if (!TargetComponent) return null;
 
         return (
           <ChildrenWrapper
-            value={component}
-            key={component.id}
+            value={newComponent}
+            key={newComponent.id}
             borderNone={isOuter}
+            parent={parent}
           >
             <TargetComponent
-              value={component}
+              value={newComponent}
               key={id}
               global={{
                 setParams,
@@ -60,8 +92,8 @@ const Content = (props: {
         );
       });
     };
-    return renderChildren([component], true);
-  }, [component, setParams, screenType, timestamps]);
+    return renderChildren([component], null, true);
+  }, [component, setParams, screenType, timestamps, getScale]);
 
   return <>{children}</>;
 };

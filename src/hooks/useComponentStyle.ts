@@ -72,16 +72,16 @@ export const useComponentChildrenStyle: (
   const { isOuter } = options;
 
   const styles = useMemo(() => {
-    const { width, height, opacity, rotate, left, top } = componentStyle;
+    const { opacity, rotate, left, top } = componentStyle;
     const position: any = {};
     if (!isOuter) {
       position.left = left;
       position.top = top;
     }
     return {
-      width: width / scaleX,
-      height: height / scaleY,
-      transform: `scale(${scaleX}, ${scaleY}) rotate(${rotate}deg)`,
+      width: '100%',
+      height: '100%',
+      transform: `rotate(${rotate}deg)`,
       opacity,
       ...position,
     };
