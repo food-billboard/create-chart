@@ -138,6 +138,7 @@ const PasteAction = (props: CommonActionType) => {
         setComponent: (newComponents, generateComponents) => {
           // group component
           if (isGroupComponentClick) {
+            // 放进组内需要刷新组的各个大小
             setComponent(
               generateComponents.map((item, index) => {
                 return {
@@ -147,7 +148,7 @@ const PasteAction = (props: CommonActionType) => {
                   },
                   id: item.id,
                   path: path + '.components',
-                  action: 'add',
+                  action: 'add' as any,
                 };
               }),
             );

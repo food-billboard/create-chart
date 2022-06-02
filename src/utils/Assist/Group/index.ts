@@ -289,6 +289,51 @@ class GroupUtil {
     return actionComponents;
   };
 
+  // 成组组件的新宽高位置
+  generateGroupComponentSizeAndPosition(
+    groupComponents: ComponentData.TComponentData[],
+    components: ComponentData.TComponentData[],
+  ) {
+    // 从group中抽出其left和top
+    let formatSelectPositionMap: {
+      [key: string]: {
+        left: number;
+        top: number;
+      };
+    } = {};
+
+    // the component parent limit position
+    return groupComponents.reduce(
+      (acc, cur) => {
+        const { left, top } = this.getComponentPosition(cur, components);
+
+        formatSelectPositionMap[cur.id] = {
+          left,
+          top,
+        };
+
+        const {
+          config: {
+            style: { width, height },
+          },
+        } = cur;
+
+        if (left < acc.left) acc.left = left;
+        if (left + width > acc.right) acc.right = left + width;
+        if (top < acc.top) acc.top = top;
+        if (top + height > acc.bottom) acc.bottom = top + height;
+
+        return acc;
+      },
+      {
+        left: 99999,
+        right: 0,
+        top: 99999,
+        bottom: 0,
+      },
+    );
+  }
+
   // 成组
   generateGroupConfig = ({
     select,
@@ -302,50 +347,18 @@ class GroupUtil {
     const idPathMap = useIdPathMap();
     const { parent } = clickTarget;
 
-    // 从group中抽出其left和top
-    let formatSelectPositionMap: {
-      [key: string]: {
-        left: number;
-        top: number;
-      };
-    } = {};
-
     try {
-      // the component parent limit position
-      const { left, top, right, bottom } = select.reduce(
-        (acc, cur) => {
-          const targetPath = idPathMap[cur];
-
-          const { path } = targetPath;
-          const target: ComponentData.TComponentData = get(components, path);
-
-          const { left, top } = this.getComponentPosition(target, components);
-
-          formatSelectPositionMap[target.id] = {
-            left,
-            top,
-          };
-
-          const {
-            config: {
-              style: { width, height },
-            },
-          } = target;
-
-          if (left < acc.left) acc.left = left;
-          if (left + width > acc.right) acc.right = left + width;
-          if (top < acc.top) acc.top = top;
-          if (top + height > acc.bottom) acc.bottom = top + height;
-
-          return acc;
-        },
-        {
-          left: 99999,
-          right: 0,
-          top: 99999,
-          bottom: 0,
-        },
-      );
+      const { left, top, right, bottom } =
+        this.generateGroupComponentSizeAndPosition(
+          select.reduce((acc, cur) => {
+            const targetPath = idPathMap[cur];
+            const { path } = targetPath;
+            const target: ComponentData.TComponentData = get(components, path);
+            if (target) acc.push(target);
+            return acc;
+          }, [] as ComponentData.TComponentData[]),
+          components,
+        );
 
       // group component
       const newGroupComponent = createGroupComponent({
