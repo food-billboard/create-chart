@@ -340,10 +340,12 @@ class GroupUtil {
     select,
     components,
     clickTarget,
+    callback,
   }: {
     select: string[];
     components: ComponentData.TComponentData[];
     clickTarget: ComponentData.TComponentData;
+    callback?: (id: string) => void;
   }) => {
     const idPathMap = useIdPathMap();
     const { parent } = clickTarget;
@@ -374,6 +376,8 @@ class GroupUtil {
         },
         components: [],
       });
+
+      callback?.(newGroupComponent.id);
 
       return this.deleteAndMoveComponent({
         select,

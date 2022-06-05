@@ -45,6 +45,7 @@ class ComponentUtil {
     } else {
       components = targetAddParentComponents;
     }
+    value.callback?.(components, newValue);
     return components;
   }
 
@@ -84,6 +85,8 @@ class ComponentUtil {
       components[realIndex] = mergeWithoutArray(target, newValue);
     }
 
+    value.callback?.(components, newValue);
+
     return components;
   }
 
@@ -108,6 +111,8 @@ class ComponentUtil {
     } else {
       components = targetDeleteParentComponents;
     }
+
+    value.callback?.(components, id);
 
     return components;
   }
@@ -148,6 +153,8 @@ class ComponentUtil {
       components = targetUpdateParentComponents;
     }
 
+    value.callback?.(components, targetUpdateParentComponents);
+
     return components;
   }
 
@@ -165,11 +172,19 @@ class ComponentUtil {
       ...nextNewValue,
       id: select[0],
     };
+
+    let groupId = '';
+
     const newComponents = GroupUtil.generateGroupConfig({
       select,
       components,
       clickTarget: realNewValue as ComponentData.TComponentData,
+      callback: (id) => {
+        groupId = id;
+      },
     });
+
+    value.callback?.(components, groupId);
 
     return newComponents;
   }
@@ -187,6 +202,7 @@ class ComponentUtil {
       components,
       select: [newValue.id as string],
     });
+    value.callback?.(newComponents, null);
     return newComponents;
   }
 
@@ -269,6 +285,8 @@ class ComponentUtil {
         ar.splice(i + 1, 0, dragObj);
       }
     }
+
+    value.callback?.(data, null);
 
     return data;
   }

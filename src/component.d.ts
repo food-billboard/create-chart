@@ -561,6 +561,7 @@ declare namespace ComponentMethod {
     extra?: any;
     id: string;
     path?: string;
+    callback?: (components: ComponentData.TComponentData[], extra: any) => void;
     action:
       | 'add'
       | 'update'

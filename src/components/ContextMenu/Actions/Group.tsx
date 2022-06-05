@@ -3,21 +3,28 @@ import { GroupOutlined } from '@ant-design/icons';
 import { CommonActionType } from './type';
 
 const GroupAction = (props: CommonActionType) => {
-  const { value, components, select, onClick, setComponent } = props;
+  const { value, select, onClick, setComponent, setSelect } = props;
 
   const handleClick = useCallback(
     (e: any) => {
       e.stopPropagation();
 
+      let selectId = '';
+
       setComponent({
         action: 'group',
         id: [value.id, ...select.filter((item) => item !== value.id)].join(','),
         value,
+        callback: (_, id) => {
+          selectId = id;
+        },
       });
+
+      selectId && setSelect([selectId]);
 
       onClick();
     },
-    [components, setComponent, select, onClick],
+    [setSelect, setComponent, select, onClick, value],
   );
 
   return (
