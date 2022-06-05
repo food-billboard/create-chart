@@ -177,12 +177,16 @@ declare namespace ComponentData {
     id: string;
     // 源头-针对组件
     origin?: string;
+    // 源头类型-针对组件多交互
+    originId?: string;
     // 值
     value?: string;
     // 源字段名称
     key: string;
     // 变量名称
     variable: string;
+    // 是否启用 默认启用
+    show: boolean;
   };
 
   // 全局常量

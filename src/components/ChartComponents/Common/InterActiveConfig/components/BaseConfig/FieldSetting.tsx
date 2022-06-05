@@ -1,34 +1,21 @@
 import { useMemo, useCallback } from 'react';
-import { connect } from 'dva';
 import Input from '@/components/ChartComponents/Common/Input';
 import { getPath } from '@/utils/Assist/Component';
 import InteractiveUtil from '@/utils/Assist/Interactive';
 import MapTable from '../../../MapTable';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
-const FieldSetting = (props: {
+type IProps = {
   value: ComponentData.TBaseInteractiveConfig;
   onChange?: ComponentMethod.SetComponentMethod;
   id: string;
   dataSource: ComponentData.TBaseInteractiveConfig[];
   params: ComponentData.TParams[];
-  setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
-}) => {
-  const { value, onChange, id, dataSource, params, setScreen } = props;
-  const { name, fields } = value;
+  setParams: (value: ComponentData.TParams[]) => void;
+};
 
-  const setParams = useCallback(
-    (params: ComponentData.TParams[]) => {
-      setScreen({
-        config: {
-          attr: {
-            params,
-          },
-        },
-      });
-    },
-    [setScreen],
-  );
+const FieldSetting = (props: IProps) => {
+  const { value, onChange, id, dataSource, params, setParams } = props;
+  const { name, fields, show, type } = value;
 
   const onFieldMapChange = useCallback(
     (value: ComponentData.TBaseInteractiveConfigField, mapValue) => {
@@ -48,6 +35,8 @@ const FieldSetting = (props: {
           id: value.mapId,
           origin: id,
           key: value.key,
+          show,
+          originId: type,
         },
       );
 
@@ -77,7 +66,7 @@ const FieldSetting = (props: {
         action: 'update',
       });
     },
-    [id, onChange, params, setParams, dataSource],
+    [id, onChange, params, setParams, dataSource, show, type],
   );
 
   const columns = useMemo(() => {
@@ -117,4 +106,4 @@ const FieldSetting = (props: {
   return <MapTable dataSource={fields} columns={columns} rowKey="key" />;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FieldSetting);
+export default FieldSetting;

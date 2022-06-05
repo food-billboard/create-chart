@@ -1,10 +1,12 @@
-import { useMemo, ReactNode } from 'react';
+import { useMemo, ReactNode, useCallback } from 'react';
 import { Collapse, Checkbox } from 'antd';
 import { get } from 'lodash';
-import classnames from 'classnames';
+import { connect } from 'dva';
 import { InfoCircleOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { getComponent, getPath } from '@/utils/Assist/Component';
+import InteractiveUtil from '@/utils/Assist/Interactive';
 import FieldSetting from './FieldSetting';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const { Panel } = Collapse;
@@ -19,12 +21,39 @@ const BaseConfig = (props: {
   id: string;
   components: ComponentData.TComponentData[];
   onChange?: ComponentMethod.SetComponentMethod;
+  params: ComponentData.TParams[];
+  setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
 }) => {
-  const { id, components, onChange } = props;
+  const { id, components, onChange, params, setScreen } = props;
 
   const component = useMemo(() => {
     return getComponent(id, components);
   }, [id, components]);
+
+  const setParams = useCallback(
+    (params: ComponentData.TParams[]) => {
+      setScreen({
+        config: {
+          attr: {
+            params,
+          },
+        },
+      });
+    },
+    [setScreen],
+  );
+
+  const enableComponentInteractive = (show: boolean, originId: string) => {
+    return InteractiveUtil.enableComponentInteractive(
+      {
+        params,
+        setParams,
+      },
+      id,
+      originId,
+      show,
+    );
+  };
 
   const baseInteractive: ComponentData.TInteractiveConfig['base'] =
     useMemo(() => {
@@ -71,6 +100,8 @@ const BaseConfig = (props: {
                     path,
                     action: 'update',
                   });
+
+                  enableComponentInteractive(value, type);
                 }}
               >
                 <span onClick={(e) => e.stopPropagation()}>启用</span>
@@ -83,6 +114,8 @@ const BaseConfig = (props: {
               id={id}
               dataSource={baseInteractive}
               key={name}
+              params={params}
+              setParams={setParams}
             />
           </Panel>,
         );
@@ -94,7 +127,7 @@ const BaseConfig = (props: {
         domList: [],
       },
     );
-  }, [onChange, baseInteractive]);
+  }, [onChange, baseInteractive, params, setParams]);
 
   if (!baseInteractive.length) {
     return (
@@ -128,4 +161,4 @@ const BaseConfig = (props: {
   );
 };
 
-export default BaseConfig;
+export default connect(mapStateToProps, mapDispatchToProps)(BaseConfig);

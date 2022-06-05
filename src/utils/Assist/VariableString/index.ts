@@ -46,14 +46,16 @@ class VariableStringUtil {
   ) {
     return [
       ...constants,
-      ...params.map((item) => {
-        return {
+      ...params.reduce<any>((acc, item) => {
+        if (!item.show) return acc;
+        acc.push({
           key: item.variable,
           value: item.value,
           id: item.id,
-        };
-      }),
-      ...this.#urlParams4Array,
+        });
+        return acc;
+      }, []),
+      ...this.urlParams4Array,
     ];
   }
 

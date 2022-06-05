@@ -219,8 +219,8 @@ const DataFilter = (props: {
       >
         <p className="m-t-4">
           全局参数
-          <IconTooltip title="可响应式更新数据" iconStyle={{ marginLeft: 0 }}>
-            <QuestionCircleOutlined />
+          <IconTooltip title="可响应式更新数据">
+            <QuestionCircleOutlined className="m-l-4" />
           </IconTooltip>
           {' ：'}
         </p>
