@@ -8,6 +8,7 @@ import {
 } from 'react-dnd';
 import { connect } from 'dva';
 import { merge } from 'lodash';
+import ColorImageBackground from '@/components/ColorImageBackground';
 import { useBackground } from '@/hooks';
 import { createComponent } from '@/utils/Assist/Component';
 import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants/index';
@@ -69,7 +70,7 @@ const Painter = (props: PainterProps) => {
         left: PANEL_ABSOLUTE_POSITION.left,
         top: PANEL_ABSOLUTE_POSITION.top,
       },
-      backgroundStyle,
+      backgroundStyle.backgroundImage ? {} : backgroundStyle,
       style,
     );
   }, [scale, backgroundStyle, width, height, style]);
@@ -108,7 +109,7 @@ const Painter = (props: PainterProps) => {
   }, []);
 
   return (
-    <div
+    <ColorImageBackground
       id={PANEL_ID}
       className={classnames(
         styles['page-design-main-panel'],
@@ -118,10 +119,12 @@ const Painter = (props: PainterProps) => {
       style={panelStyle}
       ref={connectDropTarget}
       role={DROP_TYPE}
+      image={backgroundStyle.backgroundImage}
+      type={backgroundStyle.backgroundImage ? 'image' : 'color'}
       onMouseDown={onMouseDown}
     >
       <ComponentList />
-    </div>
+    </ColorImageBackground>
   );
 };
 

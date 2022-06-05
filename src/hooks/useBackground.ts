@@ -17,9 +17,7 @@ export const useBackground: (
       }
     } else if (background) {
       baseStyle = {
-        backgroundImage: `url(${background})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: '100% 100%',
+        backgroundImage: background,
       };
     }
     return baseStyle;
