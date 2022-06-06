@@ -117,7 +117,7 @@ const Painter = (props: PainterProps) => {
         className,
       )}
       style={panelStyle}
-      ref={connectDropTarget}
+      forwardRef={connectDropTarget}
       role={DROP_TYPE}
       image={backgroundStyle.backgroundImage}
       type={backgroundStyle.backgroundImage ? 'image' : 'color'}
