@@ -2,7 +2,10 @@ import { useCallback, useRef, useMemo } from 'react';
 import ReactSelecto from 'react-selecto';
 import { connect } from 'dva';
 import { BACKGROUND_ID } from '@/components/DesignerBackground';
-import { isComponentDisabled } from '@/utils/Assist/Component';
+import {
+  isComponentDisabled,
+  isComponentSelect,
+} from '@/utils/Assist/Component';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ColorSelect from '@/components/ColorSelect';
 import { ConnectState } from '@/models/connect';
@@ -61,7 +64,8 @@ const Selecto = (props: {
           e.inputEvent.target.className.includes('ruler-guide-line');
         if (
           VALID_SELECT_CONTAINER.includes(id) ||
-          (!select.includes(componentId) && !componentBorder && !guideLine)
+          // !select.includes(componentId)
+          (isComponentSelect(id) && !componentBorder && !guideLine)
         ) {
           setSelect?.([]);
         } else {
