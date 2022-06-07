@@ -62,7 +62,7 @@ const Content = (props: {
               parent={parent}
             >
               <SubGroup value={newComponent} isOuter={isOuter}>
-                {renderChildren(newComponent.components, newComponent)}
+                {renderChildren(newComponent.components, newComponent, false)}
               </SubGroup>
             </ChildrenWrapper>
           );

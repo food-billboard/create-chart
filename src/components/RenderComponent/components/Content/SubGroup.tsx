@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useRef, CSSProperties } from 'react';
 import classnames from 'classnames';
 import { merge } from 'lodash';
 import { connect } from 'dva';
@@ -19,6 +19,7 @@ const SubGroup = (props: {
   isOuter?: boolean;
   screenType: 'edit' | 'preview' | 'production';
   screenTheme: string;
+  style?: CSSProperties;
   [key: string]: any;
 }) => {
   const {
@@ -28,6 +29,7 @@ const SubGroup = (props: {
     isOuter = false,
     screenType,
     screenTheme,
+    style,
   } = props;
   const {
     id,
@@ -68,7 +70,7 @@ const SubGroup = (props: {
           className,
           conditionClassName,
         )}
-        style={merge(childrenStyle, conditionStyle)}
+        style={merge(childrenStyle, style || {}, conditionStyle)}
         data-id={id}
       >
         {children}
