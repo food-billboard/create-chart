@@ -98,6 +98,7 @@ const Ruler = (props: {
       e,
       lineStyle: 'solid' | 'dashed' = 'solid',
     ) => {
+      e?.stopPropagation?.();
       if (!guideLineShow) return;
       const { clientX, clientY } = e;
       let positionStyle: Partial<ComponentData.TGuideLineConfigItem['style']> =

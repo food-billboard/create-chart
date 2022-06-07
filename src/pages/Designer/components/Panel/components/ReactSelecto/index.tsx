@@ -59,9 +59,13 @@ const Selecto = (props: {
         );
         const guideLine =
           e.inputEvent.target.className.includes('ruler-guide-line');
+        const ruler = e.inputEvent.target.tagName.toLowerCase();
         if (
           VALID_SELECT_CONTAINER.includes(id) ||
-          (!select.includes(componentId) && !componentBorder && !guideLine)
+          (!select.includes(componentId) &&
+            !componentBorder &&
+            !guideLine &&
+            ruler !== 'canvas')
         ) {
           setSelect?.([]);
         } else {

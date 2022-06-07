@@ -1,4 +1,4 @@
-import { get, set } from 'lodash';
+import { get, set, merge } from 'lodash';
 import { useIdPathMap, useComponentPath } from '@/hooks';
 import ComponentUtil, {
   getParentComponent,
@@ -294,6 +294,7 @@ class GroupUtil {
   generateGroupComponentSizeAndPosition(
     groupComponents: ComponentData.TComponentData[],
     components: ComponentData.TComponentData[],
+    calculated: boolean = false,
   ) {
     // 从group中抽出其left和top
     let formatSelectPositionMap: {
@@ -306,7 +307,13 @@ class GroupUtil {
     // the component parent limit position
     return groupComponents.reduce(
       (acc, cur) => {
-        const { left, top } = this.getComponentPosition(cur, components);
+        let left = cur.config.style.left;
+        let top = cur.config.style.top;
+        if (!calculated) {
+          const result = this.getComponentPosition(cur, components);
+          left = result.left;
+          top = result.top;
+        }
 
         formatSelectPositionMap[cur.id] = {
           left,
@@ -487,6 +494,108 @@ class GroupUtil {
         ];
       },
     );
+  };
+
+  // 获取
+
+  // 添加组件到组中
+  addComponentsToGroup: (
+    components: ComponentData.TComponentData[],
+    groupComponent: ComponentData.TComponentData,
+    addComponents: ComponentData.TComponentData[],
+  ) => ComponentMethod.SetComponentMethodParamsData[] = (
+    components,
+    groupComponent,
+    addComponents,
+  ) => {
+    const { left: outerLeft, top: outerTop } = this.getComponentPosition(
+      groupComponent,
+      components,
+    );
+    const {
+      config: {
+        style: { left, top, width, height },
+        attr: { scaleX = 1, scaleY = 1 },
+      },
+      id,
+    } = groupComponent;
+
+    console.log(scaleX, scaleY, 298888);
+
+    const {
+      left: calLeft,
+      top: calTop,
+      right: calRight,
+      bottom: calBottom,
+    } = this.generateGroupComponentSizeAndPosition(
+      addComponents,
+      components,
+      true,
+    );
+
+    const newLeft = Math.min(outerLeft, calLeft);
+    const newTop = Math.min(outerTop, calTop);
+    const newRight = Math.max(outerLeft + width, calRight);
+    const newBottom = Math.max(outerTop + height, calBottom);
+    const newWidth = newRight - newLeft;
+    const newHeight = newBottom - newTop;
+    const deltaLeft = outerLeft - newLeft;
+    const deltaTop = outerTop - newTop;
+
+    const idPathMap = useIdPathMap();
+
+    const path = idPathMap[id].path;
+
+    return [
+      ...(newLeft !== outerLeft || newTop !== outerTop
+        ? groupComponent.components.map((item) => {
+            return {
+              action: 'update',
+              id: item.id,
+              value: {
+                config: {
+                  style: {
+                    left: item.config.style.left + deltaLeft,
+                    top: item.config.style.top + deltaTop,
+                  },
+                },
+              },
+            };
+          })
+        : []),
+      ...addComponents.map((item, index) => {
+        return {
+          value: merge({}, item, {
+            parent: id,
+            config: {
+              style: {
+                left: (item.config.style.left - newLeft) / scaleX,
+                top: (item.config.style.top - newTop) / scaleY,
+                width: item.config.style.width / scaleX,
+                height: item.config.style.height / scaleY,
+              },
+            },
+          }),
+          id: item.id,
+          path: path + '.components',
+          action: 'add' as any,
+        };
+      }),
+      {
+        value: {
+          config: {
+            style: {
+              left: outerLeft - deltaLeft,
+              top: outerTop - deltaTop,
+              width: newWidth,
+              height: newHeight,
+            },
+          },
+        },
+        action: 'update',
+        id: groupComponent.id,
+      },
+    ] as ComponentMethod.SetComponentMethodParamsData[];
   };
 }
 

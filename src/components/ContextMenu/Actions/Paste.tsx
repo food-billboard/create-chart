@@ -8,6 +8,7 @@ import {
   getParentPath,
   isGroupComponent as isGroupComponentMethod,
 } from '@/utils/Assist/Component';
+import GroupUtil from '@/utils/Assist/Group';
 import { CommonActionType } from './type';
 
 function coverPreviousId(
@@ -63,7 +64,15 @@ export const paste = ({
       if (!targetPath) return acc;
       const component = get(sourceComponents, targetPath.path);
       if (!component) return acc;
+
+      // 修改组件的id
       const newComponent = coverPreviousId(component, parent);
+      // 修改组件的实际位置，可能存在组件在组中
+      // const formatComponentPosition = GroupUtil.getComponentPosition(component, sourceComponents)
+      // newComponent.config.style = {
+      //   ...newComponent.config.style,
+      //   ...formatComponentPosition || {}
+      // }
       newSelect.push(newComponent.id);
       acc.push(newComponent);
       generateComponents.push(newComponent);
@@ -139,8 +148,8 @@ const PasteAction = (props: CommonActionType) => {
           // group component
           if (isGroupComponentClick) {
             // 放进组内需要刷新组的各个大小
-            setComponent(
-              generateComponents.map((item, index) => {
+            setComponent([
+              ...generateComponents.map((item, index) => {
                 return {
                   value: {
                     ...item,
@@ -151,12 +160,13 @@ const PasteAction = (props: CommonActionType) => {
                   action: 'add' as any,
                 };
               }),
-            );
+              // GroupUtil.addComponentsToGroup(components, value, generateComponents)
+            ]);
           }
           // inner component
           else if (parentComponent) {
-            setComponent(
-              generateComponents.map((item) => {
+            setComponent([
+              ...generateComponents.map((item) => {
                 return {
                   value: {
                     ...item,
@@ -164,10 +174,11 @@ const PasteAction = (props: CommonActionType) => {
                   },
                   id: item.id,
                   path: parentPath,
-                  action: 'add',
+                  action: 'add' as any,
                 };
               }),
-            );
+              // GroupUtil.addComponentsToGroup(components, parentComponent, generateComponents)
+            ]);
           }
           // outer component
           else {
@@ -200,6 +211,7 @@ const PasteAction = (props: CommonActionType) => {
       setComponent,
       type,
       parent,
+      value,
     ],
   );
 
