@@ -49,8 +49,12 @@ class GroupUtil {
         const {
           config: {
             style: { left, top },
+            attr: { scaleX = 1, scaleY = 1 },
           },
         } = parentComponent as ComponentData.TComponentData;
+
+        initPosition.left /= scaleX;
+        initPosition.top /= scaleY;
 
         initPosition.left += left;
         initPosition.top += top;
@@ -536,6 +540,13 @@ class GroupUtil {
     let outerLeft = left;
     let outerTop = top;
 
+    const addComponentsDistance = addComponents.map((item) => {
+      return {
+        left: item.config.style.left - templateAddComponentsPosition.left,
+        top: item.config.style.top - templateAddComponentsPosition.top,
+      };
+    });
+
     const deepFormat: (
       groupComponent: ComponentData.TComponentData,
       isTop?: boolean,
@@ -572,13 +583,6 @@ class GroupUtil {
         outerTop = newTop;
       }
 
-      if (!isTop) {
-        // console.log(newLeft, newTop, newWidth, newHeight, 22222222)
-      }
-      if (isTop) {
-        console.log(templateAddComponentsPosition.top, top, newTop, 22222);
-      }
-
       const tempAddComponentWidth =
         (templateAddComponentsPosition.right -
           templateAddComponentsPosition.left) /
@@ -592,8 +596,9 @@ class GroupUtil {
       const changeTop = top - newTop;
 
       const newTempAddComponentLeft =
-        templateAddComponentsPosition.left - newLeft;
-      const newTempAddComponentTop = templateAddComponentsPosition.top - newTop;
+        (templateAddComponentsPosition.left - newLeft) / scaleX;
+      const newTempAddComponentTop =
+        (templateAddComponentsPosition.top - newTop) / scaleY;
 
       calculateScaleX *= scaleX;
       calculateScaleY *= scaleY;
@@ -658,7 +663,6 @@ class GroupUtil {
               },
             });
           } else {
-            console.log(changeLeft, changeTop, 222222);
             acc.push(
               ...deepFormat(
                 merge({}, item, {
@@ -690,8 +694,11 @@ class GroupUtil {
                 config: {
                   style: {
                     left:
-                      (item.config.style.left - outerLeft) / calculateScaleX,
-                    top: (item.config.style.top - outerTop) / calculateScaleY,
+                      addComponentsDistance[index].left / calculateScaleX +
+                      newTempAddComponentLeft,
+                    top:
+                      addComponentsDistance[index].top / calculateScaleY +
+                      newTempAddComponentTop,
                     width: item.config.style.width / calculateScaleX,
                     height: item.config.style.height / calculateScaleY,
                   },

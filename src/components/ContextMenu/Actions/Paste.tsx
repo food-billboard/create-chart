@@ -148,44 +148,15 @@ const PasteAction = (props: CommonActionType) => {
         setSelect,
         components: realComponents,
         setComponent: (newComponents, generateComponents) => {
-          // group component
-          if (isGroupComponentClick) {
-            // 放进组内需要刷新组的各个大小
-            setComponent([
-              // ...generateComponents.map((item, index) => {
-              //   return {
-              //     value: {
-              //       ...item,
-              //       parent: id,
-              //     },
-              //     id: item.id,
-              //     path: path + '.components',
-              //     action: 'add' as any,
-              //   };
-              // }),
-              ...GroupUtil.addComponentsToGroup(
+          // group component or inner component
+          if (isGroupComponentClick || parentComponent) {
+            setComponent(
+              GroupUtil.addComponentsToGroup(
                 components,
-                value,
+                superParentComponent,
                 generateComponents,
               ),
-            ]);
-          }
-          // inner component
-          else if (parentComponent) {
-            setComponent([
-              ...generateComponents.map((item) => {
-                return {
-                  value: {
-                    ...item,
-                    parent: superParentComponent.id,
-                  },
-                  id: item.id,
-                  path: parentPath,
-                  action: 'add' as any,
-                };
-              }),
-              // GroupUtil.addComponentsToGroup(components, parentComponent, generateComponents)
-            ]);
+            );
           }
           // outer component
           else {
