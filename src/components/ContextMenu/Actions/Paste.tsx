@@ -68,11 +68,14 @@ export const paste = ({
       // 修改组件的id
       const newComponent = coverPreviousId(component, parent);
       // 修改组件的实际位置，可能存在组件在组中
-      // const formatComponentPosition = GroupUtil.getComponentPosition(component, sourceComponents)
-      // newComponent.config.style = {
-      //   ...newComponent.config.style,
-      //   ...formatComponentPosition || {}
-      // }
+      const formatComponentPosition = GroupUtil.getComponentPosition(
+        component,
+        sourceComponents,
+      );
+      newComponent.config.style = {
+        ...newComponent.config.style,
+        ...(formatComponentPosition || {}),
+      };
       newSelect.push(newComponent.id);
       acc.push(newComponent);
       generateComponents.push(newComponent);
@@ -149,18 +152,22 @@ const PasteAction = (props: CommonActionType) => {
           if (isGroupComponentClick) {
             // 放进组内需要刷新组的各个大小
             setComponent([
-              ...generateComponents.map((item, index) => {
-                return {
-                  value: {
-                    ...item,
-                    parent: id,
-                  },
-                  id: item.id,
-                  path: path + '.components',
-                  action: 'add' as any,
-                };
-              }),
-              // GroupUtil.addComponentsToGroup(components, value, generateComponents)
+              // ...generateComponents.map((item, index) => {
+              //   return {
+              //     value: {
+              //       ...item,
+              //       parent: id,
+              //     },
+              //     id: item.id,
+              //     path: path + '.components',
+              //     action: 'add' as any,
+              //   };
+              // }),
+              ...GroupUtil.addComponentsToGroup(
+                components,
+                value,
+                generateComponents,
+              ),
             ]);
           }
           // inner component

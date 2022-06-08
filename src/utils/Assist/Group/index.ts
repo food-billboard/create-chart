@@ -496,10 +496,223 @@ class GroupUtil {
     );
   };
 
-  // 获取
+  addComponentsToGroup: (
+    components: ComponentData.TComponentData[],
+    groupComponent: ComponentData.TComponentData,
+    addComponents: ComponentData.TComponentData[],
+  ) => ComponentMethod.SetComponentMethodParamsData[] = (
+    components,
+    groupComponent,
+    addComponents,
+  ) => {
+    const { id: originGroupComponentId } = groupComponent;
+    const idPathMap = useIdPathMap();
+
+    const originGroupComponentPath = idPathMap[originGroupComponentId].path;
+    const path = originGroupComponentPath.split('.')[0];
+
+    const topParentComponent: ComponentData.TComponentData =
+      get(components, path) || groupComponent;
+    const {
+      config: {
+        style: { left, top },
+      },
+    } = topParentComponent;
+
+    const initialAddComponentsPosition =
+      this.generateGroupComponentSizeAndPosition(
+        addComponents,
+        components,
+        true,
+      );
+
+    let templateAddComponentsPosition = {
+      ...initialAddComponentsPosition,
+    };
+
+    let calculateScaleX = 1;
+    let calculateScaleY = 1;
+
+    let outerLeft = left;
+    let outerTop = top;
+
+    const deepFormat: (
+      groupComponent: ComponentData.TComponentData,
+      isTop?: boolean,
+    ) => ComponentMethod.SetComponentMethodParamsData[] = (
+      groupComponent,
+      isTop = false,
+    ) => {
+      let result: ComponentMethod.SetComponentMethodParamsData[] = [];
+
+      const {
+        config: {
+          style: { left, top, width, height },
+          attr: { scaleX = 1, scaleY = 1 },
+        },
+        id,
+        components: groupChildren,
+      } = groupComponent;
+
+      const newLeft = Math.min(templateAddComponentsPosition.left, left);
+      const newTop = Math.min(templateAddComponentsPosition.top, top);
+      const newRight = Math.max(
+        left + width,
+        templateAddComponentsPosition.right,
+      );
+      const newBottom = Math.max(
+        top + height,
+        templateAddComponentsPosition.bottom,
+      );
+      const newWidth = newRight - newLeft;
+      const newHeight = newBottom - newTop;
+
+      if (isTop) {
+        outerLeft = newLeft;
+        outerTop = newTop;
+      }
+
+      if (!isTop) {
+        // console.log(newLeft, newTop, newWidth, newHeight, 22222222)
+      }
+      if (isTop) {
+        console.log(templateAddComponentsPosition.top, top, newTop, 22222);
+      }
+
+      const tempAddComponentWidth =
+        (templateAddComponentsPosition.right -
+          templateAddComponentsPosition.left) /
+        scaleX;
+      const tempAddComponentHeight =
+        (templateAddComponentsPosition.bottom -
+          templateAddComponentsPosition.top) /
+        scaleY;
+
+      const changeLeft = left - newLeft;
+      const changeTop = top - newTop;
+
+      const newTempAddComponentLeft =
+        templateAddComponentsPosition.left - newLeft;
+      const newTempAddComponentTop = templateAddComponentsPosition.top - newTop;
+
+      calculateScaleX *= scaleX;
+      calculateScaleY *= scaleY;
+
+      templateAddComponentsPosition = {
+        left: newTempAddComponentLeft,
+        top: newTempAddComponentTop,
+        right: newTempAddComponentLeft + tempAddComponentWidth,
+        bottom: newTempAddComponentTop + tempAddComponentHeight,
+      };
+
+      const isConfigChanged =
+        !!changeLeft ||
+        !!changeTop ||
+        newWidth !== width ||
+        newHeight !== height;
+
+      // 更改当前组
+      isConfigChanged &&
+        result.push(
+          // 非目标组
+          {
+            action: 'update',
+            id,
+            value: {
+              config: {
+                style: {
+                  width: newWidth,
+                  height: newHeight,
+                  left: newLeft,
+                  top: newTop,
+                },
+              },
+            },
+          },
+        );
+
+      // 当前组下的子组件
+      result.push(
+        ...groupChildren.reduce<any>((acc, item) => {
+          // 未改变且为组件
+          if (!isConfigChanged && !isGroupComponent(item)) return acc;
+
+          const path = idPathMap[item.id].path;
+
+          // 改变了且为组件
+          if (
+            (!isGroupComponent(item) ||
+              !originGroupComponentPath.startsWith(path)) &&
+            isConfigChanged
+          ) {
+            acc.push({
+              action: 'update' as any,
+              id: item.id,
+              value: {
+                config: {
+                  style: {
+                    left: item.config.style.left + changeLeft,
+                    top: item.config.style.top + changeTop,
+                  },
+                },
+              },
+            });
+          } else {
+            console.log(changeLeft, changeTop, 222222);
+            acc.push(
+              ...deepFormat(
+                merge({}, item, {
+                  config: {
+                    style: {
+                      left: item.config.style.left + changeLeft,
+                      top: item.config.style.top + changeTop,
+                    },
+                  },
+                }),
+                false,
+              ),
+            );
+          }
+
+          return acc;
+        }, []),
+      );
+
+      // 目标组
+      if (originGroupComponentId === id) {
+        const path = idPathMap[id].path;
+
+        result.push(
+          ...addComponents.map((item, index) => {
+            return {
+              value: merge({}, item, {
+                parent: id,
+                config: {
+                  style: {
+                    left:
+                      (item.config.style.left - outerLeft) / calculateScaleX,
+                    top: (item.config.style.top - outerTop) / calculateScaleY,
+                    width: item.config.style.width / calculateScaleX,
+                    height: item.config.style.height / calculateScaleY,
+                  },
+                },
+              }),
+              id: item.id,
+              path: path + '.components',
+              action: 'add' as any,
+            };
+          }),
+        );
+      }
+
+      return result;
+    };
+
+    return deepFormat(topParentComponent, true);
+  };
 
   // 添加组件到组中
-  addComponentsToGroup: (
+  _addComponentsToGroup: (
     components: ComponentData.TComponentData[],
     groupComponent: ComponentData.TComponentData,
     addComponents: ComponentData.TComponentData[],
@@ -518,9 +731,8 @@ class GroupUtil {
         attr: { scaleX = 1, scaleY = 1 },
       },
       id,
+      parent,
     } = groupComponent;
-
-    console.log(scaleX, scaleY, 298888);
 
     const {
       left: calLeft,
@@ -546,7 +758,27 @@ class GroupUtil {
 
     const path = idPathMap[id].path;
 
+    const parentUpdate = parent
+      ? this.addComponentsToGroup(
+          components,
+          getParentComponent(components, getParentPath(path)),
+          [
+            merge({}, groupComponent, {
+              config: {
+                style: {
+                  left: outerLeft - deltaLeft,
+                  top: outerTop - deltaTop,
+                  width: newWidth,
+                  height: newHeight,
+                },
+              },
+            }) as ComponentData.TComponentData,
+          ],
+        )
+      : [];
+
     return [
+      // 组内组件
       ...(newLeft !== outerLeft || newTop !== outerTop
         ? groupComponent.components.map((item) => {
             return {
@@ -563,6 +795,8 @@ class GroupUtil {
             };
           })
         : []),
+      // 新增的组内组件
+      // 嵌套递归的组内组件不需要了
       ...addComponents.map((item, index) => {
         return {
           value: merge({}, item, {
@@ -581,6 +815,7 @@ class GroupUtil {
           action: 'add' as any,
         };
       }),
+      // 修改当前组
       {
         value: {
           config: {
@@ -595,6 +830,8 @@ class GroupUtil {
         action: 'update',
         id: groupComponent.id,
       },
+      // 组的上级
+      ...parentUpdate,
     ] as ComponentMethod.SetComponentMethodParamsData[];
   };
 }

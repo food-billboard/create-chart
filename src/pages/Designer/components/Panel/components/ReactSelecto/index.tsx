@@ -55,20 +55,25 @@ const Selecto = (props: {
   const handleDragStart = useCallback(
     (e: any) => {
       try {
+        // 背景 大画布等
         const id = e.inputEvent.target.id;
+        // 组件id
         const componentId = e.inputEvent.target.dataset?.id;
+        // 组件边框
         const componentBorder = e.inputEvent.target.className.includes(
           'react-select-to-border',
         );
+        // 辅助线
         const guideLine =
           e.inputEvent.target.className.includes('ruler-guide-line');
+        // 标尺
         const ruler = e.inputEvent.target.tagName.toLowerCase();
         if (
           VALID_SELECT_CONTAINER.includes(id) ||
           (!componentBorder &&
             !guideLine &&
             ruler !== 'canvas' &&
-            isComponentSelect(id))
+            !isComponentSelect(componentId))
         ) {
           setSelect?.([]);
         } else {

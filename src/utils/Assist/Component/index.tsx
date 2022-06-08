@@ -96,10 +96,10 @@ export const createGroupComponent = (
   );
 };
 
-export const getParentComponent = (
+export const getParentComponent: (
   components: ComponentData.TComponentData[],
   path: string,
-) => {
+) => any = (components, path) => {
   return get(components, getParentPath(path));
 };
 
@@ -190,6 +190,8 @@ export const isComponentSelect = (id: string) => {
       tempComponent = get(components, target.path);
     }
   }
+
+  return newSelect.includes(id);
 };
 
 export default componentUtil;
