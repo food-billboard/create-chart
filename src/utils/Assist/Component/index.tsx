@@ -1,6 +1,7 @@
 import { CSSProperties } from 'react';
 import { get } from 'lodash';
 import { nanoid } from 'nanoid';
+import { getDvaApp } from 'umi';
 import { useIdPathMap } from '@/hooks';
 import { getComponentDefaultConfigByType } from '@/components/ChartComponents';
 import ColorSelect from '@/components/ColorSelect';
@@ -140,6 +141,55 @@ export const getComponentStyleInScreenType: (
     pointerEvents: 'none',
     borderColor: getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0)),
   };
+};
+
+// 组件是否被选中
+export const isComponentSelect = (id: string) => {
+  const app = getDvaApp();
+  const { state } =
+    app._models.find((item: any) => item.namespace === 'global') || {};
+  const select = state?.select || [];
+  const components = state?.components || [];
+  const idPathMap = useIdPathMap();
+
+  if (select.includes(id)) return true;
+
+  const target = idPathMap[id];
+
+  if (!target) return false;
+
+  const path = target.path;
+  const targetComponent: ComponentData.TComponentData = get(components, path);
+
+  if (!targetComponent) return false;
+
+  let newSelect: string[] = [];
+
+  if (targetComponent.components?.length) {
+    function getId(components: ComponentData.TComponentData[]) {
+      components.forEach((component) => {
+        newSelect.push(component.id);
+        if (component.components?.length) {
+          getId(component.components);
+        }
+      });
+    }
+    getId(targetComponent.components);
+  }
+
+  let i = 0;
+  let tempComponent = targetComponent;
+  while (tempComponent && tempComponent.parent && i < 100000) {
+    newSelect.push(tempComponent.parent);
+    i++;
+    const parent = tempComponent.parent;
+    const target = idPathMap[parent];
+    if (!target || !target.path) {
+      break;
+    } else {
+      tempComponent = get(components, target.path);
+    }
+  }
 };
 
 export default componentUtil;
