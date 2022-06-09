@@ -184,8 +184,6 @@ class ComponentUtil {
       },
     });
 
-    return components;
-
     value.callback?.(components, groupId);
 
     return newComponents;

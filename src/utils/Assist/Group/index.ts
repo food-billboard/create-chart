@@ -406,24 +406,87 @@ class GroupUtil {
       parentComponent,
       addComponents,
     );
+    // 实际更改
     let realResult: ComponentMethod.SetComponentMethodParamsData[] = [];
+    // 新增的组件 即需要成组的组件
     let addResult: ComponentMethod.SetComponentMethodParamsData[] = [];
-    let coverItem!: ComponentMethod.SetComponentMethodParamsData;
-    let parentItem!: ComponentMethod.SetComponentMethodParamsData;
     result.forEach((actionItem) => {
-      const { action, value, id, path } = actionItem;
+      const { action, id } = actionItem;
       if (action === 'add') {
         addResult.push(actionItem);
       } else if (action === 'update') {
-        if (id === clickTarget.id) {
-          coverItem = actionItem;
-        } else {
-          if (parentComponent.id === id) parentItem = actionItem;
+        if (id !== clickTarget.id) {
           realResult.push(actionItem);
         }
       }
     });
-    console.log(realResult, addResult, coverItem, parentItem, 222222);
+
+    const {
+      left: groupComponentLeft,
+      top: groupComponentTop,
+      right,
+      bottom,
+    } = this.generateGroupComponentSizeAndPosition(
+      addResult.map((item) => {
+        return {
+          config: {
+            style: {
+              left: item.value.config?.style?.left || 0,
+              top: item.value.config?.style?.top || 0,
+              width: item.value.config?.style?.width || 0,
+              height: item.value.config?.style?.height || 0,
+            },
+          },
+        };
+      }) as any,
+      [],
+      true,
+    );
+    // 创建新组
+    const newGroupComponent = createGroupComponent({
+      parent: parentComponent.id,
+      config: {
+        style: {
+          left: groupComponentLeft,
+          top: groupComponentTop,
+          width: right - groupComponentLeft,
+          height: bottom - groupComponentTop,
+        },
+      },
+      components: [],
+    });
+    newGroupComponent.components = addResult.map((item) => {
+      return merge({}, item.value, {
+        parent: newGroupComponent.id,
+        config: {
+          style: {
+            left: item.value.config?.style?.left || 0 - groupComponentLeft,
+            top: item.value.config?.style?.top || 0 - groupComponentTop,
+          },
+        },
+      });
+    });
+
+    realResult.push(
+      {
+        action: 'cover_update',
+        id: clickTarget.id,
+        value: newGroupComponent,
+      },
+      ...(addComponents
+        .filter((item) => item.id !== clickTarget.id)
+        .map((item) => {
+          return {
+            action: 'delete',
+            value: {},
+            id: item.id,
+          };
+        }) as any),
+    );
+
+    callback?.(newGroupComponent.id);
+
+    return realResult;
   };
 
   // 成组
