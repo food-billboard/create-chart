@@ -1,4 +1,4 @@
-import { get, set, merge } from 'lodash';
+import { get, set, merge, pick } from 'lodash';
 import { useIdPathMap, useComponentPath } from '@/hooks';
 import ComponentUtil, {
   getParentComponent,
@@ -18,7 +18,8 @@ class GroupUtil {
       id,
       parent,
       config: {
-        style: { left, top },
+        style: { left, top, width, height },
+        attr: { scaleX = 1, scaleY = 1 },
       },
     } = value;
     const targetPath = idPathMap[id];
@@ -26,10 +27,14 @@ class GroupUtil {
     let initPosition = {
       left,
       top,
+      width,
+      height,
+      scaleX,
+      scaleY,
     };
 
     if (parent) {
-      let parentPath: string = getParentPath(path);
+      let parentPath: string = path;
       let parentComponent: ComponentData.TComponentData = getParentComponent(
         components,
         parentPath,
@@ -53,11 +58,14 @@ class GroupUtil {
           },
         } = parentComponent as ComponentData.TComponentData;
 
-        initPosition.left /= scaleX;
-        initPosition.top /= scaleY;
+        initPosition.left = initPosition.left * scaleX + left;
+        initPosition.top = initPosition.top * scaleY + top;
 
-        initPosition.left += left;
-        initPosition.top += top;
+        initPosition.width *= scaleX;
+        initPosition.height *= scaleY;
+
+        initPosition.scaleX *= scaleX;
+        initPosition.scaleY *= scaleY;
 
         getParent();
       }
@@ -65,6 +73,10 @@ class GroupUtil {
       initPosition = {
         left,
         top,
+        width,
+        height,
+        scaleX,
+        scaleY,
       };
     }
 
@@ -305,6 +317,8 @@ class GroupUtil {
       [key: string]: {
         left: number;
         top: number;
+        width: number;
+        height: number;
       };
     } = {};
 
@@ -313,22 +327,22 @@ class GroupUtil {
       (acc, cur) => {
         let left = cur.config.style.left;
         let top = cur.config.style.top;
+        let width = cur.config.style.width;
+        let height = cur.config.style.height;
         if (!calculated) {
           const result = this.getComponentPosition(cur, components);
           left = result.left;
           top = result.top;
+          width = result.width;
+          height = result.height;
         }
 
         formatSelectPositionMap[cur.id] = {
           left,
           top,
+          width,
+          height,
         };
-
-        const {
-          config: {
-            style: { width, height },
-          },
-        } = cur;
 
         if (left < acc.left) acc.left = left;
         if (left + width > acc.right) acc.right = left + width;
@@ -346,8 +360,74 @@ class GroupUtil {
     );
   }
 
-  // 成组
+  // 成组1.5
   generateGroupConfig = ({
+    select,
+    components,
+    clickTarget,
+    callback,
+  }: {
+    select: string[];
+    components: ComponentData.TComponentData[];
+    clickTarget: ComponentData.TComponentData;
+    callback?: (id: string) => void;
+  }) => {
+    const idPathMap = useIdPathMap();
+    const { parent } = clickTarget;
+
+    const path = idPathMap[parent as string].path;
+    const parentComponent = get(components, path);
+
+    const addComponents: ComponentData.TComponentData[] = select.map((item) => {
+      const path = idPathMap[item].path;
+      const component = get(components, path);
+      const formatComponentPosition = this.getComponentPosition(
+        component,
+        components,
+      );
+      const newComponents = merge({}, component, {
+        config: {
+          style: {
+            ...pick(
+              formatComponentPosition || {},
+              'left',
+              'top',
+              'width',
+              'height',
+            ),
+          },
+        },
+      });
+      return newComponents;
+    });
+
+    const result = this.addComponentsToGroup(
+      components,
+      parentComponent,
+      addComponents,
+    );
+    let realResult: ComponentMethod.SetComponentMethodParamsData[] = [];
+    let addResult: ComponentMethod.SetComponentMethodParamsData[] = [];
+    let coverItem!: ComponentMethod.SetComponentMethodParamsData;
+    let parentItem!: ComponentMethod.SetComponentMethodParamsData;
+    result.forEach((actionItem) => {
+      const { action, value, id, path } = actionItem;
+      if (action === 'add') {
+        addResult.push(actionItem);
+      } else if (action === 'update') {
+        if (id === clickTarget.id) {
+          coverItem = actionItem;
+        } else {
+          if (parentComponent.id === id) parentItem = actionItem;
+          realResult.push(actionItem);
+        }
+      }
+    });
+    console.log(realResult, addResult, coverItem, parentItem, 222222);
+  };
+
+  // 成组
+  _generateGroupConfig = ({
     select,
     components,
     clickTarget,
@@ -374,15 +454,44 @@ class GroupUtil {
           components,
         );
 
+      let scaleX = 1;
+      let scaleY = 1;
+      let realLeft = left;
+      let realTop = top;
+      let realWidth = right - left;
+      let realHeight = bottom - top;
+
+      if (parent) {
+        const path = idPathMap[parent].path;
+        const parentComponent = get(components, path);
+        const {
+          left,
+          top,
+          width,
+          height,
+          scaleX: parentScaleX,
+          scaleY: parentScaleY,
+        } = this.getComponentPosition(parentComponent, components);
+        scaleX = parentScaleX;
+        scaleY = parentScaleY;
+        realLeft -= left;
+        realTop -= top;
+      }
+
+      realWidth /= scaleX;
+      realHeight /= scaleY;
+      realLeft /= scaleX;
+      realTop /= scaleY;
+
       // group component
       const newGroupComponent = createGroupComponent({
         parent,
         config: {
           style: {
-            left,
-            top,
-            width: right - left,
-            height: bottom - top,
+            left: realLeft,
+            top: realTop,
+            width: realWidth,
+            height: realHeight,
           },
         },
         components: [],
@@ -500,6 +609,7 @@ class GroupUtil {
     );
   };
 
+  // 粘贴组件
   addComponentsToGroup: (
     components: ComponentData.TComponentData[],
     groupComponent: ComponentData.TComponentData,
@@ -517,11 +627,6 @@ class GroupUtil {
 
     const topParentComponent: ComponentData.TComponentData =
       get(components, path) || groupComponent;
-    const {
-      config: {
-        style: { left, top },
-      },
-    } = topParentComponent;
 
     const initialAddComponentsPosition =
       this.generateGroupComponentSizeAndPosition(
@@ -537,9 +642,6 @@ class GroupUtil {
     let calculateScaleX = 1;
     let calculateScaleY = 1;
 
-    let outerLeft = left;
-    let outerTop = top;
-
     const addComponentsDistance = addComponents.map((item) => {
       return {
         left: item.config.style.left - templateAddComponentsPosition.left,
@@ -549,11 +651,7 @@ class GroupUtil {
 
     const deepFormat: (
       groupComponent: ComponentData.TComponentData,
-      isTop?: boolean,
-    ) => ComponentMethod.SetComponentMethodParamsData[] = (
-      groupComponent,
-      isTop = false,
-    ) => {
+    ) => ComponentMethod.SetComponentMethodParamsData[] = (groupComponent) => {
       let result: ComponentMethod.SetComponentMethodParamsData[] = [];
 
       const {
@@ -577,11 +675,6 @@ class GroupUtil {
       );
       const newWidth = newRight - newLeft;
       const newHeight = newBottom - newTop;
-
-      if (isTop) {
-        outerLeft = newLeft;
-        outerTop = newTop;
-      }
 
       const tempAddComponentWidth =
         (templateAddComponentsPosition.right -
@@ -673,7 +766,6 @@ class GroupUtil {
                     },
                   },
                 }),
-                false,
               ),
             );
           }
@@ -715,131 +807,7 @@ class GroupUtil {
       return result;
     };
 
-    return deepFormat(topParentComponent, true);
-  };
-
-  // 添加组件到组中
-  _addComponentsToGroup: (
-    components: ComponentData.TComponentData[],
-    groupComponent: ComponentData.TComponentData,
-    addComponents: ComponentData.TComponentData[],
-  ) => ComponentMethod.SetComponentMethodParamsData[] = (
-    components,
-    groupComponent,
-    addComponents,
-  ) => {
-    const { left: outerLeft, top: outerTop } = this.getComponentPosition(
-      groupComponent,
-      components,
-    );
-    const {
-      config: {
-        style: { left, top, width, height },
-        attr: { scaleX = 1, scaleY = 1 },
-      },
-      id,
-      parent,
-    } = groupComponent;
-
-    const {
-      left: calLeft,
-      top: calTop,
-      right: calRight,
-      bottom: calBottom,
-    } = this.generateGroupComponentSizeAndPosition(
-      addComponents,
-      components,
-      true,
-    );
-
-    const newLeft = Math.min(outerLeft, calLeft);
-    const newTop = Math.min(outerTop, calTop);
-    const newRight = Math.max(outerLeft + width, calRight);
-    const newBottom = Math.max(outerTop + height, calBottom);
-    const newWidth = newRight - newLeft;
-    const newHeight = newBottom - newTop;
-    const deltaLeft = outerLeft - newLeft;
-    const deltaTop = outerTop - newTop;
-
-    const idPathMap = useIdPathMap();
-
-    const path = idPathMap[id].path;
-
-    const parentUpdate = parent
-      ? this.addComponentsToGroup(
-          components,
-          getParentComponent(components, getParentPath(path)),
-          [
-            merge({}, groupComponent, {
-              config: {
-                style: {
-                  left: outerLeft - deltaLeft,
-                  top: outerTop - deltaTop,
-                  width: newWidth,
-                  height: newHeight,
-                },
-              },
-            }) as ComponentData.TComponentData,
-          ],
-        )
-      : [];
-
-    return [
-      // 组内组件
-      ...(newLeft !== outerLeft || newTop !== outerTop
-        ? groupComponent.components.map((item) => {
-            return {
-              action: 'update',
-              id: item.id,
-              value: {
-                config: {
-                  style: {
-                    left: item.config.style.left + deltaLeft,
-                    top: item.config.style.top + deltaTop,
-                  },
-                },
-              },
-            };
-          })
-        : []),
-      // 新增的组内组件
-      // 嵌套递归的组内组件不需要了
-      ...addComponents.map((item, index) => {
-        return {
-          value: merge({}, item, {
-            parent: id,
-            config: {
-              style: {
-                left: (item.config.style.left - newLeft) / scaleX,
-                top: (item.config.style.top - newTop) / scaleY,
-                width: item.config.style.width / scaleX,
-                height: item.config.style.height / scaleY,
-              },
-            },
-          }),
-          id: item.id,
-          path: path + '.components',
-          action: 'add' as any,
-        };
-      }),
-      // 修改当前组
-      {
-        value: {
-          config: {
-            style: {
-              left: outerLeft - deltaLeft,
-              top: outerTop - deltaTop,
-              width: newWidth,
-              height: newHeight,
-            },
-          },
-        },
-        action: 'update',
-        id: groupComponent.id,
-      },
-      // 组的上级
-      ...parentUpdate,
-    ] as ComponentMethod.SetComponentMethodParamsData[];
+    return deepFormat(topParentComponent);
   };
 }
 

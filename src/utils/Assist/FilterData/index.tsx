@@ -494,8 +494,13 @@ export class CompareFilterUtil {
       const [variable, value] = param;
       const { action, index, value: prevValue } = value;
 
+      let currentTargetValue;
       // 当前的值
-      const currentTargetValue = index.getValue(params);
+      try {
+        currentTargetValue = index.getValue(params);
+      } catch (err) {
+        return;
+      }
 
       if (prevValue !== currentTargetValue) {
         this.mapParams[variable].value = currentTargetValue;

@@ -88,9 +88,9 @@ const NameEditor = forwardRef<
           'p-lr-4',
           styles['design-page-layer-item-name-basic'],
         )}
-        title={name}
+        title={id}
       >
-        {name}
+        {id}
       </div>
     );
   }, [editable, name, changeName, changeEditState]);

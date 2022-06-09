@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { get } from 'lodash';
+import { get, pick } from 'lodash';
 import { SnippetsOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks/useComponentsPath';
 import {
@@ -74,7 +74,13 @@ export const paste = ({
       );
       newComponent.config.style = {
         ...newComponent.config.style,
-        ...(formatComponentPosition || {}),
+        ...pick(
+          formatComponentPosition || {},
+          'left',
+          'top',
+          'width',
+          'height',
+        ),
       };
       newSelect.push(newComponent.id);
       acc.push(newComponent);
