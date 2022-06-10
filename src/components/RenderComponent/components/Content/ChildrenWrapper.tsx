@@ -41,8 +41,18 @@ const ChildrenWrapper = (props: {
       const {
         config: {
           style: { left, top, rotate, opacity, width, height },
+          attr: { visible },
         },
       } = value;
+
+      const realStyle = {
+        transform: `rotate(${rotate}deg)`,
+        transformOrigin: 'left top',
+        opacity,
+        ...componentScreenTypeStyle,
+      };
+
+      if (!visible) realStyle.display = 'none';
 
       return cloneElement(child as any, {
         className: classnames(className, {
@@ -52,19 +62,16 @@ const ChildrenWrapper = (props: {
         style: borderNone
           ? // 组件
             {
-              transform: `rotate(${rotate}deg)`,
-              transformOrigin: 'left top',
-              opacity,
-              ...componentScreenTypeStyle,
+              ...realStyle,
             }
-          : // 部件内组件
+          : // 组内组件
             {
               left,
               top,
               width,
               height,
               position: 'absolute',
-              ...componentScreenTypeStyle,
+              ...realStyle,
             },
       });
     });
