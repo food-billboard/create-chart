@@ -495,8 +495,6 @@ class GroupUtil {
 
     callback?.(newGroupComponent.id);
 
-    console.log(realResult, 1111111);
-
     return realResult;
   };
 

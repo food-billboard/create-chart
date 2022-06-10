@@ -133,53 +133,56 @@ const ProgressBar = (props: {
 
     const realSeries = getSeries();
 
-    chartInstance.current?.setOption({
-      series: realSeries,
-      xAxis: {
-        show: false,
-        type: 'value',
-        max: 100,
-      },
-      yAxis: [
-        {
-          type: 'category',
-          inverse: true,
-          axisLabel: {
-            show: yAxisLabel.show,
-            ...yAxisLabel.textStyle,
-            color: getRgbaString(yAxisLabel.textStyle.color),
-          },
-          splitLine: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            show: false,
-          },
-          data: [yAxisLabel.value],
+    chartInstance.current?.setOption(
+      {
+        series: realSeries,
+        xAxis: {
+          show: false,
+          type: 'value',
+          max: 100,
         },
-        {
-          type: 'category',
-          inverse: true,
-          axisTick: 'none',
-          axisLine: 'none',
-          show: true,
-          axisLabel: {
-            show: false,
+        yAxis: [
+          {
+            type: 'category',
+            inverse: true,
+            axisLabel: {
+              show: yAxisLabel.show,
+              ...yAxisLabel.textStyle,
+              color: getRgbaString(yAxisLabel.textStyle.color),
+            },
+            splitLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            data: [yAxisLabel.value],
           },
-          data: [processedValue.value],
+          {
+            type: 'category',
+            inverse: true,
+            axisTick: 'none',
+            axisLine: 'none',
+            show: true,
+            axisLabel: {
+              show: false,
+            },
+            data: [processedValue.value],
+          },
+        ],
+        tooltip: {
+          ...nextTooltip,
+          trigger: 'axis',
         },
-      ],
-      tooltip: {
-        ...nextTooltip,
-        trigger: 'axis',
+        grid: {
+          ...grid,
+        },
       },
-      grid: {
-        ...grid,
-      },
-    });
+      true,
+    );
   };
 
   useChartComponentResize(chartInstance.current!);

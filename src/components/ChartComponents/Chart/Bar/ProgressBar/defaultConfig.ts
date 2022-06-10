@@ -117,7 +117,7 @@ export default () => {
       {
         style: {
           width: 400,
-          height: 100,
+          height: 120,
         },
       },
       CUSTOM_CONFIG,
