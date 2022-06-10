@@ -143,12 +143,14 @@ const TreeFunction = (props: TreeProps) => {
       dragNode,
       dropToGap: prevDropToGap,
       dropPosition,
+      select,
     };
   };
 
   const onDrop = useCallback(
     (info: any) => {
-      const { node, dragNode, dropToGap, dropPosition } = dealDropParams(info);
+      const { node, dragNode, dropToGap, dropPosition, select } =
+        dealDropParams(info);
 
       setComponent({
         action: 'drag',
@@ -159,6 +161,7 @@ const TreeFunction = (props: TreeProps) => {
           dragNode,
           dropToGap,
           dropPosition,
+          select,
         },
       });
     },

@@ -1,10 +1,10 @@
 import arrayMove from 'array-move';
-import { set, get } from 'lodash';
+import { set, get, merge } from 'lodash';
 import { useComponentPath, useIdPathMap } from '@/hooks';
 import { IGlobalModelState } from '@/models/connect';
 import GroupUtil from '../Group';
-import { EComponentType } from '../../constants';
 import { mergeWithoutArray } from '../../tool';
+import { isGroupComponent } from '.';
 
 // get parentPath
 export const getParentPath = (path: string) => {
@@ -215,9 +215,18 @@ class ComponentUtil {
     newValue: SuperPartial<ComponentData.TComponentData<{}>>,
     extra: any,
   ) {
-    const { node, dragNode, dropToGap, dropPosition: infoDropPosition } = extra;
+    const {
+      node,
+      dragNode,
+      dropToGap,
+      dropPosition: infoDropPosition,
+      select,
+    } = extra;
+    const idPathMap = useIdPathMap();
 
-    const dropKey = node.key;
+    const originDropKey = node.key;
+    let dropKey = node.key;
+    let dropIndex = -1;
     const dragKey = dragNode.key;
     const dropPos = node.pos.split('-');
     const dropPosition = infoDropPosition - Number(dropPos[dropPos.length - 1]);
@@ -235,7 +244,7 @@ class ComponentUtil {
         if (data[i].id === key) {
           return callback(data[i], i, data);
         }
-        if (data[i].type === EComponentType.GROUP_COMPONENT) {
+        if (isGroupComponent(data[i])) {
           loop(data[i].components, key, callback);
         }
       }
@@ -245,24 +254,33 @@ class ComponentUtil {
 
     // Find dragObject
     let dragObj!: ComponentData.TComponentData;
-    loop(data, dragKey, (item, index, arr) => {
-      arr.splice(index, 1);
-      dragObj = item;
+    const addComponents = select.forEach((item: string) => {
+      const path = idPathMap[item].path;
+      const component = get(components, path);
+      if (item === dragKey) dragObj = component;
+      return component;
     });
 
     if (!dropToGap) {
       // Drop on the content
-      loop(data, dropKey, (item) => {
-        item.components = item.components || [];
-        // where to insert 示例添加到头部，可以是随意位置
-        dragObj.parent = item.id;
-        item.components.unshift(dragObj);
+      loop(data, dropKey, (item, index) => {
+        dropIndex = index + 1;
+        // 组
+        if (isGroupComponent(item)) {
+          dropKey = item.id;
+        }
+        // 组内组件 | 最外层组件
+        else {
+          dropKey = item.parent;
+        }
       });
     } else if (
       node.hasChildren && // Has children
       node.expanded && // Is expanded
       dropPosition === 1 // On the bottom gap
     ) {
+      // ! 因为没看到有进来过，暂时去掉
+      return data;
       loop(data, dropKey, (item) => {
         item.components = item.components || [];
         // where to insert 示例添加到头部，可以是随意位置
@@ -272,19 +290,58 @@ class ComponentUtil {
         // item to the tail of the children
       });
     } else {
-      let ar!: ComponentData.TComponentData[];
-      let i!: number;
-      loop(data, dropKey, (item, index, arr) => {
-        ar = arr;
-        i = index;
+      loop(data, dropKey, (item, index) => {
+        dropKey = item.parent;
+        dropIndex = dropPosition === -1 ? index : index + 1;
       });
-      dragObj.parent = undefined;
-      if (dropPosition === -1) {
-        ar.splice(i, 0, dragObj);
-      } else {
-        ar.splice(i + 1, 0, dragObj);
-      }
     }
+
+    const dropPath = idPathMap[originDropKey].path;
+    const dropComponent = get(components, dropPath);
+
+    const updateResult = GroupUtil.generateGroupConfig({
+      select,
+      components,
+      clickTarget: dropComponent,
+    });
+
+    const realUpdateResult: ComponentMethod.SetComponentMethodParamsData[] = [];
+    let coverUpdateResult!: ComponentMethod.SetComponentMethodParamsData;
+    let parentUpdateResult: ComponentMethod.SetComponentMethodParamsData;
+
+    updateResult.forEach((item) => {
+      if (item.action === 'cover_update') {
+        coverUpdateResult = item;
+      } else if (item.id === dropKey) {
+        parentUpdateResult = item;
+        item.id && realUpdateResult.push(item);
+      } else if (item.action === 'delete') {
+        realUpdateResult.unshift(item);
+      } else {
+        realUpdateResult.push(item);
+      }
+    });
+
+    realUpdateResult.push(
+      ...((coverUpdateResult?.value.components || []).map((item) => {
+        return {
+          action: 'add' as any,
+          id: item?.id,
+          value: merge({}, item, {
+            parent: parentUpdateResult?.value.id,
+          }),
+        };
+      }) as any),
+    );
+
+    console.log(
+      updateResult,
+      realUpdateResult,
+      dropIndex,
+      originDropKey,
+      22222,
+    );
+    return components;
 
     value.callback?.(data, null);
 
