@@ -82,6 +82,12 @@ export const paste = ({
           'height',
         ),
       };
+      if (isGroupComponentMethod(newComponent)) {
+        newComponent.config.attr = {
+          ...newComponent.config.attr,
+          ...pick(formatComponentPosition || {}, 'scaleX', 'scaleY'),
+        };
+      }
       newSelect.push(newComponent.id);
       acc.push(newComponent);
       generateComponents.push(newComponent);

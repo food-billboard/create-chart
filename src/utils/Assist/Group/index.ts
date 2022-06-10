@@ -360,7 +360,7 @@ class GroupUtil {
     );
   }
 
-  // 成组1.5
+  // 成组
   generateGroupConfig = ({
     select,
     components,
@@ -375,7 +375,7 @@ class GroupUtil {
     const idPathMap = useIdPathMap();
     const { parent } = clickTarget;
 
-    const path = idPathMap[parent as string].path;
+    const path = idPathMap[parent as string]?.path;
     const parentComponent = get(components, path);
 
     const addComponents: ComponentData.TComponentData[] = select.map((item) => {
@@ -398,6 +398,14 @@ class GroupUtil {
           },
         },
       });
+
+      if (isGroupComponent(newComponents)) {
+        newComponents.config.attr = {
+          ...newComponents.config.attr,
+          ...pick(formatComponentPosition || {}, 'scaleX', 'scaleY'),
+        };
+      }
+
       return newComponents;
     });
 
@@ -406,6 +414,7 @@ class GroupUtil {
       parentComponent,
       addComponents,
     );
+
     // 实际更改
     let realResult: ComponentMethod.SetComponentMethodParamsData[] = [];
     // 新增的组件 即需要成组的组件
@@ -444,7 +453,7 @@ class GroupUtil {
     );
     // 创建新组
     const newGroupComponent = createGroupComponent({
-      parent: parentComponent.id,
+      parent: parentComponent?.id,
       config: {
         style: {
           left: groupComponentLeft,
@@ -460,19 +469,14 @@ class GroupUtil {
         parent: newGroupComponent.id,
         config: {
           style: {
-            left: item.value.config?.style?.left || 0 - groupComponentLeft,
-            top: item.value.config?.style?.top || 0 - groupComponentTop,
+            left: (item.value.config?.style?.left || 0) - groupComponentLeft,
+            top: (item.value.config?.style?.top || 0) - groupComponentTop,
           },
         },
       });
     });
 
     realResult.push(
-      {
-        action: 'cover_update',
-        id: clickTarget.id,
-        value: newGroupComponent,
-      },
       ...(addComponents
         .filter((item) => item.id !== clickTarget.id)
         .map((item) => {
@@ -482,95 +486,18 @@ class GroupUtil {
             id: item.id,
           };
         }) as any),
+      {
+        action: 'cover_update',
+        id: clickTarget.id,
+        value: newGroupComponent,
+      },
     );
 
     callback?.(newGroupComponent.id);
 
+    console.log(realResult, 1111111);
+
     return realResult;
-  };
-
-  // 成组
-  _generateGroupConfig = ({
-    select,
-    components,
-    clickTarget,
-    callback,
-  }: {
-    select: string[];
-    components: ComponentData.TComponentData[];
-    clickTarget: ComponentData.TComponentData;
-    callback?: (id: string) => void;
-  }) => {
-    const idPathMap = useIdPathMap();
-    const { parent } = clickTarget;
-
-    try {
-      const { left, top, right, bottom } =
-        this.generateGroupComponentSizeAndPosition(
-          select.reduce((acc, cur) => {
-            const targetPath = idPathMap[cur];
-            const { path } = targetPath;
-            const target: ComponentData.TComponentData = get(components, path);
-            if (target) acc.push(target);
-            return acc;
-          }, [] as ComponentData.TComponentData[]),
-          components,
-        );
-
-      let scaleX = 1;
-      let scaleY = 1;
-      let realLeft = left;
-      let realTop = top;
-      let realWidth = right - left;
-      let realHeight = bottom - top;
-
-      if (parent) {
-        const path = idPathMap[parent].path;
-        const parentComponent = get(components, path);
-        const {
-          left,
-          top,
-          width,
-          height,
-          scaleX: parentScaleX,
-          scaleY: parentScaleY,
-        } = this.getComponentPosition(parentComponent, components);
-        scaleX = parentScaleX;
-        scaleY = parentScaleY;
-        realLeft -= left;
-        realTop -= top;
-      }
-
-      realWidth /= scaleX;
-      realHeight /= scaleY;
-      realLeft /= scaleX;
-      realTop /= scaleY;
-
-      // group component
-      const newGroupComponent = createGroupComponent({
-        parent,
-        config: {
-          style: {
-            left: realLeft,
-            top: realTop,
-            width: realWidth,
-            height: realHeight,
-          },
-        },
-        components: [],
-      });
-
-      callback?.(newGroupComponent.id);
-
-      return this.deleteAndMoveComponent({
-        select,
-        components,
-        clickTarget,
-        groupComponent: newGroupComponent,
-      });
-    } catch (err) {
-      console.error(err);
-    }
   };
 
   // 取消成组
@@ -682,10 +609,11 @@ class GroupUtil {
     groupComponent,
     addComponents,
   ) => {
-    const { id: originGroupComponentId } = groupComponent;
+    const { id: originGroupComponentId } = groupComponent || {};
     const idPathMap = useIdPathMap();
 
-    const originGroupComponentPath = idPathMap[originGroupComponentId].path;
+    const originGroupComponentPath =
+      idPathMap[originGroupComponentId]?.path || '';
     const path = originGroupComponentPath.split('.')[0];
 
     const topParentComponent: ComponentData.TComponentData =
@@ -724,7 +652,14 @@ class GroupUtil {
         },
         id,
         components: groupChildren,
-      } = groupComponent;
+      } = groupComponent || {
+        config: {
+          style: { left: 0, top: 0, width: 999999, height: 999999 },
+          attr: { scaleX: 1, scale: 1 },
+        },
+        id: undefined,
+        components: [],
+      };
 
       const newLeft = Math.min(templateAddComponentsPosition.left, left);
       const newTop = Math.min(templateAddComponentsPosition.top, top);
@@ -774,6 +709,7 @@ class GroupUtil {
 
       // 更改当前组
       isConfigChanged &&
+        !!id &&
         result.push(
           // 非目标组
           {
@@ -793,53 +729,54 @@ class GroupUtil {
         );
 
       // 当前组下的子组件
-      result.push(
-        ...groupChildren.reduce<any>((acc, item) => {
-          // 未改变且为组件
-          if (!isConfigChanged && !isGroupComponent(item)) return acc;
+      !!id &&
+        result.push(
+          ...groupChildren.reduce<any>((acc, item) => {
+            // 未改变且为组件
+            if (!isConfigChanged && !isGroupComponent(item)) return acc;
 
-          const path = idPathMap[item.id].path;
+            const path = idPathMap[item.id].path;
 
-          // 改变了且为组件
-          if (
-            (!isGroupComponent(item) ||
-              !originGroupComponentPath.startsWith(path)) &&
-            isConfigChanged
-          ) {
-            acc.push({
-              action: 'update' as any,
-              id: item.id,
-              value: {
-                config: {
-                  style: {
-                    left: item.config.style.left + changeLeft,
-                    top: item.config.style.top + changeTop,
-                  },
-                },
-              },
-            });
-          } else {
-            acc.push(
-              ...deepFormat(
-                merge({}, item, {
+            // 改变了且为组件
+            if (
+              (!isGroupComponent(item) ||
+                !originGroupComponentPath.startsWith(path)) &&
+              isConfigChanged
+            ) {
+              acc.push({
+                action: 'update' as any,
+                id: item.id,
+                value: {
                   config: {
                     style: {
                       left: item.config.style.left + changeLeft,
                       top: item.config.style.top + changeTop,
                     },
                   },
-                }),
-              ),
-            );
-          }
+                },
+              });
+            } else {
+              acc.push(
+                ...deepFormat(
+                  merge({}, item, {
+                    config: {
+                      style: {
+                        left: item.config.style.left + changeLeft,
+                        top: item.config.style.top + changeTop,
+                      },
+                    },
+                  }),
+                ),
+              );
+            }
 
-          return acc;
-        }, []),
-      );
+            return acc;
+          }, []),
+        );
 
       // 目标组
       if (originGroupComponentId === id) {
-        const path = idPathMap[id].path;
+        const path = idPathMap[id]?.path;
 
         result.push(
           ...addComponents.map((item, index) => {
@@ -860,7 +797,7 @@ class GroupUtil {
                 },
               }),
               id: item.id,
-              path: path + '.components',
+              path: path ? path + '.components' : undefined,
               action: 'add' as any,
             };
           }),
