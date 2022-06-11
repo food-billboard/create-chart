@@ -5,6 +5,7 @@ import ComponentUtil, {
   getParentPath,
   createGroupComponent,
   isGroupComponent,
+  getParentComponentIds,
 } from '../Component';
 import { mergeWithoutArray } from '../../tool';
 
@@ -402,6 +403,8 @@ class GroupUtil {
       if (isGroupComponent(newComponents)) {
         newComponents.config.attr = {
           ...newComponents.config.attr,
+          prevScaleX: newComponents.config.attr.scaleX,
+          prevScaleY: newComponents.config.attr.scaleY,
           ...pick(formatComponentPosition || {}, 'scaleX', 'scaleY'),
         };
       }
@@ -638,9 +641,16 @@ class GroupUtil {
       };
     });
 
+    const parentIds = getParentComponentIds(originGroupComponentId);
+    originGroupComponentId && parentIds.push(originGroupComponentId);
+
     const deepFormat: (
       groupComponent: ComponentData.TComponentData,
-    ) => ComponentMethod.SetComponentMethodParamsData[] = (groupComponent) => {
+      isOuter: boolean,
+    ) => ComponentMethod.SetComponentMethodParamsData[] = (
+      groupComponent,
+      isOuter,
+    ) => {
       let result: ComponentMethod.SetComponentMethodParamsData[] = [];
 
       const {
@@ -659,45 +669,53 @@ class GroupUtil {
         components: [],
       };
 
-      const newLeft = Math.min(templateAddComponentsPosition.left, left);
-      const newTop = Math.min(templateAddComponentsPosition.top, top);
-      const newRight = Math.max(
-        left + width,
-        templateAddComponentsPosition.right,
-      );
-      const newBottom = Math.max(
-        top + height,
-        templateAddComponentsPosition.bottom,
-      );
-      const newWidth = newRight - newLeft;
-      const newHeight = newBottom - newTop;
+      const isRelationGroupComponent = isOuter || parentIds.includes(id);
 
-      const tempAddComponentWidth =
-        (templateAddComponentsPosition.right -
-          templateAddComponentsPosition.left) /
-        scaleX;
-      const tempAddComponentHeight =
-        (templateAddComponentsPosition.bottom -
-          templateAddComponentsPosition.top) /
-        scaleY;
+      let newLeft = left;
+      let newTop = top;
+      let newRight = left + width;
+      let newBottom = top + height;
+      let newWidth = width;
+      let newHeight = height;
+      let newTempAddComponentLeft = 0;
+      let newTempAddComponentTop = 0;
 
-      const changeLeft = left - newLeft;
-      const changeTop = top - newTop;
+      if (isRelationGroupComponent) {
+        newLeft = Math.min(templateAddComponentsPosition.left, left);
+        newTop = Math.min(templateAddComponentsPosition.top, top);
+        newRight = Math.max(left + width, templateAddComponentsPosition.right);
+        newBottom = Math.max(
+          top + height,
+          templateAddComponentsPosition.bottom,
+        );
+        newWidth = newRight - newLeft;
+        newHeight = newBottom - newTop;
+        calculateScaleX *= scaleX;
+        calculateScaleY *= scaleY;
 
-      const newTempAddComponentLeft =
-        (templateAddComponentsPosition.left - newLeft) / scaleX;
-      const newTempAddComponentTop =
-        (templateAddComponentsPosition.top - newTop) / scaleY;
+        const tempAddComponentWidth =
+          (templateAddComponentsPosition.right -
+            templateAddComponentsPosition.left) /
+          scaleX;
+        const tempAddComponentHeight =
+          (templateAddComponentsPosition.bottom -
+            templateAddComponentsPosition.top) /
+          scaleY;
+        newTempAddComponentLeft =
+          (templateAddComponentsPosition.left - newLeft) / scaleX;
+        newTempAddComponentTop =
+          (templateAddComponentsPosition.top - newTop) / scaleY;
 
-      calculateScaleX *= scaleX;
-      calculateScaleY *= scaleY;
+        templateAddComponentsPosition = {
+          left: newTempAddComponentLeft,
+          top: newTempAddComponentTop,
+          right: newTempAddComponentLeft + tempAddComponentWidth,
+          bottom: newTempAddComponentTop + tempAddComponentHeight,
+        };
+      }
 
-      templateAddComponentsPosition = {
-        left: newTempAddComponentLeft,
-        top: newTempAddComponentTop,
-        right: newTempAddComponentLeft + tempAddComponentWidth,
-        bottom: newTempAddComponentTop + tempAddComponentHeight,
-      };
+      const changeLeft = (left - newLeft) / scaleX;
+      const changeTop = (top - newTop) / scaleY;
 
       const isConfigChanged =
         !!changeLeft ||
@@ -727,7 +745,8 @@ class GroupUtil {
         );
 
       // 当前组下的子组件
-      !!id &&
+      isRelationGroupComponent &&
+        !!id &&
         result.push(
           ...groupChildren.reduce<any>((acc, item) => {
             // 未改变且为组件
@@ -753,7 +772,9 @@ class GroupUtil {
                   },
                 },
               });
-            } else {
+            }
+            // 改变了且为目标上层组
+            else {
               acc.push(
                 ...deepFormat(
                   merge({}, item, {
@@ -764,6 +785,7 @@ class GroupUtil {
                       },
                     },
                   }),
+                  false,
                 ),
               );
             }
@@ -792,6 +814,10 @@ class GroupUtil {
                     width: item.config.style.width / calculateScaleX,
                     height: item.config.style.height / calculateScaleY,
                   },
+                  attr: {
+                    scaleX: get(item, 'config.attr.prevScaleX') ?? 1,
+                    scaleY: get(item, 'config.attr.prevScaleY') ?? 1,
+                  },
                 },
               }),
               id: item.id,
@@ -805,7 +831,7 @@ class GroupUtil {
       return result;
     };
 
-    return deepFormat(topParentComponent);
+    return deepFormat(topParentComponent, true);
   };
 }
 

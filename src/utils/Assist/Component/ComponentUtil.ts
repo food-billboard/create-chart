@@ -37,9 +37,14 @@ class ComponentUtil {
     parentPath: string,
     components: ComponentData.TComponentData[],
     newValue: SuperPartial<ComponentData.TComponentData<{}>>,
+    extra: any,
   ) {
     const targetAddParentComponents = path ? get(components, path) : components;
-    targetAddParentComponents.push(newValue);
+    if (extra && extra.index) {
+      targetAddParentComponents.splice(extra.index, 0, newValue);
+    } else {
+      targetAddParentComponents.push(newValue);
+    }
     if (path) {
       set(components, path, targetAddParentComponents);
     } else {
@@ -254,12 +259,6 @@ class ComponentUtil {
 
     // Find dragObject
     let dragObj!: ComponentData.TComponentData;
-    const addComponents = select.forEach((item: string) => {
-      const path = idPathMap[item].path;
-      const component = get(components, path);
-      if (item === dragKey) dragObj = component;
-      return component;
-    });
 
     if (!dropToGap) {
       // Drop on the content
@@ -280,7 +279,7 @@ class ComponentUtil {
       dropPosition === 1 // On the bottom gap
     ) {
       // ! 因为没看到有进来过，暂时去掉
-      return data;
+      return [];
       loop(data, dropKey, (item) => {
         item.components = item.components || [];
         // where to insert 示例添加到头部，可以是随意位置
@@ -296,18 +295,22 @@ class ComponentUtil {
       });
     }
 
+    // 拖拽放置的组件或组
     const dropPath = idPathMap[originDropKey].path;
     const dropComponent = get(components, dropPath);
 
     const updateResult = GroupUtil.generateGroupConfig({
-      select,
+      select: [
+        ...select.filter((item: string) => item !== originDropKey),
+        originDropKey,
+      ].filter(Boolean),
       components,
       clickTarget: dropComponent,
     });
 
     const realUpdateResult: ComponentMethod.SetComponentMethodParamsData[] = [];
     let coverUpdateResult!: ComponentMethod.SetComponentMethodParamsData;
-    let parentUpdateResult: ComponentMethod.SetComponentMethodParamsData;
+    let parentUpdateResult!: ComponentMethod.SetComponentMethodParamsData;
 
     updateResult.forEach((item) => {
       if (item.action === 'cover_update') {
@@ -322,14 +325,33 @@ class ComponentUtil {
       }
     });
 
+    const coverUpdateResultStyle = get(
+      coverUpdateResult?.value,
+      'config.style',
+    );
+
     realUpdateResult.push(
-      ...((coverUpdateResult?.value.components || []).map((item) => {
+      ...((coverUpdateResult?.value.components || []).map((item, index) => {
         return {
-          action: 'add' as any,
+          action: item?.id === originDropKey ? 'update' : ('add' as any),
           id: item?.id,
           value: merge({}, item, {
-            parent: parentUpdateResult?.value.id,
+            parent: parentUpdateResult?.id || dropKey,
+            config: {
+              style: {
+                left:
+                  (item?.config?.style?.left || 0) +
+                  (coverUpdateResultStyle?.left || 0),
+                top:
+                  (item?.config?.style?.top || 0) +
+                  (coverUpdateResultStyle?.top || 0),
+              },
+            },
           }),
+          path: getParentPath(dropPath),
+          extra: {
+            index: dropIndex + index,
+          },
         };
       }) as any),
     );
@@ -338,10 +360,13 @@ class ComponentUtil {
       updateResult,
       realUpdateResult,
       dropIndex,
+      parentUpdateResult,
       originDropKey,
+      dropComponent,
       22222,
     );
-    return components;
+
+    return realUpdateResult;
 
     value.callback?.(data, null);
 
@@ -405,6 +430,7 @@ class ComponentUtil {
             parentPath,
             components,
             valueWithId,
+            extra,
           );
           break;
         case 'delete':
@@ -445,7 +471,7 @@ class ComponentUtil {
           );
           break;
         case 'group':
-          const newActionComponents = this.groupComponent(
+          const newActionComponents4Group = this.groupComponent(
             component,
             path,
             parentPath,
@@ -453,7 +479,7 @@ class ComponentUtil {
             valueWithId,
           );
           components = this.setComponent(state, {
-            payload: newActionComponents,
+            payload: newActionComponents4Group,
           });
           break;
         case 'un_group':
@@ -466,7 +492,7 @@ class ComponentUtil {
           );
           break;
         case 'drag':
-          components = this.dargSortComponent(
+          const newActionComponents4Drag = this.dargSortComponent(
             component,
             path,
             parentPath,
@@ -474,6 +500,10 @@ class ComponentUtil {
             valueWithId,
             extra,
           );
+          components = this.setComponent(state, {
+            payload: newActionComponents4Drag,
+          });
+          component.callback?.(components, null);
           break;
       }
     });

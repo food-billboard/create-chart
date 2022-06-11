@@ -7,6 +7,7 @@ import arrayMove from 'array-move';
 import { useUpdate } from 'ahooks';
 import ColorSelect from '@/components/ColorSelect';
 import { EComponentType } from '@/utils/constants';
+import { getComponentIds } from '@/utils/Assist/Component';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { useComponentPath, useIdPathMap } from '@/hooks';
 import TreeNode from './components/TreeNode';
@@ -147,10 +148,22 @@ const TreeFunction = (props: TreeProps) => {
     };
   };
 
+  const onDragStart = useCallback(
+    ({ event, node }) => {
+      const key = node.key;
+      const containsId = getComponentIds(key);
+      const newSelect = [
+        ...select.filter((item) => !containsId.includes(item)),
+        key,
+      ];
+      setSelect(newSelect);
+    },
+    [select, setSelect],
+  );
+
   const onDrop = useCallback(
     (info: any) => {
-      const { node, dragNode, dropToGap, dropPosition, select } =
-        dealDropParams(info);
+      const { node, dragNode, dropToGap, dropPosition } = dealDropParams(info);
 
       setComponent({
         action: 'drag',
@@ -165,7 +178,7 @@ const TreeFunction = (props: TreeProps) => {
         },
       });
     },
-    [components, setComponent],
+    [components, setComponent, select],
   );
 
   const selectEmpty = useCallback(() => {
@@ -190,6 +203,7 @@ const TreeFunction = (props: TreeProps) => {
         onSelect={onSelect}
         showIcon={false}
         onDrop={onDrop}
+        onDragStart={onDragStart}
         treeData={treeData}
         draggable={{
           icon: false,

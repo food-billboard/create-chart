@@ -85,8 +85,10 @@ export const paste = ({
       if (isGroupComponentMethod(newComponent)) {
         newComponent.config.attr = {
           ...newComponent.config.attr,
+          prevScaleX: newComponent.config.attr.scaleX,
+          prevScaleY: newComponent.config.attr.scaleY,
           ...pick(formatComponentPosition || {}, 'scaleX', 'scaleY'),
-        };
+        } as any;
       }
       newSelect.push(newComponent.id);
       acc.push(newComponent);

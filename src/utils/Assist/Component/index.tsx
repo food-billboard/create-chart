@@ -194,4 +194,59 @@ export const isComponentSelect = (id: string) => {
   return newSelect.includes(id);
 };
 
+// 组件的父级组件id
+export const getParentComponentIds = (id: string) => {
+  const app = getDvaApp();
+  const { state } =
+    app._models.find((item: any) => item.namespace === 'global') || {};
+  const components = state?.components || [];
+  const idPathMap = useIdPathMap();
+
+  let parentIds: string[] = [];
+  let path = idPathMap[id]?.path;
+  let target = get(components, path);
+
+  while (target?.parent) {
+    parentIds.push(target.parent);
+    path = idPathMap[target.parent]?.path;
+    target = get(components, path);
+  }
+
+  return parentIds;
+};
+
+// 组件所有包含的id
+export const getComponentIds = (id: string) => {
+  const app = getDvaApp();
+  const { state } =
+    app._models.find((item: any) => item.namespace === 'global') || {};
+  const components = state?.components || [];
+  const idPathMap = useIdPathMap();
+
+  const path = idPathMap[id].path;
+  const component = get(components, path);
+
+  const componentIdResult: string[] = [id];
+
+  function loopChildren(components: ComponentData.TComponentData[]) {
+    components.forEach((component) => {
+      const { components, id } = component;
+      componentIdResult.push(id);
+      loopChildren(components);
+    });
+  }
+
+  loopChildren(component.components || []);
+
+  let tempCompoennt = { ...component };
+
+  while (tempCompoennt?.parent) {
+    componentIdResult.push(tempCompoennt.parent);
+    const path = idPathMap[tempCompoennt.parent].path;
+    tempCompoennt = get(components, path);
+  }
+
+  return componentIdResult;
+};
+
 export default componentUtil;
