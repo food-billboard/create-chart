@@ -78,6 +78,10 @@ const FetchScreenComponent = forwardRef<
       }
     } else if (isReload) {
       setComponentAll([]);
+      setGuideLine({
+        show: true,
+        value: [],
+      });
       setScreen(DEFAULT_SCREEN_DATA);
     }
 
