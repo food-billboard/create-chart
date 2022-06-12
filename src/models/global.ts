@@ -4,6 +4,7 @@ import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils/tool';
 import { HistoryUtil } from '@/utils/Assist/History';
 import ComponentUtil from '@/utils/Assist/Component';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import { DragData } from './connect';
 
 export default {
@@ -95,19 +96,15 @@ export default {
     },
 
     *setComponent(
-      {
-        value,
-      }: {
+      value: {
         value:
           | Partial<ComponentData.TComponentData>
           | Partial<ComponentData.TComponentData>[];
+        enqueue: boolean;
       },
       { put }: any,
     ) {
-      yield put({
-        type: 'setComponentData',
-        payload: value,
-      });
+      DataChangePool.setComponentData(value, put);
     },
 
     *setComponentAll(
@@ -230,15 +227,8 @@ export default {
     },
 
     setComponentData(state: any, action: any) {
-      const prevComponents = get(state, 'components');
-      const history = get(state, 'history.value');
-
-      const newComponents = ComponentUtil.setComponent(state, action);
-
-      set(state, 'components', newComponents);
-
-      // * history enqueue
-      return history.enqueue(state, newComponents, prevComponents);
+      console.log(22222);
+      return DataChangePool.setComponentDataInternal(state, action);
     },
 
     setComponentDataAll(state: any, action: any) {
