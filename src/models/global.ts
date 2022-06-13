@@ -235,8 +235,6 @@ export default {
         payload: { value },
       } = action;
 
-      console.log(value, 299999);
-
       const newState = (Array.isArray(value) ? value : [value]).reduce(
         (state, cur) => {
           const { enqueue, value } = cur;
@@ -246,7 +244,6 @@ export default {
             ...action,
             payload: value,
           });
-          console.log(value, newComponents, 29999);
           set(state, 'components', newComponents);
 
           if (enqueue) {
@@ -258,8 +255,6 @@ export default {
         },
         state,
       );
-
-      console.log(newState, 222222222);
 
       return newState;
     },

@@ -149,49 +149,14 @@ export const isComponentSelect = (id: string) => {
   const { state } =
     app._models.find((item: any) => item.namespace === 'global') || {};
   const select = state?.select || [];
-  const components = state?.components || [];
-  const idPathMap = useIdPathMap();
 
   if (select.includes(id)) return true;
 
-  const target = idPathMap[id];
-
-  if (!target) return false;
-
-  const path = target.path;
-  const targetComponent: ComponentData.TComponentData = get(components, path);
-
-  if (!targetComponent) return false;
-
-  let newSelect: string[] = [];
-
-  if (targetComponent.components?.length) {
-    function getId(components: ComponentData.TComponentData[]) {
-      components.forEach((component) => {
-        newSelect.push(component.id);
-        if (component.components?.length) {
-          getId(component.components);
-        }
-      });
-    }
-    getId(targetComponent.components);
+  try {
+    return getComponentIds(id).includes(id);
+  } catch (err) {
+    return false;
   }
-
-  let i = 0;
-  let tempComponent = targetComponent;
-  while (tempComponent && tempComponent.parent && i < 100000) {
-    newSelect.push(tempComponent.parent);
-    i++;
-    const parent = tempComponent.parent;
-    const target = idPathMap[parent];
-    if (!target || !target.path) {
-      break;
-    } else {
-      tempComponent = get(components, target.path);
-    }
-  }
-
-  return newSelect.includes(id);
 };
 
 // 组件的父级组件id
