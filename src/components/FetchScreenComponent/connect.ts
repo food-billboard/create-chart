@@ -9,6 +9,6 @@ export const mapDispatchToProps = (dispatch: any) => ({
     dispatch({ type: 'global/setGuideLine', value }),
   setScale: (value: any) => dispatch({ type: 'global/setScale', value }),
   setScreen: (value: any) => dispatch({ type: 'global/setScreen', value }),
-  setComponentAll: (value: any) =>
-    dispatch({ type: 'global/setComponentAll', value }),
+  setComponentAll: (value: any, enqueue: boolean) =>
+    dispatch({ type: 'global/setComponentAll', value, enqueue }),
 });

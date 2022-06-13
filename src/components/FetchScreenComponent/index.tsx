@@ -21,7 +21,10 @@ const FetchScreenComponent = forwardRef<
     needFetch?: boolean;
     setScale?: (scale: number) => void;
     setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
-    setComponentAll: (value: ComponentData.TComponentData[]) => void;
+    setComponentAll: (
+      value: ComponentData.TComponentData[],
+      enqueue: boolean,
+    ) => void;
     setGuideLine: (value: ComponentData.TGuideLineConfig) => void;
   }
 >((props, ref) => {
@@ -72,12 +75,12 @@ const FetchScreenComponent = forwardRef<
         height = nextData.config.style.height;
         ThemeUtil.initCurrentThemeData(nextData.config.attr.theme);
         const mergedComponentList = mergeComponentDefaultConfig(componentsList);
-        setComponentAll(mergedComponentList);
+        setComponentAll(mergedComponentList, false);
       } catch (err) {
         message.info('数据获取失败');
       }
     } else if (isReload) {
-      setComponentAll([]);
+      setComponentAll([], false);
       setGuideLine({
         show: true,
         value: [],

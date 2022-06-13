@@ -110,10 +110,9 @@ export default {
     },
 
     *setComponentAll(
-      {
-        value,
-      }: {
+      value: {
         value: ComponentData.TComponentData[];
+        enqueue: boolean;
       },
       { put }: any,
     ) {
@@ -260,8 +259,8 @@ export default {
       // * history enqueue
       const history = get(state, 'history.value');
       const components = get(state, 'components');
+      let { value: newComponents, enqueue = true } = action.payload;
 
-      let newComponents = action.payload;
       newComponents =
         typeof newComponents === 'function'
           ? newComponents(components)
@@ -271,6 +270,8 @@ export default {
       newComponents = arrayMove(newComponents, 0, 0);
 
       set(state, 'components', newComponents);
+
+      if (!enqueue) return state;
 
       return history.enqueue(state, action.payload, components);
     },
