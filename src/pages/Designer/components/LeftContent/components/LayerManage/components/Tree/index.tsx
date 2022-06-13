@@ -10,6 +10,7 @@ import { EComponentType } from '@/utils/constants';
 import { getComponentIds } from '@/utils/Assist/Component';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { useComponentPath, useIdPathMap } from '@/hooks';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import TreeNode from './components/TreeNode';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
@@ -22,12 +23,10 @@ export type TreeProps = {
   components: ComponentData.TComponentData[];
   select: string[];
   setSelect: (value: string[]) => void;
-  setComponent: ComponentMethod.SetComponentMethod;
 };
 
 const TreeFunction = (props: TreeProps) => {
-  const { components, setSelect, setComponent, select, iconMode, disabled } =
-    props;
+  const { components, setSelect, select, iconMode, disabled } = props;
 
   const [expendKeys, setExpendKeys] = useState<string[]>([]);
 
@@ -165,7 +164,7 @@ const TreeFunction = (props: TreeProps) => {
     (info: any) => {
       const { node, dragNode, dropToGap, dropPosition } = dealDropParams(info);
 
-      setComponent({
+      DataChangePool.setComponent({
         action: 'drag',
         value: {},
         id: '',
@@ -178,7 +177,7 @@ const TreeFunction = (props: TreeProps) => {
         },
       });
     },
-    [components, setComponent, select],
+    [components, select],
   );
 
   const selectEmpty = useCallback(() => {

@@ -3,6 +3,7 @@ import { Dropdown, Menu } from 'antd';
 import type { DropDownProps } from 'antd/es/dropdown';
 import classnames from 'classnames';
 import { connect } from 'dva';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import { ActionItemType, ActionItem, DEFAULT_ACTION_LIST } from './action.map';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
@@ -18,7 +19,6 @@ const ContextMenu = (
     components: ComponentData.TComponentData[];
     setSelect: (value: string[]) => void;
     setClipboard: (value: string[]) => void;
-    setComponent: ComponentMethod.SetComponentMethod;
     setComponentAll: (value: ComponentData.TComponentData[]) => void;
     onClick?: (actionType: ActionItemType) => void;
   } & Partial<DropDownProps>,
@@ -31,7 +31,6 @@ const ContextMenu = (
     path,
     select,
     setSelect,
-    setComponent,
     setComponentAll,
     components,
     overlayClassName,
@@ -73,7 +72,7 @@ const ContextMenu = (
                 value={value}
                 select={select}
                 path={path}
-                setComponent={setComponent}
+                setComponent={DataChangePool.setComponent}
                 setSelect={setSelect}
                 setComponentAll={setComponentAll}
                 components={components}
@@ -90,7 +89,6 @@ const ContextMenu = (
     actionList,
     value,
     select,
-    setComponent,
     setSelect,
     path,
     setComponentAll,

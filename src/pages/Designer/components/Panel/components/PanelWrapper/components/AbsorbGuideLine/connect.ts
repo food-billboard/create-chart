@@ -11,6 +11,4 @@ export const mapStateToProps = (state: ConnectState) => {
 export const mapDispatchToProps = (dispatch: any) => ({
   setGuideLine: (value: any) =>
     dispatch({ type: 'global/setGuideLine', value }),
-  setComponent: (value: any) =>
-    dispatch({ type: 'global/setComponent', value }),
 });

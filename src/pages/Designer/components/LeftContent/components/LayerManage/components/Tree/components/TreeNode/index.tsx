@@ -7,6 +7,7 @@ import { FolderOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import { useHover } from 'ahooks';
 import ContextMenu from '@/components/ContextMenu';
 import { ActionItemType } from '@/components/ContextMenu/action.map';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import VisibleEditor from './Visible';
 import NameEditor, { NameEditorRefProps } from './NameEdit';
 import LockEditor from './Lock';
@@ -15,7 +16,6 @@ import styles from './index.less';
 
 const ListItem = ({
   value,
-  setComponent: propsSetComponent,
   path,
   update,
   isLeaf,
@@ -26,7 +26,6 @@ const ListItem = ({
   setHoverSelect,
 }: {
   value: ComponentData.TComponentData;
-  setComponent?: ComponentMethod.SetComponentMethod;
   setHoverSelect: (value: string) => void;
   path: string;
   update?: () => void;
@@ -52,10 +51,10 @@ const ListItem = ({
 
   const setComponent = useCallback(
     (value: ComponentMethod.SetComponentMethodParamsData) => {
-      propsSetComponent?.(value);
+      DataChangePool.setComponent?.(value);
       update?.();
     },
-    [propsSetComponent],
+    [],
   );
 
   const commonSetComponent = useCallback(
@@ -67,7 +66,7 @@ const ListItem = ({
         action: 'update',
       });
     },
-    [],
+    [setComponent],
   );
 
   const handleEditName = useCallback((type: ActionItemType) => {

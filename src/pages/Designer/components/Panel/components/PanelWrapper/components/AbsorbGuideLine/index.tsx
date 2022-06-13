@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { merge } from 'lodash';
 import GuideLine from '@/components/GuideLine';
 import { getPath } from '@/utils/Assist/Component';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import {
   AbsorbUtil,
@@ -19,15 +20,14 @@ const AbsorbGuideLine = (props: {
   scale: number;
   components: ComponentData.TComponentData[];
   guideLine: ComponentData.TGuideLineConfig;
-  setComponent: ComponentMethod.SetComponentMethod;
   setGuideLine: (value: ComponentData.TGuideLineConfig) => void;
 }) => {
   const {
     components,
     guideLine,
-    setComponent,
     setGuideLine,
     scale: originScale,
+    size,
   } = props;
   const [absorbGuideLine, setAbsorbGuideLine] = useState<
     ComponentData.TGuideLineConfigItem[]
@@ -38,7 +38,7 @@ const AbsorbGuideLine = (props: {
   }, [originScale]);
 
   const componentCallback: ComponentCallback = (id, value, components) => {
-    setComponent({
+    DataChangePool.setComponent({
       value,
       id,
       path: getPath(id),
@@ -63,9 +63,11 @@ const AbsorbGuideLine = (props: {
 
   const domList = useMemo(() => {
     return absorbGuideLine.map((line) => {
-      return <GuideLine scale={scale} {...line} disabled key={line.id} />;
+      return (
+        <GuideLine size={size} scale={scale} {...line} disabled key={line.id} />
+      );
     });
-  }, [absorbGuideLine, scale]);
+  }, [absorbGuideLine, scale, size]);
 
   useEffect(() => {
     const registerId4Component = AbsorbUtil.register(

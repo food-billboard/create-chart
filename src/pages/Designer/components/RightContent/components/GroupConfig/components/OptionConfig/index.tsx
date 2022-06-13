@@ -1,23 +1,19 @@
 import { useCallback } from 'react';
 import { Tabs } from 'antd';
-import { connect } from 'dva';
 import { merge } from 'lodash';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import { getPath } from '@/utils/Assist/Component';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import KeyWordPosition from './components/KeyWordPosition';
 import ConditionConfig from './components/ConditionConfig';
-import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const { TabPane } = Tabs;
 
-const OrientConfig = (props: {
-  component: ComponentData.TComponentData;
-  setComponent: ComponentMethod.SetComponentMethod;
-}) => {
-  const { component, setComponent } = props;
+const OrientConfig = (props: { component: ComponentData.TComponentData }) => {
+  const { component } = props;
 
   const {
     id,
@@ -28,14 +24,14 @@ const OrientConfig = (props: {
     (value: SuperPartial<ComponentData.TComponentData>) => {
       const componentPath = getPath(id);
 
-      setComponent({
+      DataChangePool.setComponent({
         value,
         id,
         path: componentPath,
         action: 'update',
       });
     },
-    [setComponent, id],
+    [id],
   );
 
   const onOrientChange = useCallback(
@@ -100,7 +96,7 @@ const OrientConfig = (props: {
         components: newComponents,
       });
     },
-    [component, setComponent],
+    [component],
   );
 
   return (
@@ -125,4 +121,4 @@ const OrientConfig = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrientConfig);
+export default OrientConfig;

@@ -8,6 +8,7 @@ import ConfirmModal, { ConfirmModalRef } from '@/components/ConfirmModal';
 import { deleteAction } from '@/components/ContextMenu/Actions/Delete';
 import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
 import { getComponent } from '@/utils/Assist/Component';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import { sleep } from '@/utils';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
@@ -17,7 +18,6 @@ const ClipboardComponent = (props: {
   components: ComponentData.TComponentData[];
   clipboard: string[];
   setClipboard: (value: string[]) => void;
-  setComponent: ComponentMethod.SetComponentMethod;
   setComponentAll: (value: ComponentData.TComponentData[]) => void;
   setSelect: (value: string[]) => void;
   screenType: ComponentData.ScreenType;
@@ -30,7 +30,6 @@ const ClipboardComponent = (props: {
     select,
     setClipboard,
     components,
-    setComponent,
     setSelect,
     undo,
     redo,
@@ -61,7 +60,7 @@ const ClipboardComponent = (props: {
     paste({
       components,
       setComponent: (_, newComponents) => {
-        setComponent(
+        DataChangePool.setComponent(
           newComponents.map((item) => {
             return {
               value: item,
@@ -111,8 +110,8 @@ const ClipboardComponent = (props: {
   });
 
   const handleDelete = useCallback(() => {
-    deleteAction(select, setComponent, setSelect);
-  }, [setComponent, select]);
+    deleteAction(select, DataChangePool.setComponent, setSelect);
+  }, [select]);
 
   return (
     <>

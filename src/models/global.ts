@@ -4,7 +4,6 @@ import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils/tool';
 import { HistoryUtil } from '@/utils/Assist/History';
 import ComponentUtil from '@/utils/Assist/Component';
-import DataChangePool from '@/utils/Assist/DataChangePool';
 import { DragData } from './connect';
 
 export default {
@@ -97,14 +96,19 @@ export default {
 
     *setComponent(
       value: {
-        value:
-          | Partial<ComponentData.TComponentData>
-          | Partial<ComponentData.TComponentData>[];
-        enqueue: boolean;
+        value: {
+          value:
+            | Partial<ComponentData.TComponentData>
+            | Partial<ComponentData.TComponentData>[];
+          enqueue: boolean;
+        }[];
       },
       { put }: any,
     ) {
-      DataChangePool.setComponentData(value, put);
+      yield put({
+        type: 'setComponentData',
+        payload: value,
+      });
     },
 
     *setComponentAll(
@@ -227,8 +231,37 @@ export default {
     },
 
     setComponentData(state: any, action: any) {
-      console.log(22222);
-      return DataChangePool.setComponentDataInternal(state, action);
+      const {
+        payload: { value },
+      } = action;
+
+      console.log(value, 299999);
+
+      const newState = (Array.isArray(value) ? value : [value]).reduce(
+        (state, cur) => {
+          const { enqueue, value } = cur;
+          const prevComponents = get(state, 'components');
+          const history = get(state, 'history.value');
+          const newComponents = ComponentUtil.setComponent(state, {
+            ...action,
+            payload: value,
+          });
+          console.log(value, newComponents, 29999);
+          set(state, 'components', newComponents);
+
+          if (enqueue) {
+            // * history enqueue
+            return history.enqueue(state, newComponents, prevComponents);
+          }
+
+          return state;
+        },
+        state,
+      );
+
+      console.log(newState, 222222222);
+
+      return newState;
     },
 
     setComponentDataAll(state: any, action: any) {

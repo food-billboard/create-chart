@@ -1,5 +1,6 @@
 import { connect } from 'dva';
 import classnames from 'classnames';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import BaseConfig from './components/BaseConfig';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
@@ -7,9 +8,8 @@ import styles from './index.less';
 const InterActiveConfig = (props: {
   id: string;
   components: ComponentData.TComponentData[];
-  setComponent: ComponentMethod.SetComponentMethod;
 }) => {
-  const { id, components, setComponent } = props;
+  const { id, components } = props;
 
   return (
     <div
@@ -18,7 +18,11 @@ const InterActiveConfig = (props: {
         'design-config-format-font-size',
       )}
     >
-      <BaseConfig id={id} components={components} onChange={setComponent} />
+      <BaseConfig
+        id={id}
+        components={components}
+        onChange={DataChangePool.setComponent}
+      />
     </div>
   );
 };

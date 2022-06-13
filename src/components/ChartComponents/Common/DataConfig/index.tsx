@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { connect } from 'dva';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { getComponent, getPath } from '@/utils/Assist/Component';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import FieldMap from './components/FieldMap';
 import ResponseData from './components/ResponseData';
 import { mapStateToProps, mapDispatchToProps } from './connect';
@@ -13,9 +14,8 @@ import styles from './index.less';
 const DataConfig = (props: {
   id: string;
   components: ComponentData.TComponentData[];
-  setComponent: ComponentMethod.SetComponentMethod;
 }) => {
-  const { id, components, setComponent } = props;
+  const { id, components } = props;
 
   const component: ComponentData.TComponentData = useMemo(() => {
     return getComponent(id, components);
@@ -27,14 +27,14 @@ const DataConfig = (props: {
 
   const onValueChange = useCallback(
     (value: ComponentMethod.SetComponentMethodParamsData['value']) => {
-      setComponent({
+      DataChangePool.setComponent({
         value,
         id,
         path: getPath(id),
         action: 'update',
       });
     },
-    [setComponent, id],
+    [id],
   );
 
   if (isDisabled) {

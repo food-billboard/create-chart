@@ -10,6 +10,7 @@ import classnames from 'classnames';
 import { connect } from 'dva';
 import { isEqual } from 'lodash';
 import { useIsComponentChildrenSelect, useComponentStyle } from '@/hooks';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import ComponentWrapper from './components/Wrapper';
 import Content from './components/Content';
 import ContextMenu from '../ContextMenu';
@@ -24,7 +25,6 @@ export type RenderComponentProps = {
   select?: string[];
   scale: number;
   setSelect?: (value: string[]) => void;
-  setComponent?: ComponentMethod.SetComponentMethod;
   setComponentAll: (
     value:
       | ComponentData.TComponentData[]
@@ -83,7 +83,6 @@ const RenderComponent = memo(
       value,
       select = [],
       setSelect,
-      setComponent: propsSetComponent,
       scale,
       index,
       path,
@@ -140,14 +139,14 @@ const RenderComponent = memo(
         ) => SuperPartial<ComponentData.TComponentData>,
       ) => {
         const result = callback(value);
-        propsSetComponent?.({
+        DataChangePool.setComponent?.({
           value: result,
           id: value.id,
           action: 'update',
           path: index.toString(),
         });
       },
-      [value, propsSetComponent, index],
+      [value, index],
     );
 
     const content = useMemo(() => {

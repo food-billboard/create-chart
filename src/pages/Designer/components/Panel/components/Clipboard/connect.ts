@@ -18,6 +18,4 @@ export const mapDispatchToProps = (dispatch: any) => ({
     dispatch({ type: 'global/setClipboard', value }),
   undo: () => dispatch({ type: 'global/undo' }),
   redo: () => dispatch({ type: 'global/redo' }),
-  setComponent: (value: any) =>
-    dispatch({ type: 'global/setComponent', value }),
 });

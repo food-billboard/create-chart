@@ -7,7 +7,7 @@ import InputNumber from '../InputNumber';
 import ConfigList from '../Structure/ConfigList';
 import Opacity from '../Opacity';
 import HalfForm from '../Structure/HalfForm';
-import FullForm from '../Structure/FullForm';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -19,9 +19,8 @@ const BaseConfig = (props: {
   id: string;
   isGroupComponent: boolean;
   components: ComponentData.TComponentData[];
-  setComponent: ComponentMethod.SetComponentMethod;
 }) => {
-  const { id, components, setComponent, isGroupComponent } = props;
+  const { id, components, isGroupComponent } = props;
 
   const { style, attr } = useMemo(() => {
     const component: ComponentData.TComponentData = getComponent(
@@ -42,7 +41,7 @@ const BaseConfig = (props: {
       } catch (err) {}
 
       const componentPath = getPath(id);
-      setComponent({
+      DataChangePool.setComponent({
         value: {
           config: {
             style: {
@@ -84,7 +83,7 @@ const BaseConfig = (props: {
         }
 
         const componentPath = getPath(id);
-        setComponent({
+        DataChangePool.setComponent({
           value: {
             config: {
               ...changeState,
@@ -98,16 +97,7 @@ const BaseConfig = (props: {
         onValueChange(key, realValue);
       }
     },
-    [
-      onValueChange,
-      isGroupComponent,
-      width,
-      height,
-      scaleX,
-      scaleY,
-      id,
-      setComponent,
-    ],
+    [onValueChange, isGroupComponent, width, height, scaleX, scaleY, id],
   );
 
   return (

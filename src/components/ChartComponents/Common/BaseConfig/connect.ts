@@ -6,7 +6,4 @@ export const mapStateToProps = (state: ConnectState) => {
   };
 };
 
-export const mapDispatchToProps = (dispatch: any) => ({
-  setComponent: (value: any) =>
-    dispatch({ type: 'global/setComponent', value }),
-});
+export const mapDispatchToProps = (dispatch: any) => ({});

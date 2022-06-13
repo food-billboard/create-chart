@@ -1,15 +1,13 @@
 import { useCallback, useMemo } from 'react';
-import { connect } from 'dva';
 import { getComponentConfigComponentByType } from '@/components/ChartComponents';
 import { getPath } from '@/utils/Assist/Component';
-import { mapStateToProps, mapDispatchToProps } from './configConnect';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 
 const ConfigComponent = (props: {
   component: ComponentData.TComponentData;
-  setComponent: ComponentMethod.SetComponentMethod;
   id: string;
 }) => {
-  const { component, setComponent } = props;
+  const { component } = props;
   const { componentType: type, id } = component;
 
   const ConfigComponent: any = useMemo(() => {
@@ -18,17 +16,17 @@ const ConfigComponent = (props: {
 
   const onChange: ComponentData.ComponentConfigProps['onChange'] = useCallback(
     (value) => {
-      setComponent({
+      DataChangePool.setComponent({
         id,
         path: getPath(id),
         value,
         action: 'update',
       });
     },
-    [setComponent, id],
+    [id],
   );
 
   return <ConfigComponent value={component} onChange={onChange} id={id} />;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfigComponent);
+export default ConfigComponent;

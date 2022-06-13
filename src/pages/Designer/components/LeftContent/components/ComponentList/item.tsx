@@ -13,6 +13,7 @@ import { connect } from 'dva';
 import { pick } from 'lodash';
 import { DragData } from '@/models/connect';
 import { createComponent } from '@/utils/Assist/Component';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -27,7 +28,6 @@ export type ComponentItemProps = ComponentData.BaseComponentItem & {
   connectDragPreview: ConnectDragPreview;
   setDragInfo?: (value: Partial<DragData>) => void;
   setSelect: (value: string[]) => void;
-  setComponent: ComponentMethod.SetComponentMethod;
 };
 
 const ComponentItem = (props: ComponentItemProps) => {
@@ -39,7 +39,6 @@ const ComponentItem = (props: ComponentItemProps) => {
     connectDragSource,
     connectDragPreview,
     setSelect,
-    setComponent,
   } = props;
 
   const handleSelect = useCallback(() => {
@@ -55,7 +54,7 @@ const ComponentItem = (props: ComponentItemProps) => {
       },
     });
 
-    setComponent({
+    DataChangePool.setComponent({
       action: 'add',
       id: component.id,
       value: component,
@@ -63,7 +62,7 @@ const ComponentItem = (props: ComponentItemProps) => {
     });
 
     setSelect([component.id]);
-  }, [title, description, setSelect, setComponent, type]);
+  }, [title, description, setSelect, type]);
 
   return (
     <>

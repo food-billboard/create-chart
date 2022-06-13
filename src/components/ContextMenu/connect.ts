@@ -9,8 +9,6 @@ export const mapStateToProps = (state: ConnectState) => {
 };
 
 export const mapDispatchToProps = (dispatch: any) => ({
-  setComponent: (value: any) =>
-    dispatch({ type: 'global/setComponent', value }),
   setComponentAll: (value: any) =>
     dispatch({ type: 'global/setComponentAll', value }),
   setSelect: (value: any) => dispatch({ type: 'global/setSelect', value }),

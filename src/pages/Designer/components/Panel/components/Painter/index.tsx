@@ -13,6 +13,7 @@ import { useBackground } from '@/hooks';
 import { createComponent } from '@/utils/Assist/Component';
 import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants/index';
 import { DragData } from '@/models/connect';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import ComponentList from '../ComponentList';
 import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -29,7 +30,6 @@ export type PainterProps = {
   setSelect: (value: string[]) => void;
   scale: number;
   config: ComponentData.TScreenData['config'];
-  setComponent: ComponentMethod.SetComponentMethod;
   className?: string;
   style?: CSSProperties;
 };
@@ -137,7 +137,7 @@ const dropTarget = DropTarget(
         x: 0,
         y: 0,
       };
-      const { setComponent, setSelect, setDragInfo, dragInfo, scale } = props;
+      const { setSelect, setDragInfo, dragInfo, scale } = props;
 
       const generateNewComponent = (
         value: ComponentData.BaseComponentItem & {
@@ -158,7 +158,7 @@ const dropTarget = DropTarget(
           },
         });
 
-        setComponent({
+        DataChangePool.setComponent({
           action: 'add',
           id: component.id,
           value: component,
