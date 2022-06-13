@@ -96,12 +96,10 @@ export default {
 
     *setComponent(
       value: {
-        value: {
-          value:
-            | Partial<ComponentData.TComponentData>
-            | Partial<ComponentData.TComponentData>[];
-          enqueue: boolean;
-        }[];
+        value:
+          | Partial<ComponentData.TComponentData>
+          | Partial<ComponentData.TComponentData>[];
+        enqueue: boolean;
       },
       { put }: any,
     ) {
@@ -232,29 +230,28 @@ export default {
 
     setComponentData(state: any, action: any) {
       const {
-        payload: { value },
+        payload: { value, enqueue },
       } = action;
+      const prevComponents = get(state, 'components');
+      const history = get(state, 'history.value');
 
       const newState = (Array.isArray(value) ? value : [value]).reduce(
-        (state, cur) => {
-          const { enqueue, value } = cur;
-          const prevComponents = get(state, 'components');
-          const history = get(state, 'history.value');
+        (state, value) => {
           const newComponents = ComponentUtil.setComponent(state, {
             ...action,
             payload: value,
           });
           set(state, 'components', newComponents);
 
-          if (enqueue) {
-            // * history enqueue
-            return history.enqueue(state, newComponents, prevComponents);
-          }
-
           return state;
         },
         state,
       );
+
+      if (enqueue) {
+        // * history enqueue
+        return history.enqueue(newState, newState.components, prevComponents);
+      }
 
       return newState;
     },

@@ -148,12 +148,14 @@ export const isComponentSelect = (id: string) => {
   const app = getDvaApp();
   const { state } =
     app._models.find((item: any) => item.namespace === 'global') || {};
-  const select = state?.select || [];
+  const select: string[] = state?.select || [];
 
   if (select.includes(id)) return true;
 
   try {
-    return getComponentIds(id).includes(id);
+    return select.some((selectItem) => {
+      return getComponentIds(selectItem).includes(id);
+    });
   } catch (err) {
     return false;
   }

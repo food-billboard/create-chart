@@ -356,16 +356,6 @@ class ComponentUtil {
       }) as any),
     );
 
-    console.log(
-      updateResult,
-      realUpdateResult,
-      dropIndex,
-      parentUpdateResult,
-      originDropKey,
-      dropComponent,
-      22222,
-    );
-
     return realUpdateResult;
 
     value.callback?.(data, null);

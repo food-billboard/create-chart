@@ -68,6 +68,7 @@ const Selecto = (props: {
           e.inputEvent.target.className.includes('ruler-guide-line');
         // 标尺
         const ruler = e.inputEvent.target.tagName.toLowerCase();
+
         if (
           VALID_SELECT_CONTAINER.includes(id) ||
           (!componentBorder &&

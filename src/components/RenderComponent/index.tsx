@@ -139,14 +139,14 @@ const RenderComponent = memo(
         ) => SuperPartial<ComponentData.TComponentData>,
       ) => {
         const result = callback(value);
-        DataChangePool.setComponent?.({
+        DataChangePool.multiSetComponent({
           value: result,
           id: value.id,
           action: 'update',
           path: index.toString(),
         });
       },
-      [value, index],
+      [value, index, select],
     );
 
     const content = useMemo(() => {
