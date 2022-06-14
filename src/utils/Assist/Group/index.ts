@@ -386,7 +386,7 @@ class GroupUtil {
         component,
         components,
       );
-      const newComponents = merge({}, component, {
+      const newComponent = merge({}, component, {
         config: {
           style: {
             ...pick(
@@ -400,16 +400,16 @@ class GroupUtil {
         },
       });
 
-      if (isGroupComponent(newComponents)) {
-        newComponents.config.attr = {
-          ...newComponents.config.attr,
-          prevScaleX: newComponents.config.attr.scaleX,
-          prevScaleY: newComponents.config.attr.scaleY,
+      if (isGroupComponent(newComponent)) {
+        newComponent.config.attr = {
+          ...newComponent.config.attr,
+          prevScaleX: newComponent.config.attr.scaleX,
+          prevScaleY: newComponent.config.attr.scaleY,
           ...pick(formatComponentPosition || {}, 'scaleX', 'scaleY'),
         };
       }
 
-      return newComponents;
+      return newComponent;
     });
 
     const result = this.addComponentsToGroup(
@@ -417,6 +417,8 @@ class GroupUtil {
       parentComponent,
       addComponents,
     );
+
+    console.log(result, 28888);
 
     // 实际更改
     let realResult: ComponentMethod.SetComponentMethodParamsData[] = [];
@@ -800,6 +802,12 @@ class GroupUtil {
 
         result.push(
           ...addComponents.map((item, index) => {
+            console.log(
+              get(item, 'config.attr.prevScaleX'),
+              calculateScaleX,
+              get(item, 'config.attr.scaleX'),
+              22222,
+            );
             return {
               value: merge({}, item, {
                 parent: id,
@@ -815,8 +823,10 @@ class GroupUtil {
                     height: item.config.style.height / calculateScaleY,
                   },
                   attr: {
-                    scaleX: get(item, 'config.attr.prevScaleX') ?? 1,
-                    scaleY: get(item, 'config.attr.prevScaleY') ?? 1,
+                    scaleX:
+                      (get(item, 'config.attr.scaleX') ?? 1) / calculateScaleX,
+                    scaleY:
+                      (get(item, 'config.attr.scaleY') ?? 1) / calculateScaleY,
                   },
                 },
               }),

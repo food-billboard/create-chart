@@ -99,7 +99,7 @@ const Collapse = (props: TCollapseProps) => {
       expandIcon={({ isActive }) => (
         <CaretRightOutlined rotate={isActive ? 90 : 0} />
       )}
-      expandIconPosition="right"
+      expandIconPosition="end"
       className={classnames(className, styles['design-config-collapse'])}
       {...nextProps}
     />

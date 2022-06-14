@@ -21,23 +21,14 @@ const ComponentTypeList = (props: {
     onChange?.(key);
   }, []);
 
-  const list = useMemo(() => {
+  const list: any = useMemo(() => {
     return COMPONENT_TYPE_LIST.map((item) => {
       const { type, icon, title } = item;
-      return (
-        <Menu.Item
-          key={type}
-          className={classnames(
-            styles['page-design-left-component-list-item'],
-            'p-lr-8',
-            'c-po',
-            'ali-cen',
-          )}
-          title={title}
-        >
-          {icon}
-        </Menu.Item>
-      );
+      return {
+        key: type,
+        label: icon,
+        title,
+      };
     });
   }, [activeComponentType]);
 
@@ -58,9 +49,8 @@ const ComponentTypeList = (props: {
             menuClass,
           )}
           selectedKeys={[activeComponentType]}
-        >
-          {list}
-        </Menu>
+          items={list}
+        />
       </div>
       <ComponentList type={activeComponentType} />
     </>

@@ -62,11 +62,11 @@ const ContextMenu = (
 
   const menu = useMemo(() => {
     return (
-      <Menu>
-        {actionList.map((item) => {
+      <Menu
+        items={actionList.map((item) => {
           const { type, children: Action } = item;
-          return (
-            <Menu.Item key={type}>
+          return {
+            label: (
               <Action
                 key={type}
                 value={value}
@@ -80,10 +80,11 @@ const ContextMenu = (
                 clipboard={clipboard}
                 setClipboard={setClipboard}
               />
-            </Menu.Item>
-          );
+            ),
+            key: type,
+          };
         })}
-      </Menu>
+      />
     );
   }, [
     actionList,

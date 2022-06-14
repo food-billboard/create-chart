@@ -13,11 +13,14 @@ const Avatar = (props: { logout: () => void; userInfo: any }) => {
 
   const menu = useMemo(() => {
     return (
-      <Menu>
-        <Menu.Item key="logout">
-          <a onClick={handleLogout}>退出登录</a>
-        </Menu.Item>
-      </Menu>
+      <Menu
+        items={[
+          {
+            label: <a onClick={handleLogout}>退出登录</a>,
+            key: 'logout',
+          },
+        ]}
+      />
     );
   }, [handleLogout]);
 

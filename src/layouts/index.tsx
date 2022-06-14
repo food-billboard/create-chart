@@ -98,10 +98,17 @@ const Layout = (props: { children?: ReactNode; pathname: string }) => {
           mode="horizontal"
           selectedKeys={[activeKey]}
           onClick={handleClick}
-        >
-          <Menu.Item key={'home'}>首页</Menu.Item>
-          <Menu.Item key={'model'}>模板</Menu.Item>
-        </Menu>
+          items={[
+            {
+              label: '首页',
+              key: 'home',
+            },
+            {
+              label: '模板',
+              key: 'model',
+            },
+          ]}
+        />
         <div className={styles['screen-page-avatar']}>
           <Avatar />
         </div>

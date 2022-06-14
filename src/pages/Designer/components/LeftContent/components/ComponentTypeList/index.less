@@ -9,22 +9,24 @@
   border-top: 1px solid @border-color-base;
   &-content {
     height: 100%;
+    :global {
+      .ant-menu-item {
+        height: 38px !important;
+        line-height: 38px !important;
+        margin-bottom: 4px !important;
+        padding: 0 14px !important;
+        :global {
+          .ant-menu-title-content {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            justify-content: center;
+          }
+        }
+      }
+    }
   }
   &-content-border {
     border-left: 1px solid @border-color-base;
-  }
-  &-item {
-    height: 38px !important;
-    line-height: 38px !important;
-    margin-bottom: 4px !important;
-    padding: 0 14px !important;
-    :global {
-      .ant-menu-title-content {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        justify-content: center;
-      }
-    }
   }
 }

@@ -1,13 +1,17 @@
 import { useMemo, useCallback, useState } from 'react';
 import { Tree as AntTree } from 'antd';
 import { connect } from 'dva';
-import { pick } from 'lodash';
+import { pick, get } from 'lodash';
 import type { DataNode } from 'antd/es/tree';
 import arrayMove from 'array-move';
 import { useUpdate } from 'ahooks';
 import ColorSelect from '@/components/ColorSelect';
 import { EComponentType } from '@/utils/constants';
-import { getComponentIds } from '@/utils/Assist/Component';
+import {
+  getComponentIds,
+  getParentComponentIds,
+  isGroupComponent,
+} from '@/utils/Assist/Component';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { useComponentPath, useIdPathMap } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
@@ -147,6 +151,32 @@ const TreeFunction = (props: TreeProps) => {
     };
   };
 
+  const canDrop = useCallback(
+    (dropKey: string) => {
+      try {
+        const idPathMap = useIdPathMap();
+        const path = idPathMap[dropKey].path;
+        const component = get(components, path);
+
+        if (!component.parent) {
+          return true;
+        } else {
+          let realDropKey = dropKey;
+          if (!isGroupComponent(component)) {
+            realDropKey = component.parent;
+          }
+          const parentKeys = getParentComponentIds(realDropKey);
+          return !select.some((selectItem) =>
+            [...parentKeys, realDropKey].includes(selectItem),
+          );
+        }
+      } catch (err) {
+        return false;
+      }
+    },
+    [components, select],
+  );
+
   const onDragStart = useCallback(
     ({ event, node }) => {
       const key = node.key;
@@ -163,6 +193,7 @@ const TreeFunction = (props: TreeProps) => {
   const onDrop = useCallback(
     (info: any) => {
       const { node, dragNode, dropToGap, dropPosition } = dealDropParams(info);
+      if (!canDrop(node.key)) return;
 
       DataChangePool.setComponent({
         action: 'drag',
@@ -177,7 +208,7 @@ const TreeFunction = (props: TreeProps) => {
         },
       });
     },
-    [components, select],
+    [components, select, canDrop],
   );
 
   const selectEmpty = useCallback(() => {

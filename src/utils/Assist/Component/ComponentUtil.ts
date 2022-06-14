@@ -230,7 +230,7 @@ class ComponentUtil {
     const idPathMap = useIdPathMap();
 
     const originDropKey = node.key;
-    let dropKey = node.key;
+    let dropKey = originDropKey;
     let dropIndex = -1;
     const dragKey = dragNode.key;
     const dropPos = node.pos.split('-');
@@ -261,16 +261,18 @@ class ComponentUtil {
     let dragObj!: ComponentData.TComponentData;
 
     if (!dropToGap) {
+      console.log(1111111111);
       // Drop on the content
       loop(data, dropKey, (item, index) => {
-        dropIndex = index + 1;
         // 组
         if (isGroupComponent(item)) {
           dropKey = item.id;
+          dropIndex = dropPosition;
         }
         // 组内组件 | 最外层组件
         else {
           dropKey = item.parent;
+          dropIndex = index + 1;
         }
       });
     } else if (
@@ -291,7 +293,14 @@ class ComponentUtil {
     } else {
       loop(data, dropKey, (item, index) => {
         dropKey = item.parent;
-        dropIndex = dropPosition === -1 ? index : index + 1;
+        // 组
+        if (isGroupComponent(item)) {
+          dropIndex = dropPosition;
+        }
+        // 组内组件 | 最外层组件
+        else {
+          dropIndex = index + 1;
+        }
       });
     }
 
@@ -307,6 +316,12 @@ class ComponentUtil {
       components,
       clickTarget: dropComponent,
     });
+
+    // console.log(originDropKey, dropKey, dropIndex, dropPosition, dropComponent, updateResult, [
+    //   ...select.filter((item: string) => item !== originDropKey),
+    //   originDropKey,
+    // ].filter(Boolean), 29999)
+    // return []
 
     const realUpdateResult: ComponentMethod.SetComponentMethodParamsData[] = [];
     let coverUpdateResult!: ComponentMethod.SetComponentMethodParamsData;
@@ -355,6 +370,14 @@ class ComponentUtil {
         };
       }) as any),
     );
+
+    console.log('dropKey: ', dropKey);
+    console.log('originDropKey: ', originDropKey);
+    console.log('dropPosition: ', dropPosition);
+    console.log('dropIndex: ', dropIndex);
+    console.log('dropComponent: ', dropComponent);
+    console.log('updateResult: ', updateResult);
+    console.log('realUpdateResult: ', realUpdateResult);
 
     return realUpdateResult;
 
@@ -494,6 +517,7 @@ class ComponentUtil {
             payload: newActionComponents4Drag,
           });
           component.callback?.(components, null);
+          console.log(components, 299999);
           break;
       }
     });

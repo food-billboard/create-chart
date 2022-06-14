@@ -56,11 +56,15 @@ const Scale = (props: {
     const value = [50, 100, 150, 200];
 
     return (
-      <Menu onClick={selectScaleSize}>
-        {value.map((item) => {
-          return <MenuItem key={item}>{item}%</MenuItem>;
+      <Menu
+        onClick={selectScaleSize}
+        items={value.map((item) => {
+          return {
+            label: `${item}%`,
+            key: item,
+          };
         })}
-      </Menu>
+      />
     );
   }, [selectScaleSize]);
 

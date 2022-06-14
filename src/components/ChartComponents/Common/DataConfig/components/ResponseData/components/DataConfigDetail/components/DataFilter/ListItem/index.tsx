@@ -202,7 +202,7 @@ const DataFilter = (props: {
       expandIcon={({ isActive }) => (
         <CaretRightOutlined rotate={isActive ? 90 : 0} />
       )}
-      expandIconPosition="right"
+      expandIconPosition="end"
       className={styles['design-config-data-filter-list-item']}
       activeKey={[activeKey]}
       onChange={onPanelCloseChange}
