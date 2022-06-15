@@ -1,3 +1,5 @@
+import { version } from '../../../package.json';
+
 export { default as DEFAULT_SCREEN_DATA } from './screenData';
 export * from './another';
 export * from './theme';
@@ -26,5 +28,5 @@ export const PANEL_ABSOLUTE_POSITION = {
 
 export const ECHARTS_URL = 'https://echarts.apache.org/zh/index.html';
 
-export const SCREEN_VERSION = '1.2';
-export const SCREEN_MODEL_VERSION = '1.2';
+export const SCREEN_VERSION = version;
+export const SCREEN_MODEL_VERSION = version;
