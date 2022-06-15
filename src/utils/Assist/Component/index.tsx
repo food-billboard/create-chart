@@ -177,7 +177,6 @@ export const getParentComponentIds = (id: string) => {
     parentIds.push(target.parent);
     path = idPathMap[target.parent]?.path;
     target = get(components, path);
-    console.log(44444444);
   }
 
   return parentIds;
@@ -212,7 +211,6 @@ export const getComponentIds = (id: string) => {
     componentIdResult.push(tempCompoennt.parent);
     const path = idPathMap[tempCompoennt.parent]?.path;
     tempCompoennt = get(components, path);
-    console.log(2222222222);
   }
 
   return componentIdResult;

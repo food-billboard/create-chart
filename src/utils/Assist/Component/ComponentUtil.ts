@@ -1,5 +1,5 @@
 import arrayMove from 'array-move';
-import { set, get, merge } from 'lodash';
+import { set, get, merge, pick, isNil, omit } from 'lodash';
 import { useComponentPath, useIdPathMap } from '@/hooks';
 import { IGlobalModelState } from '@/models/connect';
 import GroupUtil from '../Group';
@@ -39,14 +39,19 @@ class ComponentUtil {
     newValue: SuperPartial<ComponentData.TComponentData<{}>>,
     extra: any,
   ) {
-    const targetAddParentComponents = path ? get(components, path) : components;
-    if (extra && extra.index) {
+    const idPathMap = useIdPathMap();
+    const calParentPath = idPathMap[newValue.parent as string]?.path;
+    const realCalParentPath = `${calParentPath}.components`;
+    const targetAddParentComponents = calParentPath
+      ? get(components, realCalParentPath)
+      : components;
+    if (extra && !isNil(extra.index)) {
       targetAddParentComponents.splice(extra.index, 0, newValue);
     } else {
       targetAddParentComponents.push(newValue);
     }
-    if (path) {
-      set(components, path, targetAddParentComponents);
+    if (calParentPath) {
+      set(components, realCalParentPath, targetAddParentComponents);
     } else {
       components = targetAddParentComponents;
     }
@@ -261,7 +266,6 @@ class ComponentUtil {
     let dragObj!: ComponentData.TComponentData;
 
     if (!dropToGap) {
-      console.log(1111111111);
       // Drop on the content
       loop(data, dropKey, (item, index) => {
         // 组
@@ -272,7 +276,7 @@ class ComponentUtil {
         // 组内组件 | 最外层组件
         else {
           dropKey = item.parent;
-          dropIndex = index + 1;
+          dropIndex = index;
         }
       });
     } else if (
@@ -299,7 +303,7 @@ class ComponentUtil {
         }
         // 组内组件 | 最外层组件
         else {
-          dropIndex = index + 1;
+          dropIndex = index;
         }
       });
     }
@@ -307,6 +311,93 @@ class ComponentUtil {
     // 拖拽放置的组件或组
     const dropPath = idPathMap[originDropKey].path;
     const dropComponent = get(components, dropPath);
+    const dropComponentParent = dropComponent?.parent;
+    // 放置组下的直接子id
+    let dropComponentDirectChildrenIds: string[] = [];
+    if (isGroupComponent(dropComponent)) {
+      dropComponentDirectChildrenIds = (dropComponent?.components || []).map(
+        (item: any) => item.id,
+      );
+    } else if (dropComponentParent) {
+      const dropPath = idPathMap[dropComponentParent].path;
+      const dropComponent = get(components, dropPath);
+      dropComponentDirectChildrenIds = (dropComponent?.components || []).map(
+        (item: any) => item.id,
+      );
+    } else {
+      dropComponentDirectChildrenIds = components.map((item) => item.id);
+    }
+
+    // 拖拽放置是否为组
+    const isEqual = dropKey === originDropKey;
+
+    // 如果为组件放组，则直接使用复制方法
+    if (isEqual) {
+      const updateResult = GroupUtil.addComponentsToGroup(
+        components,
+        dropComponent,
+        select.map((item: string) => {
+          const path = idPathMap[item].path;
+          let newComponent = get(components, path);
+          // 修改组件的实际位置，可能存在组件在组中
+          const formatComponentPosition = GroupUtil.getComponentPosition(
+            newComponent,
+            components,
+          );
+          newComponent = merge({}, newComponent, {
+            config: {
+              style: {
+                ...pick(
+                  formatComponentPosition || {},
+                  'left',
+                  'top',
+                  'width',
+                  'height',
+                ),
+              },
+            },
+          });
+          if (isGroupComponent(newComponent)) {
+            newComponent = merge({}, newComponent, {
+              config: {
+                attr: {
+                  prevScaleX: newComponent.config.attr.scaleX,
+                  prevScaleY: newComponent.config.attr.scaleY,
+                  ...pick(formatComponentPosition || {}, 'scaleX', 'scaleY'),
+                },
+              },
+            });
+          }
+          return newComponent;
+        }),
+      );
+
+      const realUpdateResult: ComponentMethod.SetComponentMethodParamsData[] =
+        select.map((item: string) => {
+          return {
+            action: 'delete',
+            id: item,
+            value: {},
+          };
+        });
+
+      let addIndex = 0;
+      updateResult.forEach((item) => {
+        if (item.action === 'add') {
+          realUpdateResult.push({
+            ...item,
+            extra: {
+              index: dropIndex + addIndex,
+            },
+          });
+          addIndex++;
+        } else {
+          realUpdateResult.push(item);
+        }
+      });
+
+      return realUpdateResult;
+    }
 
     const updateResult = GroupUtil.generateGroupConfig({
       select: [
@@ -316,12 +407,6 @@ class ComponentUtil {
       components,
       clickTarget: dropComponent,
     });
-
-    // console.log(originDropKey, dropKey, dropIndex, dropPosition, dropComponent, updateResult, [
-    //   ...select.filter((item: string) => item !== originDropKey),
-    //   originDropKey,
-    // ].filter(Boolean), 29999)
-    // return []
 
     const realUpdateResult: ComponentMethod.SetComponentMethodParamsData[] = [];
     let coverUpdateResult!: ComponentMethod.SetComponentMethodParamsData;
@@ -345,45 +430,121 @@ class ComponentUtil {
       'config.style',
     );
 
-    realUpdateResult.push(
-      ...((coverUpdateResult?.value.components || []).map((item, index) => {
-        return {
-          action: item?.id === originDropKey ? 'update' : ('add' as any),
-          id: item?.id,
-          value: merge({}, item, {
-            parent: parentUpdateResult?.id || dropKey,
-            config: {
-              style: {
-                left:
-                  (item?.config?.style?.left || 0) +
-                  (coverUpdateResultStyle?.left || 0),
-                top:
-                  (item?.config?.style?.top || 0) +
-                  (coverUpdateResultStyle?.top || 0),
+    // 放置在最外的最前
+    if (dropIndex === -1) {
+      realUpdateResult.push(
+        ...((coverUpdateResult?.value.components || [])
+          .filter((item) => item?.id !== originDropKey)
+          .map((item, index) => {
+            return {
+              action: 'add',
+              id: item?.id,
+              value: merge({}, omit(item, 'parent'), {
+                parent: undefined,
+                config: {
+                  style: {
+                    left:
+                      (item?.config?.style?.left || 0) +
+                      (coverUpdateResultStyle?.left || 0),
+                    top:
+                      (item?.config?.style?.top || 0) +
+                      (coverUpdateResultStyle?.top || 0),
+                  },
+                },
+              }),
+              path: '',
+              extra: {
+                index,
               },
-            },
-          }),
-          path: getParentPath(dropPath),
-          extra: {
-            index: dropIndex + index,
-          },
-        };
-      }) as any),
-    );
+            };
+          }) as any),
+      );
+    }
+    // 如果放置在组上，则去掉外层的组，并将放置组继承新组的样式
+    else if (isEqual) {
+      return;
+      const scaleX = get(dropComponent, 'config.attr.scaleX') || 1;
+      const scaleY = get(dropComponent, 'config.attr.scaleY') || 1;
 
-    console.log('dropKey: ', dropKey);
-    console.log('originDropKey: ', originDropKey);
-    console.log('dropPosition: ', dropPosition);
-    console.log('dropIndex: ', dropIndex);
-    console.log('dropComponent: ', dropComponent);
-    console.log('updateResult: ', updateResult);
-    console.log('realUpdateResult: ', realUpdateResult);
+      realUpdateResult.push(
+        ...((coverUpdateResult?.value.components || []).map((item, index) => {
+          let value: any = {};
+          const isOriginDropItem = item?.id === originDropKey;
+          if (isOriginDropItem) {
+            value = {
+              parent: dropComponentParent,
+              config: {
+                style: pick(coverUpdateResultStyle, [
+                  'left',
+                  'top',
+                  'width',
+                  'height',
+                ]),
+              },
+            };
+          } else {
+            value = merge({}, item, {
+              parent: originDropKey,
+              config: {
+                style: {
+                  // * 因为没有做过特殊处理，需要单独处理当前层级的缩放
+                  width: (item?.config?.style?.width || 0) / scaleX,
+                  height: (item?.config?.style?.height || 0) / scaleY,
+                  left:
+                    (item?.config?.style?.left || 0) / scaleX +
+                    (coverUpdateResultStyle?.left || 0),
+                  top:
+                    (item?.config?.style?.top || 0) / scaleY +
+                    (coverUpdateResultStyle?.top || 0),
+                },
+              },
+            });
+          }
+          return {
+            action: isOriginDropItem ? 'update' : ('add' as any),
+            id: item?.id,
+            value,
+            path: `${dropPath}.components`,
+            extra: {
+              index: dropIndex + index, //+ (dropComponentDirectChildrenIds.includes(item?.id) ? 0 : 1),
+            },
+          };
+        }) as any),
+      );
+    } else {
+      realUpdateResult.push(
+        ...((coverUpdateResult?.value.components || []).map((item, index) => {
+          return {
+            action: item?.id === originDropKey ? 'update' : ('add' as any),
+            id: item?.id,
+            value: merge({}, omit(item, 'parent'), {
+              parent: parentUpdateResult?.id || dropKey,
+              config: {
+                style: {
+                  left:
+                    (item?.config?.style?.left || 0) +
+                    (coverUpdateResultStyle?.left || 0),
+                  top:
+                    (item?.config?.style?.top || 0) +
+                    (coverUpdateResultStyle?.top || 0),
+                },
+              },
+            }),
+            path: getParentPath(dropPath),
+            extra: {
+              index:
+                dropIndex +
+                index +
+                (dropComponentDirectChildrenIds.includes(item?.id as string)
+                  ? 0
+                  : 1),
+            },
+          };
+        }) as any),
+      );
+    }
 
     return realUpdateResult;
-
-    value.callback?.(data, null);
-
-    return data;
   }
 
   isAddParamsValid = (value: ComponentMethod.SetComponentMethodParamsData) => {
@@ -517,7 +678,6 @@ class ComponentUtil {
             payload: newActionComponents4Drag,
           });
           component.callback?.(components, null);
-          console.log(components, 299999);
           break;
       }
     });

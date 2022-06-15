@@ -418,8 +418,6 @@ class GroupUtil {
       addComponents,
     );
 
-    console.log(result, 28888);
-
     // 实际更改
     let realResult: ComponentMethod.SetComponentMethodParamsData[] = [];
     // 新增的组件 即需要成组的组件
@@ -802,12 +800,6 @@ class GroupUtil {
 
         result.push(
           ...addComponents.map((item, index) => {
-            console.log(
-              get(item, 'config.attr.prevScaleX'),
-              calculateScaleX,
-              get(item, 'config.attr.scaleX'),
-              22222,
-            );
             return {
               value: merge({}, item, {
                 parent: id,

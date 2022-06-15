@@ -103,11 +103,12 @@ const ComponentWrapper = (
     const left = Math.floor(x);
     const top = Math.floor(y);
 
-    AbsorbUtil.onComponentDrag(componentId, {
-      ...(size as any),
-      left,
-      top,
-    });
+    // ! 效果不好，到时候优化
+    // AbsorbUtil.onComponentDrag(componentId, {
+    //   ...(size as any),
+    //   left,
+    //   top,
+    // });
 
     propsOnDrag?.(event, data);
   };
@@ -143,10 +144,11 @@ const ComponentWrapper = (
     // * 点击不触发刷新
     if (Math.abs(width) < 5 && Math.abs(height) < 5) return;
 
-    AbsorbUtil.onComponentResizing(
-      componentId,
-      getComponentStyle(position, ref),
-    );
+    // ! 效果不好，到时候优化
+    // AbsorbUtil.onComponentResizing(
+    //   componentId,
+    //   getComponentStyle(position, ref),
+    // );
 
     propsOnResize?.(e, direction, ref, delta, position);
   };
