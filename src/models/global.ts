@@ -1,4 +1,4 @@
-import { set, get, merge } from 'lodash';
+import { set, get, merge, cloneDeep } from 'lodash';
 import arrayMove from 'array-move';
 import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils/tool';
@@ -231,7 +231,7 @@ export default {
       const {
         payload: { value, enqueue },
       } = action;
-      const prevComponents = get(state, 'components');
+      const prevComponents = cloneDeep(get(state, 'components') || []);
       const history = get(state, 'history.value');
 
       const newState = (Array.isArray(value) ? value : [value]).reduce(
@@ -244,7 +244,9 @@ export default {
 
           return state;
         },
-        state,
+        {
+          ...state,
+        },
       );
 
       if (enqueue) {
@@ -258,7 +260,7 @@ export default {
     setComponentDataAll(state: any, action: any) {
       // * history enqueue
       const history = get(state, 'history.value');
-      const components = get(state, 'components');
+      const components = cloneDeep(get(state, 'components') || []);
       let { value: newComponents, enqueue = true } = action.payload;
 
       newComponents =
