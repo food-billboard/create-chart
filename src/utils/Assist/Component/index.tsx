@@ -144,12 +144,7 @@ export const getComponentStyleInScreenType: (
 };
 
 // 组件是否被选中
-export const isComponentSelect = (id: string) => {
-  const app = getDvaApp();
-  const { state } =
-    app._models.find((item: any) => item.namespace === 'global') || {};
-  const select: string[] = state?.select || [];
-
+export const isComponentSelect = (id: string, select: string[]) => {
   if (select.includes(id)) return true;
 
   try {

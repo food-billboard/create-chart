@@ -74,7 +74,7 @@ const Selecto = (props: {
           (!componentBorder &&
             !guideLine &&
             ruler !== 'canvas' &&
-            !isComponentSelect(componentId))
+            !isComponentSelect(componentId, select))
         ) {
           setSelect?.([]);
         } else {
