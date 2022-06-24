@@ -2,7 +2,7 @@ import { ReactNode, useCallback, useRef, useMemo, useState } from 'react';
 import { connect } from 'dva';
 import { message } from 'antd';
 import { useKeyPress } from 'ahooks';
-import { copy } from '@/components/ContextMenu/Actions/Copy';
+import { clone } from '@/components/ContextMenu/Actions/Clone';
 import { paste } from '@/components/ContextMenu/Actions/Paste';
 import ConfirmModal, { ConfirmModalRef } from '@/components/ConfirmModal';
 import { deleteAction } from '@/components/ContextMenu/Actions/Delete';
@@ -49,7 +49,7 @@ const ClipboardComponent = (props: {
   useKeyPress(['ctrl.c', 'meta.c'], () => {
     if (disabledKeyEvent || !CopyAndPasteUtil.isFocus() || !select.length)
       return;
-    copy(select, setClipboard);
+    clone(select, setClipboard);
     message.info('复制成功');
   });
 

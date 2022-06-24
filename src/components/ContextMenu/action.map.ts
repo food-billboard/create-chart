@@ -16,6 +16,7 @@ import {
   RecoverDefaultAction,
   ChangeComponentWithData,
   CopyComponentWithStyle,
+  CloneAction,
 } from './Actions';
 
 export type ActionItemType =
@@ -35,7 +36,8 @@ export type ActionItemType =
   | 'prev_order'
   | 'recover_default'
   | 'change_component_with_data'
-  | 'copy_component_with_style';
+  | 'copy_component_with_style'
+  | 'clone';
 
 export type ActionItem = {
   type: ActionItemType;
@@ -72,12 +74,16 @@ export const DEFAULT_ACTION_LIST: ActionItem[] = [
     children: DeleteAction,
   },
   {
-    type: 'copy',
-    children: CopyAction,
+    type: 'clone',
+    children: CloneAction,
   },
   {
     type: 'paste',
     children: PasteAction,
+  },
+  {
+    type: 'copy',
+    children: CopyAction,
   },
   {
     type: 'group',

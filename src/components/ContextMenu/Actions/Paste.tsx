@@ -34,6 +34,31 @@ function coverPreviousId(
   return newComponent;
 }
 
+export function useIsValidPasteSelect({
+  select,
+  parent,
+  components,
+}: {
+  select: string[];
+  parent?: string;
+  components: ComponentData.TComponentData[];
+}) {
+  return useMemo(() => {
+    const idPathMap = useIdPathMap();
+    return select.every((componentId) => {
+      const target = idPathMap[componentId];
+      if (!target) return false;
+      const targetComponent: ComponentData.TComponentData = get(
+        components,
+        target.path,
+      );
+      if (!targetComponent) return false;
+      return true;
+      return targetComponent.parent === parent;
+    });
+  }, [select, parent, components]);
+}
+
 export const paste = ({
   sourceComponents,
   components,
@@ -116,20 +141,11 @@ const PasteAction = (props: CommonActionType) => {
   } = props;
   const { parent, type, components: currentComponents, id } = value;
 
-  const isValidPasteSelect = useMemo(() => {
-    const idPathMap = useIdPathMap();
-    return select.every((componentId) => {
-      const target = idPathMap[componentId];
-      if (!target) return false;
-      const targetComponent: ComponentData.TComponentData = get(
-        components,
-        target.path,
-      );
-      if (!targetComponent) return false;
-      return true;
-      return targetComponent.parent === parent;
-    });
-  }, [select, parent, components]);
+  const isValidPasteSelect = useIsValidPasteSelect({
+    select,
+    parent,
+    components,
+  });
 
   const isGroupComponent = () => {
     return isGroupComponentMethod({ type });
@@ -139,7 +155,6 @@ const PasteAction = (props: CommonActionType) => {
     (e: any) => {
       e?.stopPropagation();
       const parentPath = getParentPath(path);
-      const superParentPath = getParentPath(parentPath);
       const parentComponent = getParentComponent(components, path);
       const superParentComponent = getParentComponent(components, parentPath);
       let parentId: string | undefined = '';

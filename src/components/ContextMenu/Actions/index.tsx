@@ -15,3 +15,4 @@ export { default as PrevOrderAction } from './PrevOrder';
 export { default as RecoverDefaultAction } from './RecoverDefault';
 export { default as ChangeComponentWithData } from './ChangeComponentWithData';
 export { default as CopyComponentWithStyle } from './CopyComponentWithStyle';
+export { default as CloneAction } from './Clone';
