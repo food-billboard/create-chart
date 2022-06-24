@@ -15,6 +15,7 @@ const ChildrenWrapper = (props: {
   hoverSelect: string;
   borderNone?: boolean;
   screenType: ComponentData.ScreenType;
+  version: string;
 }) => {
   const {
     value,
@@ -23,6 +24,7 @@ const ChildrenWrapper = (props: {
     borderNone = false,
     screenType,
     hoverSelect,
+    version,
   } = props;
 
   const isSelect = useIsComponentChildrenSelect(
@@ -34,20 +36,27 @@ const ChildrenWrapper = (props: {
     return getComponentStyleInScreenType(screenType);
   }, [screenType]);
 
+  // * 1.5版本以后设置成中心位置
+  const transformOrigin = useMemo(() => {
+    return !version || parseFloat(version) > 1.5 ? 'center center' : 'left top';
+  }, [version]);
+
   const realChildren = useMemo(() => {
     return Children.map(children, (child) => {
       const className = get(child, 'props.className');
       const value: ComponentData.TComponentData = get(child, 'props.value');
       const {
         config: {
-          style: { left, top, rotate, opacity, width, height },
+          style: { left, top, rotate, opacity, width, height, skew },
           attr: { visible },
         },
       } = value;
 
       const realStyle = {
-        transform: `rotate(${rotate}deg)`,
-        transformOrigin: 'left top',
+        transform: `rotate(${rotate}deg) skew(${skew?.x || 0}deg, ${
+          skew?.y || 0
+        }deg)`,
+        transformOrigin,
         opacity,
         ...componentScreenTypeStyle,
       };
@@ -75,7 +84,13 @@ const ChildrenWrapper = (props: {
             },
       });
     });
-  }, [isSelect, children, borderNone, componentScreenTypeStyle]);
+  }, [
+    isSelect,
+    children,
+    borderNone,
+    componentScreenTypeStyle,
+    transformOrigin,
+  ]);
 
   return <>{realChildren}</>;
 };

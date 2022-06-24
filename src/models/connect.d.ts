@@ -24,6 +24,7 @@ interface IGlobalModelState {
 
   drag: DragData;
   scale: number;
+  version: string;
 }
 
 interface IUserModelState {

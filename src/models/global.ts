@@ -33,6 +33,7 @@ export default {
       value: null,
     },
     scale: 100,
+    version: '',
   },
 
   effects: {
@@ -52,6 +53,13 @@ export default {
     ) {
       yield put({
         type: 'setData',
+        payload: value,
+      });
+    },
+
+    *setVersion({ value }: { value: string }, { put }: any) {
+      yield put({
+        type: 'setVersionData',
         payload: value,
       });
     },
@@ -163,6 +171,11 @@ export default {
   },
 
   reducers: {
+    setVersionData(state: any, action: any) {
+      set(state, 'version', action.payload);
+      return state;
+    },
+
     setScreenTypeData(state: any, action: any) {
       set(state, 'screenType', action.payload);
       return state;

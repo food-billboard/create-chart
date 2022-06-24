@@ -10,6 +10,7 @@ import HalfForm from '../Structure/HalfForm';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
+import FullForm from '../Structure/FullForm';
 
 const { Item } = ConfigList;
 
@@ -30,7 +31,7 @@ const BaseConfig = (props: {
     return get(component, 'config') || {};
   }, [components, id]);
 
-  const { width, height, left, top, opacity, rotate } = style;
+  const { width, height, left, top, opacity, rotate, skew } = style;
   const { scaleX, scaleY } = attr;
 
   const onValueChange = useCallback(
@@ -137,6 +138,30 @@ const BaseConfig = (props: {
           value={rotate}
           onChange={onValueChange.bind(null, 'rotate')}
         />
+        <Item label="倾斜">
+          <HalfForm label="x轴">
+            <InputNumber
+              value={skew?.x}
+              onChange={(value) => {
+                onValueChange('skew', {
+                  x: (parseInt(value as any) || 0) % 360,
+                  y: skew?.y || 0,
+                });
+              }}
+            />
+          </HalfForm>
+          <HalfForm label="y轴">
+            <InputNumber
+              value={skew?.y}
+              onChange={(value) => {
+                onValueChange('skew', {
+                  y: (parseInt(value as any) || 0) % 360,
+                  x: skew?.x || 0,
+                });
+              }}
+            />
+          </HalfForm>
+        </Item>
         <Item label="不透明度">
           <HalfForm>
             <Opacity

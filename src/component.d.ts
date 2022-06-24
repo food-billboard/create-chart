@@ -149,6 +149,10 @@ declare namespace ComponentData {
       opacity: number;
       rotate: number;
       zIndex: number;
+      skew: {
+        x: number;
+        y: number;
+      };
     };
     attr: {
       visible: boolean;

@@ -5,6 +5,7 @@ export const mapStateToProps = (state: ConnectState) => {
 };
 
 export const mapDispatchToProps = (dispatch: any) => ({
+  setVersion: (value: any) => dispatch({ type: 'global/setVersion', value }),
   setGuideLine: (value: any) =>
     dispatch({ type: 'global/setGuideLine', value }),
   setScale: (value: any) => dispatch({ type: 'global/setScale', value }),

@@ -20,6 +20,7 @@ const FetchScreenComponent = forwardRef<
   {
     needFetch?: boolean;
     setScale?: (scale: number) => void;
+    setVersion: (value: string) => void;
     setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
     setComponentAll: (
       value: ComponentData.TComponentData[],
@@ -34,6 +35,7 @@ const FetchScreenComponent = forwardRef<
     needFetch = true,
     setScale,
     setGuideLine,
+    setVersion,
   } = props;
 
   const isModel = useIsModelHash();
@@ -59,7 +61,7 @@ const FetchScreenComponent = forwardRef<
         const data = await method({
           _id: id,
         });
-        const { components } = data;
+        const { components, version } = data;
         const {
           components: componentsList,
           ...nextData
@@ -68,6 +70,7 @@ const FetchScreenComponent = forwardRef<
           ...nextData,
           _id: id,
         });
+        setVersion(version);
         setGuideLine(
           nextData.config.attr.guideLine || { value: [], show: true },
         );

@@ -91,6 +91,10 @@ export const DEFAULT_CONFIG: ComponentData.TBaseConfig = {
     opacity: 1,
     rotate: 0,
     zIndex: 2,
+    skew: {
+      x: 0,
+      y: 0,
+    },
   },
   attr: {
     visible: true,
