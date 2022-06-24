@@ -25,7 +25,8 @@ const COL_SPAN = {
   xs: 12,
   md: 8,
   lg: 6,
-  xl: 4,
+  xl: 6,
+  xxl: 4,
 };
 
 const ScreenList = (props: {

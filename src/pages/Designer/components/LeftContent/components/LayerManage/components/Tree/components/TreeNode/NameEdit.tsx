@@ -79,7 +79,12 @@ const NameEditor = forwardRef<
   // 名称修改
   const baseNameEdit = useMemo(() => {
     return editable ? (
-      <Input defaultValue={name} onBlur={changeName} autoFocus />
+      <Input
+        className={styles['design-page-layer-item-name-size']}
+        defaultValue={name}
+        onBlur={changeName}
+        autoFocus
+      />
     ) : (
       <div
         onDoubleClick={changeEditState}
@@ -87,6 +92,7 @@ const NameEditor = forwardRef<
           'c-po',
           'p-lr-4',
           styles['design-page-layer-item-name-basic'],
+          styles['design-page-layer-item-name-size'],
         )}
         title={name}
       >
