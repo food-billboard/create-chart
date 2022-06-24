@@ -7,6 +7,7 @@ export default {
     'antd/lib/style/color/colorPalette.less',
   )}";`,
   ...dark,
+  '@primary-color': '#4ea397',
   '@light': '#fff',
   '@tabs-horizontal-padding': '12px 0',
 

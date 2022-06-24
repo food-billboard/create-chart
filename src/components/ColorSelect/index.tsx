@@ -27,7 +27,7 @@ function getOpacity(prevColor: ComponentData.TColorConfig) {
   return prevColor?.a ?? 1;
 }
 
-function getRgbaString(prevColor: ComponentData.TColorConfig) {
+export function getRgbaString(prevColor: ComponentData.TColorConfig) {
   if (!prevColor) return prevColor;
   try {
     return `rgba(${color(omit(prevColor, 'a')).array().join(',')}, ${
