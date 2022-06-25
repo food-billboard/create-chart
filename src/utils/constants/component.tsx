@@ -425,6 +425,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: Icon,
             description: '',
           },
+          {
+            type: 'TAG',
+            title: '标签',
+            icon: Icon,
+            description: '',
+          },
         ],
       },
     ],

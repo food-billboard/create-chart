@@ -51,6 +51,7 @@ import FontCarousel from './Font/FontCarousel';
 import Text from './Font/Text';
 import LoopText from './Font/LoopText';
 import Icon from './Font/Icon';
+import Tag from './Font/Tag';
 // media
 import Image from './Media/Image';
 import Video from './Media/Video';
@@ -140,6 +141,7 @@ COMPONENT_MAP.set(Datepicker.type, Datepicker);
 COMPONENT_MAP.set(PolarStackBar.type, PolarStackBar);
 COMPONENT_MAP.set(StateList.type, StateList);
 COMPONENT_MAP.set(Rate.type, Rate);
+COMPONENT_MAP.set(Tag.type, Tag);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);
