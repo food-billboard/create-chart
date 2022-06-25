@@ -7,6 +7,7 @@ export const mapStateToProps = (state: ConnectState) => {
     clipboard: state.global.clipboard,
     components: state.global.components,
     screenType: state.global.screenType,
+    grid: state.global.screenData.config.attr.grid,
   };
 };
 

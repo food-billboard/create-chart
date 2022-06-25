@@ -66,7 +66,12 @@ class DataChangePool {
   // }
 
   // 更新组件数据
-  setComponent = (value: any, enqueue: boolean = true) => {
+  setComponent = (
+    value:
+      | ComponentMethod.SetComponentMethodParamsData
+      | ComponentMethod.SetComponentMethodParamsData[],
+    enqueue: boolean = true,
+  ) => {
     const app = getDvaApp();
     const dispatch = app._store.dispatch;
     dispatch({ type: 'global/setComponent', value, enqueue });

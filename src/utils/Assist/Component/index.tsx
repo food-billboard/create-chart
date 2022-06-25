@@ -156,6 +156,14 @@ export const isComponentSelect = (id: string, select: string[]) => {
   }
 };
 
+// 获取dva的global
+function getDvaGlobalModelData() {
+  const app = getDvaApp();
+  const { state } =
+    app._models.find((item: any) => item.namespace === 'global') || {};
+  return state;
+}
+
 // 组件的父级组件id
 export const getParentComponentIds = (id: string) => {
   const app = getDvaApp();
@@ -175,6 +183,20 @@ export const getParentComponentIds = (id: string) => {
   }
 
   return parentIds;
+};
+
+// 获取顶级组件
+export const getTopParentComponent = (
+  id: string,
+  sourceComponents?: ComponentData.TComponentData[],
+) => {
+  const parentIds = getParentComponentIds(id);
+  let [topParentId] = parentIds.slice(-1);
+  const state = getDvaGlobalModelData();
+  const components = sourceComponents || state?.components;
+  const idPathMap = useIdPathMap();
+  if (!topParentId) topParentId = id;
+  return get(components, idPathMap[topParentId]?.path || '');
 };
 
 // 组件所有包含的id

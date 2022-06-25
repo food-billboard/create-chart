@@ -139,7 +139,7 @@ const BaseConfig = (props: {
           onChange={onValueChange.bind(null, 'rotate')}
         />
         <Item label="倾斜">
-          <HalfForm label="x轴">
+          <HalfForm>
             <InputNumber
               value={skew?.x}
               onChange={(value) => {
@@ -150,7 +150,7 @@ const BaseConfig = (props: {
               }}
             />
           </HalfForm>
-          <HalfForm label="y轴">
+          <HalfForm>
             <InputNumber
               value={skew?.y}
               onChange={(value) => {
