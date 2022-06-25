@@ -41,7 +41,7 @@ export const useComponentStyle: (
       nextComponentStyle,
       {
         transform: `rotate(${rotate}deg)`,
-        display: visible ? 'inline-block' : 'none',
+        visibility: visible ? 'visible' : 'hidden',
         borderWidth: (1 / scale) * 100,
         zIndex: isSelect ? 4 : zIndex,
         pointerEvents: lock ? 'none' : 'unset',
