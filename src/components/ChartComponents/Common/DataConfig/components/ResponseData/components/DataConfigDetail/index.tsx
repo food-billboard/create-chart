@@ -8,7 +8,6 @@ import {
 } from 'react';
 import { useResponseData } from '@/hooks';
 import FocusWrapper from '@/components/FocusWrapper';
-import Checkbox from '@/components/ChartComponents/Common/Checkbox';
 import CodeViewer from '../CodeViewer';
 import Title from './components/NormalTitle';
 import ResponseDataTitle from './components/ResponseDataTitle';
@@ -127,6 +126,9 @@ const DataConfigDetail = forwardRef<
             <Option key="static" value="static">
               静态数据
             </Option>
+            <Option key="mock" value="mock">
+              Mock
+            </Option>
             <Option key="api" value="api">
               API
             </Option>
@@ -139,6 +141,10 @@ const DataConfigDetail = forwardRef<
             onChange,
           }}
           apiProps={{
+            onChange,
+            value: props.value,
+          }}
+          mockProps={{
             onChange,
             value: props.value,
           }}

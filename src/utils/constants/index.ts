@@ -30,3 +30,6 @@ export const ECHARTS_URL = 'https://echarts.apache.org/zh/index.html';
 
 export const SCREEN_VERSION = version;
 export const SCREEN_MODEL_VERSION = version;
+
+// mock 数据请求的后端地址
+export const MOCK_REQUEST_URL = '/api/screen/mock';

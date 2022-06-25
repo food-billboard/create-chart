@@ -23,6 +23,7 @@ const ResponseData = (props: {
   const apiTypeString = useMemo(() => {
     const requestType = get(value, 'config.data.request.type');
     if (requestType === 'api') return '接口数据';
+    if (requestType === 'mock') return 'Mock数据';
     return '静态数据';
   }, [value]);
 

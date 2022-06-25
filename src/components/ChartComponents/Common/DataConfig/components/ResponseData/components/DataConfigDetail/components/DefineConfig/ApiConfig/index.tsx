@@ -13,7 +13,7 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const { Option } = Select;
 
-const IconTooltip = () => {
+export const IconTooltip = () => {
   return (
     <IconTooltipBase title="可以使用全局的变量">
       <InfoCircleOutlined className="m-r-4" />
@@ -53,7 +53,7 @@ const ApiConfig = (props: ApiConfigProps) => {
         },
       });
     },
-    [params, constants],
+    [params, constants, value],
   );
 
   return (

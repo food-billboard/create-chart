@@ -57,6 +57,10 @@ export const BASIC_DEFAULT_CONFIG: ComponentData.TBaseConfig = {
     opacity: 1,
     rotate: 0,
     zIndex: 2,
+    skew: {
+      x: 0,
+      y: 0,
+    },
   },
   attr: {
     visible: true,
@@ -73,6 +77,11 @@ export const BASIC_DEFAULT_DATA_CONFIG: ComponentData.TBaseConfig['data'] = {
     frequency: {
       show: false,
       value: 5,
+    },
+    mock: {
+      random: true,
+      total: 20,
+      fields: [],
     },
     serviceRequest: false,
     type: 'static',

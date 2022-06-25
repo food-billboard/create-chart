@@ -7,4 +7,5 @@ export const mapStateToProps = (state: ConnectState) => {
 export const mapDispatchToProps = (dispatch: any) => ({
   setScreenType: (value: any) =>
     dispatch({ type: 'global/setScreenType', value }),
+  getMockValueKindMap: () => dispatch({ type: 'data/getMockValueKindMap' }),
 });

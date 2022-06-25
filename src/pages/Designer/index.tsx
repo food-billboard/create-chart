@@ -17,8 +17,9 @@ import styles from './index.less';
 
 const Designer = (props: {
   setScreenType: (value: ComponentData.ScreenType) => void;
+  getMockValueKindMap: () => Promise<any>;
 }) => {
-  const { setScreenType } = props;
+  const { setScreenType, getMockValueKindMap } = props;
 
   const requestRef = useRef<FetchScreenComponentRef>(null);
 
@@ -36,6 +37,10 @@ const Designer = (props: {
   };
 
   useHashChangeReload(reload);
+
+  useEffect(() => {
+    getMockValueKindMap();
+  }, []);
 
   useEffect(() => {
     setScreenType('edit');

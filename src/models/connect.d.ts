@@ -27,6 +27,10 @@ interface IGlobalModelState {
   version: string;
 }
 
+interface IDataModelState {
+  mockValueKindMap: API_MOCK.TGetMockKindListData[];
+}
+
 interface IUserModelState {
   currentUser: any;
 }
@@ -44,6 +48,7 @@ export interface ConnectState {
   loading: Loading;
   settings: ProSettings;
   user: IUserModelState;
+  data: IDataModelState;
 }
 
 export interface Route extends MenuDataItem {

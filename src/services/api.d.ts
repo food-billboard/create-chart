@@ -150,3 +150,11 @@ declare namespace API_SCREEN {
     type: 'screen' | 'model';
   };
 }
+
+declare namespace API_MOCK {
+  export type TGetMockKindListData = {
+    id: string;
+    value: string;
+    description: string;
+  };
+}

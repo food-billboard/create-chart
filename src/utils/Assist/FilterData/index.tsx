@@ -3,6 +3,7 @@ import mustache from 'mustache';
 import { preRequestData } from '@/services';
 import VariableStringUtil from '../VariableString';
 import request from '../../request';
+import { MOCK_REQUEST_URL } from '../../index';
 
 class FilterData {
   stringDataToObject(value: string, defaultValue = '{}') {
@@ -183,34 +184,45 @@ class FilterData {
         headers,
         body,
         type,
+        mock,
         value: responseData,
         serviceRequest,
       },
     } = value;
 
-    if (type !== 'api' || !url) return responseData;
+    let realUrl = url;
+    let realMethod = method?.toLowerCase() as any;
+    let realBody = {};
+    let realHeaders = {};
+    const realServiceRequest = type === 'api' && serviceRequest;
 
-    const realHeaders = this.parseHeaders(headers, params, constants);
-    let realBody;
+    if (type === 'static' || (type === 'api' && !url)) return responseData;
 
-    if (method === 'POST') {
-      realBody = this.parseBody(body, params, constants);
+    if (type === 'api') {
+      realHeaders = this.parseHeaders(headers, params, constants);
+      if (method === 'POST') {
+        realBody = this.parseBody(body, params, constants);
+      }
+    } else if (type === 'mock') {
+      realMethod = 'post';
+      realUrl = MOCK_REQUEST_URL;
+      realBody = mock;
     }
 
     try {
       let result: any;
 
       // 服务端代理请求
-      if (serviceRequest) {
+      if (realServiceRequest) {
         result = await preRequestData({
-          method: method.toLowerCase() as any,
+          method: realMethod,
           body: JSON.stringify(realBody) || '{}',
           header: JSON.stringify(realHeaders) || '{}',
-          url,
+          url: realUrl,
         });
       } else {
-        result = await request(url, {
-          method,
+        result = await request(realUrl, {
+          method: realMethod,
           data: realBody,
           headers: realHeaders as any,
           mis: false,

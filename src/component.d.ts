@@ -30,11 +30,20 @@ declare namespace ComponentData {
       headers: string;
       body: string;
       serviceRequest: boolean;
+      mock: {
+        random: boolean;
+        total: number;
+        fields: {
+          key: string;
+          type: 'string' | 'number';
+          dataKind: string;
+        }[];
+      };
       frequency: {
         show: boolean;
         value: number;
       };
-      type: 'api' | 'static';
+      type: 'api' | 'static' | 'mock';
       value: any[] | object;
       valueType?: 'object' | 'array';
     };
