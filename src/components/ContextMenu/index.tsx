@@ -21,6 +21,7 @@ const ContextMenu = (
     setClipboard: (value: string[]) => void;
     setComponentAll: (value: ComponentData.TComponentData[]) => void;
     onClick?: (actionType: ActionItemType) => void;
+    actionFrom: 'layer' | 'screen';
   } & Partial<DropDownProps>,
 ) => {
   const {
@@ -37,6 +38,7 @@ const ContextMenu = (
     clipboard,
     setClipboard,
     onClick,
+    actionFrom,
     ...nextProps
   } = props;
   const { id } = value;
@@ -79,6 +81,7 @@ const ContextMenu = (
                 onClick={hiddenMenu.bind(null, type)}
                 clipboard={clipboard}
                 setClipboard={setClipboard}
+                actionFrom={actionFrom}
               />
             ),
             key: type,
@@ -96,6 +99,7 @@ const ContextMenu = (
     components,
     clipboard,
     setClipboard,
+    actionFrom,
   ]);
 
   useEffect(() => {

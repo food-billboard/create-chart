@@ -9,4 +9,5 @@ export interface CommonActionType {
   setComponent: ComponentMethod.SetComponentMethod;
   setComponentAll: (value: ComponentData.TComponentData[]) => void;
   onClick: () => void;
+  actionFrom: 'screen' | 'layer';
 }

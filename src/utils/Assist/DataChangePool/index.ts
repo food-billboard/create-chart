@@ -1,7 +1,7 @@
 import { get, set } from 'lodash';
 import { getDvaApp } from 'umi';
 import { useIdPathMap } from '@/hooks';
-import ComponentUtil from '../Component';
+import ComponentUtil, { getDvaGlobalModelData } from '../Component';
 
 class DataChangePool {
   multiSetComponentUtil: {
@@ -81,9 +81,7 @@ class DataChangePool {
   // ? 技术问题，多选拖拽调整大小专用 (⊙_⊙)?
   multiSetComponent = (value: any) => {
     if (!~this.multiSetComponentUtil.total) {
-      const app = getDvaApp();
-      const { state } =
-        app._models.find((item: any) => item.namespace === 'global') || {};
+      const state = getDvaGlobalModelData();
       const select: string[] = state?.select || [];
 
       const idPathMap = useIdPathMap();

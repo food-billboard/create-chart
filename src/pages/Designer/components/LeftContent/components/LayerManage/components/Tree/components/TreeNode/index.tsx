@@ -89,7 +89,11 @@ const ListItem = ({
     if (isLeaf) {
       return (
         <div
-          className={classnames(styles['design-page-layer-item-icon'], 'm-r-8')}
+          className={classnames(
+            styles['design-page-layer-item-icon'],
+            styles['design-page-layer-item-icon-leaf'],
+            'm-r-8',
+          )}
         >
           <img src={icon} />
         </div>
@@ -122,6 +126,7 @@ const ListItem = ({
       value={value}
       path={path}
       onClick={handleEditName}
+      actionFrom="layer"
     >
       <div
         className={classnames(

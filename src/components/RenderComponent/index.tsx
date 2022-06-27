@@ -159,6 +159,7 @@ const RenderComponent = memo(
         actionIgnore={['undo', 'redo', 'edit_name']}
         path={path}
         disabled={pointerDisabled}
+        actionFrom="screen"
       >
         <ComponentWrapper
           type={type}

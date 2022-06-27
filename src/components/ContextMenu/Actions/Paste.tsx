@@ -127,6 +127,99 @@ export const paste = ({
   setSelect(newSelect);
 };
 
+// 只用在了这里和复制
+export const pasteClick = ({
+  currentComponents,
+  id,
+  setClipboard,
+  clipboard,
+  components,
+  onClick,
+  setSelect,
+  path,
+  setComponent,
+  type,
+  parent,
+  value,
+  actionFrom,
+}: {
+  id: string;
+  type: any;
+  parent?: string;
+  currentComponents: ComponentData.TComponentData[];
+} & Pick<
+  CommonActionType,
+  | 'setClipboard'
+  | 'clipboard'
+  | 'components'
+  | 'onClick'
+  | 'setSelect'
+  | 'path'
+  | 'setComponent'
+  | 'value'
+  | 'actionFrom'
+>) => {
+  const parentPath = getParentPath(path);
+  const parentComponent = getParentComponent(components, path);
+  const superParentComponent = getParentComponent(components, parentPath);
+  let parentId: string | undefined = '';
+  let realComponents = [...components];
+  let isGroupComponentClick = false;
+  let isOuterClick = actionFrom === 'screen';
+
+  if (!isOuterClick) {
+    isGroupComponentClick = isGroupComponentMethod({ type });
+
+    // click croup component or component
+    let targetParentComponents;
+    if (isGroupComponentClick) {
+      targetParentComponents = currentComponents;
+      parentId = id;
+    } else {
+      targetParentComponents = parentComponent;
+      parentId = parent;
+    }
+
+    realComponents = targetParentComponents || components;
+  }
+
+  // 如果是大屏中点击就是最外层的点击
+  isOuterClick = isOuterClick || (!isGroupComponentClick && !parentComponent);
+
+  paste({
+    setSelect,
+    components: realComponents,
+    setComponent: (newComponents, generateComponents) => {
+      // group component or inner component
+      if (!isOuterClick) {
+        setComponent(
+          GroupUtil.addComponentsToGroup(
+            components,
+            superParentComponent,
+            generateComponents,
+          ),
+        );
+      }
+      // outer component
+      else {
+        setComponent(
+          generateComponents.map((item) => {
+            return {
+              value: item,
+              id: item.id,
+              action: 'add',
+            };
+          }),
+        );
+      }
+    },
+    clipboard,
+    sourceComponents: components,
+    parent: parentId,
+  });
+  onClick?.();
+};
+
 const PasteAction = (props: CommonActionType) => {
   const {
     onClick,
@@ -138,6 +231,7 @@ const PasteAction = (props: CommonActionType) => {
     clipboard,
     path,
     setComponent,
+    actionFrom,
   } = props;
   const { parent, type, components: currentComponents, id } = value;
 
@@ -154,57 +248,21 @@ const PasteAction = (props: CommonActionType) => {
   const handleClick = useCallback(
     (e: any) => {
       e?.stopPropagation();
-      const parentPath = getParentPath(path);
-      const parentComponent = getParentComponent(components, path);
-      const superParentComponent = getParentComponent(components, parentPath);
-      let parentId: string | undefined = '';
-
-      const isGroupComponentClick = isGroupComponent();
-
-      // click croup component or component
-      let targetParentComponents;
-      if (isGroupComponentClick) {
-        targetParentComponents = currentComponents;
-        parentId = id;
-      } else {
-        targetParentComponents = parentComponent;
-        parentId = parent;
-      }
-
-      const realComponents = targetParentComponents || components;
-
-      paste({
-        setSelect,
-        components: realComponents,
-        setComponent: (newComponents, generateComponents) => {
-          // group component or inner component
-          if (isGroupComponentClick || parentComponent) {
-            setComponent(
-              GroupUtil.addComponentsToGroup(
-                components,
-                superParentComponent,
-                generateComponents,
-              ),
-            );
-          }
-          // outer component
-          else {
-            setComponent(
-              generateComponents.map((item) => {
-                return {
-                  value: item,
-                  id: item.id,
-                  action: 'add',
-                };
-              }),
-            );
-          }
-        },
+      return pasteClick({
+        currentComponents,
+        id,
+        setClipboard,
         clipboard,
-        sourceComponents: components,
-        parent: parentId,
+        components,
+        onClick,
+        setSelect,
+        path,
+        setComponent,
+        type,
+        parent,
+        value,
+        actionFrom,
       });
-      onClick?.();
     },
     [
       currentComponents,
@@ -219,6 +277,7 @@ const PasteAction = (props: CommonActionType) => {
       type,
       parent,
       value,
+      actionFrom,
     ],
   );
 

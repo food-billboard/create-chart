@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
-import { CopyOutlined } from '@ant-design/icons';
-import DataChangePool from '@/utils/Assist/DataChangePool';
-import { paste, useIsValidPasteSelect } from './Paste';
+import { AppstoreAddOutlined } from '@ant-design/icons';
+import { paste, useIsValidPasteSelect, pasteClick } from './Paste';
 import { CommonActionType } from './type';
 
 export const copy = (pasteParams: {
@@ -19,8 +18,18 @@ export const copy = (pasteParams: {
 };
 
 const CopyAction = (props: CommonActionType) => {
-  const { select, setClipboard, onClick, value, components, setSelect } = props;
-  const { parent } = value;
+  const {
+    select,
+    setClipboard,
+    onClick,
+    value,
+    components,
+    setSelect,
+    actionFrom,
+    path,
+    setComponent,
+  } = props;
+  const { parent, id, components: currentComponents, type } = value;
 
   const isValidPasteSelect = useIsValidPasteSelect({
     select,
@@ -32,27 +41,33 @@ const CopyAction = (props: CommonActionType) => {
     (e: any) => {
       e?.stopPropagation();
 
-      copy({
-        components,
-        setComponent: (_, newComponents) => {
-          DataChangePool.setComponent(
-            newComponents.map((item) => {
-              return {
-                value: item,
-                id: item.id,
-                action: 'add',
-              };
-            }),
-          );
-        },
-        setSelect,
+      return pasteClick({
+        currentComponents,
+        id,
+        setClipboard,
         clipboard: select,
-        sourceComponents: components,
+        components,
+        onClick,
+        setSelect,
+        path,
+        setComponent,
+        type,
+        parent,
+        value,
+        actionFrom,
       });
-
-      onClick?.();
     },
-    [setClipboard, select, onClick, setSelect, components],
+    [
+      setClipboard,
+      select,
+      onClick,
+      setSelect,
+      components,
+      id,
+      path,
+      setComponent,
+      type,
+    ],
   );
 
   return (
@@ -63,7 +78,7 @@ const CopyAction = (props: CommonActionType) => {
         display: isValidPasteSelect ? 'block' : 'none',
       }}
     >
-      <CopyOutlined className="m-r-4" />
+      <AppstoreAddOutlined className="m-r-4" />
       复制
     </div>
   );

@@ -2,15 +2,14 @@ import { useCallback, useMemo } from 'react';
 import { connect } from 'dva';
 import { get } from 'lodash';
 import { getComponent, getPath } from '@/utils/Assist/Component';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import AngleSelect from '../AngleSelect';
 import InputNumber from '../InputNumber';
 import ConfigList from '../Structure/ConfigList';
 import Opacity from '../Opacity';
 import HalfForm from '../Structure/HalfForm';
-import DataChangePool from '@/utils/Assist/DataChangePool';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
-import FullForm from '../Structure/FullForm';
 
 const { Item } = ConfigList;
 

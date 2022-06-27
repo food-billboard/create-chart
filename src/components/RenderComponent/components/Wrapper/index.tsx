@@ -61,8 +61,6 @@ const ComponentWrapper = (
     setComponent,
     onDragStop: propsOnDragStopMethod,
     dragMethod,
-    size,
-    componentId,
     onDrag: propsOnDrag,
     propsOnResizeStop,
     onResizeStop: propsOnResizeStopMethod,

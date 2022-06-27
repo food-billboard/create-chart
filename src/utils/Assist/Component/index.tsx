@@ -157,19 +157,23 @@ export const isComponentSelect = (id: string, select: string[]) => {
 };
 
 // 获取dva的global
-function getDvaGlobalModelData() {
+export function getDvaGlobalModelData() {
   const app = getDvaApp();
-  const { state } =
-    app._models.find((item: any) => item.namespace === 'global') || {};
-  return state;
+  return app._store.getState().global;
 }
 
 // 组件的父级组件id
-export const getParentComponentIds = (id: string) => {
-  const app = getDvaApp();
-  const { state } =
-    app._models.find((item: any) => item.namespace === 'global') || {};
-  const components = state?.components || [];
+export const getParentComponentIds = (
+  id: string,
+  sourceComponents?: ComponentData.TComponentData[],
+) => {
+  let components;
+  if (sourceComponents) {
+    components = sourceComponents;
+  } else {
+    const state = getDvaGlobalModelData();
+    components = state?.components || [];
+  }
   const idPathMap = useIdPathMap();
 
   let parentIds: string[] = [];
@@ -188,12 +192,12 @@ export const getParentComponentIds = (id: string) => {
 // 获取顶级组件
 export const getTopParentComponent = (
   id: string,
-  sourceComponents?: ComponentData.TComponentData[],
+  sorceComponents?: ComponentData.TComponentData[],
 ) => {
+  const state = getDvaGlobalModelData();
+  const components = sorceComponents || state.components;
   const parentIds = getParentComponentIds(id);
   let [topParentId] = parentIds.slice(-1);
-  const state = getDvaGlobalModelData();
-  const components = sourceComponents || state?.components;
   const idPathMap = useIdPathMap();
   if (!topParentId) topParentId = id;
   return get(components, idPathMap[topParentId]?.path || '');
@@ -201,11 +205,10 @@ export const getTopParentComponent = (
 
 // 组件所有包含的id
 export const getComponentIds = (id: string) => {
-  const app = getDvaApp();
-  const { state } =
-    app._models.find((item: any) => item.namespace === 'global') || {};
-  const components = state?.components || [];
   const idPathMap = useIdPathMap();
+
+  const state = getDvaGlobalModelData();
+  const components = state.components;
 
   const path = idPathMap[id].path;
   const component = get(components, path);
