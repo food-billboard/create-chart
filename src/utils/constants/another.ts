@@ -5,7 +5,7 @@ const MAX_LAYER_WIDTH = 500;
 
 const MIN_LAYER_WIDTH = 250;
 
-const GUIDE_LINE_PADDING = 4;
+const GUIDE_LINE_PADDING = 2;
 
 // 组件可被缩小的最小尺寸
 const MIN_COMPONENT_WIDTH = 20;

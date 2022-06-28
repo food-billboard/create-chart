@@ -1,15 +1,19 @@
 .ruler-guide-line-horizontal {
   border-width: 0;
-  border-top: 1px dashed rgb(255, 128, 0);
+  border-top-width: 1px;
+  width: 100%;
 }
 .ruler-guide-line-vertical {
   border-width: 0;
-  border-left: 1px dashed rgb(255, 128, 0);
+  border-left-width: 1px;
+  height: 100%;
 }
 .ruler-guide-line-horizontal,
 .ruler-guide-line-vertical {
-  width: 100%;
-  height: 100%;
+  // width: 100%;
+  // height: 100%;
+  position: absolute;
+  // left: 0;
 }
 .ruler-guide-line-wrapper-horizontal,
 .ruler-guide-line-wrapper-vertical {
@@ -25,10 +29,10 @@
   cursor: ew-resize;
 }
 .ruler-guide-line-flag-horizontal {
-  left: 30px;
+  left: 60px;
 }
 .ruler-guide-line-flag-vertical {
-  top: 30px;
+  top: 60px;
 }
 .ruler-guide-line-flag-horizontal,
 .ruler-guide-line-flag-vertical {

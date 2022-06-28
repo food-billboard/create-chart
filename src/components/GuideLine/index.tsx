@@ -60,7 +60,7 @@ class GuideLine extends Component<
       scale,
     } = this.props;
     if (!this.flag || disabled) return;
-    if (this.times <= 5) {
+    if (this.times <= 2) {
       this.times++;
       return;
     }
@@ -119,13 +119,15 @@ class GuideLine extends Component<
     return {
       ...style,
       width: size.width,
-      top: (style?.top * scale || 0) + 30 - GUIDE_LINE_PADDING,
+      // top: (style?.top * scale || 0) + 30 - GUIDE_LINE_PADDING,
+      // 为了帮助辅助线对齐，多减掉一个padding
+      top: (style?.top * scale || 0) + 30 - GUIDE_LINE_PADDING * 2,
       padding: `${GUIDE_LINE_PADDING}px 0`,
     };
   }
 
   render() {
-    const { type, lineStyle = 'dashed', className, scale } = this.props;
+    const { type, lineStyle = 'dashed', className, scale, style } = this.props;
     const { left, top } = this.guideLineStyle;
 
     return (
@@ -147,16 +149,23 @@ class GuideLine extends Component<
             ),
           }}
         >
-          {Math.ceil(((left ?? top) - 30 + GUIDE_LINE_PADDING) / scale) || 0}
+          {Math.round(style.left ?? style.top)}
+          {/* {Math.round(((left ?? top) - 30 + GUIDE_LINE_PADDING) / scale) || 0} */}
         </div>
         <div
           className={styles[`ruler-guide-line-${type}`]}
-          style={{
-            borderStyle: lineStyle,
-            borderColor: getRgbaString(
-              ThemeUtil.generateNextColor4CurrentTheme(0),
-            ),
-          }}
+          style={merge(
+            {},
+            {
+              borderStyle: lineStyle,
+              borderColor: getRgbaString(
+                ThemeUtil.generateNextColor4CurrentTheme(0),
+              ),
+            },
+            type === 'horizontal'
+              ? { top: GUIDE_LINE_PADDING * 2 }
+              : { left: GUIDE_LINE_PADDING },
+          )}
         ></div>
       </div>
     );
