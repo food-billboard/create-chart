@@ -25,6 +25,7 @@ const ToolBar = (props: TCommonProps) => {
         'normal-background',
         'pos-sti',
         'page-design-left-tool-bar',
+        'zero-scrollbar',
       )}
     >
       <UndoIcon {...nextProps} />

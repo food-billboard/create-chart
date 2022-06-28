@@ -14,6 +14,7 @@ const Panel = (props: { style?: CSSProperties; className?: string }) => {
       className={classnames(
         styles['design-panel-content'],
         'dis-flex-column',
+        'zero-scrollbar',
         className,
       )}
       style={{

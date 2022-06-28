@@ -46,6 +46,7 @@ const ComponentTypeList = (props: {
           onClick={handleClick}
           className={classnames(
             styles['page-design-left-component-list-content'],
+            'zero-scrollbar',
             menuClass,
           )}
           selectedKeys={[activeComponentType]}
