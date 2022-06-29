@@ -48,7 +48,15 @@ export default [
             path: '/model-preview',
             component: '@/pages/Previewer',
           },
+          {
+            redirect: '/',
+            component: '@/pages/ScreenList',
+          },
         ],
+      },
+      {
+        redirect: '/',
+        component: '@/pages/ScreenList',
       },
     ],
   },

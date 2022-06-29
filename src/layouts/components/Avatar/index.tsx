@@ -25,7 +25,7 @@ const Avatar = (props: { logout: () => void; userInfo: any }) => {
   }, [handleLogout]);
 
   return (
-    <Dropdown overlay={menu} placement="bottomCenter">
+    <Dropdown overlay={menu} placement="bottom">
       <AntAvatar src={avatar} icon={<UserOutlined />}>
         {username}
       </AntAvatar>
