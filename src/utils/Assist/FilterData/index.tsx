@@ -206,7 +206,13 @@ class FilterData {
     } else if (type === 'mock') {
       realMethod = 'post';
       realUrl = MOCK_REQUEST_URL;
-      realBody = mock;
+      realBody = {
+        ...mock,
+        random: mock.random ? '1' : '0',
+      };
+      // 需要的字段不完整时，不需要调用接口
+      if (!mock.fields.filter((item) => !!item.key && !!item.dataKind).length)
+        return [];
     }
 
     try {

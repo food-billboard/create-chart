@@ -2,14 +2,17 @@ import { useCallback, useMemo } from 'react';
 import { merge } from 'lodash';
 import { connect } from 'dva';
 import { Button, Select } from 'antd';
+import { nanoid } from 'nanoid';
+import { DeleteOutlined } from '@ant-design/icons';
 import Input from '@/components/ChartComponents/Common/Input';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import Checkbox from '@/components/ChartComponents/Common/Checkbox';
 import { ConnectState } from '@/models/connect';
+import MapTable from '@/components/ChartComponents/Common/MapTable';
+import { mergeWithoutArray } from '@/utils';
 import SubTitle, { SubForm } from '../../SubTitle';
 import { ApiConfigProps } from '../ApiConfig';
-import MapTable from '@/components/ChartComponents/Common/MapTable';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 export type MockConfigProps = ApiConfigProps;
@@ -37,6 +40,14 @@ const _FieldsConfig = ({
     [onChange, value],
   );
 
+  const handleDelete = useCallback(
+    (record: any) => {
+      const newValue = value.filter((item) => item.id !== record.id);
+      onChange(newValue);
+    },
+    [value, onChange],
+  );
+
   const columns = useMemo(() => {
     return [
       {
@@ -49,31 +60,6 @@ const _FieldsConfig = ({
               className="w-100"
               value={value}
               onChange={onValueChange.bind(null, record, index, 'key')}
-            />
-          );
-        },
-      },
-      {
-        key: 'type',
-        title: '数据格式',
-        dataIndex: 'type',
-        width: 140,
-        render: (value: string, record: any, index: number) => {
-          return (
-            <Select
-              className="w-100"
-              value={value}
-              options={[
-                {
-                  label: '数字',
-                  value: 'number',
-                },
-                {
-                  label: '字符串',
-                  value: 'string',
-                },
-              ]}
-              onChange={onValueChange.bind(null, record, index, 'type')}
             />
           );
         },
@@ -99,26 +85,51 @@ const _FieldsConfig = ({
           );
         },
       },
+      {
+        key: 'description',
+        title: '描述',
+        dataIndex: 'description',
+        render: (_: string, record: any) => {
+          const { dataKind } = record;
+          const target = mockKindList.find((item) => item.id === dataKind);
+          return target?.description || '无描述内容';
+        },
+      },
+      {
+        key: 'operation',
+        title: '操作',
+        dataIndex: 'operation',
+        render: (_: string, record: any) => {
+          return (
+            <Button
+              type={'link'}
+              danger
+              icon={<DeleteOutlined />}
+              onClick={handleDelete.bind(null, record)}
+            />
+          );
+        },
+      },
     ];
-  }, [onValueChange, mockKindList]);
+  }, [onValueChange, mockKindList, handleDelete]);
 
   const handleAdd = useCallback(() => {
     onChange([
       ...value,
       {
         key: `key_${Date.now()}`,
-        type: 'string',
         dataKind: '',
+        id: nanoid(),
       },
     ]);
-  }, []);
+  }, [value]);
 
   return (
     <>
       <Button type="primary" onClick={handleAdd} className="m-t-8">
         新增字段
       </Button>
-      <MapTable columns={columns} rowKey={'key'} dataSource={value} />
+      <MapTable columns={columns} rowKey={'id'} dataSource={value} />
     </>
   );
 };
@@ -160,7 +171,7 @@ const MockConfig = (props: MockConfigProps) => {
 
   const onChange = useCallback(
     (newValue) => {
-      reRequest(merge({}, value, newValue));
+      reRequest(mergeWithoutArray({}, value, newValue));
     },
     [propsOnChange, reRequest, value],
   );

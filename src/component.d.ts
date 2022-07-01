@@ -35,8 +35,8 @@ declare namespace ComponentData {
         total: number;
         fields: {
           key: string;
-          type: 'string' | 'number';
           dataKind: string;
+          id: string;
         }[];
       };
       frequency: {
