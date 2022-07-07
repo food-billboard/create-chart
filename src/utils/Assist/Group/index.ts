@@ -589,13 +589,13 @@ class GroupUtil {
         parent,
       },
       (parentComponent) => {
+        const targetIndex = (parentComponent || components).findIndex((item) =>
+          select.includes(item.id),
+        );
         // generate the list
-        return [
-          ...(parentComponent || components).filter(
-            (item) => !select.includes(item.id),
-          ),
-          ...updateComponents.components,
-        ];
+        const newComponents = [...(parentComponent || components)];
+        newComponents.splice(targetIndex, 1, ...updateComponents.components);
+        return newComponents;
       },
     );
   };
