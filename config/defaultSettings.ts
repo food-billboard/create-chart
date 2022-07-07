@@ -16,10 +16,9 @@ const proSettings: DefaultSettings = {
   menu: {
     locale: true,
   },
-  title: '数据管理后台',
+  title: '数据可视化大屏',
   pwa: false,
-  // logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   iconfontUrl: '',
 };
 
-export default proSettings
+export default proSettings;

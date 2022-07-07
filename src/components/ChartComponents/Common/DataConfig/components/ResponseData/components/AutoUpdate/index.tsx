@@ -4,8 +4,9 @@ import classnames from 'classnames';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import styles from './index.less';
 
-export type TValue =
-  ComponentData.TComponentApiDataConfig['request']['frequency'];
+export type TValue = Partial<
+  ComponentData.TComponentApiDataConfig['request']['frequency']
+>;
 
 const AutoUpdate = (props: {
   value?: TValue;
@@ -22,7 +23,6 @@ const AutoUpdate = (props: {
   const onCheckChange = useCallback(
     (e: any) => {
       onChange?.({
-        ...value,
         show: !!e.target.checked,
       });
     },
@@ -33,7 +33,6 @@ const AutoUpdate = (props: {
     (value) => {
       const realValue = parseFloat(value) || 1;
       onChange?.({
-        ...value,
         value: realValue,
       });
     },
