@@ -69,6 +69,7 @@ import DatePicker from '../../../public/components/date-picker.jpg';
 import PolarStackBar from '../../../public/components/polar-stack-bar.png';
 import Rate from '../../../public/components/rate.jpg';
 import StateList from '../../../public/components/state-list.jpg';
+import Tag from '../../../public/components/tag.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -428,7 +429,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'TAG',
             title: '标签',
-            icon: Icon,
+            icon: Tag,
             description: '',
           },
         ],
