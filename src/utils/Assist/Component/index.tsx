@@ -236,4 +236,10 @@ export const getComponentIds = (id: string) => {
   return componentIdResult;
 };
 
+export function isComponentParentEqual(targetA?: string, targetB?: string) {
+  if (typeof targetA === 'string' && typeof targetB === 'string')
+    return targetA === targetB;
+  return !!targetA === !!targetB;
+}
+
 export default componentUtil;

@@ -194,7 +194,6 @@ const TreeFunction = (props: TreeProps) => {
     (info: any) => {
       const { node, dragNode, dropToGap, dropPosition } = dealDropParams(info);
       if (!canDrop(node.key)) return;
-
       DataChangePool.setComponent({
         action: 'drag',
         value: {},

@@ -4,7 +4,7 @@ import { useComponentPath, useIdPathMap } from '@/hooks';
 import { IGlobalModelState } from '@/models/connect';
 import GroupUtil from '../Group';
 import { mergeWithoutArray } from '../../tool';
-import { isGroupComponent } from '.';
+import { isGroupComponent, isComponentParentEqual } from '.';
 
 // get parentPath
 export const getParentPath = (path: string) => {
@@ -47,6 +47,15 @@ class ComponentUtil {
       : components;
     if (extra && !isNil(extra.index)) {
       targetAddParentComponents.splice(extra.index, 0, newValue);
+    } else if (extra && extra.nearComponent) {
+      const targetIndex = targetAddParentComponents.findIndex(
+        (item: any) => item.id === extra.nearComponent,
+      );
+      if (!!~targetIndex) {
+        targetAddParentComponents.splice(targetIndex + 1, 0, newValue);
+      } else {
+        targetAddParentComponents.push(newValue);
+      }
     } else {
       targetAddParentComponents.push(newValue);
     }
@@ -234,7 +243,7 @@ class ComponentUtil {
     } = extra;
     const idPathMap = useIdPathMap();
 
-    const originDropKey = node.key;
+    let originDropKey = node.key;
     let dropKey = originDropKey;
     let dropIndex = -1;
     const dragKey = dragNode.key;
@@ -263,7 +272,8 @@ class ComponentUtil {
     const data = [...components];
 
     // Find dragObject
-    let dragObj!: ComponentData.TComponentData;
+    const dragPath = idPathMap[dragKey]?.path;
+    let dragObj: ComponentData.TComponentData = get(components, dragPath);
 
     if (!dropToGap) {
       // Drop on the content
@@ -299,7 +309,14 @@ class ComponentUtil {
         dropKey = item.parent;
         // 组
         if (isGroupComponent(item)) {
-          dropIndex = dropPosition;
+          // 放在了组的最下面，其实就是放在了当前组的外面
+          if (dropPosition === 1) {
+            dropIndex =
+              infoDropPosition -
+              (isComponentParentEqual(dropKey, dragObj.parent) ? 2 : 0);
+          } else {
+            dropIndex = dropPosition;
+          }
         }
         // 组内组件 | 最外层组件
         else {
@@ -512,8 +529,15 @@ class ComponentUtil {
         }) as any),
       );
     } else {
+      let nearComponentId = dropComponent.id;
       realUpdateResult.push(
         ...((coverUpdateResult?.value.components || []).map((item, index) => {
+          const nearComponent = nearComponentId;
+
+          if (item?.id !== originDropKey) {
+            nearComponentId = item!.id;
+          }
+
           return {
             action: item?.id === originDropKey ? 'update' : ('add' as any),
             id: item?.id,
@@ -532,19 +556,39 @@ class ComponentUtil {
             }),
             path: getParentPath(dropPath),
             extra: {
-              index:
-                dropIndex +
-                index +
-                (dropComponentDirectChildrenIds.includes(item?.id as string)
-                  ? 0
-                  : 1),
+              nearComponent,
             },
           };
         }) as any),
       );
     }
 
-    return realUpdateResult;
+    const { addAction, deleteAction, anotherAction } = realUpdateResult.reduce<{
+      deleteAction: ComponentMethod.SetComponentMethodParamsData[];
+      addAction: ComponentMethod.SetComponentMethodParamsData[];
+      anotherAction: ComponentMethod.SetComponentMethodParamsData[];
+    }>(
+      (acc, cur) => {
+        if (cur.action === 'delete') {
+          acc.deleteAction.push(cur);
+        } else if (cur.action === 'add') {
+          acc.addAction.push(cur);
+        } else {
+          acc.anotherAction.push(cur);
+        }
+
+        return acc;
+      },
+      {
+        deleteAction: [],
+        addAction: [],
+        anotherAction: [],
+      },
+    );
+
+    const sortActionResult = [...anotherAction, ...deleteAction, ...addAction];
+
+    return sortActionResult;
   }
 
   isAddParamsValid = (value: ComponentMethod.SetComponentMethodParamsData) => {
