@@ -2,7 +2,7 @@
   "name": "create-chart",
   "description": "数据可视化大屏设计器",
   "author": "Daniel GLF",
-  "version": "1.5",
+  "version": "1.6",
   "private": true,
   "scripts": {
     "start": "umi dev",
