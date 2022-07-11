@@ -5,6 +5,10 @@ export default [
     component: '@/layouts/index',
     routes: [
       {
+        path: '/',
+        component: '@/pages/Home',
+      },
+      {
         path: '/register',
         component: '@/pages/Register',
       },
@@ -25,7 +29,7 @@ export default [
         component: '@/layouts/AuthLayout/index',
         routes: [
           {
-            path: '/',
+            path: '/screen',
             component: '@/pages/ScreenList',
           },
           {
@@ -50,13 +54,13 @@ export default [
           },
           {
             redirect: '/',
-            component: '@/pages/ScreenList',
+            component: '@/pages/Home',
           },
         ],
       },
       {
         redirect: '/',
-        component: '@/pages/ScreenList',
+        component: '@/pages/Home',
       },
     ],
   },

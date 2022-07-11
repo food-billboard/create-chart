@@ -57,6 +57,7 @@
     "mustache": "^4.2.0",
     "nanoid": "^3.1.30",
     "nprogress": "^0.2.0",
+    "parallax-js": "^3.1.0",
     "query-string": "^7.1.1",
     "react": "16.14.0",
     "react-color": "^2.19.3",

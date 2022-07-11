@@ -17,7 +17,7 @@ const { Header, Content, Footer } = AntLayout;
 
 const PATH_MAP: any = {
   '/model': 'model',
-  '/list': 'home',
+  '/screen': 'screen',
 };
 
 const LoginWrapper = (props: {
@@ -68,7 +68,7 @@ const Layout = (props: { children?: ReactNode; pathname: string }) => {
   const { pathname } = props;
 
   const [activeKey, setActiveKey] = useState<string>(() => {
-    return PATH_MAP[pathname] || 'home';
+    return PATH_MAP[pathname] || 'screen';
   });
 
   const handleClick = useCallback(
@@ -80,8 +80,8 @@ const Layout = (props: { children?: ReactNode; pathname: string }) => {
         case 'model':
           path = '/model';
           break;
-        case 'home':
-          path = '/';
+        case 'screen':
+          path = '/screen';
           break;
       }
       history.push(path);
@@ -100,8 +100,8 @@ const Layout = (props: { children?: ReactNode; pathname: string }) => {
           onClick={handleClick}
           items={[
             {
-              label: '首页',
-              key: 'home',
+              label: '大屏',
+              key: 'screen',
             },
             {
               label: '模板',
@@ -157,7 +157,7 @@ const GlobalLayout = (props: any) => {
     );
 
   // 分享页不用管登录
-  if (pathname === '/share') return children;
+  if (pathname === '/share' || pathname === '/') return children;
   if (
     pathname.startsWith('/login') ||
     pathname.startsWith('/register') ||
@@ -171,7 +171,7 @@ const GlobalLayout = (props: any) => {
     );
   }
 
-  if (pathname === '/list' || pathname === '/model' || pathname === '/') {
+  if (pathname === '/screen' || pathname === '/model') {
     return (
       <Layout pathname={pathname}>
         {children}
@@ -206,7 +206,7 @@ const DocumentTitleSetWrapper = (props: any) => {
       title = screenName;
     } else if (pathname.startsWith('/model')) {
       title = '大屏模板';
-    } else if (pathname === '/') {
+    } else if (pathname === '/screen') {
       title = '大屏列表';
     }
     document.title = title;
