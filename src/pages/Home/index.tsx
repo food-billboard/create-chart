@@ -1,10 +1,19 @@
-import { useEffect, useRef, useMemo, useState, CSSProperties } from 'react';
+import {
+  useEffect,
+  useRef,
+  useMemo,
+  useState,
+  CSSProperties,
+  useCallback,
+} from 'react';
 import classnames from 'classnames';
 // @ts-ignore
 import Parallax from 'parallax-js';
+import { history } from 'umi';
 import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import ColorSelect from '@/components/ColorSelect';
 import Background from './components/Background';
+import AnimationTitle from './components/AnimationTitle';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
@@ -103,6 +112,7 @@ const Home = () => {
             <li
               style={{
                 backgroundColor: 'green',
+                // backgroundImage: `url(${item})`
               }}
               key={item}
             ></li>
@@ -120,6 +130,25 @@ const Home = () => {
             <li
               style={{
                 backgroundColor: 'green',
+                // backgroundImage: `url(${item})`
+              }}
+              key={item}
+            ></li>
+          );
+        })}
+      </ul>
+    );
+  }, []);
+
+  const chartLineThreeList = useMemo(() => {
+    return (
+      <ul>
+        {[1, 2, 3, 4].map((item) => {
+          return (
+            <li
+              style={{
+                backgroundColor: 'green',
+                // backgroundImage: `url(${item})`
               }}
               key={item}
             ></li>
@@ -153,6 +182,10 @@ const Home = () => {
     );
   }, []);
 
+  const handleClick = useCallback(() => {
+    history.push('/list');
+  }, []);
+
   useEffect(() => {
     parallaxRef.current = new Parallax(
       document.querySelector('#home-page-container'),
@@ -163,62 +196,71 @@ const Home = () => {
   }, []);
 
   return (
-    <div className={styles['home-page']} id="home-page-container">
-      <div
-        className={classnames(
-          'home-page-layer',
-          styles['home-page-background'],
-        )}
-        data-depth="0.1"
-      >
-        <div>
-          <Background />
+    <div className={styles['home-page']} onClick={handleClick}>
+      <div id="home-page-container">
+        <div
+          className={classnames(
+            'home-page-layer',
+            styles['home-page-background'],
+          )}
+          data-depth="0.7"
+          data-invert-x="true"
+          data-invert-y="true"
+        >
+          <div>
+            <Background />
+          </div>
         </div>
-      </div>
-      <div
-        className={classnames('home-page-layer', styles['home-page-title'])}
-        data-depth="0.15"
-      >
-        <h1>
-          {'数据可视化大屏'.split('').map((item) => {
-            return <span key={item}>{/* {item} */}</span>;
-          })}
-        </h1>
-      </div>
-      <div
-        className={classnames('home-page-layer', styles['home-page-border'])}
-        data-depth="0.2"
-      >
-        <div>
-          <div></div>
+        <div
+          className={classnames('home-page-layer', styles['home-page-title'])}
+          data-depth="0.15"
+        >
+          <AnimationTitle />
         </div>
-      </div>
-      <div
-        className={classnames('home-page-layer', styles['home-page-chart'])}
-        data-depth="0.25"
-        data-invert-x="true"
-        data-invert-y="true"
-      >
-        {chartLineOneList}
-      </div>
-      <div
-        className={classnames(
-          'home-page-layer',
-          styles['home-page-chart-line-two'],
-        )}
-        data-depth="0.3"
-        data-invert-x="true"
-        data-invert-y="true"
-      >
-        {chartLineTwoList}
-      </div>
-      <div
-        className={classnames('home-page-layer', styles['home-page-icon'])}
-        data-depth="0.5"
-        data-invert-x="true"
-        data-invert-y="true"
-      >
-        {iconChartList}
+        <div
+          className={classnames('home-page-layer', styles['home-page-border'])}
+          data-depth="0.2"
+        >
+          <div>
+            <div></div>
+          </div>
+        </div>
+        <div
+          className={classnames('home-page-layer', styles['home-page-chart'])}
+          data-depth="0.25"
+          data-invert-x="true"
+          data-invert-y="true"
+        >
+          {chartLineOneList}
+        </div>
+        <div
+          className={classnames(
+            'home-page-layer',
+            styles['home-page-chart-line-two'],
+          )}
+          data-depth="0.3"
+          data-invert-x="true"
+          data-invert-y="true"
+        >
+          {chartLineTwoList}
+        </div>
+        <div
+          className={classnames('home-page-layer', styles['home-page-icon'])}
+          data-depth="0.35"
+          data-invert-x="true"
+          data-invert-y="true"
+        >
+          {iconChartList}
+        </div>
+        <div
+          className={classnames(
+            'home-page-layer',
+            styles['home-page-chart-line-three'],
+          )}
+          data-depth="0.4"
+        >
+          {chartLineThreeList}
+        </div>
       </div>
     </div>
   );

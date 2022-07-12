@@ -9,26 +9,15 @@
   }
 }
 
-@keyframes shake-animation {
-  0% {
-    transform: translateY(-1em);
-  }
-  25% {
-    transform: translateY(0em);
-  }
-  50% {
-    transform: translateY(1em);
-  }
-  100% {
-    transform: translateY(0em);
+@keyframes typing {
+  from {
+    width: 0;
   }
 }
 
-@rotate: 0deg;
-
-@keyframes rotate-animation {
-  to {
-    @rotate: 360deg;
+@keyframes cursor-blink {
+  50% {
+    border-color: transparent;
   }
 }
 
@@ -36,27 +25,23 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-
+  cursor: pointer;
   &-title {
     width: 100%;
     height: 60px;
     text-align: center;
     margin-top: 14vh;
-    & h1 {
-      color: @primary-color;
-      letter-spacing: 1em;
-      font-size: 3em;
-      & span {
-        transform-origin: center center;
-      }
-      & span:nth-of-type(2n) {
-        animation: shake-animation 1s infinite alternate
-          cubic-bezier(0.455, 0.03, 0.515, 0.955);
-      }
-      & span:nth-of-type(2n + 1) {
-        animation: shake-animation 1s infinite alternate
-          cubic-bezier(0.455, 0.03, 0.515, 0.955);
-      }
+  }
+  &-chart,
+  &-chart-line-two,
+  &-chart-line-three {
+    & ul {
+      position: relative;
+    }
+    & ul li {
+      background-repeat: no-repeat;
+      background-size: auto;
+      background-position: center center;
     }
   }
   &-chart {
@@ -64,9 +49,6 @@
     width: 80vw;
     height: 40vh;
     margin-left: 10vw;
-    & ul {
-      position: relative;
-    }
     & ul li {
       position: absolute;
       &:nth-of-type(1) {
@@ -94,9 +76,6 @@
     margin-left: 10vw;
     width: 80vw;
     height: 19vh;
-    & ul {
-      position: relative;
-    }
     & ul li {
       position: absolute;
       &:nth-of-type(1) {
@@ -128,6 +107,35 @@
       height: 5vh;
       text-align: center;
       font-size: ~'min(13.3vw, 5vh)';
+    }
+  }
+  &-chart-line-three {
+    margin-top: calc(65vh + 60px);
+    margin-left: 10vw;
+    width: 80vw;
+    height: 15vh;
+    & ul li {
+      position: absolute;
+      &:nth-of-type(1) {
+        left: 4vw;
+        width: 15vw;
+        height: 14vh;
+      }
+      &:nth-of-type(2) {
+        left: 23vw;
+        width: 15vw;
+        height: 14vh;
+      }
+      &:nth-of-type(3) {
+        left: 42vw;
+        width: 15vw;
+        height: 14vh;
+      }
+      &:nth-of-type(4) {
+        left: 61vw;
+        width: 15vw;
+        height: 14vh;
+      }
     }
   }
   &-background {
