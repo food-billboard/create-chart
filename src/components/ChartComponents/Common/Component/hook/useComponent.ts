@@ -322,7 +322,7 @@ export function useComponent<P extends object = {}>(
 
   useUpdateEffect(() => {
     if (!isEqual(requestResult, requestDataValue)) {
-      outerGetValue(requestDataValue);
+      outerGetValue(requestResult);
     }
   }, [outerGetValue, requestResult, requestDataValue]);
 

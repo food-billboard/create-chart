@@ -207,9 +207,7 @@ const Home = () => {
           data-invert-x="true"
           data-invert-y="true"
         >
-          <div>
-            <Background />
-          </div>
+          <div>{/* <Background /> */}</div>
         </div>
         <div
           className={classnames('home-page-layer', styles['home-page-title'])}
