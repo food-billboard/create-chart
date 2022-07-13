@@ -35,7 +35,7 @@ const ResponseDataTitle = (props: {
   return (
     <Title>
       数据响应结果
-      {type === 'api' && (
+      {type !== 'static' && (
         <IconTooltip title="重新获取数据">
           <Loading3QuartersOutlined className="m-l-4" onClick={reRequestData} />
         </IconTooltip>

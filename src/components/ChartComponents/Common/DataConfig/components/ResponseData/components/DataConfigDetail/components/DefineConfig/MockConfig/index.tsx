@@ -1,5 +1,4 @@
 import { useCallback, useMemo } from 'react';
-import { merge } from 'lodash';
 import { connect } from 'dva';
 import { Button, Select } from 'antd';
 import { nanoid } from 'nanoid';
@@ -159,7 +158,7 @@ const MockConfig = (props: MockConfigProps) => {
         constants,
       );
       propsOnChange?.(
-        merge({}, newValue, {
+        mergeWithoutArray({}, newValue, {
           request: {
             value: result,
           },
