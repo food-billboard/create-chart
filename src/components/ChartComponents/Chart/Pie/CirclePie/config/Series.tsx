@@ -8,6 +8,7 @@ import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TCirclePieConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -131,7 +132,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
-          max={8}
+          max={GlobalConfig.getChartSeriesCounter('CIRCLE_PIE')}
         />
       </Item>
     );

@@ -11,6 +11,7 @@ import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
 import Input from '@/components/ImageUpload/Input';
 import IconTooltip from '@/components/IconTooltip';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TTreeBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -277,7 +278,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
-          max={-1}
+          max={GlobalConfig.getChartSeriesCounter('TREE_BASIC')}
         />
       </Item>
     );

@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { useResponseData } from '@/hooks';
 import FocusWrapper from '@/components/FocusWrapper';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import CodeViewer from '../CodeViewer';
 import Title from './components/NormalTitle';
 import ResponseDataTitle from './components/ResponseDataTitle';
@@ -126,9 +127,11 @@ const DataConfigDetail = forwardRef<
             <Option key="static" value="static">
               静态数据
             </Option>
-            <Option key="mock" value="mock">
-              Mock
-            </Option>
+            {!!GlobalConfig.ENABLE_MOCK_DATA_CONFIG && (
+              <Option key="mock" value="mock">
+                Mock
+              </Option>
+            )}
             <Option key="api" value="api">
               API
             </Option>

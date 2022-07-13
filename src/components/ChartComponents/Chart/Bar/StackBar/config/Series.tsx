@@ -6,6 +6,7 @@ import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSe
 import ThemeUtil from '@/utils/Assist/Theme';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TStackBarConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -99,7 +100,7 @@ const SeriesConfig = (props: {
 
           onKeyChange('itemStyle', newItemStyle);
         }}
-        max={8}
+        max={GlobalConfig.getChartSeriesCounter('STACK_BAR')}
       />
     );
   }, [itemStyle, onKeyChange]);

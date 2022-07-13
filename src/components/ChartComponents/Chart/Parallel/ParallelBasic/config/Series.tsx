@@ -5,6 +5,7 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { DEFAULT_LINE_STYLE } from '../defaultConfig';
 import { TParallelBasicConfig } from '../type';
 
@@ -91,7 +92,7 @@ const SeriesConfig = (props: {
 
           onKeyChange('lineStyle', newLineStyle);
         }}
-        max={8}
+        max={GlobalConfig.getChartSeriesCounter('PARALLEL_BASIC')}
       />
     );
   }, [lineStyle, onKeyChange]);

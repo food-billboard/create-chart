@@ -6,6 +6,7 @@ import { CompatColorSelect } from '@/components/ColorSelect';
 import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TBoxPlotBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -152,7 +153,7 @@ const SeriesConfig = (props: {
             },
           });
         }}
-        max={4}
+        max={GlobalConfig.getChartSeriesCounter('BOX_PLOT_BASIC')}
       />
     );
   }, [itemStyle, onKeyChange, onChange]);

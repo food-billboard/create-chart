@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { Select, Switch } from 'antd';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import { Switch } from 'antd';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
@@ -8,7 +7,7 @@ import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
 import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import { TNightingaleConfig } from '../type';
@@ -149,7 +148,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
-          max={8}
+          max={GlobalConfig.getChartSeriesCounter('NIGHTINGALE_PIE')}
         />
       </Item>
     );

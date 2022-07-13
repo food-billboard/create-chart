@@ -6,6 +6,7 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
 import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TNegativeBarConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -89,7 +90,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
-          max={8}
+          max={GlobalConfig.getChartSeriesCounter('NEGATIVE_BAR')}
         />
       </Item>
     );

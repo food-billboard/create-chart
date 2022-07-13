@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
 import { TBubbleScatterConfig } from '../type';
 
@@ -56,7 +56,7 @@ const SeriesConfig = (props: {
                 color: value,
               })
             }
-            max={8}
+            max={GlobalConfig.getChartSeriesCounter('BUBBLE_SCATTER')}
           />
         </FullForm>
       </Item>

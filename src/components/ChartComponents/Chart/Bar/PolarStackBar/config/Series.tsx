@@ -4,6 +4,7 @@ import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TPolarStackBarConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -74,7 +75,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
-          max={10}
+          max={GlobalConfig.getChartSeriesCounter('POLAR_STACK_BAR')}
         />
       </Item>
     );

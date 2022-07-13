@@ -14,6 +14,7 @@ import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import TextAlignConfig from '@/components/ChartComponents/Common/TextAlignConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TStateListConfig } from '../type';
 import ConditionConfig from './Condition';
 
@@ -140,7 +141,7 @@ class Config extends Component<
                 this.onKeyChange('stateList', newData);
               }}
               counter={stateList.length}
-              max={20}
+              max={GlobalConfig.getChartSeriesCounter('STATE_LIST')}
               renderContent={(index) => {
                 const { backgroundColor, borderRadius } = stateList[index];
                 return (

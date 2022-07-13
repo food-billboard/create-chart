@@ -4,6 +4,7 @@ import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TStepLineConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -65,7 +66,7 @@ const SeriesConfig = (props: {
               value.map((item) => ({ color: item })),
             );
           }}
-          max={8}
+          max={GlobalConfig.getChartSeriesCounter('STEP_LINE')}
         />
       </Item>
     );

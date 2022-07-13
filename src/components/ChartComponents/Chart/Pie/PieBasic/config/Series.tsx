@@ -11,6 +11,7 @@ import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
 import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
 import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TPieBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -186,7 +187,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
-          max={8}
+          max={GlobalConfig.getChartSeriesCounter('PIE_BASIC')}
         />
       </Item>
     );

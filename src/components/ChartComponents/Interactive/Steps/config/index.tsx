@@ -12,6 +12,7 @@ import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSe
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
 import OrientSelect from '@/components/ChartComponents/Common/OrientSelect';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { DEFAULT_ICON } from '../defaultConfig';
 import { TStepsConfig } from '../type';
 
@@ -162,7 +163,7 @@ class Config extends Component<
 
                 this.onKeyChange('icons', newIcons);
               }}
-              max={8}
+              max={GlobalConfig.getChartSeriesCounter('STEPS')}
             />
           </ConfigList>
         </TabPane>

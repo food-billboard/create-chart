@@ -10,6 +10,7 @@ import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradie
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { DEFAULT_RADIAL_CONFIG } from '../../../../Common/Constants/defaultConfig';
 import { TLineBarConfig } from '../type';
 
@@ -172,7 +173,7 @@ const SeriesConfig = (props: {
 
           onKeyChange('itemStyle', newItemStyle);
         }}
-        max={8}
+        max={GlobalConfig.getChartSeriesCounter('LINE_BAR')}
       />
     );
   }, [itemStyle, onKeyChange]);

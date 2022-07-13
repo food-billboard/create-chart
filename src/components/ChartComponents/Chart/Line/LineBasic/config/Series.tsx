@@ -12,6 +12,7 @@ import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { DEFAULT_DECAL, DEFAULT_LINE_STYLE } from '../defaultConfig';
 import { TLineBasicConfig } from '../type';
 
@@ -266,7 +267,7 @@ const SeriesConfig = (props: {
             },
           });
         }}
-        max={8}
+        max={GlobalConfig.getChartSeriesCounter('LINE_BASIC')}
       />
     );
   }, [itemStyle, areaStyle, lineStyle, onKeyChange, onChange]);

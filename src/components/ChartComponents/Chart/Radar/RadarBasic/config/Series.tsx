@@ -5,10 +5,9 @@ import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelCo
 import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
 import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { CompatColorSelect } from '@/components/ColorSelect';
@@ -232,7 +231,7 @@ const SeriesConfig = (props: {
             },
           });
         }}
-        max={8}
+        max={GlobalConfig.getChartSeriesCounter('RADAR_BASIC')}
       />
     );
   }, [lineStyle, areaStyle, itemStyle, onChange]);

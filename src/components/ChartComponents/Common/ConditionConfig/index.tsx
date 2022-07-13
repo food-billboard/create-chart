@@ -1,11 +1,11 @@
 import { ReactNode, useCallback, useMemo } from 'react';
 import { Radio, Select } from 'antd';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import CodeEditor from './components/CodeEditor';
 import { DEFAULT_CONDITION_CONFIG } from '../Constants/defaultConfig';
 import ConfigList from '../Structure/ConfigList';
 import FullForm from '../Structure/FullForm';
-
 import RuleTree from '../RuleTree';
 
 const { Item } = ConfigList;
@@ -154,7 +154,7 @@ const ConditionConfig = (props: ConditionConfigProps) => {
           newValue.splice(index, 1);
           onChange?.(newValue);
         }}
-        max={3}
+        max={GlobalConfig.CONDITION_COUNTER}
       />
     );
   }, [value, onKeyChange]);

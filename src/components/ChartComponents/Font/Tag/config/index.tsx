@@ -21,9 +21,10 @@ import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSe
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import IconTooltip from '@/components/IconTooltip';
 import ThemeUtil from '@/utils/Assist/Theme';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
 import ConditionConfig from './Condition';
 import { TTagConfig } from '../type';
-import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
 
 const { TabPane } = Tabs;
 const { Item } = ConfigList;
@@ -121,7 +122,7 @@ class Config extends Component<ComponentData.ComponentConfigProps<TTagConfig>> {
                 this.onKeyChange('series', newData);
               }}
               counter={series.length}
-              max={30}
+              max={GlobalConfig.getChartSeriesCounter('TAG')}
               renderContent={(index) => {
                 const { color, icon } = series[index];
                 return (

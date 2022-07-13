@@ -15,6 +15,7 @@ import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import IconTooltip from '@/components/IconTooltip';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { DEFAULT_FONT_CONFIG } from '../../../Common/Constants/defaultConfig';
 import ConditionConfig from './Condition';
 import { TListConfig } from '../type';
@@ -323,7 +324,7 @@ class Config extends Component<
                 });
               }}
               counter={columns.data.length}
-              max={10}
+              max={GlobalConfig.getChartSeriesCounter('LIST')}
               renderContent={(index) => {
                 const { key, name, width, type, textStyle, header, scroll } =
                   columns.data[index];

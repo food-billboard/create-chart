@@ -10,6 +10,7 @@ import AngleSelect from '@/components/ChartComponents/Common/AngleSelect';
 import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TBarBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -98,7 +99,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
-          max={8}
+          max={GlobalConfig.getChartSeriesCounter('BAR_BASIC')}
         />
       </Item>
     );

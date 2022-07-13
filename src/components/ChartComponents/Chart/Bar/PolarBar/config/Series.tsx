@@ -7,6 +7,7 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TPolarBarConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -77,7 +78,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
-          max={10}
+          max={GlobalConfig.getChartSeriesCounter('POLAR_BAR')}
         />
       </Item>
     );

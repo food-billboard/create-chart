@@ -5,6 +5,7 @@ import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { CompatColorSelect } from '@/components/ColorSelect';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TPercentPieConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -104,7 +105,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
-          max={8}
+          max={GlobalConfig.getChartSeriesCounter('PERCENT_PIE')}
         />
       </Item>
     );

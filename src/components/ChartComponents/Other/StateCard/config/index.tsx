@@ -24,6 +24,7 @@ import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import IconTooltip from '@/components/IconTooltip';
 import AngleSelect from '@/components/ChartComponents/Common/AngleSelect';
 import ThemeUtil from '@/utils/Assist/Theme';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import ConditionConfig from './Condition';
 import { TStateCardConfig } from '../type';
 
@@ -98,7 +99,7 @@ class Config extends Component<
                 this.onKeyChange('stateList', newData);
               }}
               counter={stateList.length}
-              max={10}
+              max={GlobalConfig.getChartSeriesCounter('STATE_CARD')}
               renderContent={(index) => {
                 const { value, stateIcon } = stateList[index];
                 return (

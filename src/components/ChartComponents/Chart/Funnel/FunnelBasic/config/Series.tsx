@@ -11,6 +11,7 @@ import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
 import NumberPositionConfig from '@/components/ChartComponents/Common/NumberPositionConfig';
 import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TFunnelBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -202,7 +203,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
-          max={12}
+          max={GlobalConfig.getChartSeriesCounter('FUNNEL_BASIC')}
         />
       </Item>
     );

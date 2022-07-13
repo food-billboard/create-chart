@@ -8,6 +8,7 @@ import { SimpleHueRadialSelect } from '@/components/ChartComponents/Common/Simpl
 import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradientSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TRankBarConfig } from '../type';
 import { Select } from 'antd';
 
@@ -146,7 +147,7 @@ const SeriesConfig = (props: {
                 color: value,
               });
             }}
-            max={10}
+            max={GlobalConfig.getChartSeriesCounter('RANK_BAR')}
           />
         </Collapse>
       </>

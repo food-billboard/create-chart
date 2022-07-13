@@ -4,8 +4,9 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import { TZebraBarConfig } from '../type';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import { TZebraBarConfig } from '../type';
 
 const { Item } = ConfigList;
 
@@ -67,7 +68,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
-          max={8}
+          max={GlobalConfig.getChartSeriesCounter('ZEBRA_BAR')}
         />
       </Item>
     );

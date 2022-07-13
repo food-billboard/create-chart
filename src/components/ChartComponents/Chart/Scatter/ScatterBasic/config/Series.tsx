@@ -9,6 +9,7 @@ import { CompatColorSelect } from '@/components/ColorSelect';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import BoxShadowConfig from '@/components/ChartComponents/Common/BoxShadowConfig';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TScatterBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -193,7 +194,7 @@ const SeriesConfig = (props: {
             },
           });
         }}
-        max={4}
+        max={GlobalConfig.getChartSeriesCounter('SCATTER_BASIC')}
       />
     );
   }, [itemStyle, onKeyChange, onChange]);

@@ -10,6 +10,7 @@ import { SimpleHueRadialSelect } from '@/components/ChartComponents/Common/Simpl
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
 import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradientSelect';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TRadialBarConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -98,7 +99,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
-          max={8}
+          max={GlobalConfig.getChartSeriesCounter('RADIAL_BAR')}
         />
       </Collapse>
     );

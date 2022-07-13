@@ -6,6 +6,7 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import { SimpleHueRadialSelect } from '@/components/ChartComponents/Common/SimpleHueSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TCachetBarConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -120,7 +121,7 @@ const SeriesConfig = (props: {
               color: value,
             });
           }}
-          max={8}
+          max={GlobalConfig.getChartSeriesCounter('CACHET_BAR')}
         />
       </Collapse>
     );
