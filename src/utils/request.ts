@@ -1,8 +1,9 @@
 import { notification, message } from 'antd';
 import axios, { AxiosRequestConfig } from 'axios';
 import { getDvaApp, history } from 'umi';
-import { debounce, get } from 'lodash';
+import { debounce } from 'lodash';
 import { stringify } from 'querystring';
+import { REQUEST_TIMEOUT } from './constants';
 import { formatQuery } from './tool';
 
 const codeMessage = {
@@ -96,6 +97,7 @@ const request = async <ResBody>(
   try {
     body = await axios.request({
       url,
+      timeout: REQUEST_TIMEOUT,
       ...options,
       ...(params ? { params: formatQuery(params) } : {}),
     });
