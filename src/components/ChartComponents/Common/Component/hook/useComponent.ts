@@ -81,7 +81,7 @@ export function useComponent<P extends object = {}>(
   // 是否需要定时请求
   const isIntervalRequest = useCallback(() => {
     const { show } = requestFrequencyConfig;
-    return show || screenType !== 'edit';
+    return show && screenType !== 'edit';
   }, [requestFrequencyConfig, screenType]);
 
   const baseInteractive: ComponentData.TBaseInteractiveConfig[] =

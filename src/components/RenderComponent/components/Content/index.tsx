@@ -7,6 +7,7 @@ import { ComponentProps } from '../../../ChartComponents/Common/Component/type';
 import ChildrenWrapper from './ChildrenWrapper';
 import SubGroup from './SubGroup';
 import { getComponentByType } from '../../../ChartComponents';
+import styles from './index.less';
 
 const Content = (props: {
   setParams: (value: ComponentData.TParams[]) => void;
@@ -80,6 +81,7 @@ const Content = (props: {
             parent={parent}
           >
             <TargetComponent
+              className={styles['render-component-children']}
               value={newComponent}
               key={id}
               global={{

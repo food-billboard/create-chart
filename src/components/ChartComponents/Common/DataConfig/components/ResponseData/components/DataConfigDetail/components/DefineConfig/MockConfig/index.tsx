@@ -17,7 +17,7 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 export type MockConfigProps = ApiConfigProps;
 
 const _FieldsConfig = ({
-  value,
+  value = [],
   onChange,
   mockKindList,
 }: {
@@ -121,7 +121,7 @@ const _FieldsConfig = ({
         id: nanoid(),
       },
     ]);
-  }, [value]);
+  }, [value, onChange]);
 
   return (
     <>

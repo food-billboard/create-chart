@@ -149,7 +149,7 @@ class GuideLine extends Component<
             ),
           }}
         >
-          {Math.round(style.left ?? style.top)}
+          {Math.round(style.left ?? style.top) || 0}
           {/* {Math.round(((left ?? top) - 30 + GUIDE_LINE_PADDING) / scale) || 0} */}
         </div>
         <div

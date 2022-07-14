@@ -8,7 +8,18 @@ export const DEFAULT_COLOR: ComponentData.TColorConfig = {
 export const DEFAULT_GRADIENT_COLOR: ComponentData.TGradientColorConfig = {
   start: DEFAULT_COLOR,
   end: DEFAULT_COLOR,
-  direction: 0,
+  type: 'linear',
+  linearPosition: {
+    startX: 0,
+    startY: 0,
+    endX: 0,
+    endY: 0,
+  },
+  radialPosition: {
+    x: 0,
+    y: 0,
+    r: 0,
+  },
 };
 
 export const DEFAULT_BACKGROUND_CONFIG: ComponentData.TBackgroundConfig = {
