@@ -1,12 +1,4 @@
-import {
-  CSSProperties,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import classnames from 'classnames';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { history } from 'umi';
 import { connect } from 'dva';
 import {
@@ -15,12 +7,11 @@ import {
   MobileOutlined,
   BarcodeOutlined,
 } from '@ant-design/icons';
-import { Form, Input, Row, Col, Button, message, Space } from 'antd';
+import { Input, Row, Col, Button, message, Space } from 'antd';
 import Icon from '@/components/ChartComponents/Common/Icon';
-import EnterSubmitWrapper from '@/components/EnterSubmitWrapper';
 import { getCaptcha } from '@/services';
 import { mapStateToProps, mapDispatchToProps } from './connect';
-import styles from './index.less';
+import CommonBackground from './components/Background';
 
 const { Password: InputPassword } = Input;
 
@@ -159,50 +150,6 @@ export const Captcha = (props: {
         </Button>
       </Col>
     </Row>
-  );
-};
-
-export const CommonBackground = (props: {
-  style?: CSSProperties;
-  className?: string;
-  children?: ReactNode;
-  title?: ReactNode;
-  subTitle?: ReactNode;
-  tips?: ReactNode;
-  action?: ReactNode;
-  onSubmit?: () => void;
-}) => {
-  const {
-    className,
-    style,
-    title,
-    subTitle,
-    children,
-    tips,
-    action,
-    onSubmit,
-  } = props;
-
-  return (
-    <EnterSubmitWrapper
-      className={classnames(styles['login-form-background'], className)}
-      style={style}
-      onSubmit={onSubmit}
-    >
-      <div className={styles['login-form-main']}>
-        <div className={styles['login-form-main-title']}>{title}</div>
-        <div className={styles['login-form-main-sub-title']}>{subTitle}</div>
-        <div className={styles['login-form-main-content']}>
-          <Form>
-            <Space className="w-100" direction="vertical">
-              {children}
-            </Space>
-          </Form>
-        </div>
-        <div className={styles['login-form-main-tips']}>{tips}</div>
-        <div className={styles['login-form-main-action']}>{action}</div>
-      </div>
-    </EnterSubmitWrapper>
   );
 };
 

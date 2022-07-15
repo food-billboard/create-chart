@@ -1,10 +1,11 @@
 .login-form-background {
   width: 100vw;
   height: 100vh;
-  background-image: url('../../../public/background.jpeg');
+  background-image: url('../../../public/login/login-pink-background.png');
   background-repeat: no-repeat;
-  background-size: cover;
   position: relative;
+  background-position: center top;
+  background-color: white;
   .login-form-main {
     border-radius: 8px;
     width: 30%;
@@ -24,6 +25,74 @@
     &-sub-title {
       font-size: 14px;
       margin-bottom: 24px;
+    }
+  }
+
+  &-circle {
+    display: inline-block;
+    height: 100%;
+  }
+  &-main {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    max-width: 80vw;
+    height: 100%;
+    width: 100%;
+  }
+  &-info {
+    padding: 15vh 0;
+    & > div {
+      display: flex;
+      flex-direction: column;
+      color: black;
+      justify-content: space-between;
+    }
+    &-logo {
+    }
+    &-prefix {
+      height: 178px;
+    }
+    &-title {
+      max-width: 280px;
+      width: 100%;
+      font-size: 40px;
+      font-weight: 700;
+      color: #000000;
+      margin-bottom: 20px;
+    }
+    &-sub-title {
+      color: #363636;
+      font-size: 20px;
+      max-width: 260px;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+    &-animation {
+      width: 505px;
+      height: 542px;
+      position: absolute;
+      top: 50%;
+      right: 50px;
+      transform: translateY(-50%);
+      z-index: 0;
+      &-top,
+      &-bottom,
+      &-small {
+        position: absolute;
+      }
+      &-top {
+        left: 100px;
+      }
+      &-bottom {
+        bottom: 30px;
+        right: 200px;
+      }
+      &-small {
+        left: 100px;
+        top: 270px;
+      }
     }
   }
 }
