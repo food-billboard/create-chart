@@ -243,6 +243,10 @@ const ScatterMap = (props: {
   }, [syncInteractiveAction]);
 
   // 数据发生变化时
+  useDeepUpdateEffect(() => {
+    setOption();
+  }, [processedValue, options, realValue]);
+
   // 配置发生变化时
   useDeepUpdateEffect(() => {
     setOption();

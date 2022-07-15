@@ -221,7 +221,6 @@ const PolarStackBar = (props: {
   // 数据发生变化时
   useDeepUpdateEffect(() => {
     setOption();
-    chartInstance.current?.resize();
   }, [processedValue, xAxisKeys, yAxisValues, seriesKeys]);
 
   // 配置发生变化时

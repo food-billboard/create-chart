@@ -156,7 +156,6 @@ const WaterBall = (props: {
   // 数据发生变化时
   useDeepUpdateEffect(() => {
     setOption();
-    chartInstance.current?.resize();
   }, [finalValue]);
 
   // 配置发生变化时
