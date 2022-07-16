@@ -221,8 +221,7 @@ const Login = (props: { login: (value: any) => any }) => {
 
   return (
     <CommonBackground
-      title="Welcome"
-      subTitle="数据可视化大屏登录🐲"
+      title="登录"
       tips={tips}
       action={action}
       onSubmit={handleLogin}

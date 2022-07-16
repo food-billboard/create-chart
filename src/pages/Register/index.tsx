@@ -62,12 +62,7 @@ const Register = (props: { register: (value: any) => any }) => {
   }, [handleRegister]);
 
   return (
-    <CommonBackground
-      title="Welcome"
-      subTitle="数据可视化大屏注册🐲"
-      action={action}
-      onSubmit={handleRegister}
-    >
+    <CommonBackground title="注册" action={action} onSubmit={handleRegister}>
       <Mobile value={mobile} onChange={setMobile} />
       <Password value={password} onChange={setPassword} />
       <Email value={email} onChange={setEmail} />

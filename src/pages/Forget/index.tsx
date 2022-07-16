@@ -52,12 +52,7 @@ const Forget = (props: { forger: (value: any) => any }) => {
   }, [handleForget]);
 
   return (
-    <CommonBackground
-      title="Welcome"
-      subTitle="忘记密码🐲"
-      action={action}
-      onSubmit={handleForget}
-    >
+    <CommonBackground title="忘记密码" action={action} onSubmit={handleForget}>
       <Email value={email} onChange={setEmail} />
       <Captcha
         email={email}
