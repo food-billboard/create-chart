@@ -18,6 +18,9 @@ import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
 
+// svg.js svg动画
+// matter.js 物理动画
+
 const ICON_ANIMATION_LIST = [
   [
     'bi-thermometer',
