@@ -1,0 +1,41 @@
+.home-linear-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    backdrop-filter: blur(150px);
+    z-index: 1;
+  }
+  &-polygon {
+    position: absolute;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+  }
+  &-polygon-one {
+    left: -100px;
+    top: -100px;
+    background: #ffee55;
+    clip-path: polygon(0 10%, 30% 0, 100% 40%, 70% 100%, 20% 90%);
+  }
+  &-polygon-two {
+    left: 150px;
+    top: 150px;
+    background: #e950d1;
+    clip-path: polygon(10% 0, 100% 70%, 100% 100%, 20% 90%);
+  }
+  &-polygon-three {
+    left: 200px;
+    top: 200px;
+    background: rgba(87, 80, 233);
+    clip-path: polygon(80% 0, 100% 70%, 100% 100%, 20% 90%);
+  }
+}

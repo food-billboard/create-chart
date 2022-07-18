@@ -29,6 +29,7 @@
     "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-layout": "^6.5.0",
     "@scena/react-ruler": "^0.9.1",
+    "@svgdotjs/svg.js": "^3.1.2",
     "@types/react-slick": "^0.23.8",
     "ahooks": "^3.1.5",
     "animate.css": "^4.1.1",

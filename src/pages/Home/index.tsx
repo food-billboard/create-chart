@@ -14,11 +14,23 @@ import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Co
 import ColorSelect from '@/components/ColorSelect';
 import Background from './components/Background';
 import AnimationTitle from './components/AnimationTitle';
+import LinearBackground from './components/LinearBackground';
+import AnimationSvg from './components/AnimationSvg';
+import {
+  AnimationOne,
+  AnimationTwo,
+  AnimationThree,
+  AnimationFour,
+  AnimationFive,
+  AnimationSix,
+  AnimationSeven,
+  AnimationMap,
+  AnimationEight,
+} from './components/AnimationSvg/Animation';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
 
-// svg.js svg动画
 // matter.js 物理动画
 
 const ICON_ANIMATION_LIST = [
@@ -55,6 +67,8 @@ const ICON_ANIMATION_LIST = [
     'bi-dice-6',
   ],
 ];
+
+const SVG_ANIMATION_DELAY = 300;
 
 const AnimationIcon = (props: {
   value: string[];
@@ -110,15 +124,32 @@ const Home = () => {
   const chartLineOneList = useMemo(() => {
     return (
       <ul>
-        {[1, 2, 3].map((item) => {
+        {[
+          {
+            id: 'animation-one',
+            value: <AnimationOne />,
+            index: 0,
+          },
+          {
+            id: 'animation-map',
+            value: <AnimationMap />,
+            index: 1,
+          },
+          {
+            id: 'animation-two',
+            value: <AnimationTwo />,
+            index: 2,
+          },
+        ].map((item) => {
+          const { id, value, index } = item;
           return (
-            <li
-              style={{
-                backgroundColor: 'green',
-                // backgroundImage: `url(${item})`
-              }}
-              key={item}
-            ></li>
+            <li key={id}>
+              <AnimationSvg
+                delay={index * SVG_ANIMATION_DELAY}
+                id={id}
+                value={value}
+              />
+            </li>
           );
         })}
       </ul>
@@ -128,15 +159,27 @@ const Home = () => {
   const chartLineTwoList = useMemo(() => {
     return (
       <ul>
-        {[1, 2].map((item) => {
+        {[
+          {
+            value: <AnimationThree />,
+            id: 'animation-three',
+            index: 3,
+          },
+          {
+            value: <AnimationFour />,
+            id: 'animation-four',
+            index: 4,
+          },
+        ].map((item) => {
+          const { id, value, index } = item;
           return (
-            <li
-              style={{
-                backgroundColor: 'green',
-                // backgroundImage: `url(${item})`
-              }}
-              key={item}
-            ></li>
+            <li key={id}>
+              <AnimationSvg
+                delay={index * SVG_ANIMATION_DELAY}
+                id={id}
+                value={value}
+              />
+            </li>
           );
         })}
       </ul>
@@ -146,15 +189,37 @@ const Home = () => {
   const chartLineThreeList = useMemo(() => {
     return (
       <ul>
-        {[1, 2, 3, 4].map((item) => {
+        {[
+          {
+            value: <AnimationFive />,
+            id: 'animation-five',
+            index: 5,
+          },
+          {
+            value: <AnimationSix />,
+            id: 'animation-six',
+            index: 6,
+          },
+          {
+            value: <AnimationSeven />,
+            id: 'animation-seven',
+            index: 7,
+          },
+          {
+            value: <AnimationEight />,
+            id: 'animation-eight',
+            index: 8,
+          },
+        ].map((item) => {
+          const { id, value, index } = item;
           return (
-            <li
-              style={{
-                backgroundColor: 'green',
-                // backgroundImage: `url(${item})`
-              }}
-              key={item}
-            ></li>
+            <li key={id}>
+              <AnimationSvg
+                delay={index * SVG_ANIMATION_DELAY}
+                value={value}
+                id={id}
+              />
+            </li>
           );
         })}
       </ul>
@@ -200,6 +265,7 @@ const Home = () => {
 
   return (
     <div className={styles['home-page']} onClick={handleClick}>
+      <LinearBackground />
       <div id="home-page-container">
         <div
           className={classnames(
@@ -213,20 +279,64 @@ const Home = () => {
           <div>{/* <Background /> */}</div>
         </div>
         <div
-          className={classnames('home-page-layer', styles['home-page-title'])}
-          data-depth="0.15"
-        >
-          <AnimationTitle />
-        </div>
-        <div
           className={classnames('home-page-layer', styles['home-page-border'])}
           data-depth="0.2"
         >
           <div>
-            <div></div>
+            <div
+              className={classnames(
+                'home-page-layer',
+                styles['home-page-title'],
+              )}
+              data-depth="0.15"
+            >
+              <AnimationTitle />
+            </div>
+            <div
+              className={classnames(
+                'home-page-layer',
+                styles['home-page-chart'],
+              )}
+              data-depth="0.25"
+              data-invert-x="true"
+              data-invert-y="true"
+            >
+              {chartLineOneList}
+            </div>
+            <div
+              className={classnames(
+                'home-page-layer',
+                styles['home-page-chart-line-two'],
+              )}
+              data-depth="0.3"
+              data-invert-x="true"
+              data-invert-y="true"
+            >
+              {chartLineTwoList}
+            </div>
+            <div
+              className={classnames(
+                'home-page-layer',
+                styles['home-page-icon'],
+              )}
+              data-depth="0.35"
+              data-invert-x="true"
+              data-invert-y="true"
+            >
+              {iconChartList}
+            </div>
+            <div
+              className={classnames(
+                'home-page-layer',
+                styles['home-page-chart-line-three'],
+              )}
+              data-depth="0.4"
+            >
+              {chartLineThreeList}
+            </div>
           </div>
         </div>
-        <div
+        {/* <div
           className={classnames('home-page-layer', styles['home-page-chart'])}
           data-depth="0.25"
           data-invert-x="true"
@@ -261,7 +371,7 @@ const Home = () => {
           data-depth="0.4"
         >
           {chartLineThreeList}
-        </div>
+        </div> */}
       </div>
     </div>
   );
