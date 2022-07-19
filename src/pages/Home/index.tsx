@@ -261,12 +261,15 @@ const Home = () => {
         selector: '.home-page-layer',
       },
     );
+    return () => {
+      parallaxRef.current?.destroy();
+    };
   }, []);
 
   return (
-    <div className={styles['home-page']} onClick={handleClick}>
+    <div className={styles['home-page']}>
       <LinearBackground />
-      <div id="home-page-container">
+      <div id="home-page-container" className={styles['home-page-container']}>
         <div
           className={classnames(
             'home-page-layer',
@@ -286,9 +289,11 @@ const Home = () => {
             <div
               className={classnames(
                 'home-page-layer',
+                'home-page-title',
                 styles['home-page-title'],
               )}
               data-depth="0.15"
+              onClick={handleClick}
             >
               <AnimationTitle />
             </div>
@@ -336,42 +341,6 @@ const Home = () => {
             </div>
           </div>
         </div>
-        {/* <div
-          className={classnames('home-page-layer', styles['home-page-chart'])}
-          data-depth="0.25"
-          data-invert-x="true"
-          data-invert-y="true"
-        >
-          {chartLineOneList}
-        </div>
-        <div
-          className={classnames(
-            'home-page-layer',
-            styles['home-page-chart-line-two'],
-          )}
-          data-depth="0.3"
-          data-invert-x="true"
-          data-invert-y="true"
-        >
-          {chartLineTwoList}
-        </div>
-        <div
-          className={classnames('home-page-layer', styles['home-page-icon'])}
-          data-depth="0.35"
-          data-invert-x="true"
-          data-invert-y="true"
-        >
-          {iconChartList}
-        </div>
-        <div
-          className={classnames(
-            'home-page-layer',
-            styles['home-page-chart-line-three'],
-          )}
-          data-depth="0.4"
-        >
-          {chartLineThreeList}
-        </div> */}
       </div>
     </div>
   );

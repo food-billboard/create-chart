@@ -3,6 +3,35 @@
 @import '~shepherd.js/dist/css/shepherd.css';
 // @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css");
 
+@keyframes arrow-animation {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(0, 5px, 0);
+  }
+  50% {
+    transform: translate3d(0, 10px, 0);
+  }
+  75% {
+    transform: translate3d(0, 5px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.home-page-title {
+  &::after {
+    content: '点击标题开始设计！！！';
+    display: block;
+    position: relative;
+    top: -4px;
+    margin: 0 auto;
+    animation: arrow-animation 1s linear infinite;
+  }
+}
+
 html {
   scrollbar-width: thin;
 }

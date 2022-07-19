@@ -21,11 +21,16 @@
   }
 }
 
+.home-page-container {
+  width: 100vw;
+  height: 100vh;
+  pointer-events: all !important;
+}
+
 .home-page {
   width: 100vw;
   min-height: 100vh;
   overflow: auto;
-  cursor: pointer;
   &-title {
     width: 100%;
     height: 5vw;
@@ -34,7 +39,11 @@
   &-chart,
   &-chart-line-two,
   &-chart-line-three {
+    position: absolute;
+    top: 0;
     & ul {
+      width: 100%;
+      height: 100%;
       position: relative;
     }
     & ul li {
@@ -54,18 +63,18 @@
       position: absolute;
       &:nth-of-type(1) {
         left: 4vw;
-        width: 15vw;
-        height: 19vh;
+        width: 18.5vw;
+        height: 22vw;
       }
       &:nth-of-type(2) {
-        left: 23vw;
-        width: 34vw;
-        height: 40vh;
+        left: 26.5vw;
+        width: 37vw;
+        height: 44vw;
       }
       &:nth-of-type(3) {
-        left: 61vw;
-        width: 15vw;
-        height: 19vh;
+        left: 67.5vw;
+        width: 18.5vw;
+        height: 22vw;
       }
     }
   }
@@ -77,13 +86,13 @@
       position: absolute;
       &:nth-of-type(1) {
         left: 4vw;
-        width: 15vw;
-        height: 19vh;
+        width: 18.5vw;
+        height: 22vw;
       }
       &:nth-of-type(2) {
-        left: 61vw;
-        width: 15vw;
-        height: 19vh;
+        left: 67.5vw;
+        width: 18.5vw;
+        height: 22vw;
       }
     }
   }
@@ -91,16 +100,19 @@
     margin-top: 49vw;
     width: 100%;
     height: 4vw;
+    position: absolute;
+    top: 0;
     & ul {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin: 0;
     }
     & ul li {
       flex: 1;
-      height: 5vh;
+      height: 4vw;
       text-align: center;
-      font-size: ~'min(13.3vw, 5vh)';
+      font-size: 3.5vw;
     }
   }
   &-chart-line-three {
@@ -111,27 +123,28 @@
       position: absolute;
       &:nth-of-type(1) {
         left: 4vw;
-        width: 15vw;
-        height: 14vh;
+        width: 18.5vw;
+        height: 22vw;
       }
       &:nth-of-type(2) {
-        left: 23vw;
-        width: 15vw;
-        height: 14vh;
+        left: 26.5vw;
+        width: 16.5vw;
+        height: 22vw;
       }
       &:nth-of-type(3) {
-        left: 42vw;
-        width: 15vw;
-        height: 14vh;
+        left: 46vw;
+        width: 16.5vw;
+        height: 22vw;
       }
       &:nth-of-type(4) {
-        left: 61vw;
-        width: 15vw;
-        height: 14vh;
+        left: 67.5vw;
+        width: 18.5vw;
+        height: 22vw;
       }
     }
   }
   &-background {
+    display: none;
     & div {
       width: 130vw;
       height: 130vh;
@@ -141,15 +154,13 @@
     }
   }
   &-border {
-    width: 100vw;
-    height: 100vh;
+    padding: 3vw 0;
     & > div {
-      position: absolute;
       width: 90vw;
       height: 75vw;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+      left: 5vw;
+      position: relative;
+      z-index: 1;
       border: 3px solid;
       border-image: linear-gradient(
           #4ea397,
