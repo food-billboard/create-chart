@@ -7,12 +7,13 @@ import {
   useCallback,
 } from 'react';
 import classnames from 'classnames';
+import isMobileJudge from 'is-mobile';
 // @ts-ignore
 import Parallax from 'parallax-js';
 import { history } from 'umi';
 import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import ColorSelect from '@/components/ColorSelect';
-import Background from './components/Background';
+import MatterBoxes from './components/MatterBoxes';
 import AnimationTitle from './components/AnimationTitle';
 import LinearBackground from './components/LinearBackground';
 import AnimationSvg from './components/AnimationSvg';
@@ -255,6 +256,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    if (isMobileJudge()) return;
     parallaxRef.current = new Parallax(
       document.querySelector('#home-page-container'),
       {
@@ -267,7 +269,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className={styles['home-page']}>
+    <div className={styles['home-page']} id="home-page">
       <LinearBackground />
       <div id="home-page-container" className={styles['home-page-container']}>
         <div
@@ -286,6 +288,7 @@ const Home = () => {
           data-depth="0.2"
         >
           <div>
+            <MatterBoxes />
             <div
               className={classnames(
                 'home-page-layer',
