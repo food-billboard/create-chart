@@ -4,16 +4,12 @@ import {
   Render,
   Runner,
   Composite,
-  Composites,
   Mouse,
   Bodies,
-  Svg,
-  Query,
   MouseConstraint,
-  Common,
   World,
 } from 'matter-js';
-import { useSize, useDebounceFn } from 'ahooks';
+import { useDebounceFn } from 'ahooks';
 import ColorSelect from '@/components/ColorSelect';
 import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import AreaChart from '../../../../../public/home/area-chart.png';
@@ -30,7 +26,7 @@ import VideoChart from '../../../../../public/home/video-chart.png';
 import ImageChart from '../../../../../public/home/image-chart.png';
 import styles from './index.less';
 
-const TEXTURE_MAP: {
+export const TEXTURE_MAP: {
   key: string;
   texture: string;
   width?: number;
@@ -205,14 +201,14 @@ const MatterBoxes = () => {
       // }
     });
 
-    // @ts-ignore
     mouseConstraintRef.current.mouse.element.removeEventListener(
       'mousewheel',
+      // @ts-ignore
       mouseConstraintRef.current.mouse.mousewheel,
     );
-    // @ts-ignore
     mouseConstraintRef.current.mouse.element.removeEventListener(
       'DOMMouseScroll',
+      // @ts-ignore
       mouseConstraintRef.current.mouse.mousewheel,
     );
 

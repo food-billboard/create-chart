@@ -84,7 +84,7 @@
     "slick-carousel": "^1.8.1",
     "umi": "^3.5.20",
     "viewerjs": "^1.10.5",
-    "winbox": "^0.2.1"
+    "vivus": "^0.4.6"
   },
   "devDependencies": {
     "@types/classnames": "^2.3.1",
@@ -98,6 +98,7 @@
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^17.0.0",
     "@types/react-syntax-highlighter": "^13.5.2",
+    "@types/vivus": "^0.4.4",
     "@types/winbox": "^0.2.1",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.5.20",

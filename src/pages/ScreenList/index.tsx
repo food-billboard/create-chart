@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { getScreenList } from '@/services';
 import { goDesign } from '@/utils/tool';
 import { LeadIn } from '@/utils/Assist/LeadInAndOutput';
+import SvgAnimation from './components/SvgAnimation';
 import List from './components/ScreenList';
 import styles from './index.less';
 
@@ -81,6 +82,7 @@ function ScreenList() {
 
   return (
     <>
+      <SvgAnimation />
       <div
         className={classnames(
           styles['screen-page-content-main-header'],

@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { getScreenModelList } from '@/services';
 import { goDesignModel } from '@/utils/tool';
 import { LeadIn } from '@/utils/Assist/LeadInAndOutput';
+import SvgAnimation from '../ScreenList/components/SvgAnimation';
 import List from './components/List';
 import styles from './index.less';
 
@@ -81,6 +82,7 @@ function ScreenModelList() {
 
   return (
     <>
+      <SvgAnimation />
       <div
         className={classnames(
           styles['screen-page-content-main-model-header'],

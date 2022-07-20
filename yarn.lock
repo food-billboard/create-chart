@@ -1281,6 +1281,11 @@
   resolved "https://registry.npmmirror.com/@types/unist/download/@types/unist-2.0.6.tgz#250a7b16c3b91f672a24552ec64678eeb1d3a08d"
   integrity sha1-JQp7FsO5H2cqJFUuxkZ47rHToI0=
 
+"@types/vivus@^0.4.4":
+  version "0.4.4"
+  resolved "https://registry.npmmirror.com/@types/vivus/-/vivus-0.4.4.tgz#d798db5402566d35978efaf913c25452ca2eb39d"
+  integrity sha512-eE7dV8JjjkLpTvZKQomknJssib0A1kCkC7fG1NMVSp/4Am/gjNsn9o0XtZXNmXJYHVddHbHL/M0OJIVhoVioeA==
+
 "@types/winbox@^0.2.1":
   version "0.2.1"
   resolved "https://registry.npmmirror.com/@types/winbox/download/@types/winbox-0.2.1.tgz#cfab903a7021058271a72ded4965a9348e710349"
@@ -9577,6 +9582,11 @@ viewerjs@^1.10.5:
   resolved "https://registry.npmmirror.com/viewerjs/-/viewerjs-1.10.5.tgz#a0f52fe7c15fa27003099af8e7552378ed5fc94d"
   integrity sha512-QwKrmXlSfKg5x4y74F/jicpHIRqBMMfHXyboOxHDi5n4XAaejjpalphPq4/HW6venQAoMiD57HpVwBk0JvqpSA==
 
+vivus@^0.4.6:
+  version "0.4.6"
+  resolved "https://registry.npmmirror.com/vivus/-/vivus-0.4.6.tgz#60661b43d08aaa70efc1854dfd2f1583f2066608"
+  integrity sha512-q6cDPTGqw/bq9sKF2h2T6GJ9PlwAFncHq7MdaK95WTSyd/7gz//UHTZbJ3B+r8f7AhcISPTC3sv9+u65BmmFbw==
+
 vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.nlark.com/vm-browserify/download/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
@@ -9713,11 +9723,6 @@ which@^2.0.1, which@^2.0.2:
   integrity sha1-fGqN0KY2oDJ+ELWckobu6T8/UbE=
   dependencies:
     isexe "^2.0.0"
-
-winbox@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.npmmirror.com/winbox/download/winbox-0.2.1.tgz#6ca7cd047fa52d9f3324884698ce8a9c9ba9bf27"
-  integrity sha1-bKfNBH+lLZ8zJIhGmM6KnJupvyc=
 
 word-wrap@~1.2.3:
   version "1.2.3"
