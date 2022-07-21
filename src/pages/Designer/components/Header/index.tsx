@@ -3,6 +3,7 @@ import { PageHeader, Input, Button, message } from 'antd';
 import { SendOutlined, FundOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
 import classnames from 'classnames';
+import NProgress from 'nprogress';
 import FocusWrapper from '@/components/FocusWrapper';
 import {
   previewScreen,
@@ -85,6 +86,7 @@ const Header = (props: {
   const handleStore = useCallback(async () => {
     if (fetchLoading) return;
     setFetchLoading(true);
+    NProgress.start();
 
     try {
       let coverPoster = poster;
@@ -127,7 +129,6 @@ const Header = (props: {
       }
 
       const result = await method(params as any);
-      message.success('保存成功');
       setScreen?.({
         _id: result as string,
       });
@@ -135,6 +136,7 @@ const Header = (props: {
       message.info('保存失败，请重试');
     } finally {
       setFetchLoading(false);
+      NProgress.done();
     }
   }, [
     components,

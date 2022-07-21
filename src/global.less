@@ -1,6 +1,7 @@
 @import '~antd/es/style/themes/default.less';
 @import '~bootstrap-icons/font/bootstrap-icons.css';
 @import '~shepherd.js/dist/css/shepherd.css';
+@import '~nprogress/nprogress.css';
 // @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css");
 
 @keyframes arrow-animation {
@@ -583,3 +584,18 @@ body {
 }
 
 // component condition -----start
+
+// nprogress ----------start
+
+#nprogress .bar {
+  background: @primary-color;
+}
+#nprogress .peg {
+  box-shadow: 0 0 10px @primary-color, 0 0 5px @primary-color;
+}
+#nprogress .spinner-icon {
+  border-top-color: @primary-color;
+  border-left-color: @primary-color;
+}
+
+// nprogress ----------end
