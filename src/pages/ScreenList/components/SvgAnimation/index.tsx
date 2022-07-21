@@ -67,6 +67,22 @@ const SVG_MAP = [
   },
 ];
 
+const TYPE_MAP: any[] = ['delayed', 'sync', 'oneByOne'];
+
+const PATH_TIMING_MAP: any[] = [
+  Vivus.EASE,
+  Vivus.EASE_IN,
+  Vivus.EASE_OUT,
+  Vivus.EASE_OUT_BOUNCE,
+];
+
+const ANIM_TIMING_MAP: any[] = [
+  Vivus.EASE,
+  Vivus.EASE_IN,
+  Vivus.EASE_OUT,
+  Vivus.EASE_OUT_BOUNCE,
+];
+
 const COUNTER = SVG_MAP.length;
 
 const SvgAnimation = () => {
@@ -79,8 +95,10 @@ const SvgAnimation = () => {
     vivusRef.current = new Vivus(
       key,
       {
-        type: 'sync',
-        duration: 3000,
+        type: TYPE_MAP[Math.floor(Math.random() * TYPE_MAP.length)],
+        // pathTimingFunction: PATH_TIMING_MAP[Math.floor(Math.random() * PATH_TIMING_MAP.length)],
+        // animTimingFunction: ANIM_TIMING_MAP[Math.floor(Math.random() * ANIM_TIMING_MAP.length)],
+        duration: 1000,
       },
       () => {
         const next = (current + 1) % COUNTER;
