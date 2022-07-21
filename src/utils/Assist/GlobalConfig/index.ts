@@ -1,3 +1,5 @@
+import { DEFAULT_SCREEN_COVER as defaultScreenCover } from '../../constants';
+
 class GlobalConfig {
   // 条件的最大个数
   CONDITION_COUNTER = 4;
@@ -25,8 +27,12 @@ class GlobalConfig {
   // 是否开启 mock数据配置
   ENABLE_MOCK_DATA_CONFIG = true;
 
+  // 大屏的默认封面
+  DEFAULT_SCREEN_COVER = defaultScreenCover;
+
   enableConfig = (
     settings: Partial<{
+      DEFAULT_SCREEN_COVER: string;
       CONDITION_COUNTER: number;
       DEFAULT_CHART_SERIES_COUNTER: number;
       CHART_SERIES_COUNTER: {

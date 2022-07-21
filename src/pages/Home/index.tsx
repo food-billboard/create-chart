@@ -252,7 +252,7 @@ const Home = () => {
   }, []);
 
   const handleClick = useCallback(() => {
-    history.push('/list');
+    history.push('/screen');
   }, []);
 
   useEffect(() => {

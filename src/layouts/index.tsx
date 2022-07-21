@@ -137,7 +137,7 @@ const Layout = (props: { children?: ReactNode; pathname: string }) => {
 const GlobalLayout = (props: any) => {
   const {
     children,
-    location: { pathname },
+    location: { pathname, search },
   } = props;
 
   const isMobile = useMemo(() => {
@@ -178,6 +178,13 @@ const GlobalLayout = (props: any) => {
         <IntroductionButton />
       </Layout>
     );
+  }
+
+  // 设计器无id情况下返回列表
+  if (pathname.includes('designer') && !search.includes('id')) {
+    const path = pathname.includes('model') ? 'model' : 'screen';
+    history.replace(path);
+    return <div></div>;
   }
 
   return <FetchLoginWrapper {...props} />;

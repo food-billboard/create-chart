@@ -2,10 +2,10 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { Pagination, Input, Button, Empty, Space } from 'antd';
 import classnames from 'classnames';
 import { getScreenList } from '@/services';
-import { goDesign } from '@/utils/tool';
 import { LeadIn } from '@/utils/Assist/LeadInAndOutput';
 import SvgAnimation from './components/SvgAnimation';
 import List from './components/ScreenList';
+import AddDesigner from './components/AddDesigner';
 import styles from './index.less';
 
 const { Search } = Input;
@@ -52,10 +52,6 @@ function ScreenList() {
       currPage,
     });
   }, [currPage]);
-
-  const handleAdd = useCallback(() => {
-    goDesign();
-  }, []);
 
   const handleLeadIn = useCallback(async () => {
     LeadIn('screen', fetchData.bind(null, {}));
@@ -115,9 +111,7 @@ function ScreenList() {
             <Button type="primary" onClick={handleLeadIn}>
               导入
             </Button>
-            <Button type="primary" onClick={handleAdd}>
-              新建
-            </Button>
+            <AddDesigner type="screen" />
           </Space>
         </div>
       </div>

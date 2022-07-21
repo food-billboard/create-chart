@@ -36,3 +36,7 @@ export const MOCK_REQUEST_URL = '/api/screen/mock';
 
 // 数据请求超时时间
 export const REQUEST_TIMEOUT = 10000;
+
+// 默认的大屏封面
+export const DEFAULT_SCREEN_COVER =
+  'https://fc1tn.baidu.com/it/u=899773338,348679740&fm=202&mola=new&crop=v1';
