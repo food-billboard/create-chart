@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { useUpdateEffect } from 'ahooks';
 import queryString from 'query-string';
 
 export const useHash = (
@@ -32,9 +31,13 @@ export const useHash = (
   };
 };
 
+export const isModelHash = (hash: string) => {
+  return hash.includes('model-');
+};
+
 export const useIsModelHash = () => {
   const hash = useHash();
-  return hash.hash.includes('model-');
+  return isModelHash(hash.hash);
 };
 
 export const useHashChangeReload = (reload: any) => {

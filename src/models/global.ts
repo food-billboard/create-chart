@@ -4,6 +4,7 @@ import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils/tool';
 import { HistoryUtil } from '@/utils/Assist/History';
 import ComponentUtil from '@/utils/Assist/Component';
+import { ScreenDataRequest } from '@/utils/Assist/RequestPool';
 import { DragData } from './connect';
 
 export default {
@@ -48,12 +49,16 @@ export default {
     },
 
     *setScreen(
-      { value }: { value: ComponentMethod.GlobalUpdateScreenDataParams },
+      {
+        value,
+        init,
+      }: { value: ComponentMethod.GlobalUpdateScreenDataParams; init: boolean },
       { put }: any,
     ) {
       yield put({
         type: 'setData',
         payload: value,
+        init,
       });
     },
 
@@ -64,10 +69,14 @@ export default {
       });
     },
 
-    *setGuideLine({ value }: { value: string }, { put }: any) {
+    *setGuideLine(
+      { value, init }: { value: string; init: boolean },
+      { put }: any,
+    ) {
       yield put({
         type: 'setGuideLineData',
         payload: value,
+        init,
       });
     },
 
@@ -193,17 +202,22 @@ export default {
         'screenData',
         mergeWithoutArray({}, screenData, action.payload),
       );
+      !action.init && ScreenDataRequest(state);
       return state;
     },
 
-    setUndoData(state: any) {
+    setUndoData(state: any, action: any) {
       const history = get(state, 'history.value');
-      return history.undo(state);
+      const newState = history.undo(state);
+      ScreenDataRequest(newState);
+      return newState;
     },
 
-    setRedoData(state: any) {
+    setRedoData(state: any, action: any) {
       const history = get(state, 'history.value');
-      return history.redo(state);
+      const newState = history.redo(state);
+      ScreenDataRequest(newState);
+      return newState;
     },
 
     setGuideLineData(state: any, action: any) {
@@ -212,6 +226,7 @@ export default {
         'guideLine',
         mergeWithoutArray({}, state.guideLine, action.payload),
       );
+      !action.init && ScreenDataRequest(state);
       return state;
     },
 
@@ -222,6 +237,7 @@ export default {
 
     setCallback(state: any, action: any) {
       set(state, 'screenData.config.attr.filter', action.payload);
+      ScreenDataRequest(state);
       return state;
     },
 

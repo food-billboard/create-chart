@@ -6,8 +6,10 @@ import GlobalConfig from './utils/Assist/GlobalConfig';
 
 moment.locale('zh-cn');
 
+// 色调初始化
 ThemeUtil.init();
 
+// 设置全局初始化配置
 GlobalConfig.enableConfig({});
 
 export const locale = {

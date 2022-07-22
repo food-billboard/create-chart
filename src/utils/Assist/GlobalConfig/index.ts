@@ -1,5 +1,4 @@
 import { DEFAULT_SCREEN_COVER as defaultScreenCover } from '../../constants';
-
 class GlobalConfig {
   // 条件的最大个数
   CONDITION_COUNTER = 4;
@@ -30,6 +29,9 @@ class GlobalConfig {
   // 大屏的默认封面
   DEFAULT_SCREEN_COVER = defaultScreenCover;
 
+  // 大屏的保存类型
+  DEFAULT_SCREEN_SAVE_TYPE: 'auto' | 'manual' = 'auto';
+
   enableConfig = (
     settings: Partial<{
       DEFAULT_SCREEN_COVER: string;
@@ -39,6 +41,7 @@ class GlobalConfig {
         [K in ComponentData.TComponentSelfType]: number;
       };
       ENABLE_MOCK_DATA_CONFIG: boolean;
+      DEFAULT_SCREEN_SAVE_TYPE: 'auto' | 'manual';
     }>,
   ) => {
     Object.entries(settings).forEach((setting) => {

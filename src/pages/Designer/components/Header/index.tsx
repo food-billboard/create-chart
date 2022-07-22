@@ -3,30 +3,21 @@ import { PageHeader, Input, Button, message } from 'antd';
 import { SendOutlined, FundOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
 import classnames from 'classnames';
-import NProgress from 'nprogress';
 import FocusWrapper from '@/components/FocusWrapper';
-import {
-  previewScreen,
-  postScreen,
-  putScreen,
-  previewScreenModel,
-  postScreenModel,
-  putScreenModel,
-} from '@/services';
-import { captureCover, captureCoverAndUpload } from '@/utils/captureCover';
+import { previewScreen, previewScreenModel } from '@/services';
 import { goPreview, goPreviewModel } from '@/utils/tool';
-import { useIsModelHash } from '@/hooks';
+import { isModelHash } from '@/hooks';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import { saveScreenData } from '@/utils/Assist/DataChangePool';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const Header = (props: {
-  guideLine: ComponentData.TGuideLineConfig;
   screenData: Exclude<ComponentData.TScreenData, 'components'>;
-  components: ComponentData.TComponentData[];
   setScreen?: (data: ComponentMethod.GlobalUpdateScreenDataParams) => void;
 }) => {
-  const { screenData, setScreen, components, guideLine } = props;
-  const { name, _id, description, poster } = screenData || {};
+  const { screenData, setScreen } = props;
+  const { name, _id } = screenData || {};
   const [editMode, setEditMode] = useState<boolean>(false);
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
 
@@ -65,12 +56,11 @@ const Header = (props: {
     );
   }, [editMode, name, setScreen]);
 
-  const isModel = useIsModelHash();
-
   const handlePreview = useCallback(async () => {
     if (fetchLoading) return;
     setFetchLoading(true);
     try {
+      const isModel = isModelHash(location.hash);
       // 大屏预览或模板预览
       const requestMethod = isModel ? previewScreenModel : previewScreen;
       const linkMethod = isModel ? goPreviewModel : goPreview;
@@ -81,75 +71,14 @@ const Header = (props: {
     } finally {
       setFetchLoading(false);
     }
-  }, [_id, fetchLoading, isModel]);
+  }, [_id, fetchLoading]);
 
   const handleStore = useCallback(async () => {
-    if (fetchLoading) return;
-    setFetchLoading(true);
-    NProgress.start();
-
-    try {
-      let coverPoster = poster;
-      if (!coverPoster) {
-        // 截图
-        const coverBlob = await captureCover('#panel-id');
-        coverPoster = (await captureCoverAndUpload(coverBlob)) as any;
-        setScreen?.({
-          poster: coverPoster,
-        });
-      }
-
-      const params = {
-        _id,
-        name,
-        description,
-        poster: coverPoster,
-        flag: 'PC',
-        data: JSON.stringify({
-          ...screenData,
-          config: {
-            ...screenData.config,
-            attr: {
-              ...screenData.config.attr,
-              guideLine,
-            },
-          },
-          poster: screenData.poster || coverPoster,
-          components,
-        }),
-      };
-      let method: any;
-      // 模板
-      if (isModel) {
-        method = _id ? putScreenModel : postScreenModel;
-      }
-      // 大屏
-      else {
-        method = _id ? putScreen : postScreen;
-      }
-
-      const result = await method(params as any);
-      setScreen?.({
-        _id: result as string,
-      });
-    } catch (err) {
-      message.info('保存失败，请重试');
-    } finally {
-      setFetchLoading(false);
-      NProgress.done();
-    }
-  }, [
-    components,
-    description,
-    fetchLoading,
-    _id,
-    name,
-    poster,
-    screenData,
-    setScreen,
-    isModel,
-    guideLine,
-  ]);
+    await saveScreenData({
+      loading: fetchLoading,
+      setLoading: setFetchLoading,
+    });
+  }, [fetchLoading]);
 
   const extra = useMemo(() => {
     const previewButton = (
@@ -174,8 +103,13 @@ const Header = (props: {
         loading={fetchLoading}
       ></Button>
     );
-    if (!_id) return [storeButton];
-    return [previewButton, storeButton];
+    if (GlobalConfig.DEFAULT_SCREEN_SAVE_TYPE === 'manual') {
+      if (!_id) return [storeButton];
+      return [previewButton, storeButton];
+    } else {
+      if (!!_id) return [previewButton];
+      return [];
+    }
   }, [handlePreview, handleStore, _id, fetchLoading]);
 
   return (

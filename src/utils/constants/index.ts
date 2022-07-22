@@ -39,4 +39,4 @@ export const REQUEST_TIMEOUT = 10000;
 
 // 默认的大屏封面
 export const DEFAULT_SCREEN_COVER =
-  'https://fc1tn.baidu.com/it/u=899773338,348679740&fm=202&mola=new&crop=v1';
+  'http://47.97.27.23/static/image/f6543dfd1e15f8e0ae4e5e1d4e7c975e.jpeg';

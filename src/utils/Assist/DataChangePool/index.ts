@@ -3,6 +3,7 @@ import { getDvaApp } from 'umi';
 import { useIdPathMap } from '@/hooks';
 import ComponentUtil, { getDvaGlobalModelData } from '../Component';
 
+export * from './SaveScreenData';
 class DataChangePool {
   multiSetComponentUtil: {
     counter: number;
