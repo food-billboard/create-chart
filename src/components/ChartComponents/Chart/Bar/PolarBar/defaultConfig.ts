@@ -9,7 +9,6 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_ANIMATION_CONFIG,
   DEFAULT_CONDITION_CONFIG,
-  DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getName, getNumberValue } from '@/utils/constants';
 import { TPolarBarConfig } from './type';
@@ -87,7 +86,7 @@ export default () => {
         },
         legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
         tooltip: {
-          ...DEFAULT_TOOLTIP_CONFIG,
+          ...DEFAULT_TOOLTIP_CONFIG(),
         },
         animation: {
           ...DEFAULT_ANIMATION_CONFIG,

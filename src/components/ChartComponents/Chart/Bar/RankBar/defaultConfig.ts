@@ -95,7 +95,7 @@ export default () => {
           },
         },
         tooltip: {
-          ...DEFAULT_TOOLTIP_CONFIG,
+          ...DEFAULT_TOOLTIP_CONFIG(),
           formatter: '{b0}: {c0}',
           animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
         },

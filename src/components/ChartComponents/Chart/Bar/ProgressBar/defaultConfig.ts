@@ -64,7 +64,7 @@ export default () => {
           },
         },
         tooltip: {
-          ...DEFAULT_TOOLTIP_CONFIG,
+          ...DEFAULT_TOOLTIP_CONFIG(),
         },
         animation: {
           ...DEFAULT_ANIMATION_CONFIG,

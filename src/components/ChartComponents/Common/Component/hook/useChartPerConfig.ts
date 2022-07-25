@@ -1,15 +1,15 @@
 import { useMemo } from 'react';
+import { pick } from 'lodash';
 import ColorSelect from '@/components/ColorSelect';
 
 const { getRgbaString } = ColorSelect;
 
 const CHART_CONFIG_MAP = {
   grid: (value: ComponentData.ComponentGrid & { [key: string]: any }) => {
-    const { backgroundColor, ...nextGrid } = value;
+    const { ...nextGrid } = value;
     return {
       borderWidth: 0,
       ...nextGrid,
-      backgroundColor: getRgbaString(backgroundColor),
     };
   },
   tooltip: (value: ComponentData.ComponentTooltip & { [key: string]: any }) => {
@@ -46,12 +46,7 @@ const CHART_CONFIG_MAP = {
     };
   },
   xAxis: (value: ComponentData.ComponentXAxis & { [key: string]: any }) => {
-    const {
-      axisLabel: xAxisLabel,
-      nameTextStyle: xNameTextStyle,
-      splitLine,
-      ...nextXAxis
-    } = value;
+    const { axisLabel: xAxisLabel, splitLine, ...nextXAxis } = value;
     const base: any = {
       ...nextXAxis,
       splitLine: {
@@ -62,8 +57,8 @@ const CHART_CONFIG_MAP = {
         color: getRgbaString(xAxisLabel.color),
       },
       nameTextStyle: {
-        ...xNameTextStyle,
-        color: getRgbaString(xNameTextStyle.color),
+        ...pick(xAxisLabel, ['fontSize', 'fontWeight', 'fontFamily']),
+        color: getRgbaString(xAxisLabel.color),
       },
     };
     if (splitLine && splitLine.show) {
@@ -79,12 +74,7 @@ const CHART_CONFIG_MAP = {
     return base;
   },
   yAxis: (value: ComponentData.ComponentYAxis & { [key: string]: any }) => {
-    const {
-      axisLabel: yAxisLabel,
-      nameTextStyle: yNameTextStyle,
-      splitLine,
-      ...nextYAxis
-    } = value;
+    const { axisLabel: yAxisLabel, splitLine, ...nextYAxis } = value;
 
     const base = {
       ...nextYAxis,
@@ -96,8 +86,8 @@ const CHART_CONFIG_MAP = {
         color: getRgbaString(yAxisLabel.color),
       },
       nameTextStyle: {
-        ...yNameTextStyle,
-        color: getRgbaString(yNameTextStyle.color),
+        ...pick(yAxisLabel, ['fontSize', 'fontWeight', 'fontFamily']),
+        color: getRgbaString(yAxisLabel.color),
       },
     };
 
@@ -114,12 +104,7 @@ const CHART_CONFIG_MAP = {
     return base;
   },
   yAxis2: (value: ComponentData.ComponentYAxis & { [key: string]: any }) => {
-    const {
-      axisLabel: yAxisLabel,
-      nameTextStyle: yNameTextStyle,
-      splitLine,
-      ...nextYAxis
-    } = value;
+    const { axisLabel: yAxisLabel, splitLine, ...nextYAxis } = value;
 
     const base = {
       ...nextYAxis,
@@ -131,8 +116,8 @@ const CHART_CONFIG_MAP = {
         color: getRgbaString(yAxisLabel.color),
       },
       nameTextStyle: {
-        ...yNameTextStyle,
-        color: getRgbaString(yNameTextStyle.color),
+        ...pick(yAxisLabel, ['fontSize', 'fontWeight', 'fontFamily']),
+        color: getRgbaString(yAxisLabel.color),
       },
     };
 

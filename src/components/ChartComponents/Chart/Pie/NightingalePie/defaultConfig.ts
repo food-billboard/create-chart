@@ -75,7 +75,7 @@ export default () => {
         condition: [DEFAULT_CONDITION_CONFIG()],
         legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
         tooltip: {
-          ...DEFAULT_TOOLTIP_CONFIG,
+          ...DEFAULT_TOOLTIP_CONFIG(),
           animation: {
             ...DEFAULT_TOOLTIP_ANIMATION_CONFIG,
           },

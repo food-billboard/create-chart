@@ -1,14 +1,10 @@
 import { ReactNode, useCallback, useMemo } from 'react';
-import { CompatColorSelect } from '@/components/ColorSelect';
 import ConfigList from '../Structure/ConfigList';
 import { SingleCollapse as Collapse } from '../Collapse';
-import FullForm from '../Structure/FullForm';
 import MarginConfig from '../MarginConfig';
 
-const { Item } = ConfigList;
-
 export type GridConfigProps = {
-  ignore?: ('show' | 'position' | 'backgroundColor')[];
+  ignore?: ('show' | 'position')[];
   value: Partial<ComponentData.ComponentGrid> & { [key: string]: any };
   onChange?: (value: any) => void;
   children?: ReactNode;
@@ -16,7 +12,7 @@ export type GridConfigProps = {
 
 const GridConfig = (props: GridConfigProps) => {
   const { ignore = ['show'], value, onChange, children } = props;
-  const { show, backgroundColor, left, top, right, bottom } = value;
+  const { show, left, top, right, bottom } = value;
 
   const onKeyChange = useCallback(
     (key: string, value: any) => {
@@ -38,27 +34,9 @@ const GridConfig = (props: GridConfigProps) => {
     return !ignore.includes('show');
   }, [ignore]);
 
-  const needBackgroundColor = useMemo(() => {
-    return !ignore.includes('backgroundColor');
-  }, [ignore]);
-
   const needPosition = useMemo(() => {
     return !ignore.includes('position');
   }, [ignore]);
-
-  const backgroundColorConfig = useMemo(() => {
-    if (!needBackgroundColor) return null;
-    return (
-      <Item label="背景颜色">
-        <FullForm>
-          <CompatColorSelect
-            value={backgroundColor}
-            onChange={onKeyChange.bind(null, 'backgroundColor')}
-          />
-        </FullForm>
-      </Item>
-    );
-  }, [needBackgroundColor, backgroundColor, onKeyChange]);
 
   const positionConfig = useMemo(() => {
     if (!needPosition) return null;
@@ -89,7 +67,6 @@ const GridConfig = (props: GridConfigProps) => {
           activeKey: ['legend'],
         }}
       >
-        {backgroundColorConfig}
         {positionConfig}
         {children}
       </Collapse>
@@ -98,7 +75,6 @@ const GridConfig = (props: GridConfigProps) => {
 
   return (
     <ConfigList>
-      {backgroundColorConfig}
       {positionConfig}
       {children}
     </ConfigList>

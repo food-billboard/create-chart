@@ -136,12 +136,6 @@ export const DEFAULT_GRID_CONFIG: ComponentData.ComponentGrid = {
   right: 40,
   bottom: 60,
   show: true,
-  backgroundColor: {
-    r: 0,
-    g: 0,
-    b: 0,
-    a: 0,
-  },
 };
 
 // xAxis
@@ -149,15 +143,11 @@ export const DEFAULT_X_AXIS_CONFIG: ComponentData.ComponentXAxis = {
   show: true,
   position: 'bottom',
   axisLabel: {
-    show: true,
     rotate: 0,
     margin: 8,
     ...DEFAULT_FONT_CONFIG,
   },
   name: '',
-  nameTextStyle: {
-    ...DEFAULT_FONT_CONFIG,
-  },
 };
 
 // yAxis
@@ -167,25 +157,26 @@ export const DEFAULT_Y_AXIS_CONFIG: ComponentData.ComponentYAxis = {
 };
 
 // tooltip
-export const DEFAULT_TOOLTIP_CONFIG: ComponentData.ComponentTooltip = {
-  show: true,
-  formatter: '',
-  backgroundColor: {
-    r: 50,
-    g: 50,
-    b: 50,
-    a: 0.7,
-  },
-  textStyle: {
-    ...DEFAULT_FONT_CONFIG,
-    color: {
-      r: 255,
-      g: 255,
-      b: 255,
-    },
-    fontSize: 14,
-  },
-};
+export const DEFAULT_TOOLTIP_CONFIG: () => ComponentData.ComponentTooltip =
+  () => {
+    return {
+      show: true,
+      formatter: '',
+      backgroundColor: {
+        ...ThemeUtil.generateNextColor4CurrentTheme(0),
+        a: 0.6,
+      },
+      textStyle: {
+        ...DEFAULT_FONT_CONFIG,
+        color: {
+          r: 255,
+          g: 255,
+          b: 255,
+        },
+        fontSize: 14,
+      },
+    };
+  };
 
 // tooltip animation
 export const DEFAULT_TOOLTIP_ANIMATION_CONFIG: ComponentData.ComponentTooltipAnimation =

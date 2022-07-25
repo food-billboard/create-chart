@@ -106,7 +106,7 @@ export default () => {
         },
         legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
         tooltip: {
-          ...DEFAULT_TOOLTIP_CONFIG,
+          ...DEFAULT_TOOLTIP_CONFIG(),
         },
         animation: {
           ...DEFAULT_ANIMATION_CONFIG,

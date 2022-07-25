@@ -404,7 +404,6 @@ declare namespace ComponentData {
   // 网格
   export type ComponentGrid = {
     show: boolean;
-    backgroundColor: TColorConfig;
   } & TComponentMarginConfig;
 
   // xAxis
@@ -412,12 +411,10 @@ declare namespace ComponentData {
     show: boolean;
     position: 'top' | 'bottom';
     axisLabel: {
-      show: boolean;
       rotate: number;
       margin: number;
     } & TFontConfig;
     name: string;
-    nameTextStyle: TFontConfig;
   };
 
   // yAxis

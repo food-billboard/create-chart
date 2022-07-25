@@ -83,6 +83,27 @@ const AxisConfig = (props: AxisConfigProps) => {
     );
   }, [needPosition, type, position, onKeyChange]);
 
+  const textStyleConfig = useMemo(() => {
+    return (
+      <Collapse
+        child={{
+          header: '文本',
+          key: 'textStyle',
+        }}
+      >
+        <FontConfigList
+          value={pick(axisLabel!, [
+            'color',
+            'fontSize',
+            'fontWeight',
+            'fontFamily',
+          ])}
+          onChange={onKeyChange.bind(null, 'axisLabel')}
+        />
+      </Collapse>
+    );
+  }, [axisLabel, onKeyChange]);
+
   const axisLabelConfig = useMemo(() => {
     if (!needAxisLabel) return null;
     return (
@@ -91,9 +112,6 @@ const AxisConfig = (props: AxisConfigProps) => {
         child={{
           header: '刻度标签',
           key: 'axisLabel',
-          visibleRender: true,
-          value: axisLabel!.show,
-          onChange: onAxisLabelChange.bind(null, 'show'),
         }}
       >
         <AngleSelect
@@ -109,23 +127,6 @@ const AxisConfig = (props: AxisConfigProps) => {
             />
           </FullForm>
         </Item>
-        <Collapse
-          child={{
-            header: '文本',
-            key: 'textStyle',
-          }}
-          level={3}
-        >
-          <FontConfigList
-            value={pick(axisLabel!, [
-              'color',
-              'fontSize',
-              'fontWeight',
-              'fontFamily',
-            ])}
-            onChange={onKeyChange.bind(null, 'axisLabel')}
-          />
-        </Collapse>
       </Collapse>
     );
   }, [needAxisLabel, axisLabel, onAxisLabelChange, onKeyChange]);
@@ -138,24 +139,15 @@ const AxisConfig = (props: AxisConfigProps) => {
           header: '名称',
           key: 'name',
         }}
+        parent={{
+          defaultActiveKey: ['name'],
+        }}
       >
         <Item label="内容">
           <FullForm>
             <Input value={name} onChange={onKeyChange.bind(null, 'name')} />
           </FullForm>
         </Item>
-        <Collapse
-          child={{
-            header: '文字',
-            key: 'font',
-          }}
-          level={3}
-        >
-          <FontConfigList
-            value={nameTextStyle}
-            onChange={onKeyChange.bind(null, 'nameTextStyle')}
-          />
-        </Collapse>
       </Collapse>
     );
   }, [needName, name, nameTextStyle, onKeyChange]);
@@ -190,6 +182,7 @@ const AxisConfig = (props: AxisConfigProps) => {
   return (
     <ConfigList>
       {positionConfig}
+      {textStyleConfig}
       {axisLabelConfig}
       {nameConfig}
       {splitLineConfig}

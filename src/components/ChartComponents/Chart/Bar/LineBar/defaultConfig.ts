@@ -130,7 +130,7 @@ export default () => {
         yAxis: omit(DEFAULT_Y_AXIS_CONFIG, 'position'),
         yAxis2: omit(DEFAULT_Y_AXIS_CONFIG, 'position'),
         tooltip: {
-          ...DEFAULT_TOOLTIP_CONFIG,
+          ...DEFAULT_TOOLTIP_CONFIG(),
           animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
         },
         animation: {

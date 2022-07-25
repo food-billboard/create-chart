@@ -104,7 +104,7 @@ export default () => {
       },
       options: {
         tooltip: {
-          ...DEFAULT_TOOLTIP_CONFIG,
+          ...DEFAULT_TOOLTIP_CONFIG(),
         },
         grid: {
           ...DEFAULT_GRID_CONFIG,

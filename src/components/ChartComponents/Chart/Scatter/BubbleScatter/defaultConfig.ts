@@ -63,14 +63,14 @@ export default () => {
       },
       options: {
         grid: {
-          ...omit(DEFAULT_GRID_CONFIG, ['backgroundColor']),
+          ...DEFAULT_GRID_CONFIG,
           left: 160,
           top: 29,
           bottom: 30,
         },
         condition: [DEFAULT_CONDITION_CONFIG()],
         tooltip: {
-          ...DEFAULT_TOOLTIP_CONFIG,
+          ...DEFAULT_TOOLTIP_CONFIG(),
           animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
           show: false,
         },

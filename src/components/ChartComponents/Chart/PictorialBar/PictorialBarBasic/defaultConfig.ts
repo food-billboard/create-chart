@@ -84,7 +84,7 @@ export default () => {
         },
         yAxis: DEFAULT_Y_AXIS_CONFIG,
         tooltip: {
-          ...DEFAULT_TOOLTIP_CONFIG,
+          ...DEFAULT_TOOLTIP_CONFIG(),
           animation: {
             ...DEFAULT_TOOLTIP_ANIMATION_CONFIG,
           },

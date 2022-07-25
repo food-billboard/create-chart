@@ -95,7 +95,7 @@ export default () => {
         xAxis: omit(DEFAULT_X_AXIS_CONFIG, 'position'),
         yAxis: omit(DEFAULT_Y_AXIS_CONFIG, 'position'),
         tooltip: {
-          ...DEFAULT_TOOLTIP_CONFIG,
+          ...DEFAULT_TOOLTIP_CONFIG(),
           animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
         },
         animation: {
