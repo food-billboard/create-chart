@@ -31,10 +31,10 @@ const InputNumber = (
 
   const onBlur = useCallback(
     (e) => {
-      propsOnChange?.(stateValue);
+      if (value !== stateValue) propsOnChange?.(stateValue);
       propsOnBlur?.(e);
     },
-    [propsOnBlur, propsOnChange, stateValue],
+    [propsOnBlur, propsOnChange, stateValue, value],
   );
 
   useEffect(() => {
