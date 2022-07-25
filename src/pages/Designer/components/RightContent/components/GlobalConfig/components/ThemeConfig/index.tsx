@@ -1,14 +1,14 @@
-import { useMemo, useCallback, useEffect, useState } from 'react';
+import { useMemo, useCallback, useState } from 'react';
 import { Select } from 'antd';
+import { useHash } from '@/hooks';
 import ThemeUtil from '@/utils/Assist/Theme';
 
-const ThemeConfig = (props: {
-  value: string;
-  onChange: (value: string) => void;
+export const BaseThemeConfig = (props: {
+  value?: string;
+  onChange?: (value: string) => void;
+  disabled?: boolean;
 }) => {
-  const { value, onChange: propsOnChange } = props;
-
-  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const { value, onChange: propsOnChange, disabled } = props;
 
   const dataSource = useMemo(() => {
     return Object.keys(ThemeUtil.themeDataSource).map((item) => {
@@ -21,31 +21,18 @@ const ThemeConfig = (props: {
 
   const onChange = useCallback(
     (value) => {
-      propsOnChange(value);
+      propsOnChange?.(value);
       ThemeUtil.initCurrentThemeData(value);
     },
     [propsOnChange],
   );
-
-  const hashChange = () => {
-    const hash = location.hash;
-    setIsEdit(/id=/.test(hash));
-  };
-
-  useEffect(() => {
-    hashChange();
-    window.addEventListener('hashchange', hashChange);
-    return () => {
-      window.removeEventListener('hashchange', hashChange);
-    };
-  }, []);
 
   return (
     <Select
       value={value}
       onChange={onChange}
       className="w-100"
-      disabled={!!isEdit}
+      disabled={!!disabled}
     >
       {dataSource.map((item) => {
         const { label, value } = item;
@@ -57,6 +44,19 @@ const ThemeConfig = (props: {
       })}
     </Select>
   );
+};
+
+const ThemeConfig = (props: {
+  value: string;
+  onChange: (value: string) => void;
+}) => {
+  const [isEdit, setIsEdit] = useState<boolean>(/id=/.test(location.hash));
+
+  useHash((hash) => {
+    setIsEdit(/id=/.test(hash));
+  });
+
+  return <BaseThemeConfig disabled={isEdit} {...props} />;
 };
 
 export default ThemeConfig;

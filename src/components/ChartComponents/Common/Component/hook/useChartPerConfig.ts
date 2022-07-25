@@ -10,6 +10,7 @@ const CHART_CONFIG_MAP = {
     return {
       borderWidth: 0,
       ...nextGrid,
+      backgroundColor: 'transparent',
     };
   },
   tooltip: (value: ComponentData.ComponentTooltip & { [key: string]: any }) => {

@@ -7,6 +7,7 @@ import ThemeUtil from '@/utils/Assist/Theme';
 import { DEFAULT_SCREEN_DATA } from '@/utils/constants';
 import { useIsModelHash } from '@/hooks';
 import { getScreenDetail, getScreenModelDetail } from '@/services';
+import { sleep } from '@/utils';
 import { mergeComponentDefaultConfig } from '../ChartComponents';
 import { autoFitScale } from '../../pages/Designer/components/Panel/components/ToolBar/components/Scale';
 import { mapStateToProps, mapDispatchToProps } from './connect';
@@ -19,6 +20,7 @@ const FetchScreenComponent = forwardRef<
   FetchScreenComponentRef,
   {
     needFetch?: boolean;
+    onLoad?: () => void;
     setScale?: (scale: number) => void;
     setVersion: (value: string) => void;
     setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
@@ -36,6 +38,7 @@ const FetchScreenComponent = forwardRef<
     setScale,
     setGuideLine,
     setVersion,
+    onLoad,
   } = props;
 
   const isModel = useIsModelHash();
@@ -93,6 +96,10 @@ const FetchScreenComponent = forwardRef<
 
     const result = autoFitScale(width, height);
     setScale?.(result);
+
+    await sleep(1000);
+
+    onLoad?.();
   };
 
   useImperativeHandle(

@@ -8,3 +8,4 @@ export * from './useLocalStorage';
 export * from './useHash';
 export * from './useGetUserInfo';
 export * from './useIsScrolling';
+export * from './usePrimaryColor';

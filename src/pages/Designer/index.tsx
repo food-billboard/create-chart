@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ConfigProvider } from 'antd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -7,6 +7,8 @@ import { useHashChangeReload } from '@/hooks';
 import FetchScreenComponent, {
   FetchScreenComponentRef,
 } from '@/components/FetchScreenComponent';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import PageLoading from './components/PageLoading';
 import ShepherdWrapper from './components/ShepherdWrapper';
 import Header from './components/Header';
 import LeftContent from './components/LeftContent';
@@ -21,6 +23,8 @@ const Designer = (props: {
 }) => {
   const { setScreenType, getMockValueKindMap } = props;
 
+  const [loading, setLoading] = useState<boolean>(true);
+
   const requestRef = useRef<FetchScreenComponentRef>(null);
 
   const preventDefaultContextMenu = (e: any) => {
@@ -29,6 +33,7 @@ const Designer = (props: {
   };
 
   const reload = async () => {
+    setLoading(true);
     requestRef.current?.reload();
   };
 
@@ -47,7 +52,11 @@ const Designer = (props: {
   }, [setScreenType]);
 
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'production') return;
+    if (
+      process.env.NODE_ENV !== 'production' ||
+      GlobalConfig.DEFAULT_SCREEN_SAVE_TYPE !== 'auto'
+    )
+      return;
     window.addEventListener('beforeunload', closeAndPrompt);
     return () => {
       window.removeEventListener('beforeunload', closeAndPrompt);
@@ -71,7 +80,11 @@ const Designer = (props: {
           </div>
         </div>
       </ShepherdWrapper>
-      <FetchScreenComponent ref={requestRef} />
+      <PageLoading value={loading} />
+      <FetchScreenComponent
+        onLoad={setLoading.bind(null, false)}
+        ref={requestRef}
+      />
     </ConfigProvider>
   );
 };

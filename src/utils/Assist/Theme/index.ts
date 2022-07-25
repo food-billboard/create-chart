@@ -1,7 +1,12 @@
 import { registerTheme } from 'echarts';
 import color from 'color';
+import Eventemitter3 from 'eventemitter3';
 import WonderlandTheme from '../../../theme/wonderland.project.json';
 import ShineTheme from '../../../theme/shine.project.json';
+
+export const ThemeEventEmitter = new Eventemitter3();
+
+export const THEM_EVENT_NAME = 'THEM_EVENT_NAME';
 
 class ThemeUtil {
   currentTheme!: string;
@@ -28,6 +33,8 @@ class ThemeUtil {
     const theme = this.themeDataSource[themeName];
     this.currentTheme = themeName;
     this.currentThemeColor = theme.color;
+
+    ThemeEventEmitter.emit(THEM_EVENT_NAME, this.currentThemeColor[0]);
   }
 
   // 生成下一个当前色调的颜色
