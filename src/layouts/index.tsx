@@ -144,7 +144,7 @@ const GlobalLayout = (props: any) => {
     return isMobileJudge();
   }, [pathname]);
 
-  if (isMobile)
+  if (isMobile && pathname !== '/')
     return (
       <Empty
         description="请在电脑端使用"
