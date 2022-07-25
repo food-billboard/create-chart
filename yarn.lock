@@ -7991,6 +7991,11 @@ react-sortable-hoc@^2.0.0:
     invariant "^2.2.4"
     prop-types "^15.5.7"
 
+react-spinners@^0.13.3:
+  version "0.13.3"
+  resolved "https://registry.npmmirror.com/react-spinners/-/react-spinners-0.13.3.tgz#9d00d10fb2a0869b21efdc13fb0fddbcecd05731"
+  integrity sha512-FHQMH6dAl1Vw4Lxv0H7hbGsjBs0aKNVwjGrDJLuD9R/C3h9+IuBhKJOJyCcegxMaLiBSBV96Tp+XV3OwPK8Vtw==
+
 react-syntax-highlighter@^15.4.5:
   version "15.4.5"
   resolved "https://registry.npmmirror.com/react-syntax-highlighter/download/react-syntax-highlighter-15.4.5.tgz#db900d411d32a65c8e90c39cd64555bf463e712e"

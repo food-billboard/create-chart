@@ -78,6 +78,7 @@
     "react-shepherd": "^3.3.6",
     "react-slick": "^0.28.1",
     "react-sortable-hoc": "^2.0.0",
+    "react-spinners": "^0.13.3",
     "react-syntax-highlighter": "^15.4.5",
     "react-text-loop-next": "^0.0.3",
     "react-tiny-fab": "^4.0.4",
