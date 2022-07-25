@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { Form, Space, Row, Col } from 'antd';
 // @ts-ignore
 import Parallax from 'parallax-js';
+import EnterSubmitWrapper from '@/components/EnterSubmitWrapper';
 import circleImage from '../../../../../public/login/login-left-circle.png';
 import animationImageMain from '../../../../../public/login/login-background-main.png';
 import logo from '../../../../../public/logo.jpg';
@@ -43,7 +44,7 @@ const CommonBackground = (props: {
   }, []);
 
   return (
-    <div
+    <EnterSubmitWrapper
       className={classnames(styles['login-form-background'], className)}
       style={style}
       onSubmit={onSubmit}
@@ -84,40 +85,6 @@ const CommonBackground = (props: {
                   )}
                 >
                   <div className="pos-re w-100 h-100">
-                    {/* <div
-                      data-depth="0.5"
-                      data-invert-x="true"
-                      className={classnames(styles['login-form-background-info-animation'], PARALLAX_CLASS_NAME)}
-                    >
-                      <div>
-                        <img
-                          src={animationImageBottom}
-                        />
-                      </div>
-                    </div>
-                    <div
-                      className={classnames(PARALLAX_CLASS_NAME, styles['login-form-background-info-animation'])}
-                      data-invert-y="true"
-                      data-depth="0.55"
-                    >
-                      <div>
-                        <img
-                          src={animationImageTop}
-                        />
-                      </div>
-                    </div>
-                    <div
-                      className={classnames(styles['login-form-background-info-animation'], PARALLAX_CLASS_NAME)}
-                      data-depth="0.6"
-                      data-invert-x="true"
-                      data-invert-y="true"
-                    >
-                      <div>
-                        <img
-                          src={animationImageSmall}
-                        />
-                      </div>
-                    </div> */}
                     <div
                       className={classnames(
                         styles['login-form-background-info-animation'],
@@ -187,7 +154,7 @@ const CommonBackground = (props: {
           </div>
         </div>
       </div>
-    </div>
+    </EnterSubmitWrapper>
   );
 };
 
