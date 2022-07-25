@@ -1,5 +1,5 @@
 import request from '../utils/request';
-import { SCREEN_VERSION } from '../utils/constants';
+import { SCREEN_VERSION, SERVICE_REQUEST_URL } from '../utils/constants';
 
 const { REACT_APP_ENV } = process.env;
 
@@ -143,7 +143,7 @@ export const disabledScreen = (params: API_SCREEN.TDisabledScreenParams) => {
 
 // 服务端代理数据请求
 export const preRequestData = (data: API_SCREEN.TPreRequestDataParams) => {
-  return request('/api/screen/pre/request', {
+  return request(SERVICE_REQUEST_URL, {
     method: 'POST',
     data,
   });

@@ -34,6 +34,9 @@ export const SCREEN_MODEL_VERSION = version;
 // mock 数据请求的后端地址
 export const MOCK_REQUEST_URL = '/api/screen/mock';
 
+// 服务端请求的后端地址
+export const SERVICE_REQUEST_URL = '/api/screen/pre/request';
+
 // 数据请求超时时间
 export const REQUEST_TIMEOUT = 10000;
 

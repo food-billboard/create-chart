@@ -1,4 +1,8 @@
-import { DEFAULT_SCREEN_COVER as defaultScreenCover } from '../../constants';
+import {
+  DEFAULT_SCREEN_COVER as defaultScreenCover,
+  MOCK_REQUEST_URL as DEFAULT_MOCK_REQUEST_URL,
+  SERVICE_REQUEST_URL,
+} from '../../constants';
 class GlobalConfig {
   // 条件的最大个数
   CONDITION_COUNTER = 4;
@@ -26,6 +30,12 @@ class GlobalConfig {
   // 是否开启 mock数据配置
   ENABLE_MOCK_DATA_CONFIG = true;
 
+  // mock数据请求的url地址
+  MOCK_REQUEST_URL = DEFAULT_MOCK_REQUEST_URL;
+
+  // 服务端请求的url地址
+  SERVICE_SIDE_REQUEST_URL = SERVICE_REQUEST_URL;
+
   // 大屏的默认封面
   DEFAULT_SCREEN_COVER = defaultScreenCover;
 
@@ -42,6 +52,8 @@ class GlobalConfig {
       };
       ENABLE_MOCK_DATA_CONFIG: boolean;
       DEFAULT_SCREEN_SAVE_TYPE: 'auto' | 'manual';
+      MOCK_REQUEST_URL: string;
+      SERVICE_SIDE_REQUEST_URL: string;
     }>,
   ) => {
     Object.entries(settings).forEach((setting) => {
