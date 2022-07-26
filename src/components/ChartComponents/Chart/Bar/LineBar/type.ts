@@ -33,5 +33,5 @@ export type TLineBarConfig = {
     line: ComponentData.ComponentChartAnimationConfig;
     bar: ComponentData.ComponentChartAnimationConfig;
   };
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

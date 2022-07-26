@@ -70,7 +70,7 @@ const StackBar = (props: {
     onCondition: propsOnCondition,
     style: conditionStyle,
     className: conditionClassName,
-  } = useCondition(onCondition);
+  } = useCondition(onCondition, screenType);
 
   const {
     s: seriesKeys,

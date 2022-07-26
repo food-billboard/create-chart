@@ -108,7 +108,7 @@ export default () => {
         grid: {
           ...DEFAULT_GRID_CONFIG,
         },
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
         legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
         xAxis: {
           ...DEFAULT_X_AXIS_CONFIG,

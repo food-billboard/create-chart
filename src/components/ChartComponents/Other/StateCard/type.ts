@@ -14,5 +14,5 @@ export type TStateCardConfig = {
     margin: number;
     size: [number, number];
   };
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

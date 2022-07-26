@@ -23,5 +23,5 @@ export type TPolarBarConfig = {
     barWidth: number;
   };
   animation: ComponentData.ComponentChartAnimationConfig;
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

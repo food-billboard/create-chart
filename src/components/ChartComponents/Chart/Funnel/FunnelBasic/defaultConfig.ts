@@ -77,7 +77,7 @@ export default () => {
           ...DEFAULT_TOOLTIP_CONFIG(),
           animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
         },
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
         animation: {
           ...DEFAULT_ANIMATION_CONFIG,
           animationDuration: 2000,

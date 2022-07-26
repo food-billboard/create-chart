@@ -57,7 +57,7 @@ export default () => {
         },
       },
       options: {
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
         speed: 500,
         autoplay: true,
         pauseOnHover: true,

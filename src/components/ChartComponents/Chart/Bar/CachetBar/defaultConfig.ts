@@ -134,7 +134,7 @@ export default () => {
           barWidth: 10,
           borderRadius: 10,
         },
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
       },
     };
 

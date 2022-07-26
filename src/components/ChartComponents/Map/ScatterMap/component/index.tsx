@@ -72,7 +72,7 @@ const ScatterMap = (props: {
     onCondition: propsOnCondition,
     style: conditionStyle,
     className: conditionClassName,
-  } = useCondition(onCondition);
+  } = useCondition(onCondition, screenType);
 
   const { realValue } = useChartValueMapField(processedValue, {
     map: componentFilterMap,

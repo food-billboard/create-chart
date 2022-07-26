@@ -57,7 +57,7 @@ export default () => {
       },
       options: {
         padding: [8, 8],
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
         margin: [8, 8],
         textStyle: {
           ...DEFAULT_FONT_CONFIG,

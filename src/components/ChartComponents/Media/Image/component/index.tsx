@@ -23,15 +23,13 @@ const ImageBasic = (props: {
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
+  const { screenType } = global;
 
   const [visible, setVisible] = useState<boolean>(false);
 
   const {
     id,
-    config: {
-      options,
-      style: { width, height },
-    },
+    config: { options },
   } = value;
   const { type, content, repeat, condition, preview } = options;
 
@@ -59,7 +57,7 @@ const ImageBasic = (props: {
     onCondition: propsOnCondition,
     style: conditionStyle,
     className: conditionClassName,
-  } = useCondition(onCondition);
+  } = useCondition(onCondition, screenType);
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {

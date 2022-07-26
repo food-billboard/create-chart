@@ -18,5 +18,5 @@ export type TScatterBasicConfig = {
     }[];
   };
   animation: ComponentData.ComponentChartAnimationConfig;
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

@@ -30,7 +30,7 @@ const SunBurstBasic = (props: {
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
-  const { screenTheme } = global;
+  const { screenTheme, screenType } = global;
 
   const {
     id,
@@ -69,7 +69,7 @@ const SunBurstBasic = (props: {
     onCondition: propsOnCondition,
     style: conditionStyle,
     className: conditionClassName,
-  } = useCondition(onCondition);
+  } = useCondition(onCondition, screenType);
 
   const { value: realValue } = useChartValueMapField(processedValue, {
     map: componentFilterMap,

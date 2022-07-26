@@ -27,5 +27,5 @@ export type TWordCloudBasicConfig = {
     gridSize: number;
     layoutAnimation: boolean;
   };
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

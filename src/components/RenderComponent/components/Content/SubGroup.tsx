@@ -59,7 +59,7 @@ const SubGroup = (props: {
     onCondition: propsOnCondition,
     style: conditionStyle,
     className: conditionClassName,
-  } = useCondition(onCondition);
+  } = useCondition(onCondition, screenType);
 
   return (
     <>

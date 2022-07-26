@@ -21,13 +21,7 @@ const GridConfig = (props: {
     [onChange],
   );
 
-  return (
-    <GridConfigCommon
-      value={value}
-      onChange={onKeyChange}
-      ignore={['show', 'backgroundColor']}
-    />
-  );
+  return <GridConfigCommon value={value} onChange={onKeyChange} />;
 };
 
 export default GridConfig;

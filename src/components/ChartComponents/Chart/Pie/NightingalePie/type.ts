@@ -20,5 +20,5 @@ export type TNightingaleConfig = {
     radius: [number, number];
   };
   animation: ComponentData.ComponentChartAnimationConfig;
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

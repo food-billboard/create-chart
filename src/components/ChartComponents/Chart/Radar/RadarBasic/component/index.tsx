@@ -70,7 +70,7 @@ const RadarBasic = (props: {
     onCondition: propsOnCondition,
     style: conditionStyle,
     className: conditionClassName,
-  } = useCondition(onCondition);
+  } = useCondition(onCondition, screenType);
 
   const {
     x: xAxisKeys,

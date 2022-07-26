@@ -33,5 +33,5 @@ export type TPercentPieConfig = {
   animation: {
     scrollTimes: number;
   };
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

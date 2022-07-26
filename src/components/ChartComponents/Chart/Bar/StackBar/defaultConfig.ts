@@ -162,7 +162,7 @@ export default () => {
               };
             }),
         },
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
       },
     };
 

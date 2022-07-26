@@ -146,7 +146,7 @@ export default () => {
           },
           borderRadius: 30,
         },
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
       },
     };
 

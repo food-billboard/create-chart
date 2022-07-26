@@ -52,7 +52,7 @@ export default () => {
         },
       },
       options: {
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
         textStyle: {
           ...DEFAULT_FONT_CONFIG,
           fontSize: 24,

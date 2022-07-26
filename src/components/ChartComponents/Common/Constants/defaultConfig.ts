@@ -222,29 +222,34 @@ export const DEFAULT_CONDITION_CONFIG_ITEM_RULE: () => ComponentData.ComponentRu
   });
 
 // condition
-export const DEFAULT_CONDITION_CONFIG: () => ComponentData.ComponentCondition =
+export const DEFAULT_CONDITION_CONFIG: () => ComponentData.ComponentConditionConfig =
   () => ({
-    id: nanoid(),
-    action: 'hidden',
-    type: 'condition',
-    value: {
-      code: {
-        relation: [],
-        code: `
-        // 可从参数中获取相关数据
-        // 在这里添加逻辑
-        // 返回true | false 表示是否符合条件
-        return true 
-      `,
-      },
-      condition: {
+    value: [
+      {
         id: nanoid(),
-        type: 'and',
-        rule: [
-          {
-            ...DEFAULT_CONDITION_CONFIG_ITEM_RULE(),
+        action: 'hidden',
+        type: 'condition',
+        value: {
+          code: {
+            relation: [],
+            code: `
+            // 可从参数中获取相关数据
+            // 在这里添加逻辑
+            // 返回true | false 表示是否符合条件
+            return true 
+          `,
           },
-        ],
+          condition: {
+            id: nanoid(),
+            type: 'and',
+            rule: [
+              {
+                ...DEFAULT_CONDITION_CONFIG_ITEM_RULE(),
+              },
+            ],
+          },
+        },
       },
-    },
+    ],
+    initialState: 'visible',
   });

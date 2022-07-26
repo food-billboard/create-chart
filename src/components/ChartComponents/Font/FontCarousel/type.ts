@@ -5,5 +5,5 @@ export type TFontCarouselConfig = {
   play: boolean;
   pauseOnHover: boolean;
   delay: number;
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

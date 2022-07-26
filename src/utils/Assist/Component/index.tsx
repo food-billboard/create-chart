@@ -88,7 +88,7 @@ export const createGroupComponent = (
       config: {
         ...DEFAULT_CONFIG,
         options: {
-          condition: [DEFAULT_CONDITION_CONFIG()],
+          condition: DEFAULT_CONDITION_CONFIG(),
         },
       },
     },

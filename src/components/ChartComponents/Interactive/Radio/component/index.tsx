@@ -142,7 +142,10 @@ const Radio = (props: {
         reGetValue={getValue}
         reCondition={() => {}}
         componentFilter={componentFilter}
-        componentCondition={[]}
+        componentCondition={{
+          initialState: 'visible',
+          value: [],
+        }}
       />
     </>
   );

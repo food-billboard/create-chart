@@ -3,5 +3,5 @@ export type TVideoConfig = {
   loop: boolean;
   controls: boolean;
   muted: boolean;
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

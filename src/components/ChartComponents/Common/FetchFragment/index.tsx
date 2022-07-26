@@ -13,11 +13,14 @@ export type TFetchFragmentProps = {
   screenType: ComponentData.ScreenType;
   url: string;
   componentFilter: ComponentData.TComponentFilterConfig[];
-  componentCondition?: ComponentData.ComponentCondition[];
+  componentCondition?: ComponentData.ComponentConditionConfig;
 
   reFetchData: () => Promise<any>;
   reGetValue: () => void;
-  reCondition?: (condition: ComponentData.ComponentCondition) => void;
+  reCondition?: (
+    condition: ComponentData.ComponentCondition,
+    initialState: ComponentData.ComponentConditionConfig['initialState'],
+  ) => void;
 };
 
 export type TFetchFragmentRef = {
@@ -33,7 +36,10 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
       filter,
       constants,
       componentFilter,
-      componentCondition = [],
+      componentCondition: componentConditionConfig = {
+        value: [],
+        initialState: 'visible',
+      },
       url,
       reFetchData,
       reGetValue,
@@ -41,6 +47,9 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
       id,
       screenType,
     } = props;
+
+    const { value: componentCondition, initialState } =
+      componentConditionConfig;
 
     // 检查数据过滤的方法
     const filterUtil = useRef<CompareFilterUtil>(
@@ -57,7 +66,9 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
           onFilter: async () => {
             return reGetValue();
           },
-          onCondition: reCondition,
+          onCondition: (condition) => {
+            return reCondition(condition, initialState);
+          },
           onHashChange: () => {
             // * 可能存在hash值手动更改的情况
             filterUtil.current?.compare(params);
@@ -75,9 +86,9 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
 
     useEffect(() => {
       componentCondition.forEach((condition) => {
-        reCondition(condition);
+        reCondition(condition, initialState);
       });
-    }, [componentCondition, reCondition]);
+    }, [componentCondition, reCondition, initialState]);
 
     useImperativeHandle(
       ref,

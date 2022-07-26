@@ -8,5 +8,5 @@ export type TCarouselConfig = {
   pauseOnHover: boolean;
   // easing: string
   fade: boolean;
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

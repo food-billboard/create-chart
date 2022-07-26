@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import ConditionConfigCommon from '@/components/ChartComponents/Common/ConditionConfig';
 
 const ConditionConfig = (props: {
-  value: ComponentData.ComponentCondition[];
+  value: ComponentData.ComponentConditionConfig;
   onChange: ComponentData.ComponentConfigProps['onChange'];
 }) => {
   const { value, onChange } = props;

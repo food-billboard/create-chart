@@ -9,5 +9,5 @@ export type TTagConfig = {
     position: 'start' | 'end';
     margin: number;
   };
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

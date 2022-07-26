@@ -122,7 +122,7 @@ export default () => {
             formatter: '{c}',
           },
         },
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
       },
     };
 

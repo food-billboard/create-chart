@@ -8,6 +8,7 @@ import { DEFAULT_SCREEN_DATA } from '@/utils/constants';
 import { useIsModelHash } from '@/hooks';
 import { getScreenDetail, getScreenModelDetail } from '@/services';
 import { sleep } from '@/utils';
+import { ConditionChange } from '@/utils/Assist/BreakingChange';
 import { mergeComponentDefaultConfig } from '../ChartComponents';
 import { autoFitScale } from '../../pages/Designer/components/Panel/components/ToolBar/components/Scale';
 import { mapStateToProps, mapDispatchToProps } from './connect';
@@ -80,7 +81,15 @@ const FetchScreenComponent = forwardRef<
         width = nextData.config.style.width;
         height = nextData.config.style.height;
         ThemeUtil.initCurrentThemeData(nextData.config.attr.theme);
-        const mergedComponentList = mergeComponentDefaultConfig(componentsList);
+
+        // * breaking change 1.8
+        const newVersionComponentList = ConditionChange(
+          componentsList,
+          version,
+        );
+        const mergedComponentList = mergeComponentDefaultConfig(
+          newVersionComponentList,
+        );
         setComponentAll(mergedComponentList, false);
       } catch (err) {
         message.info('数据获取失败');

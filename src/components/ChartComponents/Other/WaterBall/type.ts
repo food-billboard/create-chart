@@ -10,6 +10,6 @@ export type TWaterBallConfig = {
     center: [number, number];
     radius: number;
   };
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
   animation: ComponentData.ComponentChartAnimationConfig;
 };

@@ -69,7 +69,7 @@ const CandlestickBasic = (props: {
     onCondition: propsOnCondition,
     style: conditionStyle,
     className: conditionClassName,
-  } = useCondition(onCondition);
+  } = useCondition(onCondition, screenType);
 
   const { xAxisKeys, yAxisValues } = useChartValueMapField(processedValue, {
     map: componentFilterMap,

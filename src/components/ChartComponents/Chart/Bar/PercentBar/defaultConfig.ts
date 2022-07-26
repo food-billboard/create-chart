@@ -129,7 +129,7 @@ export default () => {
           borderRadius: 10,
           barWidth: 20,
         },
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
       },
     };
 

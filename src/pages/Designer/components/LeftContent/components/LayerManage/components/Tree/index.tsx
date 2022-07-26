@@ -219,15 +219,7 @@ const TreeFunction = (props: TreeProps) => {
   }, [components, expendKeys, iconMode, select]);
 
   return (
-    <div
-      className={styles['layer-manage']}
-      style={{
-        // @ts-ignore
-        '--layer-manage-border-color': getRgbaString(
-          ThemeUtil.generateNextColor4CurrentTheme(0),
-        ),
-      }}
-    >
+    <div className={styles['layer-manage']}>
       <AntTree.DirectoryTree
         onSelect={onSelect}
         showIcon={false}

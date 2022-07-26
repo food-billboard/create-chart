@@ -57,5 +57,5 @@ export type TGaugeBasicConfig = {
     } & ComponentData.TFontConfig;
   };
   animation: ComponentData.ComponentChartAnimationConfig;
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

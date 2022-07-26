@@ -128,7 +128,7 @@ export default () => {
             color: [],
           },
         },
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
       },
     };
 

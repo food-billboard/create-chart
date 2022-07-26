@@ -92,7 +92,7 @@ export default () => {
         },
       },
       options: {
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
         tooltip: {
           ...DEFAULT_TOOLTIP_CONFIG(),
           animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,

@@ -62,7 +62,7 @@ export default () => {
       preview: {
         show: false,
       },
-      condition: [DEFAULT_CONDITION_CONFIG()],
+      condition: DEFAULT_CONDITION_CONFIG(),
     },
   };
 

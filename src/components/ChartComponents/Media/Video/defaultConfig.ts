@@ -34,7 +34,7 @@ export default () => {
       },
     },
     options: {
-      condition: [DEFAULT_CONDITION_CONFIG()],
+      condition: DEFAULT_CONDITION_CONFIG(),
       autoplay: true,
       loop: true,
       controls: true,

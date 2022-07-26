@@ -144,7 +144,7 @@ export default () => {
             color: ThemeUtil.generateNextColor4CurrentTheme(3),
           },
         },
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
       },
     };
 

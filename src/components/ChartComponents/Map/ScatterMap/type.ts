@@ -43,5 +43,5 @@ export type TScatterMapConfig = {
   tooltip: ComponentData.ComponentTooltip & {
     animation: ComponentData.ComponentTooltipAnimation;
   };
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

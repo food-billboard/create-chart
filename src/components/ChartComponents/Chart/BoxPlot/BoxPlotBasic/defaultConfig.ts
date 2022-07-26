@@ -116,7 +116,7 @@ export default () => {
           boxWidth: [7, 50],
           itemStyle: [],
         },
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
       },
     };
 

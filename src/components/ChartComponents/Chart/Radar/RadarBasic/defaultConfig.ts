@@ -75,7 +75,7 @@ export default () => {
         },
       },
       options: {
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
         legend: omit(DEFAULT_LEGEND_CONFIG, 'type'),
         tooltip: {
           ...DEFAULT_TOOLTIP_CONFIG(),

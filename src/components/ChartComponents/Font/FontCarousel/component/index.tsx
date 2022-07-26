@@ -62,7 +62,7 @@ const TFontCarousel = (props: {
     onCondition: propsOnCondition,
     style: conditionStyle,
     className: conditionClassName,
-  } = useCondition(onCondition);
+  } = useCondition(onCondition, screenType);
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {

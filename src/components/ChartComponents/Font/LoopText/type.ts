@@ -22,5 +22,5 @@ export type TLoopTextConfig = {
     value: string;
     textStyle: ComponentData.TFontConfig;
   };
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

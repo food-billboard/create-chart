@@ -7,17 +7,19 @@ import { DEFAULT_CONDITION_CONFIG } from '../Constants/defaultConfig';
 import ConfigList from '../Structure/ConfigList';
 import FullForm from '../Structure/FullForm';
 import RuleTree from '../RuleTree';
+import InitialStateConfig from './components/InitialStateConfig';
 
 const { Item } = ConfigList;
 
 export type ConditionConfigProps = {
-  value: ComponentData.ComponentCondition[];
+  value: ComponentData.ComponentConditionConfig;
   onChange?: (value: any) => void;
   children?: ReactNode;
 };
 
 const ConditionConfig = (props: ConditionConfigProps) => {
-  const { value, onChange, children } = props;
+  const { value: config, onChange, children } = props;
+  const { value, initialState } = config;
 
   const onKeyChange = useCallback(
     (key: string, value: any) => {
@@ -65,7 +67,7 @@ const ConditionConfig = (props: ConditionConfigProps) => {
                         ...item,
                         type: e.target.value,
                       } as any);
-                      onChange?.(newValue);
+                      onKeyChange('value', newValue);
                     }}
                   />
                 </FullForm>
@@ -83,7 +85,7 @@ const ConditionConfig = (props: ConditionConfigProps) => {
                           condition: newCondition,
                         },
                       });
-                      onChange?.(newValue);
+                      onKeyChange('value', newValue);
                     }}
                   />
                 </div>
@@ -100,7 +102,7 @@ const ConditionConfig = (props: ConditionConfigProps) => {
                         condition,
                       },
                     });
-                    onChange?.(newValue);
+                    onKeyChange('value', newValue);
                   }}
                 />
               )}
@@ -137,7 +139,7 @@ const ConditionConfig = (props: ConditionConfigProps) => {
                         ...item,
                         action,
                       } as any);
-                      onChange?.(newValue);
+                      onKeyChange('value', newValue);
                     }}
                   />
                 </FullForm>
@@ -147,20 +149,34 @@ const ConditionConfig = (props: ConditionConfigProps) => {
         }}
         onAdd={() => {
           const newValue = [...value, { ...DEFAULT_CONDITION_CONFIG() }];
-          onChange?.(newValue);
+          onKeyChange('value', newValue);
         }}
         onRemove={(index) => {
           const newValue = [...value];
           newValue.splice(index, 1);
-          onChange?.(newValue);
+          onKeyChange('value', newValue);
         }}
         max={GlobalConfig.CONDITION_COUNTER}
       />
     );
   }, [value, onKeyChange]);
 
+  const initStateConfig = useMemo(() => {
+    return (
+      <Item label="初始状态">
+        <FullForm>
+          <InitialStateConfig
+            value={initialState}
+            onChange={onKeyChange.bind(null, 'initialState')}
+          />
+        </FullForm>
+      </Item>
+    );
+  }, [initialState, onKeyChange]);
+
   return (
     <ConfigList>
+      {initStateConfig}
       {conditionList}
       {children}
     </ConfigList>

@@ -60,7 +60,7 @@ export default () => {
       },
     },
     options: {
-      condition: [DEFAULT_CONDITION_CONFIG()],
+      condition: DEFAULT_CONDITION_CONFIG(),
       margin: 8,
       textStyle: {
         ...DEFAULT_FONT_CONFIG,

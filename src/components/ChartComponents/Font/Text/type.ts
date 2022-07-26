@@ -9,5 +9,5 @@ export type TTextConfig = {
     show: boolean;
     speed: number;
   };
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

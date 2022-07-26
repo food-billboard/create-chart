@@ -50,7 +50,7 @@ export default () => {
         },
       },
       options: {
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
         animation: {
           ...DEFAULT_ANIMATION_CONFIG,
           animationDuration: 2000,

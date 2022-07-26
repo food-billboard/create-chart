@@ -12,5 +12,5 @@ export type TStateListConfig = {
     backgroundColor: ComponentData.TColorConfig;
     borderRadius: [number, number, number, number];
   }[];
-  condition: ComponentData.ComponentCondition[];
+  condition: ComponentData.ComponentConditionConfig;
 };

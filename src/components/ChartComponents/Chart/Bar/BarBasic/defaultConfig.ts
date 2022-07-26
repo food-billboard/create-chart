@@ -144,7 +144,7 @@ export default () => {
           barGap: 1,
           barWidth: 'auto',
         },
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
       },
     };
 

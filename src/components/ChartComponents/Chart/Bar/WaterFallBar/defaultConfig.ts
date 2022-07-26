@@ -120,7 +120,7 @@ export default () => {
           },
           barWidth: 20,
         },
-        condition: [DEFAULT_CONDITION_CONFIG()],
+        condition: DEFAULT_CONDITION_CONFIG(),
       },
     };
 

@@ -31,6 +31,7 @@ const TitleBasic = (props: {
     config: { options },
   } = value;
   const { animation, condition, ...nextOptions } = options;
+  const { screenType } = global;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -56,7 +57,7 @@ const TitleBasic = (props: {
     onCondition: propsOnCondition,
     style: conditionStyle,
     className: conditionClassName,
-  } = useCondition(onCondition);
+  } = useCondition(onCondition, screenType);
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {

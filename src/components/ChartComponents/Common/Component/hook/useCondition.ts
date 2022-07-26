@@ -1,16 +1,23 @@
 import { CSSProperties, useCallback, useState } from 'react';
+import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 
 export const useCondition = (
   callback: (
     condition: ComponentData.ComponentCondition,
   ) => ComponentData.ComponentConditionActionType | false,
+  screenType: ComponentProps['global']['screenType'],
 ) => {
   const [className, setClassName] = useState<string>('');
   const [style, setStyle] = useState<CSSProperties>({});
 
   const onCondition = useCallback(
-    (condition: ComponentData.ComponentCondition) => {
+    (
+      condition: ComponentData.ComponentCondition,
+      initialState: ComponentData.ComponentConditionConfig['initialState'],
+    ) => {
       const result = callback(condition);
+
+      if (screenType === 'edit') return false;
 
       switch (result) {
         case 'ease-in':
@@ -30,14 +37,19 @@ export const useCondition = (
           setStyle({});
           break;
         case 'visible':
-        default:
           setClassName('');
+          setStyle({});
+          break;
+        default:
+          setClassName(
+            initialState === 'visible' ? '' : 'component-condition-hidden',
+          );
           setStyle({});
       }
 
       return result;
     },
-    [callback],
+    [callback, screenType],
   );
 
   return {

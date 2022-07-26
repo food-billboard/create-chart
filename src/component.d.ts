@@ -479,6 +479,12 @@ declare namespace ComponentData {
     };
   };
 
+  // condition
+  export type ComponentConditionConfig = {
+    value: ComponentCondition[];
+    initialState: 'visible' | 'hidden';
+  };
+
   export type ComponentTooltipAnimation = {
     speed: number;
     show: boolean;

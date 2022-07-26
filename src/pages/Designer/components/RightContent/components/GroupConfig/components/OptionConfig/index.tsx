@@ -111,7 +111,7 @@ const OrientConfig = (props: { component: ComponentData.TComponentData }) => {
           <ConditionConfig
             value={
               ((options as any)?.condition ||
-                []) as ComponentData.ComponentCondition[]
+                []) as ComponentData.ComponentConditionConfig
             }
             onChange={onChange}
           />
