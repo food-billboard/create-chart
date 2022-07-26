@@ -443,6 +443,7 @@ declare namespace ComponentData {
       | 'less-then'
       | 'great-then'
       | 'equal'
+      | 'not-equal'
       | 'not-less-then'
       | 'not-great-then'
       | 'include';

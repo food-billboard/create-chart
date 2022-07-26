@@ -87,6 +87,10 @@ const ConditionItem = (props: {
             value: 'equal',
           },
           {
+            label: '不等于',
+            value: 'not-equal',
+          },
+          {
             label: '不小于',
             value: 'not-less-then',
           },

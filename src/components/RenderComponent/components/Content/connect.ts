@@ -9,4 +9,4 @@ export const mapStateToProps = (state: ConnectState) => {
   };
 };
 
-export const mapDispatchToProps = (dispatch: any) => ({});
+export const mapDispatchToProps = () => ({});

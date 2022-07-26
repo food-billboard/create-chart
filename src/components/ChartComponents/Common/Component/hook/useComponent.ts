@@ -206,6 +206,8 @@ export function useComponent<P extends object = {}>(
             switch (condition) {
               case 'equal':
                 return target.value == value;
+              case 'not-equal':
+                return target.value != value;
               case 'great-then':
                 return target.value! > value;
               case 'include':
