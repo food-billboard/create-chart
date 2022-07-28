@@ -1,4 +1,6 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
+import { useThrottleFn, useDeepCompareEffect } from 'ahooks';
+import { useLayerHover } from './useLayerHover';
 
 let ID_PATH_MAP: {
   [key: string]: {
@@ -133,19 +135,100 @@ export function useIsComponentChildrenSelect(
   components: ComponentData.TComponentData[],
   select: string[],
 ) {
-  const isSelect = useMemo(() => {
-    try {
-      format(components, (target) => {
-        const { id } = target;
-        if (select.includes(id)) {
-          throw new Error();
-        }
-      });
-      return false;
-    } catch (err) {
-      return true;
-    }
-  }, [components, select]);
+  const [, , eventBinder] = useLayerHover();
 
-  return isSelect;
+  const [isSelect, setIsSelect] = useState<{
+    click: boolean;
+    hover: boolean;
+  }>({
+    click: false,
+    hover: false,
+  });
+
+  const isSelectRef = useRef<{
+    click: boolean;
+    hover: boolean;
+  }>({
+    click: false,
+    hover: false,
+  });
+
+  const idList = useRef<string[]>([]);
+
+  const { run } = useThrottleFn(
+    () => {
+      try {
+        idList.current = format(components, (target) => {
+          const { id } = target;
+          if (select.includes(id)) {
+            throw new Error();
+          }
+        });
+        isSelectRef.current = {
+          ...isSelectRef.current,
+          click: false,
+        };
+        // setIsSelect(prev => {
+        //   return {
+        //     ...prev,
+        //     click: false
+        //   }
+        // })
+      } catch (err) {
+        // setIsSelect(prev => {
+        //   return {
+        //     ...prev,
+        //     click: true
+        //   }
+        // })
+        isSelectRef.current = {
+          ...isSelectRef.current,
+          click: true,
+        };
+      } finally {
+        setIsSelect(isSelectRef.current);
+      }
+    },
+    {
+      wait: 10,
+    },
+  );
+
+  useDeepCompareEffect(() => {
+    run();
+  }, [select, components]);
+
+  useEffect(() => {
+    return eventBinder((hoverSelect, _, { getter, setter }) => {
+      // console.log(hoverSelect, idList.current.length)
+
+      // setIsSelect((isSelect => {
+      //   const currentResult = getter()
+
+      //   if(currentResult) return { ...isSelect, hover: false }
+
+      //   const result = !!hoverSelect && idList.current.includes(hoverSelect)
+
+      //   if(result) setter()
+
+      //   return {
+      //     ...isSelect,
+      //     hover: result
+      //   }
+      // }))
+
+      const currentResult = getter();
+      if (currentResult) {
+        isSelectRef.current = { ...isSelectRef.current, hover: false };
+      } else {
+        const result = !!hoverSelect && idList.current.includes(hoverSelect);
+        if (result) setter();
+        isSelectRef.current = { ...isSelectRef.current, hover: result };
+      }
+
+      setIsSelect(isSelectRef.current);
+    });
+  }, []);
+
+  return isSelect.click || isSelect.hover;
 }

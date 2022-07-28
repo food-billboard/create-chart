@@ -9,7 +9,11 @@ import {
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { isEqual } from 'lodash';
-import { useIsComponentChildrenSelect, useComponentStyle } from '@/hooks';
+import {
+  useIsComponentChildrenSelect,
+  useComponentStyle,
+  useLayerHover,
+} from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import ComponentWrapper from './components/Wrapper';
 import Content from './components/Content';
@@ -35,7 +39,6 @@ export type RenderComponentProps = {
   path?: string;
   screenType: ComponentData.ScreenType;
   timestamps?: number;
-  hoverSelect: string;
   grid: number;
 };
 
@@ -82,13 +85,11 @@ const RenderComponent = memo(
       className,
       value,
       select = [],
-      setSelect,
       scale,
       index,
       path,
       screenType,
       timestamps,
-      hoverSelect,
       grid,
     } = props;
 
@@ -103,7 +104,7 @@ const RenderComponent = memo(
 
     const isSelect = useIsComponentChildrenSelect(
       [value],
-      [...select, hoverSelect],
+      select.filter(Boolean),
     );
 
     // 是否响应鼠标事件
@@ -117,20 +118,6 @@ const RenderComponent = memo(
       style,
       query: `div[data-id="${id}"]`,
     });
-
-    // const handleSelect = useCallback(
-    //   (e: any) => {
-    //     e?.stopPropagation();
-    //     if (!pointerDisabled && !select?.includes(id)) {
-    //       setSelect?.([id]);
-    //     }
-    //   },
-    //   [setSelect, id, select, pointerDisabled],
-    // );
-
-    const selectOnly = useCallback(() => {
-      setSelect?.([id]);
-    }, [setSelect, id]);
 
     const setComponent = useCallback(
       (
@@ -161,6 +148,9 @@ const RenderComponent = memo(
         disabled={pointerDisabled}
         actionFrom="screen"
       >
+        {/* <div>
+          22222
+        </div> */}
         <ComponentWrapper
           type={type}
           style={baseStyle}
@@ -201,7 +191,6 @@ const RenderComponent = memo(
               },
             )}
             data-id={id}
-            // onClick={handleSelect}
           >
             {content}
           </OnlyClickDiv>

@@ -48,7 +48,7 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
       screenType,
     } = props;
 
-    const { value: componentCondition, initialState } =
+    const { value: componentCondition = [], initialState } =
       componentConditionConfig;
 
     // 检查数据过滤的方法

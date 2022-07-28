@@ -2,7 +2,7 @@ import { ReactNode, useMemo, Children, cloneElement } from 'react';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import { get } from 'lodash';
-import { useIsComponentChildrenSelect } from '@/hooks';
+import { useIsComponentChildrenSelect, useLayerHover } from '@/hooks';
 import { getComponentStyleInScreenType } from '@/utils/Assist/Component';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from '../../index.less';
@@ -12,7 +12,6 @@ const ChildrenWrapper = (props: {
   value: ComponentData.TComponentData;
   parent: ComponentData.TComponentData | null;
   select: string[];
-  hoverSelect: string;
   borderNone?: boolean;
   screenType: ComponentData.ScreenType;
   version: string;
@@ -23,14 +22,10 @@ const ChildrenWrapper = (props: {
     children,
     borderNone = false,
     screenType,
-    hoverSelect,
     version,
   } = props;
 
-  const isSelect = useIsComponentChildrenSelect(
-    [value],
-    [...select, hoverSelect],
-  );
+  const isSelect = useIsComponentChildrenSelect([value], select);
 
   const componentScreenTypeStyle = useMemo(() => {
     return getComponentStyleInScreenType(screenType);

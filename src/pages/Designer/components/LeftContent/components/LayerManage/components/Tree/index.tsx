@@ -5,21 +5,17 @@ import { pick, get } from 'lodash';
 import type { DataNode } from 'antd/es/tree';
 import arrayMove from 'array-move';
 import { useUpdate } from 'ahooks';
-import ColorSelect from '@/components/ColorSelect';
 import { EComponentType } from '@/utils/constants';
 import {
   getComponentIds,
   getParentComponentIds,
   isGroupComponent,
 } from '@/utils/Assist/Component';
-import ThemeUtil from '@/utils/Assist/Theme';
 import { useComponentPath, useIdPathMap } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import TreeNode from './components/TreeNode';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
-
-const { getRgbaString } = ColorSelect;
 
 export type TreeProps = {
   disabled?: boolean;
@@ -74,13 +70,6 @@ const TreeFunction = (props: TreeProps) => {
     [setSelect, formatSelect],
   );
 
-  const onCheck = useCallback(
-    (checked: any) => {
-      setSelect(checked);
-    },
-    [setSelect],
-  );
-
   const onExpend = useCallback((keys) => {
     setExpendKeys(keys);
   }, []);
@@ -96,7 +85,6 @@ const TreeFunction = (props: TreeProps) => {
           const { id, type, components } = nextEntry;
           const isLeaf = type === EComponentType.COMPONENT;
           const isExpend = !isLeaf && expendKeys.includes(id);
-          const isSelect = select.includes(id);
 
           return {
             title: (
@@ -108,7 +96,6 @@ const TreeFunction = (props: TreeProps) => {
                 disabled={disabled}
                 isExpend={isExpend}
                 iconMode={iconMode}
-                isSelect={isSelect}
               />
             ),
             key: id,
@@ -122,7 +109,7 @@ const TreeFunction = (props: TreeProps) => {
         true,
       );
     },
-    [forceUpdate, expendKeys, iconMode, select],
+    [forceUpdate, expendKeys, iconMode],
   );
 
   // 可能是传去后台的参数
@@ -216,7 +203,7 @@ const TreeFunction = (props: TreeProps) => {
 
   const treeData = useMemo(() => {
     return getTreeData(components);
-  }, [components, expendKeys, iconMode, select]);
+  }, [components, expendKeys, iconMode]);
 
   return (
     <div className={styles['layer-manage']}>

@@ -18,6 +18,14 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  :global {
+    .ant-tree-node-selected .ant-tree-title > div {
+      opacity: 1;
+    }
+    .ant-tree-treenode-selected .ant-tree-title > div {
+      opacity: 1;
+    }
+  }
   &-placeholder {
     width: 1;
     min-height: 50px;

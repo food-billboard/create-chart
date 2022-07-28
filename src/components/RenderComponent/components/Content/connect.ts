@@ -4,7 +4,6 @@ export const mapStateToProps = (state: ConnectState) => {
   return {
     select: state.global.select || [],
     screenType: state.global.screenType,
-    hoverSelect: state.global.hoverSelect || '',
     version: state.global.version || '',
   };
 };

@@ -14,7 +14,7 @@ export const ConditionChange = (
       config: {
         options: {
           condition: {
-            value: condition,
+            value: condition || [],
             initialState: 'visible',
           },
         },

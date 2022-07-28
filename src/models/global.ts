@@ -21,7 +21,6 @@ export default {
       value: [],
     },
     select: [],
-    hoverSelect: '',
     history: {
       value: new HistoryUtil(),
       isUndoDisabled: true,
@@ -100,13 +99,6 @@ export default {
     *setSelect({ value }: { value: string[] }, { put }: any) {
       yield put({
         type: 'setSelectData',
-        payload: value,
-      });
-    },
-
-    *setHoverSelect({ value }: { value: string }, { put }: any) {
-      yield put({
-        type: 'setHoverSelectData',
         payload: value,
       });
     },
@@ -243,11 +235,6 @@ export default {
 
     setSelectData(state: any, action: any) {
       state.select = [...action.payload];
-      return state;
-    },
-
-    setHoverSelectData(state: any, action: any) {
-      set(state, 'hoverSelect', action.payload);
       return state;
     },
 

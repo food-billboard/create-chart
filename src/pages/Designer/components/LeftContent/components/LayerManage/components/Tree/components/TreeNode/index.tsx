@@ -1,7 +1,5 @@
-import { useCallback, useRef, useMemo } from 'react';
+import { useCallback, useRef, useMemo, useEffect } from 'react';
 import { Space } from 'antd';
-import { connect } from 'dva';
-import { useDebounceEffect } from 'ahooks';
 import classnames from 'classnames';
 import { FolderOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import { useHover } from 'ahooks';
@@ -11,8 +9,8 @@ import DataChangePool from '@/utils/Assist/DataChangePool';
 import VisibleEditor from './Visible';
 import NameEditor, { NameEditorRefProps } from './NameEdit';
 import LockEditor from './Lock';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
+import { useLayerHover } from '@/hooks';
 
 const ListItem = ({
   value,
@@ -22,18 +20,14 @@ const ListItem = ({
   disabled,
   isExpend,
   iconMode,
-  isSelect,
-  setHoverSelect,
 }: {
   value: ComponentData.TComponentData;
-  setHoverSelect: (value: string) => void;
   path: string;
   update?: () => void;
   isLeaf: boolean;
   disabled?: boolean;
   isExpend: boolean;
   iconMode: boolean;
-  isSelect: boolean;
 }) => {
   const {
     id,
@@ -46,6 +40,8 @@ const ListItem = ({
 
   const editRef = useRef<NameEditorRefProps>(null);
   const listItemRef = useRef<any>();
+
+  const [, setHover] = useLayerHover();
 
   const isHover = useHover(listItemRef);
 
@@ -108,17 +104,13 @@ const ListItem = ({
     );
   }, [isLeaf, icon, isExpend, iconMode]);
 
-  useDebounceEffect(
-    () => {
-      if (isHover) {
-        setHoverSelect(id);
-      } else {
-        setHoverSelect('');
-      }
-    },
-    [isHover, id, setHoverSelect],
-    { wait: 50 },
-  );
+  useEffect(() => {
+    if (isHover) {
+      setHover(id);
+    } else {
+      setHover('');
+    }
+  }, [isHover]);
 
   return (
     <ContextMenu
@@ -137,7 +129,6 @@ const ListItem = ({
             [styles['design-page-layer-item-mode-list']]: !iconMode,
             [styles['design-page-layer-item-disabled']]: !!disabled,
             [styles['design-page-layer-item-lock']]: !!lock,
-            [styles['design-page-layer-item-select']]: !!isSelect,
           },
           'dis-flex',
           'p-lr-4',
@@ -178,4 +169,4 @@ const ListItem = ({
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListItem);
+export default ListItem;
