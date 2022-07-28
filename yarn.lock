@@ -7799,8 +7799,8 @@ react-is@^17.0.1, react-is@^17.0.2:
 
 react-json-view@^1.21.3:
   version "1.21.3"
-  resolved "https://registry.npm.taobao.org/react-json-view/download/react-json-view-1.21.3.tgz#f184209ee8f1bf374fb0c41b0813cff54549c475"
-  integrity sha1-8YQgnujxvzdPsMQbCBPP9UVJxHU=
+  resolved "https://registry.npmmirror.com/react-json-view/-/react-json-view-1.21.3.tgz#f184209ee8f1bf374fb0c41b0813cff54549c475"
+  integrity sha512-13p8IREj9/x/Ye4WI/JpjhoIwuzEgUAtgJZNBJckfzJt1qyh24BdTm6UQNGnyTq9dapQdrqvquZTo3dz1X6Cjw==
   dependencies:
     flux "^4.0.1"
     react-base16-styling "^0.6.0"

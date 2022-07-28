@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo, useRef } from 'react';
-import { Button, Checkbox, Collapse, Badge, Space, message } from 'antd';
+import { Button, Checkbox, Collapse, Badge, Space } from 'antd';
 import classnames from 'classnames';
 import { useHover } from 'ahooks';
 import {
@@ -13,6 +13,7 @@ import CodeEditor from '@/components/CodeEditor';
 import ParamsSelect from '@/components/ParamsSelect';
 import IconTooltip from '@/components/IconTooltip';
 import { ComponentNumber } from '@/pages/Designer/components/LeftContent/components/CallbackManage';
+import StepDataButton from './StepData';
 import NameEditor from './NameEditor';
 import styles from './index.less';
 
@@ -28,7 +29,7 @@ export type TOnComponentChangeType = (
 const { Panel } = Collapse;
 
 const DragHandle = SortableHandle(() => {
-  return <HolderOutlined className="m-r-8 c-po" />;
+  return <HolderOutlined className="c-po" />;
 });
 
 const DataFilter = (props: {
@@ -131,6 +132,14 @@ const DataFilter = (props: {
         )}
       >
         {!dragDisabled && !isTemp && <DragHandle />}
+        <StepDataButton
+          buttonProps={{
+            style: {
+              visibility: isHover && !disabled ? 'visible' : 'hidden',
+            },
+          }}
+          id={id}
+        />
         <Checkbox
           checked={!disabled}
           onChange={(e) => {
@@ -175,7 +184,7 @@ const DataFilter = (props: {
               stop(e);
               onComponentChange('id', 'delete', null);
             }}
-          ></Button>
+          />
         </div>
       </div>
     );

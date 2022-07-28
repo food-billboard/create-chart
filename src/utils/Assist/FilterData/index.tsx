@@ -1,9 +1,16 @@
 import json5 from 'json5';
 import mustache from 'mustache';
+import { cloneDeep } from 'lodash';
 import { preRequestData } from '@/services';
 import VariableStringUtil from '../VariableString';
 import request from '../../request';
 import { MOCK_REQUEST_URL } from '../../index';
+
+export const FILTER_STEP_MAP_DATA: {
+  [id: string]: {
+    data: any;
+  };
+} = {};
 
 class FilterData {
   stringDataToObject(value: string, defaultValue = '{}') {
@@ -26,6 +33,7 @@ class FilterData {
       return {
         value,
         error: true,
+        errorMsg: err,
       };
     }
   }
@@ -54,12 +62,15 @@ class FilterData {
     existsFilterData.some((cur) => {
       const { id } = cur;
       const target = filter.find((item) => item.id === id);
-      const { error, value } = this.pipeValueByCodeString(
+      const { error, value, errorMsg } = this.pipeValueByCodeString(
         result,
         VariableStringUtil.getAllGlobalParams(params, constants),
         target!.code,
       );
       result = value;
+
+      FILTER_STEP_MAP_DATA[id] = cloneDeep(error ? errorMsg : result);
+
       return error;
     });
 
