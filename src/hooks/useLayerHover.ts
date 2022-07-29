@@ -29,7 +29,9 @@ export const useLayerHover: () => [
         let hovered = false;
         EVENT_EMITTER.emit('change', value, prevSelect, {
           getter: () => {
-            return hovered;
+            // 此步骤为了优化频繁调用hover的情况
+            // ? 应该还可以再优化，就先这样吧
+            return CHANGE_DEALING > 1; // || hovered;
           },
           setter: () => {
             hovered = true;

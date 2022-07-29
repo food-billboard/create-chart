@@ -37,7 +37,6 @@ const Content = (props: {
       isOuter?: boolean,
     ) => any = (value, parent = null, isOuter = false) => {
       const { scaleX, scaleY } = getScale(parent || undefined);
-
       return value.map((component) => {
         const { type, id } = component;
         const newComponent = mergeWithoutArray({}, component, {

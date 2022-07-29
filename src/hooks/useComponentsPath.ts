@@ -137,13 +137,9 @@ export function useIsComponentChildrenSelect(
 ) {
   const [, , eventBinder] = useLayerHover();
 
-  const [isSelect, setIsSelect] = useState<{
-    click: boolean;
-    hover: boolean;
-  }>({
-    click: false,
-    hover: false,
-  });
+  const [isSelect, setIsSelect] = useState<boolean>(false);
+
+  const [isHoverSelect, setIsHoverSelect] = useState<boolean>(false);
 
   const isSelectRef = useRef<{
     click: boolean;
@@ -168,25 +164,13 @@ export function useIsComponentChildrenSelect(
           ...isSelectRef.current,
           click: false,
         };
-        // setIsSelect(prev => {
-        //   return {
-        //     ...prev,
-        //     click: false
-        //   }
-        // })
       } catch (err) {
-        // setIsSelect(prev => {
-        //   return {
-        //     ...prev,
-        //     click: true
-        //   }
-        // })
         isSelectRef.current = {
           ...isSelectRef.current,
           click: true,
         };
       } finally {
-        setIsSelect(isSelectRef.current);
+        setIsSelect(isSelectRef.current.click);
       }
     },
     {
@@ -200,35 +184,23 @@ export function useIsComponentChildrenSelect(
 
   useEffect(() => {
     return eventBinder((hoverSelect, _, { getter, setter }) => {
-      // console.log(hoverSelect, idList.current.length)
-
-      // setIsSelect((isSelect => {
-      //   const currentResult = getter()
-
-      //   if(currentResult) return { ...isSelect, hover: false }
-
-      //   const result = !!hoverSelect && idList.current.includes(hoverSelect)
-
-      //   if(result) setter()
-
-      //   return {
-      //     ...isSelect,
-      //     hover: result
-      //   }
-      // }))
-
       const currentResult = getter();
+      const prevState = {
+        ...isSelectRef.current,
+      };
       if (currentResult) {
-        isSelectRef.current = { ...isSelectRef.current, hover: false };
+        isSelectRef.current.hover = false;
       } else {
         const result = !!hoverSelect && idList.current.includes(hoverSelect);
         if (result) setter();
-        isSelectRef.current = { ...isSelectRef.current, hover: result };
+        isSelectRef.current.hover = result;
       }
 
-      setIsSelect(isSelectRef.current);
+      if (isSelectRef.current.hover !== prevState.hover) {
+        setIsHoverSelect(isSelectRef.current.hover);
+      }
     });
   }, []);
 
-  return isSelect.click || isSelect.hover;
+  return isSelect || isHoverSelect;
 }
