@@ -1,9 +1,8 @@
-import { get } from 'lodash';
 import { ConnectState } from '@/models/connect';
 
 export const mapStateToProps = (state: ConnectState) => {
   return {
-    select: state.global.select,
+    select: state.global.select || [],
     clipboard: state.global.clipboard,
     components: state.global.components,
     screenType: state.global.screenType,

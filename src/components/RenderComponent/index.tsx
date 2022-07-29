@@ -26,13 +26,6 @@ export type RenderComponentProps = {
   select?: string[];
   scale: number;
   setSelect?: (value: string[]) => void;
-  setComponentAll: (
-    value:
-      | ComponentData.TComponentData[]
-      | ((
-          value: ComponentData.TComponentData[],
-        ) => ComponentData.TComponentData[]),
-  ) => void;
   path?: string;
   screenType: ComponentData.ScreenType;
   timestamps?: number;
@@ -145,9 +138,6 @@ const RenderComponent = memo(
         disabled={pointerDisabled}
         actionFrom="screen"
       >
-        {/* <div>
-          22222
-        </div> */}
         <ComponentWrapper
           type={type}
           style={baseStyle}

@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import { pick, get } from 'lodash';
 import type { DataNode } from 'antd/es/tree';
 import arrayMove from 'array-move';
-import { useUpdate } from 'ahooks';
+import { useUpdate, useUpdateEffect } from 'ahooks';
 import { EComponentType } from '@/utils/constants';
 import {
   getComponentIds,
@@ -29,6 +29,7 @@ const TreeFunction = (props: TreeProps) => {
   const { components, setSelect, select, iconMode, disabled } = props;
 
   const [expendKeys, setExpendKeys] = useState<string[]>([]);
+  const [internalSelect, setInternalSelect] = useState<string[]>([]);
 
   const forceUpdate = useUpdate();
 
@@ -65,9 +66,11 @@ const TreeFunction = (props: TreeProps) => {
 
   const onSelect = useCallback(
     (keys: React.Key[], info: any) => {
-      setSelect(formatSelect(keys as string[]));
+      const resultKeys = formatSelect(keys as string[]);
+      setInternalSelect(resultKeys);
+      setSelect(resultKeys);
     },
-    [setSelect, formatSelect],
+    [formatSelect, setSelect],
   );
 
   const onExpend = useCallback((keys) => {
@@ -134,7 +137,7 @@ const TreeFunction = (props: TreeProps) => {
       dragNode,
       dropToGap: prevDropToGap,
       dropPosition,
-      select,
+      select: internalSelect,
     };
   };
 
@@ -153,7 +156,7 @@ const TreeFunction = (props: TreeProps) => {
             realDropKey = component.parent;
           }
           const parentKeys = getParentComponentIds(realDropKey);
-          return !select.some((selectItem) =>
+          return !internalSelect.some((selectItem) =>
             [...parentKeys, realDropKey].includes(selectItem),
           );
         }
@@ -161,7 +164,7 @@ const TreeFunction = (props: TreeProps) => {
         return false;
       }
     },
-    [components, select],
+    [components, internalSelect],
   );
 
   const onDragStart = useCallback(
@@ -169,12 +172,12 @@ const TreeFunction = (props: TreeProps) => {
       const key = node.key;
       const containsId = getComponentIds(key);
       const newSelect = [
-        ...select.filter((item) => !containsId.includes(item)),
+        ...internalSelect.filter((item) => !containsId.includes(item)),
         key,
       ];
       setSelect(newSelect);
     },
-    [select, setSelect],
+    [internalSelect, setSelect],
   );
 
   const onDrop = useCallback(
@@ -190,11 +193,11 @@ const TreeFunction = (props: TreeProps) => {
           dragNode,
           dropToGap,
           dropPosition,
-          select,
+          select: internalSelect,
         },
       });
     },
-    [components, select, canDrop],
+    [components, internalSelect, canDrop],
   );
 
   const selectEmpty = useCallback(() => {
@@ -205,8 +208,8 @@ const TreeFunction = (props: TreeProps) => {
     return getTreeData(components);
   }, [components, expendKeys, iconMode]);
 
-  return (
-    <div className={styles['layer-manage']}>
+  const tree = useMemo(() => {
+    return (
       <AntTree.DirectoryTree
         onSelect={onSelect}
         showIcon={false}
@@ -217,13 +220,31 @@ const TreeFunction = (props: TreeProps) => {
           icon: false,
         }}
         multiple
-        selectedKeys={select}
+        selectedKeys={internalSelect}
         expandAction={false}
         defaultExpandedKeys={[]}
         className={styles['layer-manage-content']}
         onExpand={onExpend}
         disabled={!!disabled}
       />
+    );
+  }, [
+    onSelect,
+    onDrop,
+    onDragStart,
+    treeData,
+    internalSelect,
+    onExpend,
+    disabled,
+  ]);
+
+  useUpdateEffect(() => {
+    setInternalSelect(select);
+  }, [select]);
+
+  return (
+    <div className={styles['layer-manage']}>
+      {tree}
       <div
         className={styles['layer-manage-placeholder']}
         onClick={selectEmpty}

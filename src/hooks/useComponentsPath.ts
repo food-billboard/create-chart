@@ -153,6 +153,7 @@ export function useIsComponentChildrenSelect(
 
   const { run } = useThrottleFn(
     () => {
+      let prevState = isSelectRef.current.click;
       try {
         idList.current = format(components, (target) => {
           const { id } = target;
@@ -160,17 +161,12 @@ export function useIsComponentChildrenSelect(
             throw new Error();
           }
         });
-        isSelectRef.current = {
-          ...isSelectRef.current,
-          click: false,
-        };
+        isSelectRef.current.click = false;
       } catch (err) {
-        isSelectRef.current = {
-          ...isSelectRef.current,
-          click: true,
-        };
+        isSelectRef.current.click = true;
       } finally {
-        setIsSelect(isSelectRef.current.click);
+        if (prevState !== isSelectRef.current.click)
+          setIsSelect(isSelectRef.current.click);
       }
     },
     {
