@@ -5,6 +5,10 @@ import classnames from 'classnames';
 import { useControllableValue, useUnmount } from 'ahooks';
 import arrayMove from 'array-move';
 import { DEFAULT_FILTER_CODE } from '@/utils';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
 import AddItem from './addItem';
 import ListItem, { TOnChangeType, TOnComponentChangeType } from './ListItem';
 import List from './List';
@@ -12,19 +16,46 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const DataFilter = (props: {
+  id: string;
   disabled?: boolean;
   filter: ComponentData.TFilterConfig[];
   setCallbackData: (value: ComponentData.TFilterConfig[]) => void;
   value?: ComponentData.TComponentFilterConfig[];
   onChange?: (value: ComponentData.TComponentFilterConfig[]) => void;
 }) => {
-  const { disabled, filter, setCallbackData } = props;
+  const { disabled, filter, setCallbackData, id } = props;
 
   const [value, setValue] = useControllableValue<
     ComponentData.TComponentFilterConfig[]
   >(props, {
     defaultValue: [],
   });
+
+  const wrapperSetValue = useCallback(
+    (
+      config: Partial<{
+        filter: ComponentData.TFilterConfig[];
+        value: ComponentData.TComponentFilterConfig[];
+      }>,
+    ) => {
+      const { value, filter } = config;
+      value && setValue(value);
+      // 绑定全局事件
+      GLOBAL_EVENT_EMITTER.emit(
+        EVENT_NAME_MAP.COMPONENT_FILTER_CHANGE.toString(),
+        {
+          id,
+          filter,
+          componentConfig: {
+            filter: {
+              value: value,
+            },
+          },
+        },
+      );
+    },
+    [],
+  );
 
   const [tempFilterConfig, setTempFilterConfig] =
     useState<null | Partial<ComponentData.TFilterConfig>>(null);
@@ -50,31 +81,37 @@ const DataFilter = (props: {
     (updateValue: Partial<ComponentData.TFilterConfig> & { id: string }) => {
       const { id } = updateValue;
       if (id === tempFilterConfig?.id) {
-        setCallbackData([
+        const newCallback = [
           ...filter,
           {
             ...(tempFilterConfig as ComponentData.TFilterConfig),
             ...updateValue,
           },
-        ]);
-        setValue([
-          ...value,
-          {
-            id,
-            disabled: false,
-          },
-        ]);
+        ];
+        setCallbackData(newCallback);
+        wrapperSetValue({
+          value: [
+            ...value,
+            {
+              id,
+              disabled: false,
+            },
+          ],
+          filter: newCallback,
+        });
         setTempFilterConfig(null);
       } else {
-        setCallbackData(
-          filter.map((item) => {
-            if (item.id !== id) return item;
-            return {
-              ...item,
-              ...updateValue,
-            };
-          }),
-        );
+        const newCallback = filter.map((item) => {
+          if (item.id !== id) return item;
+          return {
+            ...item,
+            ...updateValue,
+          };
+        });
+        wrapperSetValue({
+          filter: newCallback,
+        });
+        setCallbackData(newCallback);
       }
     },
     [filter, setCallbackData, tempFilterConfig, value],
@@ -95,20 +132,22 @@ const DataFilter = (props: {
     (action, updateValue) => {
       if (action === 'delete') {
         const newValue = value.filter((item) => item.id !== updateValue.id);
-        setValue(newValue);
+        wrapperSetValue({
+          value: newValue,
+        });
         if (updateValue.id === tempFilterConfig?.id) {
           setTempFilterConfig(null);
         }
       } else {
-        setValue(
-          value.map((item) => {
+        wrapperSetValue({
+          value: value.map((item) => {
             if (item.id !== updateValue.id) return item;
             return {
               ...item,
               ...updateValue,
             };
           }),
-        );
+        });
       }
     },
     [value, tempFilterConfig],
@@ -129,15 +168,18 @@ const DataFilter = (props: {
             };
           });
         } else {
-          setCallbackData(
-            filter.map((item) => {
-              if (item.id !== updateValue.id) return item;
-              return {
-                ...item,
-                ...updateValue,
-              };
-            }),
-          );
+          const newFilter = filter.map((item) => {
+            if (item.id !== updateValue.id) return item;
+            return {
+              ...item,
+              ...updateValue,
+            };
+          });
+          setCallbackData(newFilter);
+          if (action !== 'name-update')
+            wrapperSetValue({
+              filter: newFilter,
+            });
         }
       }
     },
@@ -160,7 +202,9 @@ const DataFilter = (props: {
     ({ oldIndex, newIndex }) => {
       const reverseValue = value.reverse();
       const newResult = arrayMove(reverseValue, oldIndex, newIndex);
-      setValue(newResult.reverse());
+      wrapperSetValue({
+        value: newResult.reverse(),
+      });
     },
     [value],
   );
@@ -201,7 +245,7 @@ const DataFilter = (props: {
         dataSource={filter}
         onClick={handleAdd}
         value={value}
-        onChange={setValue}
+        onChange={(value) => wrapperSetValue({ value })}
         btnDisabled={!!tempFilterConfig}
       />
     </div>

@@ -17,6 +17,7 @@ const ResponseData = (props: {
   onChange?: (value: SuperPartial<ComponentData.TComponentData>) => void;
 }) => {
   const { value, onChange } = props;
+  const { id } = value;
 
   const configDetailRef = useRef<IDataConfigDetailRef>(null);
 
@@ -172,6 +173,7 @@ const ResponseData = (props: {
         ref={configDetailRef}
         value={dataConfigDetail!}
         onChange={onDataConfigChange}
+        id={id}
       />
     </div>
   );

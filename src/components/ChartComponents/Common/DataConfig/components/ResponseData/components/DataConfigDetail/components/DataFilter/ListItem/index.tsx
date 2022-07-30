@@ -18,11 +18,11 @@ import NameEditor from './NameEditor';
 import styles from './index.less';
 
 export type TOnChangeType = (
-  action: 'delete' | 'update',
+  action: 'delete' | 'update' | 'name-update',
   value: Partial<ComponentData.TFilterConfig> & { id: string },
 ) => void;
 export type TOnComponentChangeType = (
-  action: 'delete' | 'update',
+  action: 'delete' | 'update' | 'name-update',
   value: Partial<ComponentData.TComponentFilterConfig> & { id: string },
 ) => void;
 
@@ -80,7 +80,7 @@ const DataFilter = (props: {
   const onConfigChange = useCallback(
     (
       key: keyof ComponentData.TFilterConfig,
-      action: 'delete' | 'update',
+      action: 'delete' | 'update' | 'name-update',
       updateValue: any,
     ) => {
       onChange?.(action, {
@@ -152,7 +152,7 @@ const DataFilter = (props: {
         />
         <NameEditor
           value={name}
-          onChange={onConfigChange.bind(null, 'name', 'update')}
+          onChange={onConfigChange.bind(null, 'name', 'name-update')}
           isHover={isHover}
         />
         <div

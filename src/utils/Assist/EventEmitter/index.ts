@@ -8,4 +8,7 @@ export enum EVENT_NAME_MAP {
 
   // 组件被添加的时候
   COMPONENT_ADD_ACTION,
+
+  // 组件过滤发生改变的时候
+  COMPONENT_FILTER_CHANGE,
 }

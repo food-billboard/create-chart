@@ -15,7 +15,7 @@ const RightContent = (props: {
   select: string[];
   components: ComponentData.TComponentData[];
 }) => {
-  const { select, components } = props;
+  const { select = [], components } = props;
 
   const children = useMemo(() => {
     if (!select.length) return <GlobalConfig />;

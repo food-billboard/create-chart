@@ -12,6 +12,7 @@ import FilterDataUtil from '@/utils/Assist/FilterData';
 import VariableStringUtil from '@/utils/Assist/VariableString';
 import { mergeWithoutArray } from '@/utils';
 import { TFetchFragmentRef } from '@/components/ChartComponents/Common/FetchFragment';
+import { useFilterChange } from './useFilterChange';
 import { ComponentProps } from '../type';
 
 export function useComponent<P extends object = {}>(
@@ -20,6 +21,7 @@ export function useComponent<P extends object = {}>(
 ) {
   const { component, global } = props;
   const { screenType } = global;
+  const { id } = component;
 
   // 未处理的数据格式
   const [requestResult, setRequestResult] = useState<any>(() => {
@@ -142,9 +144,10 @@ export function useComponent<P extends object = {}>(
       params: ComponentData.TParams[],
       constants: ComponentData.TConstants[],
       filter: ComponentData.TFilterConfig[],
+      config?: SuperPartial<ComponentData.TComponentApiDataConfig>,
     ) => {
       const result = FilterDataUtil.getPipeFilterValue(
-        mergeWithoutArray({}, requestDataConfig, {
+        mergeWithoutArray({}, requestDataConfig, config, {
           request: {
             value,
           },
@@ -284,7 +287,12 @@ export function useComponent<P extends object = {}>(
 
   // 外部调用的getValue
   const outerGetValue = useCallback(
-    (value?: any) => {
+    (
+      value?: any,
+      options?: Partial<TFetchFragmentRef> & {
+        config?: SuperPartial<ComponentData.TComponentApiDataConfig>;
+      },
+    ) => {
       const {
         params = [],
         constants = [],
@@ -293,9 +301,15 @@ export function useComponent<P extends object = {}>(
       if (value) {
         setRequestResult(value);
       }
-      return getValue(value, params, constants, filter);
+      return getValue(
+        value,
+        options?.params || params,
+        options?.constants || constants,
+        options?.filter || filter,
+        options?.config,
+      );
     },
-    [getValue, requestResult],
+    [getValue],
   );
 
   // 外部调用的同步全部参数
@@ -317,6 +331,9 @@ export function useComponent<P extends object = {}>(
   );
 
   // * --------------------其他--------------------
+
+  // 绑定组件过滤器的变化
+  useFilterChange(id, outerGetValue);
 
   // 取消定时器
   useEffect(() => {

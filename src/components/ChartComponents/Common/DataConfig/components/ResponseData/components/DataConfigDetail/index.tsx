@@ -26,6 +26,7 @@ export interface IDataConfigDetailRef {
 interface IDataConfigDetailProps {
   value: ComponentData.TComponentApiDataConfig;
   onChange?: TOnChange;
+  id: string;
 }
 
 const { Option } = Select;
@@ -34,7 +35,7 @@ const DataConfigDetail = forwardRef<
   IDataConfigDetailRef,
   IDataConfigDetailProps
 >((props, ref) => {
-  const { value, onChange } = props;
+  const { value, onChange, id } = props;
   const {
     request: { type, valueType },
     filter: { show: filterShow, map, value: filterValue },
@@ -162,6 +163,7 @@ const DataConfigDetail = forwardRef<
           value={filterValue}
           onChange={onDataFilterValueChange}
           disabled={!filterShow}
+          id={id}
         />
         <ResponseDataMap value={map} valueType={valueType} />
 
