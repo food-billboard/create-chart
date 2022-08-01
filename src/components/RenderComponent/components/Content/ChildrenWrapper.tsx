@@ -56,7 +56,7 @@ const ChildrenWrapper = (props: {
         ...componentScreenTypeStyle,
       };
 
-      if (!visible) realStyle.display = 'none';
+      if (!visible) realStyle.visibility = 'hidden';
 
       return cloneElement(child as any, {
         className: classnames(className, {
