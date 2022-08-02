@@ -13,13 +13,9 @@ import styles from './index.less';
 
 const DataConfig = (props: {
   id: string;
-  components: ComponentData.TComponentData[];
+  component: ComponentData.TComponentData;
 }) => {
-  const { id, components } = props;
-
-  const component: ComponentData.TComponentData = useMemo(() => {
-    return getComponent(id, components);
-  }, [id, components]);
+  const { id, component } = props;
 
   const isDisabled = !!component.config.data?.disabled;
 

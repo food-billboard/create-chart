@@ -20,14 +20,10 @@ import styles from './index.less';
 
 const ComponentConfig = (props: {
   id: string;
-  components: ComponentData.TComponentData[];
+  component: ComponentData.TComponentData;
   setSelect: (value: string[]) => void;
 }) => {
-  const { id, components, setSelect } = props;
-
-  const component = useMemo(() => {
-    return getComponent(id, components);
-  }, [id, components]);
+  const { id, component, setSelect } = props;
 
   const onBack = useCallback(() => {
     const { parent } = component;
@@ -73,7 +69,7 @@ const ComponentConfig = (props: {
           }
           key="2"
         >
-          <DataConfig id={id} components={components} />
+          <DataConfig id={id} component={component} />
         </ConfigItem>
         <ConfigItem
           tab={

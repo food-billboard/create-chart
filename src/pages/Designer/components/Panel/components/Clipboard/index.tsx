@@ -9,6 +9,7 @@ import { paste } from '@/components/ContextMenu/Actions/Paste';
 import ConfirmModal, { ConfirmModalRef } from '@/components/ConfirmModal';
 import { deleteAction } from '@/components/ContextMenu/Actions/Delete';
 import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
+import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
 import { getComponent, getTopParentComponent } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import { sleep } from '@/utils';
@@ -16,7 +17,6 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const ClipboardComponent = (props: {
   children?: ReactNode;
-  select: string[];
   grid: number;
   components: ComponentData.TComponentData[];
   clipboard: string[];
@@ -30,7 +30,6 @@ const ClipboardComponent = (props: {
   const {
     children,
     clipboard,
-    select,
     setClipboard,
     components,
     setSelect,
@@ -51,6 +50,7 @@ const ClipboardComponent = (props: {
 
   // copy
   useKeyPress(['ctrl.c', 'meta.c'], () => {
+    const select = getGlobalSelect();
     if (disabledKeyEvent || !CopyAndPasteUtil.isFocus() || !select.length)
       return;
     clone(select, setClipboard);
@@ -95,6 +95,7 @@ const ClipboardComponent = (props: {
 
   // delete
   useKeyPress(['backspace', 'delete'], () => {
+    const select = getGlobalSelect();
     if (disabledKeyEvent || !CopyAndPasteUtil.isFocus() || !select.length)
       return;
 
@@ -124,7 +125,7 @@ const ClipboardComponent = (props: {
         callback(),
       );
       const idPathMap = useIdPathMap();
-
+      const select = getGlobalSelect();
       DataChangePool.setComponent(
         select.map((item) => {
           const { id } = getTopParentComponent(item, components);
@@ -186,8 +187,9 @@ const ClipboardComponent = (props: {
   });
 
   const handleDelete = useCallback(() => {
+    const select = getGlobalSelect();
     deleteAction(select, DataChangePool.setComponent, setSelect);
-  }, [select]);
+  }, []);
 
   return (
     <>

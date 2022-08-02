@@ -2,7 +2,6 @@ import { ConnectState } from '@/models/connect';
 
 export const mapStateToProps = (state: ConnectState) => {
   return {
-    select: state.global.select || [],
     components: state.global.components || [],
     clipboard: state.global.clipboard,
   };

@@ -10,11 +10,12 @@ import {
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { isEqual } from 'lodash';
-import { useIsComponentChildrenSelect, useComponentStyle } from '@/hooks';
+import { useComponentStyle } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import ComponentWrapper from './components/Wrapper';
 import Content from './components/Content';
 import ContextMenu from '../ContextMenu';
+import ConnectSelectChangeWrapper from './components/SelectChangeWrapper';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -92,10 +93,7 @@ const RenderComponent = memo(
       type,
     } = value;
 
-    const isSelect = useIsComponentChildrenSelect(
-      [value],
-      select.filter(Boolean),
-    );
+    const [isSelect, setIsSelect] = useState<boolean>(false);
 
     // 是否响应鼠标事件
     const pointerDisabled = useMemo(() => {
@@ -155,7 +153,6 @@ const RenderComponent = memo(
             x: componentStyle.left,
             y: componentStyle.top,
           }}
-          select={select}
           pointerDisabled={pointerDisabled}
           setComponent={setComponent}
           scale={scale / 100}
@@ -180,6 +177,10 @@ const RenderComponent = memo(
             data-id={id}
           >
             {content}
+            <ConnectSelectChangeWrapper
+              value={value}
+              onSelectChange={setIsSelect}
+            />
           </OnlyClickDiv>
         </ComponentWrapper>
       </ContextMenu>

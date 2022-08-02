@@ -9,6 +9,7 @@ import {
 import ThemeUtil from '@/utils/Assist/Theme';
 import ColorSelect from '@/components/ColorSelect';
 import { ConnectState } from '@/models/connect';
+import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
 import { wrapperId } from '../PanelWrapper/constants';
 import { PANEL_ID } from '../Painter';
 import { mapStateToProps, mapDispatchToProps } from './connect';
@@ -19,13 +20,12 @@ const VALID_SELECT_CONTAINER = [BACKGROUND_ID, wrapperId, PANEL_ID];
 const { getRgbaString } = ColorSelect;
 
 const Selecto = (props: {
-  select: string[];
   setSelect: (value: string[]) => void;
   screenType: ComponentData.ScreenType;
 }) => {
-  const { select, setSelect, screenType } = props;
+  const { setSelect, screenType } = props;
 
-  const currentSelect = useRef<string[]>(select);
+  const currentSelect = useRef<string[]>([]);
 
   if (screenType === 'preview') return <></>;
 
@@ -69,6 +69,8 @@ const Selecto = (props: {
         // 标尺
         const ruler = e.inputEvent.target.tagName.toLowerCase();
 
+        const select = getGlobalSelect();
+
         if (
           VALID_SELECT_CONTAINER.includes(id) ||
           (!componentBorder &&
@@ -84,7 +86,7 @@ const Selecto = (props: {
         e.stop();
       }
     },
-    [select, setSelect],
+    [setSelect],
   );
 
   return (
