@@ -8,8 +8,11 @@ import {
   Bodies,
   MouseConstraint,
   World,
+  Svg,
+  Common,
 } from 'matter-js';
 import { useDebounceFn } from 'ahooks';
+import IsMobile from 'is-mobile';
 import ColorSelect from '@/components/ColorSelect';
 import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import AreaChart from '../../../../../public/home/area-chart.png';
@@ -24,7 +27,26 @@ import ThermogramChart from '../../../../../public/home/thermogram-chart.png';
 import TitleChart from '../../../../../public/home/title-chart.png';
 import VideoChart from '../../../../../public/home/video-chart.png';
 import ImageChart from '../../../../../public/home/image-chart.png';
+import svgWall from '../../../../../public/home/wall.svg';
 import styles from './index.less';
+
+const isMobile = IsMobile();
+
+Common.setDecomp(require('poly-decomp'));
+
+function select(root: any, selector: string) {
+  return Array.prototype.slice.call(root.querySelectorAll(selector));
+}
+
+function loadSvg(url: string) {
+  return fetch(url)
+    .then(function (response) {
+      return response.text();
+    })
+    .then(function (raw) {
+      return new window.DOMParser().parseFromString(raw, 'image/svg+xml');
+    });
+}
 
 export const TEXTURE_MAP: {
   key: string;
@@ -99,6 +121,7 @@ const MatterBoxes = () => {
   const CompositeRef = useRef<Composite>();
   const worldRef = useRef<World>();
   const mouseConstraintRef = useRef<MouseConstraint>();
+  const svgRootRef = useRef<any>();
 
   const generateBoxes = (width: number, height: number) => {
     if (CompositeRef.current) {
@@ -152,6 +175,7 @@ const MatterBoxes = () => {
     ]);
 
     Composite.add(worldRef.current!, mouseConstraintRef.current!);
+    // svgPathAdd(width, height)
   };
 
   const stop = () => {
@@ -230,6 +254,28 @@ const MatterBoxes = () => {
     return stop;
   };
 
+  const svgPathAdd = (width: number, height: number) => {
+    var vertexSets = svgRootRef.current.map(function (path: any) {
+      return Svg.pathToVertices(path, 30);
+    });
+
+    var terrain = Bodies.fromVertices(
+      width / 2,
+      height / 2,
+      vertexSets,
+      {
+        isStatic: true,
+        render: {
+          fillStyle: 'transparent',
+          strokeStyle: 'rgba(255, 255, 255, 0.1)',
+          lineWidth: 4,
+        },
+      },
+      true,
+    );
+    Composite.add(worldRef.current!, terrain);
+  };
+
   const { run: resize } = useDebounceFn(
     () => {
       const width = document.body.clientWidth;
@@ -253,6 +299,14 @@ const MatterBoxes = () => {
     return () => {
       window.removeEventListener('resize', resize);
     };
+  }, []);
+
+  useEffect(() => {
+    return;
+    loadSvg(svgWall).then((root) => {
+      var paths = select(root, 'path');
+      svgRootRef.current = paths;
+    });
   }, []);
 
   return (
