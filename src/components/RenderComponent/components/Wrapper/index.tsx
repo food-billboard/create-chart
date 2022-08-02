@@ -5,6 +5,7 @@ import {
   useMemo,
   useRef,
   useEffect,
+  useCallback,
 } from 'react';
 import { Rnd, Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
 import { merge, throttle, get, omit } from 'lodash';
@@ -15,6 +16,7 @@ import {
 } from '@/utils/constants/another';
 import { isGroupComponent } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils';
+import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
 import { AbsorbUtil } from '@/pages/Designer/components/Panel/components/PanelWrapper/components/AbsorbGuideLine/utils';
 import MultiComponentActionUtil, {
   MultiComponentAction,
@@ -25,7 +27,6 @@ type IProps = {
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;
-  select?: string[];
   pointerDisabled?: boolean;
   setComponent: (
     callback: (
@@ -200,7 +201,6 @@ const ComponentWrapper = (
           'style',
           'propsOnDragStop',
           'propsOnResizeStop',
-          'select',
           'pointerDisabled',
           'setComponent',
           'componentId',
@@ -236,6 +236,8 @@ export default (
   const [stateSize, _setStateSize] = useState<IProps['size']>(props.size);
   const [isDealing, setIsDealing] = useState<boolean>(false);
 
+  const isMultiSelect = useRef<boolean>(false);
+
   const setStatePosition = throttle(_setStatePosition, 100);
   const setStateSize = throttle(_setStateSize, 100);
 
@@ -243,7 +245,6 @@ export default (
   const {
     position: propsPosition,
     size: propsSize,
-    select,
     componentId,
     isSelect,
     setComponent,
@@ -275,9 +276,9 @@ export default (
     },
   });
 
-  const multiSelect = useMemo(() => {
-    return (select?.length || 0) > 1;
-  }, [select]);
+  const getIsMultiSelect = useCallback(() => {
+    isMultiSelect.current = (getGlobalSelect()?.length || 0) > 1;
+  }, []);
 
   const position = useMemo(() => {
     if (isDealing) {
@@ -711,6 +712,7 @@ export default (
       resizeMethod={resizeMethod}
       dragMethod={dragMethod}
       onResizeStart={() => {
+        getIsMultiSelect();
         MultiComponentActionUtil.emit(
           MultiComponentAction.RESIZE_START,
           componentId,
@@ -727,11 +729,12 @@ export default (
       }}
       onResize={(e, direction, ref, delta, position) => {
         // * 复合尺寸修改
-        if (multiSelect) {
+        if (isMultiSelect.current) {
           multiOnResize(e, direction, ref, delta, position);
         }
       }}
       onDragStart={() => {
+        getIsMultiSelect();
         MultiComponentActionUtil.emit(
           MultiComponentAction.DRAG_START,
           componentId,
@@ -748,7 +751,7 @@ export default (
       }}
       onDrag={(event, data) => {
         // * 复合移动
-        if (multiSelect) {
+        if (isMultiSelect.current) {
           multiOnDrag(event, data);
         }
       }}

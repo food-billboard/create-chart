@@ -12,19 +12,14 @@ import styles from './index.less';
 
 const GroupConfig = (props: {
   id: string;
-  components: ComponentData.TComponentData[];
   component: ComponentData.TComponentData;
   setSelect: (value: string[]) => void;
 }) => {
-  const { id, components, component, setSelect } = props;
+  const { id, component, setSelect } = props;
 
   const title = useMemo(() => {
-    const component: ComponentData.TComponentData = getComponent(
-      id,
-      components,
-    );
     return component?.name;
-  }, [components, id]);
+  }, [component, id]);
 
   const disabled = isComponentDisabled(id);
 

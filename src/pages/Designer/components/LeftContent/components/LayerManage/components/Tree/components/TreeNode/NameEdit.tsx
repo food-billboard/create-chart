@@ -96,7 +96,7 @@ const NameEditor = forwardRef<
         )}
         title={name}
       >
-        {id}
+        {name}
       </div>
     );
   }, [editable, name, changeName, changeEditState]);

@@ -2,30 +2,22 @@ import { ReactNode, useMemo, Children, cloneElement, useState } from 'react';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import { get } from 'lodash';
-import { useIsComponentChildrenSelect } from '@/hooks';
 import { getComponentStyleInScreenType } from '@/utils/Assist/Component';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+import ConnectSelectChangeWrapper from '../SelectChangeWrapper';
 import styles from '../../index.less';
 
 const ChildrenWrapper = (props: {
   children?: ReactNode;
   value: ComponentData.TComponentData;
   parent: ComponentData.TComponentData | null;
-  select: string[];
   borderNone?: boolean;
   screenType: ComponentData.ScreenType;
   version: string;
 }) => {
-  const {
-    value,
-    select,
-    children,
-    borderNone = false,
-    screenType,
-    version,
-  } = props;
+  const { value, children, borderNone = false, screenType, version } = props;
 
-  const isSelect = useIsComponentChildrenSelect([value], select);
+  const [isSelect, setIsSelect] = useState<boolean>(false);
 
   const componentScreenTypeStyle = useMemo(() => {
     return getComponentStyleInScreenType(screenType);
@@ -87,7 +79,12 @@ const ChildrenWrapper = (props: {
     transformOrigin,
   ]);
 
-  return <>{realChildren}</>;
+  return (
+    <>
+      {realChildren}
+      <ConnectSelectChangeWrapper value={value} onSelectChange={setIsSelect} />
+    </>
+  );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChildrenWrapper);

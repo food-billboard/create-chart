@@ -3,7 +3,9 @@ import { Dropdown, Menu } from 'antd';
 import type { DropDownProps } from 'antd/es/dropdown';
 import classnames from 'classnames';
 import { connect } from 'dva';
+import { isEqual } from 'lodash';
 import DataChangePool from '@/utils/Assist/DataChangePool';
+import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
 import { ActionItemType, ActionItem, DEFAULT_ACTION_LIST } from './action.map';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
@@ -14,7 +16,6 @@ const ContextMenu = (
     children?: ReactNode;
     value: ComponentData.TComponentData;
     path?: string;
-    select: string[];
     clipboard: string[];
     components: ComponentData.TComponentData[];
     setSelect: (value: string[]) => void;
@@ -30,7 +31,6 @@ const ContextMenu = (
     onVisibleChange: propsOnVisibleChange,
     value,
     path,
-    select,
     setSelect,
     setComponentAll,
     components,
@@ -44,6 +44,7 @@ const ContextMenu = (
   const { id } = value;
 
   const [visible, setVisible] = useState<boolean>(false);
+  const [internalSelect, setInternalSelect] = useState<string[]>([]);
   const [actionList, setActionList] =
     useState<ActionItem[]>(DEFAULT_ACTION_LIST);
 
@@ -72,7 +73,6 @@ const ContextMenu = (
               <Action
                 key={type}
                 value={value}
-                select={select}
                 path={path}
                 setComponent={DataChangePool.setComponent}
                 setSelect={setSelect}
@@ -82,6 +82,7 @@ const ContextMenu = (
                 clipboard={clipboard}
                 setClipboard={setClipboard}
                 actionFrom={actionFrom}
+                select={internalSelect}
               />
             ),
             key: type,
@@ -92,7 +93,6 @@ const ContextMenu = (
   }, [
     actionList,
     value,
-    select,
     setSelect,
     path,
     setComponentAll,
@@ -100,6 +100,7 @@ const ContextMenu = (
     clipboard,
     setClipboard,
     actionFrom,
+    internalSelect,
   ]);
 
   useEffect(() => {
@@ -108,15 +109,19 @@ const ContextMenu = (
 
   const onVisibleChange = useCallback(
     (visible: boolean) => {
+      const select = getGlobalSelect();
       if (visible) {
         if (!select.includes(id)) {
           setSelect([id]);
+          setInternalSelect([id]);
+        } else if (!isEqual(select, internalSelect)) {
+          setInternalSelect(select);
         }
       }
       propsOnVisibleChange?.(visible);
       setVisible(visible);
     },
-    [select, id, propsOnVisibleChange],
+    [id, propsOnVisibleChange, internalSelect],
   );
 
   return (

@@ -1,4 +1,5 @@
 import moment from 'moment';
+import 'pathseg';
 import 'moment/locale/zh-cn';
 import 'animate.css';
 import ThemeUtil from './utils/Assist/Theme';
