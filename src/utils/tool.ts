@@ -130,3 +130,16 @@ export function goDesignModel(id?: string) {
   const url = id ? baseUrl + '?id=' + id : baseUrl;
   window.open(url, '_blank');
 }
+
+// 关闭页面
+export function closeWindow() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  if (userAgent.includes('firefox') || userAgent.includes('chrome')) {
+    window.location.href = 'about:blank';
+    window.close();
+  } else {
+    window.opener = null;
+    window.open('', '_self');
+    window.close();
+  }
+}

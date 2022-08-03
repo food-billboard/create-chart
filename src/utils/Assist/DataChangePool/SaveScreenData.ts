@@ -6,11 +6,14 @@ import {
   putScreen,
   postScreenModel,
   putScreenModel,
+  putScreenPool,
+  putScreenModelPool,
 } from '@/services';
 import { isModelHash } from '@/hooks';
 import { IGlobalModelState } from '@/models/connect';
 import { captureCover, captureCoverAndUpload } from '@/utils/captureCover';
 
+// 正常保存大屏
 export const saveScreenData = async ({
   loading,
   setLoading,
@@ -85,10 +88,17 @@ export const saveScreenData = async ({
   }
 };
 
-export const saveScreenDataAuto = async ({
+// 链式保存大屏
+// ! 之前的版本
+export const _saveScreenDataAuto = async ({
   state,
+  action,
 }: {
   state: IGlobalModelState;
+  action: {
+    type: API_SCREEN.TEditScreenPoolParams['type'];
+    action?: any;
+  };
 }) => {
   NProgress.start();
 
@@ -125,6 +135,52 @@ export const saveScreenDataAuto = async ({
     // 大屏
     else {
       method = _id ? putScreen : postScreen;
+    }
+
+    await method(params as any);
+  } catch (err) {
+    message.info('保存失败，请重试');
+    console.error(err);
+  } finally {
+    NProgress.done();
+  }
+};
+
+export const saveScreenDataAuto = async ({
+  state,
+  action,
+}: {
+  state: IGlobalModelState;
+  action: {
+    type: API_SCREEN.TEditScreenPoolParams['type'];
+    action?: any;
+  };
+}) => {
+  NProgress.start();
+
+  try {
+    const isModel = isModelHash(location.hash);
+
+    const { screenData } = state;
+    const { _id } = screenData || {};
+
+    // 不可能出现id不存在的情况
+    if (!_id) {
+      throw new Error();
+    }
+
+    const params = {
+      _id,
+      ...action,
+    };
+    let method: any;
+    // 模板
+    if (isModel) {
+      method = putScreenModelPool;
+    }
+    // 大屏
+    else {
+      method = putScreenPool;
     }
 
     await method(params as any);

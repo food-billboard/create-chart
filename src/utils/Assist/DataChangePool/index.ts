@@ -1,7 +1,6 @@
-import { get, set } from 'lodash';
 import { getDvaApp } from 'umi';
 import { useIdPathMap } from '@/hooks';
-import ComponentUtil, { getDvaGlobalModelData } from '../Component';
+import { getDvaGlobalModelData } from '../Component';
 
 export * from './SaveScreenData';
 class DataChangePool {

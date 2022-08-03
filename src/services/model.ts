@@ -23,6 +23,17 @@ export const putScreenModel = (data: API_SCREEN.TEditScreenParams) => {
   });
 };
 
+// 链式修改大屏
+export const putScreenModelPool = (data: API_SCREEN.TEditScreenPoolParams) => {
+  return request('/api/screen/model/pool', {
+    method: 'PUT',
+    data: {
+      ...data,
+      version: SCREEN_MODEL_VERSION,
+    },
+  });
+};
+
 // 大屏模板详情
 export const getScreenModelDetail = (params: API_SCREEN.TGetScreenDetail) => {
   return request<API_SCREEN.TScreenDetail>('/api/screen/model/detail', {

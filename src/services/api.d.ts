@@ -105,6 +105,22 @@ declare namespace API_SCREEN {
     _id: string;
   };
 
+  export type TEditScreenPoolParams = {
+    _id: string;
+    type: 'component' | 'undo' | 'redo' | 'guideLine' | 'callback' | 'screen';
+    action?:
+      | ComponentMethod.SetComponentMethodParamsData[]
+      | ComponentMethod.SetComponentMethodParamsData
+      | ComponentData.TGuideLineConfig
+      | ComponentData.TFilterConfig[]
+      | ComponentMethod.GlobalUpdateScreenDataParams;
+  };
+
+  export type TCreateScreenPoolParams = {
+    _id: string;
+    type: 'screen' | 'model';
+  };
+
   export type TShareScreenGetParams = {
     _id: string;
   };

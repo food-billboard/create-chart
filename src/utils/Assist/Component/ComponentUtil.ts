@@ -731,10 +731,16 @@ class ComponentUtil {
     components = arrayMove(components, 0, 0);
 
     // 上传大屏的数据到后台
-    ScreenDataRequest({
-      ...state,
-      components,
-    });
+    ScreenDataRequest(
+      {
+        ...state,
+        components,
+      },
+      {
+        type: 'component',
+        action: payload,
+      },
+    );
 
     return components;
   }

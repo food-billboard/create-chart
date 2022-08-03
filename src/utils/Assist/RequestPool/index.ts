@@ -52,7 +52,7 @@ class RequestPool {
 
 export const SCREEN_DATA_REQUEST_POOL = new RequestPool();
 
-export const ScreenDataRequest = (state: IGlobalModelState) => {
+export const ScreenDataRequest = (state: IGlobalModelState, action: any) => {
   if (
     GlobalConfig.DEFAULT_SCREEN_SAVE_TYPE === 'auto' &&
     state.screenType === 'edit'
@@ -60,6 +60,7 @@ export const ScreenDataRequest = (state: IGlobalModelState) => {
     SCREEN_DATA_REQUEST_POOL.request(async () => {
       return saveScreenDataAuto({
         state,
+        action,
       });
     });
   }

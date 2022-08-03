@@ -194,21 +194,29 @@ export default {
         'screenData',
         mergeWithoutArray({}, screenData, action.payload),
       );
-      !action.init && ScreenDataRequest(state);
+      !action.init &&
+        ScreenDataRequest(state, {
+          type: 'screen',
+          action: action.payload,
+        });
       return state;
     },
 
     setUndoData(state: any, action: any) {
       const history = get(state, 'history.value');
       const newState = history.undo(state);
-      ScreenDataRequest(newState);
+      ScreenDataRequest(newState, {
+        action: 'undo',
+      });
       return newState;
     },
 
     setRedoData(state: any, action: any) {
       const history = get(state, 'history.value');
       const newState = history.redo(state);
-      ScreenDataRequest(newState);
+      ScreenDataRequest(newState, {
+        type: 'redo',
+      });
       return newState;
     },
 
@@ -218,7 +226,11 @@ export default {
         'guideLine',
         mergeWithoutArray({}, state.guideLine, action.payload),
       );
-      !action.init && ScreenDataRequest(state);
+      !action.init &&
+        ScreenDataRequest(state, {
+          type: 'guideLine',
+          action: action.payload,
+        });
       return state;
     },
 
@@ -229,7 +241,10 @@ export default {
 
     setCallback(state: any, action: any) {
       set(state, 'screenData.config.attr.filter', action.payload);
-      ScreenDataRequest(state);
+      ScreenDataRequest(state, {
+        type: 'callback',
+        action: action.payload,
+      });
       return state;
     },
 

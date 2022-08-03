@@ -25,6 +25,35 @@ export const putScreen = (data: API_SCREEN.TEditScreenParams) => {
   });
 };
 
+// 链式修改大屏
+export const putScreenPool = (data: API_SCREEN.TEditScreenPoolParams) => {
+  return request('/api/screen/list/pool', {
+    method: 'PUT',
+    data: {
+      ...data,
+      version: SCREEN_VERSION,
+    },
+  });
+};
+
+// 创建大屏编辑
+export const createPutScreenPool = (
+  data: API_SCREEN.TCreateScreenPoolParams,
+) => {
+  return request('/api/screen/list/pool', {
+    method: 'POST',
+    data,
+  });
+};
+
+// 大屏编辑状态验证
+export const putScreenPoolValid = (params: { _id: string }) => {
+  return request('/api/screen/list/pool', {
+    method: 'GET',
+    params,
+  });
+};
+
 // 大屏详情
 export const getScreenDetail = (params: API_SCREEN.TGetScreenDetail) => {
   return request<API_SCREEN.TScreenDetail>('/api/screen/detail', {
