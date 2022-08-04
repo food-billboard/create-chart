@@ -88,9 +88,8 @@ export const saveScreenData = async ({
   }
 };
 
-// 链式保存大屏
-// ! 之前的版本
-export const _saveScreenDataAuto = async ({
+// 链式全量保存大屏
+export const saveScreenDataAllAuto = async ({
   state,
   action,
 }: {
@@ -146,6 +145,7 @@ export const _saveScreenDataAuto = async ({
   }
 };
 
+// 链式保存大屏
 export const saveScreenDataAuto = async ({
   state,
   action,

@@ -40,7 +40,7 @@ class GlobalConfig {
   DEFAULT_SCREEN_COVER = defaultScreenCover;
 
   // 大屏的保存类型
-  DEFAULT_SCREEN_SAVE_TYPE: 'auto' | 'manual' = 'auto';
+  DEFAULT_SCREEN_SAVE_TYPE: 'auto' | 'manual' | 'auto-all' = 'auto';
 
   enableConfig = (
     settings: Partial<{
@@ -51,7 +51,7 @@ class GlobalConfig {
         [K in ComponentData.TComponentSelfType]: number;
       };
       ENABLE_MOCK_DATA_CONFIG: boolean;
-      DEFAULT_SCREEN_SAVE_TYPE: 'auto' | 'manual';
+      DEFAULT_SCREEN_SAVE_TYPE: 'auto' | 'manual' | 'auto-all';
       MOCK_REQUEST_URL: string;
       SERVICE_SIDE_REQUEST_URL: string;
     }>,
