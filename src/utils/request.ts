@@ -123,7 +123,7 @@ const request = async <ResBody>(
 
   // 返回真正的response body res 内容
   if (!error) {
-    return (origin ? body : body?.data?.res?.data || {}) as ResBody;
+    return (origin ? body : body?.data?.res?.data ?? {}) as ResBody;
   }
   error.mis = mis;
   mis && (await misManage(error));
