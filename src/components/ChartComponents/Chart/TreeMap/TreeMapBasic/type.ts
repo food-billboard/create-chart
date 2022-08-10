@@ -13,7 +13,6 @@ export type TTreeMapBasicConfig = {
       show: boolean;
       left: 'left' | 'center' | 'right';
       top: 'top' | 'center' | 'bottom';
-      height: number;
       itemStyle: {
         textStyle: ComponentData.TFontConfig;
         color: ComponentData.TColorConfig;

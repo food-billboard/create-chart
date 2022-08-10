@@ -147,19 +147,6 @@ const SeriesConfig = (props: {
           }}
           onChange={onKeyChange.bind(null, 'breadcrumb')}
         />
-        <Item label="高度">
-          <FullForm>
-            <InputNumber
-              className="w-100"
-              value={breadcrumb.height}
-              onChange={(value) => {
-                onKeyChange('breadcrumb', {
-                  height: value,
-                });
-              }}
-            />
-          </FullForm>
-        </Item>
         <Collapse
           child={{
             header: '文本',

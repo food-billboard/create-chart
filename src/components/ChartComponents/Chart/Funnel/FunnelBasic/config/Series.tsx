@@ -56,6 +56,9 @@ const SeriesConfig = (props: {
         {...(label as any)}
         onChange={onKeyChange.bind(null, 'label')}
         ignore={['position']}
+        parent={{
+          defaultActiveKey: ['label'],
+        }}
       >
         <Item label="位置">
           <FullForm>

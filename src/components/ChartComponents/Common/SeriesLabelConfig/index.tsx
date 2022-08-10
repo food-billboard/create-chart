@@ -5,6 +5,7 @@ import FontConfig from '../FontConfig';
 
 const SeriesLabelConfig = (
   props: {
+    childrenInsertPosition?: 'start' | 'end';
     onChange?: (
       value: SuperPartial<ComponentData.ComponentSeriesLabelConfig>,
     ) => void;
@@ -28,6 +29,7 @@ const SeriesLabelConfig = (
     child,
     parent,
     level,
+    childrenInsertPosition = 'end',
   } = props;
 
   const commonOnChange = useCallback(
@@ -56,6 +58,7 @@ const SeriesLabelConfig = (
       parent={parent}
       level={level}
     >
+      {childrenInsertPosition === 'start' && children}
       {needPositionConfig && (
         <LabelPositionConfig
           value={position}
@@ -71,7 +74,7 @@ const SeriesLabelConfig = (
         }}
         onChange={onChange}
       />
-      {children}
+      {childrenInsertPosition === 'end' && children}
     </Collapse>
   );
 };

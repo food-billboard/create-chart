@@ -1,4 +1,6 @@
 import { useCallback, useMemo } from 'react';
+import { InfoCircleOutlined } from '@ant-design/icons';
+import { Select } from 'antd';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
@@ -9,8 +11,8 @@ import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradie
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import IconTooltip from '@/components/IconTooltip';
 import { TRankBarConfig } from '../type';
-import { Select } from 'antd';
 
 const { Item } = ConfigList;
 
@@ -118,7 +120,11 @@ const SeriesConfig = (props: {
       <>
         <Collapse
           child={{
-            header: '默认颜色',
+            header: (
+              <IconTooltip title="默认颜色">
+                <InfoCircleOutlined />
+              </IconTooltip>
+            ),
             key: 'defaultColor',
           }}
         >
