@@ -85,7 +85,7 @@ export const useHashChangeReload = (reload: any) => {
       hashData.isDesigner !== prevHashData.isDesigner ||
       hashData.isPreview !== prevHashData.isPreview
     ) {
-      reload?.();
+      reload?.(hashData, prevHashData);
     }
   });
 };

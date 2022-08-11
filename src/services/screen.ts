@@ -1,3 +1,6 @@
+import { history, getDvaApp } from 'umi';
+import { merge } from 'lodash';
+import { isModelHash } from '@/hooks';
 import request from '../utils/request';
 import { SCREEN_VERSION, SERVICE_REQUEST_URL } from '../utils/constants';
 
@@ -52,6 +55,38 @@ export const putScreenPoolValid = (params: { _id: string }) => {
     method: 'GET',
     params,
   });
+};
+
+// 关闭大屏编辑流
+export const deleteScreenPool = (
+  sync: boolean = false,
+  customParams?: Partial<{ _id: string; type: string }>,
+) => {
+  const {
+    location: { query },
+  } = history;
+  const { id } = query || {};
+  const app = getDvaApp();
+  const userId = app._store.getState().user.currentUser._id;
+
+  let params = {
+    type: isModelHash(location.hash) ? 'model' : 'screen',
+    _id: id,
+    user: userId,
+  };
+  params = merge({}, params, customParams);
+  const url = '/api/screen/list/pool/close';
+
+  if (sync)
+    return request(url, {
+      method: 'POST',
+      data: params,
+    });
+
+  const data = new Blob([JSON.stringify(params)], {
+    type: 'text/plain',
+  });
+  navigator.sendBeacon(url, data);
 };
 
 // 大屏详情

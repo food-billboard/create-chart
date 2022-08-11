@@ -10,7 +10,11 @@ import FetchScreenComponent, {
 } from '@/components/FetchScreenComponent';
 import { closeWindow } from '@/utils';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import { putScreenPoolValid, createPutScreenPool } from '@/services';
+import {
+  putScreenPoolValid,
+  createPutScreenPool,
+  deleteScreenPool,
+} from '@/services';
 import PageLoading from './components/PageLoading';
 import ShepherdWrapper from './components/ShepherdWrapper';
 import Header from './components/Header';
@@ -99,8 +103,12 @@ const Designer = (props: {
     }
   }, []);
 
-  const reload = async () => {
+  const reload = async (hashData: any, prevHashData: any) => {
     setLoading(true);
+    await deleteScreenPool(true, {
+      type: prevHashData.isModel ? 'model' : 'screen',
+      _id: prevHashData.id,
+    });
     await requestRef.current?.reload();
   };
 
@@ -121,6 +129,8 @@ const Designer = (props: {
     setScreenType('edit');
   }, [setScreenType]);
 
+  // 页面关闭的时候需要提示是否保存
+  // 这是在手动保存的时候才需要使用的
   useEffect(() => {
     if (
       process.env.NODE_ENV !== 'production' ||
@@ -131,7 +141,23 @@ const Designer = (props: {
     return () => {
       window.removeEventListener('beforeunload', closeAndPrompt);
     };
-  });
+  }, []);
+
+  // unload
+  // 页面关闭或者hash发生改变的时候
+  // 关闭后端保存流
+  useEffect(() => {
+    if (GlobalConfig.DEFAULT_SCREEN_SAVE_TYPE === 'manual') {
+      return;
+    }
+    window.addEventListener('unload', deleteScreenPool.bind(null, false, {}));
+    return () => {
+      window.removeEventListener(
+        'unload',
+        deleteScreenPool.bind(null, false, {}),
+      );
+    };
+  }, []);
 
   return (
     <ConfigProvider componentSize="small">
