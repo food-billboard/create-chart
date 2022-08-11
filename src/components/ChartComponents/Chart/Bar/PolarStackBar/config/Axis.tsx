@@ -35,6 +35,9 @@ const AxisConfig = (props: {
         {...(axisLabel as any)}
         onChange={onKeyChange.bind(null, 'axisLabel')}
         ignore={['position']}
+        parent={{
+          defaultActiveKey: ['label'],
+        }}
       >
         <Item label="间距">
           <FullForm>

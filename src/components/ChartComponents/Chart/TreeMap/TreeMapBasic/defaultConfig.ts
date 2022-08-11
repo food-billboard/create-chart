@@ -120,7 +120,6 @@ export default () => {
             show: true,
             left: 'center',
             top: 'bottom',
-            height: 22,
             itemStyle: {
               textStyle: {
                 ...DEFAULT_FONT_CONFIG,
@@ -134,7 +133,7 @@ export default () => {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 0.7,
+                a: 0,
               },
             },
           },

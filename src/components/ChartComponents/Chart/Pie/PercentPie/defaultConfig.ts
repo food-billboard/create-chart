@@ -90,9 +90,8 @@ export default () => {
             color: DEFAULT_THEME_COLOR_LIST_DATA,
           },
           backgroundColor: {
-            r: 23,
-            g: 49,
-            b: 100,
+            ...DEFAULT_THEME_COLOR_LIST_DATA[0],
+            a: 10,
           },
         },
       },

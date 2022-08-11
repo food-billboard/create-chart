@@ -66,6 +66,9 @@ const SeriesConfig = (props: {
         {...(label as any)}
         onChange={onKeyChange.bind(null, 'label')}
         ignore={['position']}
+        parent={{
+          defaultActiveKey: ['label'],
+        }}
       >
         <FormatterSelect
           value={label.formatter}
