@@ -206,7 +206,7 @@ export default {
       const history = get(state, 'history.value');
       const newState = history.undo(state);
       ScreenDataRequest(newState, {
-        action: 'undo',
+        type: 'undo',
       });
       return newState;
     },
