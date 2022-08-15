@@ -6,6 +6,7 @@ import { useHover } from 'ahooks';
 import ContextMenu from '@/components/ContextMenu';
 import { ActionItemType } from '@/components/ContextMenu/action.map';
 import DataChangePool from '@/utils/Assist/DataChangePool';
+import { COMPONENT_ICON_MAP } from '@/utils/constants/component';
 import VisibleEditor from './Visible';
 import NameEditor, { NameEditorRefProps } from './NameEdit';
 import LockEditor from './Lock';
@@ -34,8 +35,8 @@ const ListItem = ({
     config: {
       attr: { visible, lock },
     },
-    icon,
     parent,
+    componentType,
   } = value;
 
   const editRef = useRef<NameEditorRefProps>(null);
@@ -44,6 +45,10 @@ const ListItem = ({
   const [, setHover] = useLayerHover();
 
   const isHover = useHover(listItemRef);
+
+  const icon = useMemo(() => {
+    return COMPONENT_ICON_MAP[componentType];
+  }, [componentType]);
 
   const setComponent = useCallback(
     (value: ComponentMethod.SetComponentMethodParamsData) => {

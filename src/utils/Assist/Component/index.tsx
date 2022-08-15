@@ -1,5 +1,5 @@
 import { CSSProperties } from 'react';
-import { get } from 'lodash';
+import { get, omit } from 'lodash';
 import { nanoid } from 'nanoid';
 import { getDvaApp } from 'umi';
 import { useIdPathMap } from '@/hooks';
@@ -65,7 +65,7 @@ export const createComponent: (
       ),
       components: [],
     },
-    component,
+    omit(component, ['icon']),
     {
       id: nanoid(),
     },
