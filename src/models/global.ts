@@ -265,27 +265,34 @@ export default {
       const prevComponents = cloneDeep(get(state, 'components') || []);
       const history = get(state, 'history.value');
 
-      const newState = (Array.isArray(value) ? value : [value]).reduce(
-        (state, value) => {
-          const newComponents = ComponentUtil.setComponent(state, {
-            ...action,
-            payload: value,
-          });
-          set(state, 'components', newComponents);
+      // ! 先看看其他会不会有问题再说
+      // const newState = (Array.isArray(value) ? value : [value]).reduce(
+      //   (state, value) => {
+      //     const newComponents = ComponentUtil.setComponent(state, {
+      //       ...action,
+      //       payload: value,
+      //     });
+      //     set(state, 'components', newComponents);
 
-          return state;
-        },
-        {
-          ...state,
-        },
-      );
+      //     return state;
+      //   },
+      //   {
+      //     ...state,
+      //   },
+      // );
+
+      const newComponents = ComponentUtil.setComponent(state, {
+        ...action,
+        payload: value,
+      });
+      set(state, 'components', newComponents);
 
       if (enqueue) {
         // * history enqueue
-        return history.enqueue(newState, newState.components, prevComponents);
+        return history.enqueue(state, state.components, prevComponents);
       }
 
-      return newState;
+      return state;
     },
 
     setComponentDataAll(state: any, action: any) {
