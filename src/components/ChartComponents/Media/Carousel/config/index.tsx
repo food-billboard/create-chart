@@ -16,6 +16,7 @@ import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/
 import RadioGroup, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
+import ClipPathSelect from '@/components/ChartComponents/Common/ClipPathSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import ConditionConfig from './Condition';
 import { TCarouselConfig } from '../type';
@@ -42,7 +43,15 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: { speed, dot, autoplay, fade, condition, pauseOnHover },
+        options: {
+          speed,
+          dot,
+          autoplay,
+          fade,
+          condition,
+          pauseOnHover,
+          clipPath,
+        },
       },
     } = value;
 
@@ -128,6 +137,10 @@ class Config extends Component<
                 />
               </FullForm>
             </Item>
+            <ClipPathSelect
+              value={clipPath}
+              onChange={this.onKeyChange.bind(this, 'clipPath')}
+            />
           </ConfigList>
         </TabPane>
         <TabPane key="2" tab={<Tab>条件</Tab>}>

@@ -13,14 +13,13 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import ColorSelect, { CompatColorSelect } from '@/components/ColorSelect';
 import IconTooltip from '@/components/IconTooltip';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import RadioGroup, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
 import ImageUpload from '@/components/ImageUpload';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import ClipPathSelect from '@/components/ChartComponents/Common/ClipPathSelect';
 import ThemeUtil from '@/utils/Assist/Theme';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import ConditionConfig from './Condition';
 import { TImageConfig } from '../type';
 
@@ -110,7 +109,7 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: { type, content, repeat, condition, preview },
+        options: { type, content, repeat, condition, preview, clipPath },
       },
     } = value;
 
@@ -148,6 +147,10 @@ class Config extends Component<
                 {type === 'image' && this.backgroundForm()}
               </FullForm>
             </Item>
+            <ClipPathSelect
+              value={clipPath}
+              onChange={this.onKeyChange.bind(this, 'clipPath')}
+            />
             {type === 'image' && (
               <>
                 <Item label="预览">

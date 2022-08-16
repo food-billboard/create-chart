@@ -10,3 +10,4 @@ export * from './useGetUserInfo';
 export * from './useIsScrolling';
 export * from './usePrimaryColor';
 export * from './useLayerHover';
+export * from './useClipPath';

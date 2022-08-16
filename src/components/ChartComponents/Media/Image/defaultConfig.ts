@@ -54,6 +54,7 @@ export default () => {
     },
     options: {
       type: 'color',
+      clipPath: 'none',
       content: DEFAULT_COLOR,
       repeat: {
         x: false,

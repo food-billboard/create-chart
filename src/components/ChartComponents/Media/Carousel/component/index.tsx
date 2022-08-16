@@ -6,6 +6,7 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
+import { useClipPath } from '@/hooks';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -32,7 +33,10 @@ const CarouselBasic = (props: {
     },
     id,
   } = value;
-  const { dot, speed, autoplay, fade, condition, pauseOnHover } = options;
+  const { dot, speed, autoplay, fade, condition, pauseOnHover, clipPath } =
+    options;
+
+  const clipPathStyle = useClipPath(clipPath);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -109,6 +113,7 @@ const CarouselBasic = (props: {
             height: '100%',
           },
           style,
+          clipPathStyle,
           conditionStyle,
         )}
         id={chartId.current}

@@ -58,6 +58,7 @@ export default () => {
       },
       options: {
         condition: DEFAULT_CONDITION_CONFIG(),
+        clipPath: 'none',
         speed: 500,
         autoplay: true,
         pauseOnHover: true,

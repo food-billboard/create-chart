@@ -35,6 +35,7 @@ export default () => {
     },
     options: {
       condition: DEFAULT_CONDITION_CONFIG(),
+      clipPath: 'none',
       autoplay: true,
       loop: true,
       controls: true,

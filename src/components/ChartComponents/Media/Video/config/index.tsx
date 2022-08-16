@@ -5,6 +5,7 @@ import ComponentOptionConfig, {
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ClipPathSelect from '@/components/ChartComponents/Common/ClipPathSelect';
 import ConditionConfig from './Condition';
 import { TVideoConfig } from '../type';
 
@@ -28,7 +29,7 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: { autoplay, loop, muted, controls, condition },
+        options: { autoplay, loop, muted, controls, condition, clipPath },
       },
     } = value;
 
@@ -68,6 +69,10 @@ class Config extends Component<
                 />
               </FullForm>
             </Item>
+            <ClipPathSelect
+              value={clipPath}
+              onChange={this.onKeyChange.bind(this, 'clipPath')}
+            />
           </ConfigList>
         </TabPane>
         <TabPane key="2" tab={<Tab>条件</Tab>}>

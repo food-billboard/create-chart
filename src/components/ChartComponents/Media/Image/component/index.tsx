@@ -6,6 +6,7 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
+import { useClipPath } from '@/hooks';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -31,7 +32,16 @@ const ImageBasic = (props: {
     id,
     config: { options },
   } = value;
-  const { type, content, repeat, condition, preview } = options;
+  const {
+    type,
+    content,
+    repeat,
+    condition,
+    preview,
+    clipPath = 'circle',
+  } = options;
+
+  const clipPathStyle = useClipPath(clipPath);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -107,6 +117,7 @@ const ImageBasic = (props: {
           },
           style,
           componentStyle,
+          clipPathStyle,
           conditionStyle,
         )}
         id={chartId.current}

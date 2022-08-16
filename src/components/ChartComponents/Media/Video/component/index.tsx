@@ -5,6 +5,7 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
+import { useClipPath } from '@/hooks';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -27,8 +28,17 @@ const VideoBasic = (props: {
     id,
     config: { options },
   } = value;
-  const { controls, loop, autoplay: opAutoplay, muted, condition } = options;
+  const {
+    controls,
+    loop,
+    autoplay: opAutoplay,
+    muted,
+    condition,
+    clipPath,
+  } = options;
   const { screenType } = global;
+
+  const clipPathStyle = useClipPath(clipPath);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -90,6 +100,7 @@ const VideoBasic = (props: {
             height: '100%',
           },
           style,
+          clipPathStyle,
           conditionStyle,
         )}
         id={chartId.current}
