@@ -103,7 +103,7 @@ const Header = (props: {
         loading={fetchLoading}
       ></Button>
     );
-    if (GlobalConfig.DEFAULT_SCREEN_SAVE_TYPE === 'manual') {
+    if (!GlobalConfig.isAutoSaveType()) {
       if (!_id) return [storeButton];
       return [previewButton, storeButton];
     } else {

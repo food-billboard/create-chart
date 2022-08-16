@@ -81,7 +81,7 @@ const Designer = (props: {
 
   const onLoad = useCallback(async () => {
     setLoading(false);
-    if (GlobalConfig.DEFAULT_SCREEN_SAVE_TYPE === 'auto') {
+    if (GlobalConfig.isAutoSaveType()) {
       const {
         location: { query },
       } = history;
@@ -132,10 +132,7 @@ const Designer = (props: {
   // 页面关闭的时候需要提示是否保存
   // 这是在手动保存的时候才需要使用的
   useEffect(() => {
-    if (
-      process.env.NODE_ENV !== 'production' ||
-      GlobalConfig.DEFAULT_SCREEN_SAVE_TYPE !== 'auto'
-    )
+    if (process.env.NODE_ENV !== 'production' || !GlobalConfig.isAutoSaveType())
       return;
     window.addEventListener('beforeunload', closeAndPrompt);
     return () => {
@@ -147,7 +144,7 @@ const Designer = (props: {
   // 页面关闭或者hash发生改变的时候
   // 关闭后端保存流
   useEffect(() => {
-    if (GlobalConfig.DEFAULT_SCREEN_SAVE_TYPE === 'manual') {
+    if (!GlobalConfig.isAutoSaveType()) {
       return;
     }
     window.addEventListener('unload', deleteScreenPool.bind(null, false, {}));

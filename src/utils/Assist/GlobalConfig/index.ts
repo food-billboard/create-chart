@@ -42,6 +42,11 @@ class GlobalConfig {
   // 大屏的保存类型
   DEFAULT_SCREEN_SAVE_TYPE: 'auto' | 'manual' | 'auto-all' = 'auto';
 
+  // 是否为自动保存类型
+  isAutoSaveType() {
+    return this.DEFAULT_SCREEN_SAVE_TYPE !== 'manual';
+  }
+
   enableConfig = (
     settings: Partial<{
       DEFAULT_SCREEN_COVER: string;
