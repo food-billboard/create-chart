@@ -173,10 +173,9 @@ const GlobalLayout = (props: any) => {
 
   if (pathname === '/screen' || pathname === '/model') {
     return (
-      <Layout pathname={pathname}>
-        {children}
-        <IntroductionButton />
-      </Layout>
+      <FetchLoginWrapper {...props}>
+        <Layout pathname={pathname}>{children}</Layout>
+      </FetchLoginWrapper>
     );
   }
 
