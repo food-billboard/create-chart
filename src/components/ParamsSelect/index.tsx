@@ -1,5 +1,6 @@
 import { Select } from 'antd';
 import { connect } from 'dva';
+import { isEqual } from 'lodash';
 import { useMemo, useCallback, useState } from 'react';
 import classnames from 'classnames';
 import { SelectProps } from 'antd/es/select';
@@ -34,7 +35,7 @@ const ParamsSelect = (
 
   const domList = useMemo(() => {
     return dataSource.map((item) => {
-      const { key, value, id } = item;
+      const { key, id } = item;
       return (
         <Option key={id} value={id}>
           {key}
@@ -45,10 +46,10 @@ const ParamsSelect = (
 
   const handleBlur = useCallback(
     (e) => {
-      onChange?.(stateValue);
+      if (!isEqual(value, stateValue)) onChange?.(stateValue);
       onBlur?.(e);
     },
-    [onChange, stateValue, onBlur],
+    [onChange, stateValue, onBlur, value],
   );
 
   const handleChange = useCallback((value) => {
@@ -108,10 +109,10 @@ const InternalParamsSelectSingle = (
 
   const handleBlur = useCallback(
     (e) => {
-      onChange?.(stateValue);
+      if (stateValue !== value) onChange?.(stateValue);
       onBlur?.(e);
     },
-    [onChange, stateValue, onBlur],
+    [onChange, stateValue, onBlur, value],
   );
 
   const handleChange = useCallback((value) => {
