@@ -44,6 +44,7 @@ const DataFilter = (props: {
         className={styles['design-config-data-filter-add-item-select']}
         onSelect={onSelect}
         size="middle"
+        value=""
       >
         {realCallback.map((callback) => {
           const { id, name } = callback;

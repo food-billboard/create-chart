@@ -13,6 +13,31 @@ import { isModelHash } from '@/hooks';
 import { IGlobalModelState } from '@/models/connect';
 import { captureCover, captureCoverAndUpload } from '@/utils/captureCover';
 
+class NProgressUtil {
+  #loading = false;
+
+  internalStart = () => {
+    NProgress.start();
+    this.#loading = true;
+  };
+
+  start() {
+    if (this.#loading) {
+      NProgress.done();
+      setTimeout(this.internalStart, 50);
+    } else {
+      this.internalStart();
+    }
+  }
+
+  done() {
+    this.#loading = false;
+    NProgress.done();
+  }
+}
+
+const nProgressUtil = new NProgressUtil();
+
 // 正常保存大屏
 export const saveScreenData = async ({
   loading,
@@ -23,7 +48,7 @@ export const saveScreenData = async ({
 }) => {
   if (loading) return;
   setLoading(true);
-  NProgress.start();
+  nProgressUtil.start();
 
   try {
     const isModel = isModelHash(location.hash);
@@ -84,7 +109,7 @@ export const saveScreenData = async ({
     console.error(err);
   } finally {
     setLoading(false);
-    NProgress.done();
+    nProgressUtil.done();
   }
 };
 
@@ -99,7 +124,7 @@ export const saveScreenDataAllAuto = async ({
     action?: any;
   };
 }) => {
-  NProgress.start();
+  nProgressUtil.start();
 
   try {
     const isModel = isModelHash(location.hash);
@@ -141,7 +166,7 @@ export const saveScreenDataAllAuto = async ({
     message.info('保存失败，请重试');
     console.error(err);
   } finally {
-    NProgress.done();
+    nProgressUtil.done();
   }
 };
 
@@ -156,7 +181,7 @@ export const saveScreenDataAuto = async ({
     action?: any;
   };
 }) => {
-  NProgress.start();
+  nProgressUtil.start();
 
   try {
     const isModel = isModelHash(location.hash);
@@ -188,6 +213,6 @@ export const saveScreenDataAuto = async ({
     message.info('保存失败，请重试');
     console.error(err);
   } finally {
-    NProgress.done();
+    nProgressUtil.done();
   }
 };
