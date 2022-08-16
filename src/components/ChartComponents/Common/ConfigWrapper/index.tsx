@@ -63,40 +63,45 @@ export const ConfigItem = (
 
   return (
     <Tabs.TabPane {...nextProps}>
-      <div className={styles['design-config-wrapper-item-title']}>
-        <div className={styles['design-config-wrapper-item-title-content']}>
-          <div
-            className={classnames(
-              styles['design-config-wrapper-item-title-content-main'],
-              'dis-flex',
-            )}
-          >
-            {!!hasBack && (
-              <LeftOutlined
-                className="c-po"
-                title="返回上一级"
-                onClick={onBack}
-              />
-            )}
-            <span
-              className={classnames('text-ellipsis', 'dis-flex')}
-              title={title || ''}
+      {title !== false && (
+        <div className={styles['design-config-wrapper-item-title']}>
+          <div className={styles['design-config-wrapper-item-title-content']}>
+            <div
+              className={classnames(
+                styles['design-config-wrapper-item-title-content-main'],
+                'dis-flex',
+              )}
             >
-              {title}
-            </span>
-          </div>
-          <div
-            className={classnames(
-              styles['design-config-wrapper-item-title-content-sub'],
-              'dis-flex',
-            )}
-          >
-            <span>{title && `${version} | ${title}`}</span>
+              {!!hasBack && (
+                <LeftOutlined
+                  className="c-po"
+                  title="返回上一级"
+                  onClick={onBack}
+                />
+              )}
+              <span
+                className={classnames('text-ellipsis', 'dis-flex')}
+                title={title || ''}
+              >
+                {title}
+              </span>
+            </div>
+            <div
+              className={classnames(
+                styles['design-config-wrapper-item-title-content-sub'],
+                'dis-flex',
+              )}
+            >
+              <span>{title && `${version} | ${title}`}</span>
+            </div>
           </div>
         </div>
-      </div>
+      )}
       <div
         id={scrollBarId.current}
+        style={{
+          top: title === false ? 0 : 60,
+        }}
         className={classnames(
           styles['design-config-wrapper-item-content'],
           'zero-scrollbar',

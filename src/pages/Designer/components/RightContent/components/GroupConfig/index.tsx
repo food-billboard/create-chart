@@ -1,7 +1,7 @@
 import { useMemo, useCallback } from 'react';
 import classnames from 'classnames';
 import { connect } from 'dva';
-import { getComponent, isComponentDisabled } from '@/utils/Assist/Component';
+import { isComponentDisabled } from '@/utils/Assist/Component';
 import ConfigWrapper, {
   ConfigItem,
 } from '@/components/ChartComponents/Common/ConfigWrapper';

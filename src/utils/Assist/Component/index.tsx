@@ -190,10 +190,10 @@ export const getParentComponentIds = (
 };
 
 // 获取顶级组件
-export const getTopParentComponent = (
+export const getTopParentComponent: (
   id: string,
   sorceComponents?: ComponentData.TComponentData[],
-) => {
+) => ComponentData.TComponentData = (id, sorceComponents) => {
   const state = getDvaGlobalModelData();
   const components = sorceComponents || state.components;
   const parentIds = getParentComponentIds(id);
