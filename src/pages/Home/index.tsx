@@ -15,7 +15,9 @@ import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Co
 import ColorSelect from '@/components/ColorSelect';
 import MatterBoxes from './components/MatterBoxes';
 import AnimationTitle from './components/AnimationTitle';
-import LinearBackground from './components/LinearBackground';
+import LinearBackground, {
+  GridBackground,
+} from './components/LinearBackground';
 import AnimationSvg from './components/AnimationSvg';
 import {
   AnimationOne,
@@ -271,6 +273,7 @@ const Home = () => {
   return (
     <div className={styles['home-page']} id="home-page">
       <LinearBackground />
+      <GridBackground />
       <div id="home-page-container" className={styles['home-page-container']}>
         <div
           className={classnames(
