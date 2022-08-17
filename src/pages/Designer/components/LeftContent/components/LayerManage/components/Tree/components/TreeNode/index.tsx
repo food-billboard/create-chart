@@ -1,12 +1,14 @@
-import { useCallback, useRef, useMemo, useEffect } from 'react';
+import { useCallback, useRef, useMemo, useEffect, useState } from 'react';
 import { Space } from 'antd';
 import classnames from 'classnames';
 import { FolderOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import { useHover } from 'ahooks';
+import { useComponentHover } from '@/hooks';
 import ContextMenu from '@/components/ContextMenu';
 import { ActionItemType } from '@/components/ContextMenu/action.map';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import { COMPONENT_ICON_MAP } from '@/utils/constants/component';
+import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
 import VisibleEditor from './Visible';
 import NameEditor, { NameEditorRefProps } from './NameEdit';
 import LockEditor from './Lock';
@@ -39,12 +41,24 @@ const ListItem = ({
     componentType,
   } = value;
 
+  const [isHover, setIsHover] = useState(false);
+
   const editRef = useRef<NameEditorRefProps>(null);
   const listItemRef = useRef<any>();
 
+  const [, , eventBinder] = useComponentHover();
+
   const [, setHover] = useLayerHover();
 
-  const isHover = useHover(listItemRef);
+  useHover(listItemRef, {
+    onChange: (state) => {
+      if (state) {
+        setHover(id);
+      } else {
+        setHover('');
+      }
+    },
+  });
 
   const icon = useMemo(() => {
     return COMPONENT_ICON_MAP[componentType];
@@ -75,6 +89,14 @@ const ListItem = ({
       editRef.current?.changeEditStatus(true);
     }
   }, []);
+
+  const hoverStyle = useMemo(() => {
+    if (!isHover) return {};
+    return {
+      color: DEFAULT_THEME_COLOR,
+      opacity: 1,
+    };
+  }, [isHover]);
 
   const handleSelect = useCallback(
     (e) => {
@@ -110,12 +132,10 @@ const ListItem = ({
   }, [isLeaf, icon, isExpend, iconMode]);
 
   useEffect(() => {
-    if (isHover) {
-      setHover(id);
-    } else {
-      setHover('');
-    }
-  }, [isHover]);
+    return eventBinder((hoverSelect) => {
+      setIsHover(id === hoverSelect);
+    });
+  }, []);
 
   return (
     <ContextMenu
@@ -138,6 +158,7 @@ const ListItem = ({
           'dis-flex',
           'p-lr-4',
         )}
+        style={hoverStyle}
         onClick={handleSelect}
         ref={listItemRef}
       >

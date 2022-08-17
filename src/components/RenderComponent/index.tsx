@@ -16,6 +16,7 @@ import ComponentWrapper from './components/Wrapper';
 import Content from './components/Content';
 import ContextMenu from '../ContextMenu';
 import ConnectSelectChangeWrapper from './components/SelectChangeWrapper';
+import HoverChangeWrapper from './components/HoverChangeWrapper';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -181,6 +182,7 @@ const RenderComponent = memo(
               value={value}
               onSelectChange={setIsSelect}
             />
+            <HoverChangeWrapper id={id} />
           </OnlyClickDiv>
         </ComponentWrapper>
       </ContextMenu>

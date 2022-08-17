@@ -11,3 +11,4 @@ export * from './useIsScrolling';
 export * from './usePrimaryColor';
 export * from './useLayerHover';
 export * from './useClipPath';
+export * from './useComponentHover';

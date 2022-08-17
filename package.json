@@ -32,7 +32,7 @@
     "@svgdotjs/svg.js": "^3.1.2",
     "@types/nprogress": "^0.2.0",
     "@types/react-slick": "^0.23.8",
-    "ahooks": "^3.1.5",
+    "ahooks": "^3.7.0",
     "animate.css": "^4.1.1",
     "antd": "^4.21.1",
     "array-move": "3.0.1",
