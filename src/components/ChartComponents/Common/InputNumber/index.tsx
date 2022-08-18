@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { InputNumber as AntInputNumber } from 'antd';
 import { InputNumberProps } from 'antd/es/input-number';
 import classnames from 'classnames';
+import { useUnmount } from 'ahooks';
 
 const InputNumber = (
   props: InputNumberProps & {
@@ -42,6 +43,10 @@ const InputNumber = (
       setStateValue(value);
     }
   }, [value]);
+
+  useUnmount(() => {
+    if (value !== stateValue) propsOnChange?.(stateValue);
+  });
 
   return (
     <AntInputNumber

@@ -6,7 +6,6 @@ import {
 } from '@ant-design/icons';
 import { connect } from 'dva';
 import IconTooltip from '@/components/IconTooltip';
-import { getComponent } from '@/utils/Assist/Component';
 import ConfigComponent from './ConfigComponent';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';

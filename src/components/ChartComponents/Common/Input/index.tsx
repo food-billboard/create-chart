@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Input as AntInput } from 'antd';
 import { InputProps } from 'antd/es/input';
+import { useUnmount } from 'ahooks';
 
 const Input = (
   props: InputProps & {
@@ -41,6 +42,10 @@ const Input = (
       setStateValue(value);
     }
   }, [value]);
+
+  useUnmount(() => {
+    if (value !== stateValue) propsOnChange?.(stateValue);
+  });
 
   return (
     <AntInput
