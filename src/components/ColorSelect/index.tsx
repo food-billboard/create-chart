@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useControllableValue } from 'ahooks';
+import { useControllableValue, useUpdateEffect, useUnmount } from 'ahooks';
 import { Input, InputNumber } from 'antd';
 import {
   SketchPicker,
@@ -8,7 +8,7 @@ import {
 } from 'react-color';
 import color from 'color';
 import classnames from 'classnames';
-import { omit, merge, debounce } from 'lodash';
+import { omit, merge, debounce, isEqual } from 'lodash';
 import Tooltip from '../ChartComponents/Common/Tooltip';
 import { DEFAULT_COLOR } from '@/utils/constants';
 import styles from './index.less';
@@ -45,19 +45,31 @@ function getHexString(prevColor: ComponentData.TColorConfig, prefix?: boolean) {
 }
 
 const ColorSelect = (props: TColorSelectProps) => {
-  const [state, setState] = useControllableValue<ComponentData.TColorConfig>(
-    props,
-    {
-      defaultValue: DEFAULT_COLOR,
-    },
-  );
-
   const { value, onChange, ...nextProps } = props;
+
+  const [stateValue, setStateValue] = useState<ComponentData.TColorConfig>(
+    value || DEFAULT_COLOR,
+  );
 
   const onInternalChange: ColorChangeHandler = useCallback((value) => {
     const rgb = value.rgb;
-    setState(rgb);
+    setStateValue(rgb);
   }, []);
+
+  const onVisibleChange = useCallback(
+    (visible) => {
+      if (!visible) onChange?.(stateValue);
+    },
+    [stateValue],
+  );
+
+  useUpdateEffect(() => {
+    value && setStateValue(value);
+  }, [value]);
+
+  useUnmount(() => {
+    if (!isEqual(value, stateValue)) onChange?.(stateValue);
+  });
 
   return (
     <Tooltip
@@ -65,11 +77,12 @@ const ColorSelect = (props: TColorSelectProps) => {
         <SketchPicker
           {...nextProps}
           onChange={debounce(onInternalChange, 20)}
-          color={state}
+          color={stateValue}
         />
       }
       trigger="click"
       overlayClassName={styles['component-color-select-tooltip']}
+      onVisibleChange={onVisibleChange}
     >
       <div
         className={classnames(
@@ -78,7 +91,7 @@ const ColorSelect = (props: TColorSelectProps) => {
           'c-po',
         )}
         style={{
-          backgroundColor: getRgbaString(state),
+          backgroundColor: getRgbaString(stateValue),
         }}
       ></div>
     </Tooltip>
@@ -151,16 +164,24 @@ export const CompatColorSelect = (
     [value],
   );
 
-  const onOpacityBlur = useCallback(() => {
-    onChange?.(merge({}, value, { a: opacity }));
-  }, [opacity, value]);
+  const onOpacityBlur = useCallback(
+    (judge: boolean) => {
+      const newValue = merge({}, value, { a: opacity });
+      if (!judge || !isEqual(newValue, value)) onChange?.(newValue);
+    },
+    [opacity, value],
+  );
 
-  const onInputBlur = useCallback(() => {
-    try {
-      const rgbColor = color(`#${inputColor}`).object();
-      onChange?.(merge({}, value, rgbColor));
-    } catch (err) {}
-  }, [inputColor, value]);
+  const onInputBlur = useCallback(
+    (judge: boolean) => {
+      try {
+        const rgbColor = color(`#${inputColor}`).object();
+        const newValue = merge({}, value, rgbColor);
+        if (!judge || !isEqual(newValue, value)) onChange?.(newValue);
+      } catch (err) {}
+    },
+    [inputColor, value],
+  );
 
   // * 避免外部刷新导致内部数据不刷新
   useEffect(() => {
@@ -173,6 +194,11 @@ export const CompatColorSelect = (
     }
   }, [propsValue, propsDefaultValue]);
 
+  useUnmount(() => {
+    onOpacityBlur(true);
+    onInputBlur(true);
+  });
+
   return (
     <div className="dis-flex">
       <ColorSelect
@@ -183,7 +209,7 @@ export const CompatColorSelect = (
         prefix="#"
         value={inputColor}
         onChange={onInputColorChange}
-        onBlur={onInputBlur}
+        onBlur={onInputBlur.bind(null, false)}
       />
       {!ignoreAlpha && (
         <InputNumber
@@ -192,7 +218,7 @@ export const CompatColorSelect = (
           step={1}
           value={opacity * 100}
           onChange={onOpacityChange}
-          onBlur={onOpacityBlur}
+          onBlur={onOpacityBlur.bind(null, false)}
         />
       )}
     </div>
