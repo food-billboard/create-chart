@@ -121,6 +121,10 @@ const Switch = (props: {
     setChecked(!!defaultChecked);
   }, [defaultChecked]);
 
+  useEffect(() => {
+    onChange(!!defaultChecked);
+  }, []);
+
   return (
     <>
       <div

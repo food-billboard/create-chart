@@ -249,6 +249,10 @@ const DatePicker = (props: {
     setDateValue(moment(defaultDate));
   }, [defaultDate]);
 
+  useEffect(() => {
+    onChange(dateValue);
+  }, []);
+
   return (
     <>
       <div

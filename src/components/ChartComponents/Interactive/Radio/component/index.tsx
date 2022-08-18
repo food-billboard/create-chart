@@ -84,6 +84,14 @@ const Radio = (props: {
     setCheckedValue(defaultChecked);
   }, [defaultChecked]);
 
+  useEffect(() => {
+    onChange({
+      target: {
+        value: checkedValue,
+      },
+    });
+  }, []);
+
   return (
     <>
       <div

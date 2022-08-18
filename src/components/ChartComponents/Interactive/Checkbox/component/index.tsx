@@ -53,7 +53,6 @@ const Checkbox = (props: {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
-    onCondition,
   } = useComponent<TCheckboxConfig>(
     {
       component: value,
@@ -86,6 +85,10 @@ const Checkbox = (props: {
   useEffect(() => {
     setCheckedValue(defaultChecked.split(',').map((item) => item.trim()));
   }, [defaultChecked]);
+
+  useEffect(() => {
+    onChange(checkedValue);
+  }, []);
 
   return (
     <>

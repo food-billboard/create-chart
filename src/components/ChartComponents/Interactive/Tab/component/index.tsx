@@ -154,6 +154,10 @@ const TabBasic = (props: {
     };
   }, [loop, finalValue, screenType]);
 
+  useEffect(() => {
+    syncInteractiveAction('loop', finalValue?.[0] || '');
+  }, []);
+
   return (
     <>
       <div

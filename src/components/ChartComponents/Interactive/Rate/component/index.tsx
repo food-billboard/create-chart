@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useState } from 'react';
+import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { Rate as AntRate } from 'antd';
@@ -68,6 +68,10 @@ const Rate = (props: {
   const iconNode = useMemo(() => {
     return <span className={classnames('bi', shape)} />;
   }, [shape, size]);
+
+  useEffect(() => {
+    onChange(rateValue);
+  }, []);
 
   return (
     <div
