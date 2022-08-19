@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { connect } from 'dva';
 import classnames from 'classnames';
+import { useEventListener } from 'ahooks';
 import { BackgroundConfigRender } from '@/components/DesignerBackground';
 import { mergeWithoutArray, sleep } from '@/utils/tool';
 import ClipboardComponent from '../Clipboard';
@@ -89,6 +90,7 @@ const PanelWrapper = (props: {
     if (!dom) return;
     let dw = dom.clientWidth;
     let dh = dom.clientHeight;
+    console.log(scale, 222, dw, dh);
     let pw = width * scale + RIGHT_BOTTOM_PADDING;
     let ph = height * scale + RIGHT_BOTTOM_PADDING;
     const newWidth = Math.max(dw, pw);
@@ -96,13 +98,9 @@ const PanelWrapper = (props: {
     setSize({ width: newWidth, height: newHeight });
   };
 
-  useEffect(() => {
-    // sleep(100).then(resize);
-    // window.addEventListener('resize', resize);
-    // return () => {
-    //   window.removeEventListener('resize', resize);
-    // };
-  }, []);
+  useEventListener('resize', resize, {
+    target: window,
+  });
 
   useEffect(() => {
     sleep(1000).then(resize);

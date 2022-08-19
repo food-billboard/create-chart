@@ -1,10 +1,12 @@
 @import '~antd/es/style/themes/default.less';
 
 .design-left-component-list {
-  flex: 1;
-  width: 150px;
-  min-width: 150px;
-  max-width: 150px;
+  // flex: 1;
+  transition-property: opacity, width;
+  transition-duration: 0.2s, 0.5s;
+  opacity: 0;
+  width: 0;
+  // max-width: 150px;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
   border-top-left-radius: 0;
@@ -42,4 +44,9 @@
       }
     }
   }
+}
+.design-left-component-list-show {
+  width: 150px;
+  opacity: 1;
+  // min-width: 150px;
 }

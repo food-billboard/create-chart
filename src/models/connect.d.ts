@@ -2,6 +2,10 @@ import { MenuDataItem, Settings as ProSettings } from '@ant-design/pro-layout';
 import UndoHistory from 'react-undo-component/lib/Component/history';
 import { ThemeMap } from '@/utils/constants';
 
+export type ILocalModelState = {
+  componentCollapse: boolean;
+};
+
 export type DragData = {
   value: ComponentData.BaseComponentItem | null;
 };
@@ -48,6 +52,7 @@ export interface ConnectState {
   settings: ProSettings;
   user: IUserModelState;
   data: IDataModelState;
+  local: ILocalModelState;
 }
 
 export interface Route extends MenuDataItem {
