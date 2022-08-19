@@ -90,7 +90,6 @@ const PanelWrapper = (props: {
     if (!dom) return;
     let dw = dom.clientWidth;
     let dh = dom.clientHeight;
-    console.log(scale, 222, dw, dh);
     let pw = width * scale + RIGHT_BOTTOM_PADDING;
     let ph = height * scale + RIGHT_BOTTOM_PADDING;
     const newWidth = Math.max(dw, pw);

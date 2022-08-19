@@ -8,7 +8,7 @@ import {
   useCallback,
 } from 'react';
 import { Rnd, Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
-import { merge, throttle, get, omit } from 'lodash';
+import { merge, throttle, get, omit, pick } from 'lodash';
 import { useDeepCompareEffect } from 'ahooks';
 import {
   MIN_COMPONENT_HEIGHT,
@@ -17,6 +17,10 @@ import {
 import { isGroupComponent } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
 import { AbsorbUtil } from '@/pages/Designer/components/Panel/components/PanelWrapper/components/AbsorbGuideLine/utils';
 import MultiComponentActionUtil, {
   MultiComponentAction,
@@ -421,6 +425,14 @@ export default (
   ) => {
     const newStyle = getComponentStyle(position, ref);
 
+    GLOBAL_EVENT_EMITTER.emitThrottle(EVENT_NAME_MAP.COMPONENT_RESIZE, {
+      isMulti: false,
+      componentId,
+      value: {
+        ...newStyle,
+      },
+    });
+
     resizeInfo.current.resize = true;
 
     MultiComponentActionUtil.emit(
@@ -464,6 +476,10 @@ export default (
   const onRelationDragStart = (targetId: string) => {
     if (!isSelect || componentId === targetId) return;
     setIsDealing(true);
+    GLOBAL_EVENT_EMITTER.emitThrottle(EVENT_NAME_MAP.COMPONENT_DRAG_START, {
+      componentId,
+      isMulti: true,
+    });
   };
 
   const onRelationDrag = (
@@ -491,6 +507,14 @@ export default (
       x: get(nextPosition, 'config.style.left') || 0,
       y: get(nextPosition, 'config.style.top') || 0,
     };
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG, {
+      componentId,
+      isMulti: true,
+      value: {
+        left: nextState.x,
+        top: nextState.y,
+      },
+    });
     dragInfo.current.position = {
       ...nextState,
     };
@@ -501,9 +525,8 @@ export default (
   const onRelationDragStop = (targetId: string) => {
     if (!isSelect || componentId === targetId) return;
     setIsDealing(false);
-
+    const { x, y } = dragInfo.current.position;
     setComponent(() => {
-      const { x, y } = dragInfo.current.position;
       return {
         config: {
           style: {
@@ -513,11 +536,24 @@ export default (
         },
       };
     });
+
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_END, {
+      componentId,
+      isMulti: true,
+      value: {
+        left: x || 0,
+        top: y || 0,
+      },
+    });
   };
 
   const onRelationResizeStart = (targetId: string) => {
     if (!isSelect || componentId === targetId) return;
     setIsDealing(true);
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_START, {
+      componentId,
+      isMulti: true,
+    });
   };
 
   const onRelationResize = (
@@ -584,15 +620,26 @@ export default (
     setStateSize((prev) => ({
       ...(resizeInfo.current.size as any),
     }));
+
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE, {
+      componentId,
+      isMulti: true,
+      value: {
+        left,
+        top,
+        width,
+        height,
+      },
+    });
   };
 
   const onRelationResizeStop = (targetId: string) => {
     if (!isSelect || componentId === targetId) return;
     setIsDealing(false);
+    const { x, y } = resizeInfo.current.position;
+    const { width, height } = resizeInfo.current.size;
+    const { scaleX, scaleY } = resizeInfo.current.scale;
     setComponent(() => {
-      const { x, y } = resizeInfo.current.position;
-      const { width, height } = resizeInfo.current.size;
-      const { scaleX, scaleY } = resizeInfo.current.scale;
       return {
         config: {
           style: {
@@ -607,6 +654,16 @@ export default (
           },
         },
       };
+    });
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_END, {
+      componentId,
+      isMulti: true,
+      value: {
+        left: x,
+        top: y,
+        width,
+        height,
+      },
     });
   };
 
@@ -717,6 +774,10 @@ export default (
           MultiComponentAction.RESIZE_START,
           componentId,
         );
+        GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_START, {
+          isMulti: false,
+          componentId,
+        });
         resizeInfo.current.resize = true;
       }}
       onResizeStop={(...args) => {
@@ -726,11 +787,25 @@ export default (
         );
         props.onResizeStop?.(...args);
         resizeInfo.current.resize = false;
+        GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_END, {
+          isMulti: false,
+          componentId,
+        });
       }}
       onResize={(e, direction, ref, delta, position) => {
         // * 复合尺寸修改
         if (isMultiSelect.current) {
           multiOnResize(e, direction, ref, delta, position);
+        } else {
+          const newStyle = getComponentStyle(position, ref);
+
+          GLOBAL_EVENT_EMITTER.emitThrottle(EVENT_NAME_MAP.COMPONENT_RESIZE, {
+            isMulti: false,
+            componentId,
+            value: {
+              ...newStyle,
+            },
+          });
         }
       }}
       onDragStart={() => {
@@ -740,6 +815,10 @@ export default (
           componentId,
         );
         dragInfo.current.drag = true;
+        GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_START, {
+          isMulti: false,
+          componentId,
+        });
       }}
       onDragStop={(...args) => {
         MultiComponentActionUtil.emit(
@@ -748,12 +827,25 @@ export default (
         );
         props.onDragStop?.(...args);
         dragInfo.current.drag = false;
+        GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_END, {
+          isMulti: false,
+          componentId,
+        });
       }}
       onDrag={(event, data) => {
         // * 复合移动
         if (isMultiSelect.current) {
           multiOnDrag(event, data);
         }
+        const { x, y } = data;
+        GLOBAL_EVENT_EMITTER.emitThrottle(EVENT_NAME_MAP.COMPONENT_DRAG, {
+          isMulti: false,
+          componentId,
+          value: {
+            left: x,
+            top: y,
+          },
+        });
       }}
       position={position}
       size={size}

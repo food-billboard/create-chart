@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import Scale from './components/Scale';
+import PanelThumb from './components/PanelThumb';
 import styles from './index.less';
 
 const ToolBar = () => {
@@ -11,6 +12,7 @@ const ToolBar = () => {
         'normal-background',
       )}
     >
+      <PanelThumb />
       <Scale />
     </div>
   );
