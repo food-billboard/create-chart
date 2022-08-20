@@ -9,6 +9,10 @@ import {
 import { useResponseData } from '@/hooks';
 import FocusWrapper from '@/components/FocusWrapper';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
 import CodeViewer from '../CodeViewer';
 import Title from './components/NormalTitle';
 import ResponseDataTitle from './components/ResponseDataTitle';
@@ -51,6 +55,7 @@ const DataConfigDetail = forwardRef<
 
   // 特殊数据类型配置
   const DataOptions = useMemo(() => {
+    // TODO
     return <div></div>;
   }, []);
 
@@ -79,9 +84,19 @@ const DataConfigDetail = forwardRef<
 
   const onDataFilterOpenChange = useCallback(
     (e) => {
+      const value = e.target.checked;
       onChange?.({
         filter: {
-          show: e.target.checked,
+          show: value,
+        },
+      });
+      // 绑定全局事件
+      GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_FILTER_CHANGE, {
+        id,
+        componentConfig: {
+          filter: {
+            show: value,
+          },
         },
       });
     },

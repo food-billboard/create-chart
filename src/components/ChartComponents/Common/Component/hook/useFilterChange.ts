@@ -29,12 +29,12 @@ export const useFilterChange = (
 
   useEffect(() => {
     GLOBAL_EVENT_EMITTER.addListener(
-      EVENT_NAME_MAP.COMPONENT_FILTER_CHANGE.toString(),
+      EVENT_NAME_MAP.COMPONENT_FILTER_CHANGE,
       listener,
     );
     return () => {
       GLOBAL_EVENT_EMITTER.removeListener(
-        EVENT_NAME_MAP.COMPONENT_FILTER_CHANGE.toString(),
+        EVENT_NAME_MAP.COMPONENT_FILTER_CHANGE,
         listener,
       );
     };

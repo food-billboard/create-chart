@@ -4,6 +4,10 @@ import { get } from 'lodash';
 import classnames from 'classnames';
 import AutoUpdate, { TValue } from './components/AutoUpdate';
 import GhostButton from '@/components/GhostButton';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
 import CodeEditor from './components/CodeViewer';
 import DataConfigDetail, {
   IDataConfigDetailRef,
@@ -75,6 +79,15 @@ const ResponseData = (props: {
             filter: {
               show: checked,
             },
+          },
+        },
+      });
+      // 绑定全局事件
+      GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_FILTER_CHANGE, {
+        id,
+        componentConfig: {
+          filter: {
+            show: checked,
           },
         },
       });

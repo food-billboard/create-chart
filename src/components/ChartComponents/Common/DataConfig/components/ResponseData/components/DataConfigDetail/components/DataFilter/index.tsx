@@ -41,18 +41,15 @@ const DataFilter = (props: {
       const { value, filter } = config;
       value && setValue(value);
       // 绑定全局事件
-      GLOBAL_EVENT_EMITTER.emit(
-        EVENT_NAME_MAP.COMPONENT_FILTER_CHANGE.toString(),
-        {
-          id,
-          filter,
-          componentConfig: {
-            filter: {
-              value: value,
-            },
+      GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_FILTER_CHANGE, {
+        id,
+        filter,
+        componentConfig: {
+          filter: {
+            value,
           },
         },
-      );
+      });
     },
     [],
   );
