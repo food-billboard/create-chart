@@ -138,7 +138,7 @@ const PanelWrapper = (props: {
             setGuideLine={setGuideLine}
           />
 
-          <AbsorbGuideLine size={size} />
+          {/* <AbsorbGuideLine size={size} /> */}
           <ClipboardComponent>{children}</ClipboardComponent>
         </div>
       </div>

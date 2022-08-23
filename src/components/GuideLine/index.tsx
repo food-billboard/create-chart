@@ -6,34 +6,62 @@ import ThemeUtil from '@/utils/Assist/Theme';
 import { GUIDE_LINE_PADDING } from '@/utils/constants';
 import ColorSelect from '../ColorSelect';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+import AbsorbGuideLine from './utils';
 import styles from './index.less';
+import { SuperPartial } from 'chunk-file-upload';
 
 const { getRgbaString } = ColorSelect;
-class GuideLine extends Component<
-  {
-    disabled?: boolean;
-    style?: CSSProperties;
-    className?: string;
-    onChange?: (params: ComponentData.TGuideLineConfigItem) => void;
-    onCompleteChange?: (params: ComponentData.TGuideLineConfigItem) => void;
-    onMouseUp?: () => void;
-    onMouseDown?: () => void;
-    onMouseMove?: () => void;
-    onDoubleClick?: () => void;
-    lineStyle?: 'dashed' | 'solid';
-    scale: number;
-    size: { width: number; height: number };
-  } & ComponentData.TGuideLineConfigItem
-> {
+
+type Props = {
+  disabled?: boolean;
+  style?: CSSProperties;
+  className?: string;
+  onChange?: (params: ComponentData.TGuideLineConfigItem) => void;
+  onCompleteChange?: (params: ComponentData.TGuideLineConfigItem) => void;
+  onMouseUp?: () => void;
+  onMouseDown?: () => void;
+  onMouseMove?: () => void;
+  onDoubleClick?: () => void;
+  lineStyle?: 'dashed' | 'solid';
+  scale: number;
+  size: { width: number; height: number };
+} & ComponentData.TGuideLineConfigItem;
+class GuideLine extends Component<Props> {
+  constructor(props: Props) {
+    super(props);
+    const { type, style, lineStyle, id } = props;
+    this.AbsorbGuideLineUtil = new AbsorbGuideLine(
+      {
+        type,
+        style,
+        lineStyle,
+        id,
+      },
+      () => this.props.scale,
+      this.onChange,
+    );
+  }
+
   flag = false;
   times = 0;
   startX = 0;
   startY = 0;
 
+  AbsorbGuideLineUtil;
+
   state = {
     style: {
       ...this.props.style,
     },
+  };
+
+  onChange = (value: SuperPartial<ComponentData.TGuideLineConfigItem>) => {
+    const { style } = this.state;
+    const newStyle = merge({}, style, value);
+    console.log(newStyle.left, 29999);
+    this.setState({
+      style: newStyle,
+    });
   };
 
   onMouseDown = (e: any) => {
@@ -52,6 +80,7 @@ class GuideLine extends Component<
       document.addEventListener('mouseup', this.onMouseUp);
       onMouseDown?.();
     } catch (e) {}
+    this.AbsorbGuideLineUtil.onMouseDown();
   };
 
   onMouseMove = (e: any) => {
@@ -78,9 +107,15 @@ class GuideLine extends Component<
         changeStyle.left = left + moveDistance / scale;
         this.startX = evt.clientX;
       }
-      const newStyle = merge({}, style, changeStyle);
+
+      const newStyle = {
+        ...style,
+        ...changeStyle,
+      };
       const newItem: ComponentData.TGuideLineConfigItem = {
-        style: newStyle,
+        style: {
+          ...newStyle,
+        },
         type,
         id,
         lineStyle,
@@ -90,6 +125,7 @@ class GuideLine extends Component<
         style: newStyle,
       });
       onMouseMove?.();
+      this.AbsorbGuideLineUtil.onMouseMove(newStyle);
     } catch (e) {}
   };
 
@@ -111,6 +147,7 @@ class GuideLine extends Component<
       id,
       lineStyle,
     };
+    this.AbsorbGuideLineUtil.onMouseUp();
     onCompleteChange?.(newItem);
   };
 
@@ -141,9 +178,8 @@ class GuideLine extends Component<
   }
 
   render() {
-    const { type, lineStyle = 'dashed', className, scale } = this.props;
+    const { type, lineStyle = 'dashed', className } = this.props;
     const { style } = this.state;
-    const { left, top } = this.guideLineStyle;
 
     return (
       <div

@@ -203,7 +203,11 @@ class AbsorbUtilClass {
   }
 
   // 辅助线信息
-  getGuideLineInfo(value: ComponentData.TGuideLineConfigItem) {
+  getGuideLineInfo(
+    value: ComponentData.TGuideLineConfigItem,
+    outerSclae?: number,
+  ) {
+    const scale = outerSclae ?? this.scale;
     const { left, top, ...nextPosition } = merge(
       {},
       {
@@ -217,17 +221,21 @@ class AbsorbUtilClass {
     return Object.entries({
       ...nextPosition,
       left:
-        (left * this.scale -
+        (left * scale -
           PANEL_ABSOLUTE_POSITION.left +
+          30 +
           GUIDE_LINE_PADDING +
+          1 -
           1) /
-        this.scale,
+        scale,
       top:
-        (top * this.scale -
+        (top * scale -
           PANEL_ABSOLUTE_POSITION.top +
+          30 +
           GUIDE_LINE_PADDING +
+          1 -
           1) /
-        this.scale,
+        scale,
     }).reduce<PositionData>((acc, cur) => {
       const [key, value] = cur;
       acc[key as keyof PositionData] = value;
