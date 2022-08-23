@@ -15,6 +15,7 @@ class GuideLine extends Component<
     style?: CSSProperties;
     className?: string;
     onChange?: (params: ComponentData.TGuideLineConfigItem) => void;
+    onCompleteChange?: (params: ComponentData.TGuideLineConfigItem) => void;
     onMouseUp?: () => void;
     onMouseDown?: () => void;
     onMouseMove?: () => void;
@@ -28,6 +29,12 @@ class GuideLine extends Component<
   times = 0;
   startX = 0;
   startY = 0;
+
+  state = {
+    style: {
+      ...this.props.style,
+    },
+  };
 
   onMouseDown = (e: any) => {
     e?.stopPropagation();
@@ -49,16 +56,9 @@ class GuideLine extends Component<
 
   onMouseMove = (e: any) => {
     e?.stopPropagation();
-    const {
-      disabled,
-      style,
-      onChange,
-      type,
-      id,
-      lineStyle,
-      onMouseMove,
-      scale,
-    } = this.props;
+    const { disabled, onChange, type, id, lineStyle, onMouseMove, scale } =
+      this.props;
+    const { style } = this.state;
     if (!this.flag || disabled) return;
     if (this.times <= 2) {
       this.times++;
@@ -78,13 +78,17 @@ class GuideLine extends Component<
         changeStyle.left = left + moveDistance / scale;
         this.startX = evt.clientX;
       }
+      const newStyle = merge({}, style, changeStyle);
       const newItem: ComponentData.TGuideLineConfigItem = {
-        style: merge({}, style, changeStyle),
+        style: newStyle,
         type,
         id,
         lineStyle,
       };
       onChange?.(newItem);
+      this.setState({
+        style: newStyle,
+      });
       onMouseMove?.();
     } catch (e) {}
   };
@@ -92,13 +96,22 @@ class GuideLine extends Component<
   throttleOnMouseMove = throttle(this.onMouseMove, 30);
 
   onMouseUp = () => {
-    const { disabled, onMouseUp } = this.props;
+    const { disabled, onMouseUp, onCompleteChange, type, id, lineStyle } =
+      this.props;
+    const { style } = this.state;
     if (!this.flag || disabled) return;
     this.flag = false;
     this.times = 0;
     document.removeEventListener('mousemove', this.throttleOnMouseMove);
     document.removeEventListener('mouseup', this.onMouseUp);
     onMouseUp?.();
+    const newItem: ComponentData.TGuideLineConfigItem = {
+      style,
+      type,
+      id,
+      lineStyle,
+    };
+    onCompleteChange?.(newItem);
   };
 
   onDoubleClick = (e: any) => {
@@ -107,7 +120,8 @@ class GuideLine extends Component<
   };
 
   get guideLineStyle() {
-    const { style, type, scale, size } = this.props;
+    const { type, scale, size } = this.props;
+    const { style } = this.state;
     if (type === 'vertical') {
       return {
         ...style,
@@ -127,7 +141,8 @@ class GuideLine extends Component<
   }
 
   render() {
-    const { type, lineStyle = 'dashed', className, scale, style } = this.props;
+    const { type, lineStyle = 'dashed', className, scale } = this.props;
+    const { style } = this.state;
     const { left, top } = this.guideLineStyle;
 
     return (

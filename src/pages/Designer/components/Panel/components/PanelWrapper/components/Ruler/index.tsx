@@ -257,7 +257,7 @@ const Ruler = (props: {
         <GuideLine
           {...item}
           size={size}
-          onChange={onGuidelinePositionChange.bind(this, index)}
+          onCompleteChange={onGuidelinePositionChange.bind(this, index)}
           onMouseUp={onMoveEnd.bind(this, item, index)}
           onMouseDown={onMoveStart.bind(null, item, index)}
           onDoubleClick={deleteGuideLine.bind(this, index)}
