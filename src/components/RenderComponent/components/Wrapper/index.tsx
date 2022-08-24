@@ -8,7 +8,7 @@ import {
   useCallback,
 } from 'react';
 import { Rnd, Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
-import { merge, throttle, get, omit, pick } from 'lodash';
+import { merge, throttle, get, omit } from 'lodash';
 import { useDeepCompareEffect } from 'ahooks';
 import {
   MIN_COMPONENT_HEIGHT,
@@ -160,6 +160,10 @@ const ComponentWrapper = (
     if (!isResizing.current) setLockAspectRatio(value);
   };
 
+  const realChildren = useMemo(() => {
+    return children;
+  }, [children]);
+
   return (
     <KeyActionComponent onChange={onLockAspectRatioChange}>
       <Rnd
@@ -219,7 +223,7 @@ const ComponentWrapper = (
           'onResize',
         ])}
       >
-        {children}
+        {realChildren}
       </Rnd>
     </KeyActionComponent>
   );
@@ -425,7 +429,7 @@ export default (
   ) => {
     const newStyle = getComponentStyle(position, ref);
 
-    GLOBAL_EVENT_EMITTER.emitThrottle(EVENT_NAME_MAP.COMPONENT_RESIZE, {
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE, {
       isMulti: false,
       componentId,
       value: {
@@ -458,11 +462,27 @@ export default (
 
     dragInfo.current.drag = true;
 
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG, {
+      isMulti: false,
+      componentId,
+      value: {
+        left: x,
+        top: y,
+      },
+    });
+
+    const deltaX = x - dragInfo.current.left;
+    const deltaY = y - dragInfo.current.top;
+
     MultiComponentActionUtil.emit(
       MultiComponentAction.DRAG,
       componentId,
       event,
-      data,
+      {
+        ...data,
+        deltaX,
+        deltaY,
+      },
       dragInfo.current,
     );
 
@@ -476,7 +496,7 @@ export default (
   const onRelationDragStart = (targetId: string) => {
     if (!isSelect || componentId === targetId) return;
     setIsDealing(true);
-    GLOBAL_EVENT_EMITTER.emitThrottle(EVENT_NAME_MAP.COMPONENT_DRAG_START, {
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_START, {
       componentId,
       isMulti: true,
     });
@@ -519,7 +539,8 @@ export default (
       ...nextState,
     };
 
-    setStatePosition((prev) => ({ ...nextState }));
+    // setStatePosition((prev) => ({ ...nextState }));
+    setStatePosition({ ...nextState });
   };
 
   const onRelationDragStop = (targetId: string) => {
@@ -667,6 +688,44 @@ export default (
     });
   };
 
+  const _onDrag: RndDragCallback = (event: any, data: any) => {
+    // * 复合移动
+    if (isMultiSelect.current) {
+      multiOnDrag(event, data);
+    } else {
+      const { x, y } = data;
+      GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG, {
+        isMulti: false,
+        componentId,
+        value: {
+          left: x,
+          top: y,
+        },
+      });
+    }
+  };
+
+  const onDrag = throttle(_onDrag, 500);
+
+  const _onResize: RndResizeCallback = (e, direction, ref, delta, position) => {
+    // * 复合尺寸修改
+    if (isMultiSelect.current) {
+      multiOnResize(e, direction, ref, delta, position);
+    } else {
+      const newStyle = getComponentStyle(position, ref);
+
+      GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE, {
+        isMulti: false,
+        componentId,
+        value: {
+          ...newStyle,
+        },
+      });
+    }
+  };
+
+  const onResize = throttle(_onResize, 500);
+
   useDeepCompareEffect(() => {
     setStatePosition(propsPosition);
     resizeInfo.current = {
@@ -792,22 +851,7 @@ export default (
           componentId,
         });
       }}
-      onResize={(e, direction, ref, delta, position) => {
-        // * 复合尺寸修改
-        if (isMultiSelect.current) {
-          multiOnResize(e, direction, ref, delta, position);
-        } else {
-          const newStyle = getComponentStyle(position, ref);
-
-          GLOBAL_EVENT_EMITTER.emitThrottle(EVENT_NAME_MAP.COMPONENT_RESIZE, {
-            isMulti: false,
-            componentId,
-            value: {
-              ...newStyle,
-            },
-          });
-        }
-      }}
+      onResize={onResize}
       onDragStart={() => {
         getIsMultiSelect();
         MultiComponentActionUtil.emit(
@@ -832,21 +876,7 @@ export default (
           componentId,
         });
       }}
-      onDrag={(event, data) => {
-        // * 复合移动
-        if (isMultiSelect.current) {
-          multiOnDrag(event, data);
-        }
-        const { x, y } = data;
-        GLOBAL_EVENT_EMITTER.emitThrottle(EVENT_NAME_MAP.COMPONENT_DRAG, {
-          isMulti: false,
-          componentId,
-          value: {
-            left: x,
-            top: y,
-          },
-        });
-      }}
+      onDrag={onDrag}
       position={position}
       size={size}
     />
