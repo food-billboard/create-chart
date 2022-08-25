@@ -22,8 +22,8 @@ export enum EComponentSelfType {
 }
 
 export const PANEL_ABSOLUTE_POSITION = {
-  left: 70,
-  top: 70,
+  left: 30,
+  top: 30,
 };
 
 export const ECHARTS_URL = 'https://echarts.apache.org/zh/index.html';

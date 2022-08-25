@@ -1,5 +1,5 @@
 import { EventEmitter } from 'eventemitter3';
-
+import { debounce, throttle } from 'lodash';
 export class MultiComponentAction extends EventEmitter {
   static DRAG_START = 'DRAG_START';
   static DRAG = 'DRAG';
@@ -7,6 +7,18 @@ export class MultiComponentAction extends EventEmitter {
   static RESIZE_START = 'RESIZE_START';
   static RESIZE = 'RESIZE';
   static RESIZE_STOP = 'RESIZE_STOP';
+
+  _emitDebounce: any = (type: string, ...args: any[]) => {
+    this.emit(type, ...args);
+  };
+
+  emitDebounce = debounce(this._emitDebounce, 100);
+
+  _emitThrottle: any = (type: string, ...args: any[]) => {
+    this.emit(type, ...args);
+  };
+
+  emitThrottle = throttle(this._emitThrottle, 100);
 }
 
 const instance = new MultiComponentAction();

@@ -457,7 +457,7 @@ export default (
   };
 
   // 复合拖拽
-  const multiOnDrag: RndDragCallback = (event, data) => {
+  const _multiOnDrag: RndDragCallback = (event, data) => {
     const { x, y } = data;
 
     dragInfo.current.drag = true;
@@ -492,6 +492,8 @@ export default (
       top: y,
     };
   };
+
+  const multiOnDrag = throttle(_multiOnDrag, 1);
 
   const onRelationDragStart = (targetId: string) => {
     if (!isSelect || componentId === targetId) return;
@@ -540,7 +542,7 @@ export default (
     };
 
     // setStatePosition((prev) => ({ ...nextState }));
-    setStatePosition({ ...nextState });
+    _setStatePosition((prev) => ({ ...nextState }));
   };
 
   const onRelationDragStop = (targetId: string) => {
@@ -635,10 +637,10 @@ export default (
       },
     };
 
-    setStatePosition((prev) => ({
+    _setStatePosition((prev) => ({
       ...(resizeInfo.current.position as any),
     }));
-    setStateSize((prev) => ({
+    _setStateSize((prev) => ({
       ...(resizeInfo.current.size as any),
     }));
 
@@ -705,7 +707,7 @@ export default (
     }
   };
 
-  const onDrag = throttle(_onDrag, 500);
+  const onDrag = throttle(_onDrag, 100);
 
   const _onResize: RndResizeCallback = (e, direction, ref, delta, position) => {
     // * 复合尺寸修改
@@ -724,7 +726,30 @@ export default (
     }
   };
 
-  const onResize = throttle(_onResize, 500);
+  const onResize = throttle(_onResize, 100);
+
+  const onDragStop: RndDragCallback = (event, data) => {
+    MultiComponentActionUtil.emit(MultiComponentAction.DRAG_STOP, componentId);
+    props.onDragStop?.(event, data);
+    dragInfo.current.drag = false;
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_END, {
+      isMulti: false,
+      componentId,
+    });
+  };
+
+  const onResizeStop: RndResizeCallback = (...args) => {
+    MultiComponentActionUtil.emit(
+      MultiComponentAction.RESIZE_STOP,
+      componentId,
+    );
+    props.onResizeStop?.(...args);
+    resizeInfo.current.resize = false;
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_END, {
+      isMulti: false,
+      componentId,
+    });
+  };
 
   useDeepCompareEffect(() => {
     setStatePosition(propsPosition);
@@ -839,18 +864,7 @@ export default (
         });
         resizeInfo.current.resize = true;
       }}
-      onResizeStop={(...args) => {
-        MultiComponentActionUtil.emit(
-          MultiComponentAction.RESIZE_STOP,
-          componentId,
-        );
-        props.onResizeStop?.(...args);
-        resizeInfo.current.resize = false;
-        GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_END, {
-          isMulti: false,
-          componentId,
-        });
-      }}
+      onResizeStop={onResizeStop}
       onResize={onResize}
       onDragStart={() => {
         getIsMultiSelect();
@@ -864,18 +878,7 @@ export default (
           componentId,
         });
       }}
-      onDragStop={(...args) => {
-        MultiComponentActionUtil.emit(
-          MultiComponentAction.DRAG_STOP,
-          componentId,
-        );
-        props.onDragStop?.(...args);
-        dragInfo.current.drag = false;
-        GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_END, {
-          isMulti: false,
-          componentId,
-        });
-      }}
+      onDragStop={onDragStop}
       onDrag={onDrag}
       position={position}
       size={size}
