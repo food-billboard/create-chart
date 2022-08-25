@@ -545,9 +545,44 @@ export default (
     _setStatePosition((prev) => ({ ...nextState }));
   };
 
-  const onRelationDragStop = (targetId: string) => {
+  const onRelationDragStop = (
+    targetId: string,
+    event: any,
+    data: any,
+    outerDragInfo: any,
+  ) => {
     if (!isSelect || componentId === targetId) return;
     setIsDealing(false);
+    const nextPosition = dragMethod(
+      event,
+      data,
+      false,
+      {
+        config: {
+          style: {
+            left: dragInfo.current.position?.x || 0,
+            top: dragInfo.current.position?.y || 0,
+          },
+        },
+      },
+      outerDragInfo,
+    );
+    const nextState = {
+      x: get(nextPosition, 'config.style.left') || 0,
+      y: get(nextPosition, 'config.style.top') || 0,
+    };
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_END, {
+      componentId,
+      isMulti: true,
+      value: {
+        left: nextState.x,
+        top: nextState.y,
+      },
+    });
+    dragInfo.current.position = {
+      ...nextState,
+    };
+
     const { x, y } = dragInfo.current.position;
     setComponent(() => {
       return {
@@ -558,15 +593,6 @@ export default (
           },
         },
       };
-    });
-
-    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_END, {
-      componentId,
-      isMulti: true,
-      value: {
-        left: x || 0,
-        top: y || 0,
-      },
     });
   };
 
@@ -656,11 +682,79 @@ export default (
     });
   };
 
-  const onRelationResizeStop = (targetId: string) => {
+  const onRelationResizeStop = (
+    targetId: string,
+    e: any,
+    direction: any,
+    ref: any,
+    delta: any,
+    position: any,
+    outerResizeInfo: any,
+  ) => {
     if (!isSelect || componentId === targetId) return;
+
+    const { position: resizePosition, size, scale = {} } = resizeInfo.current;
     setIsDealing(false);
+    const nextConfig = resizeMethod(
+      e,
+      direction,
+      ref,
+      delta,
+      position,
+      false,
+      {
+        config: {
+          style: {
+            left: resizePosition.x || 0,
+            top: resizePosition.y || 0,
+            width: size.width || 0,
+            height: size.height || 0,
+          },
+          attr: {
+            ...scale,
+          },
+        },
+        type,
+      },
+      outerResizeInfo,
+    );
+
+    const {
+      config: {
+        style: { left, top, width, height },
+        attr,
+      },
+    } = nextConfig;
+    resizeInfo.current = {
+      ...resizeInfo.current,
+      position: {
+        x: left,
+        y: top,
+      },
+      size: {
+        width,
+        height,
+      },
+      scale: {
+        scaleX: attr?.scaleX,
+        scaleY: attr?.scaleY,
+      },
+    };
+
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_END, {
+      componentId,
+      isMulti: true,
+      value: {
+        left,
+        top,
+        width,
+        height,
+      },
+    });
+
     const { x, y } = resizeInfo.current.position;
-    const { width, height } = resizeInfo.current.size;
+    const { width: currentWidth, height: currentHeight } =
+      resizeInfo.current.size;
     const { scaleX, scaleY } = resizeInfo.current.scale;
     setComponent(() => {
       return {
@@ -668,8 +762,8 @@ export default (
           style: {
             left: x || 0,
             top: y || 0,
-            width: (width as number) || MIN_COMPONENT_WIDTH,
-            height: (height as number) || MIN_COMPONENT_HEIGHT,
+            width: (currentWidth as number) || MIN_COMPONENT_WIDTH,
+            height: (currentHeight as number) || MIN_COMPONENT_HEIGHT,
           },
           attr: {
             scaleX,
@@ -677,16 +771,6 @@ export default (
           },
         },
       };
-    });
-    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_END, {
-      componentId,
-      isMulti: true,
-      value: {
-        left: x,
-        top: y,
-        width,
-        height,
-      },
     });
   };
 
@@ -729,26 +813,74 @@ export default (
   const onResize = throttle(_onResize, 100);
 
   const onDragStop: RndDragCallback = (event, data) => {
-    MultiComponentActionUtil.emit(MultiComponentAction.DRAG_STOP, componentId);
-    props.onDragStop?.(event, data);
-    dragInfo.current.drag = false;
-    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_END, {
+    const { x, y } = data;
+    if (isMultiSelect.current) {
+      const deltaX = x - dragInfo.current.left;
+      const deltaY = y - dragInfo.current.top;
+
+      MultiComponentActionUtil.emit(
+        MultiComponentAction.DRAG_STOP,
+        componentId,
+        event,
+        {
+          ...data,
+          deltaX,
+          deltaY,
+        },
+        dragInfo.current,
+      );
+
+      dragInfo.current = {
+        ...dragInfo.current,
+        left: x,
+        top: y,
+      };
+    }
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG, {
       isMulti: false,
       componentId,
     });
+    props.onDragStop?.(event, data);
+    dragInfo.current.drag = false;
   };
 
-  const onResizeStop: RndResizeCallback = (...args) => {
-    MultiComponentActionUtil.emit(
-      MultiComponentAction.RESIZE_STOP,
-      componentId,
-    );
-    props.onResizeStop?.(...args);
-    resizeInfo.current.resize = false;
+  const onResizeStop: RndResizeCallback = (
+    e,
+    direction,
+    ref,
+    delta,
+    position,
+  ) => {
+    const newStyle = getComponentStyle(position, ref);
+
     GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_END, {
       isMulti: false,
       componentId,
+      value: {
+        ...newStyle,
+      },
     });
+
+    resizeInfo.current.resize = true;
+
+    MultiComponentActionUtil.emit(
+      MultiComponentAction.RESIZE_STOP,
+      componentId,
+      e,
+      direction,
+      ref,
+      delta,
+      position,
+      resizeInfo.current,
+    );
+
+    props.onResizeStop?.(e, direction, ref, delta, position);
+    resizeInfo.current.resize = false;
+
+    resizeInfo.current = {
+      ...resizeInfo.current,
+      ...newStyle,
+    };
   };
 
   useDeepCompareEffect(() => {
