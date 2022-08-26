@@ -147,7 +147,8 @@ declare namespace ComponentData {
     | 'POLAR_STACK_BAR'
     | 'STATE_LIST'
     | 'RATE'
-    | 'TAG';
+    | 'TAG'
+    | 'WEATHER';
 
   // 基础组件属性
   export type TBaseConfig = {

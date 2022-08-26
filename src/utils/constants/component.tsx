@@ -70,6 +70,7 @@ import PolarStackBar from '../../../public/components/polar-stack-bar.png';
 import Rate from '../../../public/components/rate.jpg';
 import StateList from '../../../public/components/state-list.jpg';
 import Tag from '../../../public/components/tag.jpg';
+import Weather from '../../../public/components/weather.png';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -535,6 +536,12 @@ export const COMPONENT_TYPE_LIST = [
             type: 'STATE_LIST',
             title: '状态列表',
             icon: StateList,
+            description: '',
+          },
+          {
+            type: 'WEATHER',
+            title: '天气',
+            icon: Weather,
             description: '',
           },
         ],

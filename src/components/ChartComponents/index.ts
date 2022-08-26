@@ -43,6 +43,7 @@ import List from './Other/List';
 import WaterBall from './Other/WaterBall';
 import StateCard from './Other/StateCard';
 import StateList from './Other/StateList';
+import Weather from './Other/Weather';
 // font
 import Title from './Font/Title';
 import TimeMachine from './Font/TimeMachine';
@@ -142,6 +143,7 @@ COMPONENT_MAP.set(PolarStackBar.type, PolarStackBar);
 COMPONENT_MAP.set(StateList.type, StateList);
 COMPONENT_MAP.set(Rate.type, Rate);
 COMPONENT_MAP.set(Tag.type, Tag);
+COMPONENT_MAP.set(Weather.type, Weather);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

@@ -174,3 +174,21 @@ declare namespace API_MOCK {
     description: string;
   };
 }
+
+declare namespace API_THIRD {
+  export type TWeatherParams = {
+    city: string;
+  };
+
+  export type TWeatherData = {
+    realtime: {
+      info: string;
+      wid: string;
+      temperature: string;
+      humidity: string;
+      direct: string;
+      power: string;
+      aqi: string;
+    };
+  };
+}

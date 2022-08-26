@@ -14,6 +14,7 @@ const MultipleSeriesConfig = (props: {
   renderContent: (index: number) => ReactNode;
   buttonLabel?: ReactNode;
   seriesLabel?: (value: number) => ReactNode;
+  disabledCal?: boolean;
 }) => {
   const {
     onAdd,
@@ -23,6 +24,7 @@ const MultipleSeriesConfig = (props: {
     renderContent,
     buttonLabel,
     seriesLabel,
+    disabledCal = false,
   } = props;
 
   const [activeKey, setActiveKey] = useState<string>('0');
@@ -57,9 +59,10 @@ const MultipleSeriesConfig = (props: {
   );
 
   const hideAdd = useMemo(() => {
+    if (disabledCal) return true;
     if (typeof max !== 'number') return false;
     return max <= counter;
-  }, [max, counter]);
+  }, [max, counter, disabledCal]);
 
   return (
     <>
@@ -73,7 +76,7 @@ const MultipleSeriesConfig = (props: {
         </GhostButton>
       )}
       <Tabs
-        type="editable-card"
+        type={disabledCal ? 'card' : 'editable-card'}
         onChange={onChange}
         activeKey={activeKey}
         onEdit={onEdit}
