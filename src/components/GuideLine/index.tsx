@@ -58,7 +58,6 @@ class GuideLine extends Component<Props> {
   onChange = (value: SuperPartial<ComponentData.TGuideLineConfigItem>) => {
     const { style } = this.state;
     const newStyle = merge({}, style, value);
-    console.log(newStyle.left, 29999);
     this.setState({
       style: newStyle,
     });

@@ -15,3 +15,12 @@
     transition: 0.3s;
   }
 }
+.designer-panel-thumb-active {
+  position: absolute;
+  left: 0;
+  top: 0;
+  &-item {
+    transform: var(--panel-thumb-component-scale);
+    transform-origin: var(--panel-thumb-component-transform-origin);
+  }
+}

@@ -1,11 +1,15 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { Button } from 'antd';
 import { connect } from 'dva';
 import classnames from 'classnames';
+import { pick, get } from 'lodash';
 import { useUpdateEffect } from 'ahooks';
 import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
+import { useIdPathMap } from '@/hooks';
 import ColorSelect from '@/components/ColorSelect';
+import { ConnectState } from '@/models/connect';
 import ThemeUtil from '@/utils/Assist/Theme';
+import { getDvaGlobalModelData } from '@/utils/Assist/Component';
 import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
@@ -23,70 +27,150 @@ type CommonEventType = {
   isMulti: boolean;
 };
 
-const ComponentItem = (props: {
+const TransformOriginMap = {
+  top: 'center bottom',
+  right: 'left center',
+  bottom: 'center top',
+  left: 'right center',
+  topRight: 'left bottom',
+  bottomRight: 'left top',
+  bottomLeft: 'right top',
+  topLeft: 'right bottom',
+};
+
+type TDirection = keyof typeof TransformOriginMap;
+
+const InternalComponentActiveItem = (props: {
+  components: ComponentData.TComponentData[];
+  select: string[];
   width: number;
   height: number;
-  left: number;
-  top: number;
-  id: string;
   scale: number;
 }) => {
   const {
-    id,
-    scale,
+    components,
+    select,
     width: propsWidth,
     height: propsHeight,
-    left: propsLeft,
-    top: propsTop,
+    scale,
   } = props;
 
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const [width, setWidth] = useState<number>(propsWidth || 0);
   const [height, setHeight] = useState<number>(propsHeight || 0);
-  const [left, setLeft] = useState<number>(propsLeft || 0);
-  const [top, setTop] = useState<number>(propsTop || 0);
+  const [left, setLeft] = useState<number>(0);
+  const [top, setTop] = useState<number>(0);
 
-  const onDragStart = ({ componentId }: CommonEventType) => {
-    if (componentId === id) setIsActive(true);
+  const activeComponentRef = useRef<{
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+  }>();
+
+  const resizeDirectionRef = useRef<TDirection>();
+
+  const init = () => {
+    setWidth(propsWidth);
+    setHeight(propsHeight);
+    setLeft(0);
+    setTop(0);
   };
 
-  const onDrag = ({ componentId, value }: CommonEventType) => {
-    if (componentId === id) {
-      const { left, top } = value!;
-      setLeft(left);
-      setTop(top);
-    }
+  const componentList = useMemo(() => {
+    if (!isActive) return null;
+    const idPathMap = useIdPathMap();
+    return select.reduce<any>((acc, cur) => {
+      const path = idPathMap[cur].path;
+      const component = get(components, path);
+      if (component) {
+        const {
+          width: componentWidth,
+          height: componentHeight,
+          left,
+          top,
+        } = component.config.style;
+        acc.push(
+          <div
+            className={classnames(
+              'pos-ab',
+              styles['designer-panel-thumb-active-item'],
+            )}
+            style={{
+              width: componentWidth * scale,
+              height: componentHeight * scale,
+              left: left * scale,
+              top: top * scale,
+              backgroundColor: getRgbaString(
+                ThemeUtil.generateNextColor4CurrentTheme(0),
+              ),
+            }}
+            key={component.id}
+          ></div>,
+        );
+      }
+      return acc;
+    }, []);
+  }, [isActive, select, scale, components]);
+
+  const onDragStart = ({ componentId }: CommonEventType) => {
+    init();
+    setIsActive(true);
+    const components: ComponentData.TComponentData[] =
+      getDvaGlobalModelData().components || [];
+    const component = components.find((item) => item.id === componentId);
+    activeComponentRef.current = pick(component?.config.style, [
+      'left',
+      'top',
+      'width',
+      'height',
+    ]) as any;
+  };
+
+  const onDrag = ({ value }: CommonEventType) => {
+    const { left: currentLeft, top: currentTop } = value!;
+    const { left: componentLeft, top: componentTop } =
+      activeComponentRef.current!;
+    setLeft((currentLeft - componentLeft) * scale);
+    setTop((currentTop - componentTop) * scale);
   };
 
   const onDragEnd = ({ componentId }: CommonEventType) => {
-    if (componentId === id) setIsActive(false);
+    setIsActive(false);
   };
 
-  const onResizeStart = ({ componentId }: CommonEventType) => {
-    if (componentId === id) setIsActive(true);
+  const onResizeStart = (
+    props: CommonEventType & {
+      direction: TDirection;
+    },
+  ) => {
+    resizeDirectionRef.current = props.direction;
+    onDragStart(props);
   };
 
   const onResize = ({ componentId, value }: CommonEventType) => {
-    if (componentId === id) {
-      const { left, top, width, height } = value!;
-      setLeft(left);
-      setTop(top);
-      setWidth(width);
-      setHeight(height);
-    }
+    const {
+      left: currentLeft,
+      top: currentTop,
+      width: currentWidth,
+      height: currentHeight,
+    } = value!;
+    const {
+      left: componentLeft,
+      top: componentTop,
+      width: componentWidth,
+      height: componentHeight,
+    } = activeComponentRef.current!;
+    setLeft((currentLeft - componentLeft) * scale);
+    setTop((currentTop - componentTop) * scale);
+    setWidth((currentWidth - componentWidth) * scale + propsWidth);
+    setHeight((currentHeight - componentHeight) * scale + propsHeight);
   };
 
   const onResizeEnd = ({ componentId }: CommonEventType) => {
-    if (componentId === id) setIsActive(false);
+    setIsActive(false);
   };
-
-  useUpdateEffect(() => {
-    setWidth(propsWidth);
-    setHeight(propsHeight);
-    setLeft(propsLeft);
-    setTop(propsTop);
-  }, [propsWidth, propsHeight, propsLeft, propsTop]);
 
   useEffect(() => {
     GLOBAL_EVENT_EMITTER.addListener(
@@ -135,6 +219,52 @@ const ComponentItem = (props: {
     };
   }, []);
 
+  useUpdateEffect(() => {
+    setWidth(propsWidth);
+    setHeight(propsHeight);
+  }, [propsWidth, propsHeight]);
+
+  return (
+    <div
+      className={styles['designer-panel-thumb-active']}
+      style={{
+        width: propsWidth,
+        height: propsHeight,
+        left,
+        top,
+        // @ts-ignore
+        '--panel-thumb-component-scale': `scale(${width / propsWidth}, ${
+          height / propsHeight
+        })`,
+        '--panel-thumb-component-transform-origin':
+          TransformOriginMap[resizeDirectionRef.current!] || 'center center',
+      }}
+    >
+      {componentList}
+    </div>
+  );
+};
+
+const ComponentActiveItem = connect(
+  (state: ConnectState) => {
+    return {
+      components: state.global.components,
+      select: state.global.select,
+    };
+  },
+  () => ({}),
+)(InternalComponentActiveItem);
+
+const ComponentItem = (props: {
+  width: number;
+  height: number;
+  left: number;
+  top: number;
+  id: string;
+  scale: number;
+}) => {
+  const { id, scale, width, height, left, top } = props;
+
   return (
     <div
       className="pos-ab"
@@ -143,9 +273,7 @@ const ComponentItem = (props: {
         height: height * scale,
         left: left * scale,
         top: top * scale,
-        backgroundColor: isActive
-          ? getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0))
-          : 'white',
+        backgroundColor: 'white',
       }}
     ></div>
   );
@@ -197,6 +325,11 @@ const InternalPanelThumb = (props: {
       }}
     >
       {componentList}
+      <ComponentActiveItem
+        width={THUMB_WIDTH}
+        height={thumbHeight}
+        scale={scale}
+      />
     </div>
   );
 };

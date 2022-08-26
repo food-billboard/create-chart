@@ -462,7 +462,7 @@ export default (
 
     dragInfo.current.drag = true;
 
-    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG, {
+    GLOBAL_EVENT_EMITTER.emitThrottle(EVENT_NAME_MAP.COMPONENT_DRAG, {
       isMulti: false,
       componentId,
       value: {
@@ -498,10 +498,10 @@ export default (
   const onRelationDragStart = (targetId: string) => {
     if (!isSelect || componentId === targetId) return;
     setIsDealing(true);
-    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_START, {
-      componentId,
-      isMulti: true,
-    });
+    // GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_START, {
+    //   componentId,
+    //   isMulti: true,
+    // });
   };
 
   const onRelationDrag = (
@@ -529,14 +529,14 @@ export default (
       x: get(nextPosition, 'config.style.left') || 0,
       y: get(nextPosition, 'config.style.top') || 0,
     };
-    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG, {
-      componentId,
-      isMulti: true,
-      value: {
-        left: nextState.x,
-        top: nextState.y,
-      },
-    });
+    // GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG, {
+    //   componentId,
+    //   isMulti: true,
+    //   value: {
+    //     left: nextState.x,
+    //     top: nextState.y,
+    //   },
+    // });
     dragInfo.current.position = {
       ...nextState,
     };
@@ -571,14 +571,14 @@ export default (
       x: get(nextPosition, 'config.style.left') || 0,
       y: get(nextPosition, 'config.style.top') || 0,
     };
-    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_END, {
-      componentId,
-      isMulti: true,
-      value: {
-        left: nextState.x,
-        top: nextState.y,
-      },
-    });
+    // GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_END, {
+    //   componentId,
+    //   isMulti: true,
+    //   value: {
+    //     left: nextState.x,
+    //     top: nextState.y,
+    //   },
+    // });
     dragInfo.current.position = {
       ...nextState,
     };
@@ -596,13 +596,14 @@ export default (
     });
   };
 
-  const onRelationResizeStart = (targetId: string) => {
+  const onRelationResizeStart = (targetId: string, direction: any) => {
     if (!isSelect || componentId === targetId) return;
     setIsDealing(true);
-    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_START, {
-      componentId,
-      isMulti: true,
-    });
+    // GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_START, {
+    //   componentId,
+    //   isMulti: true,
+    //   direction
+    // });
   };
 
   const onRelationResize = (
@@ -670,16 +671,16 @@ export default (
       ...(resizeInfo.current.size as any),
     }));
 
-    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE, {
-      componentId,
-      isMulti: true,
-      value: {
-        left,
-        top,
-        width,
-        height,
-      },
-    });
+    // GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE, {
+    //   componentId,
+    //   isMulti: true,
+    //   value: {
+    //     left,
+    //     top,
+    //     width,
+    //     height,
+    //   },
+    // });
   };
 
   const onRelationResizeStop = (
@@ -741,16 +742,16 @@ export default (
       },
     };
 
-    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_END, {
-      componentId,
-      isMulti: true,
-      value: {
-        left,
-        top,
-        width,
-        height,
-      },
-    });
+    // GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_END, {
+    //   componentId,
+    //   isMulti: true,
+    //   value: {
+    //     left,
+    //     top,
+    //     width,
+    //     height,
+    //   },
+    // });
 
     const { x, y } = resizeInfo.current.position;
     const { width: currentWidth, height: currentHeight } =
@@ -836,7 +837,7 @@ export default (
         top: y,
       };
     }
-    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG, {
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DRAG_END, {
       isMulti: false,
       componentId,
     });
@@ -984,15 +985,17 @@ export default (
       {...nextProps}
       resizeMethod={resizeMethod}
       dragMethod={dragMethod}
-      onResizeStart={() => {
+      onResizeStart={(_, direction) => {
         getIsMultiSelect();
         MultiComponentActionUtil.emit(
           MultiComponentAction.RESIZE_START,
           componentId,
+          direction,
         );
         GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_START, {
           isMulti: false,
           componentId,
+          direction,
         });
         resizeInfo.current.resize = true;
       }}
