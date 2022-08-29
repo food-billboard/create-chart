@@ -1,9 +1,14 @@
 import request from '../utils/request';
 
-// mock数据格式列表
+// 获取天气
 export const getWeatherData = (data: API_THIRD.TWeatherParams) => {
-  return request<API_THIRD.TWeatherData>('/api/third/weather', {
+  return request<API_THIRD.TWeatherData>('/api/third/request', {
     method: 'POST',
-    data,
+    data: {
+      params: {
+        ...data,
+        _id: '630c7f824fa77520a214a75d',
+      },
+    },
   });
 };
