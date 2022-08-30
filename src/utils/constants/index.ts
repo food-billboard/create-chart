@@ -42,4 +42,4 @@ export const REQUEST_TIMEOUT = 10000;
 
 // 默认的大屏封面
 export const DEFAULT_SCREEN_COVER =
-  'http://47.97.27.23/static/image/f6543dfd1e15f8e0ae4e5e1d4e7c975e.jpeg';
+  'http://47.97.27.23/static/image/1214adef02e38de1d9a02e5fa27af229.png';
