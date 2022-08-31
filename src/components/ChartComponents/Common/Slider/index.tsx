@@ -29,10 +29,10 @@ const Slider = (
 
   const onAfterChange = useCallback(
     (e) => {
-      propsOnChange?.(stateValue);
+      propsOnChange?.(e);
       propsOnAfterChange?.(e);
     },
-    [propsOnAfterChange, propsOnChange, stateValue],
+    [propsOnAfterChange, propsOnChange],
   );
 
   useEffect(() => {

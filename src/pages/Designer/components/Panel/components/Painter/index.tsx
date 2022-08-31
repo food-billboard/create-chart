@@ -41,7 +41,7 @@ const Painter = (props: PainterProps) => {
     connectDropTarget,
     setSelect,
     scale: originScale,
-    config: { style: { width, height } = {}, attr: { poster } = {} } = {},
+    config: { style: { width, height } = {}, attr: { poster, lens } = {} } = {},
     className,
     style,
   } = props;
@@ -60,6 +60,17 @@ const Painter = (props: PainterProps) => {
   }, [originScale]);
 
   const panelStyle: CSSProperties = useMemo(() => {
+    console.log(
+      lens?.show
+        ? {
+            filter: `hue-rotate(${lens.hueRotate}deg) brightness(${
+              lens.brightness / 100
+            }) contrast(${lens.contrast}%) grayscale(${
+              lens.grayscale
+            }%) opacity(${lens.opacity}%) saturate(${lens.saturate})`,
+          }
+        : {},
+    );
     return merge(
       {},
       {
@@ -72,8 +83,17 @@ const Painter = (props: PainterProps) => {
       },
       backgroundStyle.backgroundImage ? {} : backgroundStyle,
       style,
+      lens?.show
+        ? {
+            filter: `hue-rotate(${lens.hueRotate}deg) brightness(${
+              lens.brightness / 100
+            }) contrast(${lens.contrast}%) grayscale(${
+              lens.grayscale
+            }%) opacity(${lens.opacity}%) saturate(${lens.saturate})`,
+          }
+        : {},
     );
-  }, [scale, backgroundStyle, width, height, style]);
+  }, [scale, backgroundStyle, width, height, style, lens]);
 
   const onMouseMove = () => {
     moveCounter.current++;

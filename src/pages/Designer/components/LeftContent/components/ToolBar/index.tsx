@@ -9,6 +9,7 @@ import {
   TCommonProps,
   LocalConfigIcon,
   ComponentListCollapse,
+  LensConfig,
 } from './action.map';
 import styles from './index.less';
 
@@ -37,6 +38,7 @@ const ToolBar = (props: TCommonProps) => {
       <ConstantIcon {...nextProps} />
       <LocalConfigIcon {...nextProps} />
       <ComponentListCollapse {...nextProps} />
+      <LensConfig {...nextProps} />
     </div>
   );
 };

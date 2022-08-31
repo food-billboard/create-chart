@@ -73,6 +73,15 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
         show: true,
         value: [],
       },
+      lens: {
+        show: false,
+        hueRotate: 30,
+        saturate: 30,
+        brightness: 80,
+        contrast: 90,
+        opacity: 100,
+        grayscale: 0,
+      },
     },
     flag: {
       type: 'PC',

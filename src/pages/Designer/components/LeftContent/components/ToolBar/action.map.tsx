@@ -14,9 +14,11 @@ import {
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { ConnectState } from '@/models/connect';
+import IconFont from '@/components/ChartComponents/Common/Icon';
 import CallbackManage, { CallbackManageRef } from '../CallbackManage';
 import ConstantManage, { ConstantManageRef } from '../ConstantManage';
 import LocalConfigMange, { LocalConfigManageRef } from '../LocalConfigMange';
+import LensConfigModal, { LensConfigRef } from '../LensConfig';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -35,7 +37,8 @@ export type TCommonProps = {
       | 'callback'
       | 'constant'
       | 'localConfig'
-      | 'component-collapse',
+      | 'component-collapse'
+      | 'lens',
   ) => void;
 };
 
@@ -296,3 +299,31 @@ export const ComponentListCollapse = connect(
       dispatch({ type: 'local/setComponentCollapse', value }),
   }),
 )(InternalComponentListCollapse);
+
+// 全局滤镜
+export const LensConfig = (props: TCommonProps) => {
+  const { onClick } = props;
+
+  const lensConfigRef = useRef<LensConfigRef>(null);
+
+  const handleOpen = useCallback(() => {
+    lensConfigRef.current?.open();
+    onClick?.('lens');
+  }, [onClick]);
+
+  return (
+    <>
+      <IconFont
+        type="icon-iconlvjingkua"
+        title="全局滤镜"
+        className={classnames(
+          commonClass,
+          'c-po',
+          styles['design-left-tool-icon-hover'],
+        )}
+        onClick={handleOpen}
+      />
+      <LensConfigModal ref={lensConfigRef} />
+    </>
+  );
+};

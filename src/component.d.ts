@@ -254,6 +254,15 @@ declare namespace ComponentData {
         guideLine: TGuideLineConfig;
         theme: string;
         grid: number;
+        lens: {
+          show: boolean;
+          hueRotate: number;
+          saturate: number;
+          brightness: number;
+          contrast: number;
+          opacity: number;
+          grayscale: number;
+        };
       };
       flag: {
         type: 'PC' | 'H5';
