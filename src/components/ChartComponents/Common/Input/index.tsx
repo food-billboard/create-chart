@@ -16,9 +16,7 @@ const Input = (
     triggerOnChangeInOnChange = false,
   } = props;
 
-  const [stateValue, setStateValue] = useState<any>(
-    value ?? defaultValue ?? '',
-  );
+  const [stateValue, setStateValue] = useState<any>(value ?? defaultValue);
 
   const onChange = useCallback(
     (e) => {
@@ -44,7 +42,7 @@ const Input = (
   }, [value]);
 
   useUnmount(() => {
-    if (value !== stateValue) propsOnChange?.(stateValue);
+    if (value != stateValue) propsOnChange?.(stateValue);
   });
 
   return (

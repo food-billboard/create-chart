@@ -1,10 +1,12 @@
-import { useMemo, ReactNode, useCallback } from 'react';
+import { useMemo, ReactNode, useCallback, useEffect, useState } from 'react';
 import { Collapse, Checkbox } from 'antd';
 import { get } from 'lodash';
 import { connect } from 'dva';
 import { InfoCircleOutlined, CaretRightOutlined } from '@ant-design/icons';
+import IconTooltip from '@/components/IconTooltip';
 import { getComponent, getPath } from '@/utils/Assist/Component';
 import InteractiveUtil from '@/utils/Assist/Interactive';
+import GlobalComponent from '@/utils/Assist/GlobalComponent';
 import FieldSetting from './FieldSetting';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
@@ -14,6 +16,36 @@ const { Panel } = Collapse;
 export const Icon = ({ isActive }: any) => (
   <CaretRightOutlined rotate={isActive ? 90 : 0} />
 );
+
+const PanelHeader = (props: {
+  value: ComponentData.TBaseInteractiveConfig;
+}) => {
+  const {
+    value: { description, name },
+  } = props;
+
+  const Component = GlobalComponent.getComponent(
+    description?.replace('component_', '') || '',
+  );
+
+  if (!description) return <>{name}</>;
+  if (!description.startsWith('component_'))
+    return (
+      <>
+        {name}
+        <IconTooltip title={description}>
+          <InfoCircleOutlined className="m-l-4" />
+        </IconTooltip>
+      </>
+    );
+
+  return (
+    <>
+      {name}
+      {Component && <Component />}
+    </>
+  );
+};
 
 // 基础交互
 
@@ -72,7 +104,7 @@ const BaseConfig = (props: {
 
         acc.domList.push(
           <Panel
-            header={name}
+            header={<PanelHeader value={cur} />}
             key={type}
             extra={
               <Checkbox

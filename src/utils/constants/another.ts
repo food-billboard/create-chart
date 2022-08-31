@@ -11,6 +11,19 @@ const GUIDE_LINE_PADDING = 2;
 const MIN_COMPONENT_WIDTH = 20;
 const MIN_COMPONENT_HEIGHT = 20;
 
+// iframe组件页面接收数据通知的示例代码
+const IFRAME_COMPONENT_ON_MESSAGE_CODE_EXAMPLE = `
+  window.addEventListener('resize', () => {
+
+  })
+`;
+// iframe组件页面发送数据改变通知的示例代码
+const IFRAME_COMPONENT_POST_MESSAGE_CODE_EXAMPLE = `
+  window.addEventListener('resize', () => {
+      
+  })
+`;
+
 export {
   IMAGE_FALLBACK,
   MIN_LAYER_WIDTH,
@@ -18,4 +31,6 @@ export {
   GUIDE_LINE_PADDING,
   MIN_COMPONENT_WIDTH,
   MIN_COMPONENT_HEIGHT,
+  IFRAME_COMPONENT_ON_MESSAGE_CODE_EXAMPLE,
+  IFRAME_COMPONENT_POST_MESSAGE_CODE_EXAMPLE,
 };

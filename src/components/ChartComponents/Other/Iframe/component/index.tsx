@@ -1,7 +1,5 @@
-import { CSSProperties, useMemo, useRef } from 'react';
+import { CSSProperties, useMemo, useRef, useEffect } from 'react';
 import { uniqueId, merge } from 'lodash';
-
-import 'echarts-wordcloud';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
@@ -19,7 +17,12 @@ const IframeBasic = (props: {
   global: ComponentProps['global'];
 }) => {
   const { className, style, value, global } = props;
-  const { id } = value;
+  const {
+    id,
+    config: {
+      options: { scrolling, scale, pointEvent, relationParams },
+    },
+  } = value;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -45,6 +48,8 @@ const IframeBasic = (props: {
     });
   }, [processedValue, componentFilterMap]);
 
+  useEffect(() => {}, []);
+
   return (
     <>
       <div
@@ -55,6 +60,14 @@ const IframeBasic = (props: {
             height: '100%',
           },
           style,
+          {
+            transform: `scale(${scale})`,
+          },
+          pointEvent
+            ? {}
+            : {
+                pointEvent: 'none',
+              },
         )}
         id={chartId.current}
       >
@@ -63,6 +76,14 @@ const IframeBasic = (props: {
           width="100%"
           height="100%"
           frameBorder="0"
+          scrolling={scrolling}
+          style={
+            pointEvent
+              ? {}
+              : ({
+                  pointEvent: 'none',
+                } as CSSProperties)
+          }
         />
       </div>
       <FetchFragment

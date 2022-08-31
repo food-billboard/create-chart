@@ -5,6 +5,7 @@ import {
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { TIFrameConfig } from './type';
+import { OnMessageTooltipName } from './component/MessageTooltip';
 
 const DEFAULT_VALUE = {
   value: '/preview',
@@ -13,7 +14,22 @@ const DEFAULT_VALUE = {
 export default () => {
   const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TIFrameConfig> = {
     interactive: {
-      base: [],
+      base: [
+        {
+          type: 'message',
+          name: 'iframe通信',
+          show: false,
+          extend: true,
+          description: `component_${OnMessageTooltipName}`,
+          fields: [
+            {
+              key: 'value',
+              variable: '',
+              description: '示例通信值',
+            },
+          ],
+        },
+      ],
     },
     data: {
       request: {
@@ -24,14 +40,19 @@ export default () => {
           {
             field: 'value',
             map: '',
-            description: '数据值',
+            description: '地址',
             id: 'value',
             type: 'string',
           },
         ],
       },
     },
-    options: {},
+    options: {
+      scrolling: 'auto',
+      scale: 1,
+      pointEvent: false,
+      relationParams: [],
+    },
   };
 
   const DefaultConfig: ComponentData.TComponentData<TIFrameConfig> =

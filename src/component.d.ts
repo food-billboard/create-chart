@@ -69,6 +69,10 @@ declare namespace ComponentData {
     type: string;
     name: string;
     show: boolean;
+    // version 1.11
+    extend?: boolean;
+    // version 1.11
+    description?: string;
     fields: TBaseInteractiveConfigField[];
   };
 
