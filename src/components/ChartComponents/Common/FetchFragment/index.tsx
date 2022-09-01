@@ -14,7 +14,9 @@ export type TFetchFragmentProps = {
   url: string;
   componentFilter: ComponentData.TComponentFilterConfig[];
   componentCondition?: ComponentData.ComponentConditionConfig;
+  componentParams?: string[];
 
+  reParams?: (targetParams: ComponentData.TParams, newValue: any) => void;
   reFetchData: () => Promise<any>;
   reGetValue: () => void;
   reCondition?: (
@@ -36,11 +38,13 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
       filter,
       constants,
       componentFilter,
+      componentParams = [],
       componentCondition: componentConditionConfig = {
         value: [],
         initialState: 'visible',
       },
       url,
+      reParams = noop,
       reFetchData,
       reGetValue,
       reCondition = noop,
@@ -60,6 +64,8 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
           componentFilter,
           componentCondition,
           componentConstants: constants,
+          componentParams,
+          onParams: reParams,
           onFetch: async () => {
             return reFetchData();
           },

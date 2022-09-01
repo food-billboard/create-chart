@@ -60,6 +60,20 @@ class Config extends Component<
                   className="w-100"
                   value={scrolling}
                   onChange={this.onKeyChange.bind(this, 'scrolling')}
+                  options={[
+                    {
+                      label: '自动',
+                      value: 'auto',
+                    },
+                    {
+                      label: '显示',
+                      value: 'yes',
+                    },
+                    {
+                      label: '隐藏',
+                      value: 'no',
+                    },
+                  ]}
                 />
               </FullForm>
             </Item>
