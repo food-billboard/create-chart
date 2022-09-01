@@ -132,8 +132,7 @@ const Designer = (props: {
   // 页面关闭的时候需要提示是否保存
   // 这是在手动保存的时候才需要使用的
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'production' || !GlobalConfig.isAutoSaveType())
-      return;
+    if (!GlobalConfig.isAutoSaveType()) return;
     window.addEventListener('beforeunload', closeAndPrompt);
     return () => {
       window.removeEventListener('beforeunload', closeAndPrompt);

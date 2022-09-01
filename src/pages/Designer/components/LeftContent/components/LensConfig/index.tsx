@@ -101,7 +101,7 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
             <Item label="饱和度">
               <FullForm>
                 <Slider
-                  min={0}
+                  min={-100}
                   max={100}
                   value={saturate}
                   onChange={onChange.bind(null, 'saturate')}
@@ -111,7 +111,7 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
             <Item label="明度">
               <FullForm>
                 <Slider
-                  min={0}
+                  min={-100}
                   max={100}
                   value={brightness}
                   onChange={onChange.bind(null, 'brightness')}
@@ -121,7 +121,7 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
             <Item label="对比度">
               <FullForm>
                 <Slider
-                  min={0}
+                  min={-100}
                   max={100}
                   value={contrast}
                   onChange={onChange.bind(null, 'contrast')}

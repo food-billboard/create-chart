@@ -118,11 +118,10 @@ const IframeBasic = (props: {
     try {
       const { data, origin } = e;
       if (!finalValue.value) return;
-      const obejctValue = JSON.parse(data);
-      if (obejctValue.id !== chartId.current) return;
+      const objectValue = JSON.parse(data);
+      if (objectValue.id !== chartId.current) return;
       const domain = getDomain(location.href);
       if (domain !== origin) return;
-      console.log(obejctValue);
     } catch (err) {}
   };
 

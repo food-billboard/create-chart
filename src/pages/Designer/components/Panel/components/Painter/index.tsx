@@ -60,17 +60,6 @@ const Painter = (props: PainterProps) => {
   }, [originScale]);
 
   const panelStyle: CSSProperties = useMemo(() => {
-    console.log(
-      lens?.show
-        ? {
-            filter: `hue-rotate(${lens.hueRotate}deg) brightness(${
-              lens.brightness / 100
-            }) contrast(${lens.contrast}%) grayscale(${
-              lens.grayscale
-            }%) opacity(${lens.opacity}%) saturate(${lens.saturate})`,
-          }
-        : {},
-    );
     return merge(
       {},
       {
@@ -86,10 +75,10 @@ const Painter = (props: PainterProps) => {
       lens?.show
         ? {
             filter: `hue-rotate(${lens.hueRotate}deg) brightness(${
-              lens.brightness / 100
-            }) contrast(${lens.contrast}%) grayscale(${
+              lens.brightness + 100
+            }%) contrast(${lens.contrast + 100}%) grayscale(${
               lens.grayscale
-            }%) opacity(${lens.opacity}%) saturate(${lens.saturate})`,
+            }%) opacity(${lens.opacity}%) saturate(${lens.saturate + 100})`,
           }
         : {},
     );
