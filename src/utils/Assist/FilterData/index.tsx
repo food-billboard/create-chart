@@ -287,7 +287,9 @@ export class CompareFilterUtil {
       componentFilter,
       componentCondition,
       componentConstants,
+      componentParams,
       url,
+      onParams,
       onFilter,
       onFetch,
       onCondition,
@@ -296,8 +298,10 @@ export class CompareFilterUtil {
       componentFilter: ComponentData.TComponentFilterConfig[];
       componentCondition: ComponentData.ComponentCondition[];
       componentConstants: ComponentData.TConstants[];
+      componentParams: string[];
       url: string;
       id: string;
+      onParams: (targetParam: ComponentData.TParams[], newValue: any) => void;
       onFilter: () => Promise<any>;
       onFetch: () => Promise<any>;
       onHashChange: (e: any) => void;
@@ -309,9 +313,11 @@ export class CompareFilterUtil {
     this.prevParams = defaultValue;
     this.condition = componentCondition;
     this.constants = componentConstants;
+    this.componentParams = componentParams;
     this.onFetch = onFetch;
     this.onFilter = onFilter;
     this.onCondition = onCondition;
+    this.onParams = onParams;
     this.initComponentFilter(filter, componentFilter);
     this.initParamsMap(url, this.filter, this.condition);
     // hash 值改变监听
@@ -321,11 +327,13 @@ export class CompareFilterUtil {
   onFilter;
   onFetch;
   onCondition;
+  onParams;
 
   // 组件过滤函数的集合
   filter: TFilterData[] = [];
   condition;
   constants;
+  componentParams;
   mapParams: {
     [variable: string]: {
       action: Function[];
@@ -333,6 +341,7 @@ export class CompareFilterUtil {
         type: 'params' | 'constants' | 'href';
         value: any;
         getValue: (params?: ComponentData.TParams[]) => any;
+        getOrigin: (params?: ComponentData.TParams[]) => any;
       };
       value?: string;
     };
@@ -434,6 +443,9 @@ export class CompareFilterUtil {
             const hrefParams = VariableStringUtil.getAllUrlParams();
             return hrefParams[variable];
           },
+          getOrigin: () => {
+            return variable;
+          },
         },
         value: hrefIndex,
       };
@@ -447,6 +459,9 @@ export class CompareFilterUtil {
           value: paramsIndex,
           getValue: (params: ComponentData.TParams[]) => {
             return params[paramsIndex].value;
+          },
+          getOrigin: (params: ComponentData.TParams[]) => {
+            return params[paramsIndex];
           },
         },
         value: target.value,
@@ -462,6 +477,9 @@ export class CompareFilterUtil {
           getValue: () => {
             return this.constants[constantsIndex].value;
           },
+          getOrigin: () => {
+            return this.constants[constantsIndex];
+          },
         },
         value: target.value,
       };
@@ -475,6 +493,9 @@ export class CompareFilterUtil {
           getValue: () => {
             const hrefParams = VariableStringUtil.getAllUrlParams();
             return hrefParams[variable];
+          },
+          getOrigin: () => {
+            return variable;
           },
         },
         value: hrefIndex,
@@ -500,6 +521,10 @@ export class CompareFilterUtil {
           variables: params,
         };
       }),
+      {
+        action: this.onParams,
+        variables: this.componentParams,
+      },
       ...this.initComponentCondition(condition),
     ].forEach((item) => {
       const { action, variables } = item;
@@ -523,10 +548,12 @@ export class CompareFilterUtil {
       const [variable, value] = param;
       const { action, index, value: prevValue } = value;
 
-      let currentTargetValue;
+      let currentTargetValue: any;
+      let currentTarget: any;
       // 当前的值
       try {
         currentTargetValue = index.getValue(params);
+        currentTarget = index.getOrigin(params);
       } catch (err) {
         return;
       }
@@ -535,7 +562,10 @@ export class CompareFilterUtil {
         this.mapParams[variable].value = currentTargetValue;
 
         action.forEach((actionData) => {
-          if (!actionList.includes(actionData)) actionList.push(actionData);
+          if (!actionList.includes(actionData))
+            actionList.push(
+              actionData.bind(null, currentTarget, currentTargetValue),
+            );
         });
       }
     });

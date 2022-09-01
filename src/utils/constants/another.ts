@@ -13,15 +13,25 @@ const MIN_COMPONENT_HEIGHT = 20;
 
 // iframe组件页面接收数据通知的示例代码
 const IFRAME_COMPONENT_ON_MESSAGE_CODE_EXAMPLE = `
-  window.addEventListener('resize', () => {
-
-  })
+  function onMessage(e) {
+    const { data, origin } = e 
+    const parseData = JSON.parse(data)
+    console.log('新改变的数据：' + parseData)
+    console.log('发送数据的页面：' + origin)
+  }
+  window.addEventListener('message', onMessage)
 `;
 // iframe组件页面发送数据改变通知的示例代码
 const IFRAME_COMPONENT_POST_MESSAGE_CODE_EXAMPLE = `
-  window.addEventListener('resize', () => {
-      
-  })
+  function postMessage() {
+    const sendValue = {
+      custom_field: '需要发送的数据',
+      id: '来自上层页面传递下来的id，在onmessage事件中可以获取到'
+    }
+    // 接收数据的目标页面域名
+    const domain = 'http://www.example.com'
+    if(window.parent) window.parent.postMessage(JSON.stringify(sendValue), domain)
+  }
 `;
 
 export {
