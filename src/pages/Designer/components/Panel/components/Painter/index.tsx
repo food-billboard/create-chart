@@ -59,6 +59,23 @@ const Painter = (props: PainterProps) => {
     return originScale / 100;
   }, [originScale]);
 
+  const filter: CSSProperties = useMemo(() => {
+    if (!lens || !lens.show) return {};
+    const { hueRotate, brightness, contrast, grayscale, opacity, saturate } =
+      lens;
+    let filterData = '';
+    if (hueRotate != 0) filterData += `hue-rotate(${hueRotate}deg) `;
+    if (brightness != 0) filterData += `brightness(${brightness + 100}%) `;
+    if (contrast != 0) filterData += `contrast(${contrast + 100}%) `;
+    if (grayscale != 0) filterData += `grayscale(${grayscale}%) `;
+    if (opacity != 100) filterData += `opacity(${opacity}%) `;
+    if (saturate != 0) filterData += `saturate(${saturate}%) `;
+    if (!filterData) return {};
+    return {
+      filter: filterData,
+    };
+  }, [lens]);
+
   const panelStyle: CSSProperties = useMemo(() => {
     return merge(
       {},
@@ -72,17 +89,9 @@ const Painter = (props: PainterProps) => {
       },
       backgroundStyle.backgroundImage ? {} : backgroundStyle,
       style,
-      lens?.show
-        ? {
-            filter: `hue-rotate(${lens.hueRotate}deg) brightness(${
-              lens.brightness + 100
-            }%) contrast(${lens.contrast + 100}%) grayscale(${
-              lens.grayscale
-            }%) opacity(${lens.opacity}%) saturate(${lens.saturate + 100})`,
-          }
-        : {},
+      filter,
     );
-  }, [scale, backgroundStyle, width, height, style, lens]);
+  }, [scale, backgroundStyle, width, height, style, filter]);
 
   const onMouseMove = () => {
     moveCounter.current++;

@@ -1,10 +1,12 @@
 import { forwardRef, useImperativeHandle, useState, useCallback } from 'react';
 import { Switch, Drawer } from 'antd';
 import { connect } from 'dva';
+import classnames from 'classnames';
 import Slider from '@/components/ChartComponents/Common/Slider';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+import styles from './index.less';
 
 const { Item } = ConfigList;
 
@@ -95,6 +97,10 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
                   max={180}
                   value={hueRotate}
                   onChange={onChange.bind(null, 'hueRotate')}
+                  className={classnames(
+                    styles['designer-lens-config-hue-rotate'],
+                    styles['designer-lens-config-common'],
+                  )}
                 />
               </FullForm>
             </Item>
@@ -105,6 +111,10 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
                   max={100}
                   value={saturate}
                   onChange={onChange.bind(null, 'saturate')}
+                  className={classnames(
+                    styles['designer-lens-config-saturate'],
+                    styles['designer-lens-config-common'],
+                  )}
                 />
               </FullForm>
             </Item>
@@ -115,6 +125,10 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
                   max={100}
                   value={brightness}
                   onChange={onChange.bind(null, 'brightness')}
+                  className={classnames(
+                    styles['designer-lens-config-brightness'],
+                    styles['designer-lens-config-common'],
+                  )}
                 />
               </FullForm>
             </Item>
@@ -125,6 +139,10 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
                   max={100}
                   value={contrast}
                   onChange={onChange.bind(null, 'contrast')}
+                  className={classnames(
+                    styles['designer-lens-config-contrast'],
+                    styles['designer-lens-config-common'],
+                  )}
                 />
               </FullForm>
             </Item>
@@ -135,6 +153,10 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
                   max={100}
                   value={opacity}
                   onChange={onChange.bind(null, 'opacity')}
+                  className={classnames(
+                    styles['designer-lens-config-opacity'],
+                    styles['designer-lens-config-common'],
+                  )}
                 />
               </FullForm>
             </Item>
@@ -145,6 +167,10 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
                   max={100}
                   value={grayscale}
                   onChange={onChange.bind(null, 'grayscale')}
+                  className={classnames(
+                    styles['designer-lens-config-grayscale'],
+                    styles['designer-lens-config-common'],
+                  )}
                 />
               </FullForm>
             </Item>
