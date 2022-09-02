@@ -8,7 +8,7 @@ import { TIFrameConfig } from './type';
 import { OnMessageTooltipName } from './component/MessageTooltip';
 
 const DEFAULT_VALUE = {
-  value: '/preview',
+  value: 'http://47.97.27.23/api/backend/screen/index.html#/',
 };
 
 export default () => {

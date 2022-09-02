@@ -56,7 +56,11 @@ const IframeBasic = (props: {
   }, [processedValue, componentFilterMap]);
 
   const getDomain = (url: string) => {
-    return new URL(url).origin;
+    try {
+      return new URL(url).origin;
+    } catch (err) {
+      return '';
+    }
   };
 
   const onLoad = useCallback(() => {
