@@ -51,7 +51,7 @@ export default () => {
       BASIC_DEFAULT_CONFIG,
       {
         style: {
-          width: 100,
+          width: 200,
           height: 50,
         },
       },
