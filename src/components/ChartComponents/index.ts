@@ -58,6 +58,7 @@ import Image from './Media/Image';
 import Video from './Media/Video';
 import Carousel from './Media/Carousel';
 import PictureWall from './Media/PictureWall';
+import Audio from './Media/Audio';
 // interactive
 import Tab from './Interactive/Tab';
 import Select from './Interactive/Select';
@@ -144,6 +145,7 @@ COMPONENT_MAP.set(StateList.type, StateList);
 COMPONENT_MAP.set(Rate.type, Rate);
 COMPONENT_MAP.set(Tag.type, Tag);
 COMPONENT_MAP.set(Weather.type, Weather);
+COMPONENT_MAP.set(Audio.type, Audio);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

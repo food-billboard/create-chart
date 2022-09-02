@@ -470,6 +470,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: PictureWall,
             description: '',
           },
+          {
+            type: 'AUDIO',
+            title: '声音',
+            icon: VideoBasic,
+            description: '',
+          },
         ],
       },
     ],

@@ -152,7 +152,8 @@ declare namespace ComponentData {
     | 'STATE_LIST'
     | 'RATE'
     | 'TAG'
-    | 'WEATHER';
+    | 'WEATHER'
+    | 'AUDIO';
 
   // 基础组件属性
   export type TBaseConfig = {
