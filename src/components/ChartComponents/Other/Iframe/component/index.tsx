@@ -40,6 +40,7 @@ const IframeBasic = (props: {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
+    syncInteractiveAction,
   } = useComponent<TIFrameConfig>(
     {
       component: value,
@@ -119,22 +120,23 @@ const IframeBasic = (props: {
       const { data, origin } = e;
       if (!finalValue.value) return;
       const objectValue = JSON.parse(data);
-      if (objectValue.id !== chartId.current) return;
-      const domain = getDomain(location.href);
-      if (domain !== origin) return;
+      const { id, ...nextValues } = objectValue;
+      if (id !== chartId.current) return;
+      if (getDomain(finalValue.value) !== getDomain(origin)) return;
+      syncInteractiveAction('message', nextValues);
     } catch (err) {}
   };
 
   useUpdateEffect(() => {
     initIFrame(finalValue.value);
-  }, [finalValue]);
+  }, [finalValue.value]);
 
   useEffect(() => {
     window.addEventListener('message', onMessage);
     return () => {
       window.removeEventListener('message', onMessage);
     };
-  }, []);
+  }, [finalValue.value]);
 
   return (
     <>

@@ -245,15 +245,15 @@ export function useComponent<P extends object = {}>(
       const { setParams } = global;
 
       let toUpdateParamsId: string[] = [];
+      let updateValueKeys = Object.keys(value);
 
       baseInteractive.some((baseItem) => {
         const { show, fields, type } = baseItem;
         if (baseInteractiveType !== type || !show) return false;
 
         fields.forEach((field) => {
-          const { mapId } = field;
-          if (!mapId) return;
-
+          const { mapId, key } = field;
+          if (!mapId || !updateValueKeys.includes(key)) return;
           toUpdateParamsId.push(mapId);
         });
 
