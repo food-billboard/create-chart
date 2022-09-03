@@ -35,7 +35,7 @@ class Config extends Component<
 
     return (
       <ComponentOptionConfig>
-        <TabPane key={'1'} tab={<Tab>视频</Tab>}>
+        <TabPane key={'1'} tab={<Tab>全局样式</Tab>}>
           <ConfigList level={1}>
             <Item label="自动播放">
               <FullForm>

@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 import { Tabs } from 'antd';
 import classnames from 'classnames';
 import styles from './index.less';
-import { AppleFilled } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 

@@ -477,6 +477,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: Audio,
             description: '',
           },
+          {
+            type: 'MODEL',
+            title: '模型',
+            icon: Audio,
+            description: '',
+          },
         ],
       },
     ],
