@@ -43,3 +43,6 @@ export const REQUEST_TIMEOUT = 10000;
 // 默认的大屏封面
 export const DEFAULT_SCREEN_COVER =
   'http://47.97.27.23/static/image/1214adef02e38de1d9a02e5fa27af229.png';
+
+// 3d model 展示的url地址
+export const DEFAULT_THREE_D_MODEL_URL = 'http://localhost:5001';

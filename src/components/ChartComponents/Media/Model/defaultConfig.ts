@@ -3,7 +3,6 @@ import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
-  DEFAULT_CONDITION_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { TModelConfig } from './type';
 
