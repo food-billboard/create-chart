@@ -64,7 +64,7 @@ class Config extends Component<
                 />
               </FullForm>
             </Item>
-            <Item label="聚焦">
+            {/* <Item label="聚焦">
               <FullForm label="x">
                 <InputNumber
                   value={focus.x}
@@ -89,7 +89,7 @@ class Config extends Component<
                   }
                 />
               </FullForm>
-            </Item>
+            </Item> */}
           </ConfigList>
         </TabPane>
         <TabPane key={'2'} tab={<Tab>相机</Tab>}>
@@ -102,14 +102,14 @@ class Config extends Component<
                 />
               </FullForm>
             </Item>
-            <Item label="循环播放">
+            {/* <Item label="颜色">
               <FullForm>
                 <CompatColorSelect
                   value={color}
                   onChange={this.onKeyChange.bind(this, 'color')}
                 />
               </FullForm>
-            </Item>
+            </Item> */}
             <Collapse
               child={{
                 header: '旋转',

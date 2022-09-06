@@ -52,7 +52,7 @@ export default () => {
       },
       rotate: {
         show: true,
-        speed: 10,
+        speed: 10000,
       },
     },
   };

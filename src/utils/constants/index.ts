@@ -45,4 +45,5 @@ export const DEFAULT_SCREEN_COVER =
   'http://47.97.27.23/static/image/1214adef02e38de1d9a02e5fa27af229.png';
 
 // 3d model 展示的url地址
-export const DEFAULT_THREE_D_MODEL_URL = 'http://localhost:5001';
+export const DEFAULT_THREE_D_MODEL_URL =
+  'http://47.97.27.23/api/backend/three-model/index.html';
