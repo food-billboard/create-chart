@@ -102,6 +102,11 @@ const AudioBasic = (props: {
           src={finalValue.value}
           muted={screenType === 'edit'}
         />
+        {!controls && screenType === 'edit' && (
+          <div className={styles['component-media-audio-tooltip']}>
+            仅在设计情况下显示此<strong>音乐</strong>提示文本
+          </div>
+        )}
       </div>
       <FetchFragment
         id={id}

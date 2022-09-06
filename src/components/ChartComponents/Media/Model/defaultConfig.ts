@@ -25,7 +25,7 @@ export default () => {
           {
             field: 'value',
             map: '',
-            description: '模型地址',
+            description: '模型地址(gltf)',
             id: 'value',
             type: 'string',
           },
