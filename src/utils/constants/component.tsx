@@ -72,6 +72,7 @@ import StateList from '../../../public/components/state-list.jpg';
 import Tag from '../../../public/components/tag.jpg';
 import Weather from '../../../public/components/weather.png';
 import Audio from '../../../public/components/audio.jpg';
+import Model from '../../../public/components/model.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -480,7 +481,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'MODEL',
             title: '模型',
-            icon: Audio,
+            icon: Model,
             description: '',
           },
         ],
