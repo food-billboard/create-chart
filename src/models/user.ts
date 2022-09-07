@@ -12,6 +12,10 @@ import {
   outLogin,
 } from '@/services';
 import { getPageQuery } from '@/utils';
+import {
+  setErrorOriginUser,
+  unsetErrorOriginUser,
+} from '@/utils/Assist/ErrorBoundary';
 
 export default {
   namespace: 'user',
@@ -29,6 +33,7 @@ export default {
         type: 'saveCurrentUser',
         payload: response,
       });
+      setErrorOriginUser(response);
       return response;
     },
 
@@ -79,6 +84,7 @@ export default {
           }),
         });
       }
+      unsetErrorOriginUser();
     },
 
     //注册
