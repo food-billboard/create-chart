@@ -72,6 +72,7 @@ import Datepicker from './Interactive/Datepicker';
 import Rate from './Interactive/Rate';
 // map
 import ScatterMap from './Map/ScatterMap';
+import Ali3DMap from './Map/Ali3DMap';
 
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
@@ -148,6 +149,7 @@ COMPONENT_MAP.set(Tag.type, Tag);
 COMPONENT_MAP.set(Weather.type, Weather);
 COMPONENT_MAP.set(Audio.type, Audio);
 COMPONENT_MAP.set(Model.type, Model);
+COMPONENT_MAP.set(Ali3DMap.type, Ali3DMap);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

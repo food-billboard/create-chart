@@ -503,6 +503,12 @@ export const COMPONENT_TYPE_LIST = [
             icon: ScatterMap,
             description: '',
           },
+          {
+            type: 'ALI3D_MAP',
+            title: '高德3d地图',
+            icon: ScatterMap,
+            description: '',
+          },
         ],
       },
     ],
