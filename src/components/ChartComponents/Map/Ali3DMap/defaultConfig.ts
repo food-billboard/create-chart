@@ -6,12 +6,14 @@ import {
   DEFAULT_TOOLTIP_CONFIG,
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+  DEFAULT_THEME_COLOR_LIST,
 } from '../../Common/Constants/defaultConfig';
 import { TAli3DMapConfig } from './type';
 
 const DEFAULT_VALUE: any = [];
 
 export default () => {
+  const DEFAULT_THEME_COLOR_LIST_DATA = DEFAULT_THEME_COLOR_LIST();
   const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TAli3DMapConfig> =
     {
       interactive: {
@@ -46,8 +48,11 @@ export default () => {
         tooltip: {
           ...DEFAULT_TOOLTIP_CONFIG(),
           animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
+          ignore: [],
         },
-        scatter: {},
+        scatter: {
+          color: DEFAULT_THEME_COLOR_LIST_DATA[0],
+        },
         condition: DEFAULT_CONDITION_CONFIG(),
       },
     };

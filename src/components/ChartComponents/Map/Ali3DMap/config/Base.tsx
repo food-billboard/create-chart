@@ -67,9 +67,7 @@ const BaseConfig = (props: {
       onChange({
         config: {
           options: {
-            scatter: {
-              [key]: value,
-            },
+            [key]: value,
           },
         },
       });

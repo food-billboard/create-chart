@@ -35,7 +35,7 @@ class Config extends Component<
             />
           </ConfigList>
         </TabPane>
-        {/* <TabPane key={'2'} tab={<Tab>标记</Tab>}>
+        <TabPane key={'2'} tab={<Tab>标记</Tab>}>
           <ConfigList level={1}>
             <ScatterConfig value={scatter} onChange={onChange} />
           </ConfigList>
@@ -44,7 +44,7 @@ class Config extends Component<
           <ConfigList level={1}>
             <TooltipConfig value={tooltip} onChange={onChange} />
           </ConfigList>
-        </TabPane> */}
+        </TabPane>
         <TabPane key="4" tab={<Tab>条件</Tab>}>
           <ConfigList level={1}>
             <ConditionConfig value={condition} onChange={onChange} />

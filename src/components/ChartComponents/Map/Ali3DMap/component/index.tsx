@@ -23,9 +23,6 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'ALI3D_MAP';
 
-// 热点信息，也就是标记相关
-// https://lbs.amap.com/demo/jsapi-v2/example/map/hotspot
-
 const Ali3DMap = (props: {
   className?: string;
   style?: CSSProperties;

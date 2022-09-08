@@ -1,7 +1,10 @@
 export type TAli3DMapConfig = {
-  scatter: {};
-  tooltip: ComponentData.ComponentTooltip & {
+  scatter: {
+    color: ComponentData.TColorConfig;
+  };
+  tooltip: Omit<ComponentData.ComponentTooltip, 'formatter'> & {
     animation: ComponentData.ComponentTooltipAnimation;
+    ignore: ('image' | 'sub-title' | 'description')[];
   };
   condition: ComponentData.ComponentConditionConfig;
   style:
