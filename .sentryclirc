@@ -1,0 +1,7 @@
+[auth]
+token=token
+
+[defaults]
+url = https://sentry.io
+org = food-billboard  
+project = create-cahrt

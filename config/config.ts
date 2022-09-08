@@ -1,8 +1,11 @@
 // https://umijs.org/config/
 import { defineConfig } from 'umi';
 import { merge } from 'lodash';
-import darkTheme from './theme';
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
+// import packageJson from '../package.json'
+// @ts-ignore
+// import SentryCliPlugin from '@sentry/webpack-plugin'
+import darkTheme from './theme';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routerConfig from './router-config';
@@ -56,6 +59,15 @@ const commonConfig = {
         languages: ['javascript', 'json'],
       },
     ]);
+    // config.plugin('sentry-plugin').use(SentryCliPlugin, [
+    //   {
+    //     include: ['../dist'],
+    //     ignore: ['node_modules'],
+    //     org: 'food-billboard',
+    //     sourceMapReference: true,
+    //     release: packageJson.version,
+    //   }
+    // ])
   },
 };
 
@@ -69,6 +81,7 @@ const productionConfig: any = merge({}, commonConfig, {
   define: {
     'process.env.REACT_APP_ENV': 'prod',
   },
+  // devtool: 'source-map',
   //-----打包配置
   // base: '/api/backend/screen/',
   base: '/',
