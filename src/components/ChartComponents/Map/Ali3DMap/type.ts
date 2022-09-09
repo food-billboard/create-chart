@@ -7,6 +7,7 @@ export type TAli3DMapConfig = {
     ignore: ('image' | 'sub-title' | 'description')[];
   };
   condition: ComponentData.ComponentConditionConfig;
+  zoom: number;
   style:
     | 'normal'
     | 'dark'

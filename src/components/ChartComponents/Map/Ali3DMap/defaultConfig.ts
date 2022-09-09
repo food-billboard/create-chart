@@ -1,3 +1,4 @@
+import { omit } from 'lodash';
 import { mergeWithoutArray } from '@/utils';
 import {
   BASIC_DEFAULT_CONFIG,
@@ -10,7 +11,25 @@ import {
 } from '../../Common/Constants/defaultConfig';
 import { TAli3DMapConfig } from './type';
 
-const DEFAULT_VALUE: any = [];
+const DEFAULT_VALUE: any = {
+  center: [120.8, 30.14],
+  pointer: [
+    {
+      image: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
+      title: '这是一串标题',
+      subTitle: '这是一串副标题',
+      description: '这是一串描述'.repeat(5),
+      position: [120.8, 30.14],
+    },
+    {
+      image: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
+      title: '这是一串标题',
+      subTitle: '这是一串副标题',
+      description: '这是一串描述'.repeat(5),
+      position: [120.79, 30.13],
+    },
+  ],
+};
 
 export default () => {
   const DEFAULT_THEME_COLOR_LIST_DATA = DEFAULT_THEME_COLOR_LIST();
@@ -45,8 +64,9 @@ export default () => {
       },
       options: {
         style: 'normal',
+        zoom: 10,
         tooltip: {
-          ...DEFAULT_TOOLTIP_CONFIG(),
+          ...omit(DEFAULT_TOOLTIP_CONFIG(), ['formatter']),
           animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
           ignore: [],
         },

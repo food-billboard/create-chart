@@ -31,7 +31,7 @@ const commonConfig = {
         serviceHost:'http://47.97.27.23/_AMapService',  
       }
     `,
-    `https://webapi.amap.com/maps?v=1.4.15&key=1605b2f5a0a90cde9c112f5ea32025d3`,
+    `https://webapi.amap.com/maps?v=2.0&key=1605b2f5a0a90cde9c112f5ea32025d3`,
   ],
   locale: {
     default: 'zh-CN',

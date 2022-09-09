@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { Select } from 'antd';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { TAli3DMapConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -53,14 +54,14 @@ const STYLE_OPTIONS = [
   },
 ];
 
-type Value = Pick<TAli3DMapConfig, 'style'>;
+type Value = Pick<TAli3DMapConfig, 'style' | 'zoom'>;
 
 const BaseConfig = (props: {
   value: Value;
   onChange: ComponentData.ComponentConfigProps<TAli3DMapConfig>['onChange'];
 }) => {
   const { value, onChange } = props;
-  const { style } = value;
+  const { style, zoom } = value;
 
   const onKeyChange = useCallback(
     (key: keyof Value, value: any) => {
@@ -85,6 +86,11 @@ const BaseConfig = (props: {
             onChange={onKeyChange.bind(null, 'style')}
             options={STYLE_OPTIONS}
           />
+        </FullForm>
+      </Item>
+      <Item label="初始缩放">
+        <FullForm>
+          <InputNumber value={zoom} onChange={onKeyChange.bind(null, 'zoom')} />
         </FullForm>
       </Item>
     </ConfigList>

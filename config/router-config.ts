@@ -1,5 +1,9 @@
 export default [
   {
+    path: '/test',
+    component: '@/pages/Test',
+  },
+  {
     extra: false,
     path: '/',
     component: '@/layouts/index',
