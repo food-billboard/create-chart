@@ -15,18 +15,20 @@ const DEFAULT_VALUE: any = {
   center: [120.8, 30.14],
   pointer: [
     {
-      image: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
+      image: 'http://tpc.googlesyndication.com/simgad/5843493769827749134',
       title: '这是一串标题',
       subTitle: '这是一串副标题',
       description: '这是一串描述'.repeat(5),
       position: [120.8, 30.14],
+      topTitle: '这是顶部的标题',
     },
     {
-      image: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
+      image: 'http://tpc.googlesyndication.com/simgad/5843493769827749134',
       title: '这是一串标题',
       subTitle: '这是一串副标题',
       description: '这是一串描述'.repeat(5),
-      position: [120.79, 30.13],
+      position: [120.7, 30.1],
+      topTitle: '这是顶部的标题',
     },
   ],
 };

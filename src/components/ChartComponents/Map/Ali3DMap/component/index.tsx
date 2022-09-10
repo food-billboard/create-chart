@@ -44,7 +44,7 @@ const Ali3DMap = (props: {
   } = value;
 
   const { tooltip, condition, scatter, style: mapStyle, zoom } = options;
-  const { animation } = tooltip;
+  const { animation, ignore } = tooltip;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const mapId = useRef<string>(uniqueId(CHART_ID + 'MAP'));
@@ -56,6 +56,7 @@ const Ali3DMap = (props: {
       isCustom: true,
       content: '',
       offset: new AMapFactory.Pixel(16, -45),
+      closeWhenClickMap: true,
     }),
   );
   const tooltipTimer = useRef<any>();
@@ -145,54 +146,119 @@ const Ali3DMap = (props: {
 
   // 关闭弹出框
   const closeInfoWindow = () => {
-    mapInstance.current?.clearInfoWindow();
+    mapInfoWindow.current?.close();
   };
 
   // 创建弹出框
   const createInfoWindow = (markerInfo: any) => {
-    // const { } = markerInfo
-    // var info = document.createElement("div");
-    // info.className = "custom-info input-card content-window-card";
-    // //可以通过下面的方式修改自定义窗体的宽高
-    // info.style.width = "400px";
-    // // 定义顶部标题
-    // var top = document.createElement("div");
-    // var titleD = document.createElement("div");
-    // var closeX = document.createElement("img");
-    // top.className = "info-top";
-    // titleD.innerHTML = title;
-    // closeX.src = "https://webapi.amap.com/images/close2.gif";
-    // closeX.onclick = closeInfoWindow;
-    // top.appendChild(titleD);
-    // top.appendChild(closeX);
-    // info.appendChild(top);
-    // // 定义中部内容
-    // var middle = document.createElement("div");
-    // middle.className = "info-middle";
-    // middle.style.backgroundColor = 'white';
-    // middle.innerHTML = content;
-    // info.appendChild(middle);
-    // // 定义底部内容
-    // var bottom = document.createElement("div");
-    // bottom.className = "info-bottom";
-    // bottom.style.position = 'relative';
-    // bottom.style.top = '0px';
-    // bottom.style.margin = '0 auto';
-    // var sharp = document.createElement("img");
-    // sharp.src = "https://webapi.amap.com/images/sharp.png";
-    // bottom.appendChild(sharp);
-    // info.appendChild(bottom);
-    // return info;
+    const { image, title, subTitle, description, topTitle } = markerInfo;
+    const { textStyle, backgroundColor } = tooltip;
+    const info = document.createElement('div');
+    info.className = classnames(styles['component-map-ali3d-window']);
+    info.innerHTML = `
+      <div
+        class='${styles['component-map-ali3d-window-top']}'
+        style='font-size: ${textStyle.fontSize}px;font-weight: ${
+      textStyle.fontWeight
+    };font-family: ${textStyle.fontFamily};color:${getRgbaString(
+      textStyle.color,
+    )};background-color:${getRgbaString(backgroundColor)}'
+      >
+        <div
+          class='${styles['component-map-ali3d-window-header']}'
+        >
+          <div>
+            ${topTitle}
+          </div>
+          <div
+            class='${classnames(
+              styles['component-map-ali3d-window-close'],
+              'bi',
+              'bi-x',
+              'component-map-ali3d-window-close',
+            )}'
+          >
+          
+          </div>
+        </div>
+        <div
+          class='${styles['component-map-ali3d-window-content']}'
+        >
+          <img
+            src='${image}'
+            class='${classnames(styles['component-map-ali3d-window-image'], {
+              [styles['component-map-ali3d-window-hidden']]:
+                ignore.includes('image'),
+            })}'
+          />
+          <div
+            class='${styles['component-map-ali3d-window-main']}'
+          >
+            <div
+              class='${styles['component-map-ali3d-window-title']}'
+            >
+              ${title}
+            </div>
+            <div
+              class='${classnames(
+                styles['component-map-ali3d-window-sub-title'],
+                {
+                  [styles['component-map-ali3d-window-hidden']]:
+                    ignore.includes('sub-title'),
+                },
+              )}'
+            >
+              ${subTitle}
+            </div>
+            <div
+              class='${classnames(
+                styles['component-map-ali3d-window-description'],
+                {
+                  [styles['component-map-ali3d-window-hidden']]:
+                    ignore.includes('description'),
+                },
+              )}'
+            >
+              ${description}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const closeX = info.querySelector(
+      '.component-map-ali3d-window-close',
+    ) as any;
+    closeX.onclick = closeInfoWindow;
+
+    return info;
   };
 
   // 更新弹出框
   const updateInfoWindow = (markerInfo: any) => {
-    mapInfoWindow.current?.setContent(createInfoWindow(markerInfo));
+    closeInfoWindow();
+    const {
+      position,
+      extData: { image, description, topTitle, title, subTitle },
+    } = markerInfo;
+    mapInfoWindow.current?.setContent(
+      createInfoWindow({
+        image,
+        description,
+        topTitle,
+        title,
+        subTitle,
+      }),
+    );
+    mapInfoWindow.current?.open(mapInstance.current, position);
   };
 
   // 点击标记点
   const onMarkerClick = (markerData: any) => {
-    console.log('点击标记', markerData);
+    tooltipLoopIndex.current = markerData.extData.index;
+    updateInfoWindow(markerData);
+    // TODO
+    // 设置点击项的数据事件
   };
 
   const createMarkerLayer = () => {
@@ -208,8 +274,8 @@ const Ali3DMap = (props: {
       const { position, ...nextInfo } = item;
       const baseData = {
         extData: {
+          ...item,
           index,
-          nextInfo,
         },
         icon: DEFAULT_ICON_STYLE.image,
         // icon: DEFAULT_ICON_STYLE,
@@ -243,7 +309,19 @@ const Ali3DMap = (props: {
     createMarker();
   };
 
-  const tooltipAnimation = () => {};
+  const tooltipAnimation = () => {
+    const { pointer = [] } = realValue;
+    tooltipLoopIndex.current++;
+    tooltipLoopIndex.current %= pointer?.length;
+    const data = pointer[tooltipLoopIndex.current];
+    updateInfoWindow({
+      position: data?.position,
+      extData: {
+        ...(data || {}),
+        index: tooltipLoopIndex.current,
+      },
+    });
+  };
 
   useEffect(() => {
     initChart();
@@ -258,7 +336,8 @@ const Ali3DMap = (props: {
   // 动画轮播弹出框
   useEffect(() => {
     clearInterval(tooltipTimer.current);
-    if (!animation.show) return;
+    if (!animation.show || screenType === 'edit') return;
+    tooltipAnimation();
     tooltipTimer.current = setInterval(tooltipAnimation, animation.speed);
   }, [animation]);
 

@@ -19,7 +19,7 @@ class Config extends Component<
     const { value, onChange } = this.props;
     const {
       config: {
-        options: { tooltip, condition, scatter, style },
+        options: { tooltip, condition, scatter, style, zoom },
       },
     } = value;
 
@@ -30,16 +30,17 @@ class Config extends Component<
             <Base
               value={{
                 style,
+                zoom,
               }}
               onChange={onChange}
             />
           </ConfigList>
         </TabPane>
-        <TabPane key={'2'} tab={<Tab>标记</Tab>}>
+        {/* <TabPane key={'2'} tab={<Tab>标记</Tab>}>
           <ConfigList level={1}>
             <ScatterConfig value={scatter} onChange={onChange} />
           </ConfigList>
-        </TabPane>
+        </TabPane> */}
         <TabPane key={'3'} tab={<Tab>提示文字</Tab>}>
           <ConfigList level={1}>
             <TooltipConfig value={tooltip} onChange={onChange} />

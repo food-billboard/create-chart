@@ -4,3 +4,56 @@
     height: 100%;
   }
 }
+.component-map-ali3d-window {
+  &-hidden {
+    display: none;
+  }
+  &-top {
+    padding: 8px 4px;
+    background-color: white;
+    min-width: 200px;
+  }
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid white;
+    & div:nth-of-type(1) {
+      font-size: 1.5em;
+    }
+  }
+  &-content {
+    display: flex;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  &-title,
+  &-sub-title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 2em;
+  }
+  &-title {
+  }
+  &-close {
+    cursor: pointer;
+    font-size: 2em;
+  }
+  &-sub-title {
+  }
+  &-main {
+    width: 70%;
+    padding: 0 4px;
+    box-sizing: border-box;
+  }
+  &-image {
+    width: 30%;
+    height: auto;
+  }
+  &-description {
+    opacity: 0.8;
+    line-height: 2em;
+  }
+}
