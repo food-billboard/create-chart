@@ -73,6 +73,7 @@ import Tag from '../../../public/components/tag.jpg';
 import Weather from '../../../public/components/weather.png';
 import Audio from '../../../public/components/audio.jpg';
 import Model from '../../../public/components/model.jpg';
+import ALiMap from '../../../public/components/ali-map.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -506,7 +507,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'ALI3D_MAP',
             title: '高德3d地图',
-            icon: ScatterMap,
+            icon: ALiMap,
             description: '',
           },
         ],
