@@ -143,3 +143,19 @@ export function closeWindow() {
     window.close();
   }
 }
+
+// 版本号比较
+export function versionCompare(
+  versionA: string | number,
+  versionB: string | number,
+) {
+  const stringVersionA =
+    typeof versionA === 'number' ? versionA.toString() : versionA;
+  const stringVersionB =
+    typeof versionB === 'number' ? versionB.toString() : versionB;
+  const [topA, subA] = stringVersionA.split('.').map((item) => parseInt(item));
+  const [topB, subB] = stringVersionB.split('.').map((item) => parseInt(item));
+  if (topA > topB) return true;
+  if (topA === topB) return subA >= subB;
+  return false;
+}

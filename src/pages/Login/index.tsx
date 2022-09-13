@@ -8,10 +8,12 @@ import {
   BarcodeOutlined,
 } from '@ant-design/icons';
 import { Input, Row, Col, Button, message, Space } from 'antd';
+import classnames from 'classnames';
 import Icon from '@/components/ChartComponents/Common/Icon';
 import { getCaptcha } from '@/services';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import CommonBackground from './components/Background';
+import styles from './index.less';
 
 const { Password: InputPassword } = Input;
 
@@ -145,7 +147,11 @@ export const Captcha = (props: {
         />
       </Col>
       <Col span={8}>
-        <Button disabled={timing} onClick={onGetCaptcha} className="w-100">
+        <Button
+          disabled={timing}
+          onClick={onGetCaptcha}
+          className={classnames('w-100', styles['component-captcha'])}
+        >
           {timing ? `${count} 秒` : '获取验证码'}
         </Button>
       </Col>

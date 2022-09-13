@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import classnames from 'classnames';
 import { get } from 'lodash';
 import { getComponentStyleInScreenType } from '@/utils/Assist/Component';
+import { versionCompare } from '@/utils';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import ConnectSelectChangeWrapper from '../SelectChangeWrapper';
 import styles from '../../index.less';
@@ -25,7 +26,9 @@ const ChildrenWrapper = (props: {
 
   // * 1.5版本以后设置成中心位置
   const transformOrigin = useMemo(() => {
-    return !version || parseFloat(version) > 1.5 ? 'center center' : 'left top';
+    return !version || versionCompare(parseFloat(version), 1.6)
+      ? 'center center'
+      : 'left top';
   }, [version]);
 
   const realChildren = useMemo(() => {

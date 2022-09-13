@@ -55,7 +55,7 @@ export const ConfigItem = (
     hasBack,
     onBack,
     title = false,
-    version = 'v1.0.0',
+    version = 'v1.0',
     ...nextProps
   } = props;
 
