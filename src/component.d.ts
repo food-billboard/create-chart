@@ -156,7 +156,8 @@ declare namespace ComponentData {
     | 'AUDIO'
     | 'MODEL'
     | 'ALI3D_MAP'
-    | 'PATH_BASIC';
+    | 'PATH_BASIC'
+    | 'QR_CODE';
 
   // 基础组件属性
   export type TBaseConfig = {

@@ -572,6 +572,13 @@ export const COMPONENT_TYPE_LIST = [
             description: '',
             development: true,
           },
+          {
+            type: 'QR_CODE',
+            title: '二维码',
+            icon: Weather,
+            description: '',
+            development: false,
+          },
         ],
       },
     ],
