@@ -9,7 +9,6 @@ import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import TextAlignConfig from '@/components/ChartComponents/Common/TextAlignConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import Input from '@/components/ChartComponents/Common/Input';
 import ConditionConfig from './Condition';
 import { TLoopTextConfig } from '../type';
 

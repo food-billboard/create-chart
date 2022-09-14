@@ -1,6 +1,7 @@
 import { Col } from 'antd';
 import classnames from 'classnames';
 import { useCallback } from 'react';
+import { LockOutlined } from '@ant-design/icons';
 import {
   DragSourceMonitor,
   ConnectDragSource,
@@ -23,6 +24,7 @@ export type ComponentItemProps = ComponentData.BaseComponentItem & {
   type: string;
   icon: string;
   title: string;
+  development?: boolean;
   isDragging: boolean;
   connectDragSource: ConnectDragSource;
   connectDragPreview: ConnectDragPreview;
@@ -36,6 +38,7 @@ const ComponentItem = (props: ComponentItemProps) => {
     title,
     description,
     type,
+    development,
     connectDragSource,
     connectDragPreview,
     setSelect,
@@ -72,6 +75,9 @@ const ComponentItem = (props: ComponentItemProps) => {
         className={classnames(
           styles['design-left-component-list-item'],
           'ali-cen',
+          {
+            [styles['design-left-component-list-item-disabled']]: !!development,
+          },
         )}
         ref={connectDragSource}
         role={DRAG_TYPE}
@@ -86,6 +92,16 @@ const ComponentItem = (props: ComponentItemProps) => {
         <div className="ali-cen text-ellipsis" title={title}>
           {title}
         </div>
+        {!!development && (
+          <div
+            className={
+              styles['design-left-component-list-item-disabled-prefix']
+            }
+          >
+            <LockOutlined />
+            <span>组件开发中</span>
+          </div>
+        )}
       </Col>
     </>
   );
@@ -98,9 +114,18 @@ const dragSource = DragSource(
       props.setDragInfo?.({
         value: pick(props, ['icon', 'title', 'description', 'type']),
       });
-      return pick(props, ['icon', 'title', 'description', 'type']);
+      return pick(props, [
+        'icon',
+        'title',
+        'description',
+        'type',
+        'development',
+      ]);
     },
     endDrag(props: ComponentItemProps, monitor: DragSourceMonitor) {},
+    canDrag: (props) => {
+      return !props.development;
+    },
   },
   (connect: DragSourceConnector, monitor: DragSourceMonitor) => {
     return {

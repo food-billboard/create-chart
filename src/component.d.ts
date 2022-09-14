@@ -155,7 +155,8 @@ declare namespace ComponentData {
     | 'WEATHER'
     | 'AUDIO'
     | 'MODEL'
-    | 'ALI3D_MAP';
+    | 'ALI3D_MAP'
+    | 'PATH_BASIC';
 
   // 基础组件属性
   export type TBaseConfig = {

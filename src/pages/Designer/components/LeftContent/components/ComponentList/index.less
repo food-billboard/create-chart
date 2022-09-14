@@ -24,9 +24,14 @@
       background-color: @component-background !important;
     }
   }
+  &-item&-disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
   &-item {
     cursor: pointer;
     font-size: 13px;
+    position: relative;
     & div:nth-of-type(2) {
       line-height: 2;
     }
@@ -41,6 +46,23 @@
       transition: transform 0.1s;
       &:hover {
         transform: scale(1.1);
+      }
+    }
+    &-disabled-prefix {
+      position: absolute;
+      z-index: 2;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: not-allowed;
+      flex-direction: column;
+      & > span {
+        font-weight: bold;
       }
     }
   }

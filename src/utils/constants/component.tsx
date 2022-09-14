@@ -565,6 +565,13 @@ export const COMPONENT_TYPE_LIST = [
             icon: Weather,
             description: '',
           },
+          {
+            type: 'PATH_BASIC',
+            title: '自定义路径',
+            icon: Weather,
+            description: '',
+            development: true,
+          },
         ],
       },
     ],
