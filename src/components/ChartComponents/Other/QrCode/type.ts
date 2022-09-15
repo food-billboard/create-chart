@@ -7,11 +7,12 @@ export type TQrCodeConfig = {
       height: number;
     };
     borderRadius: number;
-    backgroundColor: ComponentData.TColorConfig;
     border: ComponentData.ComponentLineGroupConfig;
   };
   base: {
     backgroundColor: ComponentData.TColorConfig;
+    codeColor: ComponentData.TColorConfig;
+    margin: number;
   };
   condition: ComponentData.ComponentConditionConfig;
 };

@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import { Tabs } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
+import IconTooltip from '@/components/IconTooltip';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
@@ -42,6 +44,25 @@ class Config extends Component<
       <ComponentOptionConfig>
         <TabPane key={'1'} tab={<Tab>全局样式</Tab>}>
           <ConfigList level={1}>
+            <Item
+              label="二维码颜色"
+              placeholder={
+                <IconTooltip title="颜色需要比背景颜色深">
+                  <InfoCircleOutlined />
+                </IconTooltip>
+              }
+            >
+              <FullForm>
+                <CompatColorSelect
+                  value={base.codeColor}
+                  onChange={(value) => {
+                    this.onKeyChange('base', {
+                      codeColor: value,
+                    });
+                  }}
+                />
+              </FullForm>
+            </Item>
             <Item label="背景颜色">
               <FullForm>
                 <CompatColorSelect
@@ -49,6 +70,18 @@ class Config extends Component<
                   onChange={(value) => {
                     this.onKeyChange('base', {
                       backgroundColor: value,
+                    });
+                  }}
+                />
+              </FullForm>
+            </Item>
+            <Item label="外边距">
+              <FullForm>
+                <InputNumber
+                  value={base.margin}
+                  onChange={(value) => {
+                    this.onKeyChange('base', {
+                      margin: value,
                     });
                   }}
                 />
@@ -82,7 +115,14 @@ class Config extends Component<
                   />
                 </FullForm>
               </Item>
-              <Item label="图片尺寸">
+              <Item
+                label="图片尺寸"
+                placeholder={
+                  <IconTooltip title="尺寸过大可能会影响扫码">
+                    <InfoCircleOutlined />
+                  </IconTooltip>
+                }
+              >
                 <HalfForm label="宽度">
                   <InputNumber
                     value={logo.size.width}
@@ -115,18 +155,6 @@ class Config extends Component<
                     onChange={(value) => {
                       this.onKeyChange('logo', {
                         borderRadius: value,
-                      });
-                    }}
-                  />
-                </FullForm>
-              </Item>
-              <Item label="背景颜色">
-                <FullForm>
-                  <CompatColorSelect
-                    value={logo.backgroundColor}
-                    onChange={(value) => {
-                      this.onKeyChange('logo', {
-                        backgroundColor: value,
                       });
                     }}
                   />

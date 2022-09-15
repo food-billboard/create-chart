@@ -1,7 +1,9 @@
-import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react';
+import { CSSProperties, useMemo, useRef, useState } from 'react';
 import { merge, uniqueId } from 'lodash';
 import classnames from 'classnames';
 import QRCode from 'qrcode';
+import type { QRCodeRenderersOptions } from 'qrcode';
+import { useDeepCompareEffect } from 'ahooks';
 import {
   useComponent,
   useCondition,
@@ -15,7 +17,7 @@ import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TQrCodeConfig } from '../type';
 import styles from './index.less';
 
-const { getRgbaString } = ColorSelect;
+const { getRgbaString, getHexString } = ColorSelect;
 
 const CHART_ID = 'QR_CODE';
 
@@ -68,7 +70,7 @@ const QrCode = (props: {
   }, [processedValue, componentFilterMap]);
 
   const logoDom = useMemo(() => {
-    const { show, size, image, borderRadius, backgroundColor, border } = logo;
+    const { show, size, image, borderRadius, border } = logo;
     if (!show || !image) return null;
     return (
       <img
@@ -79,7 +81,6 @@ const QrCode = (props: {
           border: `${border.width}px ${border.type} ${getRgbaString(
             border.color,
           )}`,
-          backgroundColor: getRgbaString(backgroundColor),
           width: size.width,
           height: size.height,
         }}
@@ -87,9 +88,12 @@ const QrCode = (props: {
     );
   }, [logo]);
 
-  const generateQrCode = async (url: string) => {
+  const generateQrCode = async (
+    url: string,
+    options: Partial<QRCodeRenderersOptions>,
+  ) => {
     return new Promise<string>((resolve, reject) => {
-      QRCode.toDataURL(url, {}, (error, url) => {
+      QRCode.toDataURL(url, options, (error, url) => {
         if (error) {
           reject(error);
         } else {
@@ -118,9 +122,15 @@ const QrCode = (props: {
     return merge(style, conditionStyle);
   }, [style, conditionStyle]);
 
-  useEffect(() => {
-    generateQrCode(finalValue.value);
-  }, [finalValue.value]);
+  useDeepCompareEffect(() => {
+    generateQrCode(finalValue.value, {
+      margin: base.margin,
+      color: {
+        light: getHexString(base.backgroundColor),
+        dark: getHexString(base.codeColor),
+      },
+    });
+  }, [finalValue.value, base]);
 
   return (
     <>

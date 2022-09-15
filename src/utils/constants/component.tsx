@@ -74,6 +74,7 @@ import Weather from '../../../public/components/weather.png';
 import Audio from '../../../public/components/audio.jpg';
 import Model from '../../../public/components/model.jpg';
 import ALiMap from '../../../public/components/ali-map.jpg';
+import QrCode from '../../../public/components/qrcode.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -575,7 +576,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'QR_CODE',
             title: '二维码',
-            icon: Weather,
+            icon: QrCode,
             description: '',
             development: false,
           },

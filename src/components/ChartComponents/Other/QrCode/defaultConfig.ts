@@ -1,4 +1,5 @@
 import { mergeWithoutArray } from '@/utils';
+import ThemeUtil from '@/utils/Assist/Theme';
 import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
@@ -51,6 +52,8 @@ export default () => {
           g: 255,
           b: 255,
         },
+        codeColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+        margin: 4,
       },
       logo: {
         show: true,
@@ -60,13 +63,8 @@ export default () => {
           height: 50,
         },
         borderRadius: 8,
-        backgroundColor: {
-          r: 255,
-          g: 255,
-          b: 255,
-        },
         border: {
-          width: 4,
+          width: 1,
           color: {
             r: 255,
             g: 255,
