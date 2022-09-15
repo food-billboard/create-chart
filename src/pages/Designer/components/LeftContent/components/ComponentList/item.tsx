@@ -1,4 +1,4 @@
-import { Col } from 'antd';
+import { Col, Tooltip } from 'antd';
 import classnames from 'classnames';
 import { useCallback } from 'react';
 import { LockOutlined } from '@ant-design/icons';
@@ -83,12 +83,22 @@ const ComponentItem = (props: ComponentItemProps) => {
         role={DRAG_TYPE}
         onClick={handleSelect}
       >
-        <div
-          title={title}
-          style={{
-            backgroundImage: `url(${icon})`,
-          }}
-        ></div>
+        <Tooltip
+          title={
+            <div className={styles['design-left-component-list-item-preview']}>
+              <img src={icon} />
+            </div>
+          }
+          mouseEnterDelay={1}
+          placement={'left'}
+        >
+          <div
+            title={title}
+            style={{
+              backgroundImage: `url(${icon})`,
+            }}
+          ></div>
+        </Tooltip>
         <div className="ali-cen text-ellipsis" title={title}>
           {title}
         </div>
