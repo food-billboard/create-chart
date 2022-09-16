@@ -4,6 +4,7 @@ import FocusWrapper from '@/components/FocusWrapper';
 import ToolBar from './components/ToolBar';
 import ComponentTypeList from './components/ComponentTypeList';
 import LayerManage, { LayerManageRef } from './components/LayerManage';
+import ComponentSearchList from './components/ComponentList/SearchList';
 import styles from './index.less';
 import ComponentTypeListStyles from './components/ComponentTypeList/index.less';
 
@@ -32,8 +33,10 @@ const LeftContent = () => {
           'p-lr-24',
           'dis-flex',
           'w-100',
+          'pos-re',
           styles['design-page-left-content'],
         )}
+        id="design-page-left-content"
       >
         <ToolBar onClick={handleClick} />
         <LayerManage ref={layerRef} onClose={handleClose} />
@@ -46,6 +49,7 @@ const LeftContent = () => {
               : ''
           }
         />
+        <ComponentSearchList />
       </div>
     </FocusWrapper>
   );

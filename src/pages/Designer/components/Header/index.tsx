@@ -10,6 +10,7 @@ import { isModelHash } from '@/hooks';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { saveScreenData } from '@/utils/Assist/DataChangePool';
 import { mapDispatchToProps, mapStateToProps } from './connect';
+import ActionList from './ActionList';
 import styles from './index.less';
 
 const Header = (props: {
@@ -119,7 +120,9 @@ const Header = (props: {
         title={Title}
         extra={extra}
         backIcon={false}
-      ></PageHeader>
+      >
+        <ActionList />
+      </PageHeader>
     </FocusWrapper>
   );
 };

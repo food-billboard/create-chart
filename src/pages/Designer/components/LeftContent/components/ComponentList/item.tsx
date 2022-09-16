@@ -1,6 +1,6 @@
 import { Col, Tooltip } from 'antd';
 import classnames from 'classnames';
-import { useCallback } from 'react';
+import { useCallback, ReactNode } from 'react';
 import { LockOutlined } from '@ant-design/icons';
 import {
   DragSourceMonitor,
@@ -26,6 +26,9 @@ export type ComponentItemProps = ComponentData.BaseComponentItem & {
   title: string;
   development?: boolean;
   isDragging: boolean;
+  prefix?: ReactNode;
+  suffix?: ReactNode;
+  tooltip?: boolean;
   connectDragSource: ConnectDragSource;
   connectDragPreview: ConnectDragPreview;
   setDragInfo?: (value: Partial<DragData>) => void;
@@ -42,6 +45,9 @@ const ComponentItem = (props: ComponentItemProps) => {
     connectDragSource,
     connectDragPreview,
     setSelect,
+    suffix,
+    prefix,
+    tooltip = true,
   } = props;
 
   const handleSelect = useCallback(() => {
@@ -91,17 +97,27 @@ const ComponentItem = (props: ComponentItemProps) => {
           }
           mouseEnterDelay={1}
           placement={'left'}
+          {...(!!tooltip ? {} : { visible: false })}
         >
+          {prefix}
           <div
             title={title}
             style={{
               backgroundImage: `url(${icon})`,
             }}
+            className={styles['design-left-component-list-item-icon']}
           ></div>
         </Tooltip>
-        <div className="ali-cen text-ellipsis" title={title}>
+        <div
+          className={classnames(
+            'ali-cen text-ellipsis',
+            styles['design-left-component-list-item-title'],
+          )}
+          title={title}
+        >
           {title}
         </div>
+        {suffix}
         {!!development && (
           <div
             className={
@@ -130,6 +146,9 @@ const dragSource = DragSource(
         'description',
         'type',
         'development',
+        'prefix',
+        'suffix',
+        'tooltip',
       ]);
     },
     endDrag(props: ComponentItemProps, monitor: DragSourceMonitor) {},
