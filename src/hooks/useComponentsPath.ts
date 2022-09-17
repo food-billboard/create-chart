@@ -1,6 +1,9 @@
 import { useMemo, useState, useEffect, useRef } from 'react';
 import { useThrottleFn, useDeepCompareEffect } from 'ahooks';
+import { EventEmitter } from 'eventemitter3';
 import { useLayerHover } from './useLayerHover';
+
+export const ID_PATH_MAP_EVENT_EMITTER = new EventEmitter();
 
 let ID_PATH_MAP: {
   [key: string]: {
@@ -105,6 +108,8 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
   ID_PATH_MAP = {
     ...componentPathMap,
   };
+
+  ID_PATH_MAP_EVENT_EMITTER.emit('change', ID_PATH_MAP);
 
   return result;
 }

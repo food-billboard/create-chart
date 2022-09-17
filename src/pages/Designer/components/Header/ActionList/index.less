@@ -5,3 +5,25 @@
 .design-header-action-component-search {
   font-size: 16px;
 }
+.design-header-action-layer-search {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  :global {
+    .ant-select {
+      width: 0;
+      opacity: 0;
+      transition-property: width, opacity;
+      transition-duration: 0.5s, 0.2s;
+      font-size: 12px;
+    }
+  }
+}
+.design-header-action-layer-search-active {
+  :global {
+    .ant-select {
+      width: 150px;
+      opacity: 1;
+    }
+  }
+}
