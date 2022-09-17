@@ -4,6 +4,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { connect } from 'dva';
 import { history } from 'umi';
+import { useUnmount } from 'ahooks';
 import { useHashChangeReload, isModelHash } from '@/hooks';
 import FetchScreenComponent, {
   FetchScreenComponentRef,
@@ -42,6 +43,31 @@ const COMMON_MODAL_PROPS = {
   },
 };
 
+let closeAction: Function | undefined = undefined;
+
+export const useSingleModal: () => [
+  (openModal: any, update?: boolean) => void,
+  () => void,
+] = () => {
+  const handleModal = useCallback((openModal, update: boolean = true) => {
+    if (closeAction) {
+      if (update) {
+        closeAction?.();
+        closeAction = openModal();
+      }
+    } else {
+      closeAction = openModal();
+    }
+  }, []);
+
+  const handleClose = useCallback(() => {
+    closeAction?.();
+    closeAction = undefined;
+  }, []);
+
+  return [handleModal, handleClose];
+};
+
 const Designer = (props: {
   setScreenType: (value: ComponentData.ScreenType) => void;
   getMockValueKindMap: () => Promise<any>;
@@ -53,31 +79,36 @@ const Designer = (props: {
   const requestRef = useRef<FetchScreenComponentRef>(null);
   const heartValidTimerRef = useRef<any>();
 
+  const [handleModal, closeModal] = useSingleModal();
+
   const preventDefaultContextMenu = (e: any) => {
     e.preventDefault();
     return false;
   };
 
   const errorPrompt = useCallback(() => {
-    Modal.error({
-      ...COMMON_MODAL_PROPS,
-    });
-  }, []);
+    handleModal(Modal.error.bind(null, { ...COMMON_MODAL_PROPS }));
+  }, [handleModal]);
 
-  const fetchHeartValid = useCallback(async (id: string) => {
-    try {
-      const result = await putScreenPoolValid({ _id: id });
-      if (!result) {
-        clearInterval(heartValidTimerRef.current);
-        Modal.confirm({
-          ...COMMON_MODAL_PROPS,
-          content: '长时间未操作！',
-        });
+  const fetchHeartValid = useCallback(
+    async (id: string) => {
+      try {
+        const result = await putScreenPoolValid({ _id: id });
+        if (!result) {
+          clearInterval(heartValidTimerRef.current);
+          handleModal(
+            Modal.confirm.bind(null, {
+              ...COMMON_MODAL_PROPS,
+              content: '长时间未操作！',
+            }),
+          );
+        }
+      } catch (err) {
+        errorPrompt();
       }
-    } catch (err) {
-      errorPrompt();
-    }
-  }, []);
+    },
+    [handleModal],
+  );
 
   const onLoad = useCallback(async () => {
     setLoading(false);
@@ -154,6 +185,10 @@ const Designer = (props: {
       );
     };
   }, []);
+
+  useUnmount(() => {
+    closeModal();
+  });
 
   return (
     <ConfigProvider componentSize="small">
