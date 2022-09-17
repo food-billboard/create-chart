@@ -82,7 +82,8 @@ const InternalComponentActiveItem = (props: {
     if (!isActive) return null;
     const idPathMap = useIdPathMap();
     return select.reduce<any>((acc, cur) => {
-      const path = idPathMap[cur].path;
+      const path = idPathMap[cur]?.path;
+      if (!path) return acc;
       const component = get(components, path);
       if (component) {
         const {
