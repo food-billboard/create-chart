@@ -21,12 +21,18 @@ export type TPathBasicConfig = {
     type: 'to' | 'from' | 'to-from' | 'from-to';
     opacity: 'none' | '0-1' | '1-0' | '0-1-0' | '1-0-1';
     autoRotate: boolean;
-    moveType: 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out';
+    moveType:
+      | 'linear'
+      | 'easeInQuad'
+      | 'easeInSine'
+      | 'easeOutSine'
+      | 'easeInOutCubic';
     speed: number;
   };
   path: {
     show: boolean;
     line: 'dashed' | 'solid';
+    dashedValue: string;
     width: number;
     color: ComponentData.TColorConfig;
   };

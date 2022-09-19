@@ -52,7 +52,7 @@ export const useSingleModal: () => [
   const handleModal = useCallback((openModal, update: boolean = true) => {
     if (closeAction) {
       if (update) {
-        closeAction?.();
+        typeof closeAction === 'function' && closeAction?.();
         closeAction = openModal();
       }
     } else {
@@ -61,7 +61,7 @@ export const useSingleModal: () => [
   }, []);
 
   const handleClose = useCallback(() => {
-    closeAction?.();
+    typeof closeAction === 'function' && closeAction?.();
     closeAction = undefined;
   }, []);
 

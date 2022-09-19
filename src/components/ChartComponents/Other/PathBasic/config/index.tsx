@@ -1,13 +1,17 @@
 import { Component } from 'react';
 import { Tabs, Switch, Select } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import LocalUpload from '@/components/ChartComponents/Common/LocalUpload';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { CompatColorSelect } from '@/components/ColorSelect';
+import IconTooltip from '@/components/IconTooltip';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import Input from '@/components/ChartComponents/Common/Input';
 import ConditionConfig from './Condition';
 import { TPathBasicConfig } from '../type';
 
@@ -17,6 +21,16 @@ const { Item } = ConfigList;
 class Config extends Component<
   ComponentData.ComponentConfigProps<TPathBasicConfig>
 > {
+  onKeyChange = (key: keyof TPathBasicConfig, value: any) => {
+    this.props.onChange({
+      config: {
+        options: {
+          [key]: value,
+        },
+      },
+    });
+  };
+
   render() {
     const { value, onChange } = this.props;
     const {
@@ -31,7 +45,10 @@ class Config extends Component<
           <ConfigList level={1}>
             <Item label="闭合">
               <FullForm>
-                <Switch checked={close} />
+                <Switch
+                  checked={close}
+                  onChange={this.onKeyChange.bind(this, 'close')}
+                />
               </FullForm>
             </Item>
             <Item label="运动物体">
@@ -39,6 +56,11 @@ class Config extends Component<
                 <Select
                   className="w-100"
                   value={target.type}
+                  onChange={(value) =>
+                    this.onKeyChange('target', {
+                      type: value,
+                    })
+                  }
                   options={[
                     {
                       label: '方形',
@@ -60,12 +82,30 @@ class Config extends Component<
               <>
                 <Item label="半径">
                   <FullForm>
-                    <InputNumber value={target.circle.radius} />
+                    <InputNumber
+                      value={target.circle.radius}
+                      onChange={(value) =>
+                        this.onKeyChange('target', {
+                          circle: {
+                            radius: value,
+                          },
+                        })
+                      }
+                    />
                   </FullForm>
                 </Item>
                 <Item label="填充色">
                   <FullForm>
-                    <CompatColorSelect value={target.circle.color} />
+                    <CompatColorSelect
+                      value={target.circle.color}
+                      onChange={(value) =>
+                        this.onKeyChange('target', {
+                          circle: {
+                            color: value,
+                          },
+                        })
+                      }
+                    />
                   </FullForm>
                 </Item>
               </>
@@ -74,17 +114,44 @@ class Config extends Component<
               <>
                 <Item label="长">
                   <FullForm>
-                    <InputNumber value={target.rect.width} />
+                    <InputNumber
+                      value={target.rect.width}
+                      onChange={(value) =>
+                        this.onKeyChange('target', {
+                          rect: {
+                            width: value,
+                          },
+                        })
+                      }
+                    />
                   </FullForm>
                 </Item>
                 <Item label="宽">
                   <FullForm>
-                    <InputNumber value={target.rect.height} />
+                    <InputNumber
+                      value={target.rect.height}
+                      onChange={(value) =>
+                        this.onKeyChange('target', {
+                          rect: {
+                            height: value,
+                          },
+                        })
+                      }
+                    />
                   </FullForm>
                 </Item>
                 <Item label="填充色">
                   <FullForm>
-                    <CompatColorSelect value={target.rect.color} />
+                    <CompatColorSelect
+                      value={target.rect.color}
+                      onChange={(value) =>
+                        this.onKeyChange('target', {
+                          rect: {
+                            color: value,
+                          },
+                        })
+                      }
+                    />
                   </FullForm>
                 </Item>
               </>
@@ -92,16 +159,45 @@ class Config extends Component<
             {target.type === 'custom' && (
               <>
                 <Item label="图片">
-                  <FullForm>图片上传</FullForm>
+                  <FullForm>
+                    <LocalUpload
+                      value={target.custom.value}
+                      onChange={(value) => {
+                        this.onKeyChange('target', {
+                          custom: {
+                            value,
+                          },
+                        });
+                      }}
+                    />
+                  </FullForm>
                 </Item>
                 <Item label="长">
                   <FullForm>
-                    <InputNumber value={target.custom.width} />
+                    <InputNumber
+                      value={target.custom.width}
+                      onChange={(value) =>
+                        this.onKeyChange('target', {
+                          custom: {
+                            width: value,
+                          },
+                        })
+                      }
+                    />
                   </FullForm>
                 </Item>
                 <Item label="宽">
                   <FullForm>
-                    <InputNumber value={target.custom.height} />
+                    <InputNumber
+                      value={target.custom.height}
+                      onChange={(value) =>
+                        this.onKeyChange('target', {
+                          custom: {
+                            height: value,
+                          },
+                        })
+                      }
+                    />
                   </FullForm>
                 </Item>
               </>
@@ -111,6 +207,11 @@ class Config extends Component<
                 <Select
                   className="w-100"
                   value={animation.type}
+                  onChange={(value) =>
+                    this.onKeyChange('animation', {
+                      type: value,
+                    })
+                  }
                   options={[
                     {
                       label: '单向运动',
@@ -134,12 +235,26 @@ class Config extends Component<
             </Item>
             <Item label="动画时间">
               <FullForm>
-                <InputNumber value={animation.speed} />
+                <InputNumber
+                  value={animation.speed}
+                  onChange={(value) =>
+                    this.onKeyChange('animation', {
+                      speed: value,
+                    })
+                  }
+                />
               </FullForm>
             </Item>
             <Item label="自动旋转">
               <FullForm>
-                <Switch checked={animation.autoRotate} />
+                <Switch
+                  checked={animation.autoRotate}
+                  onChange={(value) =>
+                    this.onKeyChange('animation', {
+                      autoRotate: value,
+                    })
+                  }
+                />
               </FullForm>
             </Item>
             <Item label="速度曲线">
@@ -147,6 +262,11 @@ class Config extends Component<
                 <Select
                   className="w-100"
                   value={animation.moveType}
+                  onChange={(value) =>
+                    this.onKeyChange('animation', {
+                      moveType: value,
+                    })
+                  }
                   options={[
                     {
                       label: '匀速',
@@ -154,19 +274,19 @@ class Config extends Component<
                     },
                     {
                       label: '低速开始和结束',
-                      value: 'ease-in-out',
+                      value: 'easeInOutCubic',
                     },
                     {
                       label: '低速开始',
-                      value: 'ease-in',
+                      value: 'easeInSine',
                     },
                     {
                       label: '低速结束',
-                      value: 'ease-out',
+                      value: 'easeOutSine',
                     },
                     {
                       label: '先加速后减速',
-                      value: 'ease',
+                      value: 'easeInQuad',
                     },
                   ]}
                 />
@@ -177,6 +297,11 @@ class Config extends Component<
                 <Select
                   className="w-100"
                   value={animation.opacity}
+                  onChange={(value) =>
+                    this.onKeyChange('animation', {
+                      opacity: value,
+                    })
+                  }
                   options={[
                     {
                       label: '无',
@@ -208,7 +333,11 @@ class Config extends Component<
                 key: 'path',
                 visibleRender: true,
                 value: path.show,
-                onChange: (value) => {},
+                onChange: (value) => {
+                  this.onKeyChange('path', {
+                    show: value,
+                  });
+                },
               }}
             >
               <Item label="路径形式">
@@ -216,6 +345,11 @@ class Config extends Component<
                   <Select
                     className="w-100"
                     value={path.line}
+                    onChange={(value) =>
+                      this.onKeyChange('path', {
+                        line: value,
+                      })
+                    }
                     options={[
                       {
                         label: '实线',
@@ -229,14 +363,61 @@ class Config extends Component<
                   />
                 </FullForm>
               </Item>
+              {path.line === 'dashed' && (
+                <Item
+                  label="虚线尺寸"
+                  placeholder={
+                    <IconTooltip
+                      title={
+                        <>
+                          详细写法查看：
+                          <a
+                            target="_blank"
+                            href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/stroke-dasharray"
+                          >
+                            这里
+                          </a>
+                        </>
+                      }
+                    >
+                      <InfoCircleOutlined />
+                    </IconTooltip>
+                  }
+                >
+                  <FullForm>
+                    <Input
+                      value={path.dashedValue}
+                      onChange={(value) =>
+                        this.onKeyChange('path', {
+                          dashedValue: value,
+                        })
+                      }
+                    />
+                  </FullForm>
+                </Item>
+              )}
               <Item label="宽度">
                 <FullForm>
-                  <InputNumber value={path.width} />
+                  <InputNumber
+                    value={path.width}
+                    onChange={(value) =>
+                      this.onKeyChange('path', {
+                        width: value,
+                      })
+                    }
+                  />
                 </FullForm>
               </Item>
               <Item label="颜色">
                 <FullForm>
-                  <CompatColorSelect value={path.color} />
+                  <CompatColorSelect
+                    value={path.color}
+                    onChange={(value) =>
+                      this.onKeyChange('path', {
+                        color: value,
+                      })
+                    }
+                  />
                 </FullForm>
               </Item>
             </Collapse>

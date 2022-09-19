@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import ConditionConfigCommon from '@/components/ChartComponents/Common/ConditionConfig';
-import { TBarBasicConfig } from '../type';
+import { TPathBasicConfig } from '../type';
 
 const ConditionConfig = (props: {
-  value: TBarBasicConfig['condition'];
-  onChange: ComponentData.ComponentConfigProps<TBarBasicConfig>['onChange'];
+  value: TPathBasicConfig['condition'];
+  onChange: ComponentData.ComponentConfigProps<TPathBasicConfig>['onChange'];
 }) => {
   const { value, onChange } = props;
 

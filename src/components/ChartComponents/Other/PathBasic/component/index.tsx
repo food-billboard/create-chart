@@ -1,7 +1,9 @@
-import { CSSProperties, useEffect, useRef, useMemo } from 'react';
+import { CSSProperties, useCallback, useRef, useMemo } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import { useDeepUpdateEffect } from '@/hooks';
+import Anime from 'animejs';
+import { useDeepCompareEffect } from 'ahooks';
+import { connect } from 'dva';
 import {
   useComponent,
   useCondition,
@@ -12,31 +14,40 @@ import FilterDataUtil from '@/utils/Assist/FilterData';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
+import { ConnectState } from '@/models/connect';
+import { sleep } from '@/utils';
 import { TPathBasicConfig } from '../type';
+import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'PATH_BASIC';
 
-const PathBasic = (props: {
+const _PathBasic = (props: {
   className?: string;
   style?: CSSProperties;
   value: ComponentData.TComponentData<TPathBasicConfig>;
   global: ComponentProps['global'];
+  scale: number;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, scale } = props;
   const { screenTheme, screenType } = global;
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { width, height },
+    },
   } = value;
 
   const { animation, condition, path, target, close } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const chartInstance = useRef<echarts.ECharts>();
+  const chartInstance = useRef<Anime.AnimeInstance>();
   const requestRef = useRef<TFetchFragmentRef>(null);
+  const svgId = useRef<string>(uniqueId(CHART_ID + '_svg'));
+  const shapeId = useRef<string>(uniqueId(CHART_ID + '_shape'));
 
   const {
     request,
@@ -66,29 +77,165 @@ const PathBasic = (props: {
     });
   }, [processedValue, componentFilterMap]);
 
-  const initChart = () => {};
+  const shape = useMemo(() => {
+    const { type, circle, custom, rect } = target;
+    if (type === 'circle') {
+      const { radius, color } = circle;
+      return (
+        <div
+          className={styles['component-other-path-basic-shape']}
+          id={shapeId.current}
+          style={{
+            borderRadius: '50%',
+            backgroundColor: getRgbaString(color),
+            width: radius,
+            height: radius,
+          }}
+        />
+      );
+    } else if (type === 'rect') {
+      const { width, height, color } = rect;
+      return (
+        <div
+          className={styles['component-other-path-basic-shape']}
+          id={shapeId.current}
+          style={{
+            backgroundColor: getRgbaString(color),
+            width,
+            height,
+          }}
+        />
+      );
+    } else {
+      const { width, height, value } = custom;
+      return (
+        <div
+          className={styles['component-other-path-basic-shape']}
+          id={shapeId.current}
+          style={{
+            backgroundImage: `url(${value})`,
+            backgroundSize: '100% 100%',
+            backgroundRepeat: 'no-repeat',
+            width,
+            height,
+          }}
+        />
+      );
+    }
+  }, [target]);
 
-  const setOption = () => {};
+  const getOpacity = useCallback((opacity: typeof animation['opacity']) => {
+    if (opacity === 'none') return 1;
+    return opacity.split('-').map((item) => parseInt(item));
+  }, []);
 
-  useEffect(() => {
-    initChart();
-    return () => {};
-  }, [screenTheme]);
+  const getLoop = useCallback(
+    (
+      loop: typeof animation['type'],
+      moveType: typeof animation['moveType'],
+    ) => {
+      if (loop === 'to' || loop === 'from') {
+        const base = {
+          loop: true,
+        };
+        if (loop === 'to') {
+          return {
+            ...base,
+            direction: 'normal',
+          };
+        }
+        return {
+          ...base,
+          direction: 'reverse',
+        };
+      } else if (loop === 'to-from') {
+        return {
+          loop: true,
+          direction: 'alternate',
+        };
+      } else if (loop === 'from-to') {
+        const base = {
+          loop: true,
+          direction: 'alternate',
+        };
+        switch (moveType) {
+          case 'linear':
+            return base;
+          case 'easeInSine':
+            return {
+              ...base,
+              easing: 'easeOutSine',
+            };
+          case 'easeOutSine':
+            return {
+              ...base,
+              easing: 'easeInSine',
+            };
+          case 'easeInOutCubic':
+            return {
+              ...base,
+              easing: 'cubicBezier(0.35, 0, 0.65, 1)',
+            };
+          case 'easeInQuad':
+            return {
+              ...base,
+              easing: 'cubicBezier(0.5, 0, 0.11, 0)',
+            };
+        }
+      }
+      return {
+        loop: true,
+        direction: 'alternate',
+      };
+    },
+    [],
+  );
+
+  const setOption = async () => {
+    await sleep(1000);
+
+    chartInstance.current && Anime.remove(chartInstance.current);
+
+    const { type, opacity, autoRotate, moveType, speed } = animation;
+
+    const pathData = Anime.path(`#${svgId.current} path`);
+    chartInstance.current = Anime({
+      targets: `#${shapeId.current}`,
+      opacity: getOpacity(opacity),
+      duration: speed,
+      easing: moveType,
+      translateX: [pathData('x')],
+      translateY: [pathData('y')],
+      ...getLoop(type, moveType),
+      ...(autoRotate ? { rotate: pathData('angle') } : { rotate: [0, 0] }),
+    });
+
+    if (type === 'from-to') {
+      chartInstance.current.seek(speed);
+    }
+  };
 
   // 数据发生变化时
-  useDeepUpdateEffect(() => {
+  useDeepCompareEffect(() => {
     setOption();
-  }, [processedValue, finalValue.value]);
-
-  // 配置发生变化时
-  useDeepUpdateEffect(() => {
-    setOption();
-  }, [options]);
+  }, [
+    processedValue,
+    finalValue.value,
+    screenTheme,
+    width,
+    height,
+    scale,
+    animation,
+  ]);
 
   return (
     <>
       <div
-        className={classnames(className, conditionClassName)}
+        className={classnames(
+          className,
+          styles['component-other-path-basic'],
+          conditionClassName,
+        )}
         style={merge(
           {
             width: '100%',
@@ -98,7 +245,25 @@ const PathBasic = (props: {
           conditionStyle,
         )}
         id={chartId.current}
-      ></div>
+      >
+        {shape}
+        <svg id={svgId.current} width={width} height={height}>
+          <path
+            fill="none"
+            d={`${finalValue.value} ${
+              finalValue.value.trim().toUpperCase().endsWith('Z') || !close
+                ? ''
+                : 'Z'
+            }`}
+            stroke={getRgbaString(path.color)}
+            strokeOpacity={path.show ? 1 : 0}
+            strokeWidth={path.width}
+            {...(path.line === 'dashed'
+              ? { strokeDasharray: path.dashedValue }
+              : {})}
+          ></path>
+        </svg>
+      </div>
       <FetchFragment
         id={id}
         url={requestUrl}
@@ -112,6 +277,15 @@ const PathBasic = (props: {
     </>
   );
 };
+
+const PathBasic = connect(
+  (state: ConnectState) => {
+    return {
+      scale: state.global.scale,
+    };
+  },
+  () => ({}),
+)(_PathBasic);
 
 const WrapperPathBasic: typeof PathBasic & {
   id: ComponentData.TComponentSelfType;
