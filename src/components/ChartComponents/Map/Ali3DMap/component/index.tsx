@@ -24,7 +24,9 @@ const AMapFactory = (window as any).AMap;
 
 const DEFAULT_ICON_STYLE = {
   image: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
-  // size: [6, 9],
+  content: (color: string) => `
+  <svg t="1663651964806" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2467" width="48" height="72"><path d="M511.913993 63.989249C317.882076 63.989249 159.973123 221.898203 159.973123 415.930119c0 187.323366 315.473879 519.998656 328.890979 534.103813 6.020494 6.364522 14.449185 9.976818 23.221905 9.976818 0.172014 0 0.516042 0 0.688056 0 8.944734 0 17.545439-4.128339 23.393919-11.008903l109.22896-125.054258c145.179909-177.690576 218.629934-314.957836 218.629934-407.845456C864.026877 221.898203 706.117924 63.989249 511.913993 63.989249zM511.913993 575.903242c-88.415253 0-159.973123-71.55787-159.973123-159.973123s71.55787-159.973123 159.973123-159.973123 159.973123 71.55787 159.973123 159.973123S600.329246 575.903242 511.913993 575.903242z" p-id="2468" fill="${color}"></path></svg>
+  `,
   size: new AMapFactory.Size(18, 27),
   anchor: 'bottom-center',
 };
@@ -281,6 +283,8 @@ const Ali3DMap = (props: {
 
   const createMarker = () => {
     const { pointer = [] } = realValue;
+    const { color } = scatter;
+    const stringColor = getRgbaString(color);
     const markers = pointer.map((item: any, index: number) => {
       const { position, ...nextInfo } = item;
       const baseData = {
@@ -289,6 +293,7 @@ const Ali3DMap = (props: {
           index,
         },
         icon: DEFAULT_ICON_STYLE.image,
+        content: DEFAULT_ICON_STYLE.content(stringColor),
         // icon: DEFAULT_ICON_STYLE,
         position,
         zIndex: 1001,
@@ -305,7 +310,6 @@ const Ali3DMap = (props: {
   const setOption = () => {
     // if (mapLayerRef.current) mapInstance.current?.remove(mapLayerRef.current)
     mapInstance.current?.clearMap();
-    const {} = scatter;
 
     // 设置样式
     const styleName = 'amap://styles/' + mapStyle;
