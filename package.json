@@ -2,7 +2,7 @@
   "name": "create-chart",
   "description": "数据可视化大屏设计器",
   "author": "Daniel GLF",
-  "version": "1.11",
+  "version": "1.12",
   "private": true,
   "scripts": {
     "analyze": "cross-env ANALYZE=1 REACT_APP_ENV=prod umi build",
