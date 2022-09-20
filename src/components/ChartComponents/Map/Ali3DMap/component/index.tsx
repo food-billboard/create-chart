@@ -1,5 +1,5 @@
 import { CSSProperties, useEffect, useRef } from 'react';
-import { uniqueId, merge } from 'lodash';
+import { uniqueId, merge, pick } from 'lodash';
 import classnames from 'classnames';
 import { useUnmount } from 'ahooks';
 import { useDeepUpdateEffect } from '@/hooks';
@@ -251,14 +251,25 @@ const Ali3DMap = (props: {
       }),
     );
     mapInfoWindow.current?.open(mapInstance.current, position);
+    syncInteractiveAction('modal-show', {
+      position: markerInfo.position,
+      ...pick(markerInfo.extData, [
+        'image',
+        'title',
+        'subTitle',
+        'description',
+        'topTitle',
+      ]),
+    });
   };
 
   // 点击标记点
   const onMarkerClick = (markerData: any) => {
     tooltipLoopIndex.current = markerData.extData.index;
     updateInfoWindow(markerData);
-    // TODO
-    // 设置点击项的数据事件
+    syncInteractiveAction('click', {
+      position: markerData.position,
+    });
   };
 
   const createMarkerLayer = () => {

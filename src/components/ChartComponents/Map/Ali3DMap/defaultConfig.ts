@@ -38,7 +38,57 @@ export default () => {
   const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TAli3DMapConfig> =
     {
       interactive: {
-        base: [],
+        base: [
+          {
+            type: 'click',
+            name: '当点击坐标时',
+            show: false,
+            fields: [
+              {
+                key: 'position',
+                variable: '',
+                description: '标记点',
+              },
+            ],
+          },
+          {
+            type: 'modal-show',
+            name: '当模态框显示时',
+            show: false,
+            fields: [
+              {
+                key: 'image',
+                variable: '',
+                description: '图片',
+              },
+              {
+                key: 'title',
+                variable: '',
+                description: '标题',
+              },
+              {
+                key: 'subTitle',
+                variable: '',
+                description: '副标题',
+              },
+              {
+                key: 'description',
+                variable: '',
+                description: '描述',
+              },
+              {
+                key: 'position',
+                variable: '',
+                description: '坐标点',
+              },
+              {
+                key: 'topTitle',
+                variable: '',
+                description: '模态框标题',
+              },
+            ],
+          },
+        ],
       },
       data: {
         request: {
