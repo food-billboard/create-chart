@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Switch, Tabs } from 'antd';
+import { Switch } from 'antd';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
@@ -9,9 +9,7 @@ import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { TPictureWallConfig } from '../type';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 
-const { TabPane } = Tabs;
 const { Item } = ConfigList;
-
 class Config extends Component<
   ComponentData.ComponentConfigProps<TPictureWallConfig>
 > {
@@ -34,60 +32,66 @@ class Config extends Component<
     } = value;
 
     return (
-      <ComponentOptionConfig>
-        <TabPane key={'1'} tab={<Tab>样式</Tab>}>
-          <ConfigList level={1}>
-            <Item label="图片数量">
-              <FullForm>
-                <InputNumber
-                  value={maxCount}
-                  min={1}
-                  onChange={this.onKeyChange.bind(this, 'maxCount')}
-                />
-              </FullForm>
-            </Item>
-            <Item label="单行图片数">
-              <FullForm>
-                <InputNumber
-                  value={columnCount}
-                  min={1}
-                  onChange={this.onKeyChange.bind(this, 'columnCount')}
-                />
-              </FullForm>
-            </Item>
-            <Item label="间距">
-              <HalfForm label="水平">
-                <InputNumber
-                  value={margin[0]}
-                  onChange={(value) => {
-                    this.onKeyChange('margin', [value, margin[1]]);
-                  }}
-                />
-              </HalfForm>
-              <HalfForm label="垂直">
-                <InputNumber
-                  value={margin[1]}
-                  onChange={(value) => {
-                    this.onKeyChange('margin', [margin[0], value]);
-                  }}
-                />
-              </HalfForm>
-            </Item>
-            <Item label="预览">
-              <FullForm>
-                <Switch
-                  checked={preview.show}
-                  onChange={(value) => {
-                    this.onKeyChange('preview', {
-                      show: value,
-                    });
-                  }}
-                />
-              </FullForm>
-            </Item>
-          </ConfigList>
-        </TabPane>
-      </ComponentOptionConfig>
+      <ComponentOptionConfig
+        items={[
+          {
+            label: <Tab>样式</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <Item label="图片数量">
+                  <FullForm>
+                    <InputNumber
+                      value={maxCount}
+                      min={1}
+                      onChange={this.onKeyChange.bind(this, 'maxCount')}
+                    />
+                  </FullForm>
+                </Item>
+                <Item label="单行图片数">
+                  <FullForm>
+                    <InputNumber
+                      value={columnCount}
+                      min={1}
+                      onChange={this.onKeyChange.bind(this, 'columnCount')}
+                    />
+                  </FullForm>
+                </Item>
+                <Item label="间距">
+                  <HalfForm label="水平">
+                    <InputNumber
+                      value={margin[0]}
+                      onChange={(value) => {
+                        this.onKeyChange('margin', [value, margin[1]]);
+                      }}
+                    />
+                  </HalfForm>
+                  <HalfForm label="垂直">
+                    <InputNumber
+                      value={margin[1]}
+                      onChange={(value) => {
+                        this.onKeyChange('margin', [margin[0], value]);
+                      }}
+                    />
+                  </HalfForm>
+                </Item>
+                <Item label="预览">
+                  <FullForm>
+                    <Switch
+                      checked={preview.show}
+                      onChange={(value) => {
+                        this.onKeyChange('preview', {
+                          show: value,
+                        });
+                      }}
+                    />
+                  </FullForm>
+                </Item>
+              </ConfigList>
+            ),
+            key: '1',
+          },
+        ]}
+      />
     );
   }
 }

@@ -78,7 +78,7 @@ const DatePicker = (props: {
     return new Function('data', filterTime);
   }, [filterTime]);
 
-  const DatePickerDom = useMemo(() => {
+  const DatePickerDom: any = useMemo(() => {
     const prefix = 'component-interactive-date-picker';
     const className = `${prefix}-${mode}`;
     const commonProps: any = {
@@ -98,7 +98,7 @@ const DatePicker = (props: {
       onChange,
       disabledDate: filterDateFunction,
       disabledTime: filterTimeFunction,
-      dropdownClassName: classnames(styles[className]),
+      popupClassName: classnames(styles[className]),
       panelRender: (node: any) => {
         return cloneElement(node, {
           style: {
@@ -202,13 +202,17 @@ const DatePicker = (props: {
     };
     switch (mode) {
       case 'date':
+        // @ts-ignore
         return <AntDatePicker {...commonProps} />;
       case 'month':
+        // @ts-ignore
         return <MonthPicker {...commonProps} />;
       case 'time':
+        // @ts-ignore
         return <AntDatePicker showTime {...commonProps} />;
       case 'week':
         return (
+          // @ts-ignore
           <WeekPicker
             {...commonProps}
             format={(value) => {
@@ -221,6 +225,7 @@ const DatePicker = (props: {
           />
         );
       case 'year':
+        // @ts-ignore
         return <YearPicker {...commonProps} />;
     }
   }, [

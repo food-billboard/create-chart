@@ -64,7 +64,7 @@ const PasswordConfirm = forwardRef<
   return (
     <Modal
       onOk={onOk}
-      visible={visible}
+      open={visible}
       title="分享密码"
       closable={false}
       maskClosable={false}

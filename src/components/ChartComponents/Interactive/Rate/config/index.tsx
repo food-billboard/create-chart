@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Switch, Tabs } from 'antd';
+import { Switch } from 'antd';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
@@ -10,9 +10,7 @@ import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIc
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { TRateConfig } from '../type';
 
-const { TabPane } = Tabs;
 const { Item } = ConfigList;
-
 class Config extends Component<
   ComponentData.ComponentConfigProps<TRateConfig>
 > {
@@ -45,87 +43,100 @@ class Config extends Component<
     } = value;
 
     return (
-      <ComponentOptionConfig>
-        <TabPane key={'1'} tab={<Tab>基础样式</Tab>}>
-          <ConfigList level={1}>
-            <Item label="分数颜色">
-              <FullForm>
-                <CompatColorSelect
-                  value={rateBackgroundColor}
-                  onChange={this.onKeyChange.bind(this, 'rateBackgroundColor')}
+      <ComponentOptionConfig
+        items={[
+          {
+            label: <Tab>基础样式</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <Item label="分数颜色">
+                  <FullForm>
+                    <CompatColorSelect
+                      value={rateBackgroundColor}
+                      onChange={this.onKeyChange.bind(
+                        this,
+                        'rateBackgroundColor',
+                      )}
+                    />
+                  </FullForm>
+                </Item>
+                <Item label="背景色">
+                  <FullForm>
+                    <CompatColorSelect
+                      value={backgroundColor}
+                      onChange={this.onKeyChange.bind(this, 'backgroundColor')}
+                    />
+                  </FullForm>
+                </Item>
+                <Item label="大小">
+                  <FullForm>
+                    <InputNumber
+                      value={size}
+                      onChange={this.onKeyChange.bind(this, 'size')}
+                    />
+                  </FullForm>
+                </Item>
+                <Item label="间距">
+                  <FullForm>
+                    <InputNumber
+                      value={margin}
+                      onChange={this.onKeyChange.bind(this, 'margin')}
+                    />
+                  </FullForm>
+                </Item>
+                <BootstrapIconSelect
+                  itemProps={{
+                    label: '图形',
+                  }}
+                  value={shape}
+                  onChange={this.onKeyChange.bind(this, 'shape')}
                 />
-              </FullForm>
-            </Item>
-            <Item label="背景色">
-              <FullForm>
-                <CompatColorSelect
-                  value={backgroundColor}
-                  onChange={this.onKeyChange.bind(this, 'backgroundColor')}
-                />
-              </FullForm>
-            </Item>
-            <Item label="大小">
-              <FullForm>
-                <InputNumber
-                  value={size}
-                  onChange={this.onKeyChange.bind(this, 'size')}
-                />
-              </FullForm>
-            </Item>
-            <Item label="间距">
-              <FullForm>
-                <InputNumber
-                  value={margin}
-                  onChange={this.onKeyChange.bind(this, 'margin')}
-                />
-              </FullForm>
-            </Item>
-            <BootstrapIconSelect
-              itemProps={{
-                label: '图形',
-              }}
-              value={shape}
-              onChange={this.onKeyChange.bind(this, 'shape')}
-            />
-          </ConfigList>
-        </TabPane>
-        <TabPane key={'2'} tab={<Tab>交互</Tab>}>
-          <ConfigList level={1}>
-            <Item label="默认评分">
-              <FullForm>
-                <InputNumber
-                  value={defaultValue}
-                  onChange={this.onKeyChange.bind(this, 'defaultValue')}
-                />
-              </FullForm>
-            </Item>
-            <Item label="允许半选">
-              <FullForm>
-                <Switch
-                  checked={allowHalf}
-                  onChange={this.onKeyChange.bind(this, 'allowHalf')}
-                />
-              </FullForm>
-            </Item>
-            <Item label="允许清除">
-              <FullForm>
-                <Switch
-                  checked={allowClear}
-                  onChange={this.onKeyChange.bind(this, 'allowClear')}
-                />
-              </FullForm>
-            </Item>
-            <Item label="最大评分">
-              <FullForm>
-                <InputNumber
-                  value={count}
-                  onChange={this.onKeyChange.bind(this, 'count')}
-                />
-              </FullForm>
-            </Item>
-          </ConfigList>
-        </TabPane>
-      </ComponentOptionConfig>
+              </ConfigList>
+            ),
+            key: '1',
+          },
+          {
+            label: <Tab>交互</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <Item label="默认评分">
+                  <FullForm>
+                    <InputNumber
+                      value={defaultValue}
+                      onChange={this.onKeyChange.bind(this, 'defaultValue')}
+                    />
+                  </FullForm>
+                </Item>
+                <Item label="允许半选">
+                  <FullForm>
+                    <Switch
+                      checked={allowHalf}
+                      onChange={this.onKeyChange.bind(this, 'allowHalf')}
+                    />
+                  </FullForm>
+                </Item>
+                <Item label="允许清除">
+                  <FullForm>
+                    <Switch
+                      checked={allowClear}
+                      onChange={this.onKeyChange.bind(this, 'allowClear')}
+                    />
+                  </FullForm>
+                </Item>
+                <Item label="最大评分">
+                  <FullForm>
+                    <InputNumber
+                      value={count}
+                      onChange={this.onKeyChange.bind(this, 'count')}
+                    />
+                  </FullForm>
+                </Item>
+              </ConfigList>
+            ),
+            key: '2',
+          },
+        ]}
+      />
     );
   }
 }

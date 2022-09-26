@@ -115,15 +115,24 @@ const MultiConfig = () => {
 
   return (
     <div className={classnames('h-100', styles['design-config-multi'])}>
-      <ConfigWrapper tabCounter={1}>
-        <ConfigItem tab="多组件配置" key="1">
-          <div>
-            <ConfigList level={1}>
-              <KeyWordPosition onChange={onOrientChange} />
-            </ConfigList>
-          </div>
-        </ConfigItem>
-      </ConfigWrapper>
+      <ConfigWrapper
+        tabCounter={1}
+        items={[
+          {
+            label: '多组件配置',
+            key: '1',
+            children: (
+              <ConfigItem>
+                <div>
+                  <ConfigList level={1}>
+                    <KeyWordPosition onChange={onOrientChange} />
+                  </ConfigList>
+                </div>
+              </ConfigItem>
+            ),
+          },
+        ]}
+      />
     </div>
   );
 };

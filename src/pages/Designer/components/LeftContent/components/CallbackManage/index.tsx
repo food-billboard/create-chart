@@ -268,7 +268,7 @@ const CallbackList = (props: {
         title="过滤函数"
         onCancel={() => setVisible(false)}
         footer={null}
-        visible={visible}
+        open={visible}
         bodyStyle={{ padding: 0, fontSize: '12px' }}
       >
         <CodeViewer>{code}</CodeViewer>
@@ -318,7 +318,7 @@ const CallbackManage = forwardRef<CallbackManageRef, CallbackManageProps>(
     return (
       <Drawer
         mask={false}
-        visible={visible}
+        open={visible}
         maskClosable={false}
         onClose={onClose}
         footer={footer}

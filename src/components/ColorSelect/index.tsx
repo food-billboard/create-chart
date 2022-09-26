@@ -187,7 +187,7 @@ const ColorSelect = (props: TColorSelectProps) => {
       }
       trigger="click"
       overlayClassName={styles['component-color-select-tooltip']}
-      onVisibleChange={onVisibleChange}
+      onOpenChange={onVisibleChange}
     >
       <div
         className={classnames(

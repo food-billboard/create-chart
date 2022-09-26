@@ -32,38 +32,50 @@ const AxisConfig = (props: {
   );
 
   return (
-    <Tabs type="card" className={styles['axis-config']}>
-      <Tabs.TabPane tab="x轴" key="xAxis">
-        <AxisConfigCommon
-          type="xAxis"
-          value={xAxis}
-          onChange={onKeyChange.bind(null, 'xAxis')}
-          ignore={['position', 'splitLine']}
-        >
-          <Item label="最大值">
-            <FullForm>
-              <InputNumber
-                className="w-100"
-                value={xAxis.max}
-                onChange={(value) => {
-                  onKeyChange('xAxis', {
-                    max: value,
-                  });
-                }}
-              />
-            </FullForm>
-          </Item>
-        </AxisConfigCommon>
-      </Tabs.TabPane>
-      <Tabs.TabPane tab="y轴" key="yAxis">
-        <AxisConfigCommon
-          type="yAxis"
-          value={yAxis}
-          onChange={onKeyChange.bind(null, 'yAxis')}
-          ignore={['position', 'splitLine']}
-        />
-      </Tabs.TabPane>
-    </Tabs>
+    <Tabs
+      type="card"
+      className={styles['axis-config']}
+      items={[
+        {
+          label: 'x轴',
+          key: 'xAxis',
+          children: (
+            <AxisConfigCommon
+              type="xAxis"
+              value={xAxis}
+              onChange={onKeyChange.bind(null, 'xAxis')}
+              ignore={['position', 'splitLine']}
+            >
+              <Item label="最大值">
+                <FullForm>
+                  <InputNumber
+                    className="w-100"
+                    value={xAxis.max}
+                    onChange={(value) => {
+                      onKeyChange('xAxis', {
+                        max: value,
+                      });
+                    }}
+                  />
+                </FullForm>
+              </Item>
+            </AxisConfigCommon>
+          ),
+        },
+        {
+          label: 'y轴',
+          key: 'yAxis',
+          children: (
+            <AxisConfigCommon
+              type="yAxis"
+              value={yAxis}
+              onChange={onKeyChange.bind(null, 'yAxis')}
+              ignore={['position', 'splitLine']}
+            />
+          ),
+        },
+      ]}
+    />
   );
 };
 

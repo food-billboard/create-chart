@@ -300,7 +300,8 @@ const Ali3DMap = (props: {
       };
       // const point = new AMapFactory.LabelMarker(baseData)
       const point = new AMapFactory.Marker(baseData);
-      point.on('click', onMarkerClick.bind(null, baseData));
+      screenType !== 'edit' &&
+        point.on('click', onMarkerClick.bind(null, baseData));
       return point;
     });
     // mapLayerRef.current?.add(markers)

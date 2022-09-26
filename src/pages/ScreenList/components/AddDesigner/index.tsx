@@ -76,7 +76,7 @@ const AddDesigner = (props: { type: 'screen' | 'model' }) => {
       </Button>
       <Modal
         title={title + '设置'}
-        visible={visible}
+        open={visible}
         onCancel={setVisible.bind(null, false)}
         onOk={handleAdd}
       >

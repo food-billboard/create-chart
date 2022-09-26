@@ -1,8 +1,8 @@
-import { ReactNode, Children, useMemo, cloneElement, useRef } from 'react';
+import { ReactNode, useMemo, cloneElement, useRef } from 'react';
 import { Tabs } from 'antd';
+import type { TabsProps } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
-import { TabPaneProps } from 'antd/es/tabs';
 import { uniqueId } from 'lodash';
 import styles from './index.less';
 
@@ -14,18 +14,22 @@ const ConfigWrapper = (props: {
   onBack?: () => void;
   hasBack?: boolean;
   title?: string | false;
+  items: TabsProps['items'];
 }) => {
-  const { children, tabCounter = 3, onBack, hasBack, title = false } = props;
+  const { items = [], tabCounter = 3, onBack, hasBack, title = false } = props;
 
-  const realChildren = useMemo(() => {
-    return Children.map(children, (child) => {
-      return cloneElement(child as any, {
-        onBack,
-        hasBack,
-        title,
-      });
+  const realItems = useMemo(() => {
+    return items.map((child) => {
+      return {
+        ...child,
+        children: cloneElement(child.children as any, {
+          onBack,
+          hasBack,
+          title,
+        }),
+      };
     });
-  }, [children]);
+  }, [items]);
 
   return (
     <Tabs
@@ -36,33 +40,24 @@ const ConfigWrapper = (props: {
         styles[`design-config-wrapper-header-${tabCounter}`],
       )}
       tabBarGutter={0}
-    >
-      {realChildren}
-    </Tabs>
+      items={realItems}
+    />
   );
 };
 
-export const ConfigItem = (
-  props: TabPaneProps & {
-    onBack?: () => void;
-    hasBack?: boolean;
-    version?: string;
-    title?: string | false;
-  },
-) => {
-  const {
-    children,
-    hasBack,
-    onBack,
-    title = false,
-    version = 'v1.0',
-    ...nextProps
-  } = props;
+export const ConfigItem = (props: {
+  onBack?: () => void;
+  hasBack?: boolean;
+  version?: string;
+  title?: string | false;
+  children?: ReactNode;
+}) => {
+  const { children, hasBack, onBack, title = false, version = 'v1.0' } = props;
 
   const scrollBarId = useRef<string>(uniqueId('design-config-item'));
 
   return (
-    <Tabs.TabPane {...nextProps}>
+    <div>
       {title !== false && (
         <div className={styles['design-config-wrapper-item-title']}>
           <div className={styles['design-config-wrapper-item-title-content']}>
@@ -111,7 +106,7 @@ export const ConfigItem = (
           {children}
         </div>
       </div>
-    </Tabs.TabPane>
+    </div>
   );
 };
 

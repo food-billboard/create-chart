@@ -118,7 +118,7 @@ const DataConfigDetail = forwardRef<
 
   return (
     <Drawer
-      visible={visible}
+      open={visible}
       placement="right"
       onClose={setVisible.bind(null, false)}
       title="设置数据源"

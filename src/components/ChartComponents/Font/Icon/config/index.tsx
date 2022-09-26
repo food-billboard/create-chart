@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { Tabs } from 'antd';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
@@ -9,9 +8,7 @@ import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIc
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { TIconConfig } from '../type';
 
-const { TabPane } = Tabs;
 const { Item } = ConfigList;
-
 class Config extends Component<
   ComponentData.ComponentConfigProps<TIconConfig>
 > {
@@ -34,24 +31,30 @@ class Config extends Component<
     } = value;
 
     return (
-      <ComponentOptionConfig>
-        <TabPane key={'1'} tab={<Tab>基础样式</Tab>}>
-          <ConfigList level={1}>
-            <BootstrapIconSelect
-              value={iconValue}
-              onChange={this.onKeyChange.bind(this, 'value')}
-            />
-            <Item label="颜色">
-              <FullForm>
-                <CompatColorSelect
-                  value={color}
-                  onChange={this.onKeyChange.bind(this, 'color')}
+      <ComponentOptionConfig
+        items={[
+          {
+            label: <Tab>基础样式</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <BootstrapIconSelect
+                  value={iconValue}
+                  onChange={this.onKeyChange.bind(this, 'value')}
                 />
-              </FullForm>
-            </Item>
-          </ConfigList>
-        </TabPane>
-      </ComponentOptionConfig>
+                <Item label="颜色">
+                  <FullForm>
+                    <CompatColorSelect
+                      value={color}
+                      onChange={this.onKeyChange.bind(this, 'color')}
+                    />
+                  </FullForm>
+                </Item>
+              </ConfigList>
+            ),
+            key: '1',
+          },
+        ]}
+      />
     );
   }
 }

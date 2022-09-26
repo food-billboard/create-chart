@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Tabs, Switch } from 'antd';
+import { Switch } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
 import {
   InfoCircleOutlined,
@@ -23,7 +23,6 @@ import ThemeUtil from '@/utils/Assist/Theme';
 import ConditionConfig from './Condition';
 import { TImageConfig } from '../type';
 
-const { TabPane } = Tabs;
 const { Item } = ConfigList;
 
 const { getRgbaString } = ColorSelect;
@@ -114,58 +113,65 @@ class Config extends Component<
     } = value;
 
     return (
-      <ComponentOptionConfig>
-        <TabPane key={'1'} tab={<Tab>内容</Tab>}>
-          <ConfigList level={1}>
-            <Item label="类型">
-              <FullForm>
-                <RadioGroup value={type} onChange={this.onTypeChange}>
-                  <Radio icon={<PictureOutlined />} key="image" value="image" />
-                  <Radio
-                    icon={<BgColorsOutlined />}
-                    key="color"
-                    value="color"
-                  />
-                </RadioGroup>
-              </FullForm>
-            </Item>
-            <Item
-              label={type === 'color' ? '颜色' : '图片'}
-              placeholder={
-                <IconTooltip title="数据配置会影响到这里的配置">
-                  <InfoCircleOutlined />
-                </IconTooltip>
-              }
-            >
-              <FullForm>
-                {type === 'color' && (
-                  <CompatColorSelect
-                    value={content as ComponentData.TColorConfig}
-                    onChange={this.onContentChange}
-                  />
-                )}
-                {type === 'image' && this.backgroundForm()}
-              </FullForm>
-            </Item>
-            <ClipPathSelect
-              value={clipPath}
-              onChange={this.onKeyChange.bind(this, 'clipPath')}
-            />
-            {type === 'image' && (
-              <>
-                <Item label="预览">
+      <ComponentOptionConfig
+        items={[
+          {
+            label: <Tab>内容</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <Item label="类型">
                   <FullForm>
-                    <Switch
-                      checked={preview.show}
-                      onChange={(value) =>
-                        this.onKeyChange('preview', {
-                          show: value,
-                        })
-                      }
-                    />
+                    <RadioGroup value={type} onChange={this.onTypeChange}>
+                      <Radio
+                        icon={<PictureOutlined />}
+                        key="image"
+                        value="image"
+                      />
+                      <Radio
+                        icon={<BgColorsOutlined />}
+                        key="color"
+                        value="color"
+                      />
+                    </RadioGroup>
                   </FullForm>
                 </Item>
-                {/* <Collapse
+                <Item
+                  label={type === 'color' ? '颜色' : '图片'}
+                  placeholder={
+                    <IconTooltip title="数据配置会影响到这里的配置">
+                      <InfoCircleOutlined />
+                    </IconTooltip>
+                  }
+                >
+                  <FullForm>
+                    {type === 'color' && (
+                      <CompatColorSelect
+                        value={content as ComponentData.TColorConfig}
+                        onChange={this.onContentChange}
+                      />
+                    )}
+                    {type === 'image' && this.backgroundForm()}
+                  </FullForm>
+                </Item>
+                <ClipPathSelect
+                  value={clipPath}
+                  onChange={this.onKeyChange.bind(this, 'clipPath')}
+                />
+                {type === 'image' && (
+                  <>
+                    <Item label="预览">
+                      <FullForm>
+                        <Switch
+                          checked={preview.show}
+                          onChange={(value) =>
+                            this.onKeyChange('preview', {
+                              show: value,
+                            })
+                          }
+                        />
+                      </FullForm>
+                    </Item>
+                    {/* <Collapse
                   child={{
                     header: '预览',
                     key: 'preview',
@@ -191,41 +197,48 @@ class Config extends Component<
                     </FullForm>
                   </Item>
                 </Collapse> */}
-                <Item label="重复">
-                  <HalfForm label="x">
-                    <Switch
-                      checked={repeat.x}
-                      onChange={(value) => {
-                        this.onKeyChange('repeat', {
-                          x: value,
-                        });
-                      }}
-                    />
-                  </HalfForm>
-                  <HalfForm label="y">
-                    <Switch
-                      checked={repeat.y}
-                      onChange={(value) => {
-                        this.onKeyChange('repeat', {
-                          y: value,
-                        });
-                      }}
-                    />
-                  </HalfForm>
-                </Item>
-              </>
-            )}
-          </ConfigList>
-        </TabPane>
-        <TabPane key="2" tab={<Tab>条件</Tab>}>
-          <ConfigList level={1}>
-            <ConditionConfig
-              value={condition}
-              onChange={this.onKeyChange.bind(null, 'condition')}
-            />
-          </ConfigList>
-        </TabPane>
-      </ComponentOptionConfig>
+                    <Item label="重复">
+                      <HalfForm label="x">
+                        <Switch
+                          checked={repeat.x}
+                          onChange={(value) => {
+                            this.onKeyChange('repeat', {
+                              x: value,
+                            });
+                          }}
+                        />
+                      </HalfForm>
+                      <HalfForm label="y">
+                        <Switch
+                          checked={repeat.y}
+                          onChange={(value) => {
+                            this.onKeyChange('repeat', {
+                              y: value,
+                            });
+                          }}
+                        />
+                      </HalfForm>
+                    </Item>
+                  </>
+                )}
+              </ConfigList>
+            ),
+            key: '1',
+          },
+          {
+            label: <Tab>条件</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <ConditionConfig
+                  value={condition}
+                  onChange={this.onKeyChange.bind(null, 'condition')}
+                />
+              </ConfigList>
+            ),
+            key: '2',
+          },
+        ]}
+      />
     );
   }
 }

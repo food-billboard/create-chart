@@ -44,43 +44,53 @@ const ComponentConfig = (props: {
         onBack={onBack}
         tabCounter={3}
         title={title}
-      >
-        <ConfigItem
-          tab={
-            <IconTooltip title="配置">
-              <ProjectOutlined />
-            </IconTooltip>
-          }
-          key="1"
-        >
-          <ConfigList>
-            <BaseConfig id={id} isGroupComponent={false} />
-            <ConfigList level={1}>
-              <ConfigComponent component={component} id={id} />
-            </ConfigList>
-          </ConfigList>
-        </ConfigItem>
-        <ConfigItem
-          tab={
-            <IconTooltip title="数据">
-              <CodeOutlined />
-            </IconTooltip>
-          }
-          key="2"
-        >
-          <DataConfig id={id} component={component} />
-        </ConfigItem>
-        <ConfigItem
-          tab={
-            <IconTooltip title="交互">
-              <ControlOutlined />
-            </IconTooltip>
-          }
-          key="3"
-        >
-          <InterActiveConfig id={id} />
-        </ConfigItem>
-      </ConfigWrapper>
+        items={[
+          {
+            label: (
+              <IconTooltip title="配置">
+                <ProjectOutlined />
+              </IconTooltip>
+            ),
+            key: '1',
+            children: (
+              <ConfigItem>
+                <ConfigList>
+                  <BaseConfig id={id} isGroupComponent={false} />
+                  <ConfigList level={1}>
+                    <ConfigComponent component={component} id={id} />
+                  </ConfigList>
+                </ConfigList>
+              </ConfigItem>
+            ),
+          },
+          {
+            label: (
+              <IconTooltip title="数据">
+                <CodeOutlined />
+              </IconTooltip>
+            ),
+            key: '2',
+            children: (
+              <ConfigItem>
+                <DataConfig id={id} component={component} />
+              </ConfigItem>
+            ),
+          },
+          {
+            label: (
+              <IconTooltip title="交互">
+                <ControlOutlined />
+              </IconTooltip>
+            ),
+            key: '3',
+            children: (
+              <ConfigItem>
+                <InterActiveConfig id={id} />
+              </ConfigItem>
+            ),
+          },
+        ]}
+      />
     </div>
   );
 };

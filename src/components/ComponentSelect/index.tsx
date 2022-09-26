@@ -130,7 +130,7 @@ const ComponentSelect = forwardRef<
 
   return (
     <Modal
-      visible={visible}
+      open={visible}
       bodyStyle={{
         height: 500,
         overflowY: 'auto',

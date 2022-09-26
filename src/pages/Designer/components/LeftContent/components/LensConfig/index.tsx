@@ -75,7 +75,7 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
   return (
     <Drawer
       mask={false}
-      visible={visible}
+      open={visible}
       maskClosable={false}
       onClose={onClose}
       title="全局过滤器"

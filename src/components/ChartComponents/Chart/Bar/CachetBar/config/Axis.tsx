@@ -27,24 +27,36 @@ const AxisConfig = (props: {
   );
 
   return (
-    <Tabs type="card" className={styles['axis-config']}>
-      <Tabs.TabPane tab="x轴" key="xAxis">
-        <AxisConfigCommon
-          type="xAxis"
-          value={xAxis}
-          ignore={['position', 'splitLine']}
-          onChange={onKeyChange.bind(null, 'xAxis')}
-        />
-      </Tabs.TabPane>
-      <Tabs.TabPane tab="y轴" key="yAxis">
-        <AxisConfigCommon
-          type="yAxis"
-          value={yAxis}
-          onChange={onKeyChange.bind(null, 'yAxis')}
-          ignore={['position', 'splitLine']}
-        />
-      </Tabs.TabPane>
-    </Tabs>
+    <Tabs
+      type="card"
+      className={styles['axis-config']}
+      items={[
+        {
+          label: 'x轴',
+          key: 'xAxis',
+          children: (
+            <AxisConfigCommon
+              type="xAxis"
+              value={xAxis}
+              ignore={['position', 'splitLine']}
+              onChange={onKeyChange.bind(null, 'xAxis')}
+            />
+          ),
+        },
+        {
+          label: 'y轴',
+          key: 'yAxis',
+          children: (
+            <AxisConfigCommon
+              type="yAxis"
+              value={yAxis}
+              onChange={onKeyChange.bind(null, 'yAxis')}
+              ignore={['position', 'splitLine']}
+            />
+          ),
+        },
+      ]}
+    />
   );
 };
 

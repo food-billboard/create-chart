@@ -1,5 +1,6 @@
 import { omit } from 'lodash';
 import { mergeWithoutArray } from '@/utils';
+import ThemeUtil from '@/utils/Assist/Theme';
 import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
@@ -119,6 +120,7 @@ export default () => {
         zoom: 10,
         tooltip: {
           ...omit(DEFAULT_TOOLTIP_CONFIG(), ['formatter']),
+          backgroundColor: ThemeUtil.generateNextColor4CurrentTheme(0),
           animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
           ignore: [],
         },

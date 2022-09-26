@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { Tabs } from 'antd';
 import { merge } from 'lodash';
 import ComponentOptionConfig, {
   Tab,
@@ -9,8 +8,6 @@ import { getPath } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import KeyWordPosition from './components/KeyWordPosition';
 import ConditionConfig from './components/ConditionConfig';
-
-const { TabPane } = Tabs;
 
 const OrientConfig = (props: { component: ComponentData.TComponentData }) => {
   const { component } = props;
@@ -100,24 +97,34 @@ const OrientConfig = (props: { component: ComponentData.TComponentData }) => {
   );
 
   return (
-    <ComponentOptionConfig>
-      <TabPane key={'1'} tab={<Tab>基础</Tab>}>
-        <ConfigList level={1}>
-          <KeyWordPosition onChange={onOrientChange} />
-        </ConfigList>
-      </TabPane>
-      <TabPane key="6" tab={<Tab>条件</Tab>}>
-        <ConfigList level={1}>
-          <ConditionConfig
-            value={
-              ((options as any)?.condition ||
-                []) as ComponentData.ComponentConditionConfig
-            }
-            onChange={onChange}
-          />
-        </ConfigList>
-      </TabPane>
-    </ComponentOptionConfig>
+    <ComponentOptionConfig
+      items={[
+        {
+          label: <Tab>基础</Tab>,
+          children: (
+            <ConfigList level={1}>
+              <KeyWordPosition onChange={onOrientChange} />
+            </ConfigList>
+          ),
+          key: '1',
+        },
+        {
+          label: <Tab>条件</Tab>,
+          children: (
+            <ConfigList level={1}>
+              <ConditionConfig
+                value={
+                  ((options as any)?.condition ||
+                    []) as ComponentData.ComponentConditionConfig
+                }
+                onChange={onChange}
+              />
+            </ConfigList>
+          ),
+          key: '2',
+        },
+      ]}
+    />
   );
 };
 

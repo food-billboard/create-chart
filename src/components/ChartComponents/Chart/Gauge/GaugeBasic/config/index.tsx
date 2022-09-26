@@ -23,23 +23,37 @@ class Config extends Component<
     } = value;
 
     return (
-      <ComponentOptionConfig>
-        <TabPane key={'1'} tab={<Tab>表盘</Tab>}>
-          <ConfigList level={1}>
-            <SeriesConfig value={series} onChange={onChange} />
-          </ConfigList>
-        </TabPane>
-        <TabPane key={'2'} tab={<Tab>动画</Tab>}>
-          <ConfigList level={1}>
-            <AnimationConfig value={animation} onChange={onChange} />
-          </ConfigList>
-        </TabPane>
-        <TabPane key="3" tab={<Tab>条件</Tab>}>
-          <ConfigList level={1}>
-            <ConditionConfig value={condition} onChange={onChange} />
-          </ConfigList>
-        </TabPane>
-      </ComponentOptionConfig>
+      <ComponentOptionConfig
+        items={[
+          {
+            label: <Tab>表盘</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <SeriesConfig value={series} onChange={onChange} />
+              </ConfigList>
+            ),
+            key: '1',
+          },
+          {
+            label: <Tab>动画</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <AnimationConfig value={animation} onChange={onChange} />
+              </ConfigList>
+            ),
+            key: '2',
+          },
+          {
+            label: <Tab>条件</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <ConditionConfig value={condition} onChange={onChange} />
+              </ConfigList>
+            ),
+            key: '3',
+          },
+        ]}
+      />
     );
   }
 }

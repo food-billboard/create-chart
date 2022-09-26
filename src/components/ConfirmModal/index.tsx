@@ -74,7 +74,7 @@ const ConfirmModal = forwardRef<
   return (
     <Modal
       title="提示"
-      visible={visible}
+      open={visible}
       okText="确定(enter)"
       cancelText="取消(esc)"
       onOk={onOk}

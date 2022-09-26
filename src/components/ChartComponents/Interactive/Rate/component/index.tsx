@@ -58,11 +58,10 @@ const Rate = (props: {
   );
 
   const onChange = (value: any) => {
-    const target = value.target.value;
     syncInteractiveAction('change', {
-      value: target,
+      value: value,
     });
-    setRateValue(target);
+    setRateValue(value);
   };
 
   const iconNode = useMemo(() => {

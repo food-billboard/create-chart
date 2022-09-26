@@ -172,7 +172,7 @@ const PicturesWall = (
       >
         {value.length >= 1 ? null : <UploadButton />}
       </Upload>
-      <Modal visible={previewVisible} footer={null} onCancel={handleCancel}>
+      <Modal open={previewVisible} footer={null} onCancel={handleCancel}>
         <img alt="background" style={{ width: '100%' }} src={previewImage} />
       </Modal>
     </>

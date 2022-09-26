@@ -48,7 +48,7 @@ const FullScreenEditor = (props: {
         <FullscreenOutlined onClick={handleFullScreen} />
       </IconTooltip>
       <Modal
-        visible={visible}
+        open={visible}
         onOk={onOk}
         onCancel={onCancel}
         wrapClassName={styles['full-screen-editor-modal']}

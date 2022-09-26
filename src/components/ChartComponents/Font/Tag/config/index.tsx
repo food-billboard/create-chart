@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { Tabs } from 'antd';
 import {
   InfoCircleOutlined,
   BorderLeftOutlined,
@@ -26,7 +25,6 @@ import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIc
 import ConditionConfig from './Condition';
 import { TTagConfig } from '../type';
 
-const { TabPane } = Tabs;
 const { Item } = ConfigList;
 
 class Config extends Component<ComponentData.ComponentConfigProps<TTagConfig>> {
@@ -50,141 +48,157 @@ class Config extends Component<ComponentData.ComponentConfigProps<TTagConfig>> {
     } = value;
 
     return (
-      <ComponentOptionConfig>
-        <TabPane key={'1'} tab={<Tab>样式</Tab>}>
-          <ConfigList level={1}>
-            <Item label="间距">
-              <FullForm>
-                <InputNumber
-                  className="w-100"
-                  value={margin}
-                  onChange={this.onKeyChange.bind(this, 'margin')}
-                />
-              </FullForm>
-            </Item>
-            <Collapse
-              child={{
-                header: '文字样式',
-                key: 'textStyle',
-              }}
-            >
-              <FontConfigList
-                value={textStyle}
-                onChange={this.onKeyChange.bind(this, 'textStyle')}
-              />
-            </Collapse>
-            <Collapse
-              child={{
-                header: '图标',
-                key: 'icon',
-              }}
-            >
-              <Item label="位置">
-                <FullForm>
-                  <RadioGroup
-                    value={icon.position}
-                    onChange={(value) => {
-                      this.onKeyChange('icon', {
-                        position: value,
-                      });
-                    }}
-                  >
-                    <Radio icon={<BorderLeftOutlined />} value="start"></Radio>
-                    <Radio icon={<BorderRightOutlined />} value="end"></Radio>
-                  </RadioGroup>
-                </FullForm>
-              </Item>
-              <Item label="间距">
-                <FullForm>
-                  <InputNumber
-                    value={icon.margin}
-                    onChange={(value) => {
-                      this.onKeyChange('icon', {
-                        margin: value,
-                      });
-                    }}
-                  />
-                </FullForm>
-              </Item>
-            </Collapse>
-            <MultipleSeriesConfig
-              onAdd={() => {
-                const newIndex = series.length;
-                const newData = {
-                  color: ThemeUtil.generateNextColor4CurrentTheme(newIndex),
-                };
-                const newDataList = [...series, newData];
-                this.onKeyChange('series', newDataList);
-              }}
-              onRemove={(index) => {
-                const newData = [...series];
-                newData.splice(index, 1);
-                this.onKeyChange('series', newData);
-              }}
-              counter={series.length}
-              max={GlobalConfig.getChartSeriesCounter('TAG')}
-              renderContent={(index) => {
-                const { color, icon } = series[index];
-                return (
-                  <>
-                    <BootstrapIconSelect
-                      value={icon || ''}
-                      onChange={(value) => {
-                        const newData = [...series];
-                        newData.splice(
-                          index,
-                          1,
-                          merge(newData[index], {
-                            icon: value,
-                          }),
-                        );
-                        this.onKeyChange('series', newData);
-                      }}
+      <ComponentOptionConfig
+        items={[
+          {
+            label: <Tab>样式</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <Item label="间距">
+                  <FullForm>
+                    <InputNumber
+                      className="w-100"
+                      value={margin}
+                      onChange={this.onKeyChange.bind(this, 'margin')}
                     />
-                    <Item
-                      label="图标"
-                      placeholder={
-                        <IconTooltip title="与数据的value字段相关">
-                          <InfoCircleOutlined />
-                        </IconTooltip>
-                      }
-                    >
-                      <FullForm>
-                        <CompatColorSelect
-                          value={color}
+                  </FullForm>
+                </Item>
+                <Collapse
+                  child={{
+                    header: '文字样式',
+                    key: 'textStyle',
+                  }}
+                >
+                  <FontConfigList
+                    value={textStyle}
+                    onChange={this.onKeyChange.bind(this, 'textStyle')}
+                  />
+                </Collapse>
+                <Collapse
+                  child={{
+                    header: '图标',
+                    key: 'icon',
+                  }}
+                >
+                  <Item label="位置">
+                    <FullForm>
+                      <RadioGroup
+                        value={icon.position}
+                        onChange={(value) => {
+                          this.onKeyChange('icon', {
+                            position: value,
+                          });
+                        }}
+                      >
+                        <Radio
+                          icon={<BorderLeftOutlined />}
+                          value="start"
+                        ></Radio>
+                        <Radio
+                          icon={<BorderRightOutlined />}
+                          value="end"
+                        ></Radio>
+                      </RadioGroup>
+                    </FullForm>
+                  </Item>
+                  <Item label="间距">
+                    <FullForm>
+                      <InputNumber
+                        value={icon.margin}
+                        onChange={(value) => {
+                          this.onKeyChange('icon', {
+                            margin: value,
+                          });
+                        }}
+                      />
+                    </FullForm>
+                  </Item>
+                </Collapse>
+                <MultipleSeriesConfig
+                  onAdd={() => {
+                    const newIndex = series.length;
+                    const newData = {
+                      color: ThemeUtil.generateNextColor4CurrentTheme(newIndex),
+                    };
+                    const newDataList = [...series, newData];
+                    this.onKeyChange('series', newDataList);
+                  }}
+                  onRemove={(index) => {
+                    const newData = [...series];
+                    newData.splice(index, 1);
+                    this.onKeyChange('series', newData);
+                  }}
+                  counter={series.length}
+                  max={GlobalConfig.getChartSeriesCounter('TAG')}
+                  renderContent={(index) => {
+                    const { color, icon } = series[index];
+                    return (
+                      <>
+                        <BootstrapIconSelect
+                          value={icon || ''}
                           onChange={(value) => {
                             const newData = [...series];
                             newData.splice(
                               index,
                               1,
                               merge(newData[index], {
-                                color: value,
+                                icon: value,
                               }),
                             );
                             this.onKeyChange('series', newData);
                           }}
                         />
-                      </FullForm>
-                    </Item>
-                  </>
-                );
-              }}
-              buttonLabel="新增标签样式"
-              seriesLabel={(index) => {
-                return `标签${index + 1}`;
-              }}
-            />
-          </ConfigList>
-        </TabPane>
-        <TabPane key="2" tab={<Tab>条件</Tab>}>
-          <ConfigList level={1}>
-            <ConditionConfig
-              value={condition}
-              onChange={this.onKeyChange.bind(null, 'condition')}
-            />
-          </ConfigList>
-        </TabPane>
-      </ComponentOptionConfig>
+                        <Item
+                          label="图标"
+                          placeholder={
+                            <IconTooltip title="与数据的value字段相关">
+                              <InfoCircleOutlined />
+                            </IconTooltip>
+                          }
+                        >
+                          <FullForm>
+                            <CompatColorSelect
+                              value={color}
+                              onChange={(value) => {
+                                const newData = [...series];
+                                newData.splice(
+                                  index,
+                                  1,
+                                  merge(newData[index], {
+                                    color: value,
+                                  }),
+                                );
+                                this.onKeyChange('series', newData);
+                              }}
+                            />
+                          </FullForm>
+                        </Item>
+                      </>
+                    );
+                  }}
+                  buttonLabel="新增标签样式"
+                  seriesLabel={(index) => {
+                    return `标签${index + 1}`;
+                  }}
+                />
+              </ConfigList>
+            ),
+            key: '1',
+          },
+          {
+            label: <Tab>条件</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <ConditionConfig
+                  value={condition}
+                  onChange={this.onKeyChange.bind(null, 'condition')}
+                />
+              </ConfigList>
+            ),
+            key: '2',
+          },
+        ]}
+      />
     );
   }
 }

@@ -178,7 +178,7 @@ const ShareSetting = forwardRef<
   return (
     <Modal
       onCancel={onCancel}
-      visible={visible}
+      open={visible}
       title="分享设置"
       footer={[
         shared ? (

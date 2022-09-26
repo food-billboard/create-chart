@@ -6,9 +6,9 @@ import FocusWrapper from '@/components/FocusWrapper';
 
 const Tooltip = (props: TooltipProps) => {
   const {
-    onVisibleChange: propsOnVisibleChange,
+    onOpenChange: propsOnVisibleChange,
     title: propsTitle,
-    visible: propsVisible,
+    open: propsVisible,
     ...nextProps
   } = props;
 
@@ -34,8 +34,8 @@ const Tooltip = (props: TooltipProps) => {
     <AntTooltip
       {...nextProps}
       title={title}
-      onVisibleChange={onVisibleChange}
-      visible={visible}
+      onOpenChange={onVisibleChange}
+      open={visible}
     />
   );
 };

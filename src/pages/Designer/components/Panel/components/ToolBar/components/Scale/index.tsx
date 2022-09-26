@@ -7,8 +7,6 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 import { wrapperId } from '../../../PanelWrapper/constants';
 import styles from './index.less';
 
-const { Item: MenuItem } = Menu;
-
 export const autoFitScale = (width: number, height: number) => {
   const FIT_SCALE = 0.85;
 
@@ -87,7 +85,9 @@ const Scale = (props: {
           min={25}
           step={5}
           value={value}
-          onChange={setValue}
+          onChange={(value) => {
+            setValue(value ?? 25);
+          }}
         />
         <Slider
           value={value}

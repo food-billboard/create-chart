@@ -97,7 +97,7 @@ const ComponentItem = (props: ComponentItemProps) => {
           }
           mouseEnterDelay={1}
           placement={'left'}
-          {...(!!tooltip ? {} : { visible: false })}
+          {...(!!tooltip ? {} : { open: false })}
         >
           {prefix}
           <div

@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { Tabs } from 'antd';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
@@ -12,9 +11,7 @@ import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { TRadioConfig } from '../type';
 
-const { TabPane } = Tabs;
 const { Item } = ConfigList;
-
 class Config extends Component<
   ComponentData.ComponentConfigProps<TRadioConfig>
 > {
@@ -45,102 +42,112 @@ class Config extends Component<
     } = value;
 
     return (
-      <ComponentOptionConfig>
-        <TabPane key={'1'} tab={<Tab>基础样式</Tab>}>
-          <ConfigList level={1}>
-            <Item label="边框颜色">
-              <FullForm>
-                <CompatColorSelect
-                  value={borderColor}
-                  onChange={this.onKeyChange.bind(this, 'borderColor')}
-                />
-              </FullForm>
-            </Item>
-            <Item label="背景色">
-              <FullForm>
-                <CompatColorSelect
-                  value={backgroundColor}
-                  onChange={this.onKeyChange.bind(this, 'backgroundColor')}
-                />
-              </FullForm>
-            </Item>
-            <Item label="大小">
-              <FullForm>
-                <InputNumber
-                  value={size}
-                  onChange={this.onKeyChange.bind(this, 'size')}
-                />
-              </FullForm>
-            </Item>
-            <Collapse
-              child={{
-                key: 'textStyle',
-                header: '文字样式',
-              }}
-            >
-              <FontConfigList
-                value={textStyle}
-                onChange={this.onKeyChange.bind(this, 'textStyle')}
-              />
-            </Collapse>
-            <Collapse
-              child={{
-                key: 'focus',
-                header: '选中',
-              }}
-            >
-              <Item label="边框颜色">
-                <FullForm>
-                  <CompatColorSelect
-                    value={active.borderColor}
-                    onChange={(value) =>
-                      this.onKeyChange('active', {
-                        borderColor: value,
-                      })
-                    }
+      <ComponentOptionConfig
+        items={[
+          {
+            label: <Tab>基础样式</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <Item label="边框颜色">
+                  <FullForm>
+                    <CompatColorSelect
+                      value={borderColor}
+                      onChange={this.onKeyChange.bind(this, 'borderColor')}
+                    />
+                  </FullForm>
+                </Item>
+                <Item label="背景色">
+                  <FullForm>
+                    <CompatColorSelect
+                      value={backgroundColor}
+                      onChange={this.onKeyChange.bind(this, 'backgroundColor')}
+                    />
+                  </FullForm>
+                </Item>
+                <Item label="大小">
+                  <FullForm>
+                    <InputNumber
+                      value={size}
+                      onChange={this.onKeyChange.bind(this, 'size')}
+                    />
+                  </FullForm>
+                </Item>
+                <Collapse
+                  child={{
+                    key: 'textStyle',
+                    header: '文字样式',
+                  }}
+                >
+                  <FontConfigList
+                    value={textStyle}
+                    onChange={this.onKeyChange.bind(this, 'textStyle')}
                   />
-                </FullForm>
-              </Item>
-              <Item label="背景颜色">
-                <FullForm>
-                  <CompatColorSelect
-                    value={active.backgroundColor}
-                    onChange={(value) =>
-                      this.onKeyChange('active', {
-                        backgroundColor: value,
-                      })
-                    }
-                  />
-                </FullForm>
-              </Item>
-              <Item label="符号颜色">
-                <FullForm>
-                  <CompatColorSelect
-                    value={check.color}
-                    onChange={(value) =>
-                      this.onKeyChange('check', {
-                        color: value,
-                      })
-                    }
-                  />
-                </FullForm>
-              </Item>
-            </Collapse>
-          </ConfigList>
-        </TabPane>
-        <TabPane key={'2'} tab={<Tab>交互</Tab>}>
-          <ConfigList level={1}>
-            <Item label="默认选中">
-              <FullForm>
-                <Input
-                  value={defaultChecked}
-                  onChange={this.onKeyChange.bind(this, 'defaultChecked')}
-                />
-              </FullForm>
-            </Item>
-          </ConfigList>
-        </TabPane>
-      </ComponentOptionConfig>
+                </Collapse>
+                <Collapse
+                  child={{
+                    key: 'focus',
+                    header: '选中',
+                  }}
+                >
+                  <Item label="边框颜色">
+                    <FullForm>
+                      <CompatColorSelect
+                        value={active.borderColor}
+                        onChange={(value) =>
+                          this.onKeyChange('active', {
+                            borderColor: value,
+                          })
+                        }
+                      />
+                    </FullForm>
+                  </Item>
+                  <Item label="背景颜色">
+                    <FullForm>
+                      <CompatColorSelect
+                        value={active.backgroundColor}
+                        onChange={(value) =>
+                          this.onKeyChange('active', {
+                            backgroundColor: value,
+                          })
+                        }
+                      />
+                    </FullForm>
+                  </Item>
+                  <Item label="符号颜色">
+                    <FullForm>
+                      <CompatColorSelect
+                        value={check.color}
+                        onChange={(value) =>
+                          this.onKeyChange('check', {
+                            color: value,
+                          })
+                        }
+                      />
+                    </FullForm>
+                  </Item>
+                </Collapse>
+              </ConfigList>
+            ),
+            key: '1',
+          },
+          {
+            label: <Tab>交互</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <Item label="默认选中">
+                  <FullForm>
+                    <Input
+                      value={defaultChecked}
+                      onChange={this.onKeyChange.bind(this, 'defaultChecked')}
+                    />
+                  </FullForm>
+                </Item>
+              </ConfigList>
+            ),
+            key: '2',
+          },
+        ]}
+      />
     );
   }
 }

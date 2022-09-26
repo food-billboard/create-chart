@@ -22,6 +22,7 @@ const StepData = (props: { id: string }) => {
         e.preventDefault();
       }}
     >
+      {/* @ts-ignore */}
       <ReactJson
         src={jsonData}
         theme="greenscreen"
@@ -34,7 +35,7 @@ const StepData = (props: { id: string }) => {
         indentWidth={2}
         collapseStringsAfterLength={10}
         iconStyle="square"
-      />
+      ></ReactJson>
     </div>
   );
 };
@@ -58,8 +59,8 @@ const StepDataButton = (props: { buttonProps?: ButtonProps; id: string }) => {
       trigger={'click'}
       content={<StepData id={id} />}
       mouseEnterDelay={1}
-      visible={visible}
-      onVisibleChange={onVisibleChange}
+      open={visible}
+      onOpenChange={onVisibleChange}
       placement="left"
     >
       <Button

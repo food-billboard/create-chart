@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Tabs } from 'antd';
+import type { TabsProps } from 'antd';
 import classnames from 'classnames';
 import styles from './index.less';
 
@@ -7,17 +8,16 @@ const { TabPane } = Tabs;
 
 // 组件的定制化配置的tabs
 
-const ComponentOptionConfig = (props: { children?: ReactNode }) => {
-  const { children } = props;
+const ComponentOptionConfig = (props: { items?: TabsProps['items'] }) => {
+  const { items = [] } = props;
 
   return (
     <Tabs
       tabPosition={'left'}
       defaultActiveKey="0"
       className={styles['design-config-default-tab']}
-    >
-      {children}
-    </Tabs>
+      items={items}
+    />
   );
 };
 

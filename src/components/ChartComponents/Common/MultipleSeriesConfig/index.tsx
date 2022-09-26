@@ -82,18 +82,14 @@ const MultipleSeriesConfig = (props: {
         onEdit={onEdit}
         hideAdd
         className={styles['multiple-series-config']}
-      >
-        {new Array(counter).fill(0).map((_, index) => {
-          return (
-            <TabPane
-              tab={seriesLabel ? seriesLabel(index) : `系列${index + 1}`}
-              key={index.toString()}
-            >
-              {renderContent(index)}
-            </TabPane>
-          );
+        items={new Array(counter).fill(0).map((_, index) => {
+          return {
+            label: seriesLabel ? seriesLabel(index) : `系列${index + 1}`,
+            key: index.toString(),
+            children: renderContent(index),
+          };
         })}
-      </Tabs>
+      />
     </>
   );
 };

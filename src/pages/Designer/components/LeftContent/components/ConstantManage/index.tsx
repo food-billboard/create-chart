@@ -226,7 +226,7 @@ const ConstantManage = forwardRef<ConstantManageRef, ConstantManageProps>(
     return (
       <Drawer
         mask={false}
-        visible={visible}
+        open={visible}
         maskClosable={false}
         onClose={onClose}
         footer={footer}

@@ -58,7 +58,7 @@ const EditModal = (props: {
   return (
     <>
       <GhostButton onClick={show}>新增字段</GhostButton>
-      <Modal title="新增字段" visible={visible} onCancel={hide} onOk={handleOk}>
+      <Modal title="新增字段" open={visible} onCancel={hide} onOk={handleOk}>
         <Form
           form={form}
           size="small"

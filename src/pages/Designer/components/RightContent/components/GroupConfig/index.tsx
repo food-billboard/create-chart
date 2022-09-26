@@ -44,12 +44,19 @@ const GroupConfig = (props: {
         title={title}
         hasBack={hasBack}
         onBack={onBack}
-      >
-        <ConfigItem tab="组合配置" key="1">
-          <BaseConfig isGroupComponent id={id} />
-          <OptionConfig component={component} />
-        </ConfigItem>
-      </ConfigWrapper>
+        items={[
+          {
+            label: '组合配置',
+            key: '1',
+            children: (
+              <ConfigItem>
+                <BaseConfig isGroupComponent id={id} />
+                <OptionConfig component={component} />
+              </ConfigItem>
+            ),
+          },
+        ]}
+      />
     </div>
   );
 };

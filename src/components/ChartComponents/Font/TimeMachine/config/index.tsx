@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { Tabs } from 'antd';
 import {
   InfoCircleOutlined,
   BorderLeftOutlined,
@@ -23,9 +22,7 @@ import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import { TTimeMachineConfig } from '../type';
 
-const { TabPane } = Tabs;
 const { Item } = ConfigList;
-
 class Config extends Component<
   ComponentData.ComponentConfigProps<TTimeMachineConfig>
 > {
@@ -48,121 +45,133 @@ class Config extends Component<
     } = value;
 
     return (
-      <ComponentOptionConfig>
-        <TabPane key={'1'} tab={<Tab>样式</Tab>}>
-          <ConfigList level={1}>
-            <Collapse
-              child={{
-                header: '文字样式',
-                key: 'textStyle',
-              }}
-            >
-              <FontConfigList
-                value={textStyle}
-                onChange={this.onKeyChange.bind(null, 'textStyle')}
-              />
-            </Collapse>
-            <Collapse
-              child={{
-                header: '图标',
-                key: 'icon',
-                visibleRender: true,
-                value: icon.show,
-                onChange: (value) => {
-                  this.onKeyChange('icon', {
-                    show: value,
-                  });
-                },
-              }}
-            >
-              <BootstrapIconSelect
-                value={icon.value}
-                onChange={(value) => {
-                  this.onKeyChange('icon', {
-                    value,
-                  });
-                }}
-              />
-              <Item label="定位">
-                <HalfForm label="位置">
-                  <RadioGroup
-                    value={icon.position}
-                    onChange={(value) => {
+      <ComponentOptionConfig
+        items={[
+          {
+            label: <Tab>样式</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <Collapse
+                  child={{
+                    header: '文字样式',
+                    key: 'textStyle',
+                  }}
+                >
+                  <FontConfigList
+                    value={textStyle}
+                    onChange={this.onKeyChange.bind(null, 'textStyle')}
+                  />
+                </Collapse>
+                <Collapse
+                  child={{
+                    header: '图标',
+                    key: 'icon',
+                    visibleRender: true,
+                    value: icon.show,
+                    onChange: (value) => {
                       this.onKeyChange('icon', {
-                        position: value,
+                        show: value,
                       });
-                    }}
-                  >
-                    <Radio icon={<BorderLeftOutlined />} value="before"></Radio>
-                    <Radio icon={<BorderRightOutlined />} value="after"></Radio>
-                  </RadioGroup>
-                </HalfForm>
-                <HalfForm label="边距">
-                  <InputNumber
-                    className="w-100"
-                    value={icon.margin}
+                    },
+                  }}
+                >
+                  <BootstrapIconSelect
+                    value={icon.value}
                     onChange={(value) => {
                       this.onKeyChange('icon', {
-                        margin: value,
+                        value,
                       });
                     }}
                   />
-                </HalfForm>
-              </Item>
-              <Item label="颜色">
-                <FullForm>
-                  <CompatColorSelect
-                    value={icon.color}
-                    onChange={(value) => {
-                      this.onKeyChange('icon', {
-                        color: value,
-                      });
-                    }}
-                  />
-                </FullForm>
-              </Item>
-              <Item label="大小">
-                <FullForm>
-                  <InputNumber
-                    className="w-100"
-                    value={icon.size}
-                    onChange={(value) => {
-                      this.onKeyChange('icon', {
-                        size: value,
-                      });
-                    }}
-                  />
-                </FullForm>
-              </Item>
-            </Collapse>
-            <Item
-              label="格式化"
-              placeholder={
-                <IconTooltip
-                  title={
-                    <>
-                      可以参考
-                      <a target="_blank" href="http://momentjs.cn/">
-                        这里
-                      </a>
-                    </>
+                  <Item label="定位">
+                    <HalfForm label="位置">
+                      <RadioGroup
+                        value={icon.position}
+                        onChange={(value) => {
+                          this.onKeyChange('icon', {
+                            position: value,
+                          });
+                        }}
+                      >
+                        <Radio
+                          icon={<BorderLeftOutlined />}
+                          value="before"
+                        ></Radio>
+                        <Radio
+                          icon={<BorderRightOutlined />}
+                          value="after"
+                        ></Radio>
+                      </RadioGroup>
+                    </HalfForm>
+                    <HalfForm label="边距">
+                      <InputNumber
+                        className="w-100"
+                        value={icon.margin}
+                        onChange={(value) => {
+                          this.onKeyChange('icon', {
+                            margin: value,
+                          });
+                        }}
+                      />
+                    </HalfForm>
+                  </Item>
+                  <Item label="颜色">
+                    <FullForm>
+                      <CompatColorSelect
+                        value={icon.color}
+                        onChange={(value) => {
+                          this.onKeyChange('icon', {
+                            color: value,
+                          });
+                        }}
+                      />
+                    </FullForm>
+                  </Item>
+                  <Item label="大小">
+                    <FullForm>
+                      <InputNumber
+                        className="w-100"
+                        value={icon.size}
+                        onChange={(value) => {
+                          this.onKeyChange('icon', {
+                            size: value,
+                          });
+                        }}
+                      />
+                    </FullForm>
+                  </Item>
+                </Collapse>
+                <Item
+                  label="格式化"
+                  placeholder={
+                    <IconTooltip
+                      title={
+                        <>
+                          可以参考
+                          <a target="_blank" href="http://momentjs.cn/">
+                            这里
+                          </a>
+                        </>
+                      }
+                    >
+                      <InfoCircleOutlined />
+                    </IconTooltip>
                   }
                 >
-                  <InfoCircleOutlined />
-                </IconTooltip>
-              }
-            >
-              <FullForm>
-                <Input
-                  className="w-100"
-                  value={formatter}
-                  onChange={this.onKeyChange.bind(this, 'formatter')}
-                />
-              </FullForm>
-            </Item>
-          </ConfigList>
-        </TabPane>
-      </ComponentOptionConfig>
+                  <FullForm>
+                    <Input
+                      className="w-100"
+                      value={formatter}
+                      onChange={this.onKeyChange.bind(this, 'formatter')}
+                    />
+                  </FullForm>
+                </Item>
+              </ConfigList>
+            ),
+            key: '1',
+          },
+        ]}
+      />
     );
   }
 }

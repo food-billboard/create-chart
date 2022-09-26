@@ -28,7 +28,7 @@ const ContextMenu = (
   const {
     actionIgnore,
     children,
-    onVisibleChange: propsOnVisibleChange,
+    onOpenChange: propsOnVisibleChange,
     value,
     path,
     setSelect,
@@ -128,8 +128,8 @@ const ContextMenu = (
     <Dropdown
       overlay={menu}
       trigger={['contextMenu']}
-      onVisibleChange={onVisibleChange}
-      visible={visible}
+      onOpenChange={onVisibleChange}
+      open={visible}
       overlayClassName={classnames(
         styles['context-menu-content'],
         overlayClassName,
