@@ -361,9 +361,10 @@ declare namespace ComponentData {
 
   // 背景配置
   export type TBackgroundConfig = {
-    type: 'image' | 'color';
+    type: 'image' | 'color' | 'internal_background';
     background?: string;
     color?: TColorConfig;
+    internal_background?: string;
   };
 
   export type BaseComponentItem = {

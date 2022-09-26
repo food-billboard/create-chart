@@ -138,7 +138,7 @@ const Painter = (props: PainterProps) => {
       forwardRef={connectDropTarget}
       role={DROP_TYPE}
       image={backgroundStyle.backgroundImage}
-      type={backgroundStyle.backgroundImage ? 'image' : 'color'}
+      type={poster!.type}
       onMouseDown={onMouseDown}
     >
       <ComponentList />
@@ -231,4 +231,5 @@ export const NormalPainter = connect(
   mapDispatchToProps,
 )(Painter);
 
+// @ts-ignore
 export default connect(mapStateToProps, mapDispatchToProps)(dropTarget);

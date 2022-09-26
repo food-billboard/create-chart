@@ -4,9 +4,10 @@ import { useControllableValue } from 'ahooks';
 import classnames from 'classnames';
 import { merge } from 'lodash';
 import type { UploadFile } from 'antd/es/upload/interface';
+import { DEFAULT_BACKGROUND_CONFIG } from '@/utils/constants';
+import { InternalBackgroundSelect } from '../InternalBackground';
 import { CompatColorSelect } from '../ColorSelect';
 import ImageUpload from '../ImageUpload';
-import { DEFAULT_BACKGROUND_CONFIG } from '@/utils/constants';
 import styles from './index.less';
 
 const BackgroundSelect = (props: {
@@ -18,13 +19,24 @@ const BackgroundSelect = (props: {
       defaultValue: DEFAULT_BACKGROUND_CONFIG,
     });
 
-  const { color, background, type } = value;
+  const { color, background, type, internal_background } = value;
 
   const onColorChange = useCallback(
     (color) => {
       setValue(
         merge({}, value, {
           color,
+        }),
+      );
+    },
+    [value],
+  );
+
+  const onInternalBackgroundChange = useCallback(
+    (value) => {
+      setValue(
+        merge({}, value, {
+          internal_background: value,
         }),
       );
     },
@@ -51,6 +63,17 @@ const BackgroundSelect = (props: {
     [value],
   );
 
+  const internalBackgroundForm = useMemo(() => {
+    return (
+      <Col span={24}>
+        <InternalBackgroundSelect
+          value={internal_background}
+          onChange={onInternalBackgroundChange}
+        />
+      </Col>
+    );
+  }, [internal_background, onInternalBackgroundChange]);
+
   const backgroundForm = useMemo(() => {
     const realValue: any =
       typeof background === 'string' && !!background
@@ -72,6 +95,7 @@ const BackgroundSelect = (props: {
 
   const form = useMemo(() => {
     if (type === 'color') return colorForm;
+    if (type === 'internal_background') return internalBackgroundForm;
     return backgroundForm;
   }, [type, backgroundForm, colorForm]);
 
@@ -94,6 +118,9 @@ const BackgroundSelect = (props: {
         </Radio>
         <Radio key="color" value="color">
           颜色
+        </Radio>
+        <Radio key="internal_background" value="internal_background">
+          内置背景
         </Radio>
       </Radio.Group>
       {form}
