@@ -63,6 +63,8 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
           g: 46,
           b: 36,
         },
+        background: '',
+        internal_background: 'GRADIENT_MIX_BACKGROUND',
       },
       grid: 1,
       filter: DEFAULT_FILTER_LIST,

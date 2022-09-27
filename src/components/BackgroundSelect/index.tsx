@@ -90,13 +90,19 @@ const BackgroundSelect = (props: {
   }, [background, onBackgroundChange]);
 
   const colorForm = useMemo(() => {
-    return <CompatColorSelect value={color} onChange={onColorChange} />;
-  }, [color, onColorChange]);
+    return (
+      <CompatColorSelect
+        value={color}
+        onChange={onColorChange}
+        style={{ display: type === 'color' ? 'block' : 'none' }}
+      />
+    );
+  }, [color, onColorChange, type]);
 
   const form = useMemo(() => {
-    if (type === 'color') return colorForm;
+    if (type === 'image') return backgroundForm;
     if (type === 'internal_background') return internalBackgroundForm;
-    return backgroundForm;
+    return null;
   }, [type, backgroundForm, colorForm, internalBackgroundForm]);
 
   const onTypeChange = useCallback(
@@ -123,6 +129,7 @@ const BackgroundSelect = (props: {
           内置背景
         </Radio>
       </Radio.Group>
+      {colorForm}
       {form}
     </div>
   );

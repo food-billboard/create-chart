@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, CSSProperties } from 'react';
 import { useControllableValue, useUpdateEffect, useUnmount } from 'ahooks';
 import { Input, InputNumber } from 'antd';
 import {
@@ -216,12 +216,13 @@ WrapperColorSelect.getHexString = getHexString;
 WrapperColorSelect.getOpacity = getOpacity;
 
 export const CompatColorSelect = (
-  props: TColorSelectProps & { ignoreAlpha?: boolean },
+  props: TColorSelectProps & { ignoreAlpha?: boolean; style?: CSSProperties },
 ) => {
   const {
     value: propsValue,
     defaultValue: propsDefaultValue,
     ignoreAlpha = false,
+    style,
   } = props;
   const [value, onChange] = useControllableValue<ComponentData.TColorConfig>(
     props,
@@ -305,7 +306,7 @@ export const CompatColorSelect = (
   });
 
   return (
-    <div className="dis-flex">
+    <div className="dis-flex" style={style}>
       <ColorSelect
         value={props.value ?? props.defaultValue ?? value}
         onChange={onSelectChange}
