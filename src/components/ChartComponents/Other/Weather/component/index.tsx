@@ -64,7 +64,7 @@ const Weather = (props: {
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
       map: componentFilterMap,
-    });
+    })?.city;
   }, [processedValue, componentFilterMap]);
 
   const fetchData = async () => {
