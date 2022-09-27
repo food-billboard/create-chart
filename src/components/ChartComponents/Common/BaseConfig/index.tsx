@@ -1,8 +1,10 @@
 import { useCallback, useMemo } from 'react';
 import { connect } from 'dva';
 import { get } from 'lodash';
+import { Switch } from 'antd';
 import { getComponent, getPath } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
+import { InternalBorderSelect } from '../../../InternalBorder';
 import AngleSelect from '../AngleSelect';
 import InputNumber from '../InputNumber';
 import ConfigList from '../Structure/ConfigList';
@@ -30,7 +32,16 @@ const BaseConfig = (props: {
     return get(component, 'config') || {};
   }, [components, id]);
 
-  const { width, height, left, top, opacity, rotate, skew } = style;
+  const {
+    width,
+    height,
+    left,
+    top,
+    opacity,
+    rotate,
+    skew,
+    border = { show: false, value: 'GradientBorder' },
+  } = style;
   const { scaleX, scaleY } = attr;
 
   const onValueChange = useCallback(
@@ -171,6 +182,32 @@ const BaseConfig = (props: {
               step={0.1}
             />
           </HalfForm>
+        </Item>
+        <Item label="边框">
+          <HalfForm>
+            <Switch
+              checked={border.show}
+              onChange={(value) => {
+                onValueChange('border', {
+                  ...border,
+                  show: value,
+                });
+              }}
+            />
+          </HalfForm>
+          {!!border.show && (
+            <HalfForm>
+              <InternalBorderSelect
+                value={border.value}
+                onChange={(value) => {
+                  onValueChange('border', {
+                    ...border,
+                    value: value,
+                  });
+                }}
+              />
+            </HalfForm>
+          )}
         </Item>
       </ConfigList>
     </div>

@@ -1,8 +1,10 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, Fragment } from 'react';
 import { connect } from 'dva';
+import { get } from 'lodash';
 import { ConnectState } from '@/models/connect';
 import { EComponentType } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils';
+import { BorderMap } from '../../../InternalBorder';
 import { ComponentProps } from '../../../ChartComponents/Common/Component/type';
 import ChildrenWrapper from './ChildrenWrapper';
 import SubGroup from './SubGroup';
@@ -39,6 +41,13 @@ const Content = (props: {
       const { scaleX, scaleY } = getScale(parent || undefined);
       return value.map((component) => {
         const { type, id } = component;
+        const { show, value } = get(component, 'config.style.border') || {};
+        const Dom = show
+          ? (BorderMap as any)[value]?.value || Fragment
+          : Fragment;
+
+        console.log(Dom, 2222);
+
         const newComponent = mergeWithoutArray({}, component, {
           config: {
             style: {
@@ -53,18 +62,21 @@ const Content = (props: {
             },
           },
         });
+
         if (type === EComponentType.GROUP_COMPONENT) {
           return (
-            <ChildrenWrapper
-              value={newComponent}
-              key={component.id}
-              borderNone={isOuter}
-              parent={parent}
-            >
-              <SubGroup value={newComponent} isOuter={isOuter}>
-                {renderChildren(newComponent.components, newComponent, false)}
-              </SubGroup>
-            </ChildrenWrapper>
+            <Dom>
+              <ChildrenWrapper
+                value={newComponent}
+                key={component.id}
+                borderNone={isOuter}
+                parent={parent}
+              >
+                <SubGroup value={newComponent} isOuter={isOuter}>
+                  {renderChildren(newComponent.components, newComponent, false)}
+                </SubGroup>
+              </ChildrenWrapper>
+            </Dom>
           );
         }
 
@@ -73,23 +85,25 @@ const Content = (props: {
         if (!TargetComponent) return null;
 
         return (
-          <ChildrenWrapper
-            value={newComponent}
-            key={newComponent.id}
-            borderNone={isOuter}
-            parent={parent}
-          >
-            <TargetComponent
-              className={styles['render-component-children']}
+          <Dom>
+            <ChildrenWrapper
               value={newComponent}
-              key={id}
-              global={{
-                setParams,
-                screenType,
-                screenTheme,
-              }}
-            />
-          </ChildrenWrapper>
+              key={newComponent.id}
+              borderNone={isOuter}
+              parent={parent}
+            >
+              <TargetComponent
+                className={styles['render-component-children']}
+                value={newComponent}
+                key={id}
+                global={{
+                  setParams,
+                  screenType,
+                  screenTheme,
+                }}
+              />
+            </ChildrenWrapper>
+          </Dom>
         );
       });
     };

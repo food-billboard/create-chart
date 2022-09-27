@@ -173,6 +173,11 @@ declare namespace ComponentData {
         x: number;
         y: number;
       };
+      border: {
+        show: boolean;
+        value: string;
+        // TODO
+      };
     };
     attr: {
       visible: boolean;

@@ -106,6 +106,10 @@ export const DEFAULT_CONFIG: ComponentData.TBaseConfig = {
       x: 0,
       y: 0,
     },
+    border: {
+      show: false,
+      value: 'GradientBorder',
+    },
   },
   attr: {
     visible: true,
