@@ -35,7 +35,7 @@ const ColorImageBackground = (props: {
       )}
       {type === 'internal_background' &&
         ((BackgroundMap as any)[
-          (image || '').replace('internal_background', '')
+          (image || '').replace('internal_background-', '')
         ]?.value ||
           '')}
       {children}

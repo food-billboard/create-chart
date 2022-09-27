@@ -1,6 +1,5 @@
 import {} from 'react';
 import classnames from 'classnames';
-import 'css-doodle';
 import styles from './index.less';
 
 export const GridBackground = () => {

@@ -33,10 +33,10 @@ const BackgroundSelect = (props: {
   );
 
   const onInternalBackgroundChange = useCallback(
-    (value) => {
+    (internal_background) => {
       setValue(
         merge({}, value, {
-          internal_background: value,
+          internal_background,
         }),
       );
     },
@@ -97,7 +97,7 @@ const BackgroundSelect = (props: {
     if (type === 'color') return colorForm;
     if (type === 'internal_background') return internalBackgroundForm;
     return backgroundForm;
-  }, [type, backgroundForm, colorForm]);
+  }, [type, backgroundForm, colorForm, internalBackgroundForm]);
 
   const onTypeChange = useCallback(
     (e) => {

@@ -232,4 +232,4 @@ export const NormalPainter = connect(
 )(Painter);
 
 // @ts-ignore
-export default connect(mapStateToProps, mapDispatchToProps)(dropTarget);
+export default connect(mapStateToProps, mapDispatchToProps)(dropTarget) as any;

@@ -3,6 +3,7 @@ import moment from 'moment';
 import { Button, Result } from 'antd';
 import { FrownOutlined } from '@ant-design/icons';
 import 'pathseg';
+import 'css-doodle';
 import * as Sentry from '@sentry/react';
 import type { ErrorBoundaryProps } from '@sentry/react';
 import 'moment/locale/zh-cn';
