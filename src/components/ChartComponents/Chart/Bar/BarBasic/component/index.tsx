@@ -53,6 +53,7 @@ const BarBasic = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -87,11 +88,13 @@ const BarBasic = (props: {
 
   const onClick = (params: any) => {
     const { seriesName, name, data } = params;
-    syncInteractiveAction('click', {
+    const value = {
       x: name,
       y: data,
       s: seriesName,
-    });
+    };
+    syncInteractiveAction('click', value);
+    linkageMethod('click-item', value);
   };
 
   const initChart = () => {

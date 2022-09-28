@@ -76,11 +76,20 @@ declare namespace ComponentData {
     fields: TBaseInteractiveConfigField[];
   };
 
+  // 组件链接交互配置
+  export type TLinkageInteractiveConfig = {
+    type: string;
+    name: string;
+    show: boolean;
+    description?: string;
+    value: string;
+  };
+
   // 交互
   export type TInteractiveConfig = {
     base: TBaseInteractiveConfig[];
+    linkage: TLinkageInteractiveConfig[];
     // TODO
-    // linkage
     // 具体细节有待参考
   };
 

@@ -13,6 +13,7 @@ export const useComponentStyle: (
     style: CSSProperties;
     scale: number;
     query: string;
+    screenType: ComponentData.ScreenType;
   },
 ) => CSSProperties = (value, options) => {
   const {
@@ -21,7 +22,7 @@ export const useComponentStyle: (
       attr: { visible, lock },
     },
   } = value;
-  const { isSelect, style, scale, query } = options;
+  const { isSelect, style, scale, query, screenType } = options;
 
   const isHover = useHover(document.querySelector(query));
 
@@ -36,7 +37,7 @@ export const useComponentStyle: (
       opacity,
       ...nextComponentStyle
     } = componentStyle;
-    const borderWidth = (1 / scale) * 100;
+    const borderWidth = screenType === 'edit' ? (1 / scale) * 100 : 0;
     const borderColor =
       isSelect || isHover
         ? getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0))
@@ -53,7 +54,16 @@ export const useComponentStyle: (
       },
       style,
     );
-  }, [componentStyle, style, visible, scale, isSelect, lock, isHover]);
+  }, [
+    componentStyle,
+    style,
+    visible,
+    scale,
+    isSelect,
+    lock,
+    isHover,
+    screenType,
+  ]);
 
   return styles;
 };

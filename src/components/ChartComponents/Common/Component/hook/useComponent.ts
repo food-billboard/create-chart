@@ -6,13 +6,14 @@ import {
   useMemo,
   RefObject,
 } from 'react';
-import { get, isEqual } from 'lodash';
+import { get, isEqual, noop } from 'lodash';
 import { useUpdateEffect } from 'ahooks';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import VariableStringUtil from '@/utils/Assist/VariableString';
 import { mergeWithoutArray } from '@/utils';
 import { TFetchFragmentRef } from '@/components/ChartComponents/Common/FetchFragment';
 import { useFilterChange } from './useFilterChange';
+import { useLinkageInteractive } from './useLinkageInteractive';
 import { ComponentProps } from '../type';
 
 export function useComponent<P extends object = {}>(
@@ -34,6 +35,13 @@ export function useComponent<P extends object = {}>(
 
   const requestTimer = useRef<any>(1);
   const requestLoading = useRef<boolean>(false);
+
+  // 组件的过滤配置
+  const componentLinkageConfig = useMemo(() => {
+    return get(component, 'config.interactive.linkage');
+  }, [component]);
+
+  const linkageMethod = useLinkageInteractive(componentLinkageConfig);
 
   // * --------------------数据相关--------------------
 
@@ -358,6 +366,7 @@ export function useComponent<P extends object = {}>(
     getValue: outerGetValue,
     onCondition: outerGetConditionResult,
     syncInteractiveAction: outerSyncInteractiveAction,
+    linkageMethod: screenType === 'edit' ? noop : linkageMethod,
     requestUrl,
     componentFilter,
     componentFilterMap,

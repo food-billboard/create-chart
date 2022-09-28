@@ -106,6 +106,7 @@ const RenderComponent = memo(
       scale,
       style,
       query: `div[data-id="${id}"]`,
+      screenType,
     });
 
     const setComponent = useCallback(

@@ -1,10 +1,10 @@
-import { useMemo, ReactNode, useCallback, useEffect, useState } from 'react';
+import { useMemo, ReactNode, useCallback } from 'react';
 import { Collapse, Checkbox } from 'antd';
 import { get } from 'lodash';
 import { connect } from 'dva';
 import { InfoCircleOutlined, CaretRightOutlined } from '@ant-design/icons';
 import IconTooltip from '@/components/IconTooltip';
-import { getComponent, getPath } from '@/utils/Assist/Component';
+import { getPath } from '@/utils/Assist/Component';
 import InteractiveUtil from '@/utils/Assist/Interactive';
 import GlobalComponent from '@/utils/Assist/GlobalComponent';
 import FieldSetting from './FieldSetting';
@@ -51,16 +51,12 @@ const PanelHeader = (props: {
 
 const BaseConfig = (props: {
   id: string;
-  components: ComponentData.TComponentData[];
+  component: ComponentData.TComponentData;
   onChange?: ComponentMethod.SetComponentMethod;
   params: ComponentData.TParams[];
   setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
 }) => {
-  const { id, components, onChange, params, setScreen } = props;
-
-  const component = useMemo(() => {
-    return getComponent(id, components);
-  }, [id, components]);
+  const { id, component, onChange, params, setScreen } = props;
 
   const setParams = useCallback(
     (params: ComponentData.TParams[]) => {
@@ -160,15 +156,6 @@ const BaseConfig = (props: {
       },
     );
   }, [onChange, baseInteractive, params, setParams]);
-
-  if (!baseInteractive.length) {
-    return (
-      <div className={styles['design-config-interactive-base-empty']}>
-        <InfoCircleOutlined style={{ marginRight: 4 }} />
-        该组件无基础交互事件
-      </div>
-    );
-  }
 
   return (
     <div className={styles['design-config-interactive-base']}>
