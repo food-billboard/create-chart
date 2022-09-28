@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useState } from 'react';
+import { CSSProperties, useMemo, useRef, useState, ReactNode } from 'react';
 import { merge, uniqueId } from 'lodash';
 import classnames from 'classnames';
 import QRCode from 'qrcode';
@@ -26,10 +26,11 @@ const QrCode = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TQrCodeConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
   const [qrCode, setQrCode] = useState<string>('');
 
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const { screenType } = global;
 
   const {
@@ -139,6 +140,7 @@ const QrCode = (props: {
         style={componentStyle}
         id={chartId.current}
       >
+        {children}
         <div
           className={styles['component-other-qr-code-content']}
           style={{

@@ -36,19 +36,20 @@ export const useComponentStyle: (
       opacity,
       ...nextComponentStyle
     } = componentStyle;
+    const borderWidth = (1 / scale) * 100;
+    const borderColor =
+      isSelect || isHover
+        ? getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0))
+        : 'transparent';
     return merge(
       {},
       nextComponentStyle,
       {
         transform: `rotate(${rotate}deg)`,
         visibility: visible ? 'visible' : 'hidden',
-        borderWidth: (1 / scale) * 100,
+        border: `${borderWidth}px solid ${borderColor}`,
         zIndex: isSelect ? 4 : zIndex,
         pointerEvents: lock ? 'none' : 'unset',
-        borderColor:
-          isSelect || isHover
-            ? getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0))
-            : 'transparent',
       },
       style,
     );

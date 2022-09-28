@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef } from 'react';
+import { CSSProperties, useMemo, useRef, ReactNode } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
@@ -15,8 +15,9 @@ const Icon = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TIconConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value } = props;
+  const { className, style, value, children } = props;
 
   const {
     config: {
@@ -63,6 +64,7 @@ const Icon = (props: {
       )}
       id={chartId.current}
     >
+      {children}
       {iconNode}
     </div>
   );

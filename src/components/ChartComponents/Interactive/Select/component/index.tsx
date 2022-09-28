@@ -1,4 +1,11 @@
-import { CSSProperties, useMemo, useRef, useCallback, useState } from 'react';
+import {
+  CSSProperties,
+  useMemo,
+  useRef,
+  useCallback,
+  useState,
+  ReactNode,
+} from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import Select from 'react-select';
@@ -22,8 +29,9 @@ const SelectBasic = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TSelectConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
 
   const {
     id,
@@ -150,6 +158,7 @@ const SelectBasic = (props: {
         )}
         id={chartId.current}
       >
+        {children}
         <Select
           placeholder="请选择..."
           value={activeSelect}

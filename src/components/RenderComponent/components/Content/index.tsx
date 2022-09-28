@@ -46,8 +46,6 @@ const Content = (props: {
           ? (BorderMap as any)[value]?.value || Fragment
           : Fragment;
 
-        console.log(Dom, 2222);
-
         const newComponent = mergeWithoutArray({}, component, {
           config: {
             style: {
@@ -85,25 +83,24 @@ const Content = (props: {
         if (!TargetComponent) return null;
 
         return (
-          <Dom>
-            <ChildrenWrapper
+          <ChildrenWrapper
+            value={newComponent}
+            key={newComponent.id}
+            borderNone={isOuter}
+            parent={parent}
+          >
+            <TargetComponent
+              className={styles['render-component-children']}
               value={newComponent}
-              key={newComponent.id}
-              borderNone={isOuter}
-              parent={parent}
-            >
-              <TargetComponent
-                className={styles['render-component-children']}
-                value={newComponent}
-                key={id}
-                global={{
-                  setParams,
-                  screenType,
-                  screenTheme,
-                }}
-              />
-            </ChildrenWrapper>
-          </Dom>
+              key={id}
+              children={<Dom />}
+              global={{
+                setParams,
+                screenType,
+                screenTheme,
+              }}
+            />
+          </ChildrenWrapper>
         );
       });
     };

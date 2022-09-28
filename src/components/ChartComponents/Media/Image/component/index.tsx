@@ -1,4 +1,11 @@
-import { CSSProperties, useMemo, useRef, useCallback, useState } from 'react';
+import {
+  CSSProperties,
+  useMemo,
+  useRef,
+  useCallback,
+  useState,
+  ReactNode,
+} from 'react';
 import { uniqueId, merge } from 'lodash';
 import { Image } from 'antd';
 import classnames from 'classnames';
@@ -22,8 +29,9 @@ const ImageBasic = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TImageConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const { screenType } = global;
 
   const [visible, setVisible] = useState<boolean>(false);
@@ -116,13 +124,17 @@ const ImageBasic = (props: {
             height: '100%',
           },
           style,
-          componentStyle,
-          clipPathStyle,
           conditionStyle,
         )}
-        id={chartId.current}
-        onClick={onClick}
-      ></div>
+      >
+        <div
+          id={chartId.current}
+          onClick={onClick}
+          className="w-100 h-100"
+          style={merge(componentStyle, clipPathStyle)}
+        ></div>
+        {children}
+      </div>
       <Image
         preview={{
           visible: visible,

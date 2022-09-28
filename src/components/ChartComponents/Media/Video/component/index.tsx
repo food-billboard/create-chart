@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
+import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import {
@@ -21,8 +21,9 @@ const VideoBasic = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TVideoConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
 
   const {
     id,
@@ -106,6 +107,7 @@ const VideoBasic = (props: {
         id={chartId.current}
         onClick={onClick}
       >
+        {children}
         <video
           muted={muted}
           autoPlay={autoplay}

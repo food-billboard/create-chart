@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
+import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import {
@@ -23,8 +23,9 @@ const TitleBasic = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TTitleConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
 
   const {
     id,
@@ -121,6 +122,7 @@ const TitleBasic = (props: {
         id={chartId.current}
         onClick={onClick}
       >
+        {children}
         {finalValue.value || ''}
       </div>
       <FetchFragment

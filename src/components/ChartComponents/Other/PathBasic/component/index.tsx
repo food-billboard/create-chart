@@ -1,4 +1,4 @@
-import { CSSProperties, useCallback, useRef, useMemo } from 'react';
+import { CSSProperties, useCallback, useRef, useMemo, ReactNode } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import Anime from 'animejs';
@@ -29,8 +29,9 @@ const _PathBasic = (props: {
   value: ComponentData.TComponentData<TPathBasicConfig>;
   global: ComponentProps['global'];
   scale: number;
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global, scale } = props;
+  const { className, style, value, global, scale, children } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -246,6 +247,7 @@ const _PathBasic = (props: {
         )}
         id={chartId.current}
       >
+        {children}
         {shape}
         <svg id={svgId.current} width={width} height={height}>
           <path

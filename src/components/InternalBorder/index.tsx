@@ -4,6 +4,7 @@ import { useControllableValue } from 'ahooks';
 import BorderMap from './components/Border';
 
 export { default as BorderMap } from './components/Border';
+export * from './components/Border';
 
 export const InternalBorderSelect = (props: {
   value?: string;

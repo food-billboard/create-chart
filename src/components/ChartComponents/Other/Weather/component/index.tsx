@@ -1,4 +1,11 @@
-import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react';
+import {
+  CSSProperties,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 import { merge, uniqueId, noop } from 'lodash';
 import classnames from 'classnames';
 import moment from 'moment';
@@ -30,10 +37,11 @@ const Weather = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TWeatherConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
   const [weatherData, setWeatherData] = useState<API_THIRD.TWeatherData>();
 
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
 
   const {
     id,
@@ -160,6 +168,7 @@ const Weather = (props: {
         style={componentStyle}
         id={chartId.current}
       >
+        {children}
         {listContent}
       </div>
       <FetchFragment

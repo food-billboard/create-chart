@@ -1,4 +1,11 @@
-import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react';
+import {
+  CSSProperties,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import moment from 'moment';
@@ -16,8 +23,9 @@ const TimeMachineBasic = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TTimeMachineConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value } = props;
+  const { className, style, value, children } = props;
 
   const [currentTime, setCurrentTime] = useState<moment.Moment>(moment());
 
@@ -85,6 +93,7 @@ const TimeMachineBasic = (props: {
       )}
       id={chartId.current}
     >
+      {children}
       {icon.position === 'before' && iconNode}
       {currentTime.format(formatter)}
       {icon.position === 'after' && iconNode}

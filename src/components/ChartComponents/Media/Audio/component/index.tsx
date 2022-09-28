@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
+import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import {
@@ -20,8 +20,9 @@ const AudioBasic = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TAudioConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
 
   const {
     id,
@@ -95,6 +96,7 @@ const AudioBasic = (props: {
         id={chartId.current}
         onClick={onClick}
       >
+        {children}
         <audio
           autoPlay={screenType !== 'edit' && autoplay}
           loop={loop}

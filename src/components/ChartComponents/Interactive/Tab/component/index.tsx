@@ -5,6 +5,7 @@ import {
   useCallback,
   useEffect,
   useState,
+  ReactNode,
 } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -27,8 +28,9 @@ const TabBasic = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TTabConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
 
   const {
     id,
@@ -171,6 +173,7 @@ const TabBasic = (props: {
         )}
         id={chartId.current}
       >
+        {children}
         {domList}
       </div>
       <FetchFragment

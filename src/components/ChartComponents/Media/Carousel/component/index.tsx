@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
+import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
 import { Carousel } from 'antd';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -22,8 +22,9 @@ const CarouselBasic = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TCarouselConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const { screenType } = global;
 
   const {
@@ -118,6 +119,7 @@ const CarouselBasic = (props: {
         )}
         id={chartId.current}
       >
+        {children}
         <Carousel
           autoplay={autoplay}
           dots={dot.show}

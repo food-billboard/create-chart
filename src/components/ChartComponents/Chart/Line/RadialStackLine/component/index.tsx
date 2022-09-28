@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef } from 'react';
+import { CSSProperties, useEffect, useRef, ReactNode } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -14,13 +14,10 @@ import {
 } from '@/components/ChartComponents/Common/Component/hook';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
-import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TRadialStackLineConfig } from '../type';
-
-const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'RADIAL_STACK_LINE';
 
@@ -29,8 +26,9 @@ const RadialStackLine = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TRadialStackLineConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -219,8 +217,10 @@ const RadialStackLine = (props: {
           style,
           conditionStyle,
         )}
-        id={chartId.current}
-      ></div>
+      >
+        <div id={chartId.current} className="w-100 h-100"></div>
+        {children}
+      </div>
       <FetchFragment
         id={id}
         url={requestUrl}

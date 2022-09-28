@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
+import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
 import { merge, uniqueId } from 'lodash';
 import classnames from 'classnames';
 import {
@@ -23,8 +23,9 @@ const StateCard = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TStateCardConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const { screenType } = global;
 
   const {
@@ -160,6 +161,7 @@ const StateCard = (props: {
         style={componentStyle}
         id={chartId.current}
       >
+        {children}
         {listContent}
       </div>
       <FetchFragment

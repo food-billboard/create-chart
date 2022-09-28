@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
+import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
 import { merge, uniqueId } from 'lodash';
 import classnames from 'classnames';
 import { Tag as AntTag } from 'antd';
@@ -25,8 +25,9 @@ const Tag = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TTagConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const { screenType } = global;
 
   const {
@@ -143,6 +144,7 @@ const Tag = (props: {
         style={componentStyle}
         id={chartId.current}
       >
+        {children}
         {valueList}
       </div>
       <FetchFragment

@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import { Switch } from 'antd';
 import { getComponent, getPath } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
-import { InternalBorderSelect } from '../../../InternalBorder';
+import { InternalBorderSelect, DEFAULT_BORDER } from '../../../InternalBorder';
 import AngleSelect from '../AngleSelect';
 import InputNumber from '../InputNumber';
 import ConfigList from '../Structure/ConfigList';
@@ -40,7 +40,7 @@ const BaseConfig = (props: {
     opacity,
     rotate,
     skew,
-    border = { show: false, value: 'GradientBorder' },
+    border = { show: false, value: DEFAULT_BORDER },
   } = style;
   const { scaleX, scaleY } = attr;
 

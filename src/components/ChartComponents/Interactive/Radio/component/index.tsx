@@ -1,4 +1,11 @@
-import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react';
+import {
+  CSSProperties,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 import { uniqueId, merge } from 'lodash';
 import { Radio as AntRadio } from 'antd';
 import classnames from 'classnames';
@@ -21,8 +28,9 @@ const Radio = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TRadioConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
 
   const {
     id,
@@ -105,6 +113,7 @@ const Radio = (props: {
         )}
         id={chartId.current}
       >
+        {children}
         <AntRadio.Group
           value={checkedValue}
           onChange={onChange}

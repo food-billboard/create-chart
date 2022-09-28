@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
+import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import Marquee from 'react-fast-marquee';
@@ -24,8 +24,9 @@ const TFontCarousel = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TFontCarouselConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const { screenType } = global;
 
   const {
@@ -109,6 +110,7 @@ const TFontCarousel = (props: {
         id={chartId.current}
         onClick={onClick}
       >
+        {children}
         {
           <Marquee
             gradient={false}

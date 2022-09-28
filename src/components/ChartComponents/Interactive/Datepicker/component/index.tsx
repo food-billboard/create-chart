@@ -5,6 +5,7 @@ import {
   useState,
   useEffect,
   cloneElement,
+  ReactNode,
 } from 'react';
 import { uniqueId, merge } from 'lodash';
 import { DatePicker as AntDatePicker } from 'antd';
@@ -27,8 +28,9 @@ const DatePicker = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TDatePickerConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
 
   const {
     id,
@@ -271,6 +273,7 @@ const DatePicker = (props: {
         )}
         id={chartId.current}
       >
+        {children}
         {DatePickerDom}
       </div>
     </>

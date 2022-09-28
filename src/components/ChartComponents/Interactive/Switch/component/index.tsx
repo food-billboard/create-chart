@@ -1,4 +1,11 @@
-import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react';
+import {
+  CSSProperties,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
@@ -19,8 +26,9 @@ const Switch = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TSwitchConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
 
   const {
     id,
@@ -138,6 +146,7 @@ const Switch = (props: {
         )}
         id={chartId.current}
       >
+        {children}
         <ReactSwitch
           width={width}
           height={height}

@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
+import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
 import { uniqueId, merge, round as mathRound } from 'lodash';
 import classnames from 'classnames';
 import { CountUp } from 'countup.js';
@@ -39,8 +39,9 @@ const CountUpNumberBasic = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TCountUpNumberConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const { screenType } = global;
 
   const {
@@ -160,10 +161,11 @@ const CountUpNumberBasic = (props: {
           componentStyle,
           conditionStyle,
         )}
-        id={chartId.current}
         onClick={onClick}
       >
+        <div id={chartId.current} className="w-100 h-100"></div>
         {calculateValue || ''}
+        {children}
       </div>
       <FetchFragment
         id={id}

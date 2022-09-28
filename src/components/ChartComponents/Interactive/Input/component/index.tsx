@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useState } from 'react';
+import { CSSProperties, useMemo, useRef, useState, ReactNode } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
@@ -16,8 +16,9 @@ const Input = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TInputConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
 
   const {
     config: { options },
@@ -74,6 +75,7 @@ const Input = (props: {
         )}
         id={chartId.current}
       >
+        {children}
         <input
           value={inputValue}
           placeholder={placeholder.value}

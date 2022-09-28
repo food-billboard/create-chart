@@ -5,6 +5,7 @@ import {
   useCallback,
   useState,
   useEffect,
+  ReactNode,
 } from 'react';
 import { uniqueId, merge, noop } from 'lodash';
 import classnames from 'classnames';
@@ -38,8 +39,9 @@ const ModelBasic = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TModelConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
 
   const [pageLoading, setPageLoading] = useState<boolean>(true);
 
@@ -150,6 +152,7 @@ const ModelBasic = (props: {
         id={chartId.current}
         onClick={onClick}
       >
+        {children}
         {pageLoading && (
           <div className={styles['component-media-model-loading']}>
             <GridLoader loading color={color} />

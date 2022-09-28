@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid';
+import { DEFAULT_BORDER } from '@/components/InternalBorder';
 import Theme from '../../theme/wonderland.project.json';
 
 export const DEFAULT_FILTER_LIST: ComponentData.TFilterConfig[] = [
@@ -108,7 +109,7 @@ export const DEFAULT_CONFIG: ComponentData.TBaseConfig = {
     },
     border: {
       show: false,
-      value: 'GradientBorder',
+      value: DEFAULT_BORDER,
     },
   },
   attr: {

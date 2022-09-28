@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
+import { CSSProperties, useMemo, useRef, ReactNode } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { TextLoop } from 'react-text-loop-next';
@@ -24,8 +24,9 @@ const LoopText = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TLoopTextConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const { screenType } = global;
 
   const {
@@ -107,6 +108,7 @@ const LoopText = (props: {
         )}
         id={chartId.current}
       >
+        {children}
         {addonBefore.show && (
           <span
             style={{

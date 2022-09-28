@@ -1,4 +1,11 @@
-import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react';
+import {
+  CSSProperties,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { Rate as AntRate } from 'antd';
@@ -17,8 +24,9 @@ const Rate = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TRateConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
 
   const {
     config: { options },
@@ -84,6 +92,7 @@ const Rate = (props: {
       )}
       id={chartId.current}
     >
+      {children}
       <AntRate
         character={iconNode}
         value={rateValue}

@@ -1,4 +1,11 @@
-import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react';
+import {
+  CSSProperties,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 import { uniqueId, merge } from 'lodash';
 import { Checkbox as AntCheckbox } from 'antd';
 import classnames from 'classnames';
@@ -21,8 +28,9 @@ const Checkbox = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TCheckboxConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
 
   const {
     id,
@@ -103,6 +111,7 @@ const Checkbox = (props: {
         )}
         id={chartId.current}
       >
+        {children}
         <AntCheckbox.Group
           value={checkedValue}
           onChange={onChange}

@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef, useMemo } from 'react';
+import { CSSProperties, useEffect, useRef, useMemo, ReactNode } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -29,8 +29,9 @@ const WaterBall = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TWaterBallConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -178,8 +179,10 @@ const WaterBall = (props: {
           style,
           conditionStyle,
         )}
-        id={chartId.current}
-      ></div>
+      >
+        <div id={chartId.current} className="w-100 h-100"></div>
+        {children}
+      </div>
       <FetchFragment
         id={id}
         url={requestUrl}

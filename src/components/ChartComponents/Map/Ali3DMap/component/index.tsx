@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef } from 'react';
+import { CSSProperties, useEffect, useRef, ReactNode } from 'react';
 import { uniqueId, merge, pick } from 'lodash';
 import classnames from 'classnames';
 import { useUnmount } from 'ahooks';
@@ -36,8 +36,9 @@ const Ali3DMap = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TAli3DMapConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const { screenType } = global;
 
   const {
@@ -380,6 +381,7 @@ const Ali3DMap = (props: {
         )}
         id={chartId.current}
       >
+        {children}
         <div id={mapId.current}></div>
       </div>
       <FetchFragment

@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef } from 'react';
+import { CSSProperties, useEffect, useRef, ReactNode } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import { useDeepUpdateEffect } from '@/hooks';
@@ -20,8 +20,9 @@ const ClockGauge = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TClockGaugeConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const { screenTheme } = global;
 
   const {
@@ -305,8 +306,10 @@ const ClockGauge = (props: {
           },
           style,
         )}
-        id={chartId.current}
-      ></div>
+      >
+        <div id={chartId.current} className="w-100 h-100"></div>
+        {children}
+      </div>
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef } from 'react';
+import { CSSProperties, useEffect, useRef, ReactNode } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -28,8 +28,9 @@ const BoxPlotBasic = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TBoxPlotBasicConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -214,8 +215,10 @@ const BoxPlotBasic = (props: {
           style,
           conditionStyle,
         )}
-        id={chartId.current}
-      ></div>
+      >
+        <div id={chartId.current} className="w-100 h-100"></div>
+        {children}
+      </div>
       <FetchFragment
         id={id}
         url={requestUrl}

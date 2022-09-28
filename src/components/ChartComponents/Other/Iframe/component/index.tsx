@@ -1,4 +1,11 @@
-import { CSSProperties, useMemo, useRef, useCallback, useEffect } from 'react';
+import {
+  CSSProperties,
+  useMemo,
+  useRef,
+  useCallback,
+  useEffect,
+  ReactNode,
+} from 'react';
 import { uniqueId, merge, get } from 'lodash';
 import classnames from 'classnames';
 import { useUpdateEffect } from 'ahooks';
@@ -20,8 +27,9 @@ const IframeBasic = (props: {
   style?: CSSProperties;
   value: ComponentData.TComponentData<TIFrameConfig>;
   global: ComponentProps['global'];
+  children?: ReactNode;
 }) => {
-  const { className, style, value, global } = props;
+  const { className, style, value, global, children } = props;
   const {
     id,
     config: {
@@ -168,6 +176,7 @@ const IframeBasic = (props: {
                 } as CSSProperties),
           )}
         >
+          {children}
           <iframe
             src={finalValue.value}
             name={chartId.current}
