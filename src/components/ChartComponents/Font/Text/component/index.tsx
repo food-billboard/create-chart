@@ -32,7 +32,7 @@ const Text = (props: {
   const {
     id,
     config: {
-      style: { width, height },
+      style: { height },
       options,
     },
   } = value;
@@ -46,6 +46,7 @@ const Text = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -78,6 +79,9 @@ const Text = (props: {
 
   const onClick = useCallback(() => {
     syncInteractiveAction('click', {
+      value: finalValue.value,
+    });
+    linkageMethod('click', {
       value: finalValue.value,
     });
   }, [syncInteractiveAction, finalValue]);

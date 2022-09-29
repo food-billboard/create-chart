@@ -50,6 +50,7 @@ const RadialStackLine = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -84,11 +85,13 @@ const RadialStackLine = (props: {
 
   const onClick = (params: any) => {
     const { seriesName, name, value } = params;
-    syncInteractiveAction('click', {
+    const target = {
       x: name,
       y: value,
       s: seriesName,
-    });
+    };
+    syncInteractiveAction('click', target);
+    linkageMethod('click-item', target);
   };
 
   const initChart = () => {
@@ -118,7 +121,7 @@ const RadialStackLine = (props: {
         width: 0,
       },
       showSymbol: false,
-      triggerLineEvent: true,
+      triggerLineEvent: false,
       areaStyle: {
         color: radialGradientColor(areaStyle.color[0]) || 'transparent',
       },

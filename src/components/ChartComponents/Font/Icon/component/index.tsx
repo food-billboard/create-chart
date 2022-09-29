@@ -3,6 +3,7 @@ import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
+import { useLinkageInteractive } from '@/components/ChartComponents/Common/Component/hook/useLinkageInteractive';
 import { TIconConfig } from '../type';
 import styles from './index.less';
 
@@ -17,17 +18,25 @@ const Icon = (props: {
   global: ComponentProps['global'];
   children?: ReactNode;
 }) => {
-  const { className, style, value, children } = props;
+  const { className, style, value, children, global } = props;
+  const { screenType } = global;
 
   const {
     config: {
       options,
       style: { width, height },
+      interactive: { linkage = [] } = {},
     },
   } = value;
   const { color, value: iconValue } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
+
+  const linkageMethod = useLinkageInteractive(linkage);
+
+  const onClick = () => {
+    screenType !== 'edit' && linkageMethod('click', {});
+  };
 
   const componentStyle = useMemo(() => {
     let baseStyle: CSSProperties = {
@@ -63,6 +72,7 @@ const Icon = (props: {
         componentStyle,
       )}
       id={chartId.current}
+      onClick={onClick}
     >
       {children}
       {iconNode}

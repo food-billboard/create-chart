@@ -42,7 +42,7 @@ export default () => {
       interactive: {
         base: [
           {
-            type: 'click',
+            type: 'click-bar',
             name: '当点击项时',
             show: false,
             fields: [
@@ -57,14 +57,26 @@ export default () => {
                 description: 'y轴',
               },
               {
-                key: 'y2',
-                variable: '',
-                description: 'y2轴',
-              },
-              {
                 key: 's',
                 variable: '',
                 description: '柱图系列',
+              },
+            ],
+          },
+          {
+            type: 'click-line',
+            name: '当点击项时',
+            show: false,
+            fields: [
+              {
+                key: 'x',
+                variable: '',
+                description: 'x轴',
+              },
+              {
+                key: 'y2',
+                variable: '',
+                description: 'y2轴',
               },
               {
                 key: 's2',
@@ -72,6 +84,22 @@ export default () => {
                 description: '折线系列',
               },
             ],
+          },
+        ],
+        linkage: [
+          {
+            type: 'click-item-bar',
+            name: '点击柱子',
+            show: false,
+            description: '',
+            value: '',
+          },
+          {
+            type: 'click-item-line',
+            name: '点击折线',
+            show: false,
+            description: '',
+            value: '',
           },
         ],
       },

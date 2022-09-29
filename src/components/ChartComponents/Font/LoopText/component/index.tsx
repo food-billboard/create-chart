@@ -47,6 +47,7 @@ const LoopText = (props: {
 
   const {
     request,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -66,6 +67,10 @@ const LoopText = (props: {
     style: conditionStyle,
     className: conditionClassName,
   } = useCondition(onCondition, screenType);
+
+  const onClick = (value: string) => {
+    linkageMethod('click', { value });
+  };
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -130,6 +135,7 @@ const LoopText = (props: {
                     color: getRgbaString(textStyle.color),
                   }}
                   key={index}
+                  onClick={onClick.bind(null, item)}
                 >
                   {item}
                 </span>

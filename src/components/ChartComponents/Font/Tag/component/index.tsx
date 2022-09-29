@@ -42,6 +42,7 @@ const Tag = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -72,6 +73,7 @@ const Tag = (props: {
     (value, e) => {
       e.stopPropagation();
       syncInteractiveAction('click', { value });
+      linkageMethod('click-item', { value });
     },
     [syncInteractiveAction],
   );

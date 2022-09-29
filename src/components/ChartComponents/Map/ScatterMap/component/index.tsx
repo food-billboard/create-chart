@@ -55,6 +55,7 @@ const ScatterMap = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -98,11 +99,13 @@ const ScatterMap = (props: {
   const onClick = (params: any) => {
     const { data } = params;
     const { name, value } = data;
-    syncInteractiveAction('click', {
+    const target = {
       name: name,
       value: value[2],
       center: value.slice(0, 2),
-    });
+    };
+    syncInteractiveAction('click', target);
+    linkageMethod('click-item', target);
   };
 
   const initChart = () => {

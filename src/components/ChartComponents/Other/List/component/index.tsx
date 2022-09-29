@@ -53,6 +53,7 @@ const ListBasic = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -84,16 +85,20 @@ const ListBasic = (props: {
       syncInteractiveAction('click-column', {
         value,
       });
+      linkageMethod('click-column', {
+        value,
+      });
     },
-    [syncInteractiveAction, finalValue],
+    [syncInteractiveAction, finalValue, linkageMethod],
   );
 
   const onItemClick = useCallback(
     (value, e) => {
       e.stopPropagation();
       syncInteractiveAction('click-item', value);
+      linkageMethod('click-item', value);
     },
-    [syncInteractiveAction],
+    [syncInteractiveAction, linkageMethod],
   );
 
   const autoplay = useMemo(() => {

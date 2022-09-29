@@ -63,6 +63,7 @@ const LineBar = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -142,12 +143,15 @@ const LineBar = (props: {
   });
 
   const onClick = (params: any) => {
-    const { seriesName, name, value } = params;
-    syncInteractiveAction('click', {
+    const { seriesName, name, value, componentSubType } = params;
+
+    const target = {
       x: name,
-      y: value,
-      s: seriesName,
-    });
+      y2: value,
+      s2: seriesName,
+    };
+    syncInteractiveAction(`click-${componentSubType}`, target);
+    linkageMethod(`click-item-${componentSubType}`, target);
   };
 
   const initChart = () => {
@@ -170,7 +174,6 @@ const LineBar = (props: {
         ...label,
         color: getRgbaString(label.color),
       },
-      triggerLineEvent: true,
       type: 'line',
       yAxisIndex: 1,
       symbolSize: 0,
@@ -244,7 +247,7 @@ const LineBar = (props: {
         })
       : [baseLineSeries];
 
-    return [...realBarSeries, ...realLineSeries];
+    return [...realLineSeries, ...realBarSeries];
   };
 
   const setOption = () => {

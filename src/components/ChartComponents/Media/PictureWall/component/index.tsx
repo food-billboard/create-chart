@@ -37,6 +37,7 @@ const PictureWall = (props: {
   const requestRef = useRef<TFetchFragmentRef>(null);
 
   const {
+    linkageMethod,
     request,
     getValue,
     requestUrl,
@@ -61,6 +62,12 @@ const PictureWall = (props: {
     return classnames(className, styles['component-media-carousel']);
   }, [className]);
 
+  const onClick = (value: any) => {
+    linkageMethod('click-item', {
+      value,
+    });
+  };
+
   const imageList = useMemo(() => {
     const rate = Math.ceil(maxCount / columnCount);
     return finalValue.slice(0, maxCount).map((item: any, index: number) => {
@@ -77,6 +84,7 @@ const PictureWall = (props: {
             }px ) / ${columnCount} )`,
           }}
           key={index}
+          onClick={onClick.bind(null, item)}
         />
       );
     });

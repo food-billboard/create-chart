@@ -21,12 +21,14 @@ const InterActiveConfig = (props: {
   }, [id, components]);
 
   const {
-    base: baseInteractive,
-    linkage: linkageInteractive,
+    base: baseInteractive = [],
+    linkage: linkageInteractive = [],
   }: Pick<ComponentData.TInteractiveConfig, 'base' | 'linkage'> =
     useMemo(() => {
       return get(component, 'config.interactive');
     }, [component]);
+
+  console.log(baseInteractive, linkageInteractive, 29999);
 
   return (
     <div
@@ -41,14 +43,14 @@ const InterActiveConfig = (props: {
           该组件无交互事件
         </div>
       )}
-      {baseInteractive.length && (
+      {!!baseInteractive.length && (
         <BaseConfig
           id={id}
           component={component}
           onChange={DataChangePool.setComponent}
         />
       )}
-      {linkageInteractive.length && (
+      {!!linkageInteractive.length && (
         <LinkageConfig
           id={id}
           component={component}

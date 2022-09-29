@@ -18,6 +18,15 @@ export default () => {
     {
       interactive: {
         base: [],
+        linkage: [
+          {
+            type: 'click-item',
+            name: '点击项',
+            show: false,
+            description: '',
+            value: '',
+          },
+        ],
       },
       data: {
         request: {

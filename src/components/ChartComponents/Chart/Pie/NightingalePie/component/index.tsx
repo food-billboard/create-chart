@@ -53,6 +53,7 @@ const NightingalePie = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -84,10 +85,12 @@ const NightingalePie = (props: {
 
   const onClick = (params: any) => {
     const { name, value } = params;
-    syncInteractiveAction('click', {
+    const target = {
       name,
       value,
-    });
+    };
+    syncInteractiveAction('click', target);
+    linkageMethod('click-item', target);
   };
 
   const initChart = () => {

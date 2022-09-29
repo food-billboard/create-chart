@@ -57,6 +57,7 @@ const Weather = (props: {
   const {
     request,
     getValue,
+    linkageMethod,
     requestUrl,
     componentFilter,
     value: processedValue = [],
@@ -145,6 +146,10 @@ const Weather = (props: {
     );
   }, [show, weatherData, widMap, textStyle]);
 
+  const onClick = () => {
+    linkageMethod('click', {});
+  };
+
   useEffect(() => {
     clearInterval(timerRef.current);
 
@@ -167,6 +172,7 @@ const Weather = (props: {
         className={componentClassName}
         style={componentStyle}
         id={chartId.current}
+        onClick={onClick}
       >
         {children}
         {listContent}

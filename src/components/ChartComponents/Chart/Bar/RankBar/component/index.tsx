@@ -54,6 +54,7 @@ const RankBar = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -85,10 +86,12 @@ const RankBar = (props: {
 
   const onClick = (params: any) => {
     const { seriesName, value } = params;
-    syncInteractiveAction('click', {
+    const target = {
       value,
       name: seriesName,
-    });
+    };
+    syncInteractiveAction('click', target);
+    linkageMethod('click-item', target);
   };
 
   const initChart = () => {

@@ -10,6 +10,7 @@ import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import moment from 'moment';
 import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
+import { useLinkageInteractive } from '@/components/ChartComponents/Common/Component/hook/useLinkageInteractive';
 import ColorSelect from '@/components/ColorSelect';
 import { TTimeMachineConfig } from '../type';
 import styles from './index.less';
@@ -25,17 +26,20 @@ const TimeMachineBasic = (props: {
   global: ComponentProps['global'];
   children?: ReactNode;
 }) => {
-  const { className, style, value, children } = props;
+  const { className, style, value, children, global } = props;
+  const { screenType } = global;
 
   const [currentTime, setCurrentTime] = useState<moment.Moment>(moment());
 
   const {
-    config: { options },
+    config: { options, interactive: { linkage = [] } = {} },
   } = value;
   const { formatter, icon, ...nextOptions } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const timerRef = useRef<any>(null);
+
+  const linkageMethod = useLinkageInteractive(linkage);
 
   const componentStyle = useMemo(() => {
     const { textStyle } = nextOptions;
@@ -53,6 +57,10 @@ const TimeMachineBasic = (props: {
       styles['component-font-time-machine'],
     );
   }, [className]);
+
+  const onClick = () => {
+    screenType !== 'edit' && linkageMethod('click', {});
+  };
 
   const iconNode = useMemo(() => {
     const { show, margin, value, size, color, position } = icon;
@@ -92,6 +100,7 @@ const TimeMachineBasic = (props: {
         componentStyle,
       )}
       id={chartId.current}
+      onClick={onClick}
     >
       {children}
       {icon.position === 'before' && iconNode}

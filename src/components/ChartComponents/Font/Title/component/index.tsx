@@ -40,6 +40,7 @@ const TitleBasic = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -68,6 +69,9 @@ const TitleBasic = (props: {
 
   const onClick = useCallback(() => {
     syncInteractiveAction('click', {
+      value: finalValue.value,
+    });
+    linkageMethod('click', {
       value: finalValue.value,
     });
   }, [syncInteractiveAction, finalValue]);

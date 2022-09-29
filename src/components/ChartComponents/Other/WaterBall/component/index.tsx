@@ -52,6 +52,7 @@ const WaterBall = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -80,6 +81,9 @@ const WaterBall = (props: {
 
   const onClick = () => {
     syncInteractiveAction('click', {
+      value: finalValue.value,
+    });
+    linkageMethod('click', {
       value: finalValue.value,
     });
   };

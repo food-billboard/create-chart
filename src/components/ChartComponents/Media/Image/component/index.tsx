@@ -57,6 +57,7 @@ const ImageBasic = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -88,6 +89,9 @@ const ImageBasic = (props: {
       setVisible(true);
     }
     syncInteractiveAction('click', {
+      value: finalValue.value,
+    });
+    linkageMethod('click', {
       value: finalValue.value,
     });
   }, [syncInteractiveAction, finalValue, preview]);

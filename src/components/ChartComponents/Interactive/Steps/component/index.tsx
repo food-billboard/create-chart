@@ -59,6 +59,7 @@ const Steps = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -81,6 +82,7 @@ const Steps = (props: {
   const onClick = useCallback(
     (item: any, index: number) => {
       syncInteractiveAction('click', item);
+      linkageMethod('click-item', item);
       setActiveStep(index);
       clearInterval(timerRef.current);
       if (screenType === 'edit' && carousel.show) return;

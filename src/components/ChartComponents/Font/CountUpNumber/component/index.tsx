@@ -66,6 +66,7 @@ const CountUpNumberBasic = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -101,6 +102,9 @@ const CountUpNumberBasic = (props: {
 
   const onClick = useCallback(() => {
     syncInteractiveAction('click', {
+      value: finalValue.value,
+    });
+    linkageMethod('click', {
       value: finalValue.value,
     });
   }, [syncInteractiveAction, finalValue]);
@@ -163,8 +167,9 @@ const CountUpNumberBasic = (props: {
         )}
         onClick={onClick}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {calculateValue || ''}
+        <div id={chartId.current} className="w-100 h-100">
+          {calculateValue || ''}
+        </div>
         {children}
       </div>
       <FetchFragment

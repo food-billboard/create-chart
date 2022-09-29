@@ -54,6 +54,7 @@ const PolarBar = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -85,10 +86,12 @@ const PolarBar = (props: {
 
   const onClick = (params: any) => {
     const { name, data } = params;
-    syncInteractiveAction('click', {
-      x: name,
-      y: data,
-    });
+    const target = {
+      name,
+      value: data,
+    };
+    syncInteractiveAction('click', target);
+    linkageMethod('click-item', target);
   };
 
   const initChart = () => {

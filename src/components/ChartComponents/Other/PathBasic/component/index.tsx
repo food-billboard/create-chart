@@ -51,6 +51,7 @@ const _PathBasic = (props: {
   const shapeId = useRef<string>(uniqueId(CHART_ID + '_shape'));
 
   const {
+    linkageMethod,
     request,
     getValue,
     requestUrl,
@@ -192,6 +193,10 @@ const _PathBasic = (props: {
     [],
   );
 
+  const onClick = () => {
+    linkageMethod('click', {});
+  };
+
   const setOption = async () => {
     await sleep(1000);
 
@@ -246,6 +251,7 @@ const _PathBasic = (props: {
           conditionStyle,
         )}
         id={chartId.current}
+        onClick={onClick}
       >
         {children}
         {shape}

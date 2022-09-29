@@ -42,6 +42,7 @@ const StateCard = (props: {
 
   const {
     request,
+    linkageMethod,
     syncInteractiveAction,
     getValue,
     requestUrl,
@@ -73,8 +74,9 @@ const StateCard = (props: {
     (value, e) => {
       e.stopPropagation();
       syncInteractiveAction('click', value);
+      linkageMethod('click-item', value);
     },
-    [syncInteractiveAction],
+    [syncInteractiveAction, linkageMethod],
   );
 
   const componentClassName = useMemo(() => {

@@ -11,6 +11,15 @@ export default () => {
   const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TIconConfig> = {
     interactive: {
       base: [],
+      linkage: [
+        {
+          type: 'click',
+          name: '点击',
+          show: false,
+          description: '',
+          value: '',
+        },
+      ],
     },
     data: {
       request: {

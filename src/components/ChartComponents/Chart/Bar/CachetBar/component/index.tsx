@@ -54,6 +54,7 @@ const CachetBar = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -88,11 +89,13 @@ const CachetBar = (props: {
 
   const onClick = (params: any) => {
     const { seriesName, name, value } = params;
-    syncInteractiveAction('click', {
+    const target = {
       x: name,
       y: value,
       s: seriesName,
-    });
+    };
+    syncInteractiveAction('click', target);
+    linkageMethod('click-item', target);
   };
 
   const initChart = () => {

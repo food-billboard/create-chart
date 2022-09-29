@@ -55,6 +55,7 @@ const BubbleScatter = (props: {
     getValue,
     requestUrl,
     componentFilter,
+    linkageMethod,
     value: processedValue = [],
     componentFilterMap,
     onCondition,
@@ -175,6 +176,10 @@ const BubbleScatter = (props: {
     };
   };
 
+  const onClick = () => {
+    linkageMethod('click', {});
+  };
+
   const setOption = () => {
     const { animation, ...nextTooltip } = tooltip;
 
@@ -236,6 +241,7 @@ const BubbleScatter = (props: {
           style,
           conditionStyle,
         )}
+        onClick={onClick}
       >
         <div id={chartId.current} className="w-100 h-100"></div>
         {children}

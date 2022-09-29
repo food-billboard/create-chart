@@ -45,6 +45,7 @@ const TFontCarousel = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -73,6 +74,9 @@ const TFontCarousel = (props: {
 
   const onClick = useCallback(() => {
     syncInteractiveAction('click', {
+      value: finalValue.value,
+    });
+    linkageMethod('click', {
       value: finalValue.value,
     });
   }, [syncInteractiveAction, finalValue]);

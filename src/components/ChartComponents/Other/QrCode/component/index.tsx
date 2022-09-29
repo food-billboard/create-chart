@@ -44,6 +44,7 @@ const QrCode = (props: {
 
   const {
     request,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -69,6 +70,12 @@ const QrCode = (props: {
       map: componentFilterMap,
     });
   }, [processedValue, componentFilterMap]);
+
+  const onClick = () => {
+    linkageMethod('click', {
+      value: finalValue.value,
+    });
+  };
 
   const logoDom = useMemo(() => {
     const { show, size, image, borderRadius, border } = logo;
@@ -139,6 +146,7 @@ const QrCode = (props: {
         className={componentClassName}
         style={componentStyle}
         id={chartId.current}
+        onClick={onClick}
       >
         {children}
         <div

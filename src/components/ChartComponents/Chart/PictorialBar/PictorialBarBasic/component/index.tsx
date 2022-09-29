@@ -53,6 +53,7 @@ const PictorialBar = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -84,10 +85,12 @@ const PictorialBar = (props: {
 
   const onClick = (params: any) => {
     const { name, data } = params;
-    syncInteractiveAction('click', {
+    const target = {
       name,
-      value,
-    });
+      value: data,
+    };
+    syncInteractiveAction('click', target);
+    linkageMethod('click-item', target);
   };
 
   const initChart = () => {

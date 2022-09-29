@@ -52,6 +52,7 @@ const BoxPlotBasic = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -86,11 +87,13 @@ const BoxPlotBasic = (props: {
 
   const onClick = (params: any) => {
     const { seriesName, name, value } = params;
-    syncInteractiveAction('click', {
+    const target = {
       x: name,
-      y: value,
+      y: `[${value.join(',')}]`,
       s: seriesName,
-    });
+    };
+    syncInteractiveAction('click', target);
+    linkageMethod('click-item', target);
   };
 
   const initChart = () => {

@@ -45,6 +45,7 @@ const CarouselBasic = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -74,6 +75,7 @@ const CarouselBasic = (props: {
   const onClick = useCallback(
     (value) => {
       syncInteractiveAction('click', value);
+      linkageMethod('click-item', value);
     },
     [syncInteractiveAction],
   );

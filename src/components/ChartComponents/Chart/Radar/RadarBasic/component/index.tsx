@@ -54,6 +54,7 @@ const RadarBasic = (props: {
   const {
     request,
     getValue,
+    linkageMethod,
     requestUrl,
     componentFilter,
     value: processedValue = [],
@@ -204,6 +205,10 @@ const RadarBasic = (props: {
     };
   };
 
+  const onClick = (value: any) => {
+    linkageMethod('click', {});
+  };
+
   const getSeries = () => {
     const { itemStyle, label, lineStyle, areaStyle, ...nextSeries } = series;
     const { animation: show, animationDuration, animationEasing } = animation;
@@ -319,6 +324,11 @@ const RadarBasic = (props: {
     setOption();
     chartInstance.current?.resize();
   }, [options]);
+
+  useEffect(() => {
+    chartInstance.current?.off('click');
+    chartInstance.current?.on('click', onClick);
+  }, [linkageMethod]);
 
   useAnimationChange(chartInstance.current!, animation, setOption);
 

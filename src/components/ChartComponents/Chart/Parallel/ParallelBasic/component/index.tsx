@@ -53,6 +53,7 @@ const ParallelBasic = (props: {
     request,
     getValue,
     requestUrl,
+    linkageMethod,
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
@@ -140,6 +141,11 @@ const ParallelBasic = (props: {
       : baseSeries;
 
     return realSeries;
+  };
+
+  const onClick = () => {
+    console.log(222222);
+    linkageMethod('click', {});
   };
 
   const setOption = () => {
@@ -234,6 +240,7 @@ const ParallelBasic = (props: {
           style,
           conditionStyle,
         )}
+        onClick={onClick}
       >
         <div id={chartId.current} className="w-100 h-100"></div>
         {children}

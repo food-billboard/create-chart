@@ -53,6 +53,7 @@ const PercentBar = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -84,10 +85,12 @@ const PercentBar = (props: {
 
   const onClick = (params: any) => {
     const { seriesName, value } = params;
-    syncInteractiveAction('click', {
+    const target = {
       value: value,
       name: seriesName,
-    });
+    };
+    syncInteractiveAction('click', target);
+    linkageMethod('click-item', target);
   };
 
   const initChart = () => {

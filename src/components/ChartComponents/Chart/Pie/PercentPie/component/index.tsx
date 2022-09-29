@@ -63,6 +63,7 @@ const PercentPie = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -94,9 +95,11 @@ const PercentPie = (props: {
   };
 
   const onClick = () => {
-    syncInteractiveAction('click', {
+    const target = {
       value: finalValue.value,
-    });
+    };
+    syncInteractiveAction('click', target);
+    linkageMethod('click', target);
   };
 
   const initChart = () => {

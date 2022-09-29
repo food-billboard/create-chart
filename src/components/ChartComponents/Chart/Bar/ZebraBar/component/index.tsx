@@ -53,6 +53,7 @@ const ZebraBar = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -87,10 +88,12 @@ const ZebraBar = (props: {
 
   const onClick = (params: any) => {
     const { seriesName, name, value } = params;
-    syncInteractiveAction('click', {
+    const target = {
       x: name,
       y: value,
-    });
+    };
+    syncInteractiveAction('click', target);
+    linkageMethod('click-item', target);
   };
 
   const initChart = () => {

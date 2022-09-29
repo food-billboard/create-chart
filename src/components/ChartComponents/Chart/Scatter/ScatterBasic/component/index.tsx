@@ -55,6 +55,7 @@ const ScatterBasic = (props: {
     getValue,
     requestUrl,
     componentFilter,
+    linkageMethod,
     value: processedValue = [],
     componentFilterMap,
     onCondition,
@@ -83,6 +84,10 @@ const ScatterBasic = (props: {
       },
     },
   );
+
+  const onClick = () => {
+    linkageMethod('click', {});
+  };
 
   const initChart = () => {
     const chart = init(
@@ -222,6 +227,7 @@ const ScatterBasic = (props: {
           style,
           conditionStyle,
         )}
+        onClick={onClick}
       >
         <div id={chartId.current} className="w-100 h-100"></div>
         {children}

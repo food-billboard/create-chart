@@ -40,6 +40,15 @@ export default () => {
     {
       interactive: {
         base: [],
+        linkage: [
+          {
+            type: 'click',
+            name: '点击项',
+            show: false,
+            description: '',
+            value: '',
+          },
+        ],
       },
       data: {
         request: {

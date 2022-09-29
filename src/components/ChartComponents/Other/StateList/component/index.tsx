@@ -50,6 +50,7 @@ const StateList = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -80,8 +81,9 @@ const StateList = (props: {
     (value, e) => {
       e.stopPropagation();
       syncInteractiveAction('click', value);
+      linkageMethod('click-item', value);
     },
-    [syncInteractiveAction],
+    [syncInteractiveAction, linkageMethod],
   );
 
   const componentClassName = useMemo(() => {

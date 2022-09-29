@@ -53,6 +53,7 @@ const ProgressBar = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -83,6 +84,7 @@ const ProgressBar = (props: {
     syncInteractiveAction('click', {
       value: finalValue.value,
     });
+    linkageMethod('click', { value: finalValue.value });
   };
 
   const initChart = () => {

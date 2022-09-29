@@ -48,6 +48,7 @@ const TabBasic = (props: {
   const {
     request,
     syncInteractiveAction,
+    linkageMethod,
     getValue,
     requestUrl,
     componentFilter,
@@ -84,6 +85,7 @@ const TabBasic = (props: {
   const onClick = useCallback(
     (item: any, index: number) => {
       syncInteractiveAction('click', item);
+      linkageMethod('click-item', item);
       setActiveTab(index);
       loopTimerRef.current && clearInterval(loopTimerRef.current);
       const { show, speed } = loop;
