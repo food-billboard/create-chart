@@ -1,6 +1,14 @@
 import { omit } from 'lodash';
 import { nanoid } from 'nanoid';
 import ThemeUtil from '@/utils/Assist/Theme';
+import { DEFAULT_BORDER } from '@/components/InternalBorder';
+
+// 默认linkage
+export const DEFAULT_LINKAGE_CONFIG = {
+  show: false,
+  description: '',
+  value: '',
+};
 
 // 默认的透明度
 export const DEFAULT_OPACITY = 0.4;
@@ -61,6 +69,10 @@ export const BASIC_DEFAULT_CONFIG: ComponentData.TBaseConfig = {
       x: 0,
       y: 0,
     },
+    border: {
+      show: false,
+      value: DEFAULT_BORDER,
+    },
   },
   attr: {
     visible: true,
@@ -98,6 +110,7 @@ export const BASIC_DEFAULT_DATA_CONFIG: ComponentData.TBaseConfig['data'] = {
 export const BASIC_DEFAULT_INTERACTIVE_CONFIG: ComponentData.TBaseConfig['interactive'] =
   {
     base: [],
+    linkage: [],
   };
 
 export const DEFAULT_FONT_CONFIG: ComponentData.TFontConfig = {

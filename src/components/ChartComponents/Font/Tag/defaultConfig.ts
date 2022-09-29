@@ -6,6 +6,7 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_THEME_COLOR_LIST,
+  DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { getText } from '@/utils/constants';
 import { TTagConfig } from './type';
@@ -37,11 +38,9 @@ export default () => {
       ],
       linkage: [
         {
+          ...DEFAULT_LINKAGE_CONFIG,
           type: 'click-item',
           name: '点击项',
-          show: false,
-          description: '',
-          value: '',
         },
       ],
     },

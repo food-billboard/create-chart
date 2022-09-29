@@ -13,6 +13,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_GRID_CONFIG,
+  DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { getDate, getNumberValue, getSeries } from '@/utils/constants';
@@ -75,11 +76,9 @@ export default () => {
         ],
         linkage: [
           {
+            ...DEFAULT_LINKAGE_CONFIG,
             type: 'click-item',
             name: '点击项',
-            show: false,
-            description: '',
-            value: '',
           },
         ],
       },

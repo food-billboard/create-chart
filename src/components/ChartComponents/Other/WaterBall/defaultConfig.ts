@@ -7,6 +7,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_FONT_CONFIG,
   DEFAULT_RADIAL_CONFIG,
+  DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TWaterBallConfig } from './type';
@@ -41,11 +42,9 @@ export default () => {
         ],
         linkage: [
           {
+            ...DEFAULT_LINKAGE_CONFIG,
             type: 'click',
             name: '点击',
-            show: false,
-            description: '',
-            value: '',
           },
         ],
       },

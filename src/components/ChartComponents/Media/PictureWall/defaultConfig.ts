@@ -3,6 +3,7 @@ import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
+  DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { TPictureWallConfig } from './type';
 
@@ -17,11 +18,9 @@ export default () => {
         base: [],
         linkage: [
           {
+            ...DEFAULT_LINKAGE_CONFIG,
             type: 'click-item',
             name: '点击项',
-            show: false,
-            description: '',
-            value: '',
           },
         ],
       },

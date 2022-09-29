@@ -9,6 +9,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_RADIAL_CONFIG,
   DEFAULT_GRID_CONFIG,
+  DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TProgressBarConfig } from './type';
@@ -37,11 +38,9 @@ export default () => {
         ],
         linkage: [
           {
+            ...DEFAULT_LINKAGE_CONFIG,
             type: 'click',
             name: '点击进度条',
-            show: false,
-            description: '',
-            value: '',
           },
         ],
       },

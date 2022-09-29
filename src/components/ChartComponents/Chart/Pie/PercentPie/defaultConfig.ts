@@ -6,6 +6,7 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_THEME_COLOR_LIST,
+  DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { TPercentPieConfig } from './type';
 
@@ -30,11 +31,9 @@ export default () => {
         ],
         linkage: [
           {
+            ...DEFAULT_LINKAGE_CONFIG,
             type: 'click',
             name: '点击',
-            show: false,
-            description: '',
-            value: '',
           },
         ],
       },

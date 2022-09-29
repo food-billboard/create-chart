@@ -10,6 +10,7 @@ import {
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_THEME_RADIAL_COLOR_LIST,
   DEFAULT_GRID_CONFIG,
+  DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getName, getNumberValue } from '@/utils/constants';
 import ThemeUtil from '@/utils/Assist/Theme';
@@ -53,11 +54,9 @@ export default () => {
         ],
         linkage: [
           {
+            ...DEFAULT_LINKAGE_CONFIG,
             type: 'click-item',
             name: '点击项',
-            show: false,
-            description: '',
-            value: '',
           },
         ],
       },

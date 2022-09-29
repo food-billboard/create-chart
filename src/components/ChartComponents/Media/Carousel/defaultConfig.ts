@@ -4,6 +4,7 @@ import {
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_CONDITION_CONFIG,
+  DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { getName } from '@/utils/constants/defaultValue';
 import { TCarouselConfig } from './type';
@@ -34,11 +35,9 @@ export default () => {
         ],
         linkage: [
           {
+            ...DEFAULT_LINKAGE_CONFIG,
             type: 'click-item',
             name: '点击项',
-            show: false,
-            description: '',
-            value: '',
           },
         ],
       },

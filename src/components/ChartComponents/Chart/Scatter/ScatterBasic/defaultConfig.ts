@@ -12,6 +12,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_GRID_CONFIG,
+  DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue } from '@/utils/constants';
 import { TScatterBasicConfig } from './type';
@@ -33,11 +34,9 @@ export default () => {
         base: [],
         linkage: [
           {
+            ...DEFAULT_LINKAGE_CONFIG,
             type: 'click',
             name: '点击',
-            show: false,
-            description: '',
-            value: '',
           },
         ],
       },

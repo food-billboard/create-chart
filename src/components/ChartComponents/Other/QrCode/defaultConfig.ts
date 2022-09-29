@@ -5,6 +5,7 @@ import {
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_CONDITION_CONFIG,
+  DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { TQrCodeConfig } from './type';
 
@@ -21,11 +22,9 @@ export default () => {
       base: [],
       linkage: [
         {
+          ...DEFAULT_LINKAGE_CONFIG,
           type: 'click',
           name: '点击',
-          show: false,
-          description: '',
-          value: '',
         },
       ],
     },

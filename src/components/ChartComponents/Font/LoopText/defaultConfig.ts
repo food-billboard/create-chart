@@ -5,6 +5,7 @@ import {
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
   DEFAULT_CONDITION_CONFIG,
+  DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { getText } from '@/utils/constants';
 import { TLoopTextConfig } from './type';
@@ -20,11 +21,9 @@ export default () => {
         base: [],
         linkage: [
           {
+            ...DEFAULT_LINKAGE_CONFIG,
             type: 'click-item',
             name: '点击项',
-            show: false,
-            description: '',
-            value: '',
           },
         ],
       },

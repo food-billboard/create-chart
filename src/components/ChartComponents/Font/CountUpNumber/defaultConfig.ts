@@ -5,6 +5,7 @@ import {
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
   DEFAULT_CONDITION_CONFIG,
+  DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { getNumberValue } from '@/utils/constants';
 import { TCountUpNumberConfig } from './type';
@@ -35,11 +36,9 @@ export default () => {
         ],
         linkage: [
           {
+            ...DEFAULT_LINKAGE_CONFIG,
             type: 'click',
             name: '点击',
-            show: false,
-            description: '',
-            value: '',
           },
         ],
       },
