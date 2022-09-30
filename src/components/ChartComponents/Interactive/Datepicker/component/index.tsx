@@ -1,18 +1,9 @@
-import {
-  CSSProperties,
-  useMemo,
-  useRef,
-  useState,
-  useEffect,
-  cloneElement,
-  ReactNode,
-} from 'react';
+import { useMemo, useRef, useState, useEffect, cloneElement } from 'react';
 import { uniqueId, merge } from 'lodash';
 import { DatePicker as AntDatePicker } from 'antd';
 import classnames from 'classnames';
 import moment from 'moment';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import { TDatePickerConfig } from '../type';
 import styles from './index.less';
@@ -23,13 +14,9 @@ const { WeekPicker, YearPicker, MonthPicker } = AntDatePicker;
 
 const CHART_ID = 'DATE_PICKER';
 
-const DatePicker = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TDatePickerConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const DatePicker = (
+  props: ComponentData.CommonComponentProps<TDatePickerConfig>,
+) => {
   const { className, style, value, global, children } = props;
 
   const {

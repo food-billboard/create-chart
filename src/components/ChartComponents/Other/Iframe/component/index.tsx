@@ -1,16 +1,8 @@
-import {
-  CSSProperties,
-  useMemo,
-  useRef,
-  useCallback,
-  useEffect,
-  ReactNode,
-} from 'react';
+import { CSSProperties, useMemo, useRef, useCallback, useEffect } from 'react';
 import { uniqueId, merge, get } from 'lodash';
 import classnames from 'classnames';
 import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -22,13 +14,9 @@ import styles from './index.less';
 
 const CHART_ID = 'IFRAME';
 
-const IframeBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TIFrameConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const IframeBasic = (
+  props: ComponentData.CommonComponentProps<TIFrameConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const {
     id,

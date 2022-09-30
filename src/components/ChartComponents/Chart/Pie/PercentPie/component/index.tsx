@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef, useMemo, ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -10,7 +10,6 @@ import {
   useCondition,
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import FetchFragment, {
@@ -32,13 +31,9 @@ function getCirclePoint(x0: number, y0: number, r: number, angle: number) {
   };
 }
 
-const PercentPie = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TPercentPieConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const PercentPie = (
+  props: ComponentData.CommonComponentProps<TPercentPieConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenTheme, screenType } = global;
 

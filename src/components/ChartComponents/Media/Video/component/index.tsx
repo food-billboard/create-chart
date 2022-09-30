@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
+import { useMemo, useRef, useCallback } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import {
@@ -6,7 +6,6 @@ import {
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { useClipPath } from '@/hooks';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -16,13 +15,9 @@ import styles from './index.less';
 
 const CHART_ID = 'VIDEO';
 
-const VideoBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TVideoConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const VideoBasic = (
+  props: ComponentData.CommonComponentProps<TVideoConfig>,
+) => {
   const { className, style, value, global, children } = props;
 
   const {

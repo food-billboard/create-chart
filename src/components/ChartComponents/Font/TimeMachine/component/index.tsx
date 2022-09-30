@@ -1,15 +1,7 @@
-import {
-  CSSProperties,
-  useMemo,
-  useRef,
-  useState,
-  useEffect,
-  ReactNode,
-} from 'react';
+import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import moment from 'moment';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import { useLinkageInteractive } from '@/components/ChartComponents/Common/Component/hook/useLinkageInteractive';
 import ColorSelect from '@/components/ColorSelect';
 import { TTimeMachineConfig } from '../type';
@@ -19,13 +11,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'TIME_MACHINE';
 
-const TimeMachineBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TTimeMachineConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const TimeMachineBasic = (
+  props: ComponentData.CommonComponentProps<TTimeMachineConfig>,
+) => {
   const { className, style, value, children, global } = props;
   const { screenType } = global;
 

@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useState, ReactNode } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { merge, uniqueId } from 'lodash';
 import classnames from 'classnames';
 import QRCode from 'qrcode';
@@ -8,7 +8,6 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -21,13 +20,7 @@ const { getRgbaString, getHexString } = ColorSelect;
 
 const CHART_ID = 'QR_CODE';
 
-const QrCode = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TQrCodeConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const QrCode = (props: ComponentData.CommonComponentProps<TQrCodeConfig>) => {
   const [qrCode, setQrCode] = useState<string>('');
 
   const { className, style, value, global, children } = props;

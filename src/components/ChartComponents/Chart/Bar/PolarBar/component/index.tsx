@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef, ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -12,7 +12,6 @@ import {
   useCondition,
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import ThemeUtil from '@/utils/Assist/Theme';
 import FetchFragment, {
@@ -25,13 +24,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'POLAR_BAR';
 
-const PolarBar = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TPolarBarConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const PolarBar = (
+  props: ComponentData.CommonComponentProps<TPolarBarConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenTheme, screenType } = global;
 

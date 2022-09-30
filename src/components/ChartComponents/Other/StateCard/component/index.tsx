@@ -1,11 +1,10 @@
-import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
+import { useMemo, useRef, useCallback } from 'react';
 import { merge, uniqueId } from 'lodash';
 import classnames from 'classnames';
 import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -18,13 +17,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'STATE_CARD';
 
-const StateCard = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TStateCardConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const StateCard = (
+  props: ComponentData.CommonComponentProps<TStateCardConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenType } = global;
 

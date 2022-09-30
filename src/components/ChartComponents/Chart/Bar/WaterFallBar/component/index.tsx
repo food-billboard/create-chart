@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef, ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -14,7 +14,6 @@ import {
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -25,13 +24,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'WATER_FALL_BAR';
 
-const WaterFallBar = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TWaterFallBarConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const WaterFallBar = (
+  props: ComponentData.CommonComponentProps<TWaterFallBarConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenTheme, screenType } = global;
 

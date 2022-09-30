@@ -1,7 +1,6 @@
-import { CSSProperties, useMemo, useRef, ReactNode } from 'react';
+import { CSSProperties, useMemo, useRef } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import { useLinkageInteractive } from '@/components/ChartComponents/Common/Component/hook/useLinkageInteractive';
 import { TIconConfig } from '../type';
@@ -11,13 +10,7 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'ICON';
 
-const Icon = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TIconConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const Icon = (props: ComponentData.CommonComponentProps<TIconConfig>) => {
   const { className, style, value, children, global } = props;
   const { screenType } = global;
 

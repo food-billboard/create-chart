@@ -2,17 +2,16 @@ import { Component as ReactComponent } from 'react';
 import { get } from 'lodash';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { mergeWithoutArray } from '@/utils';
-import { ComponentProps, TGlobalData } from './type';
 
 // 公共渲染组件
 // 提供对应的一些公共的方法
 // 请求的数据放在内部控制
 
 class Component<P extends object = {}, S = {}> extends ReactComponent<
-  ComponentProps<P>,
+  ComponentData.ComponentProps<P>,
   S
 > {
-  constructor(props: ComponentProps<P>) {
+  constructor(props: ComponentData.ComponentProps<P>) {
     super(props);
   }
 

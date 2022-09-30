@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef, ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import { uniqueId, merge, pick } from 'lodash';
 import classnames from 'classnames';
 import { useUnmount } from 'ahooks';
@@ -8,7 +8,6 @@ import {
   useChartValueMapField,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -31,13 +30,9 @@ const DEFAULT_ICON_STYLE = {
   anchor: 'bottom-center',
 };
 
-const Ali3DMap = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TAli3DMapConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const Ali3DMap = (
+  props: ComponentData.CommonComponentProps<TAli3DMapConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenType } = global;
 

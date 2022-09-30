@@ -1,4 +1,4 @@
-import { CSSProperties, useCallback, useRef, useMemo, ReactNode } from 'react';
+import { useCallback, useRef, useMemo } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import Anime from 'animejs';
@@ -8,7 +8,6 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import FetchFragment, {
@@ -23,14 +22,11 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'PATH_BASIC';
 
-const _PathBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TPathBasicConfig>;
-  global: ComponentProps['global'];
-  scale: number;
-  children?: ReactNode;
-}) => {
+const _PathBasic = (
+  props: ComponentData.CommonComponentProps<TPathBasicConfig> & {
+    scale: number;
+  },
+) => {
   const { className, style, value, global, scale, children } = props;
   const { screenTheme, screenType } = global;
 

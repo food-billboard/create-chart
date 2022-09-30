@@ -1,17 +1,9 @@
-import {
-  CSSProperties,
-  useMemo,
-  useRef,
-  useCallback,
-  useState,
-  ReactNode,
-} from 'react';
+import { useMemo, useRef, useCallback, useState } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import Select from 'react-select';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -24,13 +16,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'SELECT';
 
-const SelectBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TSelectConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const SelectBasic = (
+  props: ComponentData.CommonComponentProps<TSelectConfig>,
+) => {
   const { className, style, value, global, children } = props;
 
   const {

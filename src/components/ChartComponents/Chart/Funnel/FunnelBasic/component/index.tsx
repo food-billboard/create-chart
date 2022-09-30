@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef, ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -13,7 +13,6 @@ import {
   useChartComponentTooltip,
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -24,13 +23,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'FUNNEL_BASIC';
 
-const FunnelBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TFunnelBasicConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const FunnelBasic = (
+  props: ComponentData.CommonComponentProps<TFunnelBasicConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenTheme, screenType } = global;
 

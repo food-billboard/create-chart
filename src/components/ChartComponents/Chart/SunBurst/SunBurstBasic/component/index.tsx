@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef, ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -12,7 +12,6 @@ import {
   useCondition,
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -23,13 +22,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'SUN_BURST_BASIC';
 
-const SunBurstBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TSunBurstBasicConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const SunBurstBasic = (
+  props: ComponentData.CommonComponentProps<TSunBurstBasicConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenTheme, screenType } = global;
 

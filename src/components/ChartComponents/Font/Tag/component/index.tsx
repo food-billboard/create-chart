@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
+import { useMemo, useRef, useCallback } from 'react';
 import { merge, uniqueId } from 'lodash';
 import classnames from 'classnames';
 import { Tag as AntTag } from 'antd';
@@ -6,7 +6,6 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -20,13 +19,7 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'TAG';
 
-const Tag = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TTagConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const Tag = (props: ComponentData.CommonComponentProps<TTagConfig>) => {
   const { className, style, value, global, children } = props;
   const { screenType } = global;
 

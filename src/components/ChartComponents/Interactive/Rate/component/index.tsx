@@ -1,16 +1,8 @@
-import {
-  CSSProperties,
-  useMemo,
-  useRef,
-  useState,
-  useEffect,
-  ReactNode,
-} from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { Rate as AntRate } from 'antd';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import { TRateConfig } from '../type';
 import styles from './index.less';
@@ -19,13 +11,7 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'RATE';
 
-const Rate = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TRateConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const Rate = (props: ComponentData.CommonComponentProps<TRateConfig>) => {
   const { className, style, value, global, children } = props;
 
   const {

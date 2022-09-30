@@ -1,16 +1,8 @@
-import {
-  CSSProperties,
-  useMemo,
-  useRef,
-  useState,
-  useEffect,
-  ReactNode,
-} from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import { merge, uniqueId, noop } from 'lodash';
 import classnames from 'classnames';
 import moment from 'moment';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -32,13 +24,7 @@ const KEY_MAP: any = {
   },
 };
 
-const Weather = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TWeatherConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const Weather = (props: ComponentData.CommonComponentProps<TWeatherConfig>) => {
   const [weatherData, setWeatherData] = useState<API_THIRD.TWeatherData>();
 
   const { className, style, value, global, children } = props;

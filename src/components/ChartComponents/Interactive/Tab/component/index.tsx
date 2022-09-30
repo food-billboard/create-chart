@@ -1,16 +1,7 @@
-import {
-  CSSProperties,
-  useMemo,
-  useRef,
-  useCallback,
-  useEffect,
-  useState,
-  ReactNode,
-} from 'react';
+import { useMemo, useRef, useCallback, useEffect, useState } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -23,13 +14,7 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'TAB';
 
-const TabBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TTabConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
   const { className, style, value, global, children } = props;
 
   const {

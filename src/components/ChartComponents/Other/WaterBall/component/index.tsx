@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef, useMemo, ReactNode } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -12,7 +12,6 @@ import {
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import FetchFragment, {
@@ -24,13 +23,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'WATER_BALL';
 
-const WaterBall = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TWaterBallConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const WaterBall = (
+  props: ComponentData.CommonComponentProps<TWaterBallConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenTheme, screenType } = global;
 

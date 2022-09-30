@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
+import { useMemo, useRef, useCallback } from 'react';
 import { merge, uniqueId } from 'lodash';
 import classnames from 'classnames';
 import Slider from 'react-slick';
@@ -6,7 +6,6 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -22,13 +21,7 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'LIST';
 
-const ListBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TListConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
   const { className, style, value, global, children } = props;
   const { screenType } = global;
 

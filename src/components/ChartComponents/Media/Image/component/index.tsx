@@ -1,11 +1,4 @@
-import {
-  CSSProperties,
-  useMemo,
-  useRef,
-  useCallback,
-  useState,
-  ReactNode,
-} from 'react';
+import { useMemo, useRef, useCallback, useState } from 'react';
 import { uniqueId, merge } from 'lodash';
 import { Image } from 'antd';
 import classnames from 'classnames';
@@ -14,7 +7,6 @@ import {
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { useClipPath } from '@/hooks';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -24,13 +16,9 @@ import styles from './index.less';
 
 const CHART_ID = 'IMAGE';
 
-const ImageBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TImageConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const ImageBasic = (
+  props: ComponentData.CommonComponentProps<TImageConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenType } = global;
 

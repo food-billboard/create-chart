@@ -1,8 +1,7 @@
-import { CSSProperties, useMemo, useRef, useState, ReactNode } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import { TInputConfig } from '../type';
 import styles from './index.less';
@@ -11,13 +10,7 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'INPUT';
 
-const Input = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TInputConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const Input = (props: ComponentData.CommonComponentProps<TInputConfig>) => {
   const { className, style, value, global, children } = props;
 
   const {

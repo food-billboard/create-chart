@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
+import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import { uniqueId, merge, round as mathRound } from 'lodash';
 import classnames from 'classnames';
 import { CountUp } from 'countup.js';
@@ -7,7 +7,6 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -34,13 +33,9 @@ const EASING_FN_MAP = {
   },
 };
 
-const CountUpNumberBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TCountUpNumberConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const CountUpNumberBasic = (
+  props: ComponentData.CommonComponentProps<TCountUpNumberConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenType } = global;
 

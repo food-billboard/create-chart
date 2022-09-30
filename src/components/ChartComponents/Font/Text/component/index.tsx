@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
+import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { useSize } from 'ahooks';
@@ -6,7 +6,6 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -19,13 +18,7 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'TEXT';
 
-const Text = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TTextConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
   const { className, style, value, global, children } = props;
   const { screenType } = global;
 

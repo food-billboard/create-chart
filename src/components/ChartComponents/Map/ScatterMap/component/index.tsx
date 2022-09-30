@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef, ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -13,7 +13,6 @@ import {
   useChartComponentTooltip,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -27,13 +26,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'SCATTER_MAP';
 
-const ScatterMap = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TScatterMapConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const ScatterMap = (
+  props: ComponentData.CommonComponentProps<TScatterMapConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenTheme, screenType } = global;
 

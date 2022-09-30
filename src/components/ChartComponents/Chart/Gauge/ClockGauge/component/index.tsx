@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef, ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import { useDeepUpdateEffect } from '@/hooks';
@@ -7,7 +7,6 @@ import {
   useComponentResize,
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import { TClockGaugeConfig } from '../type';
 
@@ -15,13 +14,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'CLOCK_GAUGE';
 
-const ClockGauge = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TClockGaugeConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const ClockGauge = (
+  props: ComponentData.CommonComponentProps<TClockGaugeConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenTheme } = global;
 

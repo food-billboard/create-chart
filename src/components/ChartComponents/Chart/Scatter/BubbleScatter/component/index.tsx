@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef, ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -13,7 +13,6 @@ import {
   useChartComponentTooltip,
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -24,13 +23,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'BUBBLE_SCATTER';
 
-const BubbleScatter = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TBubbleScatterConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const BubbleScatter = (
+  props: ComponentData.CommonComponentProps<TBubbleScatterConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenTheme, screenType } = global;
 

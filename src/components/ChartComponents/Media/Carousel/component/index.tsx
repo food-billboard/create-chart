@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
+import { useMemo, useRef, useCallback } from 'react';
 import { Carousel } from 'antd';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -7,7 +7,6 @@ import {
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { useClipPath } from '@/hooks';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -17,13 +16,9 @@ import styles from './index.less';
 
 const CHART_ID = 'CAROUSEL';
 
-const CarouselBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TCarouselConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const CarouselBasic = (
+  props: ComponentData.CommonComponentProps<TCarouselConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenType } = global;
 

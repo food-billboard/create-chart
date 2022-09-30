@@ -1,18 +1,9 @@
-import {
-  CSSProperties,
-  useMemo,
-  useRef,
-  useCallback,
-  useState,
-  useEffect,
-  ReactNode,
-} from 'react';
+import { useMemo, useRef, useCallback, useState, useEffect } from 'react';
 import { uniqueId, merge, noop } from 'lodash';
 import classnames from 'classnames';
 import GridLoader from 'react-spinners/GridLoader';
 import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -34,13 +25,9 @@ const getDomain = (url: string) => {
 
 const BASE_DOMAIN = getDomain(DEFAULT_THREE_D_MODEL_URL);
 
-const ModelBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TModelConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const ModelBasic = (
+  props: ComponentData.CommonComponentProps<TModelConfig>,
+) => {
   const { className, style, value, global, children } = props;
 
   const [pageLoading, setPageLoading] = useState<boolean>(true);

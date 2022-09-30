@@ -1,11 +1,10 @@
-import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
+import { useMemo, useRef, useCallback } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -15,13 +14,9 @@ import styles from './index.less';
 
 const CHART_ID = 'AUDIO';
 
-const AudioBasic = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TAudioConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const AudioBasic = (
+  props: ComponentData.CommonComponentProps<TAudioConfig>,
+) => {
   const { className, style, value, global, children } = props;
 
   const {

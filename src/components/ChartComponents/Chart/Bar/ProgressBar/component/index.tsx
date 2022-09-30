@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef, useMemo, ReactNode } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -11,7 +11,6 @@ import {
   useCondition,
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
@@ -24,13 +23,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'PROGRESS_BAR';
 
-const ProgressBar = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TProgressBarConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const ProgressBar = (
+  props: ComponentData.CommonComponentProps<TProgressBarConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenTheme, screenType } = global;
 

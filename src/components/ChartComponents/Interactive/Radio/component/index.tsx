@@ -1,16 +1,8 @@
-import {
-  CSSProperties,
-  useMemo,
-  useRef,
-  useState,
-  useEffect,
-  ReactNode,
-} from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import { uniqueId, merge } from 'lodash';
 import { Radio as AntRadio } from 'antd';
 import classnames from 'classnames';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -23,13 +15,7 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'RADIO';
 
-const Radio = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TRadioConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const Radio = (props: ComponentData.CommonComponentProps<TRadioConfig>) => {
   const { className, style, value, global, children } = props;
 
   const {

@@ -609,6 +609,26 @@ declare namespace ComponentData {
     width: number;
     type: ComponentLineStyle;
   };
+
+  export type TGlobalData = {
+    setParams: (params: TParams[]) => void;
+    screenType: 'edit' | 'preview' | 'production';
+    screenTheme: string;
+  };
+
+  export type ComponentProps<P extends object = {}> = {
+    component: TComponentData<P>;
+    global: TGlobalData;
+  };
+
+  // 大屏组件的通用props
+  export type CommonComponentProps<T extends object = {}> = {
+    className?: string;
+    style?: React.CSSProperties;
+    value: ComponentData.TComponentData<T>;
+    global: ComponentProps['global'];
+    children?: React.ReactNode;
+  };
 }
 
 declare namespace ComponentMethod {

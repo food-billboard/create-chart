@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, ReactNode } from 'react';
+import { CSSProperties, useMemo, useRef } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { TextLoop } from 'react-text-loop-next';
@@ -6,7 +6,6 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -19,13 +18,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'LOOP_TEXT';
 
-const LoopText = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TLoopTextConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const LoopText = (
+  props: ComponentData.CommonComponentProps<TLoopTextConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenType } = global;
 

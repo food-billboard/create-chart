@@ -1,10 +1,9 @@
 import { useCallback, RefObject } from 'react';
 import VariableStringUtil from '@/utils/Assist/VariableString';
 import { TFetchFragmentRef } from '@/components/ChartComponents/Common/FetchFragment';
-import { ComponentProps } from '../type';
 
 export function useGroupComponent<P extends object = {}>(
-  props: ComponentProps<P>,
+  props: ComponentData.ComponentProps<P>,
   requestRef: RefObject<TFetchFragmentRef>,
 ) {
   const { global } = props;

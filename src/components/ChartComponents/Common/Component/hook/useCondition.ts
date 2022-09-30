@@ -1,11 +1,10 @@
 import { CSSProperties, useCallback, useState } from 'react';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 
 export const useCondition = (
   callback: (
     condition: ComponentData.ComponentCondition,
   ) => ComponentData.ComponentConditionActionType | false,
-  screenType: ComponentProps['global']['screenType'],
+  screenType: ComponentData.ComponentProps['global']['screenType'],
 ) => {
   const [className, setClassName] = useState<string>('');
   const [style, setStyle] = useState<CSSProperties>({});

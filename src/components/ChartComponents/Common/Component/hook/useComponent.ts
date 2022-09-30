@@ -14,10 +14,9 @@ import { mergeWithoutArray } from '@/utils';
 import { TFetchFragmentRef } from '@/components/ChartComponents/Common/FetchFragment';
 import { useFilterChange } from './useFilterChange';
 import { useLinkageInteractive } from './useLinkageInteractive';
-import { ComponentProps } from '../type';
 
 export function useComponent<P extends object = {}>(
-  props: ComponentProps<P>,
+  props: ComponentData.ComponentProps<P>,
   requestRef: RefObject<TFetchFragmentRef>,
 ) {
   const { component, global } = props;

@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useRef, useCallback, ReactNode } from 'react';
+import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import Marquee from 'react-fast-marquee';
@@ -6,7 +6,6 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -19,13 +18,9 @@ const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'FONT_CAROUSEL';
 
-const TFontCarousel = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TFontCarouselConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const TFontCarousel = (
+  props: ComponentData.CommonComponentProps<TFontCarouselConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenType } = global;
 

@@ -1,9 +1,8 @@
-import { CSSProperties, useMemo, useRef, useEffect, ReactNode } from 'react';
+import { useMemo, useRef, useEffect } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import Viewer from 'viewerjs';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import { ComponentProps } from '@/components/ChartComponents/Common/Component/type';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -14,13 +13,9 @@ import styles from './index.less';
 
 const CHART_ID = 'PICTURE_WALL';
 
-const PictureWall = (props: {
-  className?: string;
-  style?: CSSProperties;
-  value: ComponentData.TComponentData<TPictureWallConfig>;
-  global: ComponentProps['global'];
-  children?: ReactNode;
-}) => {
+const PictureWall = (
+  props: ComponentData.CommonComponentProps<TPictureWallConfig>,
+) => {
   const { className, style, value, global, children } = props;
   const { screenType } = global;
 

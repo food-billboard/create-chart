@@ -5,7 +5,6 @@ import { ConnectState } from '@/models/connect';
 import { EComponentType } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils';
 import { BorderMap } from '../../../InternalBorder';
-import { ComponentProps } from '../../../ChartComponents/Common/Component/type';
 import ChildrenWrapper from './ChildrenWrapper';
 import SubGroup from './SubGroup';
 import { getComponentByType } from '../../../ChartComponents';
@@ -14,7 +13,7 @@ import styles from './index.less';
 const Content = (props: {
   setParams: (value: ComponentData.TParams[]) => void;
   screenType: string;
-  component: ComponentProps['component'];
+  component: ComponentData.ComponentProps['component'];
   timestamps?: number;
   screenTheme: string;
 }) => {
