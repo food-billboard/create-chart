@@ -70,7 +70,7 @@ export const BASIC_DEFAULT_CONFIG: ComponentData.TBaseConfig = {
       y: 0,
     },
     border: {
-      show: false,
+      show: true,
       value: DEFAULT_BORDER,
     },
   },

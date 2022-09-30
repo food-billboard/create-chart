@@ -26,7 +26,7 @@ const CHART_ID = 'BAR_BASIC';
 const BarBasic = (
   props: ComponentData.CommonComponentProps<TBarBasicConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -227,8 +227,10 @@ const BarBasic = (
           conditionStyle,
         )}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

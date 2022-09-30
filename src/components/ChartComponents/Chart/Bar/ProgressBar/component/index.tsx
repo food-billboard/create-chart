@@ -26,7 +26,7 @@ const CHART_ID = 'PROGRESS_BAR';
 const ProgressBar = (
   props: ComponentData.CommonComponentProps<TProgressBarConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -223,8 +223,10 @@ const ProgressBar = (
           conditionStyle,
         )}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

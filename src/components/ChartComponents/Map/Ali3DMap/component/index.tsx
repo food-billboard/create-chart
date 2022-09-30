@@ -33,7 +33,7 @@ const DEFAULT_ICON_STYLE = {
 const Ali3DMap = (
   props: ComponentData.CommonComponentProps<TAli3DMapConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const {
@@ -376,8 +376,12 @@ const Ali3DMap = (
         )}
         id={chartId.current}
       >
-        {children}
-        <div id={mapId.current}></div>
+        <Wrapper>
+          {children}
+          <div className="w-100 h-100" id={chartId.current}>
+            <div className="w-100 h-100" id={mapId.current}></div>
+          </div>
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

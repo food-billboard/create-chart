@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
@@ -34,7 +34,7 @@ function getCirclePoint(x0: number, y0: number, r: number, angle: number) {
 const PercentPie = (
   props: ComponentData.CommonComponentProps<TPercentPieConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -499,8 +499,10 @@ const PercentPie = (
           conditionStyle,
         )}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

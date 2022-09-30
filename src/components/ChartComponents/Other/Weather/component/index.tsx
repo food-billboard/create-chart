@@ -27,7 +27,7 @@ const KEY_MAP: any = {
 const Weather = (props: ComponentData.CommonComponentProps<TWeatherConfig>) => {
   const [weatherData, setWeatherData] = useState<API_THIRD.TWeatherData>();
 
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const {
     id,
@@ -160,8 +160,10 @@ const Weather = (props: ComponentData.CommonComponentProps<TWeatherConfig>) => {
         id={chartId.current}
         onClick={onClick}
       >
-        {children}
-        {listContent}
+        <Wrapper>
+          {children}
+          {listContent}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

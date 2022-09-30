@@ -25,7 +25,7 @@ const { getRgbaString } = ColorSelect;
 const CHART_ID = 'RANK_BAR';
 
 const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -340,8 +340,10 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
           conditionStyle,
         )}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

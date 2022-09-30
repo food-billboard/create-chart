@@ -14,10 +14,9 @@ const { getRgbaString, getHexString } = ColorSelect;
 const CHART_ID = 'SWITCH';
 
 const Switch = (props: ComponentData.CommonComponentProps<TSwitchConfig>) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const {
-    id,
     config: {
       options,
       style: { width, height },
@@ -132,22 +131,24 @@ const Switch = (props: ComponentData.CommonComponentProps<TSwitchConfig>) => {
         )}
         id={chartId.current}
       >
-        {children}
-        <ReactSwitch
-          width={width}
-          height={height}
-          checked={checked}
-          onChange={onChange}
-          offColor={getHexString(offColor, true)}
-          onColor={getHexString(onColor, true)}
-          onHandleColor={getHexString(onHandleColor, true)}
-          offHandleColor={getHexString(offHandleColor, true)}
-          checkedIcon={checkedIconDom}
-          uncheckedIcon={uncheckedIconDom}
-          boxShadow={boxShadowMethod(boxShadow) || undefined}
-          activeBoxShadow={boxShadowMethod(activeBoxShadow) || undefined}
-          handleDiameter={height * 0.8}
-        />
+        <Wrapper>
+          {children}
+          <ReactSwitch
+            width={width}
+            height={height}
+            checked={checked}
+            onChange={onChange}
+            offColor={getHexString(offColor, true)}
+            onColor={getHexString(onColor, true)}
+            onHandleColor={getHexString(onHandleColor, true)}
+            offHandleColor={getHexString(offHandleColor, true)}
+            checkedIcon={checkedIconDom}
+            uncheckedIcon={uncheckedIconDom}
+            boxShadow={boxShadowMethod(boxShadow) || undefined}
+            activeBoxShadow={boxShadowMethod(activeBoxShadow) || undefined}
+            handleDiameter={height * 0.8}
+          />
+        </Wrapper>
       </div>
     </>
   );

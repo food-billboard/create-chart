@@ -25,7 +25,7 @@ const { getRgbaString } = ColorSelect;
 const CHART_ID = 'LINE_BAR';
 
 const LineBar = (props: ComponentData.CommonComponentProps<TLineBarConfig>) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -369,8 +369,10 @@ const LineBar = (props: ComponentData.CommonComponentProps<TLineBarConfig>) => {
           conditionStyle,
         )}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

@@ -26,7 +26,7 @@ const CHART_ID = 'CIRCLE_PIE';
 const CirclePie = (
   props: ComponentData.CommonComponentProps<TCirclePieConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -262,8 +262,10 @@ const CirclePie = (
           conditionStyle,
         )}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

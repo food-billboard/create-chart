@@ -18,7 +18,7 @@ const CHART_ID = 'VIDEO';
 const VideoBasic = (
   props: ComponentData.CommonComponentProps<TVideoConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const {
     id,
@@ -102,14 +102,16 @@ const VideoBasic = (
         id={chartId.current}
         onClick={onClick}
       >
-        {children}
-        <video
-          muted={muted}
-          autoPlay={autoplay}
-          loop={loop}
-          controls={controls}
-          src={finalValue.value}
-        />
+        <Wrapper>
+          {children}
+          <video
+            muted={muted}
+            autoPlay={autoplay}
+            loop={loop}
+            controls={controls}
+            src={finalValue.value}
+          />
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

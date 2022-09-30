@@ -22,7 +22,7 @@ const { getRgbaString } = ColorSelect;
 const CHART_ID = 'LIST';
 
 const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const {
@@ -305,9 +305,11 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
         style={merge(style, conditionStyle)}
         id={chartId.current}
       >
-        {children}
-        {headerDom}
-        {listContent}
+        <Wrapper>
+          {children}
+          {headerDom}
+          {listContent}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

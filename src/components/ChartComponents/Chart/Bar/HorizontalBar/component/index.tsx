@@ -26,7 +26,7 @@ const CHART_ID = 'HORIZONTAL_BAR';
 const HorizontalBar = (
   props: ComponentData.CommonComponentProps<THorizontalBarConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -235,8 +235,10 @@ const HorizontalBar = (
           conditionStyle,
         )}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

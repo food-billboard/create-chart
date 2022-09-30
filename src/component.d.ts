@@ -273,6 +273,10 @@ declare namespace ComponentData {
         guideLine: TGuideLineConfig;
         theme: string;
         grid: number;
+        componentBorder: {
+          width: number;
+          padding: [number, number];
+        };
         lens: {
           show: boolean;
           hueRotate: number;
@@ -628,6 +632,7 @@ declare namespace ComponentData {
     value: ComponentData.TComponentData<T>;
     global: ComponentProps['global'];
     children?: React.ReactNode;
+    wrapper: any;
   };
 }
 

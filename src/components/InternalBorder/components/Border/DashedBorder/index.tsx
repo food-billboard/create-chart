@@ -1,15 +1,45 @@
-import { ReactNode } from 'react';
+import { useMemo } from 'react';
+import classnames from 'classnames';
+import { merge } from 'lodash';
+import { connect } from 'dva';
+import ThemeUtil from '@/utils/Assist/Theme';
+import ColorSelect from '../../../../ColorSelect';
+import { mapStateToProps, mapDispatchToProps } from '../connect';
+import { CommonBorderProps } from '../type';
+import commonStyles from '../index.less';
 import './index.less';
 
-const DashedBorder = (props: { children?: ReactNode }) => {
-  const { children } = props;
+const { getRgbaString } = ColorSelect;
+
+const DashedBorder = (props: CommonBorderProps) => {
+  const { children, className, style, width, padding, ...nextProps } = props;
+
+  const color = useMemo(() => {
+    return getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0));
+  }, []);
 
   return (
     <>
-      <div className={'internal-border-dashed-border'}></div>
-      {children}
+      <div
+        {...nextProps}
+        style={merge(
+          {
+            // @ts-ignore
+            '--internal-border-dashed-border-width': width + 'px',
+            padding: padding.map((item) => `${item}px`).join(' '),
+          },
+          style,
+        )}
+        className={classnames(
+          'internal-border-dashed-border',
+          commonStyles['internal-border-common'],
+          className,
+        )}
+      >
+        {children}
+      </div>
     </>
   );
 };
 
-export default DashedBorder;
+export default connect(mapStateToProps, mapDispatchToProps)(DashedBorder);

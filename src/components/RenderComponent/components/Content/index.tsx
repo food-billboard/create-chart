@@ -92,7 +92,7 @@ const Content = (props: {
               className={styles['render-component-children']}
               value={newComponent}
               key={id}
-              children={<Dom />}
+              wrapper={Dom}
               global={{
                 setParams,
                 screenType,

@@ -23,7 +23,7 @@ const CHART_ID = 'QR_CODE';
 const QrCode = (props: ComponentData.CommonComponentProps<TQrCodeConfig>) => {
   const [qrCode, setQrCode] = useState<string>('');
 
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const {
@@ -141,19 +141,21 @@ const QrCode = (props: ComponentData.CommonComponentProps<TQrCodeConfig>) => {
         id={chartId.current}
         onClick={onClick}
       >
-        {children}
-        <div
-          className={styles['component-other-qr-code-content']}
-          style={{
-            backgroundColor: getRgbaString(base.backgroundColor),
-          }}
-        >
-          <img
-            src={qrCode}
-            className={styles['component-other-qr-code-content-image']}
-          />
-          {logoDom}
-        </div>
+        <Wrapper>
+          {children}
+          <div
+            className={styles['component-other-qr-code-content']}
+            style={{
+              backgroundColor: getRgbaString(base.backgroundColor),
+            }}
+          >
+            <img
+              src={qrCode}
+              className={styles['component-other-qr-code-content-image']}
+            />
+            {logoDom}
+          </div>
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

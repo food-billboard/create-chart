@@ -19,7 +19,7 @@ const CHART_ID = 'CAROUSEL';
 const CarouselBasic = (
   props: ComponentData.CommonComponentProps<TCarouselConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const {
@@ -116,21 +116,23 @@ const CarouselBasic = (
         )}
         id={chartId.current}
       >
-        {children}
-        <Carousel
-          autoplay={autoplay}
-          dots={dot.show}
-          dotPosition={dot.position}
-          speed={speed}
-          fade={fade}
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
-          pauseOnFocus={pauseOnHover}
-        >
-          {imageList}
-        </Carousel>
+        <Wrapper>
+          {children}
+          <Carousel
+            autoplay={autoplay}
+            dots={dot.show}
+            dotPosition={dot.position}
+            speed={speed}
+            fade={fade}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+            pauseOnFocus={pauseOnHover}
+          >
+            {imageList}
+          </Carousel>
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

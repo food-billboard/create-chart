@@ -17,7 +17,7 @@ const CHART_ID = 'AUDIO';
 const AudioBasic = (
   props: ComponentData.CommonComponentProps<TAudioConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const {
     id,
@@ -91,19 +91,21 @@ const AudioBasic = (
         id={chartId.current}
         onClick={onClick}
       >
-        {children}
-        <audio
-          autoPlay={screenType !== 'edit' && autoplay}
-          loop={loop}
-          controls={controls}
-          src={finalValue.value}
-          muted={screenType === 'edit'}
-        />
-        {!controls && screenType === 'edit' && (
-          <div className={styles['component-media-audio-tooltip']}>
-            仅在设计情况下显示此<strong>音乐</strong>提示文本
-          </div>
-        )}
+        <Wrapper>
+          {children}
+          <audio
+            autoPlay={screenType !== 'edit' && autoplay}
+            loop={loop}
+            controls={controls}
+            src={finalValue.value}
+            muted={screenType === 'edit'}
+          />
+          {!controls && screenType === 'edit' && (
+            <div className={styles['component-media-audio-tooltip']}>
+              仅在设计情况下显示此<strong>音乐</strong>提示文本
+            </div>
+          )}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

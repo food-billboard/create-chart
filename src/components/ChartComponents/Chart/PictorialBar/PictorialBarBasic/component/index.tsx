@@ -26,7 +26,7 @@ const CHART_ID = 'PICTORIAL_BAR_BASIC';
 const PictorialBar = (
   props: ComponentData.CommonComponentProps<TPictorialBarBasicConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -217,8 +217,10 @@ const PictorialBar = (
           conditionStyle,
         )}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

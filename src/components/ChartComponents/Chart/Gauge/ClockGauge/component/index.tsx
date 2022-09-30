@@ -17,7 +17,7 @@ const CHART_ID = 'CLOCK_GAUGE';
 const ClockGauge = (
   props: ComponentData.CommonComponentProps<TClockGaugeConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme } = global;
 
   const {
@@ -302,8 +302,10 @@ const ClockGauge = (
           style,
         )}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
     </>
   );

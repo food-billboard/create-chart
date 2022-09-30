@@ -20,7 +20,7 @@ const CHART_ID = 'STATE_CARD';
 const StateCard = (
   props: ComponentData.CommonComponentProps<TStateCardConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const {
@@ -158,8 +158,10 @@ const StateCard = (
         style={componentStyle}
         id={chartId.current}
       >
-        {children}
-        {listContent}
+        <Wrapper>
+          {children}
+          {listContent}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

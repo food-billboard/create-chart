@@ -26,7 +26,7 @@ const CHART_ID = 'BUBBLE_SCATTER';
 const BubbleScatter = (
   props: ComponentData.CommonComponentProps<TBubbleScatterConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -238,8 +238,10 @@ const BubbleScatter = (
         )}
         onClick={onClick}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

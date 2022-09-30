@@ -25,7 +25,7 @@ const CHART_ID = 'BOX_PLOT_BASIC';
 const BoxPlotBasic = (
   props: ComponentData.CommonComponentProps<TBoxPlotBasicConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -214,8 +214,10 @@ const BoxPlotBasic = (
           conditionStyle,
         )}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

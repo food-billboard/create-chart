@@ -27,7 +27,7 @@ const CHART_ID = 'POLAR_STACK_BAR';
 const PolarStackBar = (
   props: ComponentData.CommonComponentProps<TPolarStackBarConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -243,8 +243,10 @@ const PolarStackBar = (
           conditionStyle,
         )}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

@@ -21,7 +21,7 @@ const CHART_ID = 'FONT_CAROUSEL';
 const TFontCarousel = (
   props: ComponentData.CommonComponentProps<TFontCarouselConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const {
@@ -109,26 +109,28 @@ const TFontCarousel = (
         id={chartId.current}
         onClick={onClick}
       >
-        {children}
-        {
-          <Marquee
-            gradient={false}
-            play={screenType !== 'edit' && play}
-            speed={speed}
-            direction={direction}
-            pauseOnHover={pauseOnHover}
-            delay={delay}
-          >
-            <div
-              className={styles['component-font-carousel-main']}
-              style={{
-                height,
-              }}
+        <Wrapper>
+          {children}
+          {
+            <Marquee
+              gradient={false}
+              play={screenType !== 'edit' && play}
+              speed={speed}
+              direction={direction}
+              pauseOnHover={pauseOnHover}
+              delay={delay}
             >
-              {finalValue.value || ''}
-            </div>
-          </Marquee>
-        }
+              <div
+                className={styles['component-font-carousel-main']}
+                style={{
+                  height,
+                }}
+              >
+                {finalValue.value || ''}
+              </div>
+            </Marquee>
+          }
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

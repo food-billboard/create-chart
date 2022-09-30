@@ -1,18 +1,52 @@
 .internal-border-connor-border {
-  position: absolute;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
   border-radius: 10px;
-  background: linear-gradient(to left, #2cd5ff, #2cd5ff) left top no-repeat,
-    linear-gradient(to bottom, #2cd5ff, #2cd5ff) left top no-repeat,
-    linear-gradient(to left, #2cd5ff, #2cd5ff) right top no-repeat,
-    linear-gradient(to bottom, #2cd5ff, #2cd5ff) right top no-repeat,
-    linear-gradient(to left, #2cd5ff, #2cd5ff) left bottom no-repeat,
-    linear-gradient(to bottom, #2cd5ff, #2cd5ff) left bottom no-repeat,
-    linear-gradient(to left, #2cd5ff, #2cd5ff) right bottom no-repeat,
-    linear-gradient(to left, #2cd5ff, #2cd5ff) right bottom no-repeat;
+  background: linear-gradient(
+        to left,
+        var(--internal-border-connor-border-color),
+        var(--internal-border-connor-border-color)
+      )
+      left top no-repeat,
+    linear-gradient(
+        to bottom,
+        var(--internal-border-connor-border-color),
+        var(--internal-border-connor-border-color)
+      )
+      left top no-repeat,
+    linear-gradient(
+        to left,
+        var(--internal-border-connor-border-color),
+        var(--internal-border-connor-border-color)
+      )
+      right top no-repeat,
+    linear-gradient(
+        to bottom,
+        var(--internal-border-connor-border-color),
+        var(--internal-border-connor-border-color)
+      )
+      right top no-repeat,
+    linear-gradient(
+        to left,
+        var(--internal-border-connor-border-color),
+        var(--internal-border-connor-border-color)
+      )
+      left bottom no-repeat,
+    linear-gradient(
+        to bottom,
+        var(--internal-border-connor-border-color),
+        var(--internal-border-connor-border-color)
+      )
+      left bottom no-repeat,
+    linear-gradient(
+        to left,
+        var(--internal-border-connor-border-color),
+        var(--internal-border-connor-border-color)
+      )
+      right bottom no-repeat,
+    linear-gradient(
+        to left,
+        var(--internal-border-connor-border-color),
+        var(--internal-border-connor-border-color)
+      )
+      right bottom no-repeat;
   background-size: 4px 20px, 20px 4px, 4px 20px, 20px 4px;
 }

@@ -21,7 +21,7 @@ const CHART_ID = 'STATE_LIST';
 const StateList = (
   props: ComponentData.CommonComponentProps<TStateListConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const {
@@ -160,8 +160,10 @@ const StateList = (
         style={componentStyle}
         id={chartId.current}
       >
-        {children}
-        {listContent}
+        <Wrapper>
+          {children}
+          {listContent}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

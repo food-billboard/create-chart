@@ -26,7 +26,7 @@ const CHART_ID = 'TREE_BASIC';
 const TreeBasic = (
   props: ComponentData.CommonComponentProps<TTreeBasicConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -265,8 +265,10 @@ const TreeBasic = (
           conditionStyle,
         )}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

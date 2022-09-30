@@ -19,7 +19,7 @@ const CHART_ID = 'SELECT';
 const SelectBasic = (
   props: ComponentData.CommonComponentProps<TSelectConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const {
     id,
@@ -146,84 +146,86 @@ const SelectBasic = (
         )}
         id={chartId.current}
       >
-        {children}
-        <Select
-          placeholder="请选择..."
-          value={activeSelect}
-          onMenuOpen={setSelectOpen.bind(null, true)}
-          onMenuClose={setSelectOpen.bind(null, false)}
-          onChange={onClick}
-          isSearchable={false}
-          components={components}
-          styles={{
-            placeholder(styles) {
-              return {
-                ...styles,
-                ...placeholder.textStyle,
-                color: getRgbaString(placeholder.textStyle.color),
-              };
-            },
-            // 容器
-            container(styles) {
-              return {
-                ...styles,
-                height: '100%',
-              };
-            },
-            // 常规显示框
-            control(styles) {
-              return {
-                ...styles,
-                backgroundColor: getRgbaString(active.backgroundColor),
-                height: '100%',
-                border: `${active.border.width}px ${
-                  active.border.type
-                } ${getRgbaString(active.border.color)}`,
-                boxShadow: `0 0 1px ${getRgbaString(active.border.color)}`,
-                ':hover': {
-                  borderColor: getRgbaString(active.border.color),
-                },
-              };
-            },
-            // 选择框内容
-            singleValue(styles) {
-              return {
-                ...styles,
-                ...active.textStyle,
-                color: getRgbaString(active.textStyle.color),
-              };
-            },
-            // 下拉框列表
-            menu(styles) {
-              return {
-                ...styles,
-                height: menu.height,
-                backgroundColor: getRgbaString(menu.backgroundColor),
-              };
-            },
-            // 下拉框内容
-            option(styles, { isSelected }) {
-              return {
-                ...styles,
-                ...(isSelected ? activeStyle : baseStyle),
-                height: base.height,
-                lineHeight: `${base.height - 16}px`,
-                ':hover': isSelected ? activeHoverStyle : baseHoverStyle,
-              };
-            },
-            // 下拉列表内部
-            menuList(styles) {
-              return {
-                ...styles,
-                maxHeight: menu.height,
-              };
-            },
-          }}
-          options={finalValue.map((item: any) => ({
-            label: item.name,
-            value: item.value,
-          }))}
-        ></Select>
+        <Wrapper>
+          {children}
+          <Select
+            placeholder="请选择..."
+            value={activeSelect}
+            onMenuOpen={setSelectOpen.bind(null, true)}
+            onMenuClose={setSelectOpen.bind(null, false)}
+            onChange={onClick}
+            isSearchable={false}
+            components={components}
+            styles={{
+              placeholder(styles) {
+                return {
+                  ...styles,
+                  ...placeholder.textStyle,
+                  color: getRgbaString(placeholder.textStyle.color),
+                };
+              },
+              // 容器
+              container(styles) {
+                return {
+                  ...styles,
+                  height: '100%',
+                };
+              },
+              // 常规显示框
+              control(styles) {
+                return {
+                  ...styles,
+                  backgroundColor: getRgbaString(active.backgroundColor),
+                  height: '100%',
+                  border: `${active.border.width}px ${
+                    active.border.type
+                  } ${getRgbaString(active.border.color)}`,
+                  boxShadow: `0 0 1px ${getRgbaString(active.border.color)}`,
+                  ':hover': {
+                    borderColor: getRgbaString(active.border.color),
+                  },
+                };
+              },
+              // 选择框内容
+              singleValue(styles) {
+                return {
+                  ...styles,
+                  ...active.textStyle,
+                  color: getRgbaString(active.textStyle.color),
+                };
+              },
+              // 下拉框列表
+              menu(styles) {
+                return {
+                  ...styles,
+                  height: menu.height,
+                  backgroundColor: getRgbaString(menu.backgroundColor),
+                };
+              },
+              // 下拉框内容
+              option(styles, { isSelected }) {
+                return {
+                  ...styles,
+                  ...(isSelected ? activeStyle : baseStyle),
+                  height: base.height,
+                  lineHeight: `${base.height - 16}px`,
+                  ':hover': isSelected ? activeHoverStyle : baseHoverStyle,
+                };
+              },
+              // 下拉列表内部
+              menuList(styles) {
+                return {
+                  ...styles,
+                  maxHeight: menu.height,
+                };
+              },
+            }}
+            options={finalValue.map((item: any) => ({
+              label: item.name,
+              value: item.value,
+            }))}
+          ></Select>
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

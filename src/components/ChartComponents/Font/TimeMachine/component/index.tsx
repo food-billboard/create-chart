@@ -14,7 +14,7 @@ const CHART_ID = 'TIME_MACHINE';
 const TimeMachineBasic = (
   props: ComponentData.CommonComponentProps<TTimeMachineConfig>,
 ) => {
-  const { className, style, value, children, global } = props;
+  const { className, style, value, children, global, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const [currentTime, setCurrentTime] = useState<moment.Moment>(moment());
@@ -90,10 +90,12 @@ const TimeMachineBasic = (
       id={chartId.current}
       onClick={onClick}
     >
-      {children}
-      {icon.position === 'before' && iconNode}
-      {currentTime.format(formatter)}
-      {icon.position === 'after' && iconNode}
+      <Wrapper>
+        {children}
+        {icon.position === 'before' && iconNode}
+        {currentTime.format(formatter)}
+        {icon.position === 'after' && iconNode}
+      </Wrapper>
     </div>
   );
 };

@@ -19,7 +19,7 @@ const CHART_ID = 'IMAGE';
 const ImageBasic = (
   props: ComponentData.CommonComponentProps<TImageConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const [visible, setVisible] = useState<boolean>(false);
@@ -119,13 +119,15 @@ const ImageBasic = (
           conditionStyle,
         )}
       >
-        <div
-          id={chartId.current}
-          onClick={onClick}
-          className="w-100 h-100"
-          style={merge(componentStyle, clipPathStyle)}
-        ></div>
-        {children}
+        <Wrapper>
+          <div
+            id={chartId.current}
+            onClick={onClick}
+            className="w-100 h-100"
+            style={merge(componentStyle, clipPathStyle)}
+          ></div>
+          {children}
+        </Wrapper>
       </div>
       <Image
         preview={{

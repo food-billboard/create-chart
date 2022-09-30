@@ -28,7 +28,7 @@ const BASE_DOMAIN = getDomain(DEFAULT_THREE_D_MODEL_URL);
 const ModelBasic = (
   props: ComponentData.CommonComponentProps<TModelConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const [pageLoading, setPageLoading] = useState<boolean>(true);
 
@@ -139,23 +139,25 @@ const ModelBasic = (
         id={chartId.current}
         onClick={onClick}
       >
-        {children}
-        {pageLoading && (
-          <div className={styles['component-media-model-loading']}>
-            <GridLoader loading color={color} />
-          </div>
-        )}
-        <iframe
-          name={chartId.current}
-          src={DEFAULT_THREE_D_MODEL_URL}
-          style={{
-            display: pageLoading ? 'none' : 'block',
-          }}
-          onLoad={onIframeLoad}
-          onError={onIframeError}
-          ref={iframeRef}
-          frameBorder="0"
-        />
+        <Wrapper>
+          {children}
+          {pageLoading && (
+            <div className={styles['component-media-model-loading']}>
+              <GridLoader loading color={color} />
+            </div>
+          )}
+          <iframe
+            name={chartId.current}
+            src={DEFAULT_THREE_D_MODEL_URL}
+            style={{
+              display: pageLoading ? 'none' : 'block',
+            }}
+            onLoad={onIframeLoad}
+            onError={onIframeError}
+            ref={iframeRef}
+            frameBorder="0"
+          />
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

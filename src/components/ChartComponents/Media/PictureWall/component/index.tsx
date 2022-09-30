@@ -16,7 +16,7 @@ const CHART_ID = 'PICTURE_WALL';
 const PictureWall = (
   props: ComponentData.CommonComponentProps<TPictureWallConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const {
@@ -116,8 +116,10 @@ const PictureWall = (
         )}
         id={chartId.current}
       >
-        {children}
-        {imageList}
+        <Wrapper>
+          {children}
+          {imageList}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

@@ -27,7 +27,15 @@ const _PathBasic = (
     scale: number;
   },
 ) => {
-  const { className, style, value, global, scale, children } = props;
+  const {
+    className,
+    style,
+    value,
+    global,
+    scale,
+    children,
+    wrapper: Wrapper,
+  } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -249,24 +257,26 @@ const _PathBasic = (
         id={chartId.current}
         onClick={onClick}
       >
-        {children}
-        {shape}
-        <svg id={svgId.current} width={width} height={height}>
-          <path
-            fill="none"
-            d={`${finalValue.value} ${
-              finalValue.value.trim().toUpperCase().endsWith('Z') || !close
-                ? ''
-                : 'Z'
-            }`}
-            stroke={getRgbaString(path.color)}
-            strokeOpacity={path.show ? 1 : 0}
-            strokeWidth={path.width}
-            {...(path.line === 'dashed'
-              ? { strokeDasharray: path.dashedValue }
-              : {})}
-          ></path>
-        </svg>
+        <Wrapper>
+          {children}
+          {shape}
+          <svg id={svgId.current} width={width} height={height}>
+            <path
+              fill="none"
+              d={`${finalValue.value} ${
+                finalValue.value.trim().toUpperCase().endsWith('Z') || !close
+                  ? ''
+                  : 'Z'
+              }`}
+              stroke={getRgbaString(path.color)}
+              strokeOpacity={path.show ? 1 : 0}
+              strokeWidth={path.width}
+              {...(path.line === 'dashed'
+                ? { strokeDasharray: path.dashedValue }
+                : {})}
+            ></path>
+          </svg>
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

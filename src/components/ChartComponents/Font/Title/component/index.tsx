@@ -20,7 +20,7 @@ const CHART_ID = 'TITLE';
 const TitleBasic = (
   props: ComponentData.CommonComponentProps<TTitleConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const {
     id,
@@ -121,8 +121,10 @@ const TitleBasic = (
         id={chartId.current}
         onClick={onClick}
       >
-        {children}
-        {finalValue.value || ''}
+        <Wrapper>
+          {children}
+          {finalValue.value || ''}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

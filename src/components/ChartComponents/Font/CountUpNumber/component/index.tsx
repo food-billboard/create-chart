@@ -36,7 +36,7 @@ const EASING_FN_MAP = {
 const CountUpNumberBasic = (
   props: ComponentData.CommonComponentProps<TCountUpNumberConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const {
@@ -162,10 +162,12 @@ const CountUpNumberBasic = (
         )}
         onClick={onClick}
       >
-        <div id={chartId.current} className="w-100 h-100">
-          {calculateValue || ''}
-        </div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100">
+            {calculateValue || ''}
+          </div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

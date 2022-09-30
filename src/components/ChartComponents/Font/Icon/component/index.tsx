@@ -11,7 +11,7 @@ const { getRgbaString } = ColorSelect;
 const CHART_ID = 'ICON';
 
 const Icon = (props: ComponentData.CommonComponentProps<TIconConfig>) => {
-  const { className, style, value, children, global } = props;
+  const { className, style, value, children, global, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const {
@@ -67,8 +67,10 @@ const Icon = (props: ComponentData.CommonComponentProps<TIconConfig>) => {
       id={chartId.current}
       onClick={onClick}
     >
-      {children}
-      {iconNode}
+      <Wrapper>
+        {children}
+        {iconNode}
+      </Wrapper>
     </div>
   );
 };

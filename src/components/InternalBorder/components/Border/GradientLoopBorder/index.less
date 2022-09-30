@@ -1,11 +1,5 @@
 .internal-border-gradient-loop-border {
-  position: absolute;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  border: 10px solid;
+  border: var(--internal-border-gradient-loop-border-width) solid;
   border-image: linear-gradient(45deg, gold, deeppink) 1;
   clip-path: inset(0px round 10px);
   animation: internal-border-gradient-border-huerotate 6s infinite linear;
@@ -19,4 +13,9 @@
       filter: hue-rotate(360deg);
     }
   }
+}
+.internal-border-gradient-loop-border-outer {
+  position: absolute;
+  top: 0;
+  left: 0;
 }

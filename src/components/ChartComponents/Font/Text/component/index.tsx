@@ -19,7 +19,7 @@ const { getRgbaString } = ColorSelect;
 const CHART_ID = 'TEXT';
 
 const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const {
@@ -138,8 +138,10 @@ const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
         id={chartId.current}
         onClick={onClick}
       >
-        {children}
-        {element}
+        <Wrapper>
+          {children}
+          {element}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

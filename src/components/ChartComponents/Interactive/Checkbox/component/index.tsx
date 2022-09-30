@@ -18,7 +18,7 @@ const CHART_ID = 'CHECKBOX';
 const Checkbox = (
   props: ComponentData.CommonComponentProps<TCheckboxConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const {
     id,
@@ -99,45 +99,47 @@ const Checkbox = (
         )}
         id={chartId.current}
       >
-        {children}
-        <AntCheckbox.Group
-          value={checkedValue}
-          onChange={onChange}
-          className={styles['component-interactive-checkbox-main']}
-          style={{
-            // @ts-ignore
-            '--component-checkbox-size': size + 'px',
-            '--component-checkbox-border-color': getRgbaString(borderColor),
-            '--component-checkbox-background-color':
-              getRgbaString(backgroundColor),
-            '--component-checkbox-border-radius': borderRadius + 'px',
-            '--component-checkbox-checked-border-color': getRgbaString(
-              active.borderColor,
-            ),
-            '--component-checkbox-checked-background-color': getRgbaString(
-              active.backgroundColor,
-            ),
-            '--component-checkbox-checked-color': getRgbaString(check.color),
-            '--component-checkbox-checked-width': (size / 14) * 5 + 'px',
-            '--component-checkbox-checked-height': (size / 14) * 8 + 'px',
-          }}
-        >
-          {(finalValue || []).map((item: any) => {
-            const { name, value } = item;
-            return (
-              <AntCheckbox
-                key={value}
-                value={value}
-                style={{
-                  ...textStyle,
-                  color: getRgbaString(textStyle.color),
-                }}
-              >
-                {name}
-              </AntCheckbox>
-            );
-          })}
-        </AntCheckbox.Group>
+        <Wrapper>
+          {children}
+          <AntCheckbox.Group
+            value={checkedValue}
+            onChange={onChange}
+            className={styles['component-interactive-checkbox-main']}
+            style={{
+              // @ts-ignore
+              '--component-checkbox-size': size + 'px',
+              '--component-checkbox-border-color': getRgbaString(borderColor),
+              '--component-checkbox-background-color':
+                getRgbaString(backgroundColor),
+              '--component-checkbox-border-radius': borderRadius + 'px',
+              '--component-checkbox-checked-border-color': getRgbaString(
+                active.borderColor,
+              ),
+              '--component-checkbox-checked-background-color': getRgbaString(
+                active.backgroundColor,
+              ),
+              '--component-checkbox-checked-color': getRgbaString(check.color),
+              '--component-checkbox-checked-width': (size / 14) * 5 + 'px',
+              '--component-checkbox-checked-height': (size / 14) * 8 + 'px',
+            }}
+          >
+            {(finalValue || []).map((item: any) => {
+              const { name, value } = item;
+              return (
+                <AntCheckbox
+                  key={value}
+                  value={value}
+                  style={{
+                    ...textStyle,
+                    color: getRgbaString(textStyle.color),
+                  }}
+                >
+                  {name}
+                </AntCheckbox>
+              );
+            })}
+          </AntCheckbox.Group>
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

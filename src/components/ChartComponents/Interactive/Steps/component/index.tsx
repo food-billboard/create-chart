@@ -17,7 +17,7 @@ const { getRgbaString } = ColorSelect;
 const CHART_ID = 'STEPS';
 
 const Steps = (props: ComponentData.CommonComponentProps<TStepsConfig>) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const {
@@ -227,15 +227,17 @@ const Steps = (props: ComponentData.CommonComponentProps<TStepsConfig>) => {
         )}
         id={chartId.current}
       >
-        {children}
-        <RcSteps
-          current={activeStep}
-          labelPlacement={labelPlacement}
-          direction={direction}
-          status={outerStatus}
-        >
-          {stepList}
-        </RcSteps>
+        <Wrapper>
+          {children}
+          <RcSteps
+            current={activeStep}
+            labelPlacement={labelPlacement}
+            direction={direction}
+            status={outerStatus}
+          >
+            {stepList}
+          </RcSteps>
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

@@ -76,6 +76,10 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
         show: true,
         value: [],
       },
+      componentBorder: {
+        width: 10,
+        padding: [0, 0],
+      },
       lens: {
         show: false,
         hueRotate: 30,

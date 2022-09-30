@@ -11,7 +11,7 @@ const { getRgbaString } = ColorSelect;
 const CHART_ID = 'INPUT';
 
 const Input = (props: ComponentData.CommonComponentProps<TInputConfig>) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const {
     config: { options },
@@ -68,59 +68,65 @@ const Input = (props: ComponentData.CommonComponentProps<TInputConfig>) => {
         )}
         id={chartId.current}
       >
-        {children}
-        <input
-          value={inputValue}
-          placeholder={placeholder.value}
-          onChange={(e) => {
-            setInputValue(e.target.value);
-          }}
-          className={styles['component-interactive-input-main']}
-          style={{
-            ...textStyle,
-            ...(search.show
-              ? {
-                  borderTopLeftRadius: borderRadius,
-                  borderBottomLeftRadius: borderRadius,
-                }
-              : {
-                  borderRadius,
-                }),
-            color: getRgbaString(textStyle.color),
-            border: `${border.width}px ${border.type} ${getRgbaString(
-              border.color,
-            )}`,
-            borderRightWidth: 0,
-            backgroundColor: getRgbaString(backgroundColor),
-            // @ts-ignore
-            '--placeholder-color': getRgbaString(placeholder.color),
-            width: `calc( 100% - ${search.show ? search.width : 0}px - ${
-              border.width * 2
-            }px )`,
-          }}
-        />
-        {search.show && (
-          <div
-            className={styles['component-interactive-input-button']}
-            style={{
-              width: search.width,
-            }}
-          >
-            <button
-              className={styles['component-interactive-input-button-content']}
-              onClick={onChange}
-              style={{
-                ...search.textStyle,
-                color: getRgbaString(search.textStyle.color),
-                backgroundColor: getRgbaString(search.backgroundColor),
-                borderTopRightRadius: borderRadius,
-                borderBottomRightRadius: borderRadius,
+        <Wrapper>
+          {children}
+          <div className="dis-flex w-100 h-100">
+            <input
+              value={inputValue}
+              placeholder={placeholder.value}
+              onChange={(e) => {
+                setInputValue(e.target.value);
               }}
-            >
-              {search.value}
-            </button>
+              className={styles['component-interactive-input-main']}
+              style={{
+                ...textStyle,
+                ...(search.show
+                  ? {
+                      borderTopLeftRadius: borderRadius,
+                      borderBottomLeftRadius: borderRadius,
+                    }
+                  : {
+                      borderRadius,
+                    }),
+                color: getRgbaString(textStyle.color),
+                border: `${border.width}px ${border.type} ${getRgbaString(
+                  border.color,
+                )}`,
+                borderRightWidth: 0,
+                backgroundColor: getRgbaString(backgroundColor),
+                // @ts-ignore
+                '--placeholder-color': getRgbaString(placeholder.color),
+                width: `calc( 100% - ${search.show ? search.width : 0}px - ${
+                  border.width * 2
+                }px )`,
+              }}
+            />
+            {search.show && (
+              <div
+                className={styles['component-interactive-input-button']}
+                style={{
+                  width: search.width,
+                }}
+              >
+                <button
+                  className={
+                    styles['component-interactive-input-button-content']
+                  }
+                  onClick={onChange}
+                  style={{
+                    ...search.textStyle,
+                    color: getRgbaString(search.textStyle.color),
+                    backgroundColor: getRgbaString(search.backgroundColor),
+                    borderTopRightRadius: borderRadius,
+                    borderBottomRightRadius: borderRadius,
+                  }}
+                >
+                  {search.value}
+                </button>
+              </div>
+            )}
           </div>
-        )}
+        </Wrapper>
       </div>
     </>
   );

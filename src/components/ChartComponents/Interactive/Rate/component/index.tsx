@@ -12,7 +12,7 @@ const { getRgbaString } = ColorSelect;
 const CHART_ID = 'RATE';
 
 const Rate = (props: ComponentData.CommonComponentProps<TRateConfig>) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const {
     config: { options },
@@ -78,22 +78,24 @@ const Rate = (props: ComponentData.CommonComponentProps<TRateConfig>) => {
       )}
       id={chartId.current}
     >
-      {children}
-      <AntRate
-        character={iconNode}
-        value={rateValue}
-        onChange={onChange}
-        allowClear={allowClear}
-        allowHalf={allowHalf}
-        count={count}
-        style={{
-          // @ts-ignore
-          '--component-rate-active-color': getRgbaString(rateBackgroundColor),
-          '--component-rate-color': getRgbaString(backgroundColor),
-          '--component-rate-size': size + 'px',
-          '--component-rate-margin': margin + 'px',
-        }}
-      />
+      <Wrapper>
+        {children}
+        <AntRate
+          character={iconNode}
+          value={rateValue}
+          onChange={onChange}
+          allowClear={allowClear}
+          allowHalf={allowHalf}
+          count={count}
+          style={{
+            // @ts-ignore
+            '--component-rate-active-color': getRgbaString(rateBackgroundColor),
+            '--component-rate-color': getRgbaString(backgroundColor),
+            '--component-rate-size': size + 'px',
+            '--component-rate-margin': margin + 'px',
+          }}
+        />
+      </Wrapper>
     </div>
   );
 };

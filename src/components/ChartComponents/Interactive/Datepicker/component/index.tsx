@@ -17,7 +17,7 @@ const CHART_ID = 'DATE_PICKER';
 const DatePicker = (
   props: ComponentData.CommonComponentProps<TDatePickerConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const {
     id,
@@ -260,8 +260,10 @@ const DatePicker = (
         )}
         id={chartId.current}
       >
-        {children}
-        {DatePickerDom}
+        <Wrapper>
+          {children}
+          {DatePickerDom}
+        </Wrapper>
       </div>
     </>
   );

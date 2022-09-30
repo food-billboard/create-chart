@@ -25,7 +25,7 @@ const CHART_ID = 'PARALLEL_BASIC';
 const ParallelBasic = (
   props: ComponentData.CommonComponentProps<TParallelBasicConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
 
   const {
@@ -139,7 +139,6 @@ const ParallelBasic = (
   };
 
   const onClick = () => {
-    console.log(222222);
     linkageMethod('click', {});
   };
 
@@ -237,8 +236,10 @@ const ParallelBasic = (
         )}
         onClick={onClick}
       >
-        <div id={chartId.current} className="w-100 h-100"></div>
-        {children}
+        <Wrapper>
+          <div id={chartId.current} className="w-100 h-100"></div>
+          {children}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

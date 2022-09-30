@@ -20,7 +20,7 @@ const { getRgbaString } = ColorSelect;
 const CHART_ID = 'TAG';
 
 const Tag = (props: ComponentData.CommonComponentProps<TTagConfig>) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
 
   const {
@@ -139,8 +139,10 @@ const Tag = (props: ComponentData.CommonComponentProps<TTagConfig>) => {
         style={componentStyle}
         id={chartId.current}
       >
-        {children}
-        {valueList}
+        <Wrapper>
+          {children}
+          {valueList}
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}

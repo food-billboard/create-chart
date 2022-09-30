@@ -30,7 +30,7 @@ const GlobalConfig = (props: {
   const {
     config: {
       style: { width, height },
-      attr: { poster, theme, grid },
+      attr: { poster, theme, grid, componentBorder },
     },
     description,
     poster: cover,
@@ -117,6 +117,46 @@ const GlobalConfig = (props: {
                         onChange={onValueChange.bind(null, 'poster')}
                       />
                     </FullForm>
+                  </Item>
+                  <Item
+                    label="组件边框"
+                    placeholder={
+                      <IconTooltip title="统一配置组件边框的样式">
+                        <InfoCircleOutlined />
+                      </IconTooltip>
+                    }
+                  >
+                    <FullForm label="宽度">
+                      <InputNumber
+                        value={componentBorder.width}
+                        onChange={onValueChange.bind(
+                          null,
+                          'config.attr.componentBorder.width',
+                        )}
+                      />
+                    </FullForm>
+                    <HalfForm label="横向间距">
+                      <InputNumber
+                        value={componentBorder.padding[0]}
+                        onChange={(value) =>
+                          onValueChange('config.attr.componentBorder.padding', [
+                            value,
+                            componentBorder.padding[1],
+                          ])
+                        }
+                      />
+                    </HalfForm>
+                    <HalfForm label="纵向间距">
+                      <InputNumber
+                        value={componentBorder.padding[1]}
+                        onChange={(value) =>
+                          onValueChange('config.attr.componentBorder.padding', [
+                            componentBorder.padding[0],
+                            value,
+                          ])
+                        }
+                      />
+                    </HalfForm>
                   </Item>
                   <Item label="栅格">
                     <FullForm>

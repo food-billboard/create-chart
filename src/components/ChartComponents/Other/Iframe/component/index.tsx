@@ -17,7 +17,7 @@ const CHART_ID = 'IFRAME';
 const IframeBasic = (
   props: ComponentData.CommonComponentProps<TIFrameConfig>,
 ) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const {
     id,
     config: {
@@ -164,23 +164,25 @@ const IframeBasic = (
                 } as CSSProperties),
           )}
         >
-          {children}
-          <iframe
-            src={finalValue.value}
-            name={chartId.current}
-            width="100%"
-            height="100%"
-            frameBorder="0"
-            scrolling={scrolling}
-            onLoad={onLoad}
-            style={
-              pointEvent
-                ? {}
-                : ({
-                    pointerEvents: 'none',
-                  } as CSSProperties)
-            }
-          />
+          <Wrapper>
+            {children}
+            <iframe
+              src={finalValue.value}
+              name={chartId.current}
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              scrolling={scrolling}
+              onLoad={onLoad}
+              style={
+                pointEvent
+                  ? {}
+                  : ({
+                      pointerEvents: 'none',
+                    } as CSSProperties)
+              }
+            />
+          </Wrapper>
         </div>
       </div>
       <FetchFragment

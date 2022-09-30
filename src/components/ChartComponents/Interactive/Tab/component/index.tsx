@@ -15,7 +15,7 @@ const { getRgbaString } = ColorSelect;
 const CHART_ID = 'TAB';
 
 const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
-  const { className, style, value, global, children } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const {
     id,
@@ -160,8 +160,10 @@ const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
         )}
         id={chartId.current}
       >
-        {children}
-        {domList}
+        <Wrapper>
+          {children}
+          <div className="dis-flex w-100 h-100">{domList}</div>
+        </Wrapper>
       </div>
       <FetchFragment
         id={id}
