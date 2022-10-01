@@ -22,7 +22,10 @@ const VideoBasic = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const {
     controls,
@@ -102,7 +105,7 @@ const VideoBasic = (
         id={chartId.current}
         onClick={onClick}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           <video
             muted={muted}

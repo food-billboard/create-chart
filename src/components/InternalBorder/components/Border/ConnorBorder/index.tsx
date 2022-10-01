@@ -1,41 +1,33 @@
-import { useMemo } from 'react';
-import classnames from 'classnames';
-import { merge } from 'lodash';
-import { connect } from 'dva';
-import ThemeUtil from '@/utils/Assist/Theme';
-import ColorSelect from '../../../../ColorSelect';
-import { mapStateToProps, mapDispatchToProps } from '../connect';
+import { CSSProperties } from 'react';
 import { CommonBorderProps } from '../type';
-import commonStyles from '../index.less';
+import { useBorderWrapper } from '../hooks';
 import './index.less';
 
-const { getRgbaString } = ColorSelect;
-
 const ConnorBorder = (props: CommonBorderProps) => {
-  const { children, className, style, width, padding, ...nextProps } = props;
-
-  const color = useMemo(() => {
-    return getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0));
-  }, []);
+  const {
+    origin: {
+      props: { width, padding },
+    },
+    children,
+    style,
+    ...nextProps
+  } = useBorderWrapper(props, 'internal-border-connor-border', {
+    colorType: 'item',
+  });
 
   return (
     <>
       <div
-        style={merge(
-          {
-            // @ts-ignore
-            '--internal-border-connor-border-width': width + 'px',
-            '--internal-border-connor-border-color': color,
-            padding: padding.map((item) => `${item}px`).join(' '),
-          },
-          style,
-        )}
-        className={classnames(
-          'internal-border-connor-border',
-          commonStyles['internal-border-common'],
-          className,
-        )}
         {...nextProps}
+        style={{
+          ...style,
+          backgroundSize: `${width * 0.4}px ${width * 2}px, ${width * 2}px ${
+            width * 0.4
+          }px, ${width * 0.4}px ${width * 2}px, ${width * 2}px ${
+            width * 0.4
+          }px`,
+          borderRadius: padding.map((item) => `${item}px`).join(' '),
+        }}
       >
         {children}
       </div>
@@ -43,4 +35,16 @@ const ConnorBorder = (props: CommonBorderProps) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConnorBorder);
+const ConnorBorderWrapper: typeof ConnorBorder & {
+  getOuterStyle: (
+    props: ComponentData.TScreenData['config']['attr']['componentBorder'],
+  ) => CSSProperties;
+} = ConnorBorder as any;
+
+ConnorBorderWrapper.getOuterStyle = ({ width, padding }) => {
+  return {
+    padding: padding.map((item) => `${item + width * 0.4}px`).join(' '),
+  };
+};
+
+export default ConnorBorderWrapper;

@@ -26,7 +26,10 @@ const ImageBasic = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const {
     type,
@@ -119,7 +122,7 @@ const ImageBasic = (
           conditionStyle,
         )}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div
             id={chartId.current}
             onClick={onClick}

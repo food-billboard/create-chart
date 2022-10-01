@@ -1,40 +1,44 @@
-import { useMemo } from 'react';
-import classnames from 'classnames';
-import { merge } from 'lodash';
-import { connect } from 'dva';
-import ThemeUtil from '@/utils/Assist/Theme';
-import ColorSelect from '../../../../ColorSelect';
-import { mapStateToProps, mapDispatchToProps } from '../connect';
+import { CSSProperties } from 'react';
+import { getRgbaString } from '@/utils/Assist/Theme';
 import { CommonBorderProps } from '../type';
-import commonStyles from '../index.less';
+import { useBorderWrapper } from '../hooks';
 import './index.less';
 
-const { getRgbaString } = ColorSelect;
-
 const FlickerBorder = (props: CommonBorderProps) => {
-  const { children, className, style, width, padding, ...nextProps } = props;
+  const { origin, children, ...nextProps } = useBorderWrapper(
+    props,
+    'internal-border-flicker-border',
+    {
+      colorType: 'list',
+    },
+  );
 
-  const color = useMemo(() => {
-    return getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0));
-  }, []);
+  const ColorList = origin.color as ComponentData.TColorConfig[];
 
   return (
     <>
       <div
         {...nextProps}
-        style={merge(
-          {
-            // @ts-ignore
-            '--internal-border-flicker-border-width': width + 'px',
-            padding: padding.map((item) => `${item}px`).join(' '),
-          },
-          style,
-        )}
-        className={classnames(
-          'internal-border-flicker-border',
-          commonStyles['internal-border-common'],
-          className,
-        )}
+        style={{
+          ...nextProps.style,
+          // @ts-ignore
+          '--internal-border-flicker-border-shadow-0': getRgbaString({
+            ...ColorList[1],
+            a: 0.1,
+          }),
+          '--internal-border-flicker-border-shadow-1': getRgbaString({
+            ...ColorList[1],
+            a: 0.2,
+          }),
+          '--internal-border-flicker-border-shadow-2': getRgbaString({
+            ...ColorList[1],
+            a: 0.4,
+          }),
+          '--internal-border-flicker-border-shadow-3': getRgbaString({
+            ...ColorList[2],
+            a: 0.6,
+          }),
+        }}
       >
         {children}
       </div>
@@ -42,4 +46,16 @@ const FlickerBorder = (props: CommonBorderProps) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FlickerBorder);
+const FlickerBorderWrapper: typeof FlickerBorder & {
+  getOuterStyle: (
+    props: ComponentData.TScreenData['config']['attr']['componentBorder'],
+  ) => CSSProperties;
+} = FlickerBorder as any;
+
+FlickerBorderWrapper.getOuterStyle = ({ width, padding }) => {
+  return {
+    padding: padding.map((item) => `${item + width}px`).join(' '),
+  };
+};
+
+export default FlickerBorderWrapper;

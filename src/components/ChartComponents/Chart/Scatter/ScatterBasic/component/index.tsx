@@ -31,7 +31,10 @@ const ScatterBasic = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { legend, series, tooltip, animation, xAxis, yAxis, condition, grid } =
@@ -224,7 +227,7 @@ const ScatterBasic = (
         )}
         onClick={onClick}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>

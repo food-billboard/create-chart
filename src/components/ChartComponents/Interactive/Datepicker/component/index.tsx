@@ -21,7 +21,10 @@ const DatePicker = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const {
     defaultDate,
@@ -260,7 +263,7 @@ const DatePicker = (
         )}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           {DatePickerDom}
         </Wrapper>

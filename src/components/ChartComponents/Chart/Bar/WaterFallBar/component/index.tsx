@@ -32,7 +32,10 @@ const WaterFallBar = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { series, xAxis, yAxis, tooltip, animation, condition, grid } =
@@ -230,7 +233,7 @@ const WaterFallBar = (
           conditionStyle,
         )}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>

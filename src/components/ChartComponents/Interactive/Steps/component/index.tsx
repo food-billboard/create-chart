@@ -22,7 +22,10 @@ const Steps = (props: ComponentData.CommonComponentProps<TStepsConfig>) => {
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const {
     defaultCurrent,
@@ -227,7 +230,7 @@ const Steps = (props: ComponentData.CommonComponentProps<TStepsConfig>) => {
         )}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           <RcSteps
             current={activeStep}

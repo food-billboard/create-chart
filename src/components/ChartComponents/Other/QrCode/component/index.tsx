@@ -28,7 +28,10 @@ const QrCode = (props: ComponentData.CommonComponentProps<TQrCodeConfig>) => {
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const { condition, logo, base } = options;
 
@@ -141,7 +144,7 @@ const QrCode = (props: ComponentData.CommonComponentProps<TQrCodeConfig>) => {
         id={chartId.current}
         onClick={onClick}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           <div
             className={styles['component-other-qr-code-content']}

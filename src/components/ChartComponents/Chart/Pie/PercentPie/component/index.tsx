@@ -39,7 +39,10 @@ const PercentPie = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { series, animation, condition, statistics, lineStyle } =
@@ -499,7 +502,7 @@ const PercentPie = (
           conditionStyle,
         )}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>

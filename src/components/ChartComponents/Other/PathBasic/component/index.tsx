@@ -42,7 +42,7 @@ const _PathBasic = (
     id,
     config: {
       options,
-      style: { width, height },
+      style: { width, height, border },
     },
   } = value;
 
@@ -257,7 +257,7 @@ const _PathBasic = (
         id={chartId.current}
         onClick={onClick}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           {shape}
           <svg id={svgId.current} width={width} height={height}>

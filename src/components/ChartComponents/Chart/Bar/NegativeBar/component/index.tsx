@@ -31,7 +31,10 @@ const NegativeBar = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { legend, series, xAxis, yAxis, tooltip, animation, condition, grid } =
@@ -275,7 +278,7 @@ const NegativeBar = (
           conditionStyle,
         )}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>

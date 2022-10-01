@@ -30,7 +30,10 @@ const SunBurstBasic = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { series, tooltip, animation, condition } =
@@ -183,7 +186,7 @@ const SunBurstBasic = (
           conditionStyle,
         )}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>

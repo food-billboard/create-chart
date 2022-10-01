@@ -20,7 +20,11 @@ const TimeMachineBasic = (
   const [currentTime, setCurrentTime] = useState<moment.Moment>(moment());
 
   const {
-    config: { options, interactive: { linkage = [] } = {} },
+    config: {
+      options,
+      style: { border },
+      interactive: { linkage = [] } = {},
+    },
   } = value;
   const { formatter, icon, ...nextOptions } = options;
 
@@ -90,7 +94,7 @@ const TimeMachineBasic = (
       id={chartId.current}
       onClick={onClick}
     >
-      <Wrapper>
+      <Wrapper border={border}>
         {children}
         {icon.position === 'before' && iconNode}
         {currentTime.format(formatter)}

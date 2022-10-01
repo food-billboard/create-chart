@@ -24,7 +24,10 @@ const TitleBasic = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const { animation, condition, ...nextOptions } = options;
   const { screenType } = global;
@@ -121,7 +124,7 @@ const TitleBasic = (
         id={chartId.current}
         onClick={onClick}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           {finalValue.value || ''}
         </Wrapper>

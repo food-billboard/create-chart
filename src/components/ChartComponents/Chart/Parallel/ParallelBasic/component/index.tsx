@@ -30,7 +30,10 @@ const ParallelBasic = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { legend, series, animation, parallel, parallelAxis, condition } =
@@ -236,7 +239,7 @@ const ParallelBasic = (
         )}
         onClick={onClick}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>

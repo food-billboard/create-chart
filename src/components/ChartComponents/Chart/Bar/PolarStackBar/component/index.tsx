@@ -32,7 +32,10 @@ const PolarStackBar = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { legend, series, polar, angleAxis, tooltip, animation, condition } =
@@ -243,7 +246,7 @@ const PolarStackBar = (
           conditionStyle,
         )}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>

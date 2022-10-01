@@ -14,7 +14,10 @@ const Input = (props: ComponentData.CommonComponentProps<TInputConfig>) => {
   const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const {
-    config: { options },
+    config: {
+      options,
+      style: { border: outBorder },
+    },
   } = value;
   const {
     border,
@@ -68,7 +71,7 @@ const Input = (props: ComponentData.CommonComponentProps<TInputConfig>) => {
         )}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={outBorder}>
           {children}
           <div className="dis-flex w-100 h-100">
             <input

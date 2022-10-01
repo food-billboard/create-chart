@@ -1,7 +1,12 @@
 .internal-border-gradient-loop-border {
   border: var(--internal-border-gradient-loop-border-width) solid;
-  border-image: linear-gradient(45deg, gold, deeppink) 1;
-  clip-path: inset(0px round 10px);
+  border-image: linear-gradient(
+      45deg,
+      var(--internal-border-gradient-loop-border-color-0),
+      var(--internal-border-gradient-loop-border-color-5)
+    )
+    1;
+  clip-path: inset(0px round var(--internal-border-gradient-loop-border-width));
   animation: internal-border-gradient-border-huerotate 6s infinite linear;
   filter: hue-rotate(360deg);
 

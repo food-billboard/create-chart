@@ -19,7 +19,10 @@ const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const { active, base, loop } = options;
   const { screenType } = global;
@@ -160,7 +163,7 @@ const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
         )}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           <div className="dis-flex w-100 h-100">{domList}</div>
         </Wrapper>

@@ -31,7 +31,10 @@ const ProgressBar = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { series, yAxis, tooltip, animation, condition, grid } =
@@ -223,7 +226,7 @@ const ProgressBar = (
           conditionStyle,
         )}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>

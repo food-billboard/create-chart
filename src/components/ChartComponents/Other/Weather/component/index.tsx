@@ -31,7 +31,10 @@ const Weather = (props: ComponentData.CommonComponentProps<TWeatherConfig>) => {
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const { show, textStyle, widMap, align } = options;
 
@@ -160,7 +163,7 @@ const Weather = (props: ComponentData.CommonComponentProps<TWeatherConfig>) => {
         id={chartId.current}
         onClick={onClick}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           {listContent}
         </Wrapper>

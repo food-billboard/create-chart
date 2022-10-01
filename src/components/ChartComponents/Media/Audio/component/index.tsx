@@ -21,7 +21,10 @@ const AudioBasic = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const { controls, loop, autoplay: opAutoplay, condition } = options;
   const { screenType } = global;
@@ -91,7 +94,7 @@ const AudioBasic = (
         id={chartId.current}
         onClick={onClick}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           <audio
             autoPlay={screenType !== 'edit' && autoplay}

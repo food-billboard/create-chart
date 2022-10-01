@@ -1,10 +1,47 @@
-import {} from 'react';
+import { useMemo, Fragment } from 'react';
 import { Select } from 'antd';
 import { useControllableValue } from 'ahooks';
+import { connect } from 'dva';
+import { pick } from 'lodash';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 import BorderMap from './components/Border';
+import { CommonBorderProps } from './components/Border/type';
+import styles from './components/Border/index.less';
 
 export { default as BorderMap } from './components/Border';
 export * from './components/Border';
+
+const _InternalBorderWrapper = (
+  props: CommonBorderProps & {
+    border: ComponentData.TComponentData['config']['style']['border'];
+  },
+) => {
+  const { children, border, ...nextProps } = props;
+
+  const Dom = useMemo(() => {
+    if (!border.show) return Fragment;
+    return (BorderMap as any)[border.value]?.value || Fragment;
+  }, [border]);
+
+  console.log(Dom.getOuterStyle?.(pick(nextProps, ['width', 'padding'])), 2222);
+
+  return (
+    <>
+      <Dom {...nextProps}></Dom>
+      <div
+        className={styles['internal-border-outer']}
+        style={Dom.getOuterStyle?.(pick(nextProps, ['width', 'padding'])) || {}}
+      >
+        {children}
+      </div>
+    </>
+  );
+};
+
+export const InternalBorderWrapper = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(_InternalBorderWrapper);
 
 export const InternalBorderSelect = (props: {
   value?: string;

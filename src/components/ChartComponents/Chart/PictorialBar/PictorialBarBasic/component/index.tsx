@@ -31,7 +31,10 @@ const PictorialBar = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { series, xAxis, yAxis, tooltip, animation, condition, grid } =
@@ -217,7 +220,7 @@ const PictorialBar = (
           conditionStyle,
         )}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>

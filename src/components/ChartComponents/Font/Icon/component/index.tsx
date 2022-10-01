@@ -17,7 +17,7 @@ const Icon = (props: ComponentData.CommonComponentProps<TIconConfig>) => {
   const {
     config: {
       options,
-      style: { width, height },
+      style: { width, height, border },
       interactive: { linkage = [] } = {},
     },
   } = value;
@@ -67,7 +67,7 @@ const Icon = (props: ComponentData.CommonComponentProps<TIconConfig>) => {
       id={chartId.current}
       onClick={onClick}
     >
-      <Wrapper>
+      <Wrapper border={border}>
         {children}
         {iconNode}
       </Wrapper>

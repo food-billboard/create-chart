@@ -21,7 +21,10 @@ const ClockGauge = (
   const { screenTheme } = global;
 
   const {
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { series } = useChartPerConfig<TClockGaugeConfig>(options);
@@ -302,7 +305,7 @@ const ClockGauge = (
           style,
         )}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>

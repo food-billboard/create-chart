@@ -22,6 +22,7 @@ const IframeBasic = (
     id,
     config: {
       options: { scrolling, scale, pointEvent, relationParams },
+      style: { border },
     },
   } = value;
 
@@ -164,7 +165,7 @@ const IframeBasic = (
                 } as CSSProperties),
           )}
         >
-          <Wrapper>
+          <Wrapper border={border}>
             {children}
             <iframe
               src={finalValue.value}

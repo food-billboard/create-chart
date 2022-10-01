@@ -41,7 +41,10 @@ const CountUpNumberBasic = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const {
     animation,
@@ -162,7 +165,7 @@ const CountUpNumberBasic = (
         )}
         onClick={onClick}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100">
             {calculateValue || ''}
           </div>

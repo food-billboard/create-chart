@@ -19,7 +19,7 @@ const Switch = (props: ComponentData.CommonComponentProps<TSwitchConfig>) => {
   const {
     config: {
       options,
-      style: { width, height },
+      style: { width, height, border },
     },
   } = value;
   const {
@@ -131,7 +131,7 @@ const Switch = (props: ComponentData.CommonComponentProps<TSwitchConfig>) => {
         )}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           <ReactSwitch
             width={width}

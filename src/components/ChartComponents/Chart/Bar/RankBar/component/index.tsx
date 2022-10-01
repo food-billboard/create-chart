@@ -30,7 +30,10 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { series, yAxis, tooltip, animation, condition, grid } =
@@ -340,7 +343,7 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
           conditionStyle,
         )}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>

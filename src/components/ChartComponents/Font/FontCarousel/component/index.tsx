@@ -28,7 +28,7 @@ const TFontCarousel = (
     id,
     config: {
       options,
-      style: { height },
+      style: { height, border },
     },
   } = value;
   const { textStyle, speed, direction, play, delay, pauseOnHover, condition } =
@@ -109,7 +109,7 @@ const TFontCarousel = (
         id={chartId.current}
         onClick={onClick}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           {
             <Marquee

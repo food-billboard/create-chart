@@ -1,48 +1,23 @@
-import { useMemo } from 'react';
-import classnames from 'classnames';
-import { merge } from 'lodash';
-import { connect } from 'dva';
-import ThemeUtil from '@/utils/Assist/Theme';
-import ColorSelect from '../../../../ColorSelect';
-import { mapStateToProps, mapDispatchToProps } from '../connect';
+import { CSSProperties } from 'react';
 import { CommonBorderProps } from '../type';
-import commonStyles from '../index.less';
+import { useBorderWrapper } from '../hooks';
 import './index.less';
 
-const { getRgbaString } = ColorSelect;
-
 const GradientLoopBorder = (props: CommonBorderProps) => {
-  const { children, className, style, width, padding, ...nextProps } = props;
-
-  const color = useMemo(() => {
-    return getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0));
-  }, []);
+  const { origin, children, style, ...nextProps } = useBorderWrapper(
+    props,
+    'internal-border-gradient-loop-border',
+    {
+      colorType: 'list',
+    },
+  );
 
   return (
     <>
-      <div
-        {...nextProps}
-        style={merge(
-          {
-            // @ts-ignore
-            '--internal-border-gradient-loop-border-width': width + 'px',
-          },
-          style,
-        )}
-        className={classnames(
-          'internal-border-gradient-loop-border',
-          commonStyles['internal-border-common'],
-          className,
-        )}
-      ></div>
+      <div {...nextProps} style={style}></div>
       <div
         className={'w-100 h-100 internal-border-gradient-loop-border-outer'}
-        style={merge(
-          {
-            padding: padding.map((item) => `${item}px`).join(' '),
-          },
-          style,
-        )}
+        style={style}
       >
         {children}
       </div>
@@ -50,4 +25,16 @@ const GradientLoopBorder = (props: CommonBorderProps) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GradientLoopBorder);
+const GradientLoopBorderWrapper: typeof GradientLoopBorder & {
+  getOuterStyle: (
+    props: ComponentData.TScreenData['config']['attr']['componentBorder'],
+  ) => CSSProperties;
+} = GradientLoopBorder as any;
+
+GradientLoopBorderWrapper.getOuterStyle = ({ width, padding }) => {
+  return {
+    padding: padding.map((item) => `${item + width}px`).join(' '),
+  };
+};
+
+export default GradientLoopBorderWrapper;

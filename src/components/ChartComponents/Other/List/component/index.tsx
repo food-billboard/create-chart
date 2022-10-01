@@ -29,7 +29,7 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
     id,
     config: {
       options,
-      style: { height },
+      style: { height, border },
     },
   } = value;
   const {
@@ -305,7 +305,7 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
         style={merge(style, conditionStyle)}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           {headerDom}
           {listContent}

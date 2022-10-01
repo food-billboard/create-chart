@@ -25,7 +25,7 @@ const CarouselBasic = (
   const {
     config: {
       options,
-      style: { height },
+      style: { height, border },
     },
     id,
   } = value;
@@ -116,7 +116,7 @@ const CarouselBasic = (
         )}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           <Carousel
             autoplay={autoplay}

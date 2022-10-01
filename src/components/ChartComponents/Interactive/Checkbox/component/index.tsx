@@ -22,7 +22,10 @@ const Checkbox = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const {
     borderColor,
@@ -99,7 +102,7 @@ const Checkbox = (
         )}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           <AntCheckbox.Group
             value={checkedValue}

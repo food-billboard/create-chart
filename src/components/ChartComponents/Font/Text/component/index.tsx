@@ -25,7 +25,7 @@ const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
   const {
     id,
     config: {
-      style: { height },
+      style: { height, border },
       options,
     },
   } = value;
@@ -138,7 +138,7 @@ const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
         id={chartId.current}
         onClick={onClick}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           {element}
         </Wrapper>

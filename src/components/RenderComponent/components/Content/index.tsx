@@ -1,10 +1,10 @@
-import { useMemo, useCallback, Fragment } from 'react';
+import { useMemo, useCallback } from 'react';
 import { connect } from 'dva';
 import { get } from 'lodash';
 import { ConnectState } from '@/models/connect';
 import { EComponentType } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils';
-import { BorderMap } from '../../../InternalBorder';
+import { InternalBorderWrapper } from '../../../InternalBorder';
 import ChildrenWrapper from './ChildrenWrapper';
 import SubGroup from './SubGroup';
 import { getComponentByType } from '../../../ChartComponents';
@@ -40,10 +40,7 @@ const Content = (props: {
       const { scaleX, scaleY } = getScale(parent || undefined);
       return value.map((component) => {
         const { type, id } = component;
-        const { show, value } = get(component, 'config.style.border') || {};
-        const Dom = show
-          ? (BorderMap as any)[value]?.value || Fragment
-          : Fragment;
+        const border = get(component, 'config.style.border') || {};
 
         const newComponent = mergeWithoutArray({}, component, {
           config: {
@@ -62,7 +59,7 @@ const Content = (props: {
 
         if (type === EComponentType.GROUP_COMPONENT) {
           return (
-            <Dom>
+            <InternalBorderWrapper border={border}>
               <ChildrenWrapper
                 value={newComponent}
                 key={component.id}
@@ -73,7 +70,7 @@ const Content = (props: {
                   {renderChildren(newComponent.components, newComponent, false)}
                 </SubGroup>
               </ChildrenWrapper>
-            </Dom>
+            </InternalBorderWrapper>
           );
         }
 
@@ -92,7 +89,7 @@ const Content = (props: {
               className={styles['render-component-children']}
               value={newComponent}
               key={id}
-              wrapper={Dom}
+              wrapper={InternalBorderWrapper}
               global={{
                 setParams,
                 screenType,

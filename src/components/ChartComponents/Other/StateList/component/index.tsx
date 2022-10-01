@@ -26,7 +26,10 @@ const StateList = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const {
     margin,
@@ -160,7 +163,7 @@ const StateList = (
         style={componentStyle}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           {listContent}
         </Wrapper>

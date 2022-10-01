@@ -36,7 +36,10 @@ const ModelBasic = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -139,7 +142,7 @@ const ModelBasic = (
         id={chartId.current}
         onClick={onClick}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           {pageLoading && (
             <div className={styles['component-media-model-loading']}>

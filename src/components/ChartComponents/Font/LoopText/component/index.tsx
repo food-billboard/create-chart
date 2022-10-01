@@ -26,7 +26,10 @@ const LoopText = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const {
     animation,
@@ -108,7 +111,7 @@ const LoopText = (
         )}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           {addonBefore.show && (
             <span

@@ -1,10 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, CSSProperties } from 'react';
 import classnames from 'classnames';
 import { merge } from 'lodash';
-import { connect } from 'dva';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ColorSelect from '../../../../ColorSelect';
-import { mapStateToProps, mapDispatchToProps } from '../connect';
 import { CommonBorderProps } from '../type';
 import commonStyles from '../index.less';
 import './index.less';
@@ -40,4 +38,16 @@ const RotateLoopBorder = (props: CommonBorderProps) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RotateLoopBorder);
+const RotateLoopBorderWrapper: typeof RotateLoopBorder & {
+  getOuterStyle: (
+    props: ComponentData.TScreenData['config']['attr']['componentBorder'],
+  ) => CSSProperties;
+} = RotateLoopBorder as any;
+
+RotateLoopBorderWrapper.getOuterStyle = ({ width, padding }) => {
+  return {
+    padding: padding.map((item) => `${item + width}px`).join(' '),
+  };
+};
+
+export default RotateLoopBorderWrapper;

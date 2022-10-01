@@ -20,7 +20,10 @@ const Radio = (props: ComponentData.CommonComponentProps<TRadioConfig>) => {
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const {
     borderColor,
@@ -99,7 +102,7 @@ const Radio = (props: ComponentData.CommonComponentProps<TRadioConfig>) => {
         )}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           <AntRadio.Group
             value={checkedValue}

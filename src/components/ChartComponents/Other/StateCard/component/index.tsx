@@ -27,7 +27,7 @@ const StateCard = (
     id,
     config: {
       options,
-      style: { height },
+      style: { border },
     },
   } = value;
   const { margin, textStyle, stateIcon, stateList, condition } = options;
@@ -158,7 +158,7 @@ const StateCard = (
         style={componentStyle}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           {listContent}
         </Wrapper>

@@ -22,7 +22,7 @@ const PictureWall = (
   const {
     config: {
       options,
-      style: { height },
+      style: { height, border },
     },
     id,
   } = value;
@@ -116,7 +116,7 @@ const PictureWall = (
         )}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           {imageList}
         </Wrapper>

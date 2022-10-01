@@ -23,7 +23,10 @@ const SelectBasic = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const {
     active,
@@ -146,7 +149,7 @@ const SelectBasic = (
         )}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           <Select
             placeholder="请选择..."

@@ -29,7 +29,10 @@ const WordCloudBasic = (
   const { screenTheme, screenType } = global;
 
   const {
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
     id,
   } = value;
 
@@ -208,7 +211,7 @@ const WordCloudBasic = (
           conditionStyle,
         )}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>

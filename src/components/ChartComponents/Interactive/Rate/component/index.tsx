@@ -15,7 +15,10 @@ const Rate = (props: ComponentData.CommonComponentProps<TRateConfig>) => {
   const { className, style, value, global, children, wrapper: Wrapper } = props;
 
   const {
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const {
     margin,
@@ -78,7 +81,7 @@ const Rate = (props: ComponentData.CommonComponentProps<TRateConfig>) => {
       )}
       id={chartId.current}
     >
-      <Wrapper>
+      <Wrapper border={border}>
         {children}
         <AntRate
           character={iconNode}

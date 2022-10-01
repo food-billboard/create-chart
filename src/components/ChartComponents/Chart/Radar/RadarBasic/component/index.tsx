@@ -32,7 +32,10 @@ const RadarBasic = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { legend, series, tooltip, animation, radar, condition } =
@@ -340,7 +343,7 @@ const RadarBasic = (
           conditionStyle,
         )}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>

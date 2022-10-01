@@ -38,7 +38,10 @@ const Ali3DMap = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { tooltip, condition, scatter, style: mapStyle, zoom } = options;
@@ -376,7 +379,7 @@ const Ali3DMap = (
         )}
         id={chartId.current}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           {children}
           <div className="w-100 h-100" id={chartId.current}>
             <div className="w-100 h-100" id={mapId.current}></div>

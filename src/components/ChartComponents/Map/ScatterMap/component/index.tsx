@@ -34,7 +34,10 @@ const ScatterMap = (
 
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
 
   const { tooltip, condition, geo, scatter } = options;
@@ -265,7 +268,7 @@ const ScatterMap = (
           conditionStyle,
         )}
       >
-        <Wrapper>
+        <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>
