@@ -53,7 +53,7 @@ export const useSingleModal: () => [
     if (closeAction) {
       if (update) {
         typeof closeAction === 'function' && closeAction?.();
-        closeAction = openModal();
+        closeAction = openModal().destroy;
       }
     } else {
       closeAction = openModal();
