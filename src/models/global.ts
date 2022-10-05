@@ -28,7 +28,10 @@ export default {
     },
     componentSelect: null,
     theme: ThemeMap.dark,
-    clipboard: [],
+    clipboard: {
+      timestamps: Date.now(),
+      value: [],
+    },
     drag: {
       value: null,
     },
@@ -138,7 +141,10 @@ export default {
       });
     },
 
-    *setClipboard({ value }: { value: string[] }, { put }: any) {
+    *setClipboard(
+      { value }: { value: ComponentClipboard.LocalClipboardType },
+      { put }: any,
+    ) {
       yield put({
         type: 'setClipboardData',
         payload: value,

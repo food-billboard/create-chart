@@ -636,6 +636,20 @@ declare namespace ComponentData {
   };
 }
 
+declare namespace ComponentClipboard {
+  export type LocalClipboardType = {
+    timestamps: number;
+    value: string[];
+  };
+
+  export type StorageClipboardType = {
+    timestamps: number;
+    value: ComponentData.TComponentData[];
+    show: boolean;
+    screenId: string;
+  };
+}
+
 declare namespace ComponentMethod {
   type SetComponentMethodParamsData = {
     value: SuperPartial<ComponentData.TComponentData>;

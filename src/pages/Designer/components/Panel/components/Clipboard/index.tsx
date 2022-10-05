@@ -19,8 +19,8 @@ const ClipboardComponent = (props: {
   children?: ReactNode;
   grid: number;
   components: ComponentData.TComponentData[];
-  clipboard: string[];
-  setClipboard: (value: string[]) => void;
+  clipboard: ComponentClipboard.LocalClipboardType;
+  setClipboard: (value: ComponentClipboard.LocalClipboardType) => void;
   setComponentAll: (value: ComponentData.TComponentData[]) => void;
   setSelect: (value: string[]) => void;
   screenType: ComponentData.ScreenType;
@@ -59,7 +59,11 @@ const ClipboardComponent = (props: {
 
   // paste
   useKeyPress(['ctrl.v', 'meta.v'], () => {
-    if (disabledKeyEvent || !CopyAndPasteUtil.isFocus() || !clipboard.length)
+    if (
+      disabledKeyEvent ||
+      !CopyAndPasteUtil.isFocus() ||
+      !clipboard.value.length
+    )
       return;
     paste({
       components,

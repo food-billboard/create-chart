@@ -23,8 +23,6 @@ const _InternalBorderWrapper = (
     return (BorderMap as any)[border.value]?.value || Fragment;
   }, [border]);
 
-  console.log(Dom.getOuterStyle?.(pick(nextProps, ['width', 'padding'])), 2222);
-
   return (
     <>
       <Dom {...nextProps}></Dom>

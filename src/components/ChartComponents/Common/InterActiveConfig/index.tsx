@@ -28,8 +28,6 @@ const InterActiveConfig = (props: {
       return get(component, 'config.interactive');
     }, [component]);
 
-  console.log(baseInteractive, linkageInteractive, 29999);
-
   return (
     <div
       className={classnames(

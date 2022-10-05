@@ -9,6 +9,7 @@ import {
   isGroupComponent as isGroupComponentMethod,
 } from '@/utils/Assist/Component';
 import GroupUtil from '@/utils/Assist/Group';
+import ClipboardComponent from '@/utils/Assist/ClipboardComponent';
 import { CommonActionType } from './type';
 
 function coverPreviousId(
@@ -59,7 +60,7 @@ export function useIsValidPasteSelect({
   }, [select, parent, components]);
 }
 
-export const paste = ({
+export const paste = async ({
   sourceComponents,
   components,
   clipboard,
@@ -69,7 +70,7 @@ export const paste = ({
 }: {
   sourceComponents: ComponentData.TComponentData[];
   components: ComponentData.TComponentData[];
-  clipboard: string[];
+  clipboard: ComponentClipboard.LocalClipboardType;
   setComponent: (
     components: ComponentData.TComponentData[],
     generateComponents: ComponentData.TComponentData[],
@@ -80,46 +81,59 @@ export const paste = ({
   const idPathMap = useIdPathMap();
   const newSelect: string[] = [];
 
+  const { clipboardComponents: realClipboard, isStorage } =
+    await ClipboardComponent.getRealComponentClipboard(clipboard);
+
   let generateComponents: ComponentData.TComponentData[] = [];
 
   const newComponents = [
     ...components,
-    ...clipboard.reduce<ComponentData.TComponentData[]>((acc, cur) => {
-      const targetPath = idPathMap[cur];
-      if (!targetPath) return acc;
-      const component = get(sourceComponents, targetPath.path);
-      if (!component) return acc;
+    ...realClipboard.reduce<ComponentData.TComponentData[]>(
+      (acc, component) => {
+        // 修改组件的id
+        let newComponent: ComponentData.TComponentData;
 
-      // 修改组件的id
-      const newComponent = coverPreviousId(component, parent);
-      // 修改组件的实际位置，可能存在组件在组中
-      const formatComponentPosition = GroupUtil.getComponentPosition(
-        component,
-        sourceComponents,
-      );
-      newComponent.config.style = {
-        ...newComponent.config.style,
-        ...pick(
-          formatComponentPosition || {},
-          'left',
-          'top',
-          'width',
-          'height',
-        ),
-      };
-      if (isGroupComponentMethod(newComponent)) {
-        newComponent.config.attr = {
-          ...newComponent.config.attr,
-          prevScaleX: newComponent.config.attr.scaleX,
-          prevScaleY: newComponent.config.attr.scaleY,
-          ...pick(formatComponentPosition || {}, 'scaleX', 'scaleY'),
-        } as any;
-      }
-      newSelect.push(newComponent.id);
-      acc.push(newComponent);
-      generateComponents.push(newComponent);
-      return acc;
-    }, []),
+        if (isStorage) {
+          newComponent = coverPreviousId(component, parent);
+        } else {
+          newComponent = GroupUtil.covertComponentPosition(
+            component,
+            sourceComponents,
+          );
+          newComponent = coverPreviousId(newComponent, parent);
+
+          // // 修改组件的实际位置，可能存在组件在组中
+          // const formatComponentPosition = GroupUtil.getComponentPosition(
+          //   component,
+          //   sourceComponents,
+          // );
+          // newComponent.config.style = {
+          //   ...newComponent.config.style,
+          //   ...pick(
+          //     formatComponentPosition || {},
+          //     'left',
+          //     'top',
+          //     'width',
+          //     'height',
+          //   ),
+          // };
+          // if (isGroupComponentMethod(newComponent)) {
+          //   newComponent.config.attr = {
+          //     ...newComponent.config.attr,
+          //     prevScaleX: newComponent.config.attr.scaleX,
+          //     prevScaleY: newComponent.config.attr.scaleY,
+          //     ...pick(formatComponentPosition || {}, 'scaleX', 'scaleY'),
+          //   } as any;
+          // }
+        }
+
+        newSelect.push(newComponent.id);
+        acc.push(newComponent);
+        generateComponents.push(newComponent);
+        return acc;
+      },
+      [],
+    ),
   ];
 
   setComponent(newComponents, generateComponents);
@@ -128,7 +142,7 @@ export const paste = ({
 };
 
 // 只用在了这里和复制
-export const pasteClick = ({
+export const pasteClick = async ({
   currentComponents,
   id,
   setClipboard,
@@ -186,7 +200,7 @@ export const pasteClick = ({
   // 如果是大屏中点击就是最外层的点击
   isOuterClick = isOuterClick || (!isGroupComponentClick && !parentComponent);
 
-  paste({
+  await paste({
     setSelect,
     components: realComponents,
     setComponent: (newComponents, generateComponents) => {

@@ -23,7 +23,7 @@ interface IGlobalModelState {
   componentSelect: ComponentData.TComponentData<any> | null;
   history: TUndoHistory;
   theme: ThemeMap;
-  clipboard: string[];
+  clipboard: ComponentClipboard.LocalClipboardType;
 
   drag: DragData;
   scale: number;

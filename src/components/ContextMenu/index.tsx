@@ -16,7 +16,7 @@ const ContextMenu = (
     children?: ReactNode;
     value: ComponentData.TComponentData;
     path?: string;
-    clipboard: string[];
+    clipboard: ComponentClipboard.LocalClipboardType;
     components: ComponentData.TComponentData[];
     setSelect: (value: string[]) => void;
     setClipboard: (value: string[]) => void;

@@ -10,6 +10,31 @@ import ComponentUtil, {
 import { mergeWithoutArray } from '../../tool';
 
 class GroupUtil {
+  covertComponentPosition = (
+    value: ComponentData.TComponentData,
+    components: ComponentData.TComponentData[],
+  ) => {
+    const newValue = { ...value };
+    // 修改组件的实际位置，可能存在组件在组中
+    const formatComponentPosition = this.getComponentPosition(
+      value,
+      components,
+    );
+    newValue.config.style = {
+      ...newValue.config.style,
+      ...pick(formatComponentPosition || {}, 'left', 'top', 'width', 'height'),
+    };
+    if (isGroupComponent(newValue)) {
+      newValue.config.attr = {
+        ...newValue.config.attr,
+        prevScaleX: newValue.config.attr.scaleX,
+        prevScaleY: newValue.config.attr.scaleY,
+        ...pick(formatComponentPosition || {}, 'scaleX', 'scaleY'),
+      } as any;
+    }
+    return newValue;
+  };
+
   getComponentPosition = (
     value: ComponentData.TComponentData,
     components: ComponentData.TComponentData[],

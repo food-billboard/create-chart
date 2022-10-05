@@ -86,7 +86,6 @@ const StepLine = (
 
   const onClick = (params: any) => {
     const { seriesName, name, value } = params;
-    console.log(params, 22222);
     const target = {
       x: name,
       y: value,

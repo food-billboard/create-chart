@@ -3,9 +3,9 @@ export interface CommonActionType {
   components: ComponentData.TComponentData[];
   path: string;
   select: string[];
-  clipboard: string[];
+  clipboard: ComponentClipboard.LocalClipboardType;
   setSelect: (value: string[]) => void;
-  setClipboard: (value: string[]) => void;
+  setClipboard: (value: ComponentClipboard.LocalClipboardType) => void;
   setComponent: ComponentMethod.SetComponentMethod;
   setComponentAll: (value: ComponentData.TComponentData[]) => void;
   onClick: () => void;

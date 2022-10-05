@@ -8,6 +8,7 @@ import {
 import { Button, Drawer } from 'antd';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import BackgroundConfig from './components/BackgroundConfig';
+import CrossClipboard from './components/CrossClipboard';
 
 export interface LocalConfigManageRef {
   open: () => void;
@@ -65,6 +66,7 @@ const LocalConfigManage = forwardRef<
     >
       <ConfigList level={1}>
         <BackgroundConfig />
+        <CrossClipboard />
       </ConfigList>
     </Drawer>
   );

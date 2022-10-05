@@ -6,7 +6,7 @@ import { CommonActionType } from './type';
 export const copy = (pasteParams: {
   sourceComponents: ComponentData.TComponentData[];
   components: ComponentData.TComponentData[];
-  clipboard: string[];
+  clipboard: ComponentClipboard.LocalClipboardType;
   setComponent: (
     components: ComponentData.TComponentData[],
     generateComponents: ComponentData.TComponentData[],
@@ -45,7 +45,10 @@ const CopyAction = (props: CommonActionType) => {
         currentComponents,
         id,
         setClipboard,
-        clipboard: select,
+        clipboard: {
+          value: select,
+          timestamps: Date.now(),
+        },
         components,
         onClick,
         setSelect,
