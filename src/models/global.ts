@@ -29,7 +29,7 @@ export default {
     componentSelect: null,
     theme: ThemeMap.dark,
     clipboard: {
-      timestamps: Date.now(),
+      timestamps: 0,
       value: [],
     },
     drag: {

@@ -17,7 +17,13 @@ export class LocalConfig extends EventEmitter {
 
   store;
 
-  private _setItem = async (key: string, value: any) => {
+  private _setItem: <T = any>(
+    key: string,
+    value: T,
+  ) => Promise<{
+    value?: T;
+    errMsg: unknown | null;
+  }> = async (key, value) => {
     let response: any;
     try {
       await this.store.setItem(key, value);
@@ -26,6 +32,7 @@ export class LocalConfig extends EventEmitter {
         value,
       };
     } catch (err) {
+      console.error(err);
       response = {
         errMsg: err,
       };
@@ -33,7 +40,12 @@ export class LocalConfig extends EventEmitter {
     return response;
   };
 
-  private _getItem = async (key: string) => {
+  private _getItem: <T = any>(
+    key: string,
+  ) => Promise<{
+    value?: T;
+    errMsg: null | unknown;
+  }> = async (key) => {
     let response: any;
     try {
       const value = await this.store.getItem(key);
@@ -42,6 +54,7 @@ export class LocalConfig extends EventEmitter {
         value,
       };
     } catch (err) {
+      console.error(err);
       response = {
         errMsg: err,
       };

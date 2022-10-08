@@ -51,6 +51,7 @@ function useMessage(
               loading.current = false;
               successContent?.onClose?.();
             },
+            key: messageKey.current,
           });
         } else {
           throw new Error('');
@@ -60,6 +61,7 @@ function useMessage(
           duration: 2,
           content: '操作失败！',
           ...errorContent,
+          key: messageKey.current,
           onClose: () => {
             loading.current = false;
             errorContent?.onClose?.();
@@ -121,6 +123,7 @@ export class Message {
           duration: 2,
           content: '操作成功！',
           ...successContent,
+          key: this.messageKey,
           onClose: () => {
             this.loading = false;
             successContent?.onClose?.();
@@ -134,6 +137,7 @@ export class Message {
         duration: 2,
         content: '操作失败！',
         ...errorContent,
+        key: this.messageKey,
         onClose: () => {
           this.loading = false;
           errorContent?.onClose?.();

@@ -11,10 +11,15 @@ const _clone = async (
   select: string[],
   setClipboard: (value: ComponentClipboard.LocalClipboardType) => void,
 ) => {
-  const storageClipboard: ComponentClipboard.StorageClipboardType =
+  const result =
     (await LocalConfigInstance.getItem(
       LocalConfig.CONFIG_KEY_CROSS_CLIPBOARD,
     )) || {};
+
+  if (result.errMsg) throw new Error();
+
+  const storageClipboard =
+    result.value as ComponentClipboard.StorageClipboardType;
 
   const timestamps = Date.now();
   const id = get(getDvaGlobalModelData(), 'screenData._id');

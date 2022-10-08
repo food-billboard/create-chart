@@ -19,16 +19,18 @@ const _InternalBorderWrapper = (
   const { children, border, ...nextProps } = props;
 
   const Dom = useMemo(() => {
-    if (!border.show) return Fragment;
-    return (BorderMap as any)[border.value]?.value || Fragment;
+    if (!border.show) return null;
+    return (BorderMap as any)[border.value]?.value || null;
   }, [border]);
 
   return (
     <>
-      <Dom {...nextProps}></Dom>
+      {Dom && <Dom {...nextProps}></Dom>}
       <div
         className={styles['internal-border-outer']}
-        style={Dom.getOuterStyle?.(pick(nextProps, ['width', 'padding'])) || {}}
+        style={
+          Dom?.getOuterStyle?.(pick(nextProps, ['width', 'padding'])) || {}
+        }
       >
         {children}
       </div>

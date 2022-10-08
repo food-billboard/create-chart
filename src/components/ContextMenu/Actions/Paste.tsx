@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { get, pick } from 'lodash';
+import { get } from 'lodash';
 import { SnippetsOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks/useComponentsPath';
 import {
@@ -78,11 +78,12 @@ export const paste = async ({
   setSelect: (value: string[]) => void;
   parent?: string;
 }) => {
-  const idPathMap = useIdPathMap();
   const newSelect: string[] = [];
 
   const { clipboardComponents: realClipboard, isStorage } =
     await ClipboardComponent.getRealComponentClipboard(clipboard);
+
+  if (!realClipboard.length) return;
 
   let generateComponents: ComponentData.TComponentData[] = [];
 
@@ -91,41 +92,10 @@ export const paste = async ({
     ...realClipboard.reduce<ComponentData.TComponentData[]>(
       (acc, component) => {
         // 修改组件的id
-        let newComponent: ComponentData.TComponentData;
-
-        if (isStorage) {
-          newComponent = coverPreviousId(component, parent);
-        } else {
-          newComponent = GroupUtil.covertComponentPosition(
-            component,
-            sourceComponents,
-          );
-          newComponent = coverPreviousId(newComponent, parent);
-
-          // // 修改组件的实际位置，可能存在组件在组中
-          // const formatComponentPosition = GroupUtil.getComponentPosition(
-          //   component,
-          //   sourceComponents,
-          // );
-          // newComponent.config.style = {
-          //   ...newComponent.config.style,
-          //   ...pick(
-          //     formatComponentPosition || {},
-          //     'left',
-          //     'top',
-          //     'width',
-          //     'height',
-          //   ),
-          // };
-          // if (isGroupComponentMethod(newComponent)) {
-          //   newComponent.config.attr = {
-          //     ...newComponent.config.attr,
-          //     prevScaleX: newComponent.config.attr.scaleX,
-          //     prevScaleY: newComponent.config.attr.scaleY,
-          //     ...pick(formatComponentPosition || {}, 'scaleX', 'scaleY'),
-          //   } as any;
-          // }
-        }
+        const newComponent: ComponentData.TComponentData = coverPreviousId(
+          component,
+          parent,
+        );
 
         newSelect.push(newComponent.id);
         acc.push(newComponent);

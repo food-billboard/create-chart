@@ -1,6 +1,5 @@
 import { ReactNode, useCallback, useRef, useMemo, useState } from 'react';
 import { connect } from 'dva';
-import { message } from 'antd';
 import { useKeyPress, useDebounceFn } from 'ahooks';
 import { merge, get } from 'lodash';
 import { useIdPathMap } from '@/hooks';
@@ -54,17 +53,11 @@ const ClipboardComponent = (props: {
     if (disabledKeyEvent || !CopyAndPasteUtil.isFocus() || !select.length)
       return;
     clone(select, setClipboard);
-    message.info('复制成功');
   });
 
   // paste
-  useKeyPress(['ctrl.v', 'meta.v'], () => {
-    if (
-      disabledKeyEvent ||
-      !CopyAndPasteUtil.isFocus() ||
-      !clipboard.value.length
-    )
-      return;
+  useKeyPress(['ctrl.v', 'meta.v'], async () => {
+    if (disabledKeyEvent || !CopyAndPasteUtil.isFocus()) return;
     paste({
       components,
       setComponent: (_, newComponents) => {
@@ -82,7 +75,6 @@ const ClipboardComponent = (props: {
       clipboard,
       sourceComponents: components,
     });
-    message.info('新增成功');
   });
 
   // undo
