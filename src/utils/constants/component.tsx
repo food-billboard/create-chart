@@ -581,6 +581,13 @@ export const COMPONENT_TYPE_LIST = [
             description: '',
             development: false,
           },
+          {
+            type: 'LUCKY_DRAW',
+            title: '抽奖转盘',
+            icon: QrCode,
+            description: '',
+            development: false,
+          },
         ],
       },
     ],

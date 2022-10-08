@@ -46,6 +46,7 @@ import StateList from './Other/StateList';
 import Weather from './Other/Weather';
 import PathBasic from './Other/PathBasic';
 import QrCode from './Other/QrCode';
+import LuckyDraw from './Other/LuckyDraw';
 // font
 import Title from './Font/Title';
 import TimeMachine from './Font/TimeMachine';
@@ -154,6 +155,7 @@ COMPONENT_MAP.set(Model.type, Model);
 COMPONENT_MAP.set(Ali3DMap.type, Ali3DMap);
 COMPONENT_MAP.set(PathBasic.type, PathBasic);
 COMPONENT_MAP.set(QrCode.type, QrCode);
+COMPONENT_MAP.set(LuckyDraw.type, LuckyDraw);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

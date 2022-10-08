@@ -166,7 +166,8 @@ declare namespace ComponentData {
     | 'MODEL'
     | 'ALI3D_MAP'
     | 'PATH_BASIC'
-    | 'QR_CODE';
+    | 'QR_CODE'
+    | 'LUCKY_DRAW';
 
   // 基础组件属性
   export type TBaseConfig = {

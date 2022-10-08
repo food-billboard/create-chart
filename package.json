@@ -29,6 +29,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-layout": "^6.5.0",
+    "@lucky-canvas/react": "^0.1.13",
     "@scena/react-ruler": "^0.9.1",
     "@sentry/react": "^7.12.1",
     "@sentry/tracing": "^7.12.1",
