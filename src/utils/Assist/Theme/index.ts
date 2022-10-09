@@ -153,6 +153,14 @@ class ThemeUtil {
     return this.currentThemeColor.length;
   }
 
+  get themeNameList() {
+    return Object.keys(this.themeDataSource);
+  }
+
+  getThemeColorList(name: string) {
+    return this.themeDataSource[name].color;
+  }
+
   // 初始化
   init() {
     this.initCurrentThemeData(WonderlandTheme.themeName);

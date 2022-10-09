@@ -1,12 +1,15 @@
-import { useMemo, useRef, useCallback } from 'react';
-import { merge, uniqueId } from 'lodash';
+import { useMemo, useRef, useCallback, useState } from 'react';
+import { merge, uniqueId, get, pick } from 'lodash';
 import classnames from 'classnames';
+import { connect } from 'dva';
+import { useDebounceEffect } from 'ahooks';
 // @ts-ignore
 import { LuckyWheel } from '@lucky-canvas/react';
 import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
+import { ConnectState } from '@/models/connect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -21,16 +24,26 @@ const { getRgbaString } = ColorSelect;
 const CHART_ID = 'LUCKY_DRAW';
 
 const LuckyDrawBasic = (
-  props: ComponentData.CommonComponentProps<TLuckyDrawConfig>,
+  props: ComponentData.CommonComponentProps<TLuckyDrawConfig> & {
+    componentBorder: ComponentData.TScreenData['config']['attr']['componentBorder'];
+  },
 ) => {
-  const { className, style, value, global, children, wrapper: Wrapper } = props;
+  const {
+    className,
+    style,
+    value,
+    global,
+    children,
+    wrapper: Wrapper,
+    componentBorder: { width: borderWidth, padding },
+  } = props;
   const { screenType } = global;
 
   const {
     id,
     config: {
       options,
-      style: { border },
+      style: { border, width, height },
     },
   } = value;
   const {
@@ -41,9 +54,18 @@ const LuckyDrawBasic = (
     blocks,
   } = options;
 
+  const [componentSize, setComponentSize] = useState<{
+    width: number;
+    height: number;
+  }>({
+    width,
+    height,
+  });
+
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
   const luckyDrawRef = useRef<any>();
+  const loadingRef = useRef(false);
 
   const {
     request,
@@ -62,6 +84,10 @@ const LuckyDrawBasic = (
     },
     requestRef,
   );
+
+  const luckySize = useMemo(() => {
+    return Math.min(componentSize.width, componentSize.height);
+  }, [componentSize]);
 
   const {
     onCondition: propsOnCondition,
@@ -115,18 +141,42 @@ const LuckyDrawBasic = (
     });
   }, [finalValue, prizes]);
 
+  const onClick = useCallback(() => {
+    linkageMethod('click', {});
+  }, [linkageMethod]);
+
+  const onLucky = useCallback(() => {
+    if (loadingRef.current) return;
+    luckyDrawRef.current?.play?.();
+  }, []);
+
   const onStart = useCallback(() => {
+    loadingRef.current = true;
     syncInteractiveAction('click', {});
   }, [syncInteractiveAction]);
 
   const onEnd = useCallback(
     async (prize) => {
-      syncInteractiveAction('end', {
-        title: '',
-      });
+      loadingRef.current = false;
+      console.log(prize, 2222);
+      syncInteractiveAction('end', prize);
     },
     [syncInteractiveAction],
   );
+
+  const Button = BUTTON_MAP[buttons.type];
+
+  useDebounceEffect(() => {
+    const dom = document.querySelector(`.${chartId.current}`);
+    if (dom) {
+      const width = dom.clientWidth;
+      const height = dom.clientHeight;
+      setComponentSize({
+        width,
+        height,
+      });
+    }
+  }, [width, height, borderWidth, padding]);
 
   return (
     <>
@@ -134,26 +184,49 @@ const LuckyDrawBasic = (
         className={componentClassName}
         style={merge(style, conditionStyle)}
         id={chartId.current}
+        onClick={onClick}
       >
         <Wrapper border={border}>
           {children}
-          <LuckyWheel
-            ref={luckyDrawRef}
-            defaultStyle={{
-              wordWrap: true,
-              lineClamp: Infinity,
-              ...luckyStyle,
-              background: getRgbaString(luckyStyle.background),
-              fontStyle: luckyStyle.fontFamily,
-              fontColor: getRgbaString(luckyStyle.color),
-            }}
-            defaultConfig={config}
-            prizes={prizesList}
-            blocks={BLOCK_MAP[blocks.type]}
-            buttons={BUTTON_MAP[buttons.type]}
-            onEnd={onEnd}
-            onStart={onStart}
-          />
+          <div
+            className={classnames(
+              chartId.current,
+              'w-100 h-100 pos-ab',
+              styles['component-other-lucky-draw-main'],
+            )}
+          >
+            <LuckyWheel
+              width={luckySize}
+              height={luckySize}
+              ref={luckyDrawRef}
+              defaultStyle={{
+                wordWrap: true,
+                lineClamp: Infinity,
+                ...luckyStyle,
+                background: getRgbaString(luckyStyle.background),
+                fontStyle: luckyStyle.fontFamily,
+                fontColor: getRgbaString(luckyStyle.color),
+              }}
+              defaultConfig={config}
+              prizes={prizesList}
+              blocks={BLOCK_MAP[blocks.type].value}
+              onEnd={onEnd}
+              onStart={onStart}
+            />
+            {!!Button && (
+              <Button
+                size={luckySize}
+                onClick={onLucky}
+                style={{
+                  ...pick(buttons.textStyle, ['fontWeight', 'fontFamily']),
+                  fontSize: buttons.textStyle.fontSize + 'px',
+                  color: getRgbaString(buttons.textStyle.color),
+                }}
+              >
+                {buttons.content}
+              </Button>
+            )}
+          </div>
         </Wrapper>
       </div>
       <FetchFragment
@@ -176,4 +249,14 @@ const WrapperLuckyDrawBasic: typeof LuckyDrawBasic & {
 
 WrapperLuckyDrawBasic.id = CHART_ID;
 
-export default WrapperLuckyDrawBasic;
+export default connect(
+  (state: ConnectState) => {
+    return {
+      componentBorder: get(
+        state,
+        'global.screenData.config.attr.componentBorder',
+      ),
+    };
+  },
+  () => ({}),
+)(WrapperLuckyDrawBasic);

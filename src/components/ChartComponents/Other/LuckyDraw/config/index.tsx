@@ -14,6 +14,7 @@ import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import IconTooltip from '@/components/IconTooltip';
+import Input from '@/components/ChartComponents/Common/Input';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ConditionConfig from './Condition';
@@ -126,12 +127,41 @@ class Config extends Component<
                         },
                         {
                           label: '样式二',
-                          value: 'custom_1',
+                          value: 'custom_2',
                         },
                       ]}
                     />
                   </FullForm>
                 </Item>
+                <Item label="文案">
+                  <FullForm>
+                    <Input
+                      value={buttons.content}
+                      onChange={(value) => {
+                        this.onKeyChange('buttons', {
+                          content: value,
+                        });
+                      }}
+                    />
+                  </FullForm>
+                </Item>
+                <Collapse
+                  child={{
+                    header: '文本',
+                    key: 'textStyle',
+                  }}
+                >
+                  <FontConfigList
+                    value={buttons.textStyle}
+                    onChange={(value) => {
+                      this.onKeyChange('buttons', {
+                        textStyle: {
+                          ...value,
+                        },
+                      });
+                    }}
+                  />
+                </Collapse>
               </ConfigList>
             ),
             key: '2',
@@ -157,7 +187,7 @@ class Config extends Component<
                         },
                         {
                           label: '样式二',
-                          value: 'custom_1',
+                          value: 'custom_2',
                         },
                       ]}
                     />
@@ -165,7 +195,7 @@ class Config extends Component<
                 </Item>
               </ConfigList>
             ),
-            key: '2',
+            key: '3',
           },
           {
             label: <Tab>奖品</Tab>,
@@ -252,7 +282,7 @@ class Config extends Component<
                 />
               </ConfigList>
             ),
-            key: '3',
+            key: '4',
           },
           {
             label: <Tab>条件</Tab>,

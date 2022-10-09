@@ -2,4 +2,39 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+  &-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.component-other-lucky-draw-button-common {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  background-color: var(--component-other-lucky-draw-button-color);
+  transform: translateX(-50%) translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%) translateY(-90%);
+    width: 0;
+    height: 0;
+    border: var(--component-other-lucky-draw-button-size) solid transparent;
+    border-bottom: var(--component-other-lucky-draw-button-size) solid
+      var(--component-other-lucky-draw-button-color);
+  }
+}
+.component-other-lucky-draw-button-1 {
+  border-radius: 20%;
+}
+.component-other-lucky-draw-button-2 {
+  border-radius: 50%;
 }

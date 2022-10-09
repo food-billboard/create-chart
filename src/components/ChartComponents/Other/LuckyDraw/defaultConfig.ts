@@ -8,14 +8,52 @@ import {
   DEFAULT_LINKAGE_CONFIG,
   DEFAULT_THEME_COLOR_LIST,
 } from '../../Common/Constants/defaultConfig';
-import ThemeUtil from '@/utils/Assist/Theme';
 import { TLuckyDrawConfig } from './type';
+import prizes1 from '../../../../../public/other/prizes-1.png';
+import prizes2 from '../../../../../public/other/prizes-2.png';
+import prizes3 from '../../../../../public/other/prizes-3.png';
+import prizes4 from '../../../../../public/other/prizes-4.png';
+import prizes5 from '../../../../../public/other/prizes-5.png';
+import prizes6 from '../../../../../public/other/prizes-6.png';
+import prizes7 from '../../../../../public/other/prizes-7.png';
 
-const DEFAULT_VALUE = new Array(20).fill({
-  range: 10,
-  title: '奖品名字',
-  img: '图片地址',
-});
+const DEFAULT_VALUE = [
+  {
+    range: 5,
+    title: '电影包场',
+    img: prizes7,
+  },
+  {
+    range: 10,
+    title: '爆米花',
+    img: prizes6,
+  },
+  {
+    range: 20,
+    title: '电影票',
+    img: prizes5,
+  },
+  {
+    range: 25,
+    title: '100积分',
+    img: prizes4,
+  },
+  {
+    range: 30,
+    title: '50积分',
+    img: prizes3,
+  },
+  {
+    range: 35,
+    title: '20积分',
+    img: prizes2,
+  },
+  {
+    range: 35,
+    title: '10积分',
+    img: prizes1,
+  },
+];
 
 export default () => {
   const colorList = DEFAULT_THEME_COLOR_LIST();
@@ -32,6 +70,16 @@ export default () => {
                 key: 'title',
                 variable: '',
                 description: '奖品名字',
+              },
+              {
+                key: 'range',
+                variable: '',
+                description: '中奖概率',
+              },
+              {
+                key: 'img',
+                variable: '',
+                description: '奖品图片',
               },
             ],
           },
@@ -89,6 +137,12 @@ export default () => {
         },
         buttons: {
           type: 'custom_1',
+          content: '抽奖',
+          textStyle: {
+            ...DEFAULT_FONT_CONFIG,
+            fontWeight: 'blod',
+            fontSize: 16,
+          },
         },
         prizes: {
           config: colorList.map((item) => {

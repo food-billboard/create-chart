@@ -9,6 +9,8 @@ export type TLuckyDrawConfig = {
   };
   buttons: {
     type: 'custom_1' | 'custom_2';
+    content: string;
+    textStyle: ComponentData.TFontConfig;
   };
   prizes: {
     size: {
