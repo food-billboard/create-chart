@@ -3,6 +3,8 @@ import { Select } from 'antd';
 import { useControllableValue } from 'ahooks';
 import { connect } from 'dva';
 import { pick } from 'lodash';
+import classNames from 'classnames';
+import { SELECTO_CLASSNAME } from '@/utils/constants';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import BorderMap from './components/Border';
 import { CommonBorderProps } from './components/Border/type';
@@ -27,10 +29,11 @@ const _InternalBorderWrapper = (
     <>
       {Dom && <Dom {...nextProps}></Dom>}
       <div
-        className={styles['internal-border-outer']}
+        className={classNames(styles['internal-border-outer'])}
         style={
           Dom?.getOuterStyle?.(pick(nextProps, ['width', 'padding'])) || {}
         }
+        data-id={nextProps.id}
       >
         {children}
       </div>

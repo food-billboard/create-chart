@@ -59,7 +59,11 @@ const Content = (props: {
 
         if (type === EComponentType.GROUP_COMPONENT) {
           return (
-            <InternalBorderWrapper border={border} key={component.id}>
+            <InternalBorderWrapper
+              border={border}
+              key={component.id}
+              id={component.id}
+            >
               <ChildrenWrapper
                 value={newComponent}
                 borderNone={isOuter}

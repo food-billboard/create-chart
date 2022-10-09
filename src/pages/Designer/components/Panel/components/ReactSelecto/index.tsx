@@ -1,6 +1,7 @@
-import { useCallback, useRef, useMemo } from 'react';
+import { useCallback, useRef, useMemo, CSSProperties, ReactNode } from 'react';
 import ReactSelecto from 'react-selecto';
 import { connect } from 'dva';
+import classNames from 'classnames';
 import { BACKGROUND_ID } from '@/components/DesignerBackground';
 import {
   isComponentDisabled,
@@ -10,6 +11,7 @@ import ThemeUtil from '@/utils/Assist/Theme';
 import ColorSelect from '@/components/ColorSelect';
 import { ConnectState } from '@/models/connect';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
+import { SELECTO_CLASSNAME } from '@/utils/constants';
 import { wrapperId } from '../PanelWrapper/constants';
 import { PANEL_ID } from '../Painter';
 import { mapStateToProps, mapDispatchToProps } from './connect';
@@ -59,10 +61,9 @@ const Selecto = (props: {
         const id = e.inputEvent.target.id;
         // 组件id
         const componentId = e.inputEvent.target.dataset?.id;
-        // 组件边框
-        const componentBorder = e.inputEvent.target.className.includes(
-          'react-select-to-border',
-        );
+        // 组件边框 或其他一些
+        const componentBorder =
+          e.inputEvent.target.className.includes(SELECTO_CLASSNAME);
         // 辅助线
         const guideLine =
           e.inputEvent.target.className.includes('ruler-guide-line');

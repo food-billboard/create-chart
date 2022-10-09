@@ -13,7 +13,8 @@ import { useDeepCompareEffect } from 'ahooks';
 import {
   MIN_COMPONENT_HEIGHT,
   MIN_COMPONENT_WIDTH,
-} from '@/utils/constants/another';
+  SELECTO_CLASSNAME,
+} from '@/utils/constants';
 import { isGroupComponent } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
@@ -195,7 +196,7 @@ const ComponentWrapper = (
           'bottomLeft',
           'bottomRight',
         ].reduce<any>((acc, cur) => {
-          acc[cur] = 'react-select-to-border';
+          acc[cur] = SELECTO_CLASSNAME;
           return acc;
         }, {})}
         minWidth={MIN_COMPONENT_WIDTH}
