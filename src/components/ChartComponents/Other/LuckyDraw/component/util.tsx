@@ -10,12 +10,13 @@ const colorList1 = ThemeUtil.getThemeColorList(themeList[1]);
 type CommonProps = {
   size: number;
   style: CSSProperties;
+  color: string;
   onClick: () => void;
   children?: ReactNode;
 };
 
 const Button1 = (props: CommonProps) => {
-  const { children, onClick, size, style } = props;
+  const { children, onClick, size, style, color } = props;
   const buttonSize = useMemo(() => {
     return size * 0.2;
   }, [size]);
@@ -30,10 +31,8 @@ const Button1 = (props: CommonProps) => {
         width: buttonSize,
         height: buttonSize,
         // @ts-ignore
-        '--component-other-lucky-draw-button-color': getRgbaString(
-          ThemeUtil.generateNextColor4CurrentTheme(0),
-        ),
-        '--component-other-lucky-draw-button-size': buttonSize * 0.1 + 'px',
+        '--component-other-lucky-draw-button-color': color,
+        '--component-other-lucky-draw-button-size': buttonSize * 0.2 + 'px',
       }}
       onClick={onClick}
     >
@@ -43,7 +42,7 @@ const Button1 = (props: CommonProps) => {
 };
 
 const Button2 = (props: CommonProps) => {
-  const { children, onClick, size, style } = props;
+  const { children, onClick, size, style, color } = props;
   const buttonSize = useMemo(() => {
     return size * 0.2;
   }, [size]);
@@ -58,10 +57,8 @@ const Button2 = (props: CommonProps) => {
         width: buttonSize,
         height: buttonSize,
         // @ts-ignore
-        '--component-other-lucky-draw-button-color': getRgbaString(
-          ThemeUtil.generateNextColor4CurrentTheme(0),
-        ),
-        '--component-other-lucky-draw-button-size': buttonSize + 'px',
+        '--component-other-lucky-draw-button-color': color,
+        '--component-other-lucky-draw-button-size': buttonSize * 0.2 + 'px',
       }}
       onClick={onClick}
     >
@@ -81,24 +78,10 @@ export const BLOCK_MAP = {
       {
         padding: '12px',
         background: colorList0[0],
-        // imgs: [
-        //   {
-        //     src: '/static/imgs/wheel-border.jpg',
-        //     width: '100%',
-        //     height: '100%',
-        //   },
-        // ],
       },
       {
         padding: '6px',
         background: colorList0[1],
-        // imgs: [
-        //   {
-        //     src: '/static/imgs/wheel-bg.png',
-        //     width: '100%',
-        //     height: '100%',
-        //   },
-        // ],
       },
       {
         background: colorList0[2],
@@ -110,35 +93,16 @@ export const BLOCK_MAP = {
       {
         padding: '12px',
         background: colorList1[0],
-        // imgs: [
-        //   {
-        //     src: '/static/imgs/wheel-border.jpg',
-        //     width: '100%',
-        //     height: '100%',
-        //   },
-        // ],
       },
       {
         padding: '6px',
         background: colorList1[1],
-        // imgs: [
-        //   {
-        //     src: '/static/imgs/wheel-border.png',
-        //     width: '100%',
-        //     height: '100%',
-        //   },
-        // ],
       },
       {
         background: colorList0[2],
-        // imgs: [
-        //   {
-        //     src: '/static/imgs/wheel-bg.png',
-        //     width: '100%',
-        //     height: '100%',
-        //   },
-        // ],
       },
     ],
   },
 };
+
+export const BACKGROUND_PADDING = 18;

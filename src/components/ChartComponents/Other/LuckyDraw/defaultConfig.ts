@@ -15,42 +15,36 @@ import prizes3 from '../../../../../public/other/prizes-3.png';
 import prizes4 from '../../../../../public/other/prizes-4.png';
 import prizes5 from '../../../../../public/other/prizes-5.png';
 import prizes6 from '../../../../../public/other/prizes-6.png';
-import prizes7 from '../../../../../public/other/prizes-7.png';
 
 const DEFAULT_VALUE = [
   {
-    range: 5,
-    title: '电影包场',
-    img: prizes7,
-  },
-  {
     range: 10,
-    title: '爆米花',
-    img: prizes6,
-  },
-  {
-    range: 20,
-    title: '电影票',
+    title: '',
     img: prizes5,
   },
   {
+    range: 20,
+    title: '',
+    img: prizes6,
+  },
+  {
     range: 25,
-    title: '100积分',
+    title: '',
     img: prizes4,
   },
   {
     range: 30,
-    title: '50积分',
+    title: '',
     img: prizes3,
   },
   {
     range: 35,
-    title: '20积分',
+    title: '',
     img: prizes2,
   },
   {
     range: 35,
-    title: '10积分',
+    title: '',
     img: prizes1,
   },
 ];
@@ -133,6 +127,7 @@ export default () => {
           config: {
             // 建议配置范围 10 ~ 30
             speed: 20,
+            stop: 5000,
           },
         },
         buttons: {
@@ -143,17 +138,18 @@ export default () => {
             fontWeight: 'blod',
             fontSize: 16,
           },
+          color: {
+            r: 252,
+            g: 53,
+            b: 81,
+          },
         },
         prizes: {
-          config: colorList.map((item) => {
+          config: colorList.slice(0, 2).map((item) => {
             return {
               background: item,
             };
           }),
-          size: {
-            width: 40,
-            height: 40,
-          },
         },
         blocks: {
           type: 'custom_1',
@@ -172,7 +168,7 @@ export default () => {
       {
         style: {
           width: 400,
-          height: 600,
+          height: 400,
         },
       },
       CUSTOM_CONFIG,

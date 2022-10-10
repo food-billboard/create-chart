@@ -5,18 +5,16 @@ export type TLuckyDrawConfig = {
     } & ComponentData.TFontConfig;
     config: {
       speed: number;
+      stop: number;
     };
   };
   buttons: {
     type: 'custom_1' | 'custom_2';
     content: string;
     textStyle: ComponentData.TFontConfig;
+    color: ComponentData.TColorConfig;
   };
   prizes: {
-    size: {
-      width: number;
-      height: number;
-    };
     config: {
       background: ComponentData.TColorConfig;
     }[];

@@ -10,7 +10,6 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import IconTooltip from '@/components/IconTooltip';
@@ -85,6 +84,20 @@ class Config extends Component<
                     />
                   </FullForm>
                 </Item>
+                <Item label="抽奖时间">
+                  <FullForm>
+                    <InputNumber
+                      value={global.config.stop}
+                      onChange={(value) => {
+                        this.onKeyChange('global', {
+                          config: {
+                            stop: value,
+                          },
+                        });
+                      }}
+                    />
+                  </FullForm>
+                </Item>
                 <Collapse
                   child={{
                     header: '文本',
@@ -130,6 +143,18 @@ class Config extends Component<
                           value: 'custom_2',
                         },
                       ]}
+                    />
+                  </FullForm>
+                </Item>
+                <Item label="颜色">
+                  <FullForm>
+                    <CompatColorSelect
+                      value={buttons.color}
+                      onChange={(value) => {
+                        this.onKeyChange('buttons', {
+                          color: value,
+                        });
+                      }}
                     />
                   </FullForm>
                 </Item>
@@ -201,7 +226,7 @@ class Config extends Component<
             label: <Tab>奖品</Tab>,
             children: (
               <ConfigList level={1}>
-                <Item label="大小">
+                {/* <Item label="大小">
                   <HalfForm label="宽">
                     <InputNumber
                       value={prizes.size.width}
@@ -226,7 +251,7 @@ class Config extends Component<
                       }}
                     />
                   </HalfForm>
-                </Item>
+                </Item> */}
                 <MultipleSeriesConfig
                   onAdd={() => {
                     const newData = {

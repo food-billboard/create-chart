@@ -76,6 +76,7 @@ import Model from '../../../public/components/model.jpg';
 import ALiMap from '../../../public/components/ali-map.jpg';
 import QrCode from '../../../public/components/qrcode.jpg';
 import PathBasic from '../../../public/components/path-basic.jpg';
+import LuckyDraw from '../../../public/components/lucky-draw.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -584,7 +585,7 @@ export const COMPONENT_TYPE_LIST = [
           {
             type: 'LUCKY_DRAW',
             title: '抽奖转盘',
-            icon: QrCode,
+            icon: LuckyDraw,
             description: '',
             development: false,
           },

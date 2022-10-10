@@ -1,5 +1,5 @@
 import { useMemo, useRef, useCallback, useState } from 'react';
-import { merge, uniqueId, get, pick } from 'lodash';
+import { merge, uniqueId, get, pick, omit } from 'lodash';
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { useDebounceEffect } from 'ahooks';
@@ -16,7 +16,7 @@ import FetchFragment, {
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TLuckyDrawConfig } from '../type';
-import { BUTTON_MAP, BLOCK_MAP } from './util';
+import { BUTTON_MAP, BLOCK_MAP, BACKGROUND_PADDING } from './util';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
@@ -53,6 +53,7 @@ const LuckyDrawBasic = (
     prizes,
     blocks,
   } = options;
+  const { stop, speed } = config;
 
   const [componentSize, setComponentSize] = useState<{
     width: number;
@@ -111,10 +112,10 @@ const LuckyDrawBasic = (
 
   const prizesList = useMemo(() => {
     const defaultRange = 100 / finalValue.length;
-    const {
-      size: { width, height },
-      config,
-    } = prizes;
+    const { config } = prizes;
+    const radial = luckySize / 2 - BACKGROUND_PADDING;
+    const imgWidth = 0.4 * radial;
+    const imgHeight = 0.4 * radial;
     const colorLength = config.length;
     return finalValue.map((item: any, index: number) => {
       const { img, title, range } = item;
@@ -126,20 +127,25 @@ const LuckyDrawBasic = (
         fonts: [
           {
             text: title,
-            top: 0,
+            top: '45%',
+            ...omit(luckyStyle, ['background']),
+            fontStyle: luckyStyle.fontFamily,
+            fontColor: getRgbaString(luckyStyle.color),
           },
         ],
-        imgs: [
-          {
-            src: img,
-            width,
-            height,
-            top: 0,
-          },
-        ],
+        imgs: img
+          ? [
+              {
+                src: img,
+                width: imgWidth,
+                height: imgHeight,
+                top: '5%',
+              },
+            ]
+          : [],
       };
     });
-  }, [finalValue, prizes]);
+  }, [finalValue, prizes, luckyStyle, luckySize]);
 
   const onClick = useCallback(() => {
     linkageMethod('click', {});
@@ -148,7 +154,10 @@ const LuckyDrawBasic = (
   const onLucky = useCallback(() => {
     if (loadingRef.current) return;
     luckyDrawRef.current?.play?.();
-  }, []);
+    setTimeout(() => {
+      luckyDrawRef.current?.stop?.();
+    }, stop);
+  }, [stop]);
 
   const onStart = useCallback(() => {
     loadingRef.current = true;
@@ -158,8 +167,12 @@ const LuckyDrawBasic = (
   const onEnd = useCallback(
     async (prize) => {
       loadingRef.current = false;
-      console.log(prize, 2222);
-      syncInteractiveAction('end', prize);
+      const { fonts, imgs, range } = prize;
+      syncInteractiveAction('end', {
+        title: get(fonts, '0.text'),
+        img: get(imgs, '0.src'),
+        range,
+      });
     },
     [syncInteractiveAction],
   );
@@ -202,12 +215,11 @@ const LuckyDrawBasic = (
               defaultStyle={{
                 wordWrap: true,
                 lineClamp: Infinity,
-                ...luckyStyle,
                 background: getRgbaString(luckyStyle.background),
-                fontStyle: luckyStyle.fontFamily,
-                fontColor: getRgbaString(luckyStyle.color),
               }}
-              defaultConfig={config}
+              defaultConfig={{
+                speed,
+              }}
               prizes={prizesList}
               blocks={BLOCK_MAP[blocks.type].value}
               onEnd={onEnd}
@@ -217,6 +229,7 @@ const LuckyDrawBasic = (
               <Button
                 size={luckySize}
                 onClick={onLucky}
+                color={getRgbaString(buttons.color)}
                 style={{
                   ...pick(buttons.textStyle, ['fontWeight', 'fontFamily']),
                   fontSize: buttons.textStyle.fontSize + 'px',
