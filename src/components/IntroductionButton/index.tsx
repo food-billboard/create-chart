@@ -3,6 +3,7 @@ import {
   SmileOutlined,
   GithubOutlined,
   ContactsOutlined,
+  QuestionCircleOutlined,
 } from '@ant-design/icons';
 import { Fab, Action } from 'react-tiny-fab';
 import ColorSelect from '@/components/ColorSelect';
@@ -21,6 +22,13 @@ const IntroductionButton = () => {
     window.open('https://food-billboard.github.io/', '_blank');
   };
 
+  const gotoOperation = () => {
+    window.open(
+      'http://47.97.27.23/api/backend/create-chart-docs/index.html',
+      '_blank',
+    );
+  };
+
   return (
     <div className={styles['introduction-button']}>
       <Fab
@@ -34,7 +42,7 @@ const IntroductionButton = () => {
         }}
         style={{
           right: 0,
-          top: 260,
+          top: 56,
         }}
         icon={<SmileOutlined />}
         event={'hover'}
@@ -69,6 +77,21 @@ const IntroductionButton = () => {
           }}
         >
           <ContactsOutlined />
+        </Action>
+        <Action
+          text="操作文档"
+          onClick={gotoOperation}
+          style={{
+            color: 'white',
+            width: 30,
+            height: 30,
+            backgroundColor: getRgbaString(
+              ThemeUtil.generateNextColor4CurrentTheme(3),
+            ),
+            fontSize: '12px',
+          }}
+        >
+          <QuestionCircleOutlined />
         </Action>
       </Fab>
     </div>
