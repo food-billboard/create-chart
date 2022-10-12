@@ -94,7 +94,7 @@ const BackgroundSelect = (props: {
       <CompatColorSelect
         value={color}
         onChange={onColorChange}
-        style={{ display: type === 'color' ? 'block' : 'none' }}
+        style={{ display: type === 'color' ? 'flex' : 'none' }}
       />
     );
   }, [color, onColorChange, type]);

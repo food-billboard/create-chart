@@ -178,7 +178,7 @@ const ScreenList = (props: {
         }}
       >
         {value.map((item) => {
-          const { name, poster, _id, enable } = item;
+          const { name, poster, _id, enable, description } = item;
           return (
             <Col key={_id} {...COL_SPAN} onClick={handleEdit.bind(null, item)}>
               <div className={styles['screen-list-icon-content-item']}>
@@ -225,6 +225,14 @@ const ScreenList = (props: {
                     title={name}
                   >
                     {name}
+                  </div>
+                  <div
+                    className={classnames(
+                      styles['screen-list-icon-content-item-footer-desc'],
+                      'text-ellipsis',
+                    )}
+                  >
+                    {description || '无任何描述~'}
                   </div>
                   <div
                     className={

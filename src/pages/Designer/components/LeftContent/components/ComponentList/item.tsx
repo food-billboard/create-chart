@@ -165,4 +165,5 @@ const dragSource = DragSource(
   },
 )(ComponentItem);
 
-export default connect(mapStateToProps, mapDispatchToProps)(dragSource);
+// @ts-ignore
+export default connect(mapStateToProps, mapDispatchToProps)(dragSource) as any;
