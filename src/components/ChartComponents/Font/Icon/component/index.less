@@ -1,4 +1,12 @@
 .component-font-icon {
   align-items: center;
   justify-content: center;
+  :global {
+    .bi {
+      position: relative;
+    }
+    .bi::before {
+      position: absolute;
+    }
+  }
 }
