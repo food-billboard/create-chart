@@ -93,8 +93,8 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
             <Item label="色相">
               <FullForm>
                 <Slider
-                  min={-180}
-                  max={180}
+                  min={0}
+                  max={360}
                   value={hueRotate}
                   onChange={onChange.bind(null, 'hueRotate')}
                   className={classnames(
@@ -107,8 +107,8 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
             <Item label="饱和度">
               <FullForm>
                 <Slider
-                  min={-100}
-                  max={100}
+                  min={0}
+                  max={200}
                   value={saturate}
                   onChange={onChange.bind(null, 'saturate')}
                   className={classnames(
@@ -121,8 +121,8 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
             <Item label="明度">
               <FullForm>
                 <Slider
-                  min={-100}
-                  max={100}
+                  min={0}
+                  max={200}
                   value={brightness}
                   onChange={onChange.bind(null, 'brightness')}
                   className={classnames(
@@ -135,8 +135,8 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
             <Item label="对比度">
               <FullForm>
                 <Slider
-                  min={-100}
-                  max={100}
+                  min={0}
+                  max={200}
                   value={contrast}
                   onChange={onChange.bind(null, 'contrast')}
                   className={classnames(

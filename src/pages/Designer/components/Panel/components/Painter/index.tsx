@@ -64,12 +64,18 @@ const Painter = (props: PainterProps) => {
     const { hueRotate, brightness, contrast, grayscale, opacity, saturate } =
       lens;
     let filterData = '';
-    if (hueRotate != 0) filterData += `hue-rotate(${hueRotate}deg) `;
-    if (brightness != 0) filterData += `brightness(${brightness + 100}%) `;
-    if (contrast != 0) filterData += `contrast(${contrast + 100}%) `;
-    if (grayscale != 0) filterData += `grayscale(${grayscale}%) `;
-    if (opacity != 100) filterData += `opacity(${opacity}%) `;
-    if (saturate != 0) filterData += `saturate(${saturate}%) `;
+    // if(hueRotate != 0)
+    filterData += `hue-rotate(${hueRotate}deg) `;
+    // if (contrast != 0)
+    filterData += `contrast(${contrast}%) `;
+    // if (opacity != 0)
+    filterData += `opacity(${opacity}%) `;
+    // if (saturate != 0)
+    filterData += `saturate(${saturate}%) `;
+    // if (brightness != 0)
+    filterData += `brightness(${brightness}%) `;
+    // if (grayscale != 0)
+    filterData += `grayscale(${grayscale}%) `;
     if (!filterData) return {};
     return {
       filter: filterData,
