@@ -1,3 +1,4 @@
+import { random } from 'lodash';
 import { mergeWithoutArray } from '@/utils';
 import {
   BASIC_DEFAULT_CONFIG,
@@ -10,11 +11,18 @@ import {
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TListConfig } from './type';
 
-const DEFAULT_VALUE = new Array(20).fill({
-  name: 'daniel',
-  age: 25,
-  job: 'front-end developer',
-});
+const DEFAULT_VALUE = new Array(20)
+  .fill({
+    name: 'daniel',
+    age: 25,
+    job: 'front-end developer',
+  })
+  .map((item) => {
+    return {
+      ...item,
+      mark: random(-100, 100, false),
+    };
+  });
 
 export default () => {
   const DEFAULT_HEADER = {
@@ -88,7 +96,7 @@ export default () => {
             map: '',
             description: '年龄',
             id: 'age',
-            type: 'string',
+            type: 'number',
           },
           {
             field: 'job',
@@ -96,6 +104,13 @@ export default () => {
             description: '工作',
             id: 'job',
             type: 'string',
+          },
+          {
+            field: 'mark',
+            map: '',
+            description: '评分',
+            id: 'mark',
+            type: 'number',
           },
         ],
       },
@@ -182,8 +197,24 @@ export default () => {
           {
             key: 'job',
             name: '工作',
-            width: 55,
+            width: 35,
             type: 'text',
+            textStyle: {
+              ...DEFAULT_FONT_CONFIG,
+              textAlign: 'center',
+            },
+            header: {
+              show: true,
+            },
+            scroll: {
+              show: false,
+            },
+          },
+          {
+            key: 'mark',
+            name: '评分',
+            width: 20,
+            type: 'number-point',
             textStyle: {
               ...DEFAULT_FONT_CONFIG,
               textAlign: 'center',

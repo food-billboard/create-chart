@@ -477,6 +477,10 @@ class Config extends Component<
                                   label: '图片',
                                   value: 'image',
                                 },
+                                {
+                                  label: '数字指标',
+                                  value: 'number-point',
+                                },
                               ]}
                             />
                           </FullForm>

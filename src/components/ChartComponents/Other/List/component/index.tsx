@@ -1,4 +1,5 @@
 import { useMemo, useRef, useCallback } from 'react';
+import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { merge, uniqueId } from 'lodash';
 import classnames from 'classnames';
 import Slider from 'react-slick';
@@ -20,6 +21,22 @@ import styles from './index.less';
 const { getRgbaString } = ColorSelect;
 
 const CHART_ID = 'LIST';
+
+const MarkText = ({ value }: { value: number }) => {
+  const realValue = parseFloat(value as any) || 0;
+  return (
+    <div
+      className={classnames(styles['component-other-list-item-mark'], 'w-100')}
+      style={{
+        color: realValue > 0 ? 'red' : realValue < 0 ? 'green' : 'currentcolor',
+      }}
+    >
+      <strong>{value}</strong>
+      {realValue > 0 && <ArrowUpOutlined className="m-l-4" />}
+      {realValue < 0 && <ArrowDownOutlined className="m-l-4" />}
+    </div>
+  );
+};
 
 const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
   const { className, style, value, global, children, wrapper: Wrapper } = props;
@@ -198,6 +215,7 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
                   {type === 'image' && <img src={value[key]} alt={name} />}
                   {type === 'text' &&
                     (show ? <ScrollText>{value[key]}</ScrollText> : value[key])}
+                  {type === 'number-point' && <MarkText value={value[key]} />}
                 </div>
               );
             })}

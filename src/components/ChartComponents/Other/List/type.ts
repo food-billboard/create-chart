@@ -34,7 +34,7 @@ export type TListConfig = {
       key: string;
       name: string;
       width: number;
-      type: 'image' | 'text';
+      type: 'image' | 'text' | 'number-point';
       textStyle: ComponentData.TFontConfig & {
         textAlign: 'left' | 'right' | 'center';
       };
