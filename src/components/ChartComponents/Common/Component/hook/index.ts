@@ -7,3 +7,4 @@ export * from './useCondition';
 export * from './useChartComponentTooltip';
 export * from './useGroupComponent';
 export * from './useChartPerConfig';
+export * from './useComponentSize';

@@ -1,13 +1,13 @@
-import { useMemo, useRef, useCallback, useState } from 'react';
+import { useMemo, useRef, useCallback } from 'react';
 import { merge, uniqueId, get, pick, omit } from 'lodash';
 import classnames from 'classnames';
 import { connect } from 'dva';
-import { useDebounceEffect } from 'ahooks';
 // @ts-ignore
 import { LuckyWheel } from '@lucky-canvas/react';
 import {
   useComponent,
   useCondition,
+  useComponentSize,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ConnectState } from '@/models/connect';
 import FetchFragment, {
@@ -55,14 +55,6 @@ const LuckyDrawBasic = (
   } = options;
   const { stop, speed } = config;
 
-  const [componentSize, setComponentSize] = useState<{
-    width: number;
-    height: number;
-  }>({
-    width,
-    height,
-  });
-
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
   const luckyDrawRef = useRef<any>();
@@ -84,6 +76,12 @@ const LuckyDrawBasic = (
       global,
     },
     requestRef,
+  );
+
+  const componentSize = useComponentSize(
+    `.${chartId.current}`,
+    { width, height },
+    [width, height, borderWidth, padding],
   );
 
   const luckySize = useMemo(() => {
@@ -178,18 +176,6 @@ const LuckyDrawBasic = (
   );
 
   const Button = BUTTON_MAP[buttons.type];
-
-  useDebounceEffect(() => {
-    const dom = document.querySelector(`.${chartId.current}`);
-    if (dom) {
-      const width = dom.clientWidth;
-      const height = dom.clientHeight;
-      setComponentSize({
-        width,
-        height,
-      });
-    }
-  }, [width, height, borderWidth, padding]);
 
   return (
     <>

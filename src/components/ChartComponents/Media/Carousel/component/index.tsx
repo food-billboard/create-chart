@@ -1,12 +1,15 @@
 import { useMemo, useRef, useCallback } from 'react';
 import { Carousel } from 'antd';
-import { uniqueId, merge } from 'lodash';
+import { uniqueId, merge, get } from 'lodash';
 import classnames from 'classnames';
+import { connect } from 'dva';
 import {
   useComponent,
   useCondition,
+  useComponentSize,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { useClipPath } from '@/hooks';
+import { ConnectState } from '@/models/connect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -17,15 +20,25 @@ import styles from './index.less';
 const CHART_ID = 'CAROUSEL';
 
 const CarouselBasic = (
-  props: ComponentData.CommonComponentProps<TCarouselConfig>,
+  props: ComponentData.CommonComponentProps<TCarouselConfig> & {
+    componentBorder: ComponentData.TScreenData['config']['attr']['componentBorder'];
+  },
 ) => {
-  const { className, style, value, global, children, wrapper: Wrapper } = props;
+  const {
+    className,
+    style,
+    value,
+    global,
+    children,
+    wrapper: Wrapper,
+    componentBorder: { width: borderWidth, padding },
+  } = props;
   const { screenType } = global;
 
   const {
     config: {
       options,
-      style: { height, border },
+      style: { height, border, width },
     },
     id,
   } = value;
@@ -36,6 +49,12 @@ const CarouselBasic = (
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
+
+  const { width: componentWidth, height: componentHeight } = useComponentSize(
+    `.${chartId.current}`,
+    { width, height },
+    [width, height, borderWidth, padding],
+  );
 
   const {
     request,
@@ -92,14 +111,16 @@ const CarouselBasic = (
             src={value}
             onClick={onClick.bind(null, item)}
             style={{
-              height: height - 4,
+              height: componentHeight,
               width: '100%',
+              userSelect: 'none',
             }}
+            data-id={id}
           />
         </div>
       );
     });
-  }, [finalValue, onClick, height]);
+  }, [finalValue, onClick, componentHeight, componentWidth, id]);
 
   return (
     <>
@@ -116,22 +137,29 @@ const CarouselBasic = (
         )}
         id={chartId.current}
       >
-        <Wrapper border={border}>
+        <Wrapper
+          border={border}
+          style={{
+            pointerEvents: 'none',
+          }}
+        >
           {children}
-          <Carousel
-            autoplay={autoplay}
-            dots={dot.show}
-            dotPosition={dot.position}
-            speed={speed}
-            fade={fade}
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
-            pauseOnFocus={pauseOnHover}
-          >
-            {imageList}
-          </Carousel>
+          <div className="w-100 h-100">
+            <Carousel
+              autoplay={autoplay}
+              dots={dot.show}
+              dotPosition={dot.position}
+              speed={speed}
+              fade={fade}
+              style={{
+                width: '100%',
+                height: '100%',
+              }}
+              pauseOnFocus={pauseOnHover}
+            >
+              {imageList}
+            </Carousel>
+          </div>
         </Wrapper>
       </div>
       <FetchFragment
@@ -154,4 +182,14 @@ const WrapperCarousel: typeof CarouselBasic & {
 
 WrapperCarousel.id = CHART_ID;
 
-export default WrapperCarousel;
+export default connect(
+  (state: ConnectState) => {
+    return {
+      componentBorder: get(
+        state,
+        'global.screenData.config.attr.componentBorder',
+      ),
+    };
+  },
+  () => ({}),
+)(WrapperCarousel);
