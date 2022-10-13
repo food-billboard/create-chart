@@ -98,5 +98,5 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[]) => {},
 };

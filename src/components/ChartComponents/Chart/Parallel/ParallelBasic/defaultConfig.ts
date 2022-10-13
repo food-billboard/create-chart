@@ -154,5 +154,24 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TParallelBasicConfig) => {
+    return {
+      parallelAxis: {
+        areaSelectStyle: {
+          color: {
+            ...ThemeUtil.generateNextColor4CurrentTheme(0),
+            a: options.parallelAxis.areaSelectStyle.color.a,
+          },
+        },
+      },
+      series: {
+        lineStyle: options.series.lineStyle.map((item, index) => {
+          return {
+            ...item,
+            color: ThemeUtil.generateNextColor4CurrentTheme(index),
+          };
+        }),
+      },
+    };
+  },
 };

@@ -134,5 +134,20 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TProgressBarConfig) => {
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        itemStyle: {
+          color: {
+            ...options.series.itemStyle.color,
+            start: ThemeUtil.generateNextColor4CurrentTheme(0),
+            end: ThemeUtil.generateNextColor4CurrentTheme(1),
+          },
+        },
+      },
+    };
+  },
 };

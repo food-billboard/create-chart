@@ -112,5 +112,51 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TClockGaugeConfig) => {
+    return {
+      series: {
+        axisLine: {
+          lineStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+        splitLine: {
+          color: {
+            ...options.series.splitLine.color,
+            ...ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+        axisTick: {
+          lineStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+        hourPointer: {
+          itemStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+        minutePointer: {
+          itemStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+        secondPointer: {
+          itemStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+        minuteAnchor: {
+          itemStyle: {
+            borderColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+        secondAnchor: {
+          itemStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+      },
+    };
+  },
 };

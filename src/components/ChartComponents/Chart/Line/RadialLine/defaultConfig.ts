@@ -206,5 +206,46 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TRadialLineConfig) => {
+    const DEFAULT_THEME_RADIAL_COLOR_LIST_DATA =
+      DEFAULT_THEME_RADIAL_COLOR_LIST();
+    const length = DEFAULT_THEME_RADIAL_COLOR_LIST_DATA.length;
+    return {
+      yAxis: {
+        splitLine: {
+          lineStyle: {
+            color: {
+              ...ThemeUtil.generateNextColor4CurrentTheme(0),
+              a: options.yAxis.splitLine.lineStyle.color.a,
+            },
+          },
+        },
+      },
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        itemStyle: {
+          color: options.series.itemStyle.color.map((item, index) => {
+            return ThemeUtil.generateNextColor4CurrentTheme(index);
+          }),
+        },
+        areaStyle: {
+          color: options.series.areaStyle.color.map((item, index) => {
+            return ThemeUtil.generateNextColor4CurrentTheme(index);
+          }),
+        },
+        lineStyle: options.series.lineStyle.map((item, index) => {
+          return {
+            ...item,
+            color: {
+              ...item.color,
+              start: DEFAULT_THEME_RADIAL_COLOR_LIST_DATA[index % length].start,
+              end: DEFAULT_THEME_RADIAL_COLOR_LIST_DATA[index % length].end,
+            },
+          };
+        }),
+      },
+    };
+  },
 };

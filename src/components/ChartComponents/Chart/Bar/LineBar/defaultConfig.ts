@@ -229,5 +229,29 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TLineBarConfig) => {
+    const realColorList = DEFAULT_THEME_RADIAL_COLOR_LIST();
+    const length = realColorList.length;
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        itemStyle: options.series.itemStyle.map((item, index) => {
+          const color = realColorList[index % length];
+          return {
+            line: {
+              ...item.line,
+              color: color.start,
+              areaColor: color,
+            },
+            bar: {
+              ...item.bar,
+              color,
+            },
+          };
+        }),
+      },
+    };
+  },
 };

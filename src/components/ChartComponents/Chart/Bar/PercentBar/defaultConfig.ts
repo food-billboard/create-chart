@@ -161,5 +161,25 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TPercentBarConfig) => {
+    const DEFAULT_THEME_COLOR_LIST_DATA = DEFAULT_THEME_COLOR_LIST();
+    const length = Math.floor(DEFAULT_THEME_COLOR_LIST_DATA.length / 2);
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        itemStyle: options.series.itemStyle.map((item, index) => {
+          return {
+            ...item,
+            color: {
+              ...item.color,
+              start: DEFAULT_THEME_COLOR_LIST_DATA[(index % length) * 2],
+              end: DEFAULT_THEME_COLOR_LIST_DATA[(index % length) * 2 + 1],
+            },
+          };
+        }),
+      },
+    };
+  },
 };

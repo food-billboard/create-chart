@@ -186,5 +186,58 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TRadarBasicConfig) => {
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      radar: {
+        axisLine: {
+          lineStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+        splitLine: {
+          lineStyle: {
+            color: {
+              ...ThemeUtil.generateNextColor4CurrentTheme(0),
+              a: options.radar.splitLine.lineStyle.color.a,
+            },
+          },
+        },
+        splitArea: {
+          areaStyle: {
+            color: [
+              {
+                ...ThemeUtil.generateNextColor4CurrentTheme(0),
+                a: options.radar.splitArea.areaStyle.color[0].a,
+              },
+              {
+                ...ThemeUtil.generateNextColor4CurrentTheme(1),
+                a: options.radar.splitArea.areaStyle.color[1].a,
+              },
+            ],
+          },
+        },
+      },
+      series: {
+        itemStyle: {
+          color: options.series.itemStyle.color.map((item, index) => {
+            return ThemeUtil.generateNextColor4CurrentTheme(index);
+          }),
+        },
+        lineStyle: options.series.lineStyle.map((item, index) => {
+          return {
+            ...item,
+            color: ThemeUtil.generateNextColor4CurrentTheme(index),
+          };
+        }),
+        areaStyle: {
+          color: options.series.areaStyle.color.map((item, index) => {
+            return ThemeUtil.generateNextColor4CurrentTheme(index);
+          }),
+        },
+      },
+    };
+  },
 };

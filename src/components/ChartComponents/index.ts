@@ -81,7 +81,7 @@ const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
   {
     themeConfig: {
-      convert: (colorList: string[]) => object;
+      convert: (colorList: string[], options: any) => any;
     };
     defaultConfig: () => object;
     configComponent: ReactNode;

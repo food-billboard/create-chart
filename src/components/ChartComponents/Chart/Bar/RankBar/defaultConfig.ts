@@ -178,5 +178,43 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TRankBarConfig) => {
+    const DEFAULT_THEME_RADIAL_COLOR_LIST_DATA =
+      DEFAULT_THEME_RADIAL_COLOR_LIST();
+    const length = DEFAULT_THEME_RADIAL_COLOR_LIST_DATA.length;
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        backgroundStyle: {
+          color: {
+            ...ThemeUtil.generateNextColor4CurrentTheme(0),
+            a: 0.3,
+          },
+        },
+        itemStyle: {
+          color: options.series.itemStyle.color.map((item, index) => {
+            const { start, end } =
+              DEFAULT_THEME_RADIAL_COLOR_LIST_DATA[index % length];
+            return {
+              ...item,
+              start,
+              end: {
+                ...end,
+                a: item.end.a,
+              },
+            };
+          }),
+          defaultColor: {
+            ...DEFAULT_THEME_RADIAL_COLOR_LIST_DATA[3],
+            end: {
+              ...DEFAULT_THEME_RADIAL_COLOR_LIST_DATA[3].end,
+              a: options.series.itemStyle.defaultColor.end.a,
+            },
+          },
+        },
+      },
+    };
+  },
 };

@@ -195,5 +195,29 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TStackBarConfig) => {
+    return {
+      yAxis: {
+        splitLine: {
+          lineStyle: {
+            color: {
+              ...ThemeUtil.generateNextColor4CurrentTheme(0),
+              a: options.yAxis.splitLine.lineStyle.color.a,
+            },
+          },
+        },
+      },
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        itemStyle: options.series.itemStyle.map((item, index) => {
+          return {
+            ...item,
+            color: ThemeUtil.generateNextColor4CurrentTheme(index),
+          };
+        }),
+      },
+    };
+  },
 };

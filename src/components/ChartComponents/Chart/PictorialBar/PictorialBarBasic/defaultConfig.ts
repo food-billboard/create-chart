@@ -138,5 +138,14 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[]) => {
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        symbolColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+      },
+    };
+  },
 };

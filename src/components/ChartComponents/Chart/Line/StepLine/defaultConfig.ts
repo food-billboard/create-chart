@@ -179,5 +179,29 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TStepLineConfig) => {
+    return {
+      yAxis: {
+        splitLine: {
+          lineStyle: {
+            color: {
+              ...ThemeUtil.generateNextColor4CurrentTheme(0),
+              a: options.yAxis.splitLine.lineStyle.color.a,
+            },
+          },
+        },
+      },
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        lineStyle: options.series.lineStyle.map((item, index) => {
+          return {
+            ...item,
+            color: ThemeUtil.generateNextColor4CurrentTheme(index),
+          };
+        }),
+      },
+    };
+  },
 };

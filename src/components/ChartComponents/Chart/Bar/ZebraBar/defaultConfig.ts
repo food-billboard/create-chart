@@ -91,19 +91,9 @@ export default () => {
         xAxis: {
           ...DEFAULT_X_AXIS_CONFIG,
         },
-        yAxis: merge({}, DEFAULT_Y_AXIS_CONFIG, {
-          splitLine: {
-            show: false,
-            lineStyle: {
-              width: 1,
-              type: 'solid' as any,
-              color: {
-                ...ThemeUtil.generateNextColor4CurrentTheme(0),
-                a: 0.4,
-              },
-            },
-          },
-        }),
+        yAxis: {
+          ...DEFAULT_Y_AXIS_CONFIG,
+        },
         tooltip: {
           ...DEFAULT_TOOLTIP_CONFIG(),
           animation: DEFAULT_TOOLTIP_ANIMATION_CONFIG,
@@ -156,5 +146,18 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TZebraBarConfig) => {
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        itemStyle: {
+          color: options.series.itemStyle.color.map((item, index) => {
+            return ThemeUtil.generateNextColor4CurrentTheme(index);
+          }),
+        },
+      },
+    };
+  },
 };

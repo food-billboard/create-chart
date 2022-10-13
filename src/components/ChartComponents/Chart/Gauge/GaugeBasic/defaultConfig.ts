@@ -145,5 +145,37 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TGaugeBasicConfig) => {
+    return {
+      series: {
+        axisLine: {
+          lineStyle: {
+            color: {
+              ...options.series.axisLine.lineStyle.color,
+              ...ThemeUtil.generateNextColor4CurrentTheme(0),
+            },
+          },
+        },
+        progress: {
+          color: ThemeUtil.generateNextColor4CurrentTheme(0),
+        },
+        splitLine: {
+          color: {
+            ...options.series.splitLine.color,
+            ...ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+        axisTick: {
+          lineStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+        pointer: {
+          itemStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+      },
+    };
+  },
 };

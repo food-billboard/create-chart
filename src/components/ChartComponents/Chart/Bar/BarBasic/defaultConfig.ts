@@ -176,5 +176,28 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TBarBasicConfig) => {
+    return {
+      yAxis: {
+        splitLine: {
+          lineStyle: {
+            color: {
+              ...ThemeUtil.generateNextColor4CurrentTheme(0),
+              a: options.yAxis.splitLine.lineStyle.color.a,
+            },
+          },
+        },
+      },
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        itemStyle: {
+          color: options.series.itemStyle.color.map((item, index) => {
+            return ThemeUtil.generateNextColor4CurrentTheme(index);
+          }),
+        },
+      },
+    };
+  },
 };

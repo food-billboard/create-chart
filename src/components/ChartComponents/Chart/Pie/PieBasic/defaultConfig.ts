@@ -1,5 +1,6 @@
 import { omit } from 'lodash';
 import { mergeWithoutArray } from '@/utils';
+import ThemeUtil from '@/utils/Assist/Theme';
 import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
@@ -143,5 +144,18 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TPieBasicConfig) => {
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        itemStyle: {
+          color: options.series.itemStyle.color.map((item, index) => {
+            return ThemeUtil.generateNextColor4CurrentTheme(index);
+          }),
+        },
+      },
+    };
+  },
 };

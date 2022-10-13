@@ -1,4 +1,4 @@
-import { merge, omit } from 'lodash';
+import { omit } from 'lodash';
 import { mergeWithoutArray } from '@/utils';
 import {
   BASIC_DEFAULT_CONFIG,
@@ -166,5 +166,24 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TCachetBarConfig) => {
+    const componentColorList = DEFAULT_THEME_RADIAL_COLOR_LIST();
+    const length = componentColorList.length;
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        itemStyle: {
+          color: options.series.itemStyle.color.map((item, index) => {
+            return {
+              ...item,
+              start: componentColorList[index % length].start,
+              end: componentColorList[index % length].end,
+            };
+          }),
+        },
+      },
+    };
+  },
 };

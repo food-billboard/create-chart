@@ -1,4 +1,5 @@
 import { mergeWithoutArray } from '@/utils';
+import ThemeUtil from '@/utils/Assist/Theme';
 import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
@@ -99,7 +100,7 @@ export default () => {
           },
           backgroundColor: {
             ...DEFAULT_THEME_COLOR_LIST_DATA[0],
-            a: 10,
+            a: 0.1,
           },
         },
       },
@@ -125,5 +126,28 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TPercentPieConfig) => {
+    const DEFAULT_THEME_COLOR_LIST_DATA = DEFAULT_THEME_COLOR_LIST();
+    return {
+      lineStyle: {
+        color: options.lineStyle.color.map((_, index) => {
+          return {
+            line: DEFAULT_THEME_COLOR_LIST_DATA[index],
+            point: DEFAULT_THEME_COLOR_LIST_DATA[index],
+          };
+        }),
+      },
+      series: {
+        itemStyle: {
+          color: options.series.itemStyle.color.map((item, index) => {
+            return ThemeUtil.generateNextColor4CurrentTheme(index);
+          }),
+        },
+        backgroundColor: {
+          ...DEFAULT_THEME_COLOR_LIST_DATA[0],
+          a: options.series.backgroundColor.a,
+        },
+      },
+    };
+  },
 };

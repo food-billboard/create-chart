@@ -158,5 +158,24 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TRadialStackLineConfig) => {
+    const realColorList = DEFAULT_THEME_RADIAL_COLOR_LIST();
+    const length = realColorList.length;
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        areaStyle: {
+          color: options.series.areaStyle.color.map((item, index) => {
+            return {
+              ...item,
+              start: realColorList[index % length].start,
+              end: realColorList[index % length].end,
+            };
+          }),
+        },
+      },
+    };
+  },
 };

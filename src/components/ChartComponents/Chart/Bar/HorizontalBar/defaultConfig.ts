@@ -15,6 +15,7 @@ import {
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { getDate, getNumberValue } from '@/utils/constants';
 import { THorizontalBarConfig } from './type';
 
@@ -154,5 +155,18 @@ export default () => {
 };
 
 export const themeConfig = {
-  cover: (colorList: string[]) => {},
+  convert: (colorList: string[], options: THorizontalBarConfig) => {
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        itemStyle: {
+          color: options.series.itemStyle.color.map((item, index) => {
+            return ThemeUtil.generateNextColor4CurrentTheme(index);
+          }),
+        },
+      },
+    };
+  },
 };
