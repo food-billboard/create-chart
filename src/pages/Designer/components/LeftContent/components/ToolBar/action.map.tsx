@@ -19,6 +19,7 @@ import CallbackManage, { CallbackManageRef } from '../CallbackManage';
 import ConstantManage, { ConstantManageRef } from '../ConstantManage';
 import LocalConfigMange, { LocalConfigManageRef } from '../LocalConfigMange';
 import LensConfigModal, { LensConfigRef } from '../LensConfig';
+import ThemeConfigModal, { ThemeConfigRef } from '../ThemeConfig';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -324,6 +325,34 @@ export const LensConfig = (props: TCommonProps) => {
         onClick={handleOpen}
       />
       <LensConfigModal ref={lensConfigRef} />
+    </>
+  );
+};
+
+// 色调修改
+export const ThemeConfig = (props: TCommonProps) => {
+  const { onClick } = props;
+
+  const themeConfigRef = useRef<ThemeConfigRef>(null);
+
+  const handleOpen = useCallback(() => {
+    themeConfigRef.current?.open();
+    onClick?.('lens');
+  }, [onClick]);
+
+  return (
+    <>
+      <IconFont
+        type="icon-ziyuan"
+        title="主题色选择"
+        className={classnames(
+          commonClass,
+          'c-po',
+          styles['design-left-tool-icon-hover'],
+        )}
+        onClick={handleOpen}
+      />
+      <ThemeConfigModal ref={themeConfigRef} />
     </>
   );
 };

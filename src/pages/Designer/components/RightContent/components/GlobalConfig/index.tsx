@@ -166,12 +166,12 @@ const GlobalConfig = (props: {
                       />
                     </FullForm>
                   </Item>
-                  <Item label="主题">
+                  {/* <Item label="主题">
                     <ThemeConfig
                       value={theme}
                       onChange={onValueChange.bind(null, 'config.attr.theme')}
                     />
-                  </Item>
+                  </Item> */}
                 </ConfigList>
               </ConfigItem>
             ),

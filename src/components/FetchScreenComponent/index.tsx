@@ -8,7 +8,7 @@ import { DEFAULT_SCREEN_DATA } from '@/utils/constants';
 import { useIsModelHash } from '@/hooks';
 import { getScreenDetail, getScreenModelDetail } from '@/services';
 import { sleep } from '@/utils';
-import { ConditionChange } from '@/utils/Assist/BreakingChange';
+import BreakingChange from '@/utils/Assist/BreakingChange';
 import { mergeComponentDefaultConfig } from '../ChartComponents';
 import { autoFitScale } from '../../pages/Designer/components/Panel/components/ToolBar/components/Scale';
 import { mapStateToProps, mapDispatchToProps } from './connect';
@@ -69,7 +69,7 @@ const FetchScreenComponent = forwardRef<
         const {
           components: componentsList,
           ...nextData
-        }: ComponentData.TScreenData = components;
+        }: ComponentData.TScreenData = BreakingChange(components, version);
         setScreen({
           ...nextData,
           _id: id,
@@ -82,14 +82,7 @@ const FetchScreenComponent = forwardRef<
         height = nextData.config.style.height;
         ThemeUtil.initCurrentThemeData(nextData.config.attr.theme);
 
-        // * breaking change 1.8
-        const newVersionComponentList = ConditionChange(
-          componentsList,
-          version,
-        );
-        const mergedComponentList = mergeComponentDefaultConfig(
-          newVersionComponentList,
-        );
+        const mergedComponentList = mergeComponentDefaultConfig(componentsList);
         setComponentAll(mergedComponentList, false);
       } catch (err) {
         message.info('数据获取失败');

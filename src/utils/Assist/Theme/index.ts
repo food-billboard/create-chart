@@ -4,6 +4,10 @@ import { omit } from 'lodash';
 import Eventemitter3 from 'eventemitter3';
 import WonderlandTheme from '../../../theme/wonderland.project.json';
 import ShineTheme from '../../../theme/shine.project.json';
+import EssosTheme from '../../../theme/essos.project.json';
+import MacaronsTheme from '../../../theme/macarons.project.json';
+import RomaTheme from '../../../theme/roma.project.json';
+import WesterosTheme from '../../../theme/westeros.project.json';
 
 const alphaHexMap = {
   '1.00': 'FF',
@@ -144,9 +148,17 @@ class ThemeUtil {
   currentTheme!: string;
   currentThemeColor: string[] = [];
 
-  themeDataSource = {
+  originThemeDataSource = {
     [WonderlandTheme.themeName]: WonderlandTheme.theme,
     [ShineTheme.themeName]: ShineTheme.theme,
+    [EssosTheme.themeName]: EssosTheme.theme,
+    [MacaronsTheme.themeName]: MacaronsTheme.theme,
+    [RomaTheme.themeName]: RomaTheme.theme,
+    [WesterosTheme.themeName]: WesterosTheme.theme,
+  };
+
+  themeDataSource = {
+    ...this.originThemeDataSource,
   };
 
   get currentThemeColorLength() {
@@ -161,14 +173,161 @@ class ThemeUtil {
     return this.themeDataSource[name].color;
   }
 
+  isThemeNameValid(name: string) {
+    return !!this.themeDataSource[name];
+  }
+
+  isInternalThemeName(name: string) {
+    return !!this.originThemeDataSource[name];
+  }
+
   // 初始化
   init() {
     this.initCurrentThemeData(WonderlandTheme.themeName);
   }
 
+  // 初始化自定义主题
+  initCustomTheme(themeConfig: ComponentData.TScreenTheme) {
+    const { color = [], value } = themeConfig;
+    this.themeDataSource[value] = {
+      seriesCnt: '3',
+      backgroundColor: 'rgba(255,255,255,0)',
+      titleColor: '#666666',
+      subtitleColor: '#999999',
+      textColorShow: false,
+      textColor: '#333',
+      markTextColor: '#ffffff',
+      color: ['#4ea397', '#22c3aa', '#7bd9a5', '#d0648a', '#f58db2', '#f2b3c9'],
+      // color,
+      borderColor: '#ccc',
+      borderWidth: 0,
+      visualMapColor: ['#d0648a', '#22c3aa', '#adfff1'],
+      legendTextColor: '#999999',
+      kColor: '#d0648a',
+      kColor0: 'transparent',
+      kBorderColor: '#d0648a',
+      kBorderColor0: '#22c3aa',
+      kBorderWidth: '1',
+      lineWidth: '3',
+      symbolSize: '8',
+      symbol: 'emptyCircle',
+      symbolBorderWidth: '2',
+      lineSmooth: false,
+      graphLineWidth: '1',
+      graphLineColor: '#cccccc',
+      mapLabelColor: '#28544e',
+      mapLabelColorE: '#349e8e',
+      mapBorderColor: '#999999',
+      mapBorderColorE: '#22c3aa',
+      mapBorderWidth: 0.5,
+      mapBorderWidthE: 1,
+      mapAreaColor: '#eeeeee',
+      mapAreaColorE: 'rgba(34,195,170,0.25)',
+      axes: [
+        {
+          type: 'all',
+          name: '通用坐标轴',
+          axisLineShow: true,
+          axisLineColor: '#cccccc',
+          axisTickShow: false,
+          axisTickColor: '#333',
+          axisLabelShow: true,
+          axisLabelColor: '#999999',
+          splitLineShow: true,
+          splitLineColor: ['#eeeeee'],
+          splitAreaShow: false,
+          splitAreaColor: ['rgba(250,250,250,0.05)', 'rgba(200,200,200,0.02)'],
+        },
+        {
+          type: 'category',
+          name: '类目坐标轴',
+          axisLineShow: true,
+          axisLineColor: '#333',
+          axisTickShow: true,
+          axisTickColor: '#333',
+          axisLabelShow: true,
+          axisLabelColor: '#333',
+          splitLineShow: false,
+          splitLineColor: ['#ccc'],
+          splitAreaShow: false,
+          splitAreaColor: ['rgba(250,250,250,0.3)', 'rgba(200,200,200,0.3)'],
+        },
+        {
+          type: 'value',
+          name: '数值坐标轴',
+          axisLineShow: true,
+          axisLineColor: '#333',
+          axisTickShow: true,
+          axisTickColor: '#333',
+          axisLabelShow: true,
+          axisLabelColor: '#333',
+          splitLineShow: true,
+          splitLineColor: ['#ccc'],
+          splitAreaShow: false,
+          splitAreaColor: ['rgba(250,250,250,0.3)', 'rgba(200,200,200,0.3)'],
+        },
+        {
+          type: 'log',
+          name: '对数坐标轴',
+          axisLineShow: true,
+          axisLineColor: '#333',
+          axisTickShow: true,
+          axisTickColor: '#333',
+          axisLabelShow: true,
+          axisLabelColor: '#333',
+          splitLineShow: true,
+          splitLineColor: ['#ccc'],
+          splitAreaShow: false,
+          splitAreaColor: ['rgba(250,250,250,0.3)', 'rgba(200,200,200,0.3)'],
+        },
+        {
+          type: 'time',
+          name: '时间坐标轴',
+          axisLineShow: true,
+          axisLineColor: '#333',
+          axisTickShow: true,
+          axisTickColor: '#333',
+          axisLabelShow: true,
+          axisLabelColor: '#333',
+          splitLineShow: true,
+          splitLineColor: ['#ccc'],
+          splitAreaShow: false,
+          splitAreaColor: ['rgba(250,250,250,0.3)', 'rgba(200,200,200,0.3)'],
+        },
+      ],
+      axisSeperateSetting: false,
+      toolboxColor: '#999999',
+      toolboxEmphasisColor: '#666666',
+      tooltipAxisColor: '#cccccc',
+      tooltipAxisWidth: 1,
+      timelineLineColor: '#4ea397',
+      timelineLineWidth: 1,
+      timelineItemColor: '#4ea397',
+      timelineItemColorE: '#4ea397',
+      timelineCheckColor: '#4ea397',
+      timelineCheckBorderColor: '#3cebd2',
+      timelineItemBorderWidth: 1,
+      timelineControlColor: '#4ea397',
+      timelineControlBorderColor: '#4ea397',
+      timelineControlBorderWidth: 0.5,
+      timelineLabelColor: '#4ea397',
+      datazoomBackgroundColor: 'rgba(255,255,255,0)',
+      datazoomDataColor: 'rgba(222,222,222,1)',
+      datazoomFillColor: 'rgba(114,230,212,0.25)',
+      datazoomHandleColor: '#cccccc',
+      datazoomHandleWidth: '100',
+      datazoomLabelColor: '#999999',
+    };
+  }
+
   // 设置当前的色调
-  initCurrentThemeData(themeName: string) {
+  initCurrentThemeData(themeConfig: string | ComponentData.TScreenTheme) {
+    const themeName =
+      typeof themeConfig === 'string' ? themeConfig : themeConfig.value;
     if (!themeName || this.currentTheme === themeName) return;
+    // custom theme
+    if ((themeConfig as ComponentData.TScreenTheme).type === 'custom')
+      this.initCustomTheme(themeConfig as ComponentData.TScreenTheme);
     registerTheme(themeName, this.themeDataSource[themeName]);
     const theme = this.themeDataSource[themeName];
     this.currentTheme = themeName;

@@ -80,6 +80,9 @@ import Ali3DMap from './Map/Ali3DMap';
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
   {
+    themeConfig: {
+      convert: (colorList: string[]) => object;
+    };
     defaultConfig: () => object;
     configComponent: ReactNode;
     render: ReactNode;
@@ -165,6 +168,12 @@ export function getComponentDefaultConfigByType(
   componentType: ComponentData.TComponentSelfType,
 ) {
   return COMPONENT_MAP.get(componentType)?.defaultConfig() || {};
+}
+
+export function getComponentThemeConfigByType(
+  componentType: ComponentData.TComponentSelfType,
+) {
+  return COMPONENT_MAP.get(componentType)?.themeConfig || {};
 }
 
 export function getComponentRenderByType(

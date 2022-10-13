@@ -104,9 +104,9 @@ const AddDesigner = (props: { type: 'screen' | 'model' }) => {
           >
             <Input placeholder={`请输入${title}名称`} />
           </Item>
-          <Item label="色调" name="theme">
+          {/* <Item label="色调" name="theme">
             <BaseThemeConfig />
-          </Item>
+          </Item> */}
         </Form>
       </Modal>
     </div>

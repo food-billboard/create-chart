@@ -152,3 +152,7 @@ export default () => {
     );
   return DefaultConfig;
 };
+
+export const themeConfig = {
+  cover: (colorList: string[]) => {},
+};

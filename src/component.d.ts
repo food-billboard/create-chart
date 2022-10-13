@@ -254,6 +254,14 @@ declare namespace ComponentData {
     value: TGuideLineConfigItem[];
   };
 
+  // 大屏主题色
+  export type TScreenTheme = {
+    type: 'internal' | 'custom';
+    value: string;
+    // 只有非内置的需要保存颜色数组
+    color?: string[];
+  };
+
   // 大屏配置
   export type TScreenData = {
     _id?: string;
@@ -272,7 +280,7 @@ declare namespace ComponentData {
         params: TParams[];
         constants: TConstants[];
         guideLine: TGuideLineConfig;
-        theme: string;
+        theme: TScreenTheme;
         grid: number;
         componentBorder: {
           width: number;
