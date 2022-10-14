@@ -12,6 +12,7 @@ import {
   Common,
 } from 'matter-js';
 import { useDebounceFn } from 'ahooks';
+import classnames from 'classnames';
 import IsMobile from 'is-mobile';
 import ColorSelect from '@/components/ColorSelect';
 import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Constants/defaultConfig';
@@ -285,7 +286,14 @@ const MatterBoxes = () => {
         stop();
       } catch (err) {}
 
-      init(width, height);
+      try {
+        const dom = document.querySelector('#home-page-matter-boxes-container');
+        if (dom) {
+          const targetWidth = dom.clientWidth;
+          const targetHeight = height - 0.03 * width;
+          init(targetWidth, targetHeight);
+        }
+      } catch (err) {}
     },
     {
       wait: 1000,
@@ -312,7 +320,7 @@ const MatterBoxes = () => {
   return (
     <div
       id="home-page-matter-boxes-container"
-      className={styles['home-page-matter-boxes-container']}
+      className={classnames(styles['home-page-matter-boxes-container'])}
     ></div>
   );
 };

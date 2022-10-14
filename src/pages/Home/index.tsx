@@ -291,7 +291,6 @@ const Home = () => {
           data-depth="0.2"
         >
           <div>
-            <MatterBoxes />
             <div
               className={classnames(
                 'home-page-layer',
@@ -303,6 +302,7 @@ const Home = () => {
             >
               <AnimationTitle />
             </div>
+            <MatterBoxes />
             <div
               className={classnames(
                 'home-page-layer',
