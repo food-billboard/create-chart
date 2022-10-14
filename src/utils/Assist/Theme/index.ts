@@ -1,6 +1,6 @@
 import { registerTheme } from 'echarts';
 import color from 'color';
-import { omit } from 'lodash';
+import { omit, pick } from 'lodash';
 import Eventemitter3 from 'eventemitter3';
 import WonderlandTheme from '../../../theme/wonderland.project.json';
 import ShineTheme from '../../../theme/shine.project.json';
@@ -120,9 +120,9 @@ export function getOpacity(prevColor: ComponentData.TColorConfig) {
 export function getRgbaString(prevColor: ComponentData.TColorConfig) {
   if (!prevColor) return prevColor;
   try {
-    return `rgba(${color(omit(prevColor, 'a')).array().join(',')}, ${
-      prevColor.a ?? 1
-    })`;
+    return `rgba(${color(pick(prevColor, ['r', 'g', 'b']))
+      .array()
+      .join(',')}, ${prevColor.a ?? 1})`;
   } catch (err) {
     return '';
   }
