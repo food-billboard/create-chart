@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { InputNumber as AntInputNumber } from 'antd';
 import { InputNumberProps } from 'antd/es/input-number';
 import classnames from 'classnames';
@@ -16,11 +16,13 @@ const InputNumber = (
     onBlur: propsOnBlur,
     triggerOnChangeInOnChange = false,
     className,
+    onFocus: propsOnFocus,
   } = props;
 
   const [stateValue, setStateValue] = useState<number | string>(
     value ?? defaultValue ?? 0,
   );
+  const focus = useRef<boolean>(!!props.autoFocus);
 
   const onChange = useCallback(
     (value) => {
@@ -34,18 +36,27 @@ const InputNumber = (
     (e) => {
       if (value !== stateValue) propsOnChange?.(stateValue);
       propsOnBlur?.(e);
+      focus.current = false;
     },
     [propsOnBlur, propsOnChange, stateValue, value],
   );
 
+  const onFocus = useCallback(
+    (e) => {
+      propsOnFocus?.(e);
+      focus.current = true;
+    },
+    [propsOnFocus],
+  );
+
   useEffect(() => {
     if (value !== undefined) {
-      setStateValue(value);
+      setStateValue(value as any);
     }
   }, [value]);
 
   useUnmount(() => {
-    if (value !== stateValue) propsOnChange?.(stateValue);
+    if (value !== stateValue && focus.current) propsOnChange?.(stateValue);
   });
 
   return (
@@ -55,6 +66,7 @@ const InputNumber = (
       onChange={onChange}
       onBlur={onBlur}
       value={stateValue}
+      onFocus={onFocus}
     />
   );
 };

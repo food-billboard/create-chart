@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { Input as AntInput } from 'antd';
 import { TextAreaProps } from 'antd/es/input';
 import { useUnmount } from 'ahooks';
@@ -14,9 +14,11 @@ const Textarea = (
     onChange: propsOnChange,
     onBlur: propsOnBlur,
     triggerOnChangeInOnChange = false,
+    onFocus: propsOnFocus,
   } = props;
 
   const [stateValue, setStateValue] = useState<any>(value ?? defaultValue);
+  const focus = useRef<boolean>(!!props.autoFocus);
 
   const onChange = useCallback(
     (e) => {
@@ -31,8 +33,17 @@ const Textarea = (
     (e) => {
       if (value !== stateValue) propsOnChange?.(stateValue);
       propsOnBlur?.(e);
+      focus.current = false;
     },
     [propsOnBlur, propsOnChange, stateValue, value],
+  );
+
+  const onFocus = useCallback(
+    (e) => {
+      propsOnFocus?.(e);
+      focus.current = true;
+    },
+    [propsOnFocus],
   );
 
   useEffect(() => {
@@ -42,7 +53,7 @@ const Textarea = (
   }, [value]);
 
   useUnmount(() => {
-    if (value != stateValue) propsOnChange?.(stateValue);
+    if (value != stateValue && focus.current) propsOnChange?.(stateValue);
   });
 
   return (
@@ -51,6 +62,7 @@ const Textarea = (
       onChange={onChange}
       onBlur={onBlur}
       value={stateValue}
+      onFocus={onFocus}
     />
   );
 };
