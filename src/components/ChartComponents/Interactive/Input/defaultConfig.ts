@@ -104,5 +104,11 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[]) => {
+    return {
+      search: {
+        backgroundColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+      },
+    };
+  },
 };

@@ -116,5 +116,12 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[]) => {
+    return {
+      active: {
+        borderColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+        backgroundColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+      },
+    };
+  },
 };

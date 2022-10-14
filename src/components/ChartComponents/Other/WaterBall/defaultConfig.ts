@@ -122,5 +122,15 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TWaterBallConfig) => {
+    return {
+      series: {
+        color: {
+          ...options.series.color,
+          start: ThemeUtil.generateNextColor4CurrentTheme(0),
+          end: ThemeUtil.generateNextColor4CurrentTheme(1),
+        },
+      },
+    };
+  },
 };

@@ -169,5 +169,11 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TTreeMapBasicConfig) => {
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+    };
+  },
 };

@@ -8,6 +8,7 @@ import {
   DEFAULT_THEME_COLOR_LIST,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { getText } from '@/utils/constants';
 import { TTagConfig } from './type';
 
@@ -106,5 +107,13 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TTagConfig) => {
+    return {
+      series: options.series.map((item, index) => {
+        return {
+          color: ThemeUtil.generateNextColor4CurrentTheme(index),
+        };
+      }),
+    };
+  },
 };

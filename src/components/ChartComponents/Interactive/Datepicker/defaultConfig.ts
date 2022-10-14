@@ -161,5 +161,46 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TDatePickerConfig) => {
+    return {
+      arrow: {
+        color: ThemeUtil.generateNextColor4CurrentTheme(0),
+        active: {
+          color: ThemeUtil.generateNextColor4CurrentTheme(0),
+        },
+      },
+      input: {
+        activeBorderColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+      },
+      dateAndTime: {
+        textStyle: {
+          color: ThemeUtil.generateNextColor4CurrentTheme(0),
+        },
+        prevAndNext: {
+          textStyle: {
+            color: {
+              ...ThemeUtil.generateNextColor4CurrentTheme(0),
+              a: options.dateAndTime.prevAndNext.textStyle.color.a,
+            },
+          },
+        },
+        hover: {
+          textStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+        active: {
+          backgroundColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+        },
+        disabled: {
+          textStyle: {
+            color: {
+              ...ThemeUtil.generateNextColor4CurrentTheme(0),
+              a: options.dateAndTime.disabled.textStyle.color.a,
+            },
+          },
+        },
+      },
+    };
+  },
 };

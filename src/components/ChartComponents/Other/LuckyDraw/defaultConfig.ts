@@ -178,5 +178,20 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[]) => {
+    return {
+      global: {
+        style: {
+          background: colorList[0],
+        },
+      },
+      prizes: {
+        config: colorList.slice(0, 2).map((item) => {
+          return {
+            background: item,
+          };
+        }),
+      },
+    };
+  },
 };

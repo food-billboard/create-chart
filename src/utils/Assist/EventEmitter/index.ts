@@ -43,4 +43,7 @@ export enum EVENT_NAME_MAP {
 
   // 组件缩放结束
   COMPONENT_RESIZE_END = 'COMPONENT_RESIZE_END',
+
+  // 大屏的主题色被更改的时候
+  SCREEN_THEME_CHANGE = 'SCREEN_THEME_CHANGE',
 }

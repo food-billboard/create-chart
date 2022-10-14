@@ -105,5 +105,11 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[]) => {
+    return {
+      base: {
+        codeColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+      },
+    };
+  },
 };

@@ -108,5 +108,15 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[]) => {
+    return {
+      onColor: ThemeUtil.generateNextColor4CurrentTheme(1),
+      boxShadow: {
+        color: ThemeUtil.generateNextColor4CurrentTheme(0),
+      },
+      activeBoxShadow: {
+        color: ThemeUtil.generateNextColor4CurrentTheme(0),
+      },
+    };
+  },
 };

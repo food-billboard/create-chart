@@ -184,5 +184,34 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TSelectConfig) => {
+    return {
+      baseHover: {
+        backgroundColor: {
+          ...ThemeUtil.generateNextColor4CurrentTheme(0),
+          a: options.baseHover.backgroundColor.a,
+        },
+      },
+      activeHover: {
+        backgroundColor: {
+          ...ThemeUtil.generateNextColor4CurrentTheme(0),
+          a: options.activeHover.backgroundColor.a,
+        },
+      },
+      activeSelect: {
+        backgroundColor: {
+          ...ThemeUtil.generateNextColor4CurrentTheme(0),
+          a: options.activeSelect.backgroundColor.a,
+        },
+      },
+      active: {
+        textStyle: {
+          color: ThemeUtil.generateNextColor4CurrentTheme(0),
+        },
+        border: {
+          color: ThemeUtil.generateNextColor4CurrentTheme(0),
+        },
+      },
+    };
+  },
 };

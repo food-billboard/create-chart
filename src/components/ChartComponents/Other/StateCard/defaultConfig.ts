@@ -119,5 +119,16 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TStateCardConfig) => {
+    return {
+      stateList: options.stateList.map((item, index) => {
+        return {
+          ...item,
+          stateIcon: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(index),
+          },
+        };
+      }),
+    };
+  },
 };

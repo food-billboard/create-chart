@@ -176,5 +176,38 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[]) => {
+    const DEFAULT_THEME_RADIAL_COLOR_LIST_DATA =
+      DEFAULT_THEME_RADIAL_COLOR_LIST();
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      geo: {
+        itemStyle: {
+          normal: {
+            borderColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+            areaColor: {
+              start: DEFAULT_THEME_RADIAL_COLOR_LIST_DATA[0].end,
+              end: DEFAULT_THEME_RADIAL_COLOR_LIST_DATA[0].start,
+            },
+            shadowColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+          emphasis: {
+            borderColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+            areaColor: DEFAULT_THEME_RADIAL_COLOR_LIST_DATA[0],
+            shadowColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+      },
+      scatter: {
+        rippleEffect: {
+          color: ThemeUtil.generateNextColor4CurrentTheme(3),
+        },
+        itemStyle: {
+          color: ThemeUtil.generateNextColor4CurrentTheme(3),
+        },
+      },
+    };
+  },
 };

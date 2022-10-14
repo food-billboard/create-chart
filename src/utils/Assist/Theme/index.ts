@@ -328,6 +328,7 @@ class ThemeUtil {
     // custom theme
     if ((themeConfig as ComponentData.TScreenTheme).type === 'custom')
       this.initCustomTheme(themeConfig as ComponentData.TScreenTheme);
+
     registerTheme(themeName, this.themeDataSource[themeName]);
     const theme = this.themeDataSource[themeName];
     this.currentTheme = themeName;

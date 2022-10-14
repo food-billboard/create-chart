@@ -112,6 +112,7 @@ const ScatterBasic = (
       type: 'scatter',
       itemStyle: {
         ...(itemStyle[0] || {}),
+        borderColor: getRgbaString(itemStyle[0]?.borderColor),
         color: getRgbaString(itemStyle[0]?.color),
         shadowOffsetX: itemStyle[0]?.shadow.hShadow || 0,
         shadowOffsetY: itemStyle[0]?.shadow.vShadow || 0,
@@ -137,6 +138,7 @@ const ScatterBasic = (
             ...baseSeries,
             itemStyle: {
               ...(itemStyle[index] || {}),
+              borderColor: getRgbaString(itemStyle[index]?.borderColor),
               color: getRgbaString(itemStyle[index]?.color),
               shadowOffsetX: itemStyle[index].shadow.hShadow,
               shadowOffsetY: itemStyle[index].shadow.vShadow,

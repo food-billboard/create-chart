@@ -228,5 +228,26 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[]) => {
+    return {
+      style: {
+        finish: {
+          textStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+          lineStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+        process: {
+          textStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+          lineStyle: {
+            color: ThemeUtil.generateNextColor4CurrentTheme(0),
+          },
+        },
+      },
+    };
+  },
 };

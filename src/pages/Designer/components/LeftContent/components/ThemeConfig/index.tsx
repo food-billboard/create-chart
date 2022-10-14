@@ -6,15 +6,18 @@ import {
   useMemo,
 } from 'react';
 import { Space, Drawer, Tabs, Row, Col } from 'antd';
+import EventEmitter from 'eventemitter3';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import getImageColor from '@/utils/getImageColor';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
-
-const { TabPane } = Tabs;
 
 export type ThemeConfigRef = {
   open: () => void;
@@ -43,11 +46,7 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
   }, []);
 
   const onChange = useCallback(
-    (
-      key: keyof ComponentData.TScreenTheme,
-      type: ComponentData.TScreenTheme['type'],
-      value,
-    ) => {
+    (type: ComponentData.TScreenTheme['type'], value) => {
       let realValue = value;
       try {
         realValue = value.target.value;
@@ -57,15 +56,17 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
           attr: {
             theme: {
               type,
-              [key]: realValue,
+              value: realValue,
             },
           },
         },
       });
       // 更改色调
-      ThemeUtil.initCurrentThemeData(type);
+      ThemeUtil.initCurrentThemeData(realValue);
       // 修改组件颜色
       setComponent(ComponentThemeChange(realValue));
+      // 通知组件更新
+      GLOBAL_EVENT_EMITTER.emitDebounce(EVENT_NAME_MAP.SCREEN_THEME_CHANGE);
     },
     [setScreen],
   );
@@ -121,7 +122,7 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
                         styles['designer-theme-config-list'],
                       )}
                       key={theme}
-                      onClick={() => onChange('value', 'internal', theme)}
+                      onClick={() => onChange('internal', theme)}
                     >
                       {colorList.map((item) => {
                         return (

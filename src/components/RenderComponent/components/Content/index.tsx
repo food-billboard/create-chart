@@ -113,7 +113,7 @@ export default connect(
   (state: ConnectState) => {
     return {
       screenType: state.global.screenType,
-      screenTheme: state.global.screenData.config.attr.theme,
+      screenTheme: state.global.screenData.config.attr.theme.value,
     };
   },
   (dispatch) => {

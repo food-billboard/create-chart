@@ -151,5 +151,14 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[]) => {
+    return {
+      tooltip: {
+        backgroundColor: ThemeUtil.generateNextColor4CurrentTheme(0),
+      },
+      scatter: {
+        color: ThemeUtil.generateNextColor4CurrentTheme(0),
+      },
+    };
+  },
 };

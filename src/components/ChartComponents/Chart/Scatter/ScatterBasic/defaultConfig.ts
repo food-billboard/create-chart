@@ -14,6 +14,7 @@ import {
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { getDate, getNumberValue } from '@/utils/constants';
 import { TScatterBasicConfig } from './type';
 
@@ -116,5 +117,30 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TScatterBasicConfig) => {
+    return {
+      tooltip: {
+        backgroundColor: DEFAULT_TOOLTIP_CONFIG().backgroundColor,
+      },
+      series: {
+        itemStyle: options.series.itemStyle.map((item, index) => {
+          return {
+            ...item,
+            color: ThemeUtil.generateNextColor4CurrentTheme(index),
+            shadow: {
+              ...item.shadow,
+              color: {
+                ...ThemeUtil.generateNextColor4CurrentTheme(index),
+                a: item.shadow.color.a,
+              },
+            },
+            borderColor: {
+              ...ThemeUtil.generateNextColor4CurrentTheme(index),
+              a: item.borderColor.a,
+            },
+          };
+        }),
+      },
+    };
+  },
 };

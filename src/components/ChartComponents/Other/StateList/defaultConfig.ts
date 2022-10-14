@@ -106,5 +106,14 @@ export default () => {
 };
 
 export const themeConfig = {
-  convert: (colorList: string[]) => {},
+  convert: (colorList: string[], options: TStateListConfig) => {
+    return {
+      stateList: options.stateList.map((item, index) => {
+        return {
+          ...item,
+          backgroundColor: ThemeUtil.generateNextColor4CurrentTheme(index),
+        };
+      }),
+    };
+  },
 };
