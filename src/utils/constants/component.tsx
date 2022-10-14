@@ -7,6 +7,7 @@ import {
   AppstoreOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
+import IconFont from '@/components/ChartComponents/Common/Icon';
 import BarBasic from '../../../public/components/bar-basic.png';
 import LineBasic from '../../../public/components/line-basic.png';
 import PieBasic from '../../../public/components/pie-basic.png';
@@ -77,6 +78,7 @@ import ALiMap from '../../../public/components/ali-map.jpg';
 import QrCode from '../../../public/components/qrcode.jpg';
 import PathBasic from '../../../public/components/path-basic.jpg';
 import LuckyDraw from '../../../public/components/lucky-draw.jpg';
+import Ticket from '../../../public/components/ticket.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -654,6 +656,25 @@ export const COMPONENT_TYPE_LIST = [
             type: 'RATE',
             title: '评分',
             icon: Rate,
+            description: '',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'source',
+    title: '素材',
+    icon: <IconFont type="icon-sucai" className={classnames(commonClass)} />,
+    children: [
+      {
+        type: 'source-basic',
+        title: '素材库',
+        children: [
+          {
+            type: 'TICKET',
+            title: '卡券',
+            icon: Ticket,
             description: '',
           },
         ],

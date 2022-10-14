@@ -76,6 +76,8 @@ import Rate from './Interactive/Rate';
 // map
 import ScatterMap from './Map/ScatterMap';
 import Ali3DMap from './Map/Ali3DMap';
+// source
+import Ticket from './Source/Ticket';
 
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
@@ -159,6 +161,7 @@ COMPONENT_MAP.set(Ali3DMap.type, Ali3DMap);
 COMPONENT_MAP.set(PathBasic.type, PathBasic);
 COMPONENT_MAP.set(QrCode.type, QrCode);
 COMPONENT_MAP.set(LuckyDraw.type, LuckyDraw);
+COMPONENT_MAP.set(Ticket.type, Ticket);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);
