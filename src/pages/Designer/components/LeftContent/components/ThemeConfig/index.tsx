@@ -5,8 +5,8 @@ import {
   useCallback,
   useMemo,
 } from 'react';
-import { Space, Drawer, Tabs, Row, Col } from 'antd';
-import EventEmitter from 'eventemitter3';
+import { Space, Drawer, Tabs, Row, Col, Result } from 'antd';
+import { SmileOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import getImageColor from '@/utils/getImageColor';
@@ -145,7 +145,16 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
           {
             key: '1',
             label: '自定义主题',
-            children: <div></div>,
+            children: (
+              <div>
+                <Result
+                  icon={<SmileOutlined />}
+                  title={
+                    <span style={{ fontSize: '14px' }}>努力研发中。。。</span>
+                  }
+                />
+              </div>
+            ),
           },
         ]}
       />
