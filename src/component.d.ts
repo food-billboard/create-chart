@@ -168,7 +168,8 @@ declare namespace ComponentData {
     | 'PATH_BASIC'
     | 'QR_CODE'
     | 'LUCKY_DRAW'
-    | 'TICKET';
+    | 'TICKET'
+    | 'BUTTON';
 
   // 基础组件属性
   export type TBaseConfig = {

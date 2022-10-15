@@ -79,6 +79,7 @@ import QrCode from '../../../public/components/qrcode.jpg';
 import PathBasic from '../../../public/components/path-basic.jpg';
 import LuckyDraw from '../../../public/components/lucky-draw.jpg';
 import Ticket from '../../../public/components/ticket.jpg';
+import Button from '../../../public/components/button.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -656,6 +657,12 @@ export const COMPONENT_TYPE_LIST = [
             type: 'RATE',
             title: '评分',
             icon: Rate,
+            description: '',
+          },
+          {
+            type: 'BUTTON',
+            title: '按钮',
+            icon: Button,
             description: '',
           },
         ],

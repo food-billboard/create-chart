@@ -73,6 +73,7 @@ import Checkbox from './Interactive/Checkbox';
 import Radio from './Interactive/Radio';
 import Datepicker from './Interactive/Datepicker';
 import Rate from './Interactive/Rate';
+import Button from './Interactive/Button';
 // map
 import ScatterMap from './Map/ScatterMap';
 import Ali3DMap from './Map/Ali3DMap';
@@ -162,6 +163,7 @@ COMPONENT_MAP.set(PathBasic.type, PathBasic);
 COMPONENT_MAP.set(QrCode.type, QrCode);
 COMPONENT_MAP.set(LuckyDraw.type, LuckyDraw);
 COMPONENT_MAP.set(Ticket.type, Ticket);
+COMPONENT_MAP.set(Button.type, Button);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);
