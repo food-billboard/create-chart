@@ -50,34 +50,11 @@ export default () => {
   const CUSTOM_CONFIG: ComponentData.TInternalComponentConfig<TStepLineConfig> =
     {
       interactive: {
-        base: [
-          {
-            type: 'click',
-            name: '当点击项时',
-            show: false,
-            fields: [
-              {
-                key: 'x',
-                variable: '',
-                description: 'x轴',
-              },
-              {
-                key: 'y',
-                variable: '',
-                description: 'y轴',
-              },
-              {
-                key: 's',
-                variable: '',
-                description: '系列',
-              },
-            ],
-          },
-        ],
+        base: [],
         linkage: [
           {
             ...DEFAULT_LINKAGE_CONFIG,
-            type: 'click-item',
+            type: 'click',
             name: '点击项',
           },
         ],

@@ -85,14 +85,11 @@ const StepLine = (
   );
 
   const onClick = (params: any) => {
-    const { seriesName, name, value } = params;
-    const target = {
-      x: name,
-      y: value,
-      s: seriesName,
-    };
-    syncInteractiveAction('click', target);
-    linkageMethod('click-item', target);
+    const { seriesName } = params;
+    syncInteractiveAction('click', {});
+    linkageMethod('click-item', {
+      seriesName,
+    });
   };
 
   const initChart = () => {
@@ -125,6 +122,7 @@ const StepLine = (
         ...(lineStyle[0] || {}),
         color: getRgbaString(lineStyle[0]?.color),
       },
+      triggerLineEvent: true,
       data: yAxisValues._defaultValue_,
       animation: show,
       animationEasing,

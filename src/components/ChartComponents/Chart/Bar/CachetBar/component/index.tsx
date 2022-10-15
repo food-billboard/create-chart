@@ -146,6 +146,7 @@ const CachetBar = (
             ...baseSeries,
             itemStyle: {
               ...itemStyle,
+              borderRadius,
               color: radialGradientColor(itemStyle.color[index]),
             },
             data: yAxisValues[item] || [],
@@ -156,7 +157,7 @@ const CachetBar = (
 
     return {
       series: realSeries,
-      max: max + 10,
+      max: max * 1.2,
     };
   };
 

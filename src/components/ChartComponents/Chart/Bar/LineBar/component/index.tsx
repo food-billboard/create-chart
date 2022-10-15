@@ -141,11 +141,21 @@ const LineBar = (props: ComponentData.CommonComponentProps<TLineBarConfig>) => {
   const onClick = (params: any) => {
     const { seriesName, name, value, componentSubType } = params;
 
-    const target = {
-      x: name,
-      y2: value,
-      s2: seriesName,
-    };
+    let target: any = {};
+
+    if (componentSubType === 'bar') {
+      target = {
+        x: name,
+        y: value,
+        s: seriesName,
+      };
+    } else {
+      target = {
+        x: name,
+        y2: value,
+        s2: seriesName,
+      };
+    }
     syncInteractiveAction(`click-${componentSubType}`, target);
     linkageMethod(`click-item-${componentSubType}`, target);
   };
@@ -166,13 +176,14 @@ const LineBar = (props: ComponentData.CommonComponentProps<TLineBarConfig>) => {
     const { itemStyle, label, style, ...nextSeries } = series;
     const baseLineSeries = {
       ...nextSeries,
+      z: 2,
       label: {
         ...label,
         color: getRgbaString(label.color),
       },
       type: 'line',
       yAxisIndex: 1,
-      symbolSize: 0,
+      symbolSize: 6,
       areaStyle: {
         color: radialGradientColor(itemStyle[0]?.line.areaColor),
       },
@@ -193,6 +204,7 @@ const LineBar = (props: ComponentData.CommonComponentProps<TLineBarConfig>) => {
     };
     const baseBarSeries = {
       ...nextSeries,
+      z: 3,
       label: {
         ...label,
         position: 'inside',
