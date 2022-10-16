@@ -95,6 +95,7 @@
     "react-tiny-fab": "^4.0.4",
     "react-undo-component": "^1.0.1",
     "slick-carousel": "^1.8.1",
+    "typed.js": "^2.0.12",
     "umi": "^3.5.20",
     "viewerjs": "^1.10.5",
     "vivus": "^0.4.6"

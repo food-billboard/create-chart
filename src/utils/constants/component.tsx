@@ -80,6 +80,7 @@ import PathBasic from '../../../public/components/path-basic.jpg';
 import LuckyDraw from '../../../public/components/lucky-draw.jpg';
 import Ticket from '../../../public/components/ticket.jpg';
 import Button from '../../../public/components/button.jpg';
+import Typed from '../../../public/components/typed.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -682,6 +683,12 @@ export const COMPONENT_TYPE_LIST = [
             type: 'TICKET',
             title: '卡券',
             icon: Ticket,
+            description: '',
+          },
+          {
+            type: 'TYPED',
+            title: '打字机',
+            icon: Typed,
             description: '',
           },
         ],
