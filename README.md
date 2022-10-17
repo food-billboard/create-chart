@@ -1,11 +1,61 @@
-# 数据可视化大屏  
 
-## 介绍  
-这是一个基于[echarts](https://github.com/apache/echarts)数据可视化大屏项目📈。
+<center>
+  <img src="./public/logo.jpg" />
+</center>
 
-### 当前版本(1.13)😈    
+<br/>
 
-### changelog  
+<h1 align="center">数据可视化大屏</h1>
+
+<div align='center'>
+
+一个基于[echarts](https://github.com/apache/echarts)数据可视化大屏设计器项目📈。
+
+</div>
+
+## 当前版本(1.13)😈    
+
+## ✨ 特性  
+
+- 👁 可视化设计      
+- 👾 丰富组件与物料  
+- 🔧 简化设计  
+- 📚 静态、API及Mock数据支持  
+- 📌 快速预览以及外链分享链接  
+- 👨‍👨‍👧‍👦 强大的交互能力  
+
+## 🖥 截图
+
+<div align="center">
+  <img src="./public/other/screenshoot-3.jpg" width="60%" />
+  <br/>
+  <br/>
+  <img src="./public/other/screenshoot-4.jpg" width="60%" />
+  <br/>
+  <br/>
+  <img src="./public/other/screenshoot-5.jpg" width="60%" />
+  <br/>
+  <br/>
+  <img src="./public/other/screenshoot-1.png" width="60%" />
+  <br/>
+  <br/>
+  <img src="./public/other/screenshoot-2.png" width="60%" />
+</div>
+
+## 🕷 本地调试
+
+```
+ $ git clone git@github.com:food-billboard/create-chart.git
+ $ cd create-chart 
+ $ yarn 
+ $ yarn start 
+```
+
+## 🙋‍♂️ 试用  
+
+账号和密码放在`issue`当中，如有兴趣或有问题也可以在`issue`中联系我。     
+
+## 👇🏻 Changelog  
 [1.13](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.13.md)   
 [1.12](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.12.md)  
 [1.11](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.11.md)  
@@ -21,27 +71,6 @@
 [1.1](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.1.md)  
 [1.0](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.0.md)  
 
-### 目录结构  
-- `/` 首页  
-- `/screen` 大屏列表
-- `/login` 登录  
-- `/register` 注册  
-- `/forget` 忘记密码  
-- `/designer` 设计器  
-- `/preview` 预览  
-- `/share` 分享  
-- `/model` 模板列表  
-- `/model-designer` 模板设计器   
-- `/model-preview` 模板预览  
-### 功能 
-其中的一些细节功能可以自行操作了解   
-#### 图层  
-左边列表中提供图层的功能设置组件的一些属性，包括置顶、置底、显示/隐藏、成组/取消成组、锁定/取消锁定、复制/粘贴、删除、重命名等。  
-#### 数据  
-目前数据只提供了`静态数据`和`api数据`  
-并且提供了  
-- 数据过滤器功能  
-- 全局常量  
-- 字符串变量（可以在api的headers和body中使用变量）  
-#### 交互  
-大部分组件包含了对应的事件用于响应数据的变化，并且同步到绑定了该组件变量的对应组件中，达到数据联动的效果。  
+## 🔗 链接  
+[官网](http://47.97.27.23/api/backend/screen/index.html#/)  
+[操作文档](http://47.97.27.23/api/backend/create-chart-docs/index.html#/)  
