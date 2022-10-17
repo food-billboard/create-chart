@@ -1,6 +1,6 @@
 
 <center>
-  <img src="./public/logo.jpg" />
+  <img src="/public/logo.jpg" />
 </center>
 
 <br/>
@@ -27,19 +27,19 @@
 ## 🖥 截图
 
 <div align="center">
-  <img src="./public/other/screenshoot-3.jpg" width="60%" />
+  <img src="/public/other/screenshoot-3.jpg" width="60%" />
   <br/>
   <br/>
-  <img src="./public/other/screenshoot-4.jpg" width="60%" />
+  <img src="/public/other/screenshoot-4.jpg" width="60%" />
   <br/>
   <br/>
-  <img src="./public/other/screenshoot-5.jpg" width="60%" />
+  <img src="/public/other/screenshoot-5.jpg" width="60%" />
   <br/>
   <br/>
-  <img src="./public/other/screenshoot-1.png" width="60%" />
+  <img src="/public/other/screenshoot-1.png" width="60%" />
   <br/>
   <br/>
-  <img src="./public/other/screenshoot-2.png" width="60%" />
+  <img src="/public/other/screenshoot-2.png" width="60%" />
 </div>
 
 ## 🕷 本地调试
