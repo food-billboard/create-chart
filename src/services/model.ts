@@ -25,7 +25,7 @@ export const putScreenModel = (data: API_SCREEN.TEditScreenParams) => {
 
 // 链式修改大屏
 export const putScreenModelPool = (data: API_SCREEN.TEditScreenPoolParams) => {
-  return request('/api/screen/model/pool', {
+  return request('/api/screen/list/pool/model', {
     method: 'PUT',
     data: {
       ...data,

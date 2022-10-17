@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "analyze": "cross-env ANALYZE=1 REACT_APP_ENV=prod umi build",
-    "start": "umi dev",
+    "start": "cross-env PORT=8001 && umi dev",
     "start:dev": "cross-env REACT_APP_ENV=dev umi dev",
     "build": "REACT_APP_ENV=prod umi build",
     "postinstall": "umi generate tmp",
