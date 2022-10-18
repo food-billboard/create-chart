@@ -1,6 +1,6 @@
 
 <center>
-  <img src="/public/logo.jpg" />
+  <img src="public/logo.jpg" />
 </center>
 
 <br/>
@@ -13,9 +13,11 @@
 
 </div>
 
-## 当前版本(1.13)😈    
+## 😈   当前版本(1.14) 
 
-## ✨ 特性  
+<br/>
+
+## ✨  特性  
 
 - 👁 可视化设计      
 - 👾 丰富组件与物料  
@@ -24,25 +26,25 @@
 - 📌 快速预览以及外链分享链接  
 - 👨‍👨‍👧‍👦 强大的交互能力  
 
-## 🖥 截图
+## 🖥  截图
 
 <div align="center">
-  <img src="/public/other/screenshoot-3.jpg" width="60%" />
+  <img src="public/other/screenshoot-3.jpg" width="60%" />
   <br/>
   <br/>
-  <img src="/public/other/screenshoot-4.jpg" width="60%" />
+  <img src="public/other/screenshoot-4.jpg" width="60%" />
   <br/>
   <br/>
-  <img src="/public/other/screenshoot-5.jpg" width="60%" />
+  <img src="public/other/screenshoot-5.jpg" width="60%" />
   <br/>
   <br/>
-  <img src="/public/other/screenshoot-1.png" width="60%" />
+  <img src="public/other/screenshoot-1.png" width="60%" />
   <br/>
   <br/>
-  <img src="/public/other/screenshoot-2.png" width="60%" />
+  <img src="public/other/screenshoot-2.png" width="60%" />
 </div>
 
-## 🕷 本地调试
+## 🕷  本地调试
 
 ```
  $ git clone git@github.com:food-billboard/create-chart.git
@@ -51,11 +53,12 @@
  $ yarn start 
 ```
 
-## 🙋‍♂️ 试用  
+## 🙋‍♂️  试用  
 
-账号和密码放在`issue`当中，如有兴趣或有问题也可以在`issue`中联系我。     
+账号和密码放在[issue](https://github.com/food-billboard/create-chart/issues/2)当中，如有兴趣或有问题也可以在[issue](https://github.com/food-billboard/create-chart/issues)中联系我。     
 
-## 👇🏻 Changelog  
+## 👇🏻  Changelog  
+[1.14](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.14.md) 
 [1.13](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.13.md)   
 [1.12](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.12.md)  
 [1.11](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.11.md)  
@@ -71,6 +74,6 @@
 [1.1](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.1.md)  
 [1.0](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.0.md)  
 
-## 🔗 链接  
+## 🔗  链接  
 [官网](http://47.97.27.23/api/backend/screen/index.html#/)  
 [操作文档](http://47.97.27.23/api/backend/create-chart-docs/index.html#/)  
