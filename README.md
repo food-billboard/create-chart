@@ -38,10 +38,10 @@
   <img src="public/other/screenshoot-5.jpg" width="60%" />
   <br/>
   <br/>
-  <img src="public/other/screenshoot-1.png" width="60%" />
+  <img src="public/other/screenshoot-1.png" width="60%" style="background: #22284A" />
   <br/>
   <br/>
-  <img src="public/other/screenshoot-2.png" width="60%" />
+  <img src="public/other/screenshoot-2.png" width="60%" style="background: rgb(3, 17, 90)" />
 </div>
 
 ## 🕷  本地调试
@@ -58,7 +58,7 @@
 账号和密码放在[issue](https://github.com/food-billboard/create-chart/issues/2)当中，如有兴趣或有问题也可以在[issue](https://github.com/food-billboard/create-chart/issues)中联系我。     
 
 ## 👇🏻  Changelog  
-[1.14](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.14.md) 
+[1.14](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.14.md)   
 [1.13](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.13.md)   
 [1.12](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.12.md)  
 [1.11](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.11.md)  
