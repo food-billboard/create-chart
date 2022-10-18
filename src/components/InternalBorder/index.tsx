@@ -4,7 +4,6 @@ import { useControllableValue } from 'ahooks';
 import { connect } from 'dva';
 import { pick } from 'lodash';
 import classNames from 'classnames';
-import { SELECTO_CLASSNAME } from '@/utils/constants';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import BorderMap from './components/Border';
 import { CommonBorderProps } from './components/Border/type';
@@ -18,7 +17,7 @@ const _InternalBorderWrapper = (
     border: ComponentData.TComponentData['config']['style']['border'];
   },
 ) => {
-  const { children, border, ...nextProps } = props;
+  const { children, border = { show: false }, ...nextProps } = props;
 
   const Dom = useMemo(() => {
     if (!border.show) return null;
