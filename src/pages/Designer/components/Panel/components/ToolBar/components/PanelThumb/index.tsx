@@ -57,10 +57,12 @@ const InternalComponentActiveItem = (props: {
 
   const [isActive, setIsActive] = useState<boolean>(false);
 
-  const [width, setWidth] = useState<number>(propsWidth || 0);
-  const [height, setHeight] = useState<number>(propsHeight || 0);
+  // const [width, setWidth] = useState<number>(propsWidth || 0);
+  // const [height, setHeight] = useState<number>(propsHeight || 0);
   const [left, setLeft] = useState<number>(0);
   const [top, setTop] = useState<number>(0);
+  const [widthScale, setWidthScale] = useState<number>(1);
+  const [heightScale, setHeightScale] = useState<number>(1);
 
   const activeComponentRef = useRef<{
     left: number;
@@ -71,9 +73,13 @@ const InternalComponentActiveItem = (props: {
 
   const resizeDirectionRef = useRef<TDirection>();
 
+  const actionType = useRef<'resize' | 'drag'>('drag');
+
   const init = () => {
-    setWidth(propsWidth);
-    setHeight(propsHeight);
+    // setWidth(propsWidth);
+    // setHeight(propsHeight);
+    setWidthScale(1);
+    setHeightScale(1);
     setLeft(0);
     setTop(0);
   };
@@ -116,6 +122,7 @@ const InternalComponentActiveItem = (props: {
   }, [isActive, select, scale, components]);
 
   const onDragStart = ({ componentId }: CommonEventType) => {
+    actionType.current = 'drag';
     init();
     setIsActive(true);
     const components: ComponentData.TComponentData[] =
@@ -148,6 +155,7 @@ const InternalComponentActiveItem = (props: {
   ) => {
     resizeDirectionRef.current = props.direction;
     onDragStart(props);
+    actionType.current = 'resize';
   };
 
   const onResize = ({ componentId, value }: CommonEventType) => {
@@ -165,8 +173,10 @@ const InternalComponentActiveItem = (props: {
     } = activeComponentRef.current!;
     setLeft((currentLeft - componentLeft) * scale);
     setTop((currentTop - componentTop) * scale);
-    setWidth((currentWidth - componentWidth) * scale + propsWidth);
-    setHeight((currentHeight - componentHeight) * scale + propsHeight);
+    // setWidth((currentWidth - componentWidth) * scale + propsWidth);
+    // setHeight((currentHeight - componentHeight) * scale + propsHeight);
+    setWidthScale(currentWidth / componentWidth);
+    setHeightScale(currentHeight / componentHeight);
   };
 
   const onResizeEnd = ({ componentId }: CommonEventType) => {
@@ -220,10 +230,10 @@ const InternalComponentActiveItem = (props: {
     };
   }, []);
 
-  useUpdateEffect(() => {
-    setWidth(propsWidth);
-    setHeight(propsHeight);
-  }, [propsWidth, propsHeight]);
+  // useUpdateEffect(() => {
+  //   setWidth(propsWidth);
+  //   setHeight(propsHeight);
+  // }, [propsWidth, propsHeight]);
 
   return (
     <div
@@ -231,12 +241,13 @@ const InternalComponentActiveItem = (props: {
       style={{
         width: propsWidth,
         height: propsHeight,
-        left,
-        top,
+        left: actionType.current === 'drag' ? left : 0,
+        top: actionType.current === 'drag' ? top : 0,
         // @ts-ignore
-        '--panel-thumb-component-scale': `scale(${width / propsWidth}, ${
-          height / propsHeight
-        })`,
+        // '--panel-thumb-component-scale': `scale(${width / propsWidth}, ${
+        //   height / propsHeight
+        // })`,
+        '--panel-thumb-component-scale': `scale(${widthScale}, ${heightScale})`,
         '--panel-thumb-component-transform-origin':
           TransformOriginMap[resizeDirectionRef.current!] || 'center center',
       }}
