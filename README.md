@@ -1,11 +1,11 @@
 
-<center>
+<div align="center">
   <img src="public/logo.jpg" />
-</center>
+</div>
 
 <br/>
 
-<h1 align="center">数据可视化大屏</h1>
+<h1 align="center">🌛  数据可视化大屏  🌝 </h1>
 
 <div align='center'>
 
