@@ -1,0 +1,78 @@
+.internal-border-4-border {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &-reverse {
+    transform: rotate(180deg);
+  }
+
+  .dv-border-svg-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+
+    & > polyline {
+      fill: none;
+    }
+  }
+
+  .internal-border-4-border-sw1 {
+    stroke-width: 1;
+  }
+
+  .internal-border-4-border-sw3 {
+    stroke-width: 3px;
+    stroke-linecap: round;
+  }
+
+  &-line-1 {
+    .internal-border-4-border-sw1;
+  }
+
+  &-line-2 {
+    .internal-border-4-border-sw1;
+  }
+
+  &-line-3 {
+    .internal-border-4-border-sw3;
+  }
+
+  &-line-4 {
+    .internal-border-4-border-sw3;
+  }
+
+  &-line-5 {
+    .internal-border-4-border-sw1;
+  }
+
+  &-line-6 {
+    .internal-border-4-border-sw1;
+  }
+
+  &-line-7 {
+    .internal-border-4-border-sw1;
+  }
+
+  &-line-8 {
+    .internal-border-4-border-sw3;
+  }
+
+  &-line-9 {
+    .internal-border-4-border-sw3;
+    stroke-dasharray: 100 250;
+  }
+
+  &-line-10 {
+    .internal-border-4-border-sw1;
+    stroke-dasharray: 80 270;
+  }
+
+  &-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+}
