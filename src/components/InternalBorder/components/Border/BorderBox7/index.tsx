@@ -1,4 +1,4 @@
-import React, { useMemo, forwardRef } from 'react';
+import React, { useMemo, forwardRef, CSSProperties } from 'react';
 import classnames from 'classnames';
 import { CommonBorderProps } from '../type';
 import { useBorderWrapper, useAutoResize } from '../hooks';
@@ -20,7 +20,6 @@ const BorderBox = forwardRef((props: IProps, ref) => {
     },
     children,
     className,
-    style,
     ...nextProps
   } = useBorderWrapper(props, 'internal-border-7-border', {
     colorType: 'list',
@@ -40,13 +39,12 @@ const BorderBox = forwardRef((props: IProps, ref) => {
       boxShadow: `inset 0 0 40px ${mergedColor[0]}`,
       border: `1px solid ${mergedColor[0]}`,
       backgroundColor,
-      ...style,
     }),
-    [style, mergedColor, backgroundColor],
+    [mergedColor, backgroundColor],
   );
 
   return (
-    <div {...nextProps} className={classNames} style={newStyle} ref={domRef}>
+    <div className={classNames} style={newStyle} ref={domRef}>
       <svg
         className={styles['internal-border-7-border-container']}
         width={width}
@@ -98,11 +96,26 @@ const BorderBox = forwardRef((props: IProps, ref) => {
         />
       </svg>
 
-      <div className={styles['internal-border-7-border-content']}>
+      <div
+        {...nextProps}
+        className={styles['internal-border-7-border-content']}
+      >
         {children}
       </div>
     </div>
   );
 });
+
+const BorderBoxWrapper: typeof BorderBox & {
+  getOuterStyle: (
+    props: ComponentData.TScreenData['config']['attr']['componentBorder'],
+  ) => CSSProperties;
+} = BorderBox as any;
+
+BorderBoxWrapper.getOuterStyle = ({ width, padding }) => {
+  return {
+    padding: padding.map((item) => `${item + width * 0.4}px`).join(' '),
+  };
+};
 
 export default BorderBox;

@@ -1,4 +1,4 @@
-import React, { useMemo, forwardRef } from 'react';
+import React, { useMemo, forwardRef, CSSProperties } from 'react';
 import classnames from 'classnames';
 import { CommonBorderProps } from '../type';
 import { useBorderWrapper, useAutoResize } from '../hooks';
@@ -35,7 +35,7 @@ const BorderBox = forwardRef((props: IProps, ref) => {
   );
 
   return (
-    <div {...nextProps} className={classNames} ref={domRef}>
+    <div className={classNames} ref={domRef}>
       <svg
         className={styles['internal-border-1-border-container']}
         width={width}
@@ -79,11 +79,26 @@ const BorderBox = forwardRef((props: IProps, ref) => {
         />
       </svg>
 
-      <div className={styles['internal-border-1-border-content']}>
+      <div
+        {...nextProps}
+        className={styles['internal-border-1-border-content']}
+      >
         {children}
       </div>
     </div>
   );
 });
+
+const BorderBoxWrapper: typeof BorderBox & {
+  getOuterStyle: (
+    props: ComponentData.TScreenData['config']['attr']['componentBorder'],
+  ) => CSSProperties;
+} = BorderBox as any;
+
+BorderBoxWrapper.getOuterStyle = ({ width, padding }) => {
+  return {
+    padding: padding.map((item) => `${item + width * 0.4}px`).join(' '),
+  };
+};
 
 export default BorderBox;
