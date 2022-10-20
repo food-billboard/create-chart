@@ -1,9 +1,8 @@
 import React, { useMemo, forwardRef, useState } from 'react';
 import classnames from 'classnames';
 import { nanoid } from 'nanoid';
-import { useAutoResize } from '@/hooks';
 import { CommonBorderProps } from '../type';
-import { useBorderWrapper } from '../hooks';
+import { useBorderWrapper, useAutoResize } from '../hooks';
 import styles from './index.less';
 
 const defaultColor = ['#11eefd', '#0078d2'];

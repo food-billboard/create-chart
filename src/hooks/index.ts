@@ -13,5 +13,3 @@ export * from './useLayerHover';
 export * from './useClipPath';
 export * from './useComponentHover';
 export * from './useFirstChange';
-// @ts-ignore
-export { default as useAutoResize } from './autoResize';

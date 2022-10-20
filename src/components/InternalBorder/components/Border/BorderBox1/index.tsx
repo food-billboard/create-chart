@@ -1,8 +1,7 @@
 import React, { useMemo, forwardRef } from 'react';
 import classnames from 'classnames';
-import { useAutoResize } from '@/hooks';
 import { CommonBorderProps } from '../type';
-import { useBorderWrapper } from '../hooks';
+import { useBorderWrapper, useAutoResize } from '../hooks';
 import styles from './index.less';
 
 const border = ['left-top', 'right-top', 'left-bottom', 'right-bottom'];
@@ -37,7 +36,7 @@ const BorderBox = forwardRef((props: IProps, ref) => {
   );
 
   return (
-    <div {...nextProps} className={classNames} ref={domRef}>
+    <div className={classNames} ref={domRef}>
       <svg
         className={styles['internal-border-1-border-line']}
         width={width}
@@ -121,7 +120,10 @@ const BorderBox = forwardRef((props: IProps, ref) => {
         </svg>
       ))}
 
-      <div className={styles[`internal-border-1-border-box-content`]}>
+      <div
+        {...nextProps}
+        className={styles[`internal-border-1-border-box-content`]}
+      >
         {children}
       </div>
     </div>

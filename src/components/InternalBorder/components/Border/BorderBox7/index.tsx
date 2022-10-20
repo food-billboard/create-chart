@@ -1,8 +1,7 @@
 import React, { useMemo, forwardRef } from 'react';
 import classnames from 'classnames';
-import { useAutoResize } from '@/hooks';
 import { CommonBorderProps } from '../type';
-import { useBorderWrapper } from '../hooks';
+import { useBorderWrapper, useAutoResize } from '../hooks';
 import styles from './index.less';
 
 const defaultColor = ['rgba(128,128,128,0.3)', 'rgba(128,128,128,0.5)'];

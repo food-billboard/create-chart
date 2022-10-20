@@ -7,6 +7,9 @@ import { SELECTO_CLASSNAME } from '@/utils/constants';
 import { CommonBorderProps } from './type';
 import commonStyles from './index.less';
 
+// @ts-ignore
+export { default as useAutoResize } from './autoResize';
+
 export function useBorderWrapper<T extends object = {}>(
   props: CommonBorderProps & T,
   key: string,
