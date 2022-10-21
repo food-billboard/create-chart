@@ -77,3 +77,7 @@
 ## 🔗  链接  
 [官网](http://47.97.27.23/api/backend/screen/index.html#/)  
 [操作文档](http://47.97.27.23/api/backend/create-chart-docs/index.html#/)  
+
+## 👀  引用  
+[一些边框和装饰的组件](https://github.com/DataV-Team/DataV)  
+[图片主题色获取](https://github.com/lokesh/color-thief)   
