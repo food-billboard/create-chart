@@ -81,6 +81,14 @@ import LuckyDraw from '../../../public/components/lucky-draw.jpg';
 import Ticket from '../../../public/components/ticket.jpg';
 import Button from '../../../public/components/button.jpg';
 import Typed from '../../../public/components/typed.jpg';
+import Decoration1 from '../../../public/components/decoration-1.jpg';
+import Decoration2 from '../../../public/components/decoration-2.jpg';
+import Decoration3 from '../../../public/components/decoration-3.jpg';
+import Decoration4 from '../../../public/components/decoration-4.jpg';
+import Decoration5 from '../../../public/components/decoration-5.jpg';
+import Decoration6 from '../../../public/components/decoration-6.jpg';
+import Decoration7 from '../../../public/components/decoration-7.jpg';
+import Decoration8 from '../../../public/components/decoration-8.jpg';
 
 const commonClass: string = classnames('ac-i-size-m');
 
@@ -689,6 +697,54 @@ export const COMPONENT_TYPE_LIST = [
             type: 'TYPED',
             title: '打字机',
             icon: Typed,
+            description: '',
+          },
+          {
+            type: 'DECORATION_1',
+            title: '装饰1',
+            icon: Decoration1,
+            description: '',
+          },
+          {
+            type: 'DECORATION_2',
+            title: '装饰2',
+            icon: Decoration2,
+            description: '',
+          },
+          {
+            type: 'DECORATION_3',
+            title: '装饰3',
+            icon: Decoration3,
+            description: '',
+          },
+          {
+            type: 'DECORATION_4',
+            title: '装饰4',
+            icon: Decoration4,
+            description: '',
+          },
+          {
+            type: 'DECORATION_5',
+            title: '装饰5',
+            icon: Decoration5,
+            description: '',
+          },
+          {
+            type: 'DECORATION_6',
+            title: '装饰6',
+            icon: Decoration6,
+            description: '',
+          },
+          {
+            type: 'DECORATION_7',
+            title: '装饰7',
+            icon: Decoration7,
+            description: '',
+          },
+          {
+            type: 'DECORATION_8',
+            title: '装饰8',
+            icon: Decoration8,
             description: '',
           },
         ],

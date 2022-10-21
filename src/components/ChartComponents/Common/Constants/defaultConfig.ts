@@ -72,6 +72,7 @@ export const BASIC_DEFAULT_CONFIG: ComponentData.TBaseConfig = {
     border: {
       show: false,
       value: DEFAULT_BORDER,
+      disabled: false,
     },
   },
   attr: {

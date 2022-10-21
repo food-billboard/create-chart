@@ -40,7 +40,7 @@ const BaseConfig = (props: {
     opacity,
     rotate,
     skew,
-    border = { show: false, value: DEFAULT_BORDER },
+    border = { show: false, value: DEFAULT_BORDER, disabled: false },
   } = style;
   const { scaleX, scaleY } = attr;
 
@@ -183,32 +183,34 @@ const BaseConfig = (props: {
             />
           </HalfForm>
         </Item>
-        <Item label="边框">
-          <HalfForm>
-            <Switch
-              checked={border.show}
-              onChange={(value) => {
-                onValueChange('border', {
-                  ...border,
-                  show: value,
-                });
-              }}
-            />
-          </HalfForm>
-          {!!border.show && (
+        {!border.disabled && (
+          <Item label="边框">
             <HalfForm>
-              <InternalBorderSelect
-                value={border.value}
+              <Switch
+                checked={border.show}
                 onChange={(value) => {
                   onValueChange('border', {
                     ...border,
-                    value: value,
+                    show: value,
                   });
                 }}
               />
             </HalfForm>
-          )}
-        </Item>
+            {!!border.show && (
+              <HalfForm>
+                <InternalBorderSelect
+                  value={border.value}
+                  onChange={(value) => {
+                    onValueChange('border', {
+                      ...border,
+                      value: value,
+                    });
+                  }}
+                />
+              </HalfForm>
+            )}
+          </Item>
+        )}
       </ConfigList>
     </div>
   );

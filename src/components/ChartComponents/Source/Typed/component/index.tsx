@@ -63,7 +63,7 @@ const Typed = (props: ComponentData.CommonComponentProps<TTypedConfig>) => {
   }, [textStyle]);
 
   const componentClassName = useMemo(() => {
-    return classnames(className, styles['component-font-text']);
+    return classnames(className, styles['component-source-typed']);
   }, [className]);
 
   useEffect(() => {

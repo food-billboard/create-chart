@@ -170,7 +170,15 @@ declare namespace ComponentData {
     | 'LUCKY_DRAW'
     | 'TICKET'
     | 'BUTTON'
-    | 'TYPED';
+    | 'TYPED'
+    | 'DECORATION_1'
+    | 'DECORATION_2'
+    | 'DECORATION_3'
+    | 'DECORATION_4'
+    | 'DECORATION_5'
+    | 'DECORATION_6'
+    | 'DECORATION_7'
+    | 'DECORATION_8';
 
   // 基础组件属性
   export type TBaseConfig = {
@@ -189,6 +197,7 @@ declare namespace ComponentData {
       border: {
         show: boolean;
         value: string;
+        disabled?: boolean;
         // TODO
       };
     };

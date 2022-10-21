@@ -80,6 +80,14 @@ import Ali3DMap from './Map/Ali3DMap';
 // source
 import Ticket from './Source/Ticket';
 import Typed from './Source/Typed';
+import Decoration1 from './Source/Decoration1';
+import Decoration2 from './Source/Decoration2';
+import Decoration3 from './Source/Decoration3';
+import Decoration4 from './Source/Decoration4';
+import Decoration5 from './Source/Decoration5';
+import Decoration6 from './Source/Decoration6';
+import Decoration7 from './Source/Decoration7';
+import Decoration8 from './Source/Decoration8';
 
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
@@ -166,6 +174,14 @@ COMPONENT_MAP.set(LuckyDraw.type, LuckyDraw);
 COMPONENT_MAP.set(Ticket.type, Ticket);
 COMPONENT_MAP.set(Button.type, Button);
 COMPONENT_MAP.set(Typed.type, Typed);
+COMPONENT_MAP.set(Decoration1.type, Decoration1);
+COMPONENT_MAP.set(Decoration2.type, Decoration2);
+COMPONENT_MAP.set(Decoration3.type, Decoration3);
+COMPONENT_MAP.set(Decoration4.type, Decoration4);
+COMPONENT_MAP.set(Decoration5.type, Decoration5);
+COMPONENT_MAP.set(Decoration6.type, Decoration6);
+COMPONENT_MAP.set(Decoration7.type, Decoration7);
+COMPONENT_MAP.set(Decoration8.type, Decoration8);
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);
