@@ -52,13 +52,14 @@ export function useBorderWrapper<T extends object = {}>(
       },
       style,
     );
-  }, [style, key, width]);
+  }, [style, key, width, color]);
 
   return {
     origin: {
       props,
       options,
       color: originColor,
+      stringColor: Array.isArray(color) ? color : [color],
     },
     className: newClassName,
     style: newStyle,

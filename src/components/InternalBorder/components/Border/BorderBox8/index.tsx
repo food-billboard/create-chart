@@ -19,12 +19,8 @@ const BorderBox = forwardRef((props: IProps, ref) => {
 
   const {
     origin: {
-      props: {
-        color = [],
-        backgroundColor = 'transparent',
-        reverse = false,
-        dur = 1,
-      },
+      props: { backgroundColor = 'transparent', reverse = false, dur = 1 },
+      stringColor: color,
     },
     children,
     className,

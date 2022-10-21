@@ -85,16 +85,16 @@ export default {
     value: BorderBox10,
     title: '边框10',
   },
-  BorderBox11: {
-    value: BorderBox11,
-    title: '边框11',
-  },
+  // BorderBox11: {
+  //   value: BorderBox11,
+  //   title: '边框11',
+  // },
   BorderBox12: {
     value: BorderBox12,
-    title: '边框12',
+    title: '边框11',
   },
   BorderBox13: {
     value: BorderBox13,
-    title: '边框13',
+    title: '边框12',
   },
 };

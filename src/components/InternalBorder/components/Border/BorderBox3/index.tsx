@@ -16,7 +16,8 @@ const BorderBox = forwardRef((props: IProps, ref) => {
 
   const {
     origin: {
-      props: { color = [], backgroundColor = 'transparent' },
+      props: { backgroundColor = 'transparent' },
+      stringColor: color,
     },
     children,
     className,
@@ -55,6 +56,7 @@ const BorderBox = forwardRef((props: IProps, ref) => {
           points={`4, 4 ${width - 22} ,4 ${width - 22}, ${height - 22} 4, ${
             height - 22
           } 4, 4`}
+          fill={'none'}
         />
         <polyline
           className={styles['internal-border-1-border-line2']}
@@ -62,6 +64,7 @@ const BorderBox = forwardRef((props: IProps, ref) => {
           points={`10, 10 ${width - 16}, 10 ${width - 16}, ${height - 16} 10, ${
             height - 16
           } 10, 10`}
+          fill={'none'}
         />
         <polyline
           className={styles['internal-border-1-border-line2']}
@@ -69,6 +72,7 @@ const BorderBox = forwardRef((props: IProps, ref) => {
           points={`16, 16 ${width - 10}, 16 ${width - 10}, ${height - 10} 16, ${
             height - 10
           } 16, 16`}
+          fill={'none'}
         />
         <polyline
           className={styles['internal-border-1-border-line2']}
@@ -76,6 +80,7 @@ const BorderBox = forwardRef((props: IProps, ref) => {
           points={`22, 22 ${width - 4}, 22 ${width - 4}, ${height - 4} 22, ${
             height - 4
           } 22, 22`}
+          fill={'none'}
         />
       </svg>
 

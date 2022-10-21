@@ -17,7 +17,8 @@ const BorderBox = forwardRef((props: IProps, ref) => {
 
   const {
     origin: {
-      props: { color = [], backgroundColor = 'transparent', reverse = false },
+      props: { backgroundColor = 'transparent', reverse = false },
+      stringColor: color,
     },
     children,
     className,
@@ -58,52 +59,62 @@ const BorderBox = forwardRef((props: IProps, ref) => {
           stroke={mergedColor[0]}
           points={`145, ${height - 5} 40, ${height - 5} 10, ${height - 35}
           10, 40 40, 5 150, 5 170, 20 ${width - 15}, 20`}
+          fill="none"
         />
         <polyline
           className={styles['internal-border-4-border-line-2']}
           stroke={mergedColor[1]}
           points={`245, ${height - 1} 36, ${height - 1} 14, ${height - 23}
           14, ${height - 100}`}
+          fill="none"
         />
         <polyline
           className={styles['internal-border-4-border-line-3']}
           stroke={mergedColor[0]}
           points={`7, ${height - 40} 7, ${height - 75}`}
+          fill="none"
         />
         <polyline
           className={styles['internal-border-4-border-line-4']}
           stroke={mergedColor[0]}
           points={`28, 24 13, 41 13, 64`}
+          fill="none"
         />
         <polyline
           className={styles['internal-border-4-border-line-5']}
           stroke={mergedColor[0]}
           points={`5, 45 5, 140`}
+          fill="none"
         />
         <polyline
           className={styles['internal-border-4-border-line-6']}
           stroke={mergedColor[1]}
           points={`14, 75 14, 180`}
+          fill="none"
         />
         <polyline
           className={styles['internal-border-4-border-line-7']}
           stroke={mergedColor[1]}
           points={`55, 11 147, 11 167, 26 250, 26`}
+          fill="none"
         />
         <polyline
           className={styles['internal-border-4-border-line-8']}
           stroke={mergedColor[1]}
           points={`158, 5 173, 16`}
+          fill="none"
         />
         <polyline
           className={styles['internal-border-4-border-line-9']}
           stroke={mergedColor[0]}
           points={`200, 17 ${width - 10}, 17`}
+          fill="none"
         />
         <polyline
           className={styles['internal-border-4-border-line-10']}
           stroke={mergedColor[1]}
           points={`385, 17 ${width - 10}, 17`}
+          fill="none"
         />
       </svg>
 
