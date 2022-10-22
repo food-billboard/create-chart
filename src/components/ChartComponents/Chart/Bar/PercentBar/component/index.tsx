@@ -106,11 +106,12 @@ const PercentBar = (
   const getSeries = () => {
     const {
       itemStyle: itemStyleList,
-      borderRadius,
-      barWidth,
+      barWidth: _barWidth,
       ...nextSeries
     } = series;
     const { animation: show, animationDuration, animationEasing } = animation;
+    // @ts-ignore
+    const barWidth = _barWidth === 'auto' ? 20 : _barWidth;
 
     const { label, color } = itemStyleList[0] || {};
 
@@ -178,9 +179,9 @@ const PercentBar = (
       const { label, color } = itemStyleList[index] || {};
       let borderRadiusConfig = undefined;
       if (index === 0) {
-        borderRadiusConfig = [0, 0, borderRadius, borderRadius];
+        borderRadiusConfig = [0, 0, barWidth / 2, barWidth / 2];
       } else if (index === xAxisKeys.length - 1) {
-        borderRadiusConfig = [borderRadius, borderRadius, 0, 0];
+        borderRadiusConfig = [barWidth / 2, barWidth / 2, 0, 0];
       }
 
       return {

@@ -12,16 +12,14 @@ export type TProgressBarConfig = {
     showBackground: boolean;
     backgroundStyle: {
       color: ComponentData.TColorConfig;
-      borderRadius: number;
     };
     label: Omit<ComponentData.ComponentSeriesLabelConfig, 'position'> & {
       formatter: string;
     };
     itemStyle: {
       color: ComponentData.TGradientColorConfig;
-      borderRadius: number;
     };
-    barWidth: 'auto' | number;
+    barWidth: number;
   };
   animation: ComponentData.ComponentChartAnimationConfig;
   condition: ComponentData.ComponentConditionConfig;

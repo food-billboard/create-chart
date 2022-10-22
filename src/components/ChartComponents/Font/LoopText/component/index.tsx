@@ -106,51 +106,52 @@ const LoopText = (
             height: '100%',
           },
           style,
-          componentStyle,
           conditionStyle,
         )}
         id={chartId.current}
       >
         <Wrapper border={border}>
           {children}
-          {addonBefore.show && (
-            <span
-              style={{
-                ...addonBefore.textStyle,
-                color: getRgbaString(addonBefore.textStyle.color),
-              }}
-            >
-              {addonBefore.value}
-            </span>
-          )}
-          <TextLoop {...animation}>
-            {(finalValue.value || [])
-              .filter((item: any) => typeof item === 'string')
-              .map((item: any, index: number) => {
-                return (
-                  <span
-                    style={{
-                      ...textStyle,
-                      color: getRgbaString(textStyle.color),
-                    }}
-                    key={index}
-                    onClick={onClick.bind(null, item)}
-                  >
-                    {item}
-                  </span>
-                );
-              })}
-          </TextLoop>
-          {addonAfter.show && (
-            <span
-              style={{
-                ...addonAfter.textStyle,
-                color: getRgbaString(addonAfter.textStyle.color),
-              }}
-            >
-              {addonAfter.value}
-            </span>
-          )}
+          <div className="w-100 h-100 dis-flex" style={componentStyle}>
+            {addonBefore.show && (
+              <span
+                style={{
+                  ...addonBefore.textStyle,
+                  color: getRgbaString(addonBefore.textStyle.color),
+                }}
+              >
+                {addonBefore.value}
+              </span>
+            )}
+            <TextLoop {...animation}>
+              {(finalValue.value || [])
+                .filter((item: any) => typeof item === 'string')
+                .map((item: any, index: number) => {
+                  return (
+                    <span
+                      style={{
+                        ...textStyle,
+                        color: getRgbaString(textStyle.color),
+                      }}
+                      key={index}
+                      onClick={onClick.bind(null, item)}
+                    >
+                      {item}
+                    </span>
+                  );
+                })}
+            </TextLoop>
+            {addonAfter.show && (
+              <span
+                style={{
+                  ...addonAfter.textStyle,
+                  color: getRgbaString(addonAfter.textStyle.color),
+                }}
+              >
+                {addonAfter.value}
+              </span>
+            )}
+          </div>
         </Wrapper>
       </div>
       <FetchFragment

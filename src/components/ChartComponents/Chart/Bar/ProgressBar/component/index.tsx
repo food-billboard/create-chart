@@ -98,12 +98,21 @@ const ProgressBar = (
   };
 
   const getSeries = () => {
-    const { itemStyle, backgroundStyle, label, ...nextSeries } = series;
+    const {
+      itemStyle,
+      backgroundStyle,
+      label,
+      barWidth: _barWidth,
+      ...nextSeries
+    } = series;
     const { animation: show, animationDuration, animationEasing } = animation;
+    // @ts-ignore
+    const barWidth = _barWidth === 'auto' ? 20 : _barWidth;
     const baseSeries = {
       ...nextSeries,
       backgroundStyle: {
         ...backgroundStyle,
+        borderRadius: barWidth * 1.5,
         color: getRgbaString(backgroundStyle.color),
       },
       label: {
@@ -115,6 +124,7 @@ const ProgressBar = (
       type: 'bar',
       itemStyle: {
         ...itemStyle,
+        borderRadius: barWidth / 2,
         color: radialGradientColor(itemStyle.color),
       },
       data: [finalValue.value],

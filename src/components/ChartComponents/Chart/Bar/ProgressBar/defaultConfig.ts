@@ -88,7 +88,6 @@ export default () => {
               b: 180,
               a: 0.2,
             },
-            borderRadius: 30,
           },
           label: {
             show: true,
@@ -106,7 +105,6 @@ export default () => {
               start: ThemeUtil.generateNextColor4CurrentTheme(0),
               end: ThemeUtil.generateNextColor4CurrentTheme(1),
             },
-            borderRadius: 10,
           },
           barWidth: 20,
         },

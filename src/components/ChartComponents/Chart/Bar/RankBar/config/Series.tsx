@@ -1,5 +1,4 @@
 import { useCallback, useMemo } from 'react';
-import { InfoCircleOutlined } from '@ant-design/icons';
 import { Select } from 'antd';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
@@ -11,7 +10,6 @@ import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradie
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import IconTooltip from '@/components/IconTooltip';
 import { TRankBarConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -21,7 +19,7 @@ const SeriesConfig = (props: {
   onChange: ComponentData.ComponentConfigProps<TRankBarConfig>['onChange'];
 }) => {
   const { value, onChange } = props;
-  const { barWidth, label, itemStyle, backgroundStyle, borderRadius } = value;
+  const { barWidth, label, itemStyle, backgroundStyle } = value;
 
   const onKeyChange = useCallback(
     (key: keyof TRankBarConfig['series'], value: any) => {
@@ -120,11 +118,7 @@ const SeriesConfig = (props: {
       <>
         <Collapse
           child={{
-            header: (
-              <IconTooltip title="默认颜色">
-                <InfoCircleOutlined />
-              </IconTooltip>
-            ),
+            header: '默认颜色',
             key: 'defaultColor',
           }}
         >
@@ -163,17 +157,11 @@ const SeriesConfig = (props: {
   const barConfig = useMemo(() => {
     return (
       <>
-        <Item label="柱子">
-          <FullForm label="宽度">
+        <Item label="柱宽">
+          <FullForm>
             <InputNumber
               value={barWidth}
               onChange={onKeyChange.bind(null, 'barWidth')}
-            />
-          </FullForm>
-          <FullForm label="圆角">
-            <InputNumber
-              value={borderRadius}
-              onChange={onKeyChange.bind(null, 'borderRadius')}
             />
           </FullForm>
         </Item>

@@ -109,7 +109,7 @@ export default () => {
           },
           label: {
             show: false,
-            position: 'inside',
+            position: 'right',
             ...DEFAULT_FONT_CONFIG,
             color: {
               r: 255,

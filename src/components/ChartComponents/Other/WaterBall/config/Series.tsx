@@ -17,15 +17,7 @@ const SeriesConfig = (props: {
   onChange: ComponentData.ComponentConfigProps<TWaterBallConfig>['onChange'];
 }) => {
   const { value, onChange } = props;
-  const {
-    label,
-    amplitude,
-    waveAnimation,
-    backgroundStyle,
-    color,
-    center,
-    radius,
-  } = value;
+  const { label, amplitude, backgroundStyle, color, center, radius } = value;
 
   const onKeyChange = useCallback(
     (key: keyof TWaterBallConfig['series'], value: any) => {
@@ -64,19 +56,6 @@ const SeriesConfig = (props: {
       </Item>
     );
   }, [amplitude, onKeyChange]);
-
-  const waveAnimationConfig = useMemo(() => {
-    return (
-      <Item label="波动动画">
-        <FullForm>
-          <Switch
-            checked={waveAnimation}
-            onChange={onKeyChange.bind(null, 'waveAnimation')}
-          />
-        </FullForm>
-      </Item>
-    );
-  }, [waveAnimation, onKeyChange]);
 
   const backgroundStyleConfig = useMemo(() => {
     return (
@@ -150,7 +129,6 @@ const SeriesConfig = (props: {
       {backgroundStyleConfig}
       {labelConfig}
       {amplitudeConfig}
-      {waveAnimationConfig}
     </ConfigList>
   );
 };

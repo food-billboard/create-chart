@@ -118,7 +118,6 @@ const TitleBasic = (
             height: '100%',
           },
           style,
-          componentStyle,
           conditionStyle,
         )}
         id={chartId.current}
@@ -126,7 +125,9 @@ const TitleBasic = (
       >
         <Wrapper border={border}>
           {children}
-          {finalValue.value || ''}
+          <div style={componentStyle} className="w-100 h-100 dis-flex">
+            {finalValue.value || ''}
+          </div>
         </Wrapper>
       </div>
       <FetchFragment

@@ -82,7 +82,6 @@ export default () => {
             show: true,
           },
           amplitude: 20, // 振幅
-          waveAnimation: true,
           backgroundStyle: {
             color: {
               r: 0,

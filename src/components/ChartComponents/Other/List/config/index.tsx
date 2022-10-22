@@ -622,7 +622,7 @@ class Config extends Component<
                 <Collapse
                   child={{
                     header: '索引',
-                    key: 'header',
+                    key: 'indexes',
                     visibleRender: true,
                     value: index.show,
                     onChange: (value) => {
@@ -630,6 +630,9 @@ class Config extends Component<
                         show: value,
                       });
                     },
+                  }}
+                  parent={{
+                    defaultActiveKey: ['indexes'],
                   }}
                 >
                   <Item label="宽度（%）">

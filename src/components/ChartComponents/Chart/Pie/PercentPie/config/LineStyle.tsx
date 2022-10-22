@@ -83,7 +83,7 @@ const LegendConfig = (props: {
       <Collapse
         child={{
           key: 'color',
-          header: '线条颜色',
+          header: '颜色',
         }}
       >
         {color.map((item, index) => {
@@ -92,7 +92,7 @@ const LegendConfig = (props: {
               key={index}
               child={{
                 key: 'color' + (index + 1),
-                header: '线条' + (index + 1),
+                header: '颜色' + (index + 1),
               }}
             >
               <Item label="线条">

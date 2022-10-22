@@ -5,7 +5,6 @@ import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradientSelect';
-import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
 import { TProgressBarConfig } from '../type';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
@@ -44,6 +43,9 @@ const SeriesConfig = (props: {
           value: showBackground,
           onChange: onKeyChange.bind(null, 'showBackground'),
         }}
+        parent={{
+          defaultActiveKey: ['background'],
+        }}
       >
         <Item label="颜色">
           <FullForm>
@@ -52,18 +54,6 @@ const SeriesConfig = (props: {
               onChange={(value) => {
                 onKeyChange('backgroundStyle', {
                   color: value,
-                });
-              }}
-            />
-          </FullForm>
-        </Item>
-        <Item label="圆角">
-          <FullForm>
-            <InputNumber
-              value={backgroundStyle.borderRadius}
-              onChange={(value) => {
-                onKeyChange('backgroundStyle', {
-                  borderRadius: value,
                 });
               }}
             />
@@ -94,35 +84,21 @@ const SeriesConfig = (props: {
 
   const itemStyleConfig = useMemo(() => {
     return (
-      <>
-        <Item label="圆角">
-          <FullForm>
-            <InputNumber
-              value={itemStyle.borderRadius}
-              onChange={(value) => {
-                onKeyChange('itemStyle', {
-                  borderRadius: value,
-                });
-              }}
-            />
-          </FullForm>
-        </Item>
-        <Collapse
-          child={{
-            header: '颜色',
-            key: 'color',
+      <Collapse
+        child={{
+          header: '颜色',
+          key: 'color',
+        }}
+      >
+        <ChartGradientSelect
+          value={itemStyle.color}
+          onChange={(value) => {
+            onKeyChange('itemStyle', {
+              color: value,
+            });
           }}
-        >
-          <ChartGradientSelect
-            value={itemStyle.color}
-            onChange={(value) => {
-              onKeyChange('itemStyle', {
-                color: value,
-              });
-            }}
-          />
-        </Collapse>
-      </>
+        />
+      </Collapse>
     );
   }, [itemStyle, onKeyChange]);
 
@@ -131,7 +107,7 @@ const SeriesConfig = (props: {
       <>
         <Item label="宽度">
           <FullForm>
-            <AutoInputNumber
+            <InputNumber
               value={barWidth}
               onChange={onKeyChange.bind(null, 'barWidth')}
             />

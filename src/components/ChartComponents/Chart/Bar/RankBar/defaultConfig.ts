@@ -152,7 +152,6 @@ export default () => {
             formatter: '{value}',
             position: 'deep-top',
           },
-          borderRadius: 30,
         },
         condition: DEFAULT_CONDITION_CONFIG(),
       },

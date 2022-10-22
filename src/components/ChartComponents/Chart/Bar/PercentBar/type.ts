@@ -21,7 +21,6 @@ export type TPercentBarConfig = {
       };
     }[];
     barWidth: number;
-    borderRadius: number;
   };
   animation: ComponentData.ComponentChartAnimationConfig;
   condition: ComponentData.ComponentConditionConfig;

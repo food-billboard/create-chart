@@ -33,7 +33,7 @@ class Config extends Component<
             key: '1',
           },
           {
-            label: <Tab>线条</Tab>,
+            label: <Tab>线条和圆点</Tab>,
             children: (
               <ConfigList level={1}>
                 <LineStyleConfig value={lineStyle} onChange={onChange} />

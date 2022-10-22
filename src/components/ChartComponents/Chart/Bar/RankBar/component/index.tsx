@@ -103,8 +103,7 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
   };
 
   const getSeries = () => {
-    const { itemStyle, label, backgroundStyle, borderRadius, ...nextSeries } =
-      series;
+    const { itemStyle, label, backgroundStyle, ...nextSeries } = series;
     const { animation: show, animationDuration, animationEasing } = animation;
     const { color, defaultColor, ...nextItemStyle } = itemStyle;
 
@@ -130,7 +129,7 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
       zlevel: 1,
       itemStyle: {
         ...nextItemStyle,
-        borderRadius,
+        borderRadius: nextSeries.barWidth / 2,
       },
       data: yAxisValues._defaultValue_.map((item: any, index: number) => {
         return {
@@ -153,7 +152,7 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
       {
         ...commonStyle,
         itemStyle: {
-          borderRadius,
+          borderRadius: nextSeries.barWidth / 2,
           color: getRgbaString({
             ...backgroundStyle.color,
             a: backgroundStyle.show ? backgroundStyle.color.a : 0,

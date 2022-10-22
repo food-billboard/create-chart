@@ -96,9 +96,16 @@ const TimeMachineBasic = (
     >
       <Wrapper border={border}>
         {children}
-        {icon.position === 'before' && iconNode}
-        {currentTime.format(formatter)}
-        {icon.position === 'after' && iconNode}
+        <div
+          className={classnames(
+            'w-100 h-100 dis-flex',
+            styles['component-font-time-machine-main'],
+          )}
+        >
+          {icon.position === 'before' && iconNode}
+          {currentTime.format(formatter)}
+          {icon.position === 'after' && iconNode}
+        </div>
       </Wrapper>
     </div>
   );

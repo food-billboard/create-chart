@@ -160,13 +160,16 @@ const CountUpNumberBasic = (
             height: '100%',
           },
           style,
-          componentStyle,
           conditionStyle,
         )}
         onClick={onClick}
       >
         <Wrapper border={border}>
-          <div id={chartId.current} className="w-100 h-100">
+          <div
+            id={chartId.current}
+            className="w-100 h-100 dis-flex"
+            style={componentStyle}
+          >
             {calculateValue || ''}
           </div>
           {children}

@@ -106,6 +106,7 @@ const WaterBall = (
 
     const baseSeries = {
       ...nextSeries,
+      waveAnimation: true,
       type: 'liquidFill',
       data: [finalValue.value],
       radius: radius + '%',

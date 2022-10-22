@@ -244,7 +244,7 @@ export const CompatColorSelect = (
         onChange={onSelectChange}
       />
       <Input
-        prefix="#"
+        prefix={<span onClick={(e) => e.stopPropagation}>#</span>}
         value={inputColor}
         onChange={onInputColorChange}
         onBlur={onInputBlur.bind(null, false)}

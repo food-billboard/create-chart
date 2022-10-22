@@ -5,7 +5,6 @@ import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradientSelect';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
-import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import Input from '@/components/ChartComponents/Common/Input';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
@@ -22,7 +21,7 @@ const SeriesConfig = (props: {
   onChange: ComponentData.ComponentConfigProps<TPercentBarConfig>['onChange'];
 }) => {
   const { value, onChange } = props;
-  const { barWidth, itemStyle, borderRadius } = value;
+  const { barWidth, itemStyle } = value;
 
   const onKeyChange = useCallback(
     (key: keyof TPercentBarConfig['series'], value: any) => {
@@ -318,23 +317,17 @@ const SeriesConfig = (props: {
   const barConfig = useMemo(() => {
     return (
       <>
-        <Item label="柱子">
-          <FullForm label="宽度">
-            <AutoInputNumber
+        <Item label="柱宽">
+          <FullForm>
+            <InputNumber
               value={barWidth}
               onChange={onKeyChange.bind(null, 'barWidth')}
-            />
-          </FullForm>
-          <FullForm label="圆角">
-            <InputNumber
-              value={borderRadius}
-              onChange={onKeyChange.bind(null, 'borderRadius')}
             />
           </FullForm>
         </Item>
       </>
     );
-  }, [barWidth, borderRadius, onKeyChange]);
+  }, [barWidth, onKeyChange]);
 
   return (
     <ConfigList>

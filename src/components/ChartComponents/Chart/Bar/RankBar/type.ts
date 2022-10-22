@@ -24,7 +24,6 @@ export type TRankBarConfig = {
       formatter: string;
       position: 'top' | 'deep-top' | 'center';
     };
-    borderRadius: number;
     barWidth: number;
   };
   animation: ComponentData.ComponentChartAnimationConfig;
