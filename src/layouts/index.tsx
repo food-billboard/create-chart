@@ -8,6 +8,7 @@ import { history } from 'umi';
 import { ConnectState } from '@/models/connect';
 import Loading from '@/components/PageLoading';
 import IntroductionButton from '@/components/IntroductionButton';
+import PromptChrome from '@/components/PromptChrome';
 import { dispatchLogin } from '@/utils/request';
 import Avatar from './components/Avatar';
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -229,6 +230,15 @@ const DocumentTitleSetWrapper = (props: any) => {
   return dom;
 };
 
+// 环境判断
+const EnviromentPrompt = (props: any) => {
+  return (
+    <PromptChrome>
+      <DocumentTitleSetWrapper {...props} />
+    </PromptChrome>
+  );
+};
+
 export default connect(
   (state: ConnectState) => {
     return {
@@ -236,4 +246,4 @@ export default connect(
     };
   },
   () => ({}),
-)(DocumentTitleSetWrapper);
+)(EnviromentPrompt);
