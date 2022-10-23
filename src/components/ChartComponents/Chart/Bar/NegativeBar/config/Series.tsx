@@ -1,5 +1,4 @@
 import { useCallback, useMemo } from 'react';
-import { Select } from 'antd';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
@@ -38,7 +37,15 @@ const SeriesConfig = (props: {
       <>
         <SeriesLabelConfig
           {...(label[0] as any)}
-          onChange={(value) => onKeyChange('label', [value, label[1]])}
+          onChange={(value) =>
+            onKeyChange('label', [
+              {
+                ...label[0],
+                ...value,
+              },
+              label[1],
+            ])
+          }
           child={{
             header: '负轴标签',
           }}
@@ -58,7 +65,15 @@ const SeriesConfig = (props: {
         </SeriesLabelConfig>
         <SeriesLabelConfig
           {...(label[1] as any)}
-          onChange={(value) => onKeyChange('label', [label[0], value])}
+          onChange={(value) =>
+            onKeyChange('label', [
+              label[0],
+              {
+                ...label[1],
+                ...value,
+              },
+            ])
+          }
           child={{
             header: '正轴标签',
           }}

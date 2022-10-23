@@ -75,6 +75,7 @@ const Ticket = (
             {
               [styles['component-source-ticket-main-with-line']]: show,
             },
+            chartId.current,
           )}
           style={{
             // @ts-ignore
