@@ -13,7 +13,8 @@
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "create-chart": "node ./scripts/GenerateComponent/index.js"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
