@@ -88,6 +88,7 @@ import Decoration5 from './Source/Decoration5';
 import Decoration6 from './Source/Decoration6';
 import Decoration7 from './Source/Decoration7';
 import Decoration8 from './Source/Decoration8';
+// component-map-import-prefix
 
 const COMPONENT_MAP = new Map<
   ComponentData.TComponentSelfType,
@@ -182,6 +183,7 @@ COMPONENT_MAP.set(Decoration5.type, Decoration5);
 COMPONENT_MAP.set(Decoration6.type, Decoration6);
 COMPONENT_MAP.set(Decoration7.type, Decoration7);
 COMPONENT_MAP.set(Decoration8.type, Decoration8);
+// component-map-insert-prefix
 
 export function getComponentByType(component: ComponentData.TComponentData) {
   return COMPONENT_MAP.get(component.componentType);

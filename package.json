@@ -122,9 +122,11 @@
     "@umijs/test": "^3.5.20",
     "commander": "^9.4.0",
     "cross-env": "^7.0.3",
+    "inquirer": "^9.1.4",
     "lint-staged": "^10.0.7",
     "monaco-editor-webpack-plugin": "^7.0.1",
     "prettier": "^2.2.0",
+    "string.prototype.replaceall": "^1.0.6",
     "typescript": "^4.1.2",
     "yorkie": "^2.0.0"
   }

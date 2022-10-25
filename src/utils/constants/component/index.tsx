@@ -89,12 +89,13 @@ import Decoration5 from '../../../public/components/decoration-5.jpg';
 import Decoration6 from '../../../public/components/decoration-6.jpg';
 import Decoration7 from '../../../public/components/decoration-7.jpg';
 import Decoration8 from '../../../public/components/decoration-8.jpg';
+import GENERATE_COMPONENT_LIST from './GenerateList';
 
 const commonClass: string = classnames('ac-i-size-m');
 
-export const COMPONENT_TYPE_LIST = [
+const _COMPONENT_TYPE_LIST = [
   {
-    type: 'chart',
+    type: 'Chart',
     icon: <AreaChartOutlined className={classnames(commonClass)} />,
     title: '图表',
     children: [
@@ -395,12 +396,12 @@ export const COMPONENT_TYPE_LIST = [
     ],
   },
   {
-    type: 'font',
+    type: 'Font',
     title: '文本',
     icon: <FontColorsOutlined className={classnames(commonClass)} />,
     children: [
       {
-        type: 'text',
+        type: 'Font',
         title: '文字',
         children: [
           {
@@ -456,12 +457,12 @@ export const COMPONENT_TYPE_LIST = [
     ],
   },
   {
-    type: 'media',
+    type: 'Media',
     title: '媒体',
     icon: <FundProjectionScreenOutlined className={classnames(commonClass)} />,
     children: [
       {
-        type: 'media',
+        type: 'Media',
         title: '媒体',
         children: [
           {
@@ -505,7 +506,7 @@ export const COMPONENT_TYPE_LIST = [
     ],
   },
   {
-    type: 'map',
+    type: 'Map',
     title: '地图',
     icon: <CompassOutlined className={classnames(commonClass)} />,
     children: [
@@ -530,7 +531,7 @@ export const COMPONENT_TYPE_LIST = [
     ],
   },
   {
-    type: 'other',
+    type: 'Other',
     title: '其他',
     icon: <AppstoreOutlined className={classnames(commonClass)} />,
     children: [
@@ -606,7 +607,7 @@ export const COMPONENT_TYPE_LIST = [
     ],
   },
   {
-    type: 'interactive',
+    type: 'Interactive',
     title: '联动',
     icon: <InteractionOutlined className={classnames(commonClass)} />,
     children: [
@@ -752,6 +753,39 @@ export const COMPONENT_TYPE_LIST = [
     ],
   },
 ];
+
+export const COMPONENT_TYPE_LIST = _COMPONENT_TYPE_LIST.reduce<
+  typeof _COMPONENT_TYPE_LIST
+>((acc, cur) => {
+  const { type, children } = cur;
+  let newChildren = [...children];
+  const currentTypeList = GENERATE_COMPONENT_LIST.filter(
+    (item) => item.parentType === type,
+  );
+  currentTypeList.forEach((current) => {
+    const { parentType, subParentType, ...nextCurrent } = current;
+    newChildren = newChildren.map((item) => {
+      const { type, children } = item;
+      if (type === subParentType) {
+        return {
+          ...item,
+          children: [
+            ...children,
+            {
+              ...nextCurrent,
+            },
+          ],
+        };
+      }
+      return item;
+    });
+  });
+  acc.push({
+    ...cur,
+    children: newChildren,
+  });
+  return acc;
+}, []);
 
 export const COMPONENT_ONLY_TYPE_LIST = COMPONENT_TYPE_LIST.reduce<
   {
