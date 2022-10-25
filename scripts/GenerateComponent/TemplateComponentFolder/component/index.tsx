@@ -74,21 +74,12 @@ const Component = (
   }, [syncInteractiveAction, finalValue]);
 
   const componentStyle = useMemo(() => {
-    const {
-      textStyle,
-      align: { vertical, horizontal },
-      orient,
-    } = nextOptions;
     let baseStyle: CSSProperties = {
       ...textStyle,
       color: getRgbaString(textStyle.color),
-      justifyContent: horizontal,
-      alignItems: vertical,
-      writingMode: orient as any,
-      whiteSpace: orient === 'vertical-lr' ? 'pre' : 'nowrap',
     };
     return baseStyle;
-  }, [nextOptions]);
+  }, [textStyle]);
 
   const componentClassName = useMemo(() => {
     return classnames(
@@ -108,6 +99,7 @@ const Component = (
             height: '100%',
           },
           style,
+          componentStyle,
           conditionStyle,
         )}
         id={chartId.current}

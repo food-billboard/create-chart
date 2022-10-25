@@ -62,8 +62,8 @@ export default () => {
           ...DEFAULT_FONT_CONFIG,
         },
         content: "字符串配置",
-        counter: "数字配置",
-        color: color: DEFAULT_THEME_COLOR_LIST()[0],
+        counter: 200,
+        color: DEFAULT_THEME_COLOR_LIST()[0],
         condition: DEFAULT_CONDITION_CONFIG(),
       },
     };
