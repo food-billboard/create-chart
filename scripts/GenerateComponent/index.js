@@ -8,6 +8,10 @@ const replaceAll = require('string.prototype.replaceall')
 const parentTypeMap = require('./parentType')
 const subParentTypeMap = require('./subParent')
 
+const divider = () => {
+  console.log(chalk.blue('-------------------------------'))
+}
+
 async function isTypeExists(type) {
   return fs.readFileSync(path.join(__dirname, '../../src/component-type.d.ts'), 'utf-8').includes(type)
 }
@@ -34,6 +38,7 @@ async function generate(data) {
     if(!fs.existsSync(componentSubPath)) {
       fs.mkdirSync(componentSubPath)
       console.log(chalk.green(`文件夹不存在并自动创建: ${componentSubPath}`))
+      divider()
     }
     if(fs.existsSync(componentPath)) {
       reject(`文件已经存在: ${componentPath}`)
@@ -46,6 +51,7 @@ async function generate(data) {
     const originPath = path.join(__dirname, './TemplateComponentFolder')
     const newPath = path.join(__dirname, `./${ComponentKey}`)
     console.log(chalk.green(`复制组件文件夹: ${originPath} 到 ${newPath}`))
+    divider()
     return fs.copy(path.join(__dirname, './TemplateComponentFolder'), path.join(__dirname, `./${ComponentKey}`))
   })
   // 替换组件文件夹中的内容
@@ -55,8 +61,8 @@ async function generate(data) {
       if(isDir) {
         return fs.readdir(filePath)
         .then(data => {
-          const realFilePath = path.join(filePath, item)
           return data.map((item) => {
+            const realFilePath = path.join(filePath, item)
             return replaceDir(realFilePath)
           })
         })
@@ -64,6 +70,7 @@ async function generate(data) {
       return fs.readFile(filePath, 'utf-8')
       .then(data => {
         console.log(chalk.green(`替换组件文件: ${filePath}中的变量内容`))
+        divider()
         return fs.writeFile(
           filePath, 
           replaceAll(data, '{{COMPONENT_NAME}}', ComponentKey).replace('{{COMPONENT_TYPE}}', type)
@@ -76,6 +83,7 @@ async function generate(data) {
   .then(() => {
     const currentPath = path.join(__dirname, `./${ComponentKey}`)
     console.log(chalk.green(`移动文件夹: ${currentPath} 到 ${componentPath}`))
+    divider()
     return fs.move(currentPath, componentPath)
   })
   // 读取组件列表的引入文件
@@ -86,6 +94,7 @@ async function generate(data) {
   .then(templateData => {
     const filePath = path.join(__dirname, `../../src/utils/constants/component/GenerateList/${ComponentKey}Component.ts`)
     console.log(chalk.green(`创建组件列表引入文件：${filePath}`))
+    divider()
     return fs.writeFile(
       filePath, 
       templateData
@@ -100,6 +109,7 @@ async function generate(data) {
   .then(() => {
     const filePath = path.join(__dirname, `../../src/utils/constants/component/GenerateList/index.tsx`)
     console.log(chalk.green(`添加组件列表引入文件: ${filePath}的引入`))
+    divider()
     return fs.readFile(filePath, 'utf-8')
     .then(data => {
       return fs.writeFile(
@@ -122,6 +132,7 @@ async function generate(data) {
   .then(() => {
     const filePath = path.join(__dirname, '../../src/component-type.d.ts')
     console.log(chalk.green(`修改组件类型Map文件: ${filePath}`))
+    divider()
     return fs.readFile(filePath, 'utf-8')
     .then(data => {
       return fs.writeFile(
@@ -141,6 +152,7 @@ async function generate(data) {
   .then(() => {
     const filePath = path.join(__dirname, '../../src/components/ChartComponents/index.ts')
     console.log(chalk.green(`添加组件到总引入入口Map文件: ${filePath}`))
+    divider()
     return fs.readFile(filePath, 'utf-8')
     .then(data => {
       return fs.writeFile(
@@ -160,7 +172,7 @@ async function generate(data) {
     })
   })
   .then(() => {
-    console.log(chalk.green(`组件创建成功，目录：${componentPath}`))
+    console.log(chalk.greenBright(`组件创建成功，目录：${componentPath}`))
   })
 
 }
