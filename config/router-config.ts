@@ -25,6 +25,10 @@ export default [
         component: '@/pages/Share',
       },
       {
+        path: '/viewer',
+        component: '@/pages/Viewer',
+      },
+      {
         path: '/',
         component: '@/layouts/AuthLayout/index',
         routes: [

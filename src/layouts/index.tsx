@@ -158,7 +158,8 @@ const GlobalLayout = (props: any) => {
     );
 
   // 分享页不用管登录
-  if (pathname === '/share' || pathname === '/') return children;
+  if (pathname === '/share' || pathname === '/' || pathname === '/viewer')
+    return children;
   if (
     pathname.startsWith('/login') ||
     pathname.startsWith('/register') ||
@@ -231,7 +232,7 @@ const DocumentTitleSetWrapper = (props: any) => {
 };
 
 // 环境判断
-const EnviromentPrompt = (props: any) => {
+const EnvironmentPrompt = (props: any) => {
   return (
     <PromptChrome>
       <DocumentTitleSetWrapper {...props} />
@@ -246,4 +247,4 @@ export default connect(
     };
   },
   () => ({}),
-)(EnviromentPrompt);
+)(EnvironmentPrompt);
