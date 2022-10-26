@@ -5,17 +5,16 @@ import {
   useCallback,
   useMemo,
 } from 'react';
-import { Space, Drawer, Tabs, Row, Col, Result } from 'antd';
-import { SmileOutlined } from '@ant-design/icons';
+import { Space, Drawer, Tabs } from 'antd';
 import { connect } from 'dva';
-import classnames from 'classnames';
-import getImageColor from '@/utils/getImageColor';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
 import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
+import ColorItem from './ColorItem';
+import CustomConfig from './CustomConfig';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -102,59 +101,33 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
       <Tabs
         className={styles['designer-theme-config']}
         centered
+        defaultActiveKey={type}
         items={[
           {
-            key: '0',
+            key: 'internal',
             label: '主题色选择',
             children: (
               <Space direction="vertical" className="w-100 h-100">
                 {Object.entries(COLOR_MAP).map((item) => {
                   const [theme, colorList] = item;
-                  const span = 24 / colorList.length;
                   return (
-                    <Row
-                      gutter={24}
-                      className={classnames(
-                        {
-                          [styles['designer-theme-config-list-check']]:
-                            value === theme,
-                        },
-                        styles['designer-theme-config-list'],
-                      )}
+                    <ColorItem
+                      value={colorList}
+                      name={theme}
+                      onClick={onChange.bind(null, 'internal')}
+                      checked={value === theme}
                       key={theme}
-                      onClick={() => onChange('internal', theme)}
-                    >
-                      {colorList.map((item) => {
-                        return (
-                          <Col span={span} key={item}>
-                            <div
-                              className={styles['designer-theme-config-item']}
-                              style={{
-                                backgroundColor: item,
-                              }}
-                            ></div>
-                          </Col>
-                        );
-                      })}
-                    </Row>
+                    />
                   );
                 })}
               </Space>
             ),
           },
           {
-            key: '1',
+            key: 'custom',
             label: '自定义主题',
-            children: (
-              <div>
-                <Result
-                  icon={<SmileOutlined />}
-                  title={
-                    <span style={{ fontSize: '14px' }}>努力研发中。。。</span>
-                  }
-                />
-              </div>
-            ),
+            forceRender: true,
+            children: <CustomConfig />,
           },
         ]}
       />

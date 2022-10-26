@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import { uniqueId } from 'lodash';
 import { Upload, Modal, message } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
 import { getBase64, UploadButton } from '@/components/ImageUpload';
 import styles from './index.less';
 
@@ -69,12 +68,6 @@ class LocalUpload extends Component<{
 
   render() {
     const { previewVisible, previewImage, previewTitle } = this.state;
-    const uploadButton = (
-      <div>
-        <UploadOutlined />
-        <div style={{ marginTop: 8 }}>上传</div>
-      </div>
-    );
     return (
       <>
         <Upload

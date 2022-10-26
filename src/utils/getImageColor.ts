@@ -15,12 +15,14 @@ const getImageColor = async (file: any) => {
     });
     const colorThief = new ColorThief();
     const mainColor = await colorThief.getColor(image);
-    const similarColors = await colorThief.current.getPalette(
+    const similarColors = await colorThief.getPalette(
       image,
       GENERATE_COLOR_COUNT,
     );
-    return [mainColor, ...similarColors];
+    // return [mainColor, ...similarColors];
+    return [...similarColors];
   } catch (err) {
+    console.error(err);
     message.info('获取颜色失败');
   }
 
