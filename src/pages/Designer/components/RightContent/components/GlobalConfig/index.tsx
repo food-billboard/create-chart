@@ -14,7 +14,6 @@ import ConfigWrapper, {
 } from '@/components/ChartComponents/Common/ConfigWrapper';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import CoverSelect from '@/components/CoverSelect';
-import ThemeConfig from './components/ThemeConfig';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -29,8 +28,9 @@ const GlobalConfig = (props: {
 
   const {
     config: {
-      style: { width, height },
-      attr: { poster, theme, grid, componentBorder },
+      style: { width, height, padding },
+      attr: { poster, grid, componentBorder },
+      flag: { type },
     },
     description,
     poster: cover,
@@ -64,26 +64,28 @@ const GlobalConfig = (props: {
             children: (
               <ConfigItem>
                 <ConfigList style={{ minHeight: '100%' }}>
-                  <Item label="屏幕大小">
-                    <HalfForm label="宽度">
-                      <InputNumber
-                        value={width}
-                        onChange={onValueChange.bind(
-                          null,
-                          'config.style.width',
-                        )}
-                      />
-                    </HalfForm>
-                    <HalfForm label="高度">
-                      <InputNumber
-                        value={height}
-                        onChange={onValueChange.bind(
-                          null,
-                          'config.style.height',
-                        )}
-                      />
-                    </HalfForm>
-                  </Item>
+                  {type !== 'H5' && (
+                    <Item label="屏幕大小">
+                      <HalfForm label="宽度">
+                        <InputNumber
+                          value={width}
+                          onChange={onValueChange.bind(
+                            null,
+                            'config.style.width',
+                          )}
+                        />
+                      </HalfForm>
+                      <HalfForm label="高度">
+                        <InputNumber
+                          value={height}
+                          onChange={onValueChange.bind(
+                            null,
+                            'config.style.height',
+                          )}
+                        />
+                      </HalfForm>
+                    </Item>
+                  )}
                   <Item label="描述">
                     <FullForm>
                       <TextArea
@@ -166,6 +168,32 @@ const GlobalConfig = (props: {
                       />
                     </FullForm>
                   </Item>
+                  {type === 'H5' && (
+                    <Item label="间距">
+                      <HalfForm label="上下">
+                        <InputNumber
+                          value={padding?.[0] || 0}
+                          onChange={(value) =>
+                            onValueChange('config.style.padding', [
+                              value,
+                              padding?.[1],
+                            ])
+                          }
+                        />
+                      </HalfForm>
+                      <HalfForm label="左右">
+                        <InputNumber
+                          value={padding?.[1] || 0}
+                          onChange={(value) =>
+                            onValueChange('config.style.padding', [
+                              padding?.[0],
+                              value,
+                            ])
+                          }
+                        />
+                      </HalfForm>
+                    </Item>
+                  )}
                   {/* <Item label="主题">
                     <ThemeConfig
                       value={theme}

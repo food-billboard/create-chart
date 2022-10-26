@@ -201,6 +201,7 @@ declare namespace ComponentData {
       style: {
         width: number;
         height: number;
+        padding: [number, number];
       };
       attr: {
         poster: TBackgroundConfig;

@@ -16,6 +16,7 @@ import { DragData } from '@/models/connect';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import ComponentList from '../ComponentList';
 import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
+import H5AutoHeight from '../H5AutoHeight';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -41,7 +42,11 @@ const Painter = (props: PainterProps) => {
     connectDropTarget,
     setSelect,
     scale: originScale,
-    config: { style: { width, height } = {}, attr: { poster, lens } = {} } = {},
+    config: {
+      style: { width, height } = {},
+      attr: { poster, lens } = {},
+      flag: { type } = {},
+    } = {},
     className,
     style,
   } = props;
@@ -148,6 +153,7 @@ const Painter = (props: PainterProps) => {
       onMouseDown={onMouseDown}
     >
       <ComponentList />
+      <H5AutoHeight />
     </ColorImageBackground>
   );
 };

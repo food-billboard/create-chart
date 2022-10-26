@@ -32,6 +32,7 @@ export type RenderComponentProps = {
   screenType: ComponentData.ScreenType;
   timestamps?: number;
   grid: number;
+  flag: ComponentData.TScreenData['config']['flag']['type'];
 };
 
 const OnlyClickDiv = (props: {
@@ -83,6 +84,7 @@ const RenderComponent = memo(
       screenType,
       timestamps,
       grid,
+      flag,
     } = props;
 
     const {
@@ -165,6 +167,7 @@ const RenderComponent = memo(
           componentId={id}
           isSelect={isSelect}
           grid={grid}
+          flag={flag}
         >
           <OnlyClickDiv
             className={classnames(

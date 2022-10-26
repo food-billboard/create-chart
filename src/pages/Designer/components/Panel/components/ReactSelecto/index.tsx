@@ -108,7 +108,7 @@ const Selecto = (props: {
 
 const InternalSelecto = connect(mapStateToProps, mapDispatchToProps)(Selecto);
 
-const OuterSelecto = (props: { theme: string }) => {
+const OuterSelecto = (props: { theme: ComponentData.TScreenTheme }) => {
   const { theme } = props;
 
   const color = useMemo(() => {

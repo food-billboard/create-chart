@@ -41,6 +41,7 @@ type IProps = {
   componentId: string;
   isSelect: boolean;
   grid: number;
+  flag: ComponentData.TScreenData['config']['flag']['type'];
 } & Partial<Props>;
 
 const getComponentStyle = (position: any, size: any) => {
@@ -77,6 +78,7 @@ const ComponentWrapper = (
     style,
     grid,
     children,
+    flag,
   } = props;
 
   const isResizing = useRef<boolean>(false);
@@ -169,7 +171,7 @@ const ComponentWrapper = (
     <KeyActionComponent onChange={onLockAspectRatioChange}>
       <Rnd
         enableResizing={!pointerDisabled && isSelect}
-        disableDragging={pointerDisabled || !isSelect}
+        disableDragging={flag === 'H5' || pointerDisabled || !isSelect}
         className={className}
         style={merge({}, style)}
         default={{
@@ -222,6 +224,7 @@ const ComponentWrapper = (
           'onDragStop',
           'onResizeStop',
           'onResize',
+          'flag',
         ])}
       >
         {realChildren}

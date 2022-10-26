@@ -7,6 +7,7 @@ export * from './color';
 export * from './component';
 export * from './data';
 export * from './defaultValue';
+export * from './mobile';
 
 export enum EComponentType {
   GROUP_COMPONENT = 'GROUP_COMPONENT',

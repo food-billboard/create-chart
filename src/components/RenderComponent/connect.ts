@@ -5,6 +5,7 @@ export const mapStateToProps = (state: ConnectState) => {
     scale: state.global.scale,
     screenType: state.global.screenType,
     grid: state.global.screenData.config.attr.grid || 1,
+    flag: state.global.screenData.config.flag.type,
   };
 };
 

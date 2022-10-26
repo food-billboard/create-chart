@@ -1,5 +1,5 @@
 import { useRef, useCallback } from 'react';
-import { Row, Col, Button, Switch, message, Modal } from 'antd';
+import { Row, Col, Button, Switch, message, Modal, Tag } from 'antd';
 import {
   SendOutlined,
   DeleteOutlined,
@@ -178,7 +178,7 @@ const ScreenList = (props: {
         }}
       >
         {value.map((item) => {
-          const { name, poster, _id, enable, description } = item;
+          const { name, poster, _id, enable, description, flag } = item;
           return (
             <Col key={_id} {...COL_SPAN} onClick={handleEdit.bind(null, item)}>
               <div className={styles['screen-list-icon-content-item']}>
@@ -220,11 +220,18 @@ const ScreenList = (props: {
                   <div
                     className={classnames(
                       styles['screen-list-icon-content-item-footer-name'],
-                      'text-ellipsis',
+                      'dis-flex',
                     )}
                     title={name}
                   >
-                    {name}
+                    <div className="text-ellipsis m-r-4">{name}</div>
+                    <div
+                      style={{
+                        color: flag === 'H5' ? 'orange' : 'green',
+                      }}
+                    >
+                      ({flag})
+                    </div>
                   </div>
                   <div
                     className={classnames(

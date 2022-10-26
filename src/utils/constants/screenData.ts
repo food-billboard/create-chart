@@ -55,6 +55,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
     style: {
       width: 1920,
       height: 1080,
+      padding: [0, 0],
     },
     attr: {
       poster: {
@@ -71,7 +72,10 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
       filter: DEFAULT_FILTER_LIST,
       params: [],
       constants: [],
-      theme: Theme.themeName,
+      theme: {
+        type: 'custom',
+        value: Theme.themeName,
+      },
       guideLine: {
         show: true,
         value: [],

@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { Pagination, Input, Button, Empty, Space } from 'antd';
+import { Pagination, Input, Button, Empty, Space, Select } from 'antd';
 import classnames from 'classnames';
 import { getScreenModelList } from '@/services';
 import { LeadIn } from '@/utils/Assist/LeadInAndOutput';
@@ -14,6 +14,9 @@ function ScreenModelList() {
   const [currPage, setCurrPage] = useState<number>(1);
   const [total, setTotal] = useState<number>(0);
   const [searchData, setSearchData] = useState<string>('');
+  const [searchType, setSearchType] = useState<
+    ComponentData.TScreenData['config']['flag']['type'] | ''
+  >('');
   const [list, setList] = useState<API_SCREEN.TGetScreenListData[]>([]);
 
   const fetchLoading = useRef<boolean>(false);
@@ -26,17 +29,23 @@ function ScreenModelList() {
     params: Partial<{
       currPage: number;
       content: string;
+      flag: typeof searchType;
     }>,
   ) => {
     if (fetchLoading.current) return;
     fetchLoading.current = true;
 
-    const { currPage: paramsCurrentPage, content: paramsContent } = params;
+    const {
+      currPage: paramsCurrentPage,
+      content: paramsContent,
+      flag: paramsFlag,
+    } = params;
 
     try {
       const res = await getScreenModelList({
         currPage: ((paramsCurrentPage ?? currPage) || 1) - 1,
         content: paramsContent ?? searchData,
+        flag: paramsFlag ?? searchType,
       });
       const { total, list } = res.data.res;
       setTotal(total);
@@ -52,6 +61,16 @@ function ScreenModelList() {
       currPage,
     });
   }, [currPage]);
+
+  const handleReset = useCallback(() => {
+    setSearchData('');
+    setSearchType('');
+    fetchData({
+      currPage: 0,
+      content: '',
+      flag: '',
+    });
+  }, []);
 
   const handleLeadIn = useCallback(async () => {
     LeadIn('model', fetchData.bind(null, {}));
@@ -96,16 +115,41 @@ function ScreenModelList() {
           'dis-flex',
         )}
       >
-        <Search
-          value={searchData}
-          onChange={(e) => {
-            setSearchData(e.target.value);
-          }}
-          onSearch={fetchData.bind(null, {
-            currPage,
-            content: searchData,
-          })}
-        />
+        <Space>
+          <Search
+            value={searchData}
+            onChange={(e) => {
+              setSearchData(e.target.value);
+            }}
+            onSearch={fetchData.bind(null, {
+              currPage,
+              content: searchData,
+            })}
+          />
+          <Select
+            value={searchType}
+            onChange={setSearchType}
+            style={{ width: 200 }}
+            options={[
+              {
+                label: '全部',
+                value: '',
+              },
+              {
+                label: 'PC端',
+                value: 'PC',
+              },
+              {
+                label: '移动端',
+                value: 'H5',
+              },
+            ]}
+          />
+          <Button type="primary" onClick={fetchData.bind(null, {})}>
+            搜索
+          </Button>
+          <Button onClick={handleReset}>重置</Button>
+        </Space>
         <div>
           <Space>
             <Button type="primary" onClick={handleLeadIn}>
