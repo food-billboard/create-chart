@@ -1,7 +1,6 @@
-import { useCallback, useRef, useMemo, CSSProperties, ReactNode } from 'react';
+import { useCallback, useRef, useMemo } from 'react';
 import ReactSelecto from 'react-selecto';
 import { connect } from 'dva';
-import classNames from 'classnames';
 import { BACKGROUND_ID } from '@/components/DesignerBackground';
 import {
   isComponentDisabled,
@@ -113,7 +112,7 @@ const OuterSelecto = (props: { theme: ComponentData.TScreenTheme }) => {
 
   const color = useMemo(() => {
     return ThemeUtil.generateNextColor4CurrentTheme(0);
-  }, [theme]);
+  }, [theme.value]);
 
   return (
     <div

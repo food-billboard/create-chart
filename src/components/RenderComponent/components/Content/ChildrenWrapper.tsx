@@ -1,7 +1,8 @@
-import { ReactNode, useMemo, Children, cloneElement, useState } from 'react';
+import { ReactNode, useMemo, Children, cloneElement } from 'react';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import { get } from 'lodash';
+import { useRafState } from 'ahooks';
 import { getComponentStyleInScreenType } from '@/utils/Assist/Component';
 import { versionCompare } from '@/utils';
 import { mapStateToProps, mapDispatchToProps } from './connect';
@@ -18,7 +19,7 @@ const ChildrenWrapper = (props: {
 }) => {
   const { value, children, borderNone = false, screenType, version } = props;
 
-  const [isSelect, setIsSelect] = useState<boolean>(false);
+  const [isSelect, setIsSelect] = useRafState<boolean>(false);
 
   const componentScreenTypeStyle = useMemo(() => {
     return getComponentStyleInScreenType(screenType);

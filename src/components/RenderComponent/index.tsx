@@ -5,11 +5,11 @@ import {
   memo,
   ReactNode,
   useRef,
-  useState,
 } from 'react';
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { isEqual } from 'lodash';
+import { useRafState } from 'ahooks';
 import { useComponentStyle } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import ComponentWrapper from './components/Wrapper';
@@ -96,7 +96,7 @@ const RenderComponent = memo(
       type,
     } = value;
 
-    const [isSelect, setIsSelect] = useState<boolean>(false);
+    const [isSelect, setIsSelect] = useRafState<boolean>(false);
 
     // 是否响应鼠标事件
     const pointerDisabled = useMemo(() => {

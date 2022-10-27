@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { Rnd, Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
 import { merge, throttle, get, omit } from 'lodash';
-import { useDeepCompareEffect } from 'ahooks';
+import { useDeepCompareEffect, useRafState } from 'ahooks';
 import {
   MIN_COMPONENT_HEIGHT,
   MIN_COMPONENT_WIDTH,
@@ -82,7 +82,7 @@ const ComponentWrapper = (
   } = props;
 
   const isResizing = useRef<boolean>(false);
-  const [lockAspectRatio, setLockAspectRatio] = useState<boolean>(false);
+  const [lockAspectRatio, setLockAspectRatio] = useRafState<boolean>(false);
 
   const onDragStop: RndDragCallback = (event, data) => {
     // * 未选中不触发事件
@@ -242,10 +242,10 @@ export default (
     type: ComponentData.TComponentType;
   },
 ) => {
-  const [statePosition, _setStatePosition] = useState<IProps['position']>(
+  const [statePosition, _setStatePosition] = useRafState<IProps['position']>(
     props.position,
   );
-  const [stateSize, _setStateSize] = useState<IProps['size']>(props.size);
+  const [stateSize, _setStateSize] = useRafState<IProps['size']>(props.size);
   const [isDealing, setIsDealing] = useState<boolean>(false);
 
   const isMultiSelect = useRef<boolean>(false);

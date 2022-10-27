@@ -2,7 +2,7 @@ import { useCallback, useRef, useMemo, useEffect, useState } from 'react';
 import { Space } from 'antd';
 import classnames from 'classnames';
 import { FolderOutlined, FolderOpenOutlined } from '@ant-design/icons';
-import { useHover } from 'ahooks';
+import { useHover, useRafState } from 'ahooks';
 import { useComponentHover } from '@/hooks';
 import ContextMenu from '@/components/ContextMenu';
 import { ActionItemType } from '@/components/ContextMenu/action.map';
@@ -41,7 +41,7 @@ const ListItem = ({
     componentType,
   } = value;
 
-  const [isHover, setIsHover] = useState(false);
+  const [isHover, setIsHover] = useRafState(false);
 
   const editRef = useRef<NameEditorRefProps>(null);
   const listItemRef = useRef<any>();
