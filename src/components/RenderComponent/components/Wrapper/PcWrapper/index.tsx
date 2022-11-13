@@ -1,6 +1,7 @@
 import { ReactNode, CSSProperties, useState, useMemo, useRef } from 'react';
 import { Rnd, Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
 import { merge, omit } from 'lodash';
+import { useRafState } from 'ahooks';
 import {
   MIN_COMPONENT_HEIGHT,
   MIN_COMPONENT_WIDTH,
@@ -52,7 +53,7 @@ const ComponentWrapper = (
   } = props;
 
   const isResizing = useRef<boolean>(false);
-  const [lockAspectRatio, setLockAspectRatio] = useState<boolean>(false);
+  const [lockAspectRatio, setLockAspectRatio] = useRafState<boolean>(false);
 
   const onDragStop: RndDragCallback = (event, data) => {
     // * 未选中不触发事件

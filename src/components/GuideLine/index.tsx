@@ -1,11 +1,9 @@
 import { Component, CSSProperties } from 'react';
 import { merge, throttle } from 'lodash';
 import classnames from 'classnames';
-import { connect } from 'dva';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { GUIDE_LINE_PADDING } from '@/utils/constants';
 import ColorSelect from '../ColorSelect';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import AbsorbGuideLine from './utils';
 import styles from './index.less';
 import { SuperPartial } from 'chunk-file-upload';
@@ -222,4 +220,4 @@ class GuideLine extends Component<Props> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GuideLine);
+export default GuideLine;

@@ -70,6 +70,8 @@ const FetchScreenComponent = forwardRef<
           components: componentsList,
           ...nextData
         }: ComponentData.TScreenData = BreakingChange(components, version);
+        // 先注册主题色再修改数据
+        ThemeUtil.initCurrentThemeData(nextData.config.attr.theme);
         setScreen({
           ...nextData,
           _id: id,
@@ -80,7 +82,6 @@ const FetchScreenComponent = forwardRef<
         );
         width = nextData.config.style.width;
         height = nextData.config.style.height;
-        ThemeUtil.initCurrentThemeData(nextData.config.attr.theme);
 
         const mergedComponentList = mergeComponentDefaultConfig(componentsList);
         setComponentAll(mergedComponentList, false);
