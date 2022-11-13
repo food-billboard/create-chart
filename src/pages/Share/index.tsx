@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { connect } from 'dva';
 import { history } from 'umi';
-import { message } from 'antd';
+import { message, Empty } from 'antd';
+import IsMobile from 'is-mobile';
 import FetchScreenComponent from '@/components/FetchScreenComponent';
 import { useHashChangeReload } from '@/hooks';
 import {
@@ -17,13 +18,16 @@ import useResize from './useResize';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
+const isMobile = IsMobile();
+
 function Share(props: {
   setScreenType: (value: ComponentData.ScreenType) => void;
   width: number;
   height: number;
+  flag: ComponentData.ScreenFlagType;
   setScale: (value: number) => void;
 }) {
-  const { setScreenType, width, height, setScale } = props;
+  const { setScreenType, width, height, setScale, flag } = props;
 
   const [needFetch, setNeedFetch] = useState<boolean>(false);
   const [heartbeat, setHeartbeat] = useState<boolean>(true);
@@ -105,6 +109,19 @@ function Share(props: {
       clearInterval(timerRef.current);
     };
   }, []);
+
+  if (isMobile && flag !== 'H5') {
+    return (
+      <Empty
+        description="请在电脑端使用"
+        style={{
+          position: 'relative',
+          top: '50%',
+          transform: 'translateY(-50%)',
+        }}
+      />
+    );
+  }
 
   return (
     <>

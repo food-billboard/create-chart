@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { useCallback, useRef, useMemo, CSSProperties } from 'react';
+import { useCallback, useRef, useMemo, CSSProperties, useContext } from 'react';
 import {
   ConnectDropTarget,
   DropTargetMonitor,
@@ -17,6 +17,7 @@ import DataChangePool from '@/utils/Assist/DataChangePool';
 import ComponentList from '../ComponentList';
 import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
 import H5AutoHeight from '../H5AutoHeight';
+import { ExchangePreviewerContext } from '../../../ExchangeScreenFlag/components/MobilePreviewer/context';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -51,6 +52,9 @@ const Painter = (props: PainterProps) => {
     style,
   } = props;
 
+  // ? 为了pc转h5预览用的
+  const { flag } = useContext(ExchangePreviewerContext);
+
   const clickFlag = useRef<boolean>(false);
   const clickPos = useRef<{ x: number; y: number }>({
     x: 0,
@@ -60,9 +64,17 @@ const Painter = (props: PainterProps) => {
 
   const backgroundStyle = useBackground(poster);
 
+  const flagType = useMemo(() => {
+    return flag || type;
+  }, [flag, type]);
+
+  const isExchange = useMemo(() => {
+    return !!flag && flag !== type;
+  }, [flag, type]);
+
   const scale = useMemo(() => {
-    return originScale / 100;
-  }, [originScale]);
+    return isExchange ? 1 : originScale / 100;
+  }, [originScale, isExchange]);
 
   const filter: CSSProperties = useMemo(() => {
     if (!lens || !lens.show) return {};
@@ -93,16 +105,21 @@ const Painter = (props: PainterProps) => {
       {
         transformOrigin: 'left top',
         transform: `scale(${scale})`,
-        width: Number(width) || 1920,
-        height: Number(height) || 1080,
-        left: PANEL_ABSOLUTE_POSITION.left,
-        top: PANEL_ABSOLUTE_POSITION.top,
+        width: isExchange ? 375 : Number(width) || 1920,
+        height: isExchange ? 'auto' : Number(height) || 1080,
+        left: isExchange ? 0 : PANEL_ABSOLUTE_POSITION.left,
+        top: isExchange ? 0 : PANEL_ABSOLUTE_POSITION.top,
       },
       backgroundStyle.backgroundImage ? {} : backgroundStyle,
       style,
       filter,
+      isExchange
+        ? {
+            position: 'relative',
+          }
+        : {},
     );
-  }, [scale, backgroundStyle, width, height, style, filter]);
+  }, [scale, backgroundStyle, width, height, style, filter, isExchange]);
 
   const onMouseMove = () => {
     moveCounter.current++;
@@ -152,7 +169,7 @@ const Painter = (props: PainterProps) => {
       type={poster!.type}
       onMouseDown={onMouseDown}
     >
-      <ComponentList />
+      <ComponentList flag={flagType!} />
       <H5AutoHeight />
     </ColorImageBackground>
   );

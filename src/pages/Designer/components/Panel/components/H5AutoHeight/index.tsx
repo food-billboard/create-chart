@@ -11,6 +11,7 @@ const H5AutoHeight = (props: {
   const {
     config: {
       style: { height },
+      flag: { type },
     },
     components,
     setScreenData,
@@ -29,7 +30,7 @@ const H5AutoHeight = (props: {
   }, [components]);
 
   useEffect(() => {
-    if (componentsHeight - height < MOBILE_HEIGHT / 2) {
+    if (componentsHeight - height < MOBILE_HEIGHT / 2 && type === 'H5') {
       setScreenData({
         config: {
           style: {
@@ -38,7 +39,7 @@ const H5AutoHeight = (props: {
         },
       });
     }
-  }, [componentsHeight, height]);
+  }, [componentsHeight, height, type]);
 
   return <></>;
 };

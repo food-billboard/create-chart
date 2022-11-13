@@ -74,6 +74,7 @@
     "poly-decomp": "^0.3.0",
     "qrcode": "^1.5.1",
     "query-string": "^7.1.1",
+    "re-resizable": "^6.9.9",
     "react": "16.14.0",
     "react-color": "^2.19.3",
     "react-dnd": "^14.0.5",

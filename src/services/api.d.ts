@@ -45,7 +45,7 @@ declare namespace API_SCREEN {
     currPage?: number;
     pageSize?: number;
     content?: string;
-    flag?: ComponentData.TScreenData['config']['flag']['type'] | '';
+    flag?: ComponentData.ScreenFlagType | '';
   };
 
   export type TGetScreenListRes = {

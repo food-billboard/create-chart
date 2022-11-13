@@ -190,6 +190,9 @@ declare namespace ComponentData {
     color?: string[];
   };
 
+  // 大屏端类型
+  export type ScreenFlagType = 'PC' | 'H5';
+
   // 大屏配置
   export type TScreenData = {
     _id?: string;
@@ -226,7 +229,7 @@ declare namespace ComponentData {
         };
       };
       flag: {
-        type: 'PC' | 'H5';
+        type: ScreenFlagType;
       };
     };
   };
@@ -555,7 +558,7 @@ declare namespace ComponentData {
   export type TGlobalData = {
     setParams: (params: TParams[]) => void;
     screenType: 'edit' | 'preview' | 'production';
-    screenTheme: string;
+    screenTheme: TScreenTheme;
   };
 
   export type ComponentProps<P extends object = {}> = {

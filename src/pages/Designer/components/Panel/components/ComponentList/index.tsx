@@ -10,8 +10,9 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const ComponentList = (props: {
   components: ComponentData.TComponentData[];
+  flag: ComponentData.ScreenFlagType;
 }) => {
-  const { components = [] } = props;
+  const { components = [], flag } = props;
 
   const list = useMemo(() => {
     useIdPathMap(true, components);
@@ -26,6 +27,7 @@ const ComponentList = (props: {
       // * 多组件共同拖拽
       const props: any = {
         timestamps: Date.now(),
+        flag,
       };
 
       return (
@@ -38,7 +40,7 @@ const ComponentList = (props: {
         />
       );
     });
-  }, [components]);
+  }, [components, flag]);
 
   return <>{list}</>;
 };

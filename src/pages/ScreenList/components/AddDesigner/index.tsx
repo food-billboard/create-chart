@@ -1,12 +1,11 @@
 import { useCallback, useState, useMemo } from 'react';
-import { Button, Modal, Form, Input, message } from 'antd';
+import { Button, Modal, Form, Input, message, Select } from 'antd';
 import { merge } from 'lodash';
 import { postScreen, postScreenModel } from '@/services';
 import { goDesign, goDesignModel } from '@/utils/tool';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import DEFAULT_SCREEN_DATA from '@/utils/constants/screenData';
-import ThemeUtil from '@/utils/Assist/Theme';
-import { BaseThemeConfig } from '../../../Designer/components/RightContent/components/GlobalConfig/components/ThemeConfig';
+import ThemeUtil, { DEFAULT_THEME_NAME } from '@/utils/Assist/Theme';
 
 const { Item, useForm } = Form;
 
@@ -31,12 +30,12 @@ const AddDesigner = (props: { type: 'screen' | 'model' }) => {
 
   const handleAdd = useCallback(async () => {
     let name;
-    let theme;
+    let flag;
 
     try {
-      const result = await form.validateFields(['name', 'theme']);
+      const result = await form.validateFields(['name', 'flag']);
       name = result.name;
-      theme = result.theme;
+      flag = result.flag;
     } catch (err) {
       return;
     }
@@ -47,14 +46,14 @@ const AddDesigner = (props: { type: 'screen' | 'model' }) => {
         name,
         description: '',
         poster: GlobalConfig.DEFAULT_SCREEN_COVER,
-        flag: 'PC' as any,
+        flag,
         data: JSON.stringify(
           merge({}, DEFAULT_SCREEN_DATA, {
             name,
             poster: GlobalConfig.DEFAULT_SCREEN_COVER,
             config: {
               attr: {
-                theme,
+                theme: DEFAULT_THEME_NAME,
               },
             },
           }),
@@ -104,9 +103,21 @@ const AddDesigner = (props: { type: 'screen' | 'model' }) => {
           >
             <Input placeholder={`请输入${title}名称`} />
           </Item>
-          {/* <Item label="色调" name="theme">
-            <BaseThemeConfig />
-          </Item> */}
+          <Item label="平台" name="flag" initialValue={'PC'}>
+            <Select
+              className="w-100"
+              options={[
+                {
+                  label: '电脑端',
+                  value: 'PC',
+                },
+                {
+                  label: '移动端',
+                  value: 'H5',
+                },
+              ]}
+            />
+          </Item>
         </Form>
       </Modal>
     </div>

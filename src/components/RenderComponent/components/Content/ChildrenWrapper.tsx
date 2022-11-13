@@ -15,8 +15,16 @@ const ChildrenWrapper = (props: {
   borderNone?: boolean;
   screenType: ComponentData.ScreenType;
   version: string;
+  flag: ComponentData.ScreenFlagType;
 }) => {
-  const { value, children, borderNone = false, screenType, version } = props;
+  const {
+    value,
+    children,
+    borderNone = false,
+    screenType,
+    version,
+    flag,
+  } = props;
 
   const [isSelect, setIsSelect] = useState<boolean>(false);
 
@@ -69,7 +77,7 @@ const ChildrenWrapper = (props: {
               top,
               width,
               height,
-              position: 'absolute',
+              position: flag === 'H5' ? 'relative' : 'absolute',
               ...realStyle,
             },
       });
@@ -80,6 +88,7 @@ const ChildrenWrapper = (props: {
     borderNone,
     componentScreenTypeStyle,
     transformOrigin,
+    flag,
   ]);
 
   return (

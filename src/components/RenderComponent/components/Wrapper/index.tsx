@@ -7,14 +7,10 @@ import {
   useEffect,
   useCallback,
 } from 'react';
-import { Rnd, Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
-import { merge, throttle, get, omit } from 'lodash';
+import { Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
+import { throttle, get, omit } from 'lodash';
 import { useDeepCompareEffect } from 'ahooks';
-import {
-  MIN_COMPONENT_HEIGHT,
-  MIN_COMPONENT_WIDTH,
-  SELECTO_CLASSNAME,
-} from '@/utils/constants';
+import { MIN_COMPONENT_HEIGHT, MIN_COMPONENT_WIDTH } from '@/utils/constants';
 import { isGroupComponent } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
@@ -22,11 +18,11 @@ import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
-import { AbsorbUtil } from '@/pages/Designer/components/Panel/components/PanelWrapper/components/AbsorbGuideLine/utils';
 import MultiComponentActionUtil, {
   MultiComponentAction,
 } from '@/utils/Assist/MultiComponentAction';
-import KeyActionComponent from './KeyActionComponent';
+import PcWrapper from './PcWrapper';
+import H5Wrapper from './H5Wrapper';
 
 type IProps = {
   children?: ReactNode;
@@ -41,7 +37,7 @@ type IProps = {
   componentId: string;
   isSelect: boolean;
   grid: number;
-  flag: ComponentData.TScreenData['config']['flag']['type'];
+  flag: ComponentData.ScreenFlagType;
 } & Partial<Props>;
 
 const getComponentStyle = (position: any, size: any) => {
@@ -53,184 +49,6 @@ const getComponentStyle = (position: any, size: any) => {
     left: position.x,
     top: position.y,
   };
-};
-
-const ComponentWrapper = (
-  props: IProps & {
-    dragMethod: any;
-    resizeMethod: any;
-  },
-) => {
-  const {
-    isSelect,
-    position,
-    propsOnDragStop,
-    setComponent,
-    onDragStop: propsOnDragStopMethod,
-    dragMethod,
-    onDrag: propsOnDrag,
-    propsOnResizeStop,
-    onResizeStop: propsOnResizeStopMethod,
-    resizeMethod,
-    onResize: propsOnResize,
-    pointerDisabled,
-    className,
-    style,
-    grid,
-    children,
-    flag,
-  } = props;
-
-  const isResizing = useRef<boolean>(false);
-  const [lockAspectRatio, setLockAspectRatio] = useState<boolean>(false);
-
-  const onDragStop: RndDragCallback = (event, data) => {
-    // * 未选中不触发事件
-    if (!isSelect) return;
-
-    const { x, y } = data;
-    const { x: prevX = 0, y: prevY = 0 } = position || {};
-
-    // * 点击不触发刷新
-    if (Math.abs(x - prevX) < 5 && Math.abs(y - prevY) < 5) return;
-    setComponent(dragMethod.bind(null, event, data, true));
-
-    propsOnDragStop?.();
-    propsOnDragStopMethod?.(event, data);
-    AbsorbUtil.onComponentDragEnd();
-  };
-
-  const onDrag: RndDragCallback = (event, data) => {
-    // * 未选中不触发事件
-    if (!isSelect) return;
-
-    const { x, y } = data;
-
-    const left = Math.floor(x);
-    const top = Math.floor(y);
-
-    // ! 效果不好，到时候优化
-    // AbsorbUtil.onComponentDrag(componentId, {
-    //   ...(size as any),
-    //   left,
-    //   top,
-    // });
-
-    propsOnDrag?.(event, data);
-  };
-
-  const onResizeStop: RndResizeCallback = (
-    e,
-    direction,
-    ref,
-    delta,
-    position,
-  ) => {
-    // * 未选中不触发事件
-    if (!isSelect) return;
-
-    const { width, height } = delta;
-    // * 点击不触发刷新
-    if (Math.abs(width) < 5 && Math.abs(height) < 5) return;
-
-    setComponent(
-      resizeMethod.bind(null, e, direction, ref, delta, position, true),
-    );
-
-    propsOnResizeStopMethod?.(e, direction, ref, delta, position);
-    propsOnResizeStop?.();
-    isResizing.current = false;
-  };
-
-  const onResize: RndResizeCallback = (e, direction, ref, delta, position) => {
-    // * 未选中不触发事件
-    if (!isSelect) return;
-
-    const { width, height } = delta;
-    // * 点击不触发刷新
-    if (Math.abs(width) < 5 && Math.abs(height) < 5) return;
-
-    // ! 效果不好，到时候优化
-    // AbsorbUtil.onComponentResizing(
-    //   componentId,
-    //   getComponentStyle(position, ref),
-    // );
-
-    propsOnResize?.(e, direction, ref, delta, position);
-  };
-
-  const onLockAspectRatioChange = (value: boolean) => {
-    if (!isResizing.current) setLockAspectRatio(value);
-  };
-
-  const realChildren = useMemo(() => {
-    return children;
-  }, [children]);
-
-  return (
-    <KeyActionComponent onChange={onLockAspectRatioChange}>
-      <Rnd
-        enableResizing={!pointerDisabled && isSelect}
-        disableDragging={flag === 'H5' || pointerDisabled || !isSelect}
-        className={className}
-        style={merge({}, style)}
-        default={{
-          x: 0,
-          y: 0,
-          width: 320,
-          height: 200,
-        }}
-        onDrag={onDrag}
-        onDragStop={onDragStop}
-        onResize={onResize}
-        onResizeStop={onResizeStop}
-        onResizeStart={(event, data, direction) => {
-          isResizing.current = true;
-          props.onResizeStart?.(event, data, direction);
-        }}
-        resizeHandleClasses={[
-          'left',
-          'top',
-          'right',
-          'bottom',
-          'topLeft',
-          'topRight',
-          'bottomLeft',
-          'bottomRight',
-        ].reduce<any>((acc, cur) => {
-          acc[cur] = SELECTO_CLASSNAME;
-          return acc;
-        }, {})}
-        minWidth={MIN_COMPONENT_WIDTH}
-        minHeight={MIN_COMPONENT_HEIGHT}
-        lockAspectRatio={lockAspectRatio}
-        resizeGrid={[grid, grid]}
-        dragGrid={[grid, grid]}
-        {...omit(props, [
-          'children',
-          'className',
-          'style',
-          'propsOnDragStop',
-          'propsOnResizeStop',
-          'pointerDisabled',
-          'setComponent',
-          'componentId',
-          'isSelect',
-          'grid',
-          'isResizing',
-          'resizeMethod',
-          'dragMethod',
-          'onDrag',
-          'onDragStop',
-          'onResizeStop',
-          'onResize',
-          'flag',
-        ])}
-      >
-        {realChildren}
-      </Rnd>
-    </KeyActionComponent>
-  );
 };
 
 export default (
@@ -260,6 +78,7 @@ export default (
     componentId,
     isSelect,
     setComponent,
+    flag,
   } = nextProps;
 
   const dragInfo = useRef({
@@ -297,7 +116,7 @@ export default (
       return statePosition;
     }
     return propsPosition;
-  }, [propsPosition, statePosition, isDealing]);
+  }, [propsPosition, statePosition, isDealing, flag]);
 
   const size = useMemo(() => {
     if (isDealing) return stateSize;
@@ -984,8 +803,35 @@ export default (
     };
   }, [isSelect]);
 
+  if (flag === 'H5') {
+    return (
+      <H5Wrapper
+        {...(omit(nextProps, ['bounds']) as any)}
+        grid={[nextProps.grid, nextProps.grid]}
+        resizeMethod={resizeMethod}
+        onResizeStart={(_, direction) => {
+          getIsMultiSelect();
+          MultiComponentActionUtil.emit(
+            MultiComponentAction.RESIZE_START,
+            componentId,
+            direction,
+          );
+          GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_RESIZE_START, {
+            isMulti: false,
+            componentId,
+            direction,
+          });
+          resizeInfo.current.resize = true;
+        }}
+        onResizeStop={onResizeStop}
+        onResize={onResize}
+        size={size}
+      />
+    );
+  }
+
   return (
-    <ComponentWrapper
+    <PcWrapper
       {...nextProps}
       resizeMethod={resizeMethod}
       dragMethod={dragMethod}

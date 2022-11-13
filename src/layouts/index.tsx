@@ -145,7 +145,10 @@ const GlobalLayout = (props: any) => {
     return isMobileJudge();
   }, [pathname]);
 
-  if (isMobile && pathname !== '/')
+  if (
+    isMobile &&
+    !['/', '/model-preview', '/preview', '/share'].includes(pathname)
+  )
     return (
       <Empty
         description="请在电脑端使用"
@@ -158,8 +161,7 @@ const GlobalLayout = (props: any) => {
     );
 
   // 分享页不用管登录
-  if (pathname === '/share' || pathname === '/' || pathname === '/viewer')
-    return children;
+  if (['/share', '/', 'viewer'].includes(pathname)) return children;
   if (
     pathname.startsWith('/login') ||
     pathname.startsWith('/register') ||
@@ -173,7 +175,7 @@ const GlobalLayout = (props: any) => {
     );
   }
 
-  if (pathname === '/screen' || pathname === '/model') {
+  if (['/screen', '/model'].includes(pathname)) {
     return (
       <FetchLoginWrapper {...props}>
         <Layout pathname={pathname}>{children}</Layout>

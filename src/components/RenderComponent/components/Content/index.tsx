@@ -4,6 +4,7 @@ import { get } from 'lodash';
 import { ConnectState } from '@/models/connect';
 import { EComponentType } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils';
+import { useScreenFlag } from '@/hooks';
 import { InternalBorderWrapper } from '../../../InternalBorder';
 import ChildrenWrapper from './ChildrenWrapper';
 import SubGroup from './SubGroup';
@@ -16,8 +17,16 @@ const Content = (props: {
   component: ComponentData.ComponentProps['component'];
   timestamps?: number;
   screenTheme: string;
+  flag: ComponentData.ScreenFlagType;
 }) => {
-  const { component, setParams, screenType, timestamps, screenTheme } = props;
+  const {
+    component,
+    setParams,
+    screenType,
+    timestamps,
+    screenTheme,
+    flag: propsFlag,
+  } = props;
 
   const getScale = useCallback((component?: ComponentData.TComponentData) => {
     if (!component)
@@ -30,6 +39,8 @@ const Content = (props: {
       scaleY: component.config.attr.scaleY ?? 1,
     };
   }, []);
+
+  const flag = useScreenFlag(propsFlag);
 
   const children = useMemo(() => {
     const renderChildren: (
@@ -47,8 +58,15 @@ const Content = (props: {
             style: {
               width: component.config.style.width * scaleX,
               height: component.config.style.height * scaleY,
-              left: component.config.style.left * scaleX,
-              top: component.config.style.top * scaleY,
+              ...(flag === 'H5'
+                ? {
+                    left: 0,
+                    top: 0,
+                  }
+                : {
+                    left: component.config.style.left * scaleX,
+                    top: component.config.style.top * scaleY,
+                  }),
             },
             attr: {
               scaleX: (component.config.attr.scaleX ?? 1) * scaleX,
@@ -68,8 +86,9 @@ const Content = (props: {
                 value={newComponent}
                 borderNone={isOuter}
                 parent={parent}
+                flag={flag}
               >
-                <SubGroup value={newComponent} isOuter={isOuter}>
+                <SubGroup value={newComponent} isOuter={isOuter} flag={flag}>
                   {renderChildren(newComponent.components, newComponent, false)}
                 </SubGroup>
               </ChildrenWrapper>
@@ -87,6 +106,7 @@ const Content = (props: {
             key={newComponent.id}
             borderNone={isOuter}
             parent={parent}
+            flag={flag}
           >
             <TargetComponent
               className={styles['render-component-children']}
@@ -104,7 +124,7 @@ const Content = (props: {
       });
     };
     return renderChildren([component], null, true);
-  }, [component, setParams, screenType, timestamps, getScale]);
+  }, [component, setParams, screenType, timestamps, getScale, flag]);
 
   return <>{children}</>;
 };
@@ -114,6 +134,7 @@ export default connect(
     return {
       screenType: state.global.screenType,
       screenTheme: state.global.screenData.config.attr.theme.value,
+      flag: state.global.screenData.config.flag.type,
     };
   },
   (dispatch) => {

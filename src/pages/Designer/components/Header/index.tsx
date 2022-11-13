@@ -9,6 +9,7 @@ import { goPreview, goPreviewModel } from '@/utils/tool';
 import { isModelHash } from '@/hooks';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { saveScreenData } from '@/utils/Assist/DataChangePool';
+import ExchangeScreenFlagButton from '../ExchangeScreenFlag';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import ActionList from './ActionList';
 import styles from './index.less';
@@ -18,7 +19,13 @@ const Header = (props: {
   setScreen?: (data: ComponentMethod.GlobalUpdateScreenDataParams) => void;
 }) => {
   const { screenData, setScreen } = props;
-  const { name, _id } = screenData || {};
+  const {
+    name,
+    _id,
+    config: {
+      flag: { type },
+    },
+  } = screenData || {};
   const [editMode, setEditMode] = useState<boolean>(false);
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
 
@@ -104,14 +111,28 @@ const Header = (props: {
         loading={fetchLoading}
       ></Button>
     );
+    const exchangeScreenFlagButton = (
+      <ExchangeScreenFlagButton
+        key="exchange"
+        loading={fetchLoading}
+        setLoading={setFetchLoading}
+      />
+    );
+    let baseList: any[] = [];
+    if (type === 'PC') baseList.push(exchangeScreenFlagButton);
     if (!GlobalConfig.isAutoSaveType()) {
-      if (!_id) return [storeButton];
-      return [previewButton, storeButton];
+      if (!_id) {
+        baseList.push(storeButton);
+      } else {
+        baseList.push(previewButton, storeButton);
+      }
     } else {
-      if (!!_id) return [previewButton];
-      return [];
+      if (!!_id) {
+        baseList.push(previewButton);
+      }
     }
-  }, [handlePreview, handleStore, _id, fetchLoading]);
+    return baseList;
+  }, [handlePreview, handleStore, _id, fetchLoading, type]);
 
   return (
     <FocusWrapper>

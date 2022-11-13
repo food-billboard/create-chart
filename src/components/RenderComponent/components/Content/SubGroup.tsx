@@ -18,8 +18,9 @@ const SubGroup = (props: {
   value: ComponentData.TComponentData;
   isOuter?: boolean;
   screenType: 'edit' | 'preview' | 'production';
-  screenTheme: string;
+  screenTheme: ComponentData.TScreenTheme;
   style?: CSSProperties;
+  flag: ComponentData.ScreenFlagType;
   [key: string]: any;
 }) => {
   const {
@@ -30,6 +31,7 @@ const SubGroup = (props: {
     screenType,
     screenTheme,
     style,
+    flag,
   } = props;
   const {
     id,
@@ -66,7 +68,7 @@ const SubGroup = (props: {
       <div
         className={classnames(
           styles['render-component-wrapper-inner'],
-          'pos-ab',
+          flag === 'H5' ? 'pos-re' : 'pos-ab',
           className,
           conditionClassName,
         )}

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import { history } from 'umi';
-import { message } from 'antd';
+import { message, Empty } from 'antd';
+import IsMobile from 'is-mobile';
 import FetchScreenComponent from '@/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
 import { previewScreenValid, previewScreenModelValid } from '@/services';
@@ -10,13 +11,16 @@ import useResize from '../Share/useResize';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
+const isMobile = IsMobile();
+
 function Previewer(props: {
   setScreenType: (value: ComponentData.ScreenType) => void;
   width: number;
   height: number;
+  flag: ComponentData.ScreenFlagType;
   setScale: (value: number) => void;
 }) {
-  const { setScreenType, width, height, setScale } = props;
+  const { setScreenType, width, height, setScale, flag } = props;
 
   const [needFetch, setNeedFetch] = useState<boolean>(false);
 
@@ -56,6 +60,19 @@ function Previewer(props: {
   useEffect(() => {
     fetchValid();
   }, []);
+
+  if (isMobile && flag !== 'H5') {
+    return (
+      <Empty
+        description="请在电脑端使用"
+        style={{
+          position: 'relative',
+          top: '50%',
+          transform: 'translateY(-50%)',
+        }}
+      />
+    );
+  }
 
   return (
     <>

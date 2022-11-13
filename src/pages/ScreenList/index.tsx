@@ -15,7 +15,7 @@ function ScreenList() {
   const [total, setTotal] = useState<number>(0);
   const [searchData, setSearchData] = useState<string>('');
   const [searchType, setSearchType] = useState<
-    ComponentData.TScreenData['config']['flag']['type'] | ''
+    ComponentData.ScreenFlagType | ''
   >('');
   const [list, setList] = useState<API_SCREEN.TGetScreenListData[]>([]);
 

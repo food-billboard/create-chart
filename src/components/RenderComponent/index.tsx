@@ -6,6 +6,7 @@ import {
   ReactNode,
   useRef,
   useState,
+  useContext,
 } from 'react';
 import classnames from 'classnames';
 import { connect } from 'dva';
@@ -17,6 +18,7 @@ import Content from './components/Content';
 import ContextMenu from '../ContextMenu';
 import ConnectSelectChangeWrapper from './components/SelectChangeWrapper';
 import HoverChangeWrapper from './components/HoverChangeWrapper';
+import { ExchangePreviewerContext } from '../../pages/Designer/components/ExchangeScreenFlag/components/MobilePreviewer/context';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -32,7 +34,7 @@ export type RenderComponentProps = {
   screenType: ComponentData.ScreenType;
   timestamps?: number;
   grid: number;
-  flag: ComponentData.TScreenData['config']['flag']['type'];
+  flag: ComponentData.ScreenFlagType;
 };
 
 const OnlyClickDiv = (props: {
@@ -96,12 +98,18 @@ const RenderComponent = memo(
       type,
     } = value;
 
+    const { mobilePreviewerAble } = useContext(ExchangePreviewerContext);
+
     const [isSelect, setIsSelect] = useState<boolean>(false);
 
     // 是否响应鼠标事件
     const pointerDisabled = useMemo(() => {
-      return screenType === 'preview' || lock;
-    }, [lock, screenType, isSelect]);
+      return mobilePreviewerAble || screenType === 'preview' || lock;
+    }, [lock, screenType, isSelect, mobilePreviewerAble]);
+
+    const realFlag = useMemo(() => {
+      return mobilePreviewerAble ? 'H5' : flag;
+    }, [mobilePreviewerAble, flag]);
 
     const baseStyle = useComponentStyle(value, {
       isSelect,
@@ -132,6 +140,30 @@ const RenderComponent = memo(
       return <Content component={value} timestamps={timestamps} />;
     }, [value, timestamps]);
 
+    const children = useMemo(() => {
+      return (
+        <OnlyClickDiv
+          className={classnames(
+            styles['render-component-content'],
+            'w-100',
+            'h-100',
+            'pos-re',
+            {
+              'c-po': !isSelect,
+            },
+          )}
+          data-id={id}
+        >
+          {content}
+          <ConnectSelectChangeWrapper
+            value={value}
+            onSelectChange={setIsSelect}
+          />
+          <HoverChangeWrapper id={id} />
+        </OnlyClickDiv>
+      );
+    }, [isSelect, id, content, value]);
+
     return (
       <ContextMenu
         value={value}
@@ -153,10 +185,14 @@ const RenderComponent = memo(
             width: componentStyle.width,
             height: componentStyle.height,
           }}
-          position={{
-            x: componentStyle.left,
-            y: componentStyle.top,
-          }}
+          position={
+            realFlag === 'H5'
+              ? { x: 0, y: 0 }
+              : {
+                  x: componentStyle.left,
+                  y: componentStyle.top,
+                }
+          }
           pointerDisabled={pointerDisabled}
           setComponent={setComponent}
           scale={scale / 100}
@@ -167,27 +203,9 @@ const RenderComponent = memo(
           componentId={id}
           isSelect={isSelect}
           grid={grid}
-          flag={flag}
+          flag={realFlag}
         >
-          <OnlyClickDiv
-            className={classnames(
-              styles['render-component-content'],
-              'w-100',
-              'h-100',
-              'pos-re',
-              {
-                'c-po': !isSelect,
-              },
-            )}
-            data-id={id}
-          >
-            {content}
-            <ConnectSelectChangeWrapper
-              value={value}
-              onSelectChange={setIsSelect}
-            />
-            <HoverChangeWrapper id={id} />
-          </OnlyClickDiv>
+          {children}
         </ComponentWrapper>
       </ContextMenu>
     );
