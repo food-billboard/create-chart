@@ -136,6 +136,7 @@ const ComponentWrapper = (
         'onResizeStop',
         'onResize',
         'flag',
+        'position',
       ])}
     >
       {realChildren}

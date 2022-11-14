@@ -4,6 +4,7 @@ import type { DropDownProps } from 'antd/es/dropdown';
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { isEqual } from 'lodash';
+import { useScreenFlag } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
 import { ActionItemType, ActionItem, DEFAULT_ACTION_LIST } from './action.map';
@@ -23,6 +24,7 @@ const ContextMenu = (
     setComponentAll: (value: ComponentData.TComponentData[]) => void;
     onClick?: (actionType: ActionItemType) => void;
     actionFrom: 'layer' | 'screen';
+    flag: ComponentData.ScreenFlagType;
   } & Partial<DropDownProps>,
 ) => {
   const {
@@ -39,6 +41,7 @@ const ContextMenu = (
     setClipboard,
     onClick,
     actionFrom,
+    flag,
     ...nextProps
   } = props;
   const { id } = value;
@@ -48,10 +51,18 @@ const ContextMenu = (
   const [actionList, setActionList] =
     useState<ActionItem[]>(DEFAULT_ACTION_LIST);
 
+  const realFlag = useScreenFlag(flag);
+
   const resetActionList = (actionIgnore?: ActionItemType[]) => {
+    const baseActionIgnore = realFlag === 'H5' ? ['group', 'un_group'] : [];
+    const realActionIgnore = actionIgnore
+      ? [...actionIgnore, ...baseActionIgnore]
+      : [...baseActionIgnore];
     if (!actionIgnore) return;
     setActionList(
-      DEFAULT_ACTION_LIST.filter((item) => !actionIgnore.includes(item.type)),
+      DEFAULT_ACTION_LIST.filter(
+        (item) => !realActionIgnore.includes(item.type),
+      ),
     );
   };
 
@@ -105,7 +116,7 @@ const ContextMenu = (
 
   useEffect(() => {
     resetActionList(actionIgnore);
-  }, [actionIgnore]);
+  }, [actionIgnore, realFlag]);
 
   const onVisibleChange = useCallback(
     (visible: boolean) => {

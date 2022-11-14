@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useContext } from 'react';
 import { connect } from 'dva';
 import { useIdPathMap } from '@/hooks';
 import RenderComponent from '@/components/RenderComponent';
@@ -7,12 +7,24 @@ import {
   isGroupComponent as isGroupComponentFunc,
 } from '@/utils/Assist/Component';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+import { ExchangePreviewerContext } from '../../../ExchangeScreenFlag/components/MobilePreviewer/context';
 
 const ComponentList = (props: {
   components: ComponentData.TComponentData[];
+  exchangeMobileTemplateComponents: ComponentData.TComponentData[];
   flag: ComponentData.ScreenFlagType;
 }) => {
-  const { components = [], flag } = props;
+  const {
+    components: _components = [],
+    flag,
+    exchangeMobileTemplateComponents,
+  } = props;
+
+  const { mobilePreviewerAble } = useContext(ExchangePreviewerContext);
+
+  const components = useMemo(() => {
+    return mobilePreviewerAble ? exchangeMobileTemplateComponents : _components;
+  }, [_components, exchangeMobileTemplateComponents]);
 
   const list = useMemo(() => {
     useIdPathMap(true, components);

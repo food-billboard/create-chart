@@ -144,6 +144,8 @@ export const ThemeEventEmitter = new Eventemitter3();
 export const THEM_EVENT_NAME = 'THEM_EVENT_NAME';
 
 export const DEFAULT_THEME_COLOR = WonderlandTheme.theme.color[0];
+export const DEFAULT_THEME_NAME = WonderlandTheme.themeName;
+
 class ThemeUtil {
   currentTheme!: string;
   currentThemeColor: string[] = [];

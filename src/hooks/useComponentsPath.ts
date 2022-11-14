@@ -24,7 +24,7 @@ export function useIdPathMap(
   force: boolean = false,
   components: ComponentData.TComponentData[] = [],
 ) {
-  if (force && !Object.keys(ID_PATH_MAP).length) {
+  if (force || !Object.keys(ID_PATH_MAP).length) {
     useComponentPath(components);
   }
   return ID_PATH_MAP;

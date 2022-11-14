@@ -10,15 +10,19 @@ import { mapDispatchToProps, mapStateToProps } from './connect';
 const ExchangeButton = ({
   loading,
   setLoading,
+  setExchangeMobileComponents,
 }: {
   loading: boolean;
   setLoading: (loading: boolean) => void;
+  setExchangeMobileComponents: (
+    components: ComponentData.TComponentData[],
+  ) => void;
 }) => {
   const ref = useRef<MobilePreviewerRef>(null);
 
   const handleClick = useCallback(() => {
     ref.current?.open();
-  }, [setLoading]);
+  }, [setLoading, setLoading]);
 
   return (
     <>
