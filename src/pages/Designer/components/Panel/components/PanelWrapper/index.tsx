@@ -26,6 +26,7 @@ const PanelWrapper = (props: {
   width?: number;
   height?: number;
   children: ReactNode;
+  flag: ComponentData.ScreenFlagType;
   guideLineList?: ComponentData.TGuideLineConfigItem[];
   guideLineShow?: boolean;
   setGuideLine: (value: ComponentData.TGuideLineConfig) => void;
@@ -40,6 +41,7 @@ const PanelWrapper = (props: {
     guideLineShow,
     setGuideLine,
     setSelect,
+    flag,
   } = props;
 
   const [size, setSize] = useState({ width: 0, height: 0 });
@@ -104,6 +106,10 @@ const PanelWrapper = (props: {
   useEffect(() => {
     sleep(1000).then(resize);
   }, [scale]);
+
+  useEffect(() => {
+    if (flag === 'H5') resize();
+  }, [flag, height]);
 
   return (
     <div

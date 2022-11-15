@@ -8,15 +8,25 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 export type RulerProps = Partial<BaseRulerProps>;
 
 const { getRgbaString } = ColorSelect;
-class Ruler extends Component<
-  RulerProps & {
-    theme: string;
-  }
-> {
+
+type Props = RulerProps & {
+  theme: ComponentData.TScreenTheme;
+};
+
+class Ruler extends Component<Props> {
   rulerRef = createRef<any>();
 
   resize = () => {
     this.rulerRef.current?.resize();
+  };
+
+  componentDidUpdate = (prevProps: Props) => {
+    if (
+      this.props.height !== prevProps.height ||
+      this.props.width !== prevProps.width
+    ) {
+      this.resize();
+    }
   };
 
   componentDidMount = () => {
@@ -29,18 +39,23 @@ class Ruler extends Component<
 
   render() {
     return (
-      <ReactRuler
-        backgroundColor={getRgbaString(
-          ThemeUtil.generateNextColor4CurrentTheme(0),
-        )}
-        lineColor={'rgba(255, 255, 255)'}
-        textColor={'rgba(255, 255, 255)'}
-        type="vertical"
-        {...this.props}
-        ref={this.rulerRef}
-      />
+      <>
+        <ReactRuler
+          backgroundColor={getRgbaString(
+            ThemeUtil.generateNextColor4CurrentTheme(0),
+          )}
+          lineColor={'rgba(255, 255, 255)'}
+          textColor={'rgba(255, 255, 255)'}
+          type="vertical"
+          {...this.props}
+          ref={this.rulerRef}
+        />
+      </>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Ruler);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Ruler as any) as any;

@@ -8,6 +8,7 @@ export const mapStateToProps = (state: ConnectState) => {
     width: get(state, 'global.screenData.config.style.width'),
     height: get(state, 'global.screenData.config.style.height'),
     scale: get(state, 'global.scale'),
+    flag: state.global.screenData.config.flag.type,
   };
 };
 

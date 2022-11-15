@@ -189,7 +189,15 @@ const dropTarget = DropTarget(
         x: 0,
         y: 0,
       };
-      const { setSelect, setDragInfo, dragInfo, scale } = props;
+      const {
+        setSelect,
+        setDragInfo,
+        dragInfo,
+        scale,
+        config: {
+          flag: { type },
+        },
+      } = props;
 
       const generateNewComponent = (
         value: ComponentData.BaseComponentItem & {
@@ -203,10 +211,15 @@ const dropTarget = DropTarget(
           description: value.description,
           componentType: value.type,
           config: {
-            style: {
-              left: Math.floor(value.left),
-              top: Math.floor(value.top),
-            },
+            style:
+              type === 'PC'
+                ? {
+                    left: Math.floor(value.left),
+                    top: Math.floor(value.top),
+                  }
+                : {
+                    width: 375,
+                  },
           },
         });
 

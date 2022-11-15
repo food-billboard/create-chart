@@ -99,6 +99,7 @@ const ComponentWrapper = (
         width: 375,
         height: 200,
       }}
+      maxWidth={375}
       onResize={onResize as any}
       onResizeStop={onResizeStop as any}
       onResizeStart={(event, data, direction) => {
