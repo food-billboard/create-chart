@@ -7,24 +7,11 @@ import {
   isGroupComponent as isGroupComponentFunc,
 } from '@/utils/Assist/Component';
 import { mapStateToProps, mapDispatchToProps } from './connect';
-import { ExchangePreviewerContext } from '../../../ExchangeScreenFlag/components/MobilePreviewer/context';
 
 const ComponentList = (props: {
   components: ComponentData.TComponentData[];
-  exchangeMobileTemplateComponents: ComponentData.TComponentData[];
-  flag: ComponentData.ScreenFlagType;
 }) => {
-  const {
-    components: _components = [],
-    flag,
-    exchangeMobileTemplateComponents,
-  } = props;
-
-  const { mobilePreviewerAble } = useContext(ExchangePreviewerContext);
-
-  const components = useMemo(() => {
-    return mobilePreviewerAble ? exchangeMobileTemplateComponents : _components;
-  }, [_components, exchangeMobileTemplateComponents]);
+  const { components = [] } = props;
 
   const list = useMemo(() => {
     useIdPathMap(true, components);
@@ -39,7 +26,6 @@ const ComponentList = (props: {
       // * 多组件共同拖拽
       const props: any = {
         timestamps: Date.now(),
-        flag,
       };
 
       return (
@@ -52,7 +38,7 @@ const ComponentList = (props: {
         />
       );
     });
-  }, [components, flag]);
+  }, [components]);
 
   return <>{list}</>;
 };

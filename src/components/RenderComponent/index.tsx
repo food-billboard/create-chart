@@ -5,7 +5,6 @@ import {
   memo,
   ReactNode,
   useRef,
-  useContext,
 } from 'react';
 import classnames from 'classnames';
 import { connect } from 'dva';
@@ -18,7 +17,6 @@ import Content from './components/Content';
 import ContextMenu from '../ContextMenu';
 import ConnectSelectChangeWrapper from './components/SelectChangeWrapper';
 import HoverChangeWrapper from './components/HoverChangeWrapper';
-import { ExchangePreviewerContext } from '../../pages/Designer/components/ExchangeScreenFlag/components/MobilePreviewer/context';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -98,18 +96,12 @@ const RenderComponent = memo(
       type,
     } = value;
 
-    const { mobilePreviewerAble } = useContext(ExchangePreviewerContext);
-
     const [isSelect, setIsSelect] = useRafState<boolean>(false);
 
     // 是否响应鼠标事件
     const pointerDisabled = useMemo(() => {
-      return mobilePreviewerAble || screenType === 'preview' || lock;
-    }, [lock, screenType, isSelect, mobilePreviewerAble]);
-
-    const realFlag = useMemo(() => {
-      return mobilePreviewerAble ? 'H5' : flag;
-    }, [mobilePreviewerAble, flag]);
+      return screenType === 'preview' || lock;
+    }, [lock, screenType, isSelect]);
 
     const baseStyle = useComponentStyle(value, {
       isSelect,
@@ -185,14 +177,10 @@ const RenderComponent = memo(
             width: componentStyle.width,
             height: componentStyle.height,
           }}
-          position={
-            realFlag === 'H5'
-              ? { x: 0, y: 0 }
-              : {
-                  x: componentStyle.left,
-                  y: componentStyle.top,
-                }
-          }
+          position={{
+            x: componentStyle.left,
+            y: componentStyle.top,
+          }}
           pointerDisabled={pointerDisabled}
           setComponent={setComponent}
           scale={scale / 100}
@@ -203,7 +191,7 @@ const RenderComponent = memo(
           componentId={id}
           isSelect={isSelect}
           grid={grid}
-          flag={realFlag}
+          flag={flag}
         >
           {children}
         </ComponentWrapper>

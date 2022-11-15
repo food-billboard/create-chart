@@ -4,7 +4,6 @@ import type { DropDownProps } from 'antd/es/dropdown';
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { isEqual } from 'lodash';
-import { useScreenFlag } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
 import { ActionItemType, ActionItem, DEFAULT_ACTION_LIST } from './action.map';
@@ -51,10 +50,8 @@ const ContextMenu = (
   const [actionList, setActionList] =
     useState<ActionItem[]>(DEFAULT_ACTION_LIST);
 
-  const realFlag = useScreenFlag(flag);
-
   const resetActionList = (actionIgnore?: ActionItemType[]) => {
-    const baseActionIgnore = realFlag === 'H5' ? ['group', 'un_group'] : [];
+    const baseActionIgnore = flag === 'H5' ? ['group', 'un_group'] : [];
     const realActionIgnore = actionIgnore
       ? [...actionIgnore, ...baseActionIgnore]
       : [...baseActionIgnore];
@@ -116,7 +113,7 @@ const ContextMenu = (
 
   useEffect(() => {
     resetActionList(actionIgnore);
-  }, [actionIgnore, realFlag]);
+  }, [actionIgnore, flag]);
 
   const onVisibleChange = useCallback(
     (visible: boolean) => {

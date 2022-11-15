@@ -16,7 +16,6 @@ export default {
     // 大屏
     screenData: DEFAULT_SCREEN_DATA,
     components: DEFAULT_SCREEN_DATA.components,
-    exchangeMobileTemplateComponents: [],
     guideLine: {
       show: true,
       value: [],
@@ -176,24 +175,9 @@ export default {
         },
       });
     },
-
-    *setExchangeMobileComponents(
-      { value }: { value: ComponentData.TComponentData[] },
-      { put }: any,
-    ) {
-      yield put({
-        type: 'setExchangeMobileComponentsData',
-        payload: value,
-      });
-    },
   },
 
   reducers: {
-    setExchangeMobileComponentsData(state: any, action: any) {
-      set(state, 'exchangeMobileTemplateComponents', action.payload);
-      return state;
-    },
-
     setVersionData(state: any, action: any) {
       set(state, 'version', action.payload);
       return state;
@@ -321,7 +305,6 @@ export default {
       // * history enqueue
       const history = get(state, 'history.value');
       const components = cloneDeep(get(state, 'components') || []);
-      console.log(action.payload, 22222);
       let { value: newComponents, enqueue = true } = action.payload;
 
       newComponents =

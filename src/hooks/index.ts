@@ -13,4 +13,3 @@ export * from './useLayerHover';
 export * from './useClipPath';
 export * from './useComponentHover';
 export * from './useFirstChange';
-export * from './useScreenFlag';

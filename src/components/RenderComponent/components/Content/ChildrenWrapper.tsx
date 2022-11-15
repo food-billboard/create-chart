@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { get } from 'lodash';
 import { useRafState } from 'ahooks';
 import { getComponentStyleInScreenType } from '@/utils/Assist/Component';
-import { versionCompare } from '@/utils';
+import { ComponentTransformOriginChange } from '@/utils/Assist/BreakingChange';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import ConnectSelectChangeWrapper from '../SelectChangeWrapper';
 import styles from '../../index.less';
@@ -35,9 +35,7 @@ const ChildrenWrapper = (props: {
 
   // * 1.5版本以后设置成中心位置
   const transformOrigin = useMemo(() => {
-    return !version || versionCompare(parseFloat(version), 1.6)
-      ? 'center center'
-      : 'left top';
+    return ComponentTransformOriginChange(version);
   }, [version]);
 
   const realChildren = useMemo(() => {

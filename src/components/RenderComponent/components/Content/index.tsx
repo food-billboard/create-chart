@@ -4,7 +4,6 @@ import { get } from 'lodash';
 import { ConnectState } from '@/models/connect';
 import { EComponentType } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils';
-import { useScreenFlag } from '@/hooks';
 import { InternalBorderWrapper } from '../../../InternalBorder';
 import ChildrenWrapper from './ChildrenWrapper';
 import SubGroup from './SubGroup';
@@ -13,20 +12,14 @@ import styles from './index.less';
 
 const Content = (props: {
   setParams: (value: ComponentData.TParams[]) => void;
-  screenType: string;
+  screenType: ComponentData.ScreenType;
   component: ComponentData.ComponentProps['component'];
   timestamps?: number;
   screenTheme: string;
   flag: ComponentData.ScreenFlagType;
 }) => {
-  const {
-    component,
-    setParams,
-    screenType,
-    timestamps,
-    screenTheme,
-    flag: propsFlag,
-  } = props;
+  const { component, setParams, screenType, timestamps, screenTheme, flag } =
+    props;
 
   const getScale = useCallback((component?: ComponentData.TComponentData) => {
     if (!component)
@@ -39,8 +32,6 @@ const Content = (props: {
       scaleY: component.config.attr.scaleY ?? 1,
     };
   }, []);
-
-  const flag = useScreenFlag(propsFlag);
 
   const children = useMemo(() => {
     const renderChildren: (

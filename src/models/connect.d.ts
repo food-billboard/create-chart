@@ -18,7 +18,6 @@ interface IGlobalModelState {
   screenType: ComponentData.ScreenType;
   screenData: Exclude<ComponentData.TScreenData, 'components'>;
   components: ComponentData.TScreenData['components'];
-  exchangeMobileTemplateComponents: ComponentData.TScreenData['components'];
   guideLine: ComponentData.TGuideLineConfig;
   select: string[];
   componentSelect: ComponentData.TComponentData<any> | null;

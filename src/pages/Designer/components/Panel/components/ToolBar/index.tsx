@@ -1,9 +1,13 @@
 import classnames from 'classnames';
+import { connect } from 'dva';
 import Scale from './components/Scale';
 import PanelThumb from './components/PanelThumb';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
-const ToolBar = () => {
+const ToolBar = (props: { flag: ComponentData.ScreenFlagType }) => {
+  const { flag } = props;
+
   return (
     <div
       className={classnames(
@@ -12,10 +16,10 @@ const ToolBar = () => {
         'normal-background',
       )}
     >
-      <PanelThumb />
+      {flag === 'PC' && <PanelThumb />}
       <Scale />
     </div>
   );
 };
 
-export default ToolBar;
+export default connect(mapStateToProps, mapDispatchToProps)(ToolBar);

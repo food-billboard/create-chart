@@ -3,6 +3,8 @@ import { ConditionChange } from './ConditionChange';
 import { ScreenThemeTypeChange } from './ScreenThemeTypeChange';
 import { mergeWithoutArray } from '../../tool';
 
+export * from './ComponentTransformOriginChange';
+
 const BreakingChange: (
   screenData: ComponentData.TScreenData,
   version: string,

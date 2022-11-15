@@ -47,6 +47,7 @@ const FetchScreenComponent = forwardRef<
   const fetchData = async (isReload: boolean = false) => {
     let width;
     let height;
+    let flag;
     const { width: defaultWidth, height: defaultHeight } = get(
       DEFAULT_SCREEN_DATA,
       'config.style',
@@ -82,6 +83,7 @@ const FetchScreenComponent = forwardRef<
         );
         width = nextData.config.style.width;
         height = nextData.config.style.height;
+        flag = nextData.config.flag.type;
 
         const mergedComponentList = mergeComponentDefaultConfig(componentsList);
         setComponentAll(mergedComponentList, false);
@@ -97,7 +99,7 @@ const FetchScreenComponent = forwardRef<
       setScreen(DEFAULT_SCREEN_DATA);
     }
 
-    const result = autoFitScale(width, height);
+    const result = autoFitScale(width, height, flag);
     setScale?.(result);
 
     await sleep(1000);

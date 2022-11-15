@@ -35,6 +35,7 @@ export const useComponentStyle: (
       top,
       zIndex,
       opacity,
+      skew,
       ...nextComponentStyle
     } = componentStyle;
     const borderWidth = screenType === 'edit' ? (1 / scale) * 100 : 0;
@@ -46,7 +47,9 @@ export const useComponentStyle: (
       {},
       nextComponentStyle,
       {
-        transform: `rotate(${rotate}deg)`,
+        transform: `rotate(${rotate}deg) skew(${skew?.x || 0}deg, ${
+          skew?.y || 0
+        }deg)`,
         visibility: visible ? 'visible' : 'hidden',
         border: `${borderWidth}px solid ${borderColor}`,
         zIndex: isSelect ? 4 : zIndex,

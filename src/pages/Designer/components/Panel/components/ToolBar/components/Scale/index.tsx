@@ -7,7 +7,12 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 import { wrapperId } from '../../../PanelWrapper/constants';
 import styles from './index.less';
 
-export const autoFitScale = (width: number, height: number) => {
+export const autoFitScale = (
+  width: number,
+  height: number,
+  flag?: ComponentData.ScreenFlagType,
+) => {
+  if (flag === 'H5') return 100;
   const FIT_SCALE = 0.85;
 
   const wrapper = document.querySelector(`#${wrapperId}`);

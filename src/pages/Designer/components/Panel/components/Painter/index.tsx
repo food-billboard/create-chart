@@ -1,5 +1,12 @@
 import classnames from 'classnames';
-import { useCallback, useRef, useMemo, CSSProperties, useContext } from 'react';
+import {
+  useCallback,
+  useRef,
+  useMemo,
+  CSSProperties,
+  useContext,
+  ReactNode,
+} from 'react';
 import {
   ConnectDropTarget,
   DropTargetMonitor,
@@ -34,6 +41,7 @@ export type PainterProps = {
   config: ComponentData.TScreenData['config'];
   className?: string;
   style?: CSSProperties;
+  children?: ReactNode;
 };
 
 export const PANEL_ID = 'panel-id';
@@ -50,6 +58,7 @@ const Painter = (props: PainterProps) => {
     } = {},
     className,
     style,
+    children,
   } = props;
 
   // ? 为了pc转h5预览用的
@@ -63,10 +72,6 @@ const Painter = (props: PainterProps) => {
   const moveCounter = useRef<number>(0);
 
   const backgroundStyle = useBackground(poster);
-
-  const flagType = useMemo(() => {
-    return flag || type;
-  }, [flag, type]);
 
   const isExchange = useMemo(() => {
     return !!flag && flag !== type;
@@ -169,7 +174,7 @@ const Painter = (props: PainterProps) => {
       type={poster!.type}
       onMouseDown={onMouseDown}
     >
-      <ComponentList flag={flagType!} />
+      {children || <ComponentList />}
       <H5AutoHeight />
     </ColorImageBackground>
   );
