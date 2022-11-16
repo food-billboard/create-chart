@@ -116,6 +116,7 @@ const PercentBar = (
     const { label, color } = itemStyleList[0] || {};
 
     function labelConfig(label: any) {
+      if (!label) return {};
       return {
         show: label.show,
         formatter: (params: any) => {

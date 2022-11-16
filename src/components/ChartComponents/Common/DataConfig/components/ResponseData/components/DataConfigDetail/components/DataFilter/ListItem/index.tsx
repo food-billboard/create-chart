@@ -30,7 +30,7 @@ const { Panel } = Collapse;
 
 const DragHandle = SortableHandle(() => {
   return <HolderOutlined className="c-po" />;
-});
+}) as any;
 
 const DataFilter = (props: {
   isTemp?: boolean;

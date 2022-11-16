@@ -16,7 +16,7 @@ const _clone = async (
       LocalConfig.CONFIG_KEY_CROSS_CLIPBOARD,
     )) || {};
 
-  if (result.errMsg) throw new Error();
+  if (result.errMsg) throw new Error(result.errMsg as string);
 
   const storageClipboard =
     result.value as ComponentClipboard.StorageClipboardType;

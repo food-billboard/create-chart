@@ -104,12 +104,8 @@ const PanelWrapper = (props: {
   });
 
   useEffect(() => {
-    sleep(1000).then(resize);
-  }, [scale]);
-
-  useEffect(() => {
-    if (flag === 'H5') resize();
-  }, [flag, height]);
+    resize();
+  }, [flag, height, scale]);
 
   return (
     <div

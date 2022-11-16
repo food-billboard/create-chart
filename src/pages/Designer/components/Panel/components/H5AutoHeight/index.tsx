@@ -3,8 +3,6 @@ import { connect } from 'dva';
 import { ConnectState } from '@/models/connect';
 import { MOBILE_HEIGHT } from '@/utils/constants';
 
-let index = 0;
-
 const H5AutoHeight = (props: {
   config: ComponentData.TScreenData['config'];
   components: ComponentData.TComponentData[];
@@ -33,7 +31,6 @@ const H5AutoHeight = (props: {
 
   useEffect(() => {
     if (height - componentsHeight < MOBILE_HEIGHT / 2 && type === 'H5') {
-      index++;
       setScreenData({
         config: {
           style: {

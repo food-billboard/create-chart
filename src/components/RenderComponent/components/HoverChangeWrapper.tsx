@@ -7,7 +7,7 @@ const HoverChangeWrapper = (props: { id: string }) => {
 
   const [, setHover] = useComponentHover();
 
-  useHover(document.querySelector(`[data-id="${id}"]`), {
+  useHover(() => document.querySelector(`[data-id="${id}"]`), {
     onChange: (state) => {
       if (state) {
         setHover(id);

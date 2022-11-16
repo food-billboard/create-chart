@@ -14,6 +14,7 @@ export const useComponentStyle: (
     scale: number;
     query: string;
     screenType: ComponentData.ScreenType;
+    flag: ComponentData.ScreenFlagType;
   },
 ) => CSSProperties = (value, options) => {
   const {
@@ -22,9 +23,9 @@ export const useComponentStyle: (
       attr: { visible, lock },
     },
   } = value;
-  const { isSelect, style, scale, query, screenType } = options;
+  const { isSelect, style, scale, query, screenType, flag } = options;
 
-  const isHover = useHover(document.querySelector(query));
+  const isHover = useHover(() => document.querySelector(query));
 
   const styles = useMemo(() => {
     const {
@@ -55,6 +56,11 @@ export const useComponentStyle: (
         zIndex: isSelect ? 4 : zIndex,
         pointerEvents: lock ? 'none' : 'unset',
       },
+      flag === 'H5' && !visible
+        ? {
+            position: 'absolute',
+          }
+        : {},
       style,
     );
   }, [
@@ -66,6 +72,7 @@ export const useComponentStyle: (
     lock,
     isHover,
     screenType,
+    flag,
   ]);
 
   return styles;
