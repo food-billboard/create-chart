@@ -1,8 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { connect } from 'dva';
 import { history } from 'umi';
-import { message, Empty } from 'antd';
-import IsMobile from 'is-mobile';
+import { message } from 'antd';
 import FetchScreenComponent from '@/components/FetchScreenComponent';
 import { useHashChangeReload } from '@/hooks';
 import {
@@ -14,11 +13,9 @@ import { NormalPainter } from '../Designer/components/Panel/components/Painter';
 import PasswordConfirm, {
   PasswordConfirmRef,
 } from './components/PasswordConfirm';
-import useResize from './useResize';
+import PainterWrapper from './components/PainterWrapper';
+import useWrapperProps from './useWrapperProps';
 import { mapStateToProps, mapDispatchToProps } from './connect';
-import styles from './index.less';
-
-const isMobile = IsMobile();
 
 function Share(props: {
   setScreenType: (value: ComponentData.ScreenType) => void;
@@ -35,7 +32,12 @@ function Share(props: {
   const passwordConfirmRef = useRef<PasswordConfirmRef>(null);
   const timerRef = useRef<any>();
 
-  const scale = useResize(width, height, setScale);
+  const { scale, ...wrapperProps } = useWrapperProps(
+    width,
+    height,
+    setScale,
+    flag,
+  );
 
   const heartbeatFetch = async () => {
     try {
@@ -110,32 +112,12 @@ function Share(props: {
     };
   }, []);
 
-  if (isMobile && flag !== 'H5') {
-    return (
-      <Empty
-        description="请在电脑端使用"
-        style={{
-          position: 'relative',
-          top: '50%',
-          transform: 'translateY(-50%)',
-        }}
-      />
-    );
-  }
-
   return (
-    <>
-      {heartbeat && (
-        <NormalPainter
-          className={styles['page-share']}
-          style={{
-            transform: `scale(${scale}) translateX(-50%)`,
-          }}
-        />
-      )}
+    <PainterWrapper>
+      {heartbeat && <NormalPainter {...wrapperProps} />}
       <FetchScreenComponent needFetch={needFetch} />
       <PasswordConfirm ref={passwordConfirmRef} onOk={onPasswordConfirm} />
-    </>
+    </PainterWrapper>
   );
 }
 

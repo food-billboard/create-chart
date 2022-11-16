@@ -1,17 +1,14 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import { history } from 'umi';
-import { message, Empty } from 'antd';
-import IsMobile from 'is-mobile';
+import { message } from 'antd';
 import FetchScreenComponent from '@/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
 import { previewScreenValid, previewScreenModelValid } from '@/services';
 import { useIsModelHash, useHashChangeReload } from '@/hooks';
-import useResize from '../Share/useResize';
+import useWrapperProps from '../Share/useWrapperProps';
+import PainterWrapper from '../Share/components/PainterWrapper';
 import { mapStateToProps, mapDispatchToProps } from './connect';
-import styles from './index.less';
-
-const isMobile = IsMobile();
 
 function Previewer(props: {
   setScreenType: (value: ComponentData.ScreenType) => void;
@@ -51,7 +48,12 @@ function Previewer(props: {
 
   useHashChangeReload(reload);
 
-  const scale = useResize(width, height, setScale);
+  const { scale, ...wrapperProps } = useWrapperProps(
+    width,
+    height,
+    setScale,
+    flag,
+  );
 
   useEffect(() => {
     setScreenType('preview');
@@ -61,29 +63,11 @@ function Previewer(props: {
     fetchValid();
   }, []);
 
-  if (isMobile && flag !== 'H5') {
-    return (
-      <Empty
-        description="请在电脑端使用"
-        style={{
-          position: 'relative',
-          top: '50%',
-          transform: 'translateY(-50%)',
-        }}
-      />
-    );
-  }
-
   return (
-    <>
-      <NormalPainter
-        className={styles['page-preview']}
-        style={{
-          transform: `scale(${scale}) translateX(-50%)`,
-        }}
-      />
+    <PainterWrapper>
+      <NormalPainter {...wrapperProps} />
       <FetchScreenComponent needFetch={needFetch} />
-    </>
+    </PainterWrapper>
   );
 }
 

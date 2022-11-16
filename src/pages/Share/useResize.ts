@@ -5,6 +5,7 @@ const useResize = (
   containerWidth: number,
   containerHeight: number,
   setScale: (value: number) => void,
+  flag: ComponentData.ScreenFlagType = 'PC',
 ) => {
   const [{ width, height }, setSize] = useState<{
     width: number;
@@ -25,8 +26,8 @@ const useResize = (
   const scale = useMemo(() => {
     const xScale = width / containerWidth;
     const yScale = height / containerHeight;
-    return yScale;
-  }, [width, height, containerWidth, containerHeight, setScale]);
+    return flag === 'H5' ? xScale : yScale;
+  }, [width, height, containerWidth, containerHeight, setScale, flag]);
 
   useEffect(() => {
     sleep(1000).then(resize);

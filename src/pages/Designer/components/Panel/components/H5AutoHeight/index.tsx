@@ -7,6 +7,7 @@ const H5AutoHeight = (props: {
   config: ComponentData.TScreenData['config'];
   components: ComponentData.TComponentData[];
   setScreenData: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
+  screenType: ComponentData.ScreenType;
 }) => {
   const {
     config: {
@@ -15,6 +16,7 @@ const H5AutoHeight = (props: {
     },
     components,
     setScreenData,
+    screenType,
   } = props;
 
   const componentsHeight = useMemo(() => {
@@ -30,7 +32,11 @@ const H5AutoHeight = (props: {
   }, [components]);
 
   useEffect(() => {
-    if (height - componentsHeight < MOBILE_HEIGHT / 2 && type === 'H5') {
+    if (
+      screenType !== 'preview' &&
+      height - componentsHeight < MOBILE_HEIGHT / 2 &&
+      type === 'H5'
+    ) {
       setScreenData({
         config: {
           style: {
@@ -39,7 +45,7 @@ const H5AutoHeight = (props: {
         },
       });
     }
-  }, [componentsHeight, height, type]);
+  }, [componentsHeight, height, type, screenType]);
 
   return <></>;
 };
@@ -49,6 +55,7 @@ export default connect(
     return {
       config: state.global.screenData.config,
       components: state.global.components,
+      screenType: state.global.screenType,
     };
   },
   (dispatch) => {

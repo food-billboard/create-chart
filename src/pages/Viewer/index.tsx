@@ -2,34 +2,35 @@ import { useEffect } from 'react';
 import { connect } from 'dva';
 import FetchScreenComponent from '@/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
-import useResize from '../Share/useResize';
+import useWrapperProps from '../Share/useWrapperProps';
+import PainterWrapper from '../Share/components/PainterWrapper';
 import { mapStateToProps, mapDispatchToProps } from './connect';
-import styles from './index.less';
 
 function Viewer(props: {
   setScreenType: (value: ComponentData.ScreenType) => void;
   width: number;
   height: number;
   setScale: (value: number) => void;
+  flag: ComponentData.ScreenFlagType;
 }) {
-  const { setScreenType, width, height, setScale } = props;
+  const { setScreenType, width, height, setScale, flag } = props;
 
-  const scale = useResize(width, height, setScale);
+  const { scale, ...wrapperProps } = useWrapperProps(
+    width,
+    height,
+    setScale,
+    flag,
+  );
 
   useEffect(() => {
     setScreenType('preview');
   }, [setScreenType]);
 
   return (
-    <>
-      <NormalPainter
-        className={styles['page-viewer']}
-        style={{
-          transform: `scale(${scale}) translateX(-50%)`,
-        }}
-      />
+    <PainterWrapper>
+      <NormalPainter {...wrapperProps} />
       <FetchScreenComponent />
-    </>
+    </PainterWrapper>
   );
 }
 
