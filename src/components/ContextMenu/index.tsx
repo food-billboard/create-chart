@@ -91,6 +91,7 @@ const ContextMenu = (
                 setClipboard={setClipboard}
                 actionFrom={actionFrom}
                 select={internalSelect}
+                flag={flag}
               />
             ),
             key: type,
@@ -109,6 +110,7 @@ const ContextMenu = (
     setClipboard,
     actionFrom,
     internalSelect,
+    flag,
   ]);
 
   useEffect(() => {

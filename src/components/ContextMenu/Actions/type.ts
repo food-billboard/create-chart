@@ -10,4 +10,5 @@ export interface CommonActionType {
   setComponentAll: (value: ComponentData.TComponentData[]) => void;
   onClick: () => void;
   actionFrom: 'screen' | 'layer';
+  flag: ComponentData.ScreenFlagType;
 }
