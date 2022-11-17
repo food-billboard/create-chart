@@ -27,7 +27,7 @@ const useResize = (
     const xScale = width / containerWidth;
     const yScale = height / containerHeight;
     return flag === 'H5' ? xScale : yScale;
-  }, [width, height, containerWidth, containerHeight, setScale, flag]);
+  }, [width, height, containerWidth, containerHeight, flag]);
 
   useEffect(() => {
     sleep(1000).then(resize);

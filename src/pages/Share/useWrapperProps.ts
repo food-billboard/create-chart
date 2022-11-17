@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import useResize from '../Share/useResize';
 import styles from './index.less';
 
@@ -10,7 +11,10 @@ const userWrapperProps = (
   const scale = useResize(containerWidth, containerHeight, setScale, flag);
 
   return {
-    className: styles[`page-preview-${flag.toLowerCase()}`],
+    className: classnames(
+      styles[`page-preview-${flag.toLowerCase()}`],
+      'page-preview-container',
+    ),
     style: {
       transform: `scale(${scale}) translateX(${flag === 'PC' ? '50%' : '0'})`,
     },

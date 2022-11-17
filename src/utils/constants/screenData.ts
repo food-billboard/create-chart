@@ -1,6 +1,9 @@
 import { nanoid } from 'nanoid';
+import IsMobile from 'is-mobile';
 import { DEFAULT_BORDER } from '@/components/InternalBorder';
 import Theme from '../../theme/wonderland.project.json';
+
+const isMobile = IsMobile();
 
 export const DEFAULT_FILTER_LIST: ComponentData.TFilterConfig[] = [
   {
@@ -95,7 +98,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
       },
     },
     flag: {
-      type: 'PC',
+      type: isMobile ? 'H5' : 'PC',
     },
   },
 };
@@ -113,6 +116,9 @@ export const DEFAULT_CONFIG: ComponentData.TBaseConfig = {
     zIndex: 2,
     skew: {
       x: 0,
+      y: 0,
+    },
+    margin: {
       y: 0,
     },
     border: {
