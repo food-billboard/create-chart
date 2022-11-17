@@ -24,7 +24,7 @@ const _clone = async (
   const timestamps = Date.now();
   const id = get(getDvaGlobalModelData(), 'screenData._id');
 
-  if (typeof storageClipboard.show !== 'boolean' || storageClipboard.show) {
+  if (typeof storageClipboard?.show !== 'boolean' || storageClipboard.show) {
     await LocalConfigInstance.setItem(LocalConfig.CONFIG_KEY_CROSS_CLIPBOARD, {
       ...storageClipboard,
       show: true,
@@ -51,13 +51,13 @@ export const clone = async (
   await cloneMessage.createMessage(
     {
       loading: {
-        content: '复制中...',
+        content: '拷贝中...',
       },
       success: {
-        content: '复制成功',
+        content: '拷贝成功',
       },
       error: {
-        content: '复制失败',
+        content: '拷贝失败',
       },
     },
     select,

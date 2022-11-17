@@ -133,6 +133,7 @@ export class Message {
         throw new Error('');
       }
     } catch (err) {
+      console.error(err);
       message.error({
         duration: 2,
         content: '操作失败！',
