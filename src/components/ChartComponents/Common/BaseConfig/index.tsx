@@ -41,6 +41,7 @@ const BaseConfig = (props: {
     opacity,
     rotate,
     skew,
+    margin,
     border = { show: false, value: DEFAULT_BORDER, disabled: false },
   } = style;
   const { scaleX, scaleY } = attr;
@@ -185,6 +186,21 @@ const BaseConfig = (props: {
             />
           </HalfForm>
         </Item>
+        {flag === 'H5' && (
+          <Item label="间距">
+            <HalfForm label="上下间距">
+              <InputNumber
+                value={margin.y}
+                onChange={(value) =>
+                  onValueChange('margin', {
+                    ...margin,
+                    y: value,
+                  })
+                }
+              />
+            </HalfForm>
+          </Item>
+        )}
         {!border.disabled && (
           <Item label="边框">
             <HalfForm>

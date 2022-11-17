@@ -37,6 +37,7 @@ export const useComponentStyle: (
       zIndex,
       opacity,
       skew,
+      margin = { y: 0 },
       ...nextComponentStyle
     } = componentStyle;
     const borderWidth = screenType === 'edit' ? (1 / scale) * 100 : 0;
@@ -48,13 +49,10 @@ export const useComponentStyle: (
       {},
       nextComponentStyle,
       {
-        transform: `rotate(${rotate}deg) skew(${skew?.x || 0}deg, ${
-          skew?.y || 0
-        }deg)`,
-        visibility: visible ? 'visible' : 'hidden',
         border: `${borderWidth}px solid ${borderColor}`,
         zIndex: isSelect ? 4 : zIndex,
         pointerEvents: lock ? 'none' : 'unset',
+        margin: `${margin.y}px 0px`,
       },
       flag === 'H5' && !visible
         ? {
@@ -93,7 +91,7 @@ export const useComponentChildrenStyle: (
   const { isOuter } = options;
 
   const styles = useMemo(() => {
-    const { opacity, rotate, left, top } = componentStyle;
+    const { left, top } = componentStyle;
     const position: any = {};
     if (!isOuter) {
       position.left = left;
@@ -102,8 +100,6 @@ export const useComponentChildrenStyle: (
     return {
       width: '100%',
       height: '100%',
-      transform: `rotate(${rotate}deg)`,
-      opacity,
       ...position,
     };
   }, [componentStyle, scaleX, scaleY, isOuter]);

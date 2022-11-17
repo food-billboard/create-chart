@@ -110,6 +110,9 @@ declare namespace ComponentData {
         x: number;
         y: number;
       };
+      margin: {
+        y: number;
+      };
       border: {
         show: boolean;
         value: string;

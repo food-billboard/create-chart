@@ -69,6 +69,9 @@ export const BASIC_DEFAULT_CONFIG: ComponentData.TBaseConfig = {
       x: 0,
       y: 0,
     },
+    margin: {
+      y: 0,
+    },
     border: {
       show: false,
       value: DEFAULT_BORDER,
