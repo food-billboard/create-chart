@@ -42,12 +42,18 @@ const RotateLoopBorderWrapper: typeof RotateLoopBorder & {
   getOuterStyle: (
     props: ComponentData.TScreenData['config']['attr']['componentBorder'],
   ) => CSSProperties;
+  getOuterPadding: (
+    props: ComponentData.TScreenData['config']['attr']['componentBorder'],
+  ) => number[];
 } = RotateLoopBorder as any;
 
 RotateLoopBorderWrapper.getOuterStyle = ({ width, padding }) => {
   return {
     padding: padding.map((item) => `${item + width}px`).join(' '),
   };
+};
+RotateLoopBorderWrapper.getOuterPadding = ({ width, padding }) => {
+  return padding.map((item) => item + width);
 };
 
 export default RotateLoopBorderWrapper;

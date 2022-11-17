@@ -39,12 +39,18 @@ const ConnorBorderWrapper: typeof ConnorBorder & {
   getOuterStyle: (
     props: ComponentData.TScreenData['config']['attr']['componentBorder'],
   ) => CSSProperties;
+  getOuterPadding: (
+    props: ComponentData.TScreenData['config']['attr']['componentBorder'],
+  ) => number[];
 } = ConnorBorder as any;
 
 ConnorBorderWrapper.getOuterStyle = ({ width, padding }) => {
   return {
     padding: padding.map((item) => `${item + width * 0.4}px`).join(' '),
   };
+};
+ConnorBorderWrapper.getOuterPadding = ({ width, padding }) => {
+  return padding.map((item) => item + width * 0.4);
 };
 
 export default ConnorBorderWrapper;

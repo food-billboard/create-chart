@@ -23,12 +23,18 @@ const DashedBorderWrapper: typeof DashedBorder & {
   getOuterStyle: (
     props: ComponentData.TScreenData['config']['attr']['componentBorder'],
   ) => CSSProperties;
+  getOuterPadding: (
+    props: ComponentData.TScreenData['config']['attr']['componentBorder'],
+  ) => number[];
 } = DashedBorder as any;
 
 DashedBorderWrapper.getOuterStyle = ({ width, padding }) => {
   return {
     padding: padding.map((item) => `${item + width}px`).join(' '),
   };
+};
+DashedBorderWrapper.getOuterPadding = ({ width, padding }) => {
+  return padding.map((item) => item + width);
 };
 
 export default DashedBorderWrapper;

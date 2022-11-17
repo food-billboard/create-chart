@@ -1,4 +1,4 @@
-import { useMemo, Fragment } from 'react';
+import { useMemo } from 'react';
 import { Select } from 'antd';
 import { useControllableValue } from 'ahooks';
 import { connect } from 'dva';
@@ -12,6 +12,13 @@ import styles from './components/Border/index.less';
 export { default as BorderMap } from './components/Border';
 export * from './components/Border';
 
+export const getTargetBorder = (
+  border: ComponentData.TComponentData['config']['style']['border'],
+) => {
+  if (!border.show) return null;
+  return (BorderMap as any)[border.value]?.value || null;
+};
+
 const _InternalBorderWrapper = (
   props: CommonBorderProps & {
     border: ComponentData.TComponentData['config']['style']['border'];
@@ -20,8 +27,9 @@ const _InternalBorderWrapper = (
   const { children, border = { show: false }, ...nextProps } = props;
 
   const Dom = useMemo(() => {
-    if (!border.show) return null;
-    return (BorderMap as any)[border.value]?.value || null;
+    return getTargetBorder(
+      border as ComponentData.TComponentData['config']['style']['border'],
+    );
   }, [border]);
 
   return (

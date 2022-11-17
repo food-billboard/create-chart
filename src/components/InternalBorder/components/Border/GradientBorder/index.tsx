@@ -19,12 +19,18 @@ const GradientBorderWrapper: typeof GradientBorder & {
   getOuterStyle: (
     props: ComponentData.TScreenData['config']['attr']['componentBorder'],
   ) => CSSProperties;
+  getOuterPadding: (
+    props: ComponentData.TScreenData['config']['attr']['componentBorder'],
+  ) => number[];
 } = GradientBorder as any;
 
 GradientBorderWrapper.getOuterStyle = ({ width, padding }) => {
   return {
     padding: padding.map((item) => `${item + width}px`).join(' '),
   };
+};
+GradientBorderWrapper.getOuterPadding = ({ width, padding }) => {
+  return padding.map((item) => item + width);
 };
 
 export default GradientBorderWrapper;

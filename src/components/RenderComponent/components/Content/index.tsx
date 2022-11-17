@@ -4,7 +4,10 @@ import { get } from 'lodash';
 import { ConnectState } from '@/models/connect';
 import { EComponentType } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils';
-import { InternalBorderWrapper } from '../../../InternalBorder';
+import {
+  InternalBorderWrapper,
+  getTargetBorder,
+} from '../../../InternalBorder';
 import ChildrenWrapper from './ChildrenWrapper';
 import SubGroup from './SubGroup';
 import { getComponentByType } from '../../../ChartComponents';
@@ -17,9 +20,17 @@ const Content = (props: {
   timestamps?: number;
   screenTheme: string;
   flag: ComponentData.ScreenFlagType;
+  componentBorder: ComponentData.TScreenData['config']['attr']['componentBorder'];
 }) => {
-  const { component, setParams, screenType, timestamps, screenTheme, flag } =
-    props;
+  const {
+    component,
+    setParams,
+    screenType,
+    timestamps,
+    screenTheme,
+    flag,
+    componentBorder,
+  } = props;
 
   const getScale = useCallback((component?: ComponentData.TComponentData) => {
     if (!component)
@@ -33,6 +44,28 @@ const Content = (props: {
     };
   }, []);
 
+  // 组存在边框的情况下，需要重新计算组的scale
+  const getComponentGroupBorderScale = useCallback(
+    (component: ComponentData.TComponentData) => {
+      const {
+        config: {
+          style: { border, width, height },
+        },
+        componentType,
+      } = component;
+      if (!border.show || componentType !== 'GROUP_COMPONENT')
+        return { x: 1, y: 1 };
+      const padding = getTargetBorder(border)?.getOuterPadding(
+        componentBorder,
+      ) || [0, 0];
+      return {
+        x: (width - padding[0] * 2) / width,
+        y: (height - padding[1] * 2) / height,
+      };
+    },
+    [componentBorder],
+  );
+
   const children = useMemo(() => {
     const renderChildren: (
       value: ComponentData.TComponentData[],
@@ -43,6 +76,8 @@ const Content = (props: {
       return value.map((component) => {
         const { type, id } = component;
         const border = get(component, 'config.style.border') || {};
+
+        const scale = getComponentGroupBorderScale(component);
 
         const newComponent = mergeWithoutArray({}, component, {
           config: {
@@ -60,13 +95,31 @@ const Content = (props: {
                   }),
             },
             attr: {
-              scaleX: (component.config.attr.scaleX ?? 1) * scaleX,
-              scaleY: (component.config.attr.scaleY ?? 1) * scaleY,
+              scaleX: (component.config.attr.scaleX ?? 1) * scaleX * scale.x,
+              scaleY: (component.config.attr.scaleY ?? 1) * scaleY * scale.y,
             },
           },
         });
 
         if (type === EComponentType.GROUP_COMPONENT) {
+          return (
+            <ChildrenWrapper
+              value={newComponent}
+              borderNone={isOuter}
+              parent={parent}
+              flag={flag}
+              key={component.id}
+            >
+              <SubGroup
+                value={newComponent}
+                isOuter={isOuter}
+                flag={flag}
+                wrapper={InternalBorderWrapper}
+              >
+                {renderChildren(newComponent.components, newComponent, false)}
+              </SubGroup>
+            </ChildrenWrapper>
+          );
           return (
             <InternalBorderWrapper
               border={border}
@@ -115,7 +168,15 @@ const Content = (props: {
       });
     };
     return renderChildren([component], null, true);
-  }, [component, setParams, screenType, timestamps, getScale, flag]);
+  }, [
+    component,
+    setParams,
+    screenType,
+    timestamps,
+    getScale,
+    flag,
+    getComponentGroupBorderScale,
+  ]);
 
   return <>{children}</>;
 };
@@ -126,6 +187,7 @@ export default connect(
       screenType: state.global.screenType,
       screenTheme: state.global.screenData.config.attr.theme.value,
       flag: state.global.screenData.config.flag.type,
+      componentBorder: state.global.screenData.config.attr.componentBorder,
     };
   },
   (dispatch) => {

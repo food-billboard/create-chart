@@ -21,6 +21,7 @@ const SubGroup = (props: {
   screenTheme: ComponentData.TScreenTheme;
   style?: CSSProperties;
   flag: ComponentData.ScreenFlagType;
+  wrapper: any;
   [key: string]: any;
 }) => {
   const {
@@ -32,10 +33,14 @@ const SubGroup = (props: {
     screenTheme,
     style,
     flag,
+    wrapper: Wrapper,
   } = props;
   const {
     id,
-    config: { options },
+    config: {
+      options,
+      style: { border },
+    },
   } = value;
   const { condition } = options as any;
 
@@ -64,19 +69,23 @@ const SubGroup = (props: {
   } = useCondition(onCondition, screenType);
 
   return (
-    <>
-      <div
-        className={classnames(
-          styles['render-component-wrapper-inner'],
-          flag === 'H5' ? 'pos-re' : 'pos-ab',
-          className,
-          conditionClassName,
-        )}
-        style={merge(childrenStyle, style || {}, conditionStyle)}
-        data-id={id}
-      >
-        {children}
-      </div>
+    <div
+      className={classnames(
+        'w-100 h-100',
+        conditionClassName,
+        className,
+        styles['render-component-wrapper-inner'],
+      )}
+      style={merge(childrenStyle, style || {}, conditionStyle, {
+        position: flag === 'H5' ? 'relative' : 'absolute',
+      })}
+      data-id={id}
+    >
+      <Wrapper border={border}>
+        <div className={classnames('pos-re w-100 h-100', className)}>
+          {children}
+        </div>
+      </Wrapper>
       <FetchFragment
         id={id}
         ref={requestRef}
@@ -87,7 +96,7 @@ const SubGroup = (props: {
         reGetValue={() => []}
         url=""
       />
-    </>
+    </div>
   );
 };
 

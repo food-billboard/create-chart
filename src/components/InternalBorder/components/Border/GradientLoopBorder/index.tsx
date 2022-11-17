@@ -29,12 +29,18 @@ const GradientLoopBorderWrapper: typeof GradientLoopBorder & {
   getOuterStyle: (
     props: ComponentData.TScreenData['config']['attr']['componentBorder'],
   ) => CSSProperties;
+  getOuterPadding: (
+    props: ComponentData.TScreenData['config']['attr']['componentBorder'],
+  ) => number[];
 } = GradientLoopBorder as any;
 
 GradientLoopBorderWrapper.getOuterStyle = ({ width, padding }) => {
   return {
     padding: padding.map((item) => `${item + width}px`).join(' '),
   };
+};
+GradientLoopBorderWrapper.getOuterPadding = ({ width, padding }) => {
+  return padding.map((item) => item + width);
 };
 
 export default GradientLoopBorderWrapper;

@@ -50,12 +50,18 @@ const FlickerBorderWrapper: typeof FlickerBorder & {
   getOuterStyle: (
     props: ComponentData.TScreenData['config']['attr']['componentBorder'],
   ) => CSSProperties;
+  getOuterPadding: (
+    props: ComponentData.TScreenData['config']['attr']['componentBorder'],
+  ) => number[];
 } = FlickerBorder as any;
 
 FlickerBorderWrapper.getOuterStyle = ({ width, padding }) => {
   return {
     padding: padding.map((item) => `${item + width}px`).join(' '),
   };
+};
+FlickerBorderWrapper.getOuterPadding = ({ width, padding }) => {
+  return padding.map((item) => item + width);
 };
 
 export default FlickerBorderWrapper;
