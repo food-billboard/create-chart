@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import classnames from 'classnames';
+import { connect } from 'dva';
 import ConfigWrapper, {
   ConfigItem,
 } from '@/components/ChartComponents/Common/ConfigWrapper';
@@ -14,7 +15,9 @@ import { ConnectState } from '@/models/connect';
 import KeyWordPosition from '../GroupConfig/components/OptionConfig/components/KeyWordPosition';
 import styles from './index.less';
 
-const MultiConfig = () => {
+const MultiConfig = (props: { flag: ComponentData.ScreenFlagType }) => {
+  const { flag } = props;
+
   const onOrientChange = useCallback((value) => {
     const { components, select } =
       getDvaGlobalModelData() as ConnectState['global'];
@@ -125,7 +128,9 @@ const MultiConfig = () => {
               <ConfigItem>
                 <div>
                   <ConfigList level={1}>
-                    <KeyWordPosition onChange={onOrientChange} />
+                    {flag === 'PC' && (
+                      <KeyWordPosition onChange={onOrientChange} />
+                    )}
                   </ConfigList>
                 </div>
               </ConfigItem>
@@ -137,4 +142,11 @@ const MultiConfig = () => {
   );
 };
 
-export default MultiConfig;
+export default connect(
+  (state: ConnectState) => {
+    return {
+      flag: state.global.screenData.config.flag.type,
+    };
+  },
+  () => ({}),
+)(MultiConfig);
