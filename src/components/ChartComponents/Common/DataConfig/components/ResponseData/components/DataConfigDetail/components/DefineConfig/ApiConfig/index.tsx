@@ -62,7 +62,7 @@ const ApiConfig = (props: ApiConfigProps) => {
       <SubForm>
         <Select
           className="w-100 c-f-s"
-          dropdownClassName="design-config-select-dropdown"
+          popupClassName="design-config-select-dropdown"
           defaultValue="POST"
           value={method}
           onChange={(value) => {

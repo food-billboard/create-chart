@@ -52,7 +52,7 @@ const Painter = (props: PainterProps) => {
     setSelect,
     scale: originScale,
     config: {
-      style: { width, height } = {},
+      style: { width, height, padding = [0, 0] } = {},
       attr: { poster, lens } = {},
       flag: { type } = {},
     } = {},
@@ -114,6 +114,7 @@ const Painter = (props: PainterProps) => {
         height: isExchange ? 'auto' : Number(height) || 1080,
         left: isExchange ? 0 : PANEL_ABSOLUTE_POSITION.left,
         top: isExchange ? 0 : PANEL_ABSOLUTE_POSITION.top,
+        padding: padding.map((item) => `${item}px`).join(' '),
       },
       backgroundStyle.backgroundImage ? {} : backgroundStyle,
       style,
