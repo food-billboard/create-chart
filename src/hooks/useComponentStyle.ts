@@ -38,6 +38,7 @@ export const useComponentStyle: (
       opacity,
       skew,
       margin = { y: 0 },
+      border,
       ...nextComponentStyle
     } = componentStyle;
     const borderWidth = screenType === 'edit' ? (1 / scale) * 100 : 0;
@@ -51,7 +52,7 @@ export const useComponentStyle: (
       {
         border: `${borderWidth}px solid ${borderColor}`,
         zIndex: isSelect ? 4 : zIndex,
-        pointerEvents: lock ? 'none' : 'unset',
+        pointerEvents: lock || !visible ? 'none' : 'unset',
         margin: `${margin.y}px 0px`,
       },
       flag === 'H5' && !visible

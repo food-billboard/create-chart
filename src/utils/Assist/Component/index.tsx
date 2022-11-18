@@ -127,7 +127,7 @@ export const isGroupComponent = (
 export const isComponentDisabled = (select: string) => {
   const idPathMap = useIdPathMap();
   const target = idPathMap[select];
-  return !target || !!target.lock;
+  return !target || !!target.lock || !target.visible;
 };
 
 // 组件在不同 screenType 下的样式

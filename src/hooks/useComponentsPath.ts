@@ -13,6 +13,8 @@ let ID_PATH_MAP: {
     disabled?: boolean;
     // 组件是否锁定
     lock?: boolean;
+    // 是否隐藏
+    visible?: boolean;
     // 组件过滤器数据
     filter?: ComponentData.TComponentApiDataConfig['filter'];
     // 组件的名字
@@ -72,6 +74,7 @@ export function useComponentPath<T = ComponentData.TComponentDateWithPath>(
         path: currentPath,
         disabled: curComponentDisabled,
         lock: !!cur.config.attr.lock,
+        visible: !!cur.config.attr.visible,
         filter: cur.config.data?.filter,
         name: cur.name,
       };
