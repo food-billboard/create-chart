@@ -48,7 +48,10 @@ function PainterWrapper(props: {
   if (flag === 'H5') {
     return (
       <div
-        className={classnames('w-100 h-100', styles['page-preview-h5-wrapper'])}
+        className={classnames(
+          'w-100 h-100 zero-scrollbar',
+          styles['page-preview-h5-wrapper'],
+        )}
       >
         <div
           className="w-100"
