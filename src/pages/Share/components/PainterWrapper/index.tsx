@@ -11,19 +11,13 @@ const isMobile = IsMobile();
 
 function PainterWrapper(props: {
   flag: ComponentData.ScreenFlagType;
+  scale: number;
   children?: ReactNode;
 }) {
-  const { flag, children } = props;
+  const { flag, children, scale } = props;
 
   const { height = 0 } =
     useSize(() => document.querySelector('.page-preview-container')) || {};
-
-  const realHeight = useMemo(() => {
-    return (
-      document.querySelector('.page-preview-container')?.getBoundingClientRect()
-        ?.height || height
-    );
-  }, [height]);
 
   if (isMobile && flag === 'PC') {
     return (
@@ -59,7 +53,7 @@ function PainterWrapper(props: {
         <div
           className="w-100"
           style={{
-            height: realHeight,
+            height: height * scale,
             overflow: 'hidden',
           }}
         >

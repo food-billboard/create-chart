@@ -27,7 +27,7 @@ function Viewer(props: {
   }, [setScreenType]);
 
   return (
-    <PainterWrapper>
+    <PainterWrapper scale={scale}>
       <NormalPainter {...wrapperProps} />
       <FetchScreenComponent />
     </PainterWrapper>

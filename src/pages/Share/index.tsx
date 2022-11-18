@@ -113,7 +113,7 @@ function Share(props: {
   }, []);
 
   return (
-    <PainterWrapper>
+    <PainterWrapper scale={scale}>
       {heartbeat && <NormalPainter {...wrapperProps} />}
       <FetchScreenComponent needFetch={needFetch} />
       <PasswordConfirm ref={passwordConfirmRef} onOk={onPasswordConfirm} />
