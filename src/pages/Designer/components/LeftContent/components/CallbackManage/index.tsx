@@ -8,7 +8,11 @@ import {
 import { Button, Drawer, Table, Modal, Tooltip, Popconfirm, Empty } from 'antd';
 import { connect } from 'dva';
 import { nanoid } from 'nanoid';
-import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
+import {
+  MinusSquareOutlined,
+  PlusSquareOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 import CodeViewer from '@/components/CodeView';
 import ParamsSelect from '@/components/ParamsSelect';
 import FocusWrapper from '@/components/FocusWrapper';
@@ -233,9 +237,33 @@ const CallbackList = (props: {
     ];
   }, [updateCallback, deleteData, copyData]);
 
+  const handleClear = useCallback(() => {
+    const idPathMap = useIdPathMap();
+    setCallbackData?.(
+      callback.filter((item) => {
+        if (item.editable) return true;
+        return Object.values(idPathMap).some((target) => {
+          const { filter } = target;
+
+          return (
+            filter?.show &&
+            filter?.value.some(
+              (valueItem) => valueItem.id === item.id && !valueItem.disabled,
+            )
+          );
+        });
+      }),
+    );
+  }, [callback]);
+
   return (
     <FocusWrapper>
       <Table
+        title={() => (
+          <Popconfirm title="是否确认删除" onConfirm={handleClear}>
+            <Button icon={<DeleteOutlined />}>清空无引用过滤函数</Button>
+          </Popconfirm>
+        )}
         dataSource={callback}
         rowKey={(record) => record.id}
         columns={columns}

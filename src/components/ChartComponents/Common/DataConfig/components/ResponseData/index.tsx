@@ -106,78 +106,83 @@ const ResponseData = (props: {
         onChange={onAutoUpdateConfigChange}
       />
       <div className={styles['design-config-response-data-step']}>
-        <Steps progressDot current={2} direction="vertical">
-          <Step
-            title={
-              <div
-                className={classnames(
-                  styles['design-config-response-data-step-item'],
-                  'dis-flex',
-                )}
-              >
+        <Steps
+          progressDot
+          current={2}
+          direction="vertical"
+          items={[
+            {
+              title: (
                 <div
-                  className={
-                    styles['design-config-response-data-step-item-title']
-                  }
+                  className={classnames(
+                    styles['design-config-response-data-step-item'],
+                    'dis-flex',
+                  )}
                 >
-                  <span
+                  <div
                     className={
-                      styles[
-                        'design-config-response-data-step-item-title-type-txt'
-                      ]
+                      styles['design-config-response-data-step-item-title']
                     }
                   >
-                    {apiTypeString}
-                  </span>
+                    <span
+                      className={
+                        styles[
+                          'design-config-response-data-step-item-title-type-txt'
+                        ]
+                      }
+                    >
+                      {apiTypeString}
+                    </span>
+                  </div>
+                  <GhostButton onClick={openDataConfig}>配置数据源</GhostButton>
                 </div>
-                <GhostButton onClick={openDataConfig}>配置数据源</GhostButton>
-              </div>
-            }
-          />
-          <Step
-            status={filterOpen ? 'finish' : 'wait'}
-            title={
-              <div
-                className={classnames(
-                  styles['design-config-response-data-step-item'],
-                  'dis-flex',
-                )}
-              >
+              ),
+            },
+            {
+              title: (
                 <div
-                  className={
-                    styles['design-config-response-data-step-item-title']
-                  }
+                  className={classnames(
+                    styles['design-config-response-data-step-item'],
+                    'dis-flex',
+                  )}
                 >
-                  <Checkbox
-                    checked={filterOpen}
-                    onChange={onFilterConfigChange}
+                  <div
+                    className={
+                      styles['design-config-response-data-step-item-title']
+                    }
                   >
-                    数据过滤器
-                  </Checkbox>
+                    <Checkbox
+                      checked={filterOpen}
+                      onChange={onFilterConfigChange}
+                    >
+                      数据过滤器
+                    </Checkbox>
+                  </div>
+                  <GhostButton onClick={openDataConfig}>添加过滤器</GhostButton>
                 </div>
-                <GhostButton onClick={openDataConfig}>添加过滤器</GhostButton>
-              </div>
-            }
-          />
-          <Step
-            title={
-              <div
-                className={classnames(
-                  styles['design-config-response-data-step-item'],
-                  'dis-flex',
-                )}
-              >
+              ),
+              status: filterOpen ? 'finish' : 'wait',
+            },
+            {
+              title: (
                 <div
-                  className={
-                    styles['design-config-response-data-step-item-title']
-                  }
+                  className={classnames(
+                    styles['design-config-response-data-step-item'],
+                    'dis-flex',
+                  )}
                 >
-                  <span>数据响应结果{'（ 只读 ）'}</span>
+                  <div
+                    className={
+                      styles['design-config-response-data-step-item-title']
+                    }
+                  >
+                    <span>数据响应结果{'（ 只读 ）'}</span>
+                  </div>
                 </div>
-              </div>
-            }
-          />
-        </Steps>
+              ),
+            },
+          ]}
+        />
       </div>
       <div className={styles['design-config-response-data-code-editor-view']}>
         <CodeEditor value={value.config.data!} />
