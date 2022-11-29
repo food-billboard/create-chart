@@ -72,33 +72,29 @@ const ContextMenu = (
   );
 
   const menu = useMemo(() => {
-    return (
-      <Menu
-        items={actionList.map((item) => {
-          const { type, children: Action } = item;
-          return {
-            label: (
-              <Action
-                key={type}
-                value={value}
-                path={path}
-                setComponent={DataChangePool.setComponent}
-                setSelect={setSelect}
-                setComponentAll={setComponentAll}
-                components={components}
-                onClick={hiddenMenu.bind(null, type)}
-                clipboard={clipboard}
-                setClipboard={setClipboard}
-                actionFrom={actionFrom}
-                select={internalSelect}
-                flag={flag}
-              />
-            ),
-            key: type,
-          };
-        })}
-      />
-    );
+    return actionList.map((item) => {
+      const { type, children: Action } = item;
+      return {
+        label: (
+          <Action
+            key={type}
+            value={value}
+            path={path}
+            setComponent={DataChangePool.setComponent}
+            setSelect={setSelect}
+            setComponentAll={setComponentAll}
+            components={components}
+            onClick={hiddenMenu.bind(null, type)}
+            clipboard={clipboard}
+            setClipboard={setClipboard}
+            actionFrom={actionFrom}
+            select={internalSelect}
+            flag={flag}
+          />
+        ),
+        key: type,
+      };
+    });
   }, [
     actionList,
     value,
@@ -136,7 +132,9 @@ const ContextMenu = (
 
   return (
     <Dropdown
-      overlay={menu}
+      menu={{
+        items: menu,
+      }}
       trigger={['contextMenu']}
       onOpenChange={onVisibleChange}
       open={visible}

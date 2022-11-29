@@ -58,17 +58,12 @@ const Scale = (props: {
   const sizeSelect = useMemo(() => {
     const value = [50, 100, 150, 200];
 
-    return (
-      <Menu
-        onClick={selectScaleSize}
-        items={value.map((item) => {
-          return {
-            label: `${item}%`,
-            key: item,
-          };
-        })}
-      />
-    );
+    return value.map((item) => {
+      return {
+        label: `${item}%`,
+        key: item,
+      };
+    });
   }, [selectScaleSize]);
 
   return (
@@ -80,7 +75,13 @@ const Scale = (props: {
           minWidth: 300,
         }}
       >
-        <Dropdown overlay={sizeSelect}>
+        <Dropdown
+          menu={{
+            items: sizeSelect,
+            selectable: true,
+            onSelect: selectScaleSize,
+          }}
+        >
           <Button type="link" onClick={autoFitScaleMethod}>
             自适应
           </Button>

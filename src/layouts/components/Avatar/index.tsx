@@ -12,20 +12,16 @@ const Avatar = (props: { logout: () => void; userInfo: any }) => {
   }, [logout]);
 
   const menu = useMemo(() => {
-    return (
-      <Menu
-        items={[
-          {
-            label: <a onClick={handleLogout}>退出登录</a>,
-            key: 'logout',
-          },
-        ]}
-      />
-    );
+    return [
+      {
+        label: <a onClick={handleLogout}>退出登录</a>,
+        key: 'logout',
+      },
+    ];
   }, [handleLogout]);
 
   return (
-    <Dropdown overlay={menu} placement="bottom">
+    <Dropdown menu={{ items: menu }} placement="bottom">
       <AntAvatar src={avatar} icon={<UserOutlined />}>
         {username}
       </AntAvatar>
