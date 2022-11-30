@@ -2,7 +2,7 @@ import { Modal } from 'antd';
 import { useState, useCallback, useRef } from 'react';
 import { FullscreenOutlined } from '@ant-design/icons';
 import FocusWrapper from '../FocusWrapper';
-import Editor, { EditorRef } from './Editor';
+import Editor, { EditorRef } from './EditorNext';
 import IconTooltip from '../IconTooltip';
 import Typesetting from './Typesetting';
 import styles from './index.less';
@@ -58,10 +58,12 @@ const FullScreenEditor = (props: {
         <FocusWrapper className="pos-re w-100 h-100">
           <Editor
             value={stateCode}
-            onChange={setStateCode}
+            onChange={(value) => setStateCode(value ?? '')}
             ref={editorContentRef}
             language={language}
             autoFormat
+            // width="100px"
+            // height="100px"
           />
           <div className={styles['component-code-editor-action']}>
             {action && (

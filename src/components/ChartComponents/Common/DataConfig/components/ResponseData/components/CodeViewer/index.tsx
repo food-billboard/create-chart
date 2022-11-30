@@ -22,8 +22,8 @@ const CodeViewer = (
     <CodeEditor
       disabled
       language="json"
-      width={'312'}
-      height={'240'}
+      width={'312px'}
+      height={'240px'}
       bordered
       autoFormat
       action={['copy', 'typesetting']}

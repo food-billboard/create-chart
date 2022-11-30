@@ -11,7 +11,7 @@ import classnames from 'classnames';
 import Editor, {
   EditorProps as InternalEditorProps,
   EditorRef as InternalEditorRef,
-} from './Editor';
+} from './EditorNext';
 import ClipboardAction from './Clipboard';
 import FullScreenEditor from './FullScreenEditor';
 import Typesetting from './Typesetting';

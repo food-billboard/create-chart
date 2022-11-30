@@ -7,15 +7,13 @@ import {
 } from 'react';
 import { useControllableValue } from 'ahooks';
 import MonacoEditor, {
-  MonacoEditorProps,
-  EditorDidMount,
-} from 'react-monaco-editor';
+  EditorProps as MonacoEditorProps,
+  OnMount as EditorDidMount,
+} from '@monaco-editor/react';
 import classnames from 'classnames';
 import { merge } from 'lodash';
 import { sleep } from '@/utils';
 import styles from './index.less';
-
-// ! 这个组件暂时被Next替代了，先留着，看看会不会哪里还有依赖
 
 export type EditorProps = Partial<MonacoEditorProps> & {
   autoFocus?: boolean;
@@ -44,7 +42,7 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
     options,
     onChange,
     autoFocus = false,
-    editorDidMount: propsEditorDidMount,
+    onMount: propsEditorDidMount,
     disabled = false,
     className,
     bordered,
@@ -154,16 +152,25 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
       language="javascript"
       value={value}
       options={realOptions}
-      onChange={setValue}
-      editorDidMount={editorDidMount}
+      onChange={(value) => setValue(value ?? '')}
       className={classnames(
         {
           [styles['component-code-editor']]: !!bordered,
         },
         className,
       )}
-      editorWillMount={(editor) => {
-        editor.editor.defineTheme('vs-dark-custom', {
+      theme={'vs-dark'}
+      onMount={editorDidMount}
+      // 设置代码提示
+      beforeMount={(monaco) => {
+        if (!nextProps.language || nextProps.language === 'javascript')
+          monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+            target: monaco.languages.typescript.ScriptTarget.Latest,
+            module: monaco.languages.typescript.ModuleKind.ES2015,
+            allowNonTsExtensions: true,
+            lib: ['es2018'],
+          });
+        monaco.editor.defineTheme('vs-dark-custom', {
           base: 'vs-dark',
           inherit: true,
           rules: [],
