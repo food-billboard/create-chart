@@ -1913,7 +1913,7 @@ antd-mobile@^2.3.1:
     rmc-tabs "~1.2.0"
     rmc-tooltip "~1.0.0"
 
-antd@^4.1.2, antd@^4.1.3, "antd@^4.20.0 ", antd@^4.21.1:
+antd@4.24.4, antd@^4.1.2, antd@^4.1.3, "antd@^4.20.0 ":
   version "4.24.4"
   resolved "https://registry.npmmirror.com/antd/-/antd-4.24.4.tgz#33df11a101ecfe62ed4bc8a492e7f83e9b83e5e0"
   integrity sha512-XKZYMCKTQV+z0kZkAodvWMph9EhnNLon4JrWOoi2rjBzsYKKOVNEceXi3TZy/wdF6GcawjBduL3gd6NtWcTe4A==

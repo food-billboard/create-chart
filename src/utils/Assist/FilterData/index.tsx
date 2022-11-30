@@ -1,6 +1,7 @@
 import json5 from 'json5';
 import mustache from 'mustache';
 import { cloneDeep } from 'lodash';
+import Mock from 'mockjs';
 import { preRequestData } from '@/services';
 import VariableStringUtil from '../VariableString';
 import request from '../../request';
@@ -22,10 +23,12 @@ class FilterData {
   }
 
   pipeValueByCodeString(value: any, global: any, code: string) {
-    let filterFunction = new Function('data', 'global', code);
+    let filterFunction = new Function('data', 'global', 'options', code);
     try {
       return {
-        value: filterFunction(value, global),
+        value: filterFunction(value, global, {
+          Mock,
+        }),
         error: false,
       };
     } catch (err) {

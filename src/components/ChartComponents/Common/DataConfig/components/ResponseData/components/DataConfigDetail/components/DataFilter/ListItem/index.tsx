@@ -241,7 +241,7 @@ const DataFilter = (props: {
           />
         </div>
 
-        <p>{'function filter( data, global ) {'}</p>
+        <p>{'function filter( data, global, options ) {'}</p>
         <CodeEditor
           language="javascript"
           width={426}
