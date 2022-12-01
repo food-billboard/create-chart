@@ -1,6 +1,9 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import classnames from 'classnames';
+import Color from 'color';
+import ColorSelect from '@/components/ColorSelect';
+import { getHexString } from '@/utils/Assist/Theme';
 import styles from './index.less';
 
 const ColorItem = ({
@@ -8,11 +11,15 @@ const ColorItem = ({
   checked,
   name,
   onClick,
+  editable = false,
+  onChange,
 }: {
   value: string[];
   checked: boolean;
   name: string;
-  onClick: (name: string) => void;
+  onClick?: (name: string) => void;
+  editable?: boolean;
+  onChange?: (value: string[]) => void;
 }) => {
   const span = parseInt((24 / value.length).toFixed(0));
 
@@ -26,10 +33,10 @@ const ColorItem = ({
         styles['designer-theme-config-list'],
       )}
       key={name}
-      onClick={onClick.bind(null, name)}
+      onClick={onClick?.bind(null, name)}
     >
       {value.map((item, index) => {
-        return (
+        const children = (
           <Col span={span} key={index}>
             <div
               className={styles['designer-theme-config-item']}
@@ -39,6 +46,30 @@ const ColorItem = ({
             ></div>
           </Col>
         );
+        if (editable) {
+          const realValue = Color(item).object();
+          return (
+            <ColorSelect
+              key={index}
+              value={{
+                ...(realValue as ComponentData.TColorConfig),
+                a: realValue.alpha || 1,
+              }}
+              onChange={(newValue) => {
+                const color = getHexString(
+                  newValue as ComponentData.TColorConfig,
+                  true,
+                );
+                const newColor = [...value];
+                newColor.splice(index, 1, color);
+                onChange?.(newColor);
+              }}
+            >
+              {children}
+            </ColorSelect>
+          );
+        }
+        return children;
       })}
     </Row>
   );

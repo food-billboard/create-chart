@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useState, CSSProperties } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useState,
+  CSSProperties,
+  ReactNode,
+} from 'react';
 import { useControllableValue, useUpdateEffect, useUnmount } from 'ahooks';
 import { Input, InputNumber } from 'antd';
 import {
@@ -48,10 +54,11 @@ type TColorSelectProps = Partial<
   value?: ComponentData.TColorConfig;
   defaultValue?: ComponentData.TColorConfig;
   onChange?: (color: ComponentData.TColorConfig) => void;
+  children?: ReactNode;
 };
 
 const ColorSelect = (props: TColorSelectProps) => {
-  const { value, onChange, ...nextProps } = props;
+  const { value, onChange, children, ...nextProps } = props;
 
   const [stateValue, setStateValue] = useState<ComponentData.TColorConfig>(
     value || DEFAULT_COLOR,
@@ -121,16 +128,18 @@ const ColorSelect = (props: TColorSelectProps) => {
       overlayClassName={styles['component-color-select-tooltip']}
       onOpenChange={onVisibleChange}
     >
-      <div
-        className={classnames(
-          styles['component-color-select'],
-          'border-1',
-          'c-po',
-        )}
-        style={{
-          backgroundColor: getRgbaString(stateValue),
-        }}
-      ></div>
+      {children || (
+        <div
+          className={classnames(
+            styles['component-color-select'],
+            'border-1',
+            'c-po',
+          )}
+          style={{
+            backgroundColor: getRgbaString(stateValue),
+          }}
+        ></div>
+      )}
     </Tooltip>
   );
 };
@@ -155,6 +164,7 @@ export const CompatColorSelect = (
     defaultValue: propsDefaultValue,
     ignoreAlpha = false,
     style,
+    children,
   } = props;
   const [value, onChange] = useControllableValue<ComponentData.TColorConfig>(
     props,
@@ -242,6 +252,7 @@ export const CompatColorSelect = (
       <ColorSelect
         value={props.value ?? props.defaultValue ?? value}
         onChange={onSelectChange}
+        children={children}
       />
       <Input
         prefix={<span onClick={(e) => e.stopPropagation}>#</span>}

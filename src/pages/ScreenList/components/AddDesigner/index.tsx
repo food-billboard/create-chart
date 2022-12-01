@@ -53,7 +53,10 @@ const AddDesigner = (props: { type: 'screen' | 'model' }) => {
             poster: GlobalConfig.DEFAULT_SCREEN_COVER,
             config: {
               attr: {
-                theme: DEFAULT_THEME_NAME,
+                theme: {
+                  type: 'internal',
+                  value: DEFAULT_THEME_NAME,
+                },
               },
             },
           }),
