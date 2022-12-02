@@ -100,24 +100,6 @@ const ShareSetting = forwardRef<
     return target?.realValue || 30 * 24 * 60 * 60 * 1000;
   }, [time]);
 
-  const onOk = useCallback(() => {
-    if (password.length > 16) {
-      message.info('密码不能多于16位');
-      return;
-    } else if (!!password.length && password.length < 8) {
-      message.info('密码不能少于8位');
-      return;
-    }
-    propsOnOk?.({
-      auth,
-      time: getTimeData(),
-      password,
-      _id: screenId,
-    });
-    setVisible(false);
-    clear();
-  }, [auth, getTimeData, password, clear, screenId]);
-
   const fetchData = useCallback(async (id) => {
     try {
       const { auth, time } = await shareScreenGet({
@@ -143,6 +125,24 @@ const ShareSetting = forwardRef<
     [fetchData],
   );
 
+  const onOk = useCallback(() => {
+    if (password.length > 16) {
+      message.info('密码不能多于16位');
+      return;
+    } else if (!!password.length && password.length < 8) {
+      message.info('密码不能少于8位');
+      return;
+    }
+    propsOnOk?.({
+      auth,
+      time: getTimeData(),
+      password,
+      _id: screenId,
+    });
+    open(screenId);
+    setShared(true);
+  }, [auth, getTimeData, password, clear, screenId, open]);
+
   // 分享地址
   const shareAddress = useMemo(() => {
     return getShare(screenId);
@@ -154,15 +154,16 @@ const ShareSetting = forwardRef<
       e.stopPropagation();
       try {
         await closeShareScreen({ _id: screenId });
-        setVisible(false);
-        clear();
+        open(screenId);
+        setShared(false);
+        message.success('操作成功');
       } catch (err) {
         message.info('操作失败');
       } finally {
         onCancelShare?.();
       }
     },
-    [screenId, clear, onCancelShare],
+    [screenId, clear, onCancelShare, open],
   );
 
   useImperativeHandle(
@@ -187,7 +188,7 @@ const ShareSetting = forwardRef<
           </Button>
         ) : null,
         <Button key="cancel" onClick={onCancel}>
-          取消
+          关闭
         </Button>,
         <Button key="ok" onClick={onOk} type="primary">
           确定

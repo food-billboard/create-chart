@@ -122,6 +122,7 @@ const ScreenList = (props: {
       try {
         await shareScreen(value);
         onChange?.();
+        message.success('操作成功');
       } catch (err) {
         message.info('操作失败');
       } finally {
