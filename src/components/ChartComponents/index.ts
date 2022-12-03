@@ -74,6 +74,7 @@ import Radio from './Interactive/Radio';
 import Datepicker from './Interactive/Datepicker';
 import Rate from './Interactive/Rate';
 import Button from './Interactive/Button';
+import Pagination from './Interactive/Pagination';
 // map
 import ScatterMap from './Map/ScatterMap';
 import Ali3DMap from './Map/Ali3DMap';
@@ -183,6 +184,7 @@ COMPONENT_MAP.set(Decoration5.type, Decoration5);
 COMPONENT_MAP.set(Decoration6.type, Decoration6);
 COMPONENT_MAP.set(Decoration7.type, Decoration7);
 COMPONENT_MAP.set(Decoration8.type, Decoration8);
+COMPONENT_MAP.set(Pagination.type, Pagination);
 // component-map-insert-prefix
 
 export function getComponentByType(component: ComponentData.TComponentData) {

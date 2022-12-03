@@ -38,10 +38,10 @@ const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
     syncInteractiveAction,
     linkageMethod,
     getValue,
-    requestUrl,
-    componentFilter,
+    requestUrl = '',
+    componentFilter = [],
     value: processedValue = [],
-    componentFilterMap,
+    componentFilterMap = [],
   } = useComponent<TTabConfig>(
     {
       component: value,

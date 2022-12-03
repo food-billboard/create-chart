@@ -50,10 +50,10 @@ const StateList = (
     syncInteractiveAction,
     linkageMethod,
     getValue,
-    requestUrl,
-    componentFilter,
+    requestUrl = '',
+    componentFilter = [],
     value: processedValue = [],
-    componentFilterMap,
+    componentFilterMap = [],
     onCondition,
   } = useComponent<TStateListConfig>(
     {

@@ -675,6 +675,12 @@ const _COMPONENT_TYPE_LIST = [
             icon: Button,
             description: '',
           },
+          {
+            type: 'PAGINATION',
+            title: '分页',
+            icon: Button,
+            description: '',
+          },
         ],
       },
     ],

@@ -82,5 +82,6 @@ declare type ComponentSelfType =
   | 'DECORATION_5'
   | 'DECORATION_6'
   | 'DECORATION_7'
-  | 'DECORATION_8';
+  | 'DECORATION_8'
+  | 'PAGINATION';
 // component-type-insert-prefix
