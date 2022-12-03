@@ -16,7 +16,7 @@ const userWrapperProps = (
       'page-preview-container',
     ),
     style: {
-      transform: `scale(${scale}) translateX(${flag === 'PC' ? '50%' : '0'})`,
+      transform: `scale(${scale}) translateX(${flag === 'PC' ? '-50%' : '0'})`,
       minHeight: `calc( 100vh / ${scale} )`,
     },
     scale,
