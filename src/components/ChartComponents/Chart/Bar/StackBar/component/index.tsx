@@ -17,6 +17,7 @@ import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TStackBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
@@ -150,6 +151,7 @@ const StackBar = (
       type: 'bar',
       itemStyle: {
         color: getRgbaString(itemStyle[0]?.color),
+        borderRadius: [DEFAULT_BORDER_RADIUS, DEFAULT_BORDER_RADIUS, 0, 0],
       },
       barWidth: itemStyle[0]?.barWidth,
       data: yAxisValues._defaultValue_,
@@ -173,6 +175,12 @@ const StackBar = (
             ...baseSeries,
             itemStyle: {
               color: getRgbaString(itemStyle[index]?.color),
+              borderRadius: [
+                DEFAULT_BORDER_RADIUS,
+                DEFAULT_BORDER_RADIUS,
+                0,
+                0,
+              ],
             },
             barWidth: itemStyle[index]?.barWidth,
             data: yAxisValues[name] || [],

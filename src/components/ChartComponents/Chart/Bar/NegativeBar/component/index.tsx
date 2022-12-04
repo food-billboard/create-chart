@@ -17,6 +17,7 @@ import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TNegativeBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
@@ -131,6 +132,7 @@ const NegativeBar = (
         itemStyle: {
           ...itemStyle,
           color: getRgbaString(itemStyle.color[0]),
+          borderRadius: [DEFAULT_BORDER_RADIUS, 0, 0, DEFAULT_BORDER_RADIUS],
         },
         label: {
           ...label[0],
@@ -145,6 +147,7 @@ const NegativeBar = (
         itemStyle: {
           ...itemStyle,
           color: getRgbaString(itemStyle.color[1]),
+          borderRadius: [0, DEFAULT_BORDER_RADIUS, DEFAULT_BORDER_RADIUS, 0],
         },
         label: {
           ...label[1],
@@ -164,6 +167,12 @@ const NegativeBar = (
               itemStyle: {
                 ...itemStyle,
                 color: getRgbaString(itemStyle.color[index * 2]),
+                borderRadius: [
+                  DEFAULT_BORDER_RADIUS,
+                  0,
+                  0,
+                  DEFAULT_BORDER_RADIUS,
+                ],
               },
               data: (yAxisValues[item] || []).map((item: any) => item?.[0]),
               name: item,
@@ -174,6 +183,12 @@ const NegativeBar = (
               itemStyle: {
                 ...itemStyle,
                 color: getRgbaString(itemStyle.color[index * 2 + 1]),
+                borderRadius: [
+                  0,
+                  DEFAULT_BORDER_RADIUS,
+                  DEFAULT_BORDER_RADIUS,
+                  0,
+                ],
               },
               data: (yAxisValues[item] || []).map((item: any) => item?.[1]),
               name: item,

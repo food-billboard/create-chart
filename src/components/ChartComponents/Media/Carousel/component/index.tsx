@@ -14,6 +14,7 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TCarouselConfig } from '../type';
 import styles from './index.less';
 
@@ -154,6 +155,8 @@ const CarouselBasic = (
               style={{
                 width: '100%',
                 height: '100%',
+                overflow: 'hidden',
+                borderRadius: DEFAULT_BORDER_RADIUS,
               }}
               pauseOnFocus={pauseOnHover}
             >

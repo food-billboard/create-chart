@@ -11,6 +11,7 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TImageConfig } from '../type';
 import styles from './index.less';
 
@@ -127,7 +128,9 @@ const ImageBasic = (
             id={chartId.current}
             onClick={onClick}
             className="w-100 h-100"
-            style={merge(componentStyle, clipPathStyle)}
+            style={merge(componentStyle, clipPathStyle, {
+              borderRadius: DEFAULT_BORDER_RADIUS,
+            })}
           ></div>
           {children}
         </Wrapper>

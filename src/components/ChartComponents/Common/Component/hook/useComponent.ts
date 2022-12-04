@@ -37,7 +37,7 @@ export function useComponent<P extends object = {}>(
 
   // 组件的过滤配置
   const componentLinkageConfig = useMemo(() => {
-    return get(component, 'config.interactive.linkage');
+    return get(component, 'config.interactive.linkage') || [];
   }, [component]);
 
   const linkageMethod = useLinkageInteractive(componentLinkageConfig);
@@ -51,18 +51,24 @@ export function useComponent<P extends object = {}>(
 
   // 组件过滤函数集合
   const componentFilter = useMemo(() => {
-    return componentFilterConfig?.value;
+    return componentFilterConfig?.value || [];
   }, [componentFilterConfig]);
 
   // 组件过滤的字段映射
   const componentFilterMap = useMemo(() => {
-    return componentFilterConfig?.map;
+    return componentFilterConfig?.map || [];
   }, [componentFilterConfig]);
 
   // 调用频率配置
-  const requestFrequencyConfig = useMemo(() => {
-    return get(component, 'config.data.request.frequency') || {};
-  }, [component]);
+  const requestFrequencyConfig: ComponentData.TComponentApiDataConfig['request']['frequency'] =
+    useMemo(() => {
+      return (
+        get(component, 'config.data.request.frequency') || {
+          show: false,
+          value: 5000,
+        }
+      );
+    }, [component]);
 
   // 调用频率
   const requestFrequency = useMemo(() => {
@@ -71,7 +77,7 @@ export function useComponent<P extends object = {}>(
 
   // 数据请求配置
   const requestDataConfig = useMemo(() => {
-    return get(component, 'config.data');
+    return get(component, 'config.data')!;
   }, [component]);
 
   // 请求的value
@@ -84,7 +90,7 @@ export function useComponent<P extends object = {}>(
 
   // 数据请求的地址
   const requestUrl = useMemo(() => {
-    return get(requestDataConfig, 'request.url');
+    return get(requestDataConfig, 'request.url') || '';
   }, [requestDataConfig]);
 
   // 是否需要定时请求
@@ -95,7 +101,7 @@ export function useComponent<P extends object = {}>(
 
   const baseInteractive: ComponentData.TBaseInteractiveConfig[] =
     useMemo(() => {
-      return get(component, 'config.interactive.base');
+      return get(component, 'config.interactive.base') || [];
     }, [component]);
 
   // 数据请求

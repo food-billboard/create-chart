@@ -12,6 +12,7 @@ import FetchFragment, {
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TVideoConfig } from '../type';
 import styles from './index.less';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 
 const CHART_ID = 'VIDEO';
 
@@ -97,6 +98,8 @@ const VideoBasic = (
           {
             width: '100%',
             height: '100%',
+            overflow: 'hidden',
+            borderRadius: DEFAULT_BORDER_RADIUS,
           },
           style,
           clipPathStyle,

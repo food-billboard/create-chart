@@ -17,7 +17,10 @@ import ThemeUtil from '@/utils/Assist/Theme';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
-import { DEFAULT_OPACITY } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import {
+  DEFAULT_OPACITY,
+  DEFAULT_BORDER_RADIUS,
+} from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TPolarBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
@@ -118,6 +121,7 @@ const PolarBar = (
       itemStyle: {
         ...itemStyle,
         color: getRgbaString(itemStyle.color[0]),
+        borderRadius: DEFAULT_BORDER_RADIUS,
       },
       data: [yAxisValues._defaultValue_[0]],
       animation: show,
@@ -134,6 +138,7 @@ const PolarBar = (
             itemStyle: {
               ...itemStyle,
               color: getRgbaString(itemStyle.color[index]),
+              borderRadius: DEFAULT_BORDER_RADIUS,
             },
             data: [yAxisValues._defaultValue_[index] || 0],
             name: item,

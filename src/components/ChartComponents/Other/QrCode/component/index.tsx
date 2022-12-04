@@ -13,6 +13,7 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TQrCodeConfig } from '../type';
 import styles from './index.less';
 
@@ -150,6 +151,8 @@ const QrCode = (props: ComponentData.CommonComponentProps<TQrCodeConfig>) => {
             className={styles['component-other-qr-code-content']}
             style={{
               backgroundColor: getRgbaString(base.backgroundColor),
+              borderRadius: DEFAULT_BORDER_RADIUS,
+              overflow: 'hidden',
             }}
           >
             <img

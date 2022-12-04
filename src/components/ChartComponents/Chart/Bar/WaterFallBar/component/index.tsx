@@ -18,6 +18,7 @@ import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TWaterFallBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
@@ -117,6 +118,7 @@ const WaterFallBar = (
       itemStyle: {
         ...itemStyle,
         color: radialGradientColor(itemStyle.color),
+        borderRadius: DEFAULT_BORDER_RADIUS,
       },
       data: yAxisValues._defaultValue_,
       stack: 'water-fall',
@@ -134,6 +136,7 @@ const WaterFallBar = (
         itemStyle: {
           borderColor: 'transparent',
           color: 'transparent',
+          borderRadius: DEFAULT_BORDER_RADIUS,
         },
         emphasis: {
           itemStyle: {

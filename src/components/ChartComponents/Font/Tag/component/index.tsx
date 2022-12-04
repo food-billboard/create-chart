@@ -12,6 +12,7 @@ import FetchFragment, {
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import ThemeUtil from '@/utils/Assist/Theme';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TTagConfig } from '../type';
 import styles from './index.less';
 
@@ -114,6 +115,7 @@ const Tag = (props: ComponentData.CommonComponentProps<TTagConfig>) => {
             ...textStyle,
             color: getRgbaString(textStyle.color),
             lineHeight: 'unset',
+            borderRadius: DEFAULT_BORDER_RADIUS,
           }}
           color={getRgbaString(
             color || ThemeUtil.generateNextColor4CurrentTheme(currIndex),

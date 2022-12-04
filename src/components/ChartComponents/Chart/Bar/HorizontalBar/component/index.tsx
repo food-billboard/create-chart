@@ -17,6 +17,7 @@ import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { THorizontalBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
@@ -121,6 +122,7 @@ const HorizontalBar = (
       type: 'bar',
       itemStyle: {
         ...itemStyle,
+        borderRadius: [0, DEFAULT_BORDER_RADIUS, DEFAULT_BORDER_RADIUS, 0],
         color: getRgbaString(itemStyle.color[0]),
       },
       data: yAxisValues._defaultValue_,

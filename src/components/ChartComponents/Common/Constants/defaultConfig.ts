@@ -3,6 +3,9 @@ import { nanoid } from 'nanoid';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { DEFAULT_BORDER } from '@/components/InternalBorder';
 
+// 默认的圆角
+export const DEFAULT_BORDER_RADIUS = 4;
+
 // 默认linkage
 export const DEFAULT_LINKAGE_CONFIG = {
   show: false,

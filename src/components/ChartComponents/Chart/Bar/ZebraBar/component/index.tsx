@@ -17,6 +17,7 @@ import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TZebraBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
@@ -124,6 +125,7 @@ const ZebraBar = (
       itemStyle: {
         ...itemStyle,
         color: getRgbaString(itemStyle.color[0]),
+        borderRadius: [DEFAULT_BORDER_RADIUS, DEFAULT_BORDER_RADIUS, 0, 0],
       },
       symbolSize: barWidth,
       data: yAxisValues._defaultValue_,

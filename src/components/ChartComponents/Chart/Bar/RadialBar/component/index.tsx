@@ -18,6 +18,7 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
+import { DEFAULT_BORDER_RADIUS } from '../../../../Common/Constants/defaultConfig';
 import { TRadialBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
@@ -124,6 +125,7 @@ const RadialBar = (
       type: 'bar',
       itemStyle: {
         ...itemStyle,
+        borderRadius: [DEFAULT_BORDER_RADIUS, DEFAULT_BORDER_RADIUS, 0, 0],
         color: radialGradientColor(itemStyle.color[0]),
       },
       data: yAxisValues._defaultValue_,

@@ -7,6 +7,7 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TPictureWallConfig } from '../type';
 import 'viewerjs/dist/viewer.css';
 import styles from './index.less';
@@ -77,6 +78,7 @@ const PictureWall = (
             width: `calc( ( 100% - ${
               margin[0] * (columnCount + 1)
             }px ) / ${columnCount} )`,
+            borderRadius: DEFAULT_BORDER_RADIUS,
           }}
           key={index}
           onClick={onClick.bind(null, item)}

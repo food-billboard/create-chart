@@ -17,6 +17,7 @@ import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
+import { DEFAULT_BORDER_RADIUS } from '../../../../Common/Constants/defaultConfig';
 import { TBarBasicConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
@@ -123,6 +124,7 @@ const BarBasic = (
       type: 'bar',
       itemStyle: {
         ...itemStyle,
+        borderRadius: [DEFAULT_BORDER_RADIUS, DEFAULT_BORDER_RADIUS, 0, 0],
         color: getRgbaString(itemStyle.color[0]),
       },
       data: yAxisValues._defaultValue_,

@@ -17,6 +17,7 @@ import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TPieBasicConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
@@ -117,7 +118,10 @@ const PieBasic = (
         color: getRgbaString(label.color),
       },
       type: 'pie',
-      itemStyle: nextItemStyle,
+      itemStyle: {
+        ...nextItemStyle,
+        borderRadius: DEFAULT_BORDER_RADIUS,
+      },
       data: xAxisKeys.map((item: any, index: number) => {
         return {
           name: item,
