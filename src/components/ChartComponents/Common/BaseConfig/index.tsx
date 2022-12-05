@@ -73,7 +73,8 @@ const BaseConfig = (props: {
   const onSizeChange = useCallback(
     (key: 'width' | 'height', value) => {
       let realValue = Math.max(value, 20);
-      if (key === 'width') realValue = Math.min(realValue, 375);
+      if (key === 'width' && flag === 'H5')
+        realValue = Math.min(realValue, 375);
       if (isGroupComponent) {
         let changeState: any = {
           style: {
