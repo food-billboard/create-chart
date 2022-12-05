@@ -7,6 +7,7 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TTabConfig } from '../type';
 import styles from './index.less';
 
@@ -117,7 +118,9 @@ const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
           key={name}
           className={styles['component-interactive-tab-item']}
           onClick={onClick.bind(null, item, index)}
-          style={activeTab === index ? activeStyle : baseStyle}
+          style={merge({}, activeTab === index ? activeStyle : baseStyle, {
+            borderRadius: DEFAULT_BORDER_RADIUS,
+          })}
         >
           {value}
         </div>

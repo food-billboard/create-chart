@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import moment from 'moment';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TDatePickerConfig } from '../type';
 import styles from './index.less';
 
@@ -84,6 +85,7 @@ const DatePicker = (
         [`--${prefix}-input-active-border-color`]: getRgbaString(
           input.activeBorderColor,
         ),
+        borderRadius: DEFAULT_BORDER_RADIUS,
       },
       value: dateValue,
       format,

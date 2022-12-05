@@ -9,6 +9,7 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TSelectConfig } from '../type';
 import styles from './index.less';
 
@@ -180,6 +181,7 @@ const SelectBasic = (
                   ...styles,
                   backgroundColor: getRgbaString(active.backgroundColor),
                   height: '100%',
+                  borderRadius: DEFAULT_BORDER_RADIUS,
                   border: `${active.border.width}px ${
                     active.border.type
                   } ${getRgbaString(active.border.color)}`,
@@ -213,6 +215,8 @@ const SelectBasic = (
                   height: base.height,
                   lineHeight: `${base.height - 16}px`,
                   ':hover': isSelected ? activeHoverStyle : baseHoverStyle,
+                  borderRadius: DEFAULT_BORDER_RADIUS,
+                  overflow: 'hidden',
                 };
               },
               // 下拉列表内部

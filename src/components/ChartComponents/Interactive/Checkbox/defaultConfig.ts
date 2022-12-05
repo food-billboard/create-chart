@@ -4,6 +4,7 @@ import {
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
+  DEFAULT_BORDER_RADIUS,
 } from '../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TCheckboxConfig } from './type';
@@ -72,7 +73,7 @@ export default () => {
           b: 99,
         },
         defaultChecked: '',
-        borderRadius: 4,
+        borderRadius: DEFAULT_BORDER_RADIUS,
         backgroundColor: {
           r: 255,
           g: 255,

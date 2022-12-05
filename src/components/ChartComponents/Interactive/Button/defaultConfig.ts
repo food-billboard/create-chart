@@ -6,6 +6,7 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
   DEFAULT_CONDITION_CONFIG,
+  DEFAULT_BORDER_RADIUS,
 } from '../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TButtonConfig } from './type';
@@ -80,7 +81,7 @@ export default () => {
       textStyle: {
         ...DEFAULT_FONT_CONFIG,
       },
-      borderRadius: 16,
+      borderRadius: DEFAULT_BORDER_RADIUS,
     },
   };
 
@@ -94,8 +95,8 @@ export default () => {
       BASIC_DEFAULT_CONFIG,
       {
         style: {
-          width: 100,
-          height: 80,
+          width: 150,
+          height: 60,
         },
       },
       CUSTOM_CONFIG,

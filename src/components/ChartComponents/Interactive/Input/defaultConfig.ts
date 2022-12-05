@@ -4,6 +4,7 @@ import {
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
+  DEFAULT_BORDER_RADIUS,
 } from '../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TInputConfig } from './type';
@@ -43,7 +44,7 @@ export default () => {
           b: 33,
         },
       },
-      borderRadius: 0,
+      borderRadius: DEFAULT_BORDER_RADIUS,
       placeholder: {
         value: '请输入内容',
         color: {

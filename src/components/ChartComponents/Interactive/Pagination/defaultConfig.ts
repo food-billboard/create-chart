@@ -5,6 +5,7 @@ import {
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
   DEFAULT_CONDITION_CONFIG,
+  DEFAULT_BORDER_RADIUS,
 } from '../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TPaginationConfig } from './type';
@@ -66,7 +67,7 @@ export default () => {
         },
       },
       options: {
-        borderRadius: 4,
+        borderRadius: DEFAULT_BORDER_RADIUS,
         textStyle: {
           ...DEFAULT_FONT_CONFIG,
         },
