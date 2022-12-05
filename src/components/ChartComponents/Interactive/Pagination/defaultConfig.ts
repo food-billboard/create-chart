@@ -151,8 +151,8 @@ export default () => {
       BASIC_DEFAULT_CONFIG,
       {
         style: {
-          width: 400,
-          height: 80,
+          width: 600,
+          height: 50,
         },
       },
       CUSTOM_CONFIG,

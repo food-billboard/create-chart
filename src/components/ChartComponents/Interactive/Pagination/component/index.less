@@ -113,5 +113,20 @@
     .ant-select-single.ant-select-open .ant-select-selection-item {
       color: var(--component-pagination-text-color);
     }
+
+    .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+      background-color: transparent;
+      color: var(--component-pagination-text-active-color);
+    }
+    .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+      background-color: transparent;
+    }
+    .ant-select-item {
+      color: var(--component-pagination-text-color);
+      font-size: var(--component-pagination-text-size);
+      font-weight: var(--component-pagination-text-weight);
+      font-family: var(--component-pagination-text-family);
+      line-height: calc(var(--component-pagination-text-size) + 14px);
+    }
   }
 }

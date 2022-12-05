@@ -89,6 +89,7 @@ import Decoration5 from '../../../../public/components/decoration-5.jpg';
 import Decoration6 from '../../../../public/components/decoration-6.jpg';
 import Decoration7 from '../../../../public/components/decoration-7.jpg';
 import Decoration8 from '../../../../public/components/decoration-8.jpg';
+import Pagination from '../../../../public/components/pagination.jpg';
 import GENERATE_COMPONENT_LIST from './GenerateList';
 
 const commonClass: string = classnames('ac-i-size-m');
@@ -678,7 +679,7 @@ const _COMPONENT_TYPE_LIST = [
           {
             type: 'PAGINATION',
             title: '分页',
-            icon: Button,
+            icon: Pagination,
             description: '',
           },
         ],
