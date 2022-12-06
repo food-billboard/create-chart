@@ -76,6 +76,16 @@ function ScreenModelList() {
     LeadIn('model', fetchData.bind(null, {}));
   }, []);
 
+  const onVisibilityChange = useCallback(
+    (e: any) => {
+      const isHidden = e.target.webkitHidden;
+      if (!isHidden) {
+        fetchData({});
+      }
+    },
+    [searchData, searchType, currPage],
+  );
+
   useEffect(() => {
     fetchData({
       currPage,
@@ -83,17 +93,11 @@ function ScreenModelList() {
   }, [currPage]);
 
   useEffect(() => {
-    const event = (e: any) => {
-      const isHidden = e.target.webkitHidden;
-      if (!isHidden) {
-        fetchData({});
-      }
-    };
-    document.addEventListener('visibilitychange', event);
+    document.addEventListener('visibilitychange', onVisibilityChange);
     return () => {
-      document.removeEventListener('visibilitychange', event);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
     };
-  }, []);
+  }, [onVisibilityChange]);
 
   return (
     <>
