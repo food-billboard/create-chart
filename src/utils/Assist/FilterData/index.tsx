@@ -23,8 +23,8 @@ class FilterData {
   }
 
   pipeValueByCodeString(value: any, global: any, code: string) {
-    let filterFunction = new Function('data', 'global', 'options', code);
     try {
+      let filterFunction = new Function('data', 'global', 'options', code);
       return {
         value: filterFunction(value, global, {
           Mock,
@@ -405,12 +405,15 @@ export class CompareFilterUtil {
           action: this.onCondition.bind(this, cur),
         });
       } else {
-        let variables = condition.rule.reduce<string[]>((acc, item) => {
-          item.rule.forEach((item) => {
-            if (!acc.includes(item.params)) acc.push(item.params);
-          });
-          return acc;
-        }, []);
+        let variables = (condition?.rule || []).reduce<string[]>(
+          (acc, item) => {
+            item.rule.forEach((item) => {
+              if (!acc.includes(item.params)) acc.push(item.params);
+            });
+            return acc;
+          },
+          [],
+        );
         acc.push({
           variables,
           action: this.onCondition.bind(this, cur),
