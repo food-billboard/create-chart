@@ -9,8 +9,6 @@ export const GridBackground = () => {
         :doodle {
           @grid: 20 / 100vmax;
         }
-        @random { border-top: 2px solid white; }
-        @random { border-left: 2px solid white; }
         @random(.2) {
           :after {
             content: '';

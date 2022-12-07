@@ -1,0 +1,34 @@
+.home-page-action {
+  &-title {
+    margin-bottom: 5vh;
+    & span {
+      font-size: 4vw;
+      font-weight: bold;
+    }
+  }
+  &-description {
+    margin-bottom: 3vh;
+    font-size: 4vw;
+  }
+  &-tag {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5vw;
+    font-size: 4vw;
+    margin-bottom: 10vh;
+  }
+  &-button {
+    text-align: center;
+    :global {
+      .ant-btn:nth-of-type(1) {
+        margin-right: 5vw;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .home-page-action {
+    text-align: center;
+  }
+}

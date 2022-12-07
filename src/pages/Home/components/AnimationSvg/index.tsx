@@ -1,8 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { SVG } from '@svgdotjs/svg.js';
+import { useSize } from 'ahooks';
 
 const AnimationSvg = (props: { value: any; id: string; delay?: number }) => {
   const { value, id, delay } = props;
+
+  const elementRef = useRef<HTMLDivElement>(null);
+  const { width = 0, height = 0 } = useSize(elementRef) || {};
 
   const getAlllElements = () => {
     function getListInner(list: any[]) {
@@ -22,8 +26,12 @@ const AnimationSvg = (props: { value: any; id: string; delay?: number }) => {
   };
 
   useEffect(() => {
+    const size = Math.min(width, height);
+    SVG(`#${id}`).size(size, size);
+  }, [width, height]);
+
+  useEffect(() => {
     SVG(`#${id}`).animate;
-    SVG(`#${id}`).size('100%', '100%');
     getAlllElements().forEach((item: any, index: number) => {
       const originFill = item.fill();
       item.attr({ fill: 'transparent' });
@@ -41,7 +49,15 @@ const AnimationSvg = (props: { value: any; id: string; delay?: number }) => {
     });
   }, []);
 
-  return <div>{value}</div>;
+  return (
+    <div
+      ref={elementRef}
+      style={{ alignItems: 'center', justifyContent: 'center' }}
+      className="w-100 h-100 dis-flex"
+    >
+      {value}
+    </div>
+  );
 };
 
 export default AnimationSvg;

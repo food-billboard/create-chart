@@ -107,7 +107,7 @@ export const TEXTURE_MAP: {
   },
 ];
 
-const BOX_LIMIT = 30;
+const BOX_LIMIT = 20;
 
 const { getHexString } = ColorSelect;
 
@@ -290,7 +290,8 @@ const MatterBoxes = () => {
         const dom = document.querySelector('#home-page-matter-boxes-container');
         if (dom) {
           const targetWidth = dom.clientWidth;
-          const targetHeight = height - 0.03 * width;
+          // const targetHeight = height - 0.03 * width;
+          const targetHeight = dom.clientHeight;
           init(targetWidth, targetHeight);
         }
       } catch (err) {}
@@ -320,7 +321,10 @@ const MatterBoxes = () => {
   return (
     <div
       id="home-page-matter-boxes-container"
-      className={classnames(styles['home-page-matter-boxes-container'])}
+      className={classnames(
+        styles['home-page-matter-boxes-container'],
+        'w-100 h-100',
+      )}
     ></div>
   );
 };

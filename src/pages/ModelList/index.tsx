@@ -3,6 +3,7 @@ import { Pagination, Input, Button, Empty, Space, Select } from 'antd';
 import classnames from 'classnames';
 import { getScreenModelList } from '@/services';
 import { LeadIn } from '@/utils/Assist/LeadInAndOutput';
+import GhostButton from '@/components/GhostButton';
 import SvgAnimation from '../ScreenList/components/SvgAnimation';
 import List from './components/List';
 import AddDesigner from '../ScreenList/components/AddDesigner';
@@ -152,7 +153,9 @@ function ScreenModelList() {
           <Button type="primary" onClick={fetchData.bind(null, {})}>
             搜索
           </Button>
-          <Button onClick={handleReset}>重置</Button>
+          <GhostButton style={{ width: 'auto' }} onClick={handleReset}>
+            重置
+          </GhostButton>
         </Space>
         <div>
           <Space>

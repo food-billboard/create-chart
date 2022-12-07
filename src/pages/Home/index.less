@@ -1,177 +1,66 @@
 @import '~antd/es/style/themes/default.less';
 
-@keyframes wave-animation {
-  0% {
-    transform: rotateZ(2deg);
-  }
-  100% {
-    transform: rotateZ(-2deg);
-  }
-}
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-}
-
-@keyframes cursor-blink {
-  50% {
-    border-color: transparent;
-  }
-}
-
-.home-page-container {
+.home-page-wrapper {
   width: 100vw;
   height: 100vh;
-  pointer-events: all !important;
+  overflow: hidden;
+  flex-direction: column;
+  .home-page-logo {
+    background-image: url('../../../public/logo.jpg');
+    width: 31px;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    border-radius: 50%;
+    &::after {
+      content: 'Screen';
+      font-weight: bolder;
+      font-size: 1vw;
+      position: absolute;
+      right: -1vw;
+      top: 50%;
+      transform: translateX(100%) translateY(-50%);
+    }
+  }
+  .home-page-main {
+    display: flex;
+    overflow: hidden auto;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+  &-action,
+  &-animation {
+    display: inline-block;
+    width: 50vw;
+    height: 100vh;
+  }
+  &-animation {
+    width: 50vw;
+    height: 28.1vw;
+  }
 }
 
-.home-page {
-  width: 100vw;
-  min-height: 100vh;
-  overflow: auto;
-  &-title {
-    width: 100%;
-    height: 5vw;
-    text-align: center;
-    z-index: 2;
+@media only screen and (max-width: 768px) {
+  .home-page-main {
+    display: block;
   }
-  &-chart,
-  &-chart-line-two,
-  &-chart-line-three {
+  .home-page-wrapper-animation {
+    width: 100vw;
+    height: 56.2vw;
+  }
+  .home-page-wrapper-action {
     position: absolute;
-    top: 0;
-    & ul {
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
-    & ul li {
-      background-repeat: no-repeat;
-      background-size: auto;
-      background-position: center center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    top: 60vw;
+    width: 100vw;
+    height: auto;
   }
-  &-chart {
-    width: 100%;
-    height: 44vw;
-    margin-top: 5vw;
-    & ul li {
-      position: absolute;
-      &:nth-of-type(1) {
-        left: 4vw;
-        width: 18.5vw;
-        height: 22vw;
-      }
-      &:nth-of-type(2) {
-        left: 26.5vw;
-        width: 37vw;
-        height: 44vw;
-      }
-      &:nth-of-type(3) {
-        left: 67.5vw;
-        width: 18.5vw;
-        height: 22vw;
-      }
-    }
-  }
-  &-chart-line-two {
-    margin-top: 27vw;
-    width: 100%;
-    height: 22vw;
-    & ul li {
-      position: absolute;
-      &:nth-of-type(1) {
-        left: 4vw;
-        width: 18.5vw;
-        height: 22vw;
-      }
-      &:nth-of-type(2) {
-        left: 67.5vw;
-        width: 18.5vw;
-        height: 22vw;
-      }
-    }
-  }
-  &-icon {
-    margin-top: 49vw;
-    width: 100%;
-    height: 4vw;
-    position: absolute;
-    top: 0;
-    & ul {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0;
-    }
-    & ul li {
-      flex: 1;
-      height: 4vw;
-      text-align: center;
-      font-size: 3.5vw;
-    }
-  }
-  &-chart-line-three {
-    margin-top: 53vw;
-    width: 100%;
-    height: 22vw;
-    & ul li {
-      position: absolute;
-      &:nth-of-type(1) {
-        left: 4vw;
-        width: 18.5vw;
-        height: 22vw;
-      }
-      &:nth-of-type(2) {
-        left: 26.5vw;
-        width: 16.5vw;
-        height: 22vw;
-      }
-      &:nth-of-type(3) {
-        left: 46vw;
-        width: 16.5vw;
-        height: 22vw;
-      }
-      &:nth-of-type(4) {
-        left: 67.5vw;
-        width: 18.5vw;
-        height: 22vw;
-      }
-    }
-  }
-  &-background {
-    display: none;
-    & div {
-      width: 130vw;
-      height: 130vh;
-      left: -10vw;
-      top: -10vh;
-      position: absolute;
-    }
-  }
-  &-border {
-    padding: 3vw 0;
-    & > div {
-      width: 90vw;
-      height: 75vw;
-      left: 5vw;
-      position: relative;
-      z-index: 1;
-      border: 3px solid;
-      border-image: linear-gradient(
-          #4ea397,
-          #22c3aa,
-          #7bd9a5,
-          #d0648a,
-          #f58db2,
-          #f2b3c9
-        )
-        1 3;
+  :global {
+    .ant-layout-header {
+      padding: 0 5vw;
     }
   }
 }

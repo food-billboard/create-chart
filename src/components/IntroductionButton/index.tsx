@@ -8,27 +8,13 @@ import {
 import { Fab, Action } from 'react-tiny-fab';
 import ColorSelect from '@/components/ColorSelect';
 import ThemeUtil from '@/utils/Assist/Theme';
+import { gotoBlog, gotoGithub, gotoOperation } from '@/utils/Assist/About';
 import 'react-tiny-fab/dist/styles.css';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
 
 const IntroductionButton = () => {
-  const gotoGithub = () => {
-    window.open('https://github.com/food-billboard', '_blank');
-  };
-
-  const gotoBlob = () => {
-    window.open('https://food-billboard.github.io/', '_blank');
-  };
-
-  const gotoOperation = () => {
-    window.open(
-      'http://47.97.27.23/api/backend/create-chart-docs/index.html',
-      '_blank',
-    );
-  };
-
   return (
     <div className={styles['introduction-button']}>
       <Fab
@@ -65,7 +51,7 @@ const IntroductionButton = () => {
         </Action>
         <Action
           text="Blog"
-          onClick={gotoBlob}
+          onClick={gotoBlog}
           style={{
             color: 'white',
             width: 30,
