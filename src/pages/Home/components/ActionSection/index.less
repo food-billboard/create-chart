@@ -1,34 +1,77 @@
 .home-page-action {
   &-title {
-    margin-bottom: 5vh;
     & span {
-      font-size: 4vw;
       font-weight: bold;
     }
   }
   &-description {
-    margin-bottom: 3vh;
-    font-size: 4vw;
+    display: inline-block;
+    overflow: hidden;
   }
   &-tag {
     display: flex;
     justify-content: space-between;
-    padding: 0 5vw;
-    font-size: 4vw;
-    margin-bottom: 10vh;
   }
   &-button {
     text-align: center;
-    :global {
-      .ant-btn:nth-of-type(1) {
-        margin-right: 5vw;
-      }
-    }
   }
 }
 
 @media only screen and (max-width: 768px) {
   .home-page-action {
     text-align: center;
+    &-title {
+      margin-bottom: 5vh;
+      & span {
+        font-size: 4vw;
+      }
+    }
+    &-description {
+      margin-bottom: 3vh;
+      font-size: 4vw;
+      height: 4vw;
+    }
+    &-tag {
+      padding: 0 5vw;
+      font-size: 4vw;
+      margin-bottom: 10vh;
+    }
+    &-button {
+      :global {
+        .ant-btn:nth-of-type(1) {
+          margin-right: 5vw;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .home-page-action {
+    text-align: right;
+    padding: 0 5vw;
+    &-title {
+      margin-bottom: 1vh;
+      & span {
+        font-size: 1.5vw;
+      }
+    }
+    &-description {
+      margin-bottom: 3vh;
+      font-size: 1.5vw;
+      height: 2vw;
+    }
+    &-tag {
+      padding: 0 5vw;
+      font-size: 1.5vw;
+      margin-bottom: 10vh;
+    }
+    &-button {
+      :global {
+        .ant-btn:nth-of-type(1) {
+          margin-right: 5vw;
+        }
+      }
+    }
   }
 }

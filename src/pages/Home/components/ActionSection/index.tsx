@@ -12,11 +12,11 @@ const ActionSection = () => {
   }, []);
 
   useEffect(() => {
-    return;
     const instance = new TypedJs('#home-page-action-description', {
       strings: ['帮助快速成型多样化、富交互性的数据大屏。'],
       loop: true,
-      typeSpeed: 3,
+      typeSpeed: 100,
+      startDelay: 80,
     });
     return () => {
       instance.destroy();
@@ -29,20 +29,19 @@ const ActionSection = () => {
         <AnimationTitle />
         <span className="">设计器</span>
       </div>
-      <div
-        className={styles['home-page-action-description']}
-        id="home-page-action-description"
-      >
-        帮助快速成型多样化、富交互性的数据大屏。
+      <div className={styles['home-page-action-description']}>
+        <span id="home-page-action-description">
+          帮助快速成型多样化、富交互性的数据大屏。
+        </span>
       </div>
       <div className={styles['home-page-action-tag']}>
-        <span className="animate__fadeInDown animate__animated animate__repeat-1 animate__slow animate__delay-2s">
+        <span className="animate__fadeInDown animate__animated animate__repeat-1 animate__delay-2s">
           组件丰富
         </span>
-        <span className="animate__fadeInDown animate__animated animate__repeat-1 animate__slow animate__delay-3s">
+        <span className="animate__fadeInDown animate__animated animate__repeat-1 animate__delay-3s">
           千人千面
         </span>
-        <span className="animate__fadeInDown animate__animated animate__repeat-1 animate__slow animate__delay-4s">
+        <span className="animate__fadeInDown animate__animated animate__repeat-1 animate__delay-4s">
           快速扩展
         </span>
       </div>
