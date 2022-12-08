@@ -6,6 +6,7 @@ import AnimationSection from './components/AnimationSection';
 import LinearBackground, {
   GridBackground,
 } from './components/LinearBackground';
+import SubMainSection from './components/SubMainSection';
 import styles from './index.less';
 
 const { Header } = Layout;
@@ -31,6 +32,10 @@ const Home = () => {
           <AnimationSection />
         </div>
       </div>
+      <div className={styles['home-page-sub']}>
+        <SubMainSection />
+      </div>
+      <div className={styles['home-page-footer']}>{/* TODO */}</div>
     </div>
   );
 };

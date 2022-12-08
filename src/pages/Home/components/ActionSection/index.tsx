@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { Button } from 'antd';
 import TypedJs from 'typed.js';
+import classnames from 'classnames';
 import { history } from 'umi';
 import { gotoOperation } from '@/utils/Assist/About';
 import AnimationTitle from '../AnimationTitle';
@@ -15,7 +16,7 @@ const ActionSection = () => {
     const instance = new TypedJs('#home-page-action-description', {
       strings: ['帮助快速成型多样化、富交互性的数据大屏。'],
       loop: true,
-      typeSpeed: 100,
+      typeSpeed: 80,
       startDelay: 80,
     });
     return () => {
@@ -24,28 +25,17 @@ const ActionSection = () => {
   }, []);
 
   return (
-    <div className={styles['home-page-action']}>
+    <div className={classnames(styles['home-page-action'], 'h-100 pos-re')}>
       <div className={styles['home-page-action-title']}>
         <AnimationTitle />
         <span className="">设计器</span>
       </div>
-      <div className={styles['home-page-action-description']}>
-        <span id="home-page-action-description">
-          帮助快速成型多样化、富交互性的数据大屏。
-        </span>
+      <div
+        className={classnames(styles['home-page-action-description'], 'w-100')}
+      >
+        <span id="home-page-action-description"></span>
       </div>
-      <div className={styles['home-page-action-tag']}>
-        <span className="animate__fadeInDown animate__animated animate__repeat-1 animate__delay-2s">
-          组件丰富
-        </span>
-        <span className="animate__fadeInDown animate__animated animate__repeat-1 animate__delay-3s">
-          千人千面
-        </span>
-        <span className="animate__fadeInDown animate__animated animate__repeat-1 animate__delay-4s">
-          快速扩展
-        </span>
-      </div>
-      <div className={styles['home-page-action-button']}>
+      <div className={classnames(styles['home-page-action-button'], 'w-100')}>
         <Button onClick={handleStart} type="primary">
           开始制作
         </Button>

@@ -7,13 +7,13 @@
   &-description {
     display: inline-block;
     overflow: hidden;
-  }
-  &-tag {
-    display: flex;
-    justify-content: space-between;
+    position: absolute;
   }
   &-button {
     text-align: center;
+    left: 0;
+    bottom: 0;
+    position: absolute;
   }
 }
 
@@ -22,19 +22,16 @@
     text-align: center;
     &-title {
       margin-bottom: 5vh;
-      & span {
+      & > span {
         font-size: 4vw;
       }
     }
     &-description {
       margin-bottom: 3vh;
       font-size: 4vw;
-      height: 4vw;
-    }
-    &-tag {
-      padding: 0 5vw;
-      font-size: 4vw;
-      margin-bottom: 10vh;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
     }
     &-button {
       :global {
@@ -52,19 +49,16 @@
     padding: 0 5vw;
     &-title {
       margin-bottom: 1vh;
-      & span {
+      & > span {
         font-size: 1.5vw;
       }
     }
     &-description {
       margin-bottom: 3vh;
       font-size: 1.5vw;
-      height: 2vw;
-    }
-    &-tag {
-      padding: 0 5vw;
-      font-size: 1.5vw;
-      margin-bottom: 10vh;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 5vw;
     }
     &-button {
       :global {
