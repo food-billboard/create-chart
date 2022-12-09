@@ -28,9 +28,9 @@
   .home-page-main {
     display: flex;
     overflow: hidden auto;
-    flex: 1;
     position: relative;
     z-index: 1;
+    flex-wrap: wrap;
   }
   &-action,
   &-animation {
@@ -44,10 +44,17 @@
   &-action {
     height: 28.1vw;
   }
+  &-sub {
+    margin-top: 10vh;
+  }
+
+  &-footer {
+    height: 10vh;
+  }
 }
 
 @media only screen and (max-width: 768px) {
-  .home-page-main {
+  .home-page-wrapper .home-page-main {
     display: block;
   }
   .home-page-wrapper-animation {
@@ -59,6 +66,9 @@
     top: 60vw;
     width: 100vw;
     height: 56.2vw;
+  }
+  .home-page-wrapper-sub {
+    margin-top: 62vw;
   }
   :global {
     .ant-layout-header {

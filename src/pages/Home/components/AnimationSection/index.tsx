@@ -2,7 +2,6 @@ import { useEffect, useRef, useMemo, useState, CSSProperties } from 'react';
 import classnames from 'classnames';
 import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import ColorSelect from '@/components/ColorSelect';
-import MatterBoxes from '../MatterBoxes';
 import AnimationSvg from '../AnimationSvg';
 import {
   AnimationOne,
@@ -236,7 +235,6 @@ const Home = () => {
           data-depth="0.2"
         >
           <div>
-            <MatterBoxes />
             <ul
               className={classnames(
                 'home-page-layer',

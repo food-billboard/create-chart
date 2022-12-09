@@ -31,11 +31,11 @@ const Home = () => {
         <div className={styles['home-page-wrapper-animation']}>
           <AnimationSection />
         </div>
+        <div className={styles['home-page-wrapper-sub']}>
+          <SubMainSection />
+        </div>
+        <div className={styles['home-page-wrapper-footer']}>{/* TODO */}</div>
       </div>
-      <div className={styles['home-page-sub']}>
-        <SubMainSection />
-      </div>
-      <div className={styles['home-page-footer']}>{/* TODO */}</div>
     </div>
   );
 };

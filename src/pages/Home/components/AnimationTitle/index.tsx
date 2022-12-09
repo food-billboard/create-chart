@@ -20,6 +20,7 @@ const AnimationTitle = () => {
   );
 
   useEffect(() => {
+    return;
     if (!shine.current && document.getElementById('typed-title'))
       shine.current = new Shine.Shine(
         document.getElementById('typed-title'),
@@ -45,7 +46,7 @@ const AnimationTitle = () => {
       )}
       id="typed-title"
     >
-      数据可视化大屏
+      Screen Designer
     </div>
   );
 };

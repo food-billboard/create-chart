@@ -123,6 +123,7 @@ const MatterBoxes = () => {
   const worldRef = useRef<World>();
   const mouseConstraintRef = useRef<MouseConstraint>();
   const svgRootRef = useRef<any>();
+  const elementRef = useRef<HTMLDivElement>(null);
 
   const generateBoxes = (width: number, height: number) => {
     if (CompositeRef.current) {
@@ -130,7 +131,7 @@ const MatterBoxes = () => {
     }
     worldRef.current!.bodies = [];
 
-    const offset = 10;
+    const offset = 5;
     const options = {
       isStatic: true,
       render: {
@@ -302,9 +303,28 @@ const MatterBoxes = () => {
   );
 
   useEffect(() => {
-    window.addEventListener('resize', resize);
-    resize();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.length && entries[0].isIntersecting) {
+          resize();
+          observer.unobserve(elementRef.current!);
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: [0.8],
+      },
+    );
+    observer.observe(elementRef.current!);
 
+    return () => {
+      observer.unobserve(elementRef.current!);
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('resize', resize);
     return () => {
       window.removeEventListener('resize', resize);
     };
@@ -321,10 +341,8 @@ const MatterBoxes = () => {
   return (
     <div
       id="home-page-matter-boxes-container"
-      className={classnames(
-        styles['home-page-matter-boxes-container'],
-        'w-100 h-100',
-      )}
+      className={classnames(styles['home-page-matter-boxes-container'])}
+      ref={elementRef}
     ></div>
   );
 };
