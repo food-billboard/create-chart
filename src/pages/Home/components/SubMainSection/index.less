@@ -12,6 +12,32 @@
       position: relative;
       z-index: 1;
       width: 100%;
+      & > div:nth-of-type(1) {
+        visibility: hidden;
+      }
+    }
+    &-two {
+      text-align: center;
+      &-main {
+        display: inline-block;
+      }
+    }
+    &-three {
+      text-align: center;
+      & > div:nth-of-type(1) {
+        visibility: hidden;
+      }
+      &-main {
+        display: inline-block;
+      }
+      &-item {
+        transition: 0.5s;
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+        top: 0;
+        // line-height: 1;
+      }
     }
   }
 }
@@ -32,6 +58,24 @@
         & img {
           width: 10vw;
           height: 10vw;
+        }
+      }
+      &-two {
+        &-main {
+          width: 10vw;
+          height: 10vw;
+        }
+      }
+      &-three {
+        &-main {
+          width: 10vh;
+          height: 10vh;
+        }
+        &-item {
+          width: 5vh;
+          height: 5vh;
+          text-align: center;
+          line-height: 5vh;
         }
       }
     }
@@ -55,6 +99,25 @@
         & img {
           width: 10vw;
           height: 10vw;
+        }
+      }
+      &-two {
+        &-main {
+          width: 10vw;
+          height: 10vw;
+        }
+      }
+      &-three {
+        &-main {
+          width: 10vw;
+          height: 10vw;
+          font-size: 5vw;
+        }
+        &-item {
+          width: 5vw;
+          height: 5vw;
+          text-align: center;
+          line-height: 5vw;
         }
       }
     }

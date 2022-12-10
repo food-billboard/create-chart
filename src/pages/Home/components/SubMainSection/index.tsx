@@ -1,8 +1,10 @@
-import { useRef, useEffect, useState, useMemo } from 'react';
+import { useRef, useEffect, useState, ReactNode, useCallback } from 'react';
 import classnames from 'classnames';
 import { TextLoop } from 'react-text-loop-next';
 import { CountUp } from 'countup.js';
-import { random, inRange } from 'lodash';
+import { Carousel } from 'antd';
+import type { CarouselRef } from 'antd/es/carousel';
+import { random, shuffle } from 'lodash';
 import MatterBoxes from '../MatterBoxes';
 import AreaChart from '../../../../../public/home/area-chart.png';
 import BarChart from '../../../../../public/home/bar-chart.png';
@@ -24,6 +26,7 @@ import styles from './index.less';
 const ComponentRich = () => {
   return (
     <div className={styles['home-page-sub-main-tag-one']}>
+      <div>0</div>
       <TextLoop>
         {[
           AreaChart,
@@ -31,7 +34,7 @@ const ComponentRich = () => {
           DotChart,
           LineChart,
           ListChart,
-          MapChart,
+          // MapChart,
           PieChart,
           RadarChart,
           ThermogramChart,
@@ -51,14 +54,13 @@ const ChangeAble = () => {
 
   const instance = useRef<CountUp>();
   const timerRef = useRef<NodeJS.Timer>();
+  const carouselRef = useRef<CarouselRef>(null);
 
-  const conditionElement = useMemo(() => {
-    if (inRange(0, 100)) {
-      return <img src={inRange(0, 50) ? ConditionNormal : Condition1} />;
-    } else if (inRange(100, 150)) {
-    } else {
-    }
-  }, [conditionNumber]);
+  const onCondition = useCallback((number) => {
+    setTimeout(() => {
+      carouselRef.current?.goTo(random(0, 4, false));
+    }, 2200);
+  }, []);
 
   useEffect(() => {
     clearInterval(timerRef.current);
@@ -71,12 +73,17 @@ const ChangeAble = () => {
   }, []);
 
   useEffect(() => {
+    instance.current = undefined;
     // 数字动画
     instance.current = new CountUp(
-      document.querySelector('#home-page-sub-main-tag-two-counter') as any,
-      0,
+      'home-page-sub-main-tag-two-counter',
+      conditionNumber,
+      {
+        duration: 2,
+      },
     );
     instance.current.start();
+    onCondition(conditionNumber);
   }, [conditionNumber]);
 
   return (
@@ -85,14 +92,125 @@ const ChangeAble = () => {
         className={styles['home-page-sub-main-tag-two-counter']}
         id="home-page-sub-main-tag-two-counter"
       >
-        {conditionNumber}
+        {/* {conditionNumber} */}
+      </div>
+      <div className={styles['home-page-sub-main-tag-two-main']}>
+        <Carousel
+          effect="fade"
+          ref={carouselRef}
+          className="w-100"
+          dots={false}
+        >
+          {[
+            {
+              value: ConditionNormal,
+              id: '1',
+            },
+            {
+              value: Condition1,
+              id: '2',
+            },
+            {
+              value: Condition2,
+              id: '3',
+            },
+            {
+              value: MapChart,
+              id: '4',
+            },
+          ].map((item) => {
+            const { value, id } = item;
+            return (
+              <div key={id}>
+                <img src={value} className="w-100 h-100" />
+              </div>
+            );
+          })}
+        </Carousel>
       </div>
     </div>
   );
 };
 
+const Word = (props: {
+  children: ReactNode;
+  rotate: number;
+  scale: number;
+  translateX: number | string;
+  translateY: number | string;
+}) => {
+  const { children, rotate, scale, translateX, translateY } = props;
+
+  return (
+    <div
+      className={styles['home-page-sub-main-tag-three-item']}
+      style={{
+        transform: `translateX(${translateX}) translateY(${translateY}) scale(${scale})`,
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
 const ExtendAble = () => {
-  return <div>可扩展性</div>;
+  const [wordCloud, setWordCloud] = useState([
+    {
+      translateX: '100%',
+      translateY: '100%',
+      scale: 0.8,
+      rotate: 30,
+    },
+    {
+      translateX: '20%',
+      translateY: '30%',
+      scale: 0.7,
+      rotate: 50,
+    },
+    {
+      translateX: '30%',
+      translateY: '130%',
+      scale: 0.6,
+      rotate: 20,
+    },
+    {
+      translateX: '120%',
+      translateY: '25%',
+      scale: 0.4,
+      rotate: 10,
+    },
+  ]);
+
+  const timerRef = useRef<NodeJS.Timeout>();
+
+  useEffect(() => {
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setWordCloud((prev) => {
+        return shuffle(prev);
+      });
+    }, 3000);
+  }, []);
+
+  return (
+    <div className={styles['home-page-sub-main-tag-three']}>
+      <div>0</div>
+      <div
+        className={classnames(
+          styles['home-page-sub-main-tag-three-main'],
+          'pos-re',
+        )}
+      >
+        {['A', 'B', 'C', 'D'].map((item, index) => {
+          return (
+            <Word key={item} {...wordCloud[index]}>
+              {item}
+            </Word>
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
 const SubMainSection = () => {
