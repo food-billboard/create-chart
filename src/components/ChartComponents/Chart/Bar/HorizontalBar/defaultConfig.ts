@@ -14,6 +14,7 @@ import {
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
+  DEFAULT_BAR_CAROUSEL_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { getDate, getNumberValue } from '@/utils/constants';
@@ -118,6 +119,9 @@ export default () => {
         series: {
           itemStyle: {
             color: [],
+          },
+          carousel: {
+            ...DEFAULT_BAR_CAROUSEL_CONFIG,
           },
           barWidth: 'auto',
           label: {

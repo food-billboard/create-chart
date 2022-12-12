@@ -13,6 +13,7 @@ export type TRadialBarConfig = {
   };
   series: {
     showBackground: boolean;
+    carousel: ComponentData.BarCarouselConfig;
     backgroundStyle: ComponentData.TGradientColorConfig;
     label: ComponentData.ComponentSeriesLabelConfig & {
       rotate: number;

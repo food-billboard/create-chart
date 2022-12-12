@@ -10,6 +10,7 @@ import { SimpleHueRadialSelect } from '@/components/ChartComponents/Common/Simpl
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
 import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradientSelect';
+import BarCarouselConfig from '@/components/ChartComponents/Common/BarCarouselConfig';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TRadialBarConfig } from '../type';
 
@@ -27,6 +28,7 @@ const SeriesConfig = (props: {
     barWidth,
     label,
     itemStyle,
+    carousel,
   } = value;
 
   const onKeyChange = useCallback(
@@ -136,6 +138,10 @@ const SeriesConfig = (props: {
   return (
     <ConfigList>
       {backgroundConfig}
+      <BarCarouselConfig
+        value={carousel}
+        onChange={onKeyChange.bind(null, 'carousel')}
+      />
       {labelConfig}
       {barConfig}
       {itemStyleConfig}

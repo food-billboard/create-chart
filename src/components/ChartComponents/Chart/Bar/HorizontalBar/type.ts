@@ -10,6 +10,7 @@ export type THorizontalBarConfig = {
     itemStyle: {
       color: ComponentData.TColorConfig[];
     };
+    carousel: ComponentData.BarCarouselConfig;
     label: Omit<ComponentData.ComponentSeriesLabelConfig, 'position'> & {
       formatter: string;
     };

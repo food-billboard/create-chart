@@ -5,6 +5,7 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
 import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
+import BarCarouselConfig from '@/components/ChartComponents/Common/BarCarouselConfig';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { THorizontalBarConfig } from '../type';
 
@@ -15,7 +16,7 @@ const SeriesConfig = (props: {
   onChange: ComponentData.ComponentConfigProps<THorizontalBarConfig>['onChange'];
 }) => {
   const { value, onChange } = props;
-  const { barWidth, label, itemStyle } = value;
+  const { barWidth, label, itemStyle, carousel } = value;
 
   const onKeyChange = useCallback(
     (key: keyof THorizontalBarConfig['series'], value: any) => {
@@ -84,6 +85,10 @@ const SeriesConfig = (props: {
 
   return (
     <ConfigList>
+      <BarCarouselConfig
+        value={carousel}
+        onChange={onKeyChange.bind(null, 'carousel')}
+      />
       {labelConfig}
       {barConfig}
       {itemStyleConfig}

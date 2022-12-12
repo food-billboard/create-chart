@@ -13,6 +13,13 @@ export const DEFAULT_LINKAGE_CONFIG = {
   value: '',
 };
 
+// 默认柱图轮播配置
+export const DEFAULT_BAR_CAROUSEL_CONFIG = {
+  show: false,
+  speed: 5000,
+  showCount: 5,
+};
+
 // 默认的透明度
 export const DEFAULT_OPACITY = 0.4;
 

@@ -16,6 +16,7 @@ export type TRankBarConfig = {
       show: boolean;
       color: ComponentData.TColorConfig;
     };
+    carousel: ComponentData.BarCarouselConfig;
     itemStyle: {
       color: ComponentData.TGradientColorConfig[];
       defaultColor: ComponentData.TGradientColorConfig;

@@ -18,6 +18,7 @@ import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
+import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
 import { TRankBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
@@ -38,6 +39,7 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
 
   const { series, yAxis, tooltip, animation, condition, grid } =
     useChartPerConfig<TRankBarConfig>(options, ['yAxis']);
+  const { carousel } = series;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -54,7 +56,7 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
     getValue,
     requestUrl,
     componentFilter,
-    value: processedValue = [],
+    value: _processedValue = [],
     componentFilterMap,
     onCondition,
   } = useComponent<TRankBarConfig>(
@@ -70,6 +72,8 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
     style: conditionStyle,
     className: conditionClassName,
   } = useCondition(onCondition, screenType);
+
+  const processedValue = useBarCarousel(carousel, screenType, _processedValue);
 
   const { xAxisKeys, yAxisValues } = useChartValueMapField(processedValue, {
     map: componentFilterMap,
@@ -292,11 +296,12 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
           },
         },
       },
-      true,
+      screenType === 'edit',
     );
 
     screenType !== 'edit' &&
       animation.show &&
+      !carousel.show &&
       useChartComponentTooltip(chartInstance.current!, realSeries, {
         interval: animation.speed,
       });

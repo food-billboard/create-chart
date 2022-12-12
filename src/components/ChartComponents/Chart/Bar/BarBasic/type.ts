@@ -13,6 +13,7 @@ export type TBarBasicConfig = {
   };
   series: {
     showBackground: boolean;
+    carousel: ComponentData.BarCarouselConfig;
     backgroundStyle: {
       color: ComponentData.TColorConfig;
     };

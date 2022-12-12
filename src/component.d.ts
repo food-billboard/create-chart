@@ -569,6 +569,13 @@ declare namespace ComponentData {
     global: TGlobalData;
   };
 
+  // 柱形图轮播配置
+  export type BarCarouselConfig = {
+    show: boolean;
+    speed: number;
+    showCount: number;
+  };
+
   // 大屏组件的通用props
   export type CommonComponentProps<T extends object = {}> = {
     className?: string;

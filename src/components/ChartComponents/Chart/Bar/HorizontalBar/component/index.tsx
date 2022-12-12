@@ -17,6 +17,7 @@ import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
+import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { THorizontalBarConfig } from '../type';
 
@@ -40,6 +41,7 @@ const HorizontalBar = (
 
   const { legend, series, xAxis, yAxis, tooltip, animation, condition, grid } =
     useChartPerConfig<THorizontalBarConfig>(options);
+  const { carousel } = series;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
@@ -56,7 +58,7 @@ const HorizontalBar = (
     getValue,
     requestUrl,
     componentFilter,
-    value: processedValue = [],
+    value: _processedValue = [],
     componentFilterMap,
     onCondition,
   } = useComponent<THorizontalBarConfig>(
@@ -72,6 +74,8 @@ const HorizontalBar = (
     style: conditionStyle,
     className: conditionClassName,
   } = useCondition(onCondition, screenType);
+
+  const processedValue = useBarCarousel(carousel, screenType, _processedValue);
 
   const { seriesKeys, xAxisKeys, yAxisValues } = useChartValueMapField(
     processedValue,
@@ -158,43 +162,47 @@ const HorizontalBar = (
 
     const realSeries = getSeries();
 
-    chartInstance.current?.setOption({
-      grid: {
-        ...grid,
-      },
-      legend: {
-        ...legend,
-        data: seriesKeys,
-      },
-      series: realSeries,
-      xAxis: [
-        {
-          ...xAxis,
-          type: 'value',
-          axisLine: {
-            show: true,
+    chartInstance.current?.setOption(
+      {
+        grid: {
+          ...grid,
+        },
+        legend: {
+          ...legend,
+          data: seriesKeys,
+        },
+        series: realSeries,
+        xAxis: [
+          {
+            ...xAxis,
+            type: 'value',
+            axisLine: {
+              show: true,
+            },
+          },
+        ],
+        yAxis: [
+          {
+            ...yAxis,
+            type: 'category',
+            inverse: true,
+            data: xAxisKeys,
+          },
+        ],
+        tooltip: {
+          ...nextTooltip,
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow',
           },
         },
-      ],
-      yAxis: [
-        {
-          ...yAxis,
-          type: 'category',
-          inverse: true,
-          data: xAxisKeys,
-        },
-      ],
-      tooltip: {
-        ...nextTooltip,
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow',
-        },
       },
-    });
+      screenType === 'edit',
+    );
 
     screenType !== 'edit' &&
       animation.show &&
+      !carousel.show &&
       useChartComponentTooltip(chartInstance.current!, realSeries, {
         interval: animation.speed,
       });

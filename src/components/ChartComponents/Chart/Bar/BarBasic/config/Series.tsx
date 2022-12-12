@@ -10,6 +10,7 @@ import AngleSelect from '@/components/ChartComponents/Common/AngleSelect';
 import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
+import BarCarouselConfig from '@/components/ChartComponents/Common/BarCarouselConfig';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TBarBasicConfig } from '../type';
 
@@ -27,6 +28,7 @@ const SeriesConfig = (props: {
     barWidth,
     label,
     itemStyle,
+    carousel,
   } = value;
 
   const onKeyChange = useCallback(
@@ -136,6 +138,10 @@ const SeriesConfig = (props: {
   return (
     <ConfigList>
       {backgroundConfig}
+      <BarCarouselConfig
+        value={carousel}
+        onChange={onKeyChange.bind(null, 'carousel')}
+      />
       {labelConfig}
       {barConfig}
       {itemStyleConfig}

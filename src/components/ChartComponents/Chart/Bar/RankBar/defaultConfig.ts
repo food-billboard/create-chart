@@ -11,6 +11,7 @@ import {
   DEFAULT_THEME_RADIAL_COLOR_LIST,
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
+  DEFAULT_BAR_CAROUSEL_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getName, getNumberValue } from '@/utils/constants';
 import ThemeUtil from '@/utils/Assist/Theme';
@@ -113,6 +114,9 @@ export default () => {
           animationEasing: 'quadraticInOut',
         },
         series: {
+          carousel: {
+            ...DEFAULT_BAR_CAROUSEL_CONFIG,
+          },
           backgroundStyle: {
             show: true,
             color: {
