@@ -47,7 +47,7 @@ const BarCarouselConfig = (props: BarCarouselConfigProps) => {
         <FullForm>
           <InputNumber
             value={showCount}
-            onChange={onKeyChange.bind(null, 'speed')}
+            onChange={onKeyChange.bind(null, 'showCount')}
           />
         </FullForm>
       </Item>
@@ -61,8 +61,8 @@ const BarCarouselConfig = (props: BarCarouselConfigProps) => {
           <>
             柱图轮播
             {tooltip && (
-              <IconTooltip title="开启柱图轮播会阻止提示文字动画">
-                <InfoCircleOutlined />
+              <IconTooltip title="开启柱图轮播会阻止提示文字动画，切换速度和动画速度有关">
+                <InfoCircleOutlined className="m-l-4" />
               </IconTooltip>
             )}
           </>
