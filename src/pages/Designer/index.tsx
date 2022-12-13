@@ -196,6 +196,9 @@ const Designer = (props: {
         <div
           className={styles['designer-page']}
           onContextMenu={preventDefaultContextMenu}
+          style={{
+            pointerEvents: loading ? 'none' : 'all',
+          }}
         >
           <Header />
           <div className={styles['designer-page-content']}>

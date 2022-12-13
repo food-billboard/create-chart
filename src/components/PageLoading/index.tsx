@@ -14,6 +14,27 @@ const Loading = (props: { style?: CSSProperties; className?: string }) => {
   const { style, className } = props;
 
   return (
+    <div className={styles['page-custom-loading-wrapper']}>
+      <PacmanLoader
+        style={style}
+        className={classnames(styles['page-custom-loading'], className)}
+        size={25}
+        loading
+        color={color}
+      />
+    </div>
+  );
+};
+
+export const InternalLoading = (props: {
+  style?: CSSProperties;
+  className?: string;
+}) => {
+  const color = usePrimaryColor();
+
+  const { style, className } = props;
+
+  return (
     <PacmanLoader
       style={style}
       className={classnames(styles['page-custom-loading'], className)}
