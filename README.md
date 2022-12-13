@@ -29,7 +29,7 @@
 ## 🖥  截图
 
 <div align="center">
-  <img src="public/other/screenshoot-3.jpg" width="60%" />
+  <img src="public/other/screenshoot-6.jpg" width="60%" />
   <br/>
   <br/>
   <img src="public/other/screenshoot-4.jpg" width="60%" />
