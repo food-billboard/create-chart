@@ -29,19 +29,19 @@
 ## 🖥  截图
 
 <div align="center">
-  <img src="public/other/screenshoot-6.jpg" width="60%" />
+  <img src="assets/other/screenshoot-6.jpg" width="60%" />
   <br/>
   <br/>
-  <img src="public/other/screenshoot-4.jpg" width="60%" />
+  <img src="assets/other/screenshoot-4.jpg" width="60%" />
   <br/>
   <br/>
-  <img src="public/other/screenshoot-5.jpg" width="60%" />
+  <img src="assets/other/screenshoot-5.jpg" width="60%" />
   <br/>
   <br/>
-  <img src="public/other/screenshoot-1.png" width="60%" style="background: #22284A" />
+  <img src="assets/other/screenshoot-1.png" width="60%" style="background: #22284A" />
   <br/>
   <br/>
-  <img src="public/other/screenshoot-2.png" width="60%" style="background: rgb(3, 17, 90)" />
+  <img src="assets/other/screenshoot-2.png" width="60%" style="background: rgb(3, 17, 90)" />
 </div>
 
 ## 🕷  本地调试
@@ -58,23 +58,23 @@
 账号和密码放在[issue](https://github.com/food-billboard/create-chart/issues/2)当中，如有兴趣或有问题也可以在[issue](https://github.com/food-billboard/create-chart/issues)中联系我。     
 
 ## 👇🏻  Changelog  
-[1.16](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.16.md)   
-[1.15](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.15.md)   
-[1.14](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.14.md)   
-[1.13](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.13.md)   
-[1.12](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.12.md)  
-[1.11](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.11.md)  
-[1.10](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.10.md)  
-[1.9](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.9.md)  
-[1.8](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.8.md)  
-[1.7](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.7.md)  
-[1.6](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.6.md)  
-[1.5](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.5.md)  
-[1.4](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.4.md)  
-[1.3](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.3.md)  
-[1.2](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.2.md)  
-[1.1](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.1.md)  
-[1.0](https://github.com/food-billboard/create-chart/blob/main/public/docs/1.0.md)  
+[1.16](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.16.md)   
+[1.15](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.15.md)   
+[1.14](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.14.md)   
+[1.13](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.13.md)   
+[1.12](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.12.md)  
+[1.11](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.11.md)  
+[1.10](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.10.md)  
+[1.9](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.9.md)  
+[1.8](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.8.md)  
+[1.7](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.7.md)  
+[1.6](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.6.md)  
+[1.5](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.5.md)  
+[1.4](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.4.md)  
+[1.3](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.3.md)  
+[1.2](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.2.md)  
+[1.1](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.1.md)  
+[1.0](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.0.md)  
 
 ## 🔗  链接  
 [官网](http://47.97.27.23/api/backend/screen/index.html#/)  
