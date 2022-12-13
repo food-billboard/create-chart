@@ -44,8 +44,8 @@ class Ruler extends Component<Props> {
           backgroundColor={getRgbaString(
             ThemeUtil.generateNextColor4CurrentTheme(0),
           )}
-          lineColor={'rgba(255, 255, 255)'}
-          textColor={'rgba(255, 255, 255)'}
+          lineColor={'rgb(255, 255, 255)'}
+          textColor={'rgb(255, 255, 255)'}
           type="vertical"
           {...this.props}
           ref={this.rulerRef}
