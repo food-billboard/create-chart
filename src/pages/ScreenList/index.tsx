@@ -153,7 +153,11 @@ function ScreenList() {
           <Button type="primary" onClick={fetchData.bind(null, {})}>
             搜索
           </Button>
-          <GhostButton style={{ width: 'auto' }} onClick={handleReset}>
+          <GhostButton
+            className="m-r-8"
+            style={{ width: 'auto' }}
+            onClick={handleReset}
+          >
             重置
           </GhostButton>
         </Space>

@@ -333,7 +333,7 @@ const Ruler = (props: {
           height={30}
           zoom={scale}
           unit={scale > 0.5 ? 50 : 100}
-          style={{ display: 'inline-block' }}
+          // style={{ display: 'inline-block' }}
         />
       </div>
       <div
