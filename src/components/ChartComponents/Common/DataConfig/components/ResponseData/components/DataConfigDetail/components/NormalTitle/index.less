@@ -1,3 +1,4 @@
+@import '~antd/es/style/themes/default.less';
 @import '../../../../../../index.less';
 
 .design-config-data-detail-title {
@@ -11,6 +12,12 @@
     .ant-badge {
       position: absolute;
       left: -12px;
+    }
+    .ant-badge-status-processing {
+      background-color: @primary-color;
+      &::after {
+        border-color: @primary-color;
+      }
     }
   }
 }
