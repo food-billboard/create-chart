@@ -9,7 +9,7 @@ import { Drawer, Button, message } from 'antd';
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { noop } from 'lodash';
-import Loading from '@/components/PageLoading';
+import { Loading } from '@/components/PageLoading';
 import { getDvaGlobalModelData } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils';
 import { ComponentTransformOriginChange } from '@/utils/Assist/BreakingChange';
