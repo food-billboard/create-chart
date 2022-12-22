@@ -3,7 +3,12 @@
   // left: 0;
   // top: 0;
   // z-index: 1;
-  width: 100vw;
-  height: 56.2vw;
+  --container-width: ~'min(100vw, 512px)';
+  width: var(--container-width);
+  height: calc(var(--container-width) * 0.56);
   border: 3px solid white;
+  position: relative;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
 }
