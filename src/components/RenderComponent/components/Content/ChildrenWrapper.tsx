@@ -41,7 +41,7 @@ const ChildrenWrapper = (props: {
   const realChildren = useMemo(() => {
     return Children.map(children, (child) => {
       const className = get(child, 'props.className');
-      const value: ComponentData.TComponentData = get(child, 'props.value');
+      const value: ComponentData.TComponentData = get(child, 'props.value')!;
       const {
         config: {
           style: { left, top, rotate, opacity, width, height, skew },

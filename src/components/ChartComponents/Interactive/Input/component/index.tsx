@@ -99,16 +99,21 @@ const Input = (props: ComponentData.CommonComponentProps<TInputConfig>) => {
                 backgroundColor: getRgbaString(backgroundColor),
                 // @ts-ignore
                 '--placeholder-color': getRgbaString(placeholder.color),
-                width: `calc( 100% - ${search.show ? search.width : 0}px - ${
-                  border.width * 2
-                }px )`,
+                // width: `calc( 100% - ${search.show ? search.width : 0}px - ${
+                //   border.width * 2
+                // }px )`,
+                // ? 1.17 更改为百分比
+                width: `${
+                  100 -
+                  (search.show ? Math.min(100, Math.max(search.width, 0)) : 0)
+                }%`,
               }}
             />
             {search.show && (
               <div
                 className={styles['component-interactive-input-button']}
                 style={{
-                  width: search.width,
+                  width: search.width + '%',
                 }}
               >
                 <button

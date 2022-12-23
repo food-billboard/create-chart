@@ -25,7 +25,7 @@ const InterActiveConfig = (props: {
     linkage: linkageInteractive = [],
   }: Pick<ComponentData.TInteractiveConfig, 'base' | 'linkage'> =
     useMemo(() => {
-      return get(component, 'config.interactive');
+      return get(component, 'config.interactive')!;
     }, [component]);
 
   return (

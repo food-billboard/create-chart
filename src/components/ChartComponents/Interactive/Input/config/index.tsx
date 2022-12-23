@@ -136,7 +136,7 @@ class Config extends Component<
                       }),
                   }}
                 >
-                  <Item label="宽度">
+                  <Item label="宽度(%)">
                     <FullForm>
                       <InputNumber
                         value={search.width}

@@ -85,7 +85,7 @@ const BaseConfig = (props: {
 
   const baseInteractive: ComponentData.TInteractiveConfig['base'] =
     useMemo(() => {
-      return get(component, 'config.interactive.base');
+      return get(component, 'config.interactive.base')!;
     }, [component]);
 
   const { keys, domList } = useMemo(() => {

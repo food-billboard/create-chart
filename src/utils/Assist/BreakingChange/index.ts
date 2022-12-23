@@ -1,6 +1,7 @@
 import { get } from 'lodash';
 import { ConditionChange } from './ConditionChange';
 import { ScreenThemeTypeChange } from './ScreenThemeTypeChange';
+import { ComponentInputButtonWidthChange } from './ComponentInputButtonWidthChange';
 import { mergeWithoutArray } from '../../tool';
 
 export * from './ComponentTransformOriginChange';
@@ -12,10 +13,19 @@ const BreakingChange: (
   const { components, config, ...nextScreenData } = screenData;
 
   // * breaking change 1.8
-  const newVersionComponentList = ConditionChange(components, version);
+  let newVersionComponentList: ComponentData.TComponentData[] = ConditionChange(
+    components,
+    version,
+  );
 
   // * breaking change 1.14
   const newTheme = ScreenThemeTypeChange(get(config, 'attr.theme'));
+
+  // * breaking change 1.17
+  newVersionComponentList = ComponentInputButtonWidthChange(
+    components,
+    version,
+  );
 
   return {
     ...nextScreenData,

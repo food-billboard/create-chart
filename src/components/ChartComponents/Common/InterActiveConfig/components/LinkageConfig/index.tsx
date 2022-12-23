@@ -55,7 +55,7 @@ const LinkageConfig = (props: {
 
   const linkageInteractive: ComponentData.TLinkageInteractiveConfig[] =
     useMemo(() => {
-      return get(component, 'config.interactive.linkage');
+      return get(component, 'config.interactive.linkage')!;
     }, [component]);
 
   const onLinkageChange = useCallback(

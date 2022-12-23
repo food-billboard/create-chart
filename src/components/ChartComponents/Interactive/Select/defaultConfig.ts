@@ -174,7 +174,6 @@ export default () => {
         style: {
           width: 300,
           height: 60,
-          zIndex: 3,
         },
       },
       CUSTOM_CONFIG,

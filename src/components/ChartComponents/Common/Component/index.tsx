@@ -24,7 +24,9 @@ class Component<P extends object = {}, S = {}> extends ReactComponent<
   private isIntervalRequest = () => {
     const { global, component } = this.props;
     const { screenType } = global;
-    const frequency = get(component, 'config.data.request.frequency') || {};
+    const frequency = get(component, 'config.data.request.frequency') || {
+      show: false,
+    };
     const { show } = frequency;
     return show || screenType !== 'edit';
   };
@@ -37,7 +39,7 @@ class Component<P extends object = {}, S = {}> extends ReactComponent<
   ) => {
     const { component } = this.props;
     clearInterval(this.requestTimer);
-    const frequency = get(component, 'config.data.request.frequency.value');
+    const frequency = get(component, 'config.data.request.frequency.value')!;
     this.requestData(params, constants, callback).then((_) => {
       if (this.isIntervalRequest()) {
         this.requestTimer = setInterval(() => {
@@ -56,7 +58,7 @@ class Component<P extends object = {}, S = {}> extends ReactComponent<
     this.requestLoading = true;
 
     const { component } = this.props;
-    const value = get(component, 'config.data');
+    const value = get(component, 'config.data')!;
     const result = await FilterDataUtil.requestData(value, params, constants);
 
     callback?.(result);
@@ -102,7 +104,7 @@ class Component<P extends object = {}, S = {}> extends ReactComponent<
     const baseInteractive: ComponentData.TBaseInteractiveConfig[] = get(
       component,
       'config.interactive.base',
-    );
+    )!;
 
     let toUpdateParamsId: string[] = [];
 
