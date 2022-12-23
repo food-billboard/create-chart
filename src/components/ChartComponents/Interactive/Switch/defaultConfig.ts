@@ -38,7 +38,7 @@ export default () => {
         g: 136,
         b: 136,
       },
-      onColor: ThemeUtil.generateNextColor4CurrentTheme(1),
+      onColor: ThemeUtil.generateNextColor4CurrentTheme(0),
       offHandleColor: {
         r: 255,
         g: 255,
@@ -110,7 +110,7 @@ export default () => {
 export const themeConfig = {
   convert: (colorList: string[]) => {
     return {
-      onColor: ThemeUtil.generateNextColor4CurrentTheme(1),
+      onColor: ThemeUtil.generateNextColor4CurrentTheme(0),
       boxShadow: {
         color: ThemeUtil.generateNextColor4CurrentTheme(0),
       },

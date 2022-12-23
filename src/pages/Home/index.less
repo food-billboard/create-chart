@@ -7,8 +7,8 @@
   flex-direction: column;
   .home-page-logo {
     background-image: url('../../../public/logo.jpg');
-    width: 31px;
-    height: 31px;
+    width: 64px;
+    height: 64px;
     margin: 16px 24px 16px 0;
     background-size: cover;
     position: relative;
@@ -18,7 +18,7 @@
     &::after {
       content: 'Screen';
       font-weight: bolder;
-      font-size: 1vw;
+      font-size: 3vw;
       position: absolute;
       right: -1vw;
       top: 50%;
@@ -51,9 +51,20 @@
   &-footer {
     height: 10vh;
   }
+  :global {
+    .ant-layout-header {
+      height: 96px;
+    }
+  }
 }
 
 @media only screen and (max-width: 768px) {
+  .home-page-logo {
+    &::after {
+      content: 'Screen';
+      font-size: 6vw !important;
+    }
+  }
   .home-page-wrapper .home-page-main {
     display: block;
   }
