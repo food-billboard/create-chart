@@ -71,9 +71,11 @@ async function generate(data) {
       .then(data => {
         console.log(chalk.green(`替换组件文件: ${filePath}中的变量内容`))
         divider()
+        let fileData = replaceAll(data, '{{COMPONENT_NAME}}', ComponentKey)
+        fileData = replaceAll(fileData, '{{COMPONENT_TYPE}}', type)
         return fs.writeFile(
           filePath, 
-          replaceAll(data, '{{COMPONENT_NAME}}', ComponentKey).replace('{{COMPONENT_TYPE}}', type)
+          fileData
         )
       })
     }
