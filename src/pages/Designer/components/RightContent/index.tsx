@@ -1,15 +1,31 @@
 import { useMemo } from 'react';
 import classnames from 'classnames';
 import { connect } from 'dva';
+import LazyWrapper from '@/components/LazyLoad';
 import FocusWrapper from '@/components/FocusWrapper';
 import { useComponentPath } from '@/hooks';
 import { isGroupComponent, getComponent } from '@/utils/Assist/Component';
 import GlobalConfig from './components/GlobalConfig';
-import GroupConfig from './components/GroupConfig';
-import ComponentConfig from './components/ComponentConfig';
-import MultiConfig from './components/MultiConfig';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
+
+const GroupConfig = LazyWrapper(async () => {
+  return import(
+    /* webpackChunkName: "GROUP_CONFIG" */ './components/GroupConfig'
+  );
+});
+
+const ComponentConfig = LazyWrapper(async () => {
+  return import(
+    /* webpackChunkName: "COMPONENT_CONFIG" */ './components/ComponentConfig'
+  );
+});
+
+const MultiConfig = LazyWrapper(async () => {
+  return import(
+    /* webpackChunkName: "MULTI_CONFIG" */ './components/MultiConfig'
+  );
+});
 
 const RightContent = (props: {
   select: string[];

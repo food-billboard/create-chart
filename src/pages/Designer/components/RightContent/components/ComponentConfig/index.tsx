@@ -6,16 +6,27 @@ import {
 } from '@ant-design/icons';
 import { connect } from 'dva';
 import IconTooltip from '@/components/IconTooltip';
+import LazyLoadWrapper from '@/components/LazyLoad';
 import ConfigComponent from './ConfigComponent';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';
-import DataConfig from '@/components/ChartComponents/Common/DataConfig';
-import InterActiveConfig from '@/components/ChartComponents/Common/InterActiveConfig';
 import ConfigWrapper, {
   ConfigItem,
 } from '@/components/ChartComponents/Common/ConfigWrapper';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
+
+const DataConfig = LazyLoadWrapper(async () => {
+  return import(
+    /* webpackChunkName: "DATA_CONFIG" */ '@/components/ChartComponents/Common/DataConfig'
+  );
+});
+
+const InterActiveConfig = LazyLoadWrapper(async () => {
+  return import(
+    /* webpackChunkName: "INTERACTIVE_CONFIG" */ '@/components/ChartComponents/Common/InterActiveConfig'
+  );
+});
 
 const ComponentConfig = (props: {
   id: string;
