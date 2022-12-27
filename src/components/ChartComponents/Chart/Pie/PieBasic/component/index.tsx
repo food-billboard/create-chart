@@ -19,10 +19,9 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TPieBasicConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'PIE_BASIC';
 
 const PieBasic = (
   props: ComponentData.CommonComponentProps<TPieBasicConfig>,

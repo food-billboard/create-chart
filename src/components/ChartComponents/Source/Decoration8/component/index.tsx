@@ -4,11 +4,10 @@ import classnames from 'classnames';
 import ColorSelect from '@/components/ColorSelect';
 import InternalDecoration from '@/components/Decoration/Decoration11';
 import { TDecoration8Config } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'DECORATION_8';
 
 const Decoration = (
   props: ComponentData.CommonComponentProps<TDecoration8Config>,

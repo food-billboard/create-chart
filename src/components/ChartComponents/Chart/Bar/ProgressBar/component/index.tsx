@@ -18,10 +18,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TProgressBarConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'PROGRESS_BAR';
 
 const ProgressBar = (
   props: ComponentData.CommonComponentProps<TProgressBarConfig>,

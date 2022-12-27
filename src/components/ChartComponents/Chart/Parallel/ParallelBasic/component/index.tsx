@@ -17,10 +17,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TParallelBasicConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'PARALLEL_BASIC';
 
 const ParallelBasic = (
   props: ComponentData.CommonComponentProps<TParallelBasicConfig>,

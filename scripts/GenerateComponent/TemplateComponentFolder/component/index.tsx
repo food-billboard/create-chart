@@ -11,10 +11,9 @@ import FetchFragment, {
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { T{{COMPONENT_NAME}}Config } from '../type';
+import { CHART_ID } from '../id'
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = '{{COMPONENT_TYPE}}';
 
 const Component = (
   props: ComponentData.CommonComponentProps<T{{COMPONENT_NAME}}Config>,

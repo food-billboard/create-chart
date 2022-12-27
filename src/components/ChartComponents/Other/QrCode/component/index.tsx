@@ -15,11 +15,10 @@ import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TQrCodeConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString, getHexString } = ColorSelect;
-
-const CHART_ID = 'QR_CODE';
 
 const QrCode = (props: ComponentData.CommonComponentProps<TQrCodeConfig>) => {
   const [qrCode, setQrCode] = useState<string>('');

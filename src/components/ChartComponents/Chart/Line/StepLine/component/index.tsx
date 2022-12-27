@@ -18,10 +18,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TStepLineConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'STEP_LINE';
 
 const StepLine = (
   props: ComponentData.CommonComponentProps<TStepLineConfig>,

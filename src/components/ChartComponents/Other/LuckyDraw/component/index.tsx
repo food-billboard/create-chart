@@ -16,12 +16,11 @@ import FetchFragment, {
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TLuckyDrawConfig } from '../type';
+import { CHART_ID } from '../id';
 import { BUTTON_MAP, BLOCK_MAP, BACKGROUND_PADDING } from './util';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'LUCKY_DRAW';
 
 const LuckyDrawBasic = (
   props: ComponentData.CommonComponentProps<TLuckyDrawConfig> & {

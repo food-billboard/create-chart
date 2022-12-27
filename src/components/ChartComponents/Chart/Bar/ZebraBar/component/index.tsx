@@ -18,10 +18,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TZebraBarConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'ZEBRA_BAR';
 
 const ZebraBar = (
   props: ComponentData.CommonComponentProps<TZebraBarConfig>,

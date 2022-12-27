@@ -20,10 +20,9 @@ import FetchFragment, {
 import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
 import { DEFAULT_BORDER_RADIUS } from '../../../../Common/Constants/defaultConfig';
 import { TBarBasicConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'BAR_BASIC';
 
 const BarBasic = (
   props: ComponentData.CommonComponentProps<TBarBasicConfig>,

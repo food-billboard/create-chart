@@ -13,11 +13,10 @@ import FetchFragment, {
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TCountUpNumberConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'COUNT_UP_NUMBER';
 
 const EASING_FN_MAP = {
   easeOutExpo: undefined,

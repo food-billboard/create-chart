@@ -12,11 +12,10 @@ import FetchFragment, {
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TTextConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'TEXT';
 
 const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
   const { className, style, value, global, children, wrapper: Wrapper } = props;

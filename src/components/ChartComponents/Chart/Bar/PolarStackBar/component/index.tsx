@@ -19,10 +19,9 @@ import FetchFragment, {
 import { DEFAULT_OPACITY } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TPolarStackBarConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'POLAR_STACK_BAR';
 
 const PolarStackBar = (
   props: ComponentData.CommonComponentProps<TPolarStackBarConfig>,

@@ -1,24 +1,15 @@
-import { dynamic } from 'umi';
+import LazyLoadWrapper from '@/components/LazyLoad';
+import defaultConfig, { themeConfig } from './defaultConfig';
+import { CHART_ID } from './id';
 
-export default dynamic({
-  loader: async function () {
-    const defaultConfig = await import(
-      /* webpackChunkName: "CIRCLE_PIE" */ './defaultConfig'
-    );
-    const themeConfig = defaultConfig.themeConfig;
-    const configComponent = await import(
-      /* webpackChunkName: "CIRCLE_PIE" */ './config'
-    );
-    const render = await import(
-      /* webpackChunkName: "CIRCLE_PIE" */ './component'
-    );
-    const type = render.default.id;
-    return {
-      defaultConfig,
-      themeConfig,
-      configComponent,
-      render,
-      type,
-    };
-  },
-});
+export default {
+  defaultConfig,
+  themeConfig,
+  configComponent: LazyLoadWrapper(() => {
+    return import(/* webpackChunkName: "CIRCLE_PIE" */ './config');
+  }),
+  render: LazyLoadWrapper(() => {
+    return import(/* webpackChunkName: "CIRCLE_PIE" */ './component');
+  }),
+  type: CHART_ID,
+};

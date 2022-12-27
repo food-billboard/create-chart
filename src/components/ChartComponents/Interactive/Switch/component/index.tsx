@@ -7,11 +7,10 @@ import ColorSelect from '@/components/ColorSelect';
 // @ts-ignore
 import ReactSwitch from './components/Switch';
 import { TSwitchConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString, getHexString } = ColorSelect;
-
-const CHART_ID = 'SWITCH';
 
 const Switch = (props: ComponentData.CommonComponentProps<TSwitchConfig>) => {
   const { className, style, value, global, children, wrapper: Wrapper } = props;

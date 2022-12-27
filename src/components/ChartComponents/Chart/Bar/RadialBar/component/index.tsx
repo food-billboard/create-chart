@@ -21,10 +21,9 @@ import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
 import { DEFAULT_BORDER_RADIUS } from '../../../../Common/Constants/defaultConfig';
 import { TRadialBarConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'RADIAL_BAR';
 
 const RadialBar = (
   props: ComponentData.CommonComponentProps<TRadialBarConfig>,

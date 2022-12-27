@@ -18,10 +18,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TTreeBasicConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'TREE_BASIC';
 
 const TreeBasic = (
   props: ComponentData.CommonComponentProps<TTreeBasicConfig>,

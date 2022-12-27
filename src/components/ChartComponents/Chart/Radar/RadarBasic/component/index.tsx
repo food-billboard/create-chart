@@ -19,10 +19,9 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TRadarBasicConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'RADAR_BASIC';
 
 const RadarBasic = (
   props: ComponentData.CommonComponentProps<TRadarBasicConfig>,

@@ -1,24 +1,15 @@
-import { dynamic } from 'umi';
+import LazyLoadWrapper from '@/components/LazyLoad';
+import defaultConfig, { themeConfig } from './defaultConfig';
+import { CHART_ID } from './id';
 
-export default dynamic({
-  loader: async function () {
-    const defaultConfig = await import(
-      /* webpackChunkName: "ZEBRA_BAR" */ './defaultConfig'
-    );
-    const themeConfig = defaultConfig.themeConfig;
-    const configComponent = await import(
-      /* webpackChunkName: "ZEBRA_BAR" */ './config'
-    );
-    const render = await import(
-      /* webpackChunkName: "ZEBRA_BAR" */ './component'
-    );
-    const type = render.default.id;
-    return {
-      defaultConfig,
-      themeConfig,
-      configComponent,
-      render,
-      type,
-    };
-  },
-});
+export default {
+  defaultConfig,
+  themeConfig,
+  configComponent: LazyLoadWrapper(() => {
+    return import(/* webpackChunkName: "ZEBRA_BAR" */ './config');
+  }),
+  render: LazyLoadWrapper(() => {
+    return import(/* webpackChunkName: "ZEBRA_BAR" */ './component');
+  }),
+  type: CHART_ID,
+};

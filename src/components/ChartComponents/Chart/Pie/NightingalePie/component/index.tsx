@@ -19,10 +19,9 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TNightingaleConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'NIGHTINGALE_PIE';
 
 const NightingalePie = (
   props: ComponentData.CommonComponentProps<TNightingaleConfig>,

@@ -16,10 +16,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TPercentPieConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'PERCENT_PIE';
 
 //获取圆上面某点的坐标(x0,y0表示坐标，r半径，angle角度)
 function getCirclePoint(x0: number, y0: number, r: number, angle: number) {

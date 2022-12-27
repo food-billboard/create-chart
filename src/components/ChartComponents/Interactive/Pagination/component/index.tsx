@@ -13,11 +13,10 @@ import FetchFragment, {
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import ColorSelect from '@/components/ColorSelect';
 import { TPaginationConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'PAGINATION';
 
 const Pagination = (
   props: ComponentData.CommonComponentProps<TPaginationConfig>,

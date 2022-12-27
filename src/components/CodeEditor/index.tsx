@@ -1,10 +1,5 @@
-import { dynamic } from 'umi';
+import LazyLoadWrapper from '@/components/LazyLoad';
 
-export default dynamic({
-  loader: async function () {
-    const Editor = await import(
-      /* webpackChunkName: "CODE_EDITOR" */ '../SyncCodeEditor'
-    );
-    return Editor;
-  },
+export default LazyLoadWrapper(() => {
+  return import(/* webpackChunkName: "CODE_EDITOR" */ '../SyncCodeEditor');
 });

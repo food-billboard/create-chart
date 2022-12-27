@@ -4,11 +4,10 @@ import classnames from 'classnames';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
 import { TInputConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'INPUT';
 
 const Input = (props: ComponentData.CommonComponentProps<TInputConfig>) => {
   const { className, style, value, global, children, wrapper: Wrapper } = props;

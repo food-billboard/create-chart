@@ -11,11 +11,10 @@ import FetchFragment, {
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TStateCardConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'STATE_CARD';
 
 const StateCard = (
   props: ComponentData.CommonComponentProps<TStateCardConfig>,

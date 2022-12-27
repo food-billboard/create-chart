@@ -6,11 +6,10 @@ import ColorSelect from '@/components/ColorSelect';
 import { useComponentSize } from '@/components/ChartComponents/Common/Component/hook';
 import { ConnectState } from '@/models/connect';
 import { TTicketConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'TICKET';
 
 const Ticket = (
   props: ComponentData.CommonComponentProps<TTicketConfig> & {

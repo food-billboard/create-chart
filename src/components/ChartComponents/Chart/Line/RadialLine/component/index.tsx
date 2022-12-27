@@ -19,10 +19,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TRadialLineConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'RADIAL_LINE';
 
 const RadialLine = (
   props: ComponentData.CommonComponentProps<TRadialLineConfig>,

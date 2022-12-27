@@ -5,11 +5,10 @@ import moment from 'moment';
 import { useLinkageInteractive } from '@/components/ChartComponents/Common/Component/hook/useLinkageInteractive';
 import ColorSelect from '@/components/ColorSelect';
 import { TTimeMachineConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'TIME_MACHINE';
 
 const TimeMachineBasic = (
   props: ComponentData.CommonComponentProps<TTimeMachineConfig>,

@@ -20,10 +20,9 @@ import FetchFragment, {
 import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { THorizontalBarConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'HORIZONTAL_BAR';
 
 const HorizontalBar = (
   props: ComponentData.CommonComponentProps<THorizontalBarConfig>,

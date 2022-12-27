@@ -17,10 +17,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TGaugeBasicConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'GAUGE_BASIC';
 
 const GaugeBasic = (
   props: ComponentData.CommonComponentProps<TGaugeBasicConfig>,

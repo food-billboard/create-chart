@@ -19,10 +19,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TLineBarConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'LINE_BAR';
 
 const LineBar = (props: ComponentData.CommonComponentProps<TLineBarConfig>) => {
   const { className, style, value, global, children, wrapper: Wrapper } = props;

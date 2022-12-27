@@ -19,10 +19,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TCachetBarConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'CACHET_BAR';
 
 const CachetBar = (
   props: ComponentData.CommonComponentProps<TCachetBarConfig>,

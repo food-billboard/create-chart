@@ -5,11 +5,10 @@ import { Rate as AntRate } from 'antd';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
 import { TRateConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'RATE';
 
 const Rate = (props: ComponentData.CommonComponentProps<TRateConfig>) => {
   const { className, style, value, global, children, wrapper: Wrapper } = props;

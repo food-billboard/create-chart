@@ -17,10 +17,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TBoxPlotBasicConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'BOX_PLOT_BASIC';
 
 const BoxPlotBasic = (
   props: ComponentData.CommonComponentProps<TBoxPlotBasicConfig>,

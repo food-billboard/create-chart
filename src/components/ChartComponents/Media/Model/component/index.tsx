@@ -11,9 +11,8 @@ import { usePrimaryColor } from '@/hooks';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { DEFAULT_THREE_D_MODEL_URL } from '@/utils/constants';
 import { TModelConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
-
-const CHART_ID = 'MODEL';
 
 const getDomain = (url: string) => {
   try {

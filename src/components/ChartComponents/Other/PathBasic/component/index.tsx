@@ -16,11 +16,10 @@ import FetchFragment, {
 import { ConnectState } from '@/models/connect';
 import { sleep } from '@/utils';
 import { TPathBasicConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'PATH_BASIC';
 
 const _PathBasic = (
   props: ComponentData.CommonComponentProps<TPathBasicConfig> & {

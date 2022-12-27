@@ -11,12 +11,11 @@ import FilterDataUtil from '@/utils/Assist/FilterData';
 import { getWeatherData } from '@/services';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TWeatherConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 import { Space } from 'antd';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'WEATHER';
 
 const KEY_MAP: any = {
   temperature: (value: string) => {

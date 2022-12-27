@@ -17,10 +17,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TSunBurstBasicConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'SUN_BURST_BASIC';
 
 const SunBurstBasic = (
   props: ComponentData.CommonComponentProps<TSunBurstBasicConfig>,

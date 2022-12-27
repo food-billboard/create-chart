@@ -1,22 +1,15 @@
-import { dynamic } from 'umi';
+import LazyLoadWrapper from '@/components/LazyLoad';
+import defaultConfig, { themeConfig } from './defaultConfig';
+import { CHART_ID } from './id';
 
-export default dynamic({
-  loader: async function () {
-    const defaultConfig = await import(
-      /* webpackChunkName: "TITLE" */ './defaultConfig'
-    );
-    const themeConfig = defaultConfig.themeConfig;
-    const configComponent = await import(
-      /* webpackChunkName: "TITLE" */ './config'
-    );
-    const render = await import(/* webpackChunkName: "TITLE" */ './component');
-    const type = render.default.id;
-    return {
-      defaultConfig,
-      themeConfig,
-      configComponent,
-      render,
-      type,
-    };
-  },
-});
+export default {
+  defaultConfig,
+  themeConfig,
+  configComponent: LazyLoadWrapper(() => {
+    return import(/* webpackChunkName: "TITLE" */ './config');
+  }),
+  render: LazyLoadWrapper(() => {
+    return import(/* webpackChunkName: "TITLE" */ './component');
+  }),
+  type: CHART_ID,
+};

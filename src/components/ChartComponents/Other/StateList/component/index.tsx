@@ -12,11 +12,10 @@ import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TStateListConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'STATE_LIST';
 
 const StateList = (
   props: ComponentData.CommonComponentProps<TStateListConfig>,

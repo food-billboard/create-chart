@@ -9,11 +9,10 @@ import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TTabConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'TAB';
 
 const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
   const { className, style, value, global, children, wrapper: Wrapper } = props;

@@ -19,10 +19,9 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TNegativeBarConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'NEGATIVE_BAR';
 
 const NegativeBar = (
   props: ComponentData.CommonComponentProps<TNegativeBarConfig>,

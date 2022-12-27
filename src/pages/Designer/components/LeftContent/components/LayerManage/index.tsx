@@ -17,19 +17,14 @@ import { MAX_LAYER_WIDTH, MIN_LAYER_WIDTH } from '@/utils/constants';
 import ThemeUtil from '@/utils/Assist/Theme';
 import Header from './components/Header';
 import LayerList from './components/Tree';
+import { LayerManageRef } from './type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-export interface LayerManageRef {
-  open: () => void;
-  close: () => void;
-  visible: boolean;
-}
 
 export interface LayerManageProps {
   onClose?: () => void;
 }
-
 class ResizeLine extends Component<{
   value: number;
   onChange?: (value: number) => void;

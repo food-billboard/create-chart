@@ -20,10 +20,9 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TWaterFallBarConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'WATER_FALL_BAR';
 
 const WaterFallBar = (
   props: ComponentData.CommonComponentProps<TWaterFallBarConfig>,

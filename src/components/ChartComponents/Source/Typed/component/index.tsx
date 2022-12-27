@@ -9,11 +9,10 @@ import FetchFragment, {
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TTypedConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'TYPED';
 
 const Typed = (props: ComponentData.CommonComponentProps<TTypedConfig>) => {
   const { className, style, value, global, children, wrapper: Wrapper } = props;

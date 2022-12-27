@@ -18,10 +18,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TLineBasicConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'LINE_BASIC';
 
 const LineBasic = (
   props: ComponentData.CommonComponentProps<TLineBasicConfig>,

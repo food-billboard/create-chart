@@ -7,11 +7,10 @@ import { ConnectState } from '@/models/connect';
 import { useComponentSize } from '@/components/ChartComponents/Common/Component/hook';
 import { useLinkageInteractive } from '@/components/ChartComponents/Common/Component/hook/useLinkageInteractive';
 import { TIconConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'ICON';
 
 const Icon = (
   props: ComponentData.CommonComponentProps<TIconConfig> & {

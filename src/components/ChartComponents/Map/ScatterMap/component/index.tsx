@@ -19,12 +19,11 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import chinaMap from './china.json';
 import { TScatterMapConfig } from '../type';
+import { CHART_ID } from '../id';
 
 echarts.registerMap('china', chinaMap as any);
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'SCATTER_MAP';
 
 const ScatterMap = (
   props: ComponentData.CommonComponentProps<TScatterMapConfig>,

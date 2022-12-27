@@ -18,10 +18,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TCandlestickBasicConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'CANDLESTICK_BASIC';
 
 const CandlestickBasic = (
   props: ComponentData.CommonComponentProps<TCandlestickBasicConfig>,

@@ -9,10 +9,9 @@ import {
 } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
 import { TClockGaugeConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'CLOCK_GAUGE';
 
 const ClockGauge = (
   props: ComponentData.CommonComponentProps<TClockGaugeConfig>,

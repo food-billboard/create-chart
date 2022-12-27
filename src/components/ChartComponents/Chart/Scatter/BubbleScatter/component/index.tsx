@@ -18,10 +18,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TBubbleScatterConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'BUBBLE_SCATTER';
 
 const BubbleScatter = (
   props: ComponentData.CommonComponentProps<TBubbleScatterConfig>,

@@ -9,10 +9,9 @@ import FetchFragment, {
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TPictureWallConfig } from '../type';
+import { CHART_ID } from '../id';
 import 'viewerjs/dist/viewer.css';
 import styles from './index.less';
-
-const CHART_ID = 'PICTURE_WALL';
 
 const PictureWall = (
   props: ComponentData.CommonComponentProps<TPictureWallConfig>,

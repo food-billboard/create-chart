@@ -18,10 +18,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TPictorialBarBasicConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'PICTORIAL_BAR_BASIC';
 
 const PictorialBar = (
   props: ComponentData.CommonComponentProps<TPictorialBarBasicConfig>,

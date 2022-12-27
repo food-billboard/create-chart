@@ -10,9 +10,8 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TAudioConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
-
-const CHART_ID = 'AUDIO';
 
 const AudioBasic = (
   props: ComponentData.CommonComponentProps<TAudioConfig>,

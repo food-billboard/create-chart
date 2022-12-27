@@ -9,12 +9,11 @@ import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import RcSteps, { Step as RcStep } from './components/RcSteps';
 import { TStepsConfig } from '../type';
+import { CHART_ID } from '../id';
 import { DEFAULT_ICON } from '../defaultConfig';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'STEPS';
 
 const Steps = (props: ComponentData.CommonComponentProps<TStepsConfig>) => {
   const { className, style, value, global, children, wrapper: Wrapper } = props;

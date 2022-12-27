@@ -17,8 +17,7 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TRadialStackLineConfig } from '../type';
-
-const CHART_ID = 'RADIAL_STACK_LINE';
+import { CHART_ID } from '../id';
 
 const RadialStackLine = (
   props: ComponentData.CommonComponentProps<TRadialStackLineConfig>,

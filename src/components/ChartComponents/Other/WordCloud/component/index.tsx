@@ -17,10 +17,9 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { TWordCloudBasicConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'WORD_CLOUD_BASIC';
 
 const WordCloudBasic = (
   props: ComponentData.CommonComponentProps<TWordCloudBasicConfig>,

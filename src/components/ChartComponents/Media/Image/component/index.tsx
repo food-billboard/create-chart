@@ -13,9 +13,8 @@ import FetchFragment, {
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TImageConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
-
-const CHART_ID = 'IMAGE';
 
 const ImageBasic = (
   props: ComponentData.CommonComponentProps<TImageConfig>,

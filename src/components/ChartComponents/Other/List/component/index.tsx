@@ -14,13 +14,12 @@ import ColorSelect from '@/components/ColorSelect';
 import ScrollText from '@/components/ScrollText';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TListConfig } from '../type';
+import { CHART_ID } from '../id';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'LIST';
 
 const MarkText = ({ value }: { value: number }) => {
   const realValue = parseFloat(value as any) || 0;

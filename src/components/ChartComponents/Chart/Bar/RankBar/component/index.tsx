@@ -20,10 +20,9 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
 import { TRankBarConfig } from '../type';
+import { CHART_ID } from '../id';
 
 const { getRgbaString } = ColorSelect;
-
-const CHART_ID = 'RANK_BAR';
 
 const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
   const { className, style, value, global, children, wrapper: Wrapper } = props;

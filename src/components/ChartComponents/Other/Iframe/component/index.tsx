@@ -10,9 +10,8 @@ import FilterDataUtil from '@/utils/Assist/FilterData';
 import { getDvaGlobalModelData } from '@/utils/Assist/Component';
 import VariableStringUtil from '@/utils/Assist/VariableString';
 import { TIFrameConfig } from '../type';
+import { CHART_ID } from '../id';
 import styles from './index.less';
-
-const CHART_ID = 'IFRAME';
 
 const IframeBasic = (
   props: ComponentData.CommonComponentProps<TIFrameConfig>,
