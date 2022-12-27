@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react';
+import { Loading } from '../PageLoading';
 
 export default function LazyLoadWrapper<T = any>(
   loader: Parameters<typeof lazy>[0],
@@ -6,7 +7,7 @@ export default function LazyLoadWrapper<T = any>(
   const Component = lazy(loader);
   return (props: T) => {
     return (
-      <Suspense fallback={<div>loading.....</div>}>
+      <Suspense fallback={<Loading size={25} />}>
         <Component {...props} />
       </Suspense>
     );

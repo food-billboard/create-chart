@@ -11,16 +11,17 @@ import styles from './index.less';
 export const Loading = (props: {
   style?: CSSProperties;
   className?: string;
+  size?: number;
 }) => {
   const color = usePrimaryColor();
 
-  const { style, className } = props;
+  const { style, className, size = 100 } = props;
 
   return (
     <PacmanLoader
       style={style}
       className={classnames(styles['page-custom-loading'], className)}
-      size={100}
+      size={size}
       loading
       color={color}
     />
