@@ -13,11 +13,15 @@ import {
   PlusSquareOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import CodeViewer from '@/components/CodeView';
+import LazyLoadWrapper from '@/components/LazyLoad';
 import ParamsSelect from '@/components/ParamsSelect';
 import FocusWrapper from '@/components/FocusWrapper';
 import { useIdPathMap } from '@/hooks';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+
+const CodeViewer = LazyLoadWrapper(
+  () => import(/* webpackChunkName: "CODE_VIEWER" */ '@/components/CodeView'),
+);
 export interface CallbackManageRef {
   open: () => void;
 }
