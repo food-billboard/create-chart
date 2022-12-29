@@ -14,7 +14,7 @@ import { useComponentStyle } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import ComponentWrapper from './components/Wrapper';
 import Content from './components/Content';
-import ContextMenu from '../ContextMenu';
+import ContextMenu from '../../../../components/ContextMenu';
 import ConnectSelectChangeWrapper from './components/SelectChangeWrapper';
 import HoverChangeWrapper from './components/HoverChangeWrapper';
 import { mapStateToProps, mapDispatchToProps } from './connect';

@@ -1,7 +1,7 @@
 import { useMemo, useContext } from 'react';
 import { connect } from 'dva';
 import { useIdPathMap } from '@/hooks';
-import RenderComponent from '@/components/RenderComponent';
+import RenderComponent from '../../../RenderComponent';
 import {
   getPath,
   isGroupComponent as isGroupComponentFunc,

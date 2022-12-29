@@ -68,6 +68,50 @@ const commonConfig = {
     //     release: packageJson.version,
     //   }
     // ])
+    // 生产环境配置
+    if (REACT_APP_ENV === 'prod') {
+      config.merge({
+        optimization: {
+          minimize: true,
+          splitChunks: {
+            chunks: 'async',
+            minSize: 30000,
+            minChunks: 1,
+            automaticNameDelimiter: '.',
+            cacheGroups: {
+              antdesigns: {
+                name: 'antdesigns',
+                chunks: 'all',
+                test: /[\\/]node_modules[\\/](@antv|antd|@ant-design)/,
+                priority: 10,
+              },
+              // echarts: {
+              //   name: 'echarts',
+              //   chunks: 'all',
+              //   test: /[\\/]node_modules[\\/](echarts|zrender)/,
+              //   priority: 10,
+              // },
+              vendors: {
+                name: 'vendors',
+                chunks: 'all',
+                test: /[\\/]node_modules[\\/](lodash|moment|react|dva|postcss|html2canvas)/,
+                priority: 10,
+              },
+              commons: {
+                name: 'commons',
+                // 其余同步加载包
+                chunks: 'all',
+                minChunks: 2,
+                priority: 1,
+                // 这里需要注意下，webpack5会有问题， 需加上这个 enforce: true，
+                // refer: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/257#issuecomment-432594711
+                enforce: true,
+              },
+            },
+          },
+        },
+      });
+    }
   },
 };
 
@@ -86,6 +130,7 @@ const productionConfig: any = merge({}, commonConfig, {
   // base: '/api/backend/screen/',
   base: '/',
   publicPath: '/api/backend/screen/',
+  chunks: ['antdesigns', 'vendors', 'commons', 'umi'],
 });
 
 export default defineConfig(

@@ -2,15 +2,15 @@ import { useMemo, useCallback } from 'react';
 import { connect } from 'dva';
 import { get } from 'lodash';
 import { ConnectState } from '@/models/connect';
-import { EComponentType } from '@/utils/constants';
-import { mergeWithoutArray } from '@/utils';
+import { getComponentByType } from '@/components/ChartComponents';
 import {
   InternalBorderWrapper,
   getTargetBorder,
-} from '../../../InternalBorder';
+} from '@/components/InternalBorder';
+import { EComponentType } from '@/utils/constants';
+import { mergeWithoutArray } from '@/utils';
 import ChildrenWrapper from './ChildrenWrapper';
 import SubGroup from './SubGroup';
-import { getComponentByType } from '../../../ChartComponents';
 import styles from './index.less';
 
 const Content = (props: {
