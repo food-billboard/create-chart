@@ -1,1 +1,1 @@
-export const CHART_ID = 'TIME_MACHINE';
+export const CHART_ID: ComponentSelfType = 'TIME_MACHINE';

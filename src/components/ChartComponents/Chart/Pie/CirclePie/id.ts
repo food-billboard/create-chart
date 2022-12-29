@@ -1,1 +1,1 @@
-export const CHART_ID = 'CIRCLE_PIE';
+export const CHART_ID: ComponentSelfType = 'CIRCLE_PIE';

@@ -1,1 +1,1 @@
-export const CHART_ID = 'PARALLEL_BASIC';
+export const CHART_ID: ComponentSelfType = 'PARALLEL_BASIC';

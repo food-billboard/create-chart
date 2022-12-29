@@ -1,1 +1,1 @@
-export const CHART_ID = 'VIDEO';
+export const CHART_ID: ComponentSelfType = 'VIDEO';

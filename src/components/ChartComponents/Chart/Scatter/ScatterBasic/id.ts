@@ -1,1 +1,1 @@
-export const CHART_ID = 'SCATTER_BASIC';
+export const CHART_ID: ComponentSelfType = 'SCATTER_BASIC';

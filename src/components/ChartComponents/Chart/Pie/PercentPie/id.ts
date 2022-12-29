@@ -1,1 +1,1 @@
-export const CHART_ID = 'PERCENT_PIE';
+export const CHART_ID: ComponentSelfType = 'PERCENT_PIE';

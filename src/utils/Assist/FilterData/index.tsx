@@ -1,7 +1,6 @@
 import json5 from 'json5';
 import mustache from 'mustache';
 import { cloneDeep } from 'lodash';
-import Mock from 'mockjs';
 import { preRequestData } from '@/services';
 import VariableStringUtil from '../VariableString';
 import request from '../../request';
@@ -13,7 +12,13 @@ export const FILTER_STEP_MAP_DATA: {
   };
 } = {};
 
-class FilterData {
+export class FilterData {
+  // ? Hack
+  // 一开始不会用到这个模块
+  // 尝试一开始不加载Mock模块
+  // 减少umi体积
+  static Mock: any;
+
   stringDataToObject(value: string, defaultValue = '{}') {
     try {
       return json5.parse(value);
@@ -27,7 +32,7 @@ class FilterData {
       let filterFunction = new Function('data', 'global', 'options', code);
       return {
         value: filterFunction(value, global, {
-          Mock,
+          Mock: FilterData.Mock,
         }),
         error: false,
       };

@@ -1,1 +1,1 @@
-export const CHART_ID = 'POLAR_BAR';
+export const CHART_ID: ComponentSelfType = 'POLAR_BAR';

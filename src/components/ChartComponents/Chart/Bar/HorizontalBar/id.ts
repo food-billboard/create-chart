@@ -1,1 +1,1 @@
-export const CHART_ID = 'HORIZONTAL_BAR';
+export const CHART_ID: ComponentSelfType = 'HORIZONTAL_BAR';

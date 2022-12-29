@@ -1,1 +1,1 @@
-export const CHART_ID = 'GAUGE_BASIC';
+export const CHART_ID: ComponentSelfType = 'GAUGE_BASIC';

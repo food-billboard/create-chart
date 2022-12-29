@@ -1,1 +1,1 @@
-export const CHART_ID = 'CLOCK_GAUGE';
+export const CHART_ID: ComponentSelfType = 'CLOCK_GAUGE';

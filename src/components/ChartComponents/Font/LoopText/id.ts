@@ -1,1 +1,1 @@
-export const CHART_ID = 'LOOP_TEXT';
+export const CHART_ID: ComponentSelfType = 'LOOP_TEXT';

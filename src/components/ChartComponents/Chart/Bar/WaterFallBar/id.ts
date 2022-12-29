@@ -1,1 +1,1 @@
-export const CHART_ID = 'WATER_FALL_BAR';
+export const CHART_ID: ComponentSelfType = 'WATER_FALL_BAR';

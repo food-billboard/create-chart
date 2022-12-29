@@ -1,1 +1,1 @@
-export const CHART_ID = 'LUCKY_DRAW';
+export const CHART_ID: ComponentSelfType = 'LUCKY_DRAW';

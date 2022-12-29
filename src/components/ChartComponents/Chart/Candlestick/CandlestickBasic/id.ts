@@ -1,1 +1,1 @@
-export const CHART_ID = 'CANDLESTICK_BASIC';
+export const CHART_ID: ComponentSelfType = 'CANDLESTICK_BASIC';

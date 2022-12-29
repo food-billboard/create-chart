@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { init } from 'echarts';
-import { uniqueId, merge } from 'lodash';
-import { Random } from 'mockjs';
+import { uniqueId, merge, random } from 'lodash';
 import classnames from 'classnames';
 import { useDeepUpdateEffect } from '@/hooks';
 import 'echarts-wordcloud';
@@ -123,9 +122,9 @@ const WordCloudBasic = (
           return (
             'rgb(' +
             [
-              Math.round(Random.natural(...r)),
-              Math.round(Random.natural(...g)),
-              Math.round(Random.natural(...b)),
+              Math.round(random(...r, false)),
+              Math.round(random(...g, false)),
+              Math.round(random(...g, false)),
             ].join(',') +
             ')'
           );

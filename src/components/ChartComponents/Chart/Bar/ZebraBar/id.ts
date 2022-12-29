@@ -1,1 +1,1 @@
-export const CHART_ID = 'ZEBRA_BAR';
+export const CHART_ID: ComponentSelfType = 'ZEBRA_BAR';

@@ -1,1 +1,1 @@
-export const CHART_ID = '{{COMPONENT_TYPE}}';
+export const CHART_ID:ComponentSelfType = '{{COMPONENT_TYPE}}';

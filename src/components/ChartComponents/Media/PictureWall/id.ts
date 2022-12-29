@@ -1,1 +1,1 @@
-export const CHART_ID = 'PICTURE_WALL';
+export const CHART_ID: ComponentSelfType = 'PICTURE_WALL';

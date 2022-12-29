@@ -1,1 +1,1 @@
-export const CHART_ID = 'AUDIO';
+export const CHART_ID: ComponentSelfType = 'AUDIO';

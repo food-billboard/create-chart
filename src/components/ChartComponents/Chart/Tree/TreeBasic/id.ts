@@ -1,1 +1,1 @@
-export const CHART_ID = 'TREE_BASIC';
+export const CHART_ID: ComponentSelfType = 'TREE_BASIC';

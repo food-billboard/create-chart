@@ -1,1 +1,1 @@
-export const CHART_ID = 'WEATHER';
+export const CHART_ID: ComponentSelfType = 'WEATHER';

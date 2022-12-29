@@ -1,1 +1,1 @@
-export const CHART_ID = 'WORD_CLOUD_BASIC';
+export const CHART_ID: ComponentSelfType = 'WORD_CLOUD_BASIC';

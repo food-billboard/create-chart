@@ -1,1 +1,1 @@
-export const CHART_ID = 'PICTORIAL_BAR_BASIC';
+export const CHART_ID: ComponentSelfType = 'PICTORIAL_BAR_BASIC';

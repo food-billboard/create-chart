@@ -1,1 +1,1 @@
-export const CHART_ID = 'PROGRESS_BAR';
+export const CHART_ID: ComponentSelfType = 'PROGRESS_BAR';

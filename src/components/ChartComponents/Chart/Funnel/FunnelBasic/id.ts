@@ -1,1 +1,1 @@
-export const CHART_ID = 'FUNNEL_BASIC';
+export const CHART_ID: ComponentSelfType = 'FUNNEL_BASIC';

@@ -1,1 +1,1 @@
-export const CHART_ID = 'STEP_LINE';
+export const CHART_ID: ComponentSelfType = 'STEP_LINE';

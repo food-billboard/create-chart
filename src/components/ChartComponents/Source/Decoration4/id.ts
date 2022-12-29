@@ -1,1 +1,1 @@
-export const CHART_ID = 'DECORATION_4';
+export const CHART_ID: ComponentSelfType = 'DECORATION_4';

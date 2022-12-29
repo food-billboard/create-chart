@@ -1,1 +1,1 @@
-export const CHART_ID = 'TAG';
+export const CHART_ID: ComponentSelfType = 'TAG';

@@ -1,1 +1,1 @@
-export const CHART_ID = 'SUN_BURST_BASIC';
+export const CHART_ID: ComponentSelfType = 'SUN_BURST_BASIC';

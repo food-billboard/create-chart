@@ -1,1 +1,1 @@
-export const CHART_ID = 'NEGATIVE_BAR';
+export const CHART_ID: ComponentSelfType = 'NEGATIVE_BAR';

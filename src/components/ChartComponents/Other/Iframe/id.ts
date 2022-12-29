@@ -1,1 +1,1 @@
-export const CHART_ID = 'IFRAME';
+export const CHART_ID: ComponentSelfType = 'IFRAME';

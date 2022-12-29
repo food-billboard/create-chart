@@ -1,1 +1,1 @@
-export const CHART_ID = 'CHECKBOX';
+export const CHART_ID: ComponentSelfType = 'CHECKBOX';

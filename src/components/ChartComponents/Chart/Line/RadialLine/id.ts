@@ -1,1 +1,1 @@
-export const CHART_ID = 'RADIAL_LINE';
+export const CHART_ID: ComponentSelfType = 'RADIAL_LINE';

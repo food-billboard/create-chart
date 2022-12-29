@@ -1,1 +1,1 @@
-export const CHART_ID = 'PAGINATION';
+export const CHART_ID: ComponentSelfType = 'PAGINATION';

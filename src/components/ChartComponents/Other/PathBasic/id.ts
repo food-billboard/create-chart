@@ -1,1 +1,1 @@
-export const CHART_ID = 'PATH_BASIC';
+export const CHART_ID: ComponentSelfType = 'PATH_BASIC';

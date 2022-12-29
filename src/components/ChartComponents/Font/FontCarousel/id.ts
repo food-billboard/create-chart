@@ -1,1 +1,1 @@
-export const CHART_ID = 'FONT_CAROUSEL';
+export const CHART_ID: ComponentSelfType = 'FONT_CAROUSEL';

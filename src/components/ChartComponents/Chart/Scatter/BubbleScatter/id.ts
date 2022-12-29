@@ -1,1 +1,1 @@
-export const CHART_ID = 'BUBBLE_SCATTER';
+export const CHART_ID: ComponentSelfType = 'BUBBLE_SCATTER';

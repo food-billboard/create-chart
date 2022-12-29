@@ -1,1 +1,1 @@
-export const CHART_ID = 'LINE_BAR';
+export const CHART_ID: ComponentSelfType = 'LINE_BAR';

@@ -1,1 +1,1 @@
-export const CHART_ID = 'LINE_BASIC';
+export const CHART_ID: ComponentSelfType = 'LINE_BASIC';

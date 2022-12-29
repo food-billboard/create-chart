@@ -1,1 +1,1 @@
-export const CHART_ID = 'CACHET_BAR';
+export const CHART_ID: ComponentSelfType = 'CACHET_BAR';
