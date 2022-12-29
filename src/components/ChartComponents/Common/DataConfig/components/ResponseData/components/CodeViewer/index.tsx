@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { connect } from 'dva';
-import CodeEditor, { EditorProps } from '@/components/CodeEditor';
+import CodeEditor from '@/components/CodeEditor';
+import type { EditorProps } from '@/components/SyncCodeEditor';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
