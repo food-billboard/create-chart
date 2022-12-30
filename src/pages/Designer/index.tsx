@@ -5,14 +5,12 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { connect } from 'dva';
 import { history } from 'umi';
 import { useUnmount } from 'ahooks';
-import Mock from 'mockjs';
 import { useHashChangeReload, isModelHash } from '@/hooks';
 import FetchScreenComponent, {
   FetchScreenComponentRef,
-} from '@/components/FetchScreenComponent';
+} from '@/pages/Designer/components/FetchScreenComponent';
 import { closeWindow } from '@/utils';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import { FilterData } from '@/utils/Assist/FilterData';
 import {
   putScreenPoolValid,
   createPutScreenPool,
@@ -150,10 +148,6 @@ const Designer = (props: {
   };
 
   useHashChangeReload(reload);
-
-  useEffect(() => {
-    if (FilterData.Mock) FilterData.Mock = Mock;
-  }, []);
 
   useEffect(() => {
     getMockValueKindMap();

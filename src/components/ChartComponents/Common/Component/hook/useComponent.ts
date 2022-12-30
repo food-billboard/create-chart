@@ -152,14 +152,14 @@ export function useComponent<P extends object = {}>(
 
   // 获取过滤后的数据
   const getValue = useCallback(
-    (
+    async (
       value: any,
       params: ComponentData.TParams[],
       constants: ComponentData.TConstants[],
       filter: ComponentData.TFilterConfig[],
       config?: SuperPartial<ComponentData.TComponentApiDataConfig>,
     ) => {
-      const result = FilterDataUtil.getPipeFilterValue(
+      const result = await FilterDataUtil.getPipeFilterValue(
         mergeWithoutArray({}, requestDataConfig, config, {
           request: {
             value,

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import { history } from 'umi';
 import { message } from 'antd';
-import FetchScreenComponent from '@/components/FetchScreenComponent';
+import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
 import { previewScreenValid, previewScreenModelValid } from '@/services';
 import { useIsModelHash, useHashChangeReload } from '@/hooks';

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { connect } from 'dva';
-import FetchScreenComponent from '@/components/FetchScreenComponent';
+import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
 import useWrapperProps from '../Share/useWrapperProps';
 import PainterWrapper from '../Share/components/PainterWrapper';

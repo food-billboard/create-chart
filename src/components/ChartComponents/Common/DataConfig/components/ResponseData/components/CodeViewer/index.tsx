@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { connect } from 'dva';
 import CodeEditor from '@/components/CodeEditor';
 import type { EditorProps } from '@/components/SyncCodeEditor';
@@ -15,8 +15,18 @@ const CodeViewer = (
 ) => {
   const { filter, value, params, constants, ...nextProps } = props;
 
-  const responseData = useMemo(() => {
-    return FilterDataUtil.getPipeFilterValue(value, filter, params, constants);
+  const [responseData, setResponseData] = useState();
+
+  // const responseData = useMemo(() => {
+  //   return FilterDataUtil.getPipeFilterValue(value, filter, params, constants);
+  // }, [value, filter, params, constants]);
+
+  useEffect(() => {
+    FilterDataUtil.getPipeFilterValue(value, filter, params, constants).then(
+      (data) => {
+        setResponseData(data);
+      },
+    );
   }, [value, filter, params, constants]);
 
   return (

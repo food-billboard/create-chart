@@ -1,4 +1,4 @@
-import html2canvas, { Options } from 'html2canvas';
+import type { Options } from 'html2canvas';
 import { UploadImage } from './Assist/Upload';
 
 export async function captureCover(
@@ -37,21 +37,26 @@ export async function captureCover(
     ...html2canvasOptions,
   };
 
-  return new Promise<Blob>((resolve, reject) => {
-    html2canvas(element as any, options).then(function (context) {
-      context.toBlob(
-        (data) => {
-          if (data) {
-            resolve(data);
-          } else {
-            reject();
-          }
-        },
-        'image/png',
-        0.9,
-      );
-    });
-  });
+  return import(/* webpackChunkName: "HTML2CANVAS" */ 'html2canvas').then(
+    (module) => {
+      const html2canvas = module.default;
+      new Promise<Blob>((resolve, reject) => {
+        html2canvas(element as any, options).then(function (context) {
+          context.toBlob(
+            (data) => {
+              if (data) {
+                resolve(data);
+              } else {
+                reject();
+              }
+            },
+            'image/png',
+            0.9,
+          );
+        });
+      });
+    },
+  );
 }
 
 export async function captureCoverAndUpload(blob: Blob) {

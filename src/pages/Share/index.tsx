@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { connect } from 'dva';
 import { history } from 'umi';
 import { message } from 'antd';
-import FetchScreenComponent from '@/components/FetchScreenComponent';
+import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { useHashChangeReload } from '@/hooks';
 import {
   shareScreenHeartbeat,

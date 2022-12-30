@@ -94,7 +94,7 @@ const commonConfig = {
               vendors: {
                 name: 'vendors',
                 chunks: 'all',
-                test: /[\\/]node_modules[\\/](lodash|moment|react|dva|postcss|html2canvas)/,
+                test: /[\\/]node_modules[\\/](lodash|moment|react|dva|postcss)/,
                 priority: 10,
               },
               commons: {

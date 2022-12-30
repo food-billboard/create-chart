@@ -19,6 +19,13 @@ export class FilterData {
   // 减少umi体积
   static Mock: any;
 
+  static async loadMock() {
+    if (FilterData.Mock) return;
+    await import(/* webpackChunkName: "MOCK_JS" */ 'mockjs').then((module) => {
+      FilterData.Mock = module;
+    });
+  }
+
   stringDataToObject(value: string, defaultValue = '{}') {
     try {
       return json5.parse(value);
@@ -27,13 +34,18 @@ export class FilterData {
     }
   }
 
-  pipeValueByCodeString(value: any, global: any, code: string) {
+  async pipeValueByCodeString(value: any, global: any, code: string) {
     try {
-      let filterFunction = new Function('data', 'global', 'options', code);
+      const AsyncFunction = Object.getPrototypeOf(
+        async function () {},
+      ).constructor;
+      let filterFunction = AsyncFunction('data', 'global', 'options', code);
+      if (code.includes('options')) await FilterData.loadMock();
+      const response = await filterFunction(value, global, {
+        Mock: FilterData.Mock,
+      });
       return {
-        value: filterFunction(value, global, {
-          Mock: FilterData.Mock,
-        }),
+        value: response,
         error: false,
       };
     } catch (err) {
@@ -47,7 +59,7 @@ export class FilterData {
   }
 
   // 过滤器执行
-  getPipeFilterValue(
+  async getPipeFilterValue(
     value: ComponentData.TComponentApiDataConfig,
     filter: ComponentData.TFilterConfig[],
     params: ComponentData.TParams[],
@@ -67,10 +79,13 @@ export class FilterData {
     );
 
     let result: any = originData;
-    existsFilterData.some((cur) => {
+
+    // ? 现在尝试使用异步的形式执行过滤器
+    for (let i = 0; i < existsFilterData.length; i++) {
+      const cur = existsFilterData[i];
       const { id } = cur;
       const target = filter.find((item) => item.id === id);
-      const { error, value, errorMsg } = this.pipeValueByCodeString(
+      const { error, value, errorMsg } = await this.pipeValueByCodeString(
         result,
         VariableStringUtil.getAllGlobalParams(params, constants),
         target!.code,
@@ -79,8 +94,24 @@ export class FilterData {
 
       FILTER_STEP_MAP_DATA[id] = cloneDeep(error ? errorMsg : result);
 
-      return error;
-    });
+      if (error) {
+        break;
+      }
+    }
+    // existsFilterData.some((cur) => {
+    //   const { id } = cur;
+    //   const target = filter.find((item) => item.id === id);
+    //   const { error, value, errorMsg } = this.pipeValueByCodeString(
+    //     result,
+    //     VariableStringUtil.getAllGlobalParams(params, constants),
+    //     target!.code,
+    //   );
+    //   result = value;
+
+    //   FILTER_STEP_MAP_DATA[id] = cloneDeep(error ? errorMsg : result);
+
+    //   return error;
+    // });
 
     if (!stringify) return result;
 

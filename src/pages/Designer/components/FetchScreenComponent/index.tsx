@@ -9,8 +9,8 @@ import { useIsModelHash } from '@/hooks';
 import { getScreenDetail, getScreenModelDetail } from '@/services';
 import { sleep } from '@/utils';
 import BreakingChange from '@/utils/Assist/BreakingChange';
-import { mergeComponentDefaultConfig } from '../ChartComponents';
-import { autoFitScale } from '../../pages/Designer/components/Panel/components/ToolBar/components/Scale';
+import { mergeComponentDefaultConfig } from '@/components/ChartComponents';
+import { autoFitScale } from '../Panel/components/ToolBar/components/Scale';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 export type FetchScreenComponentRef = {

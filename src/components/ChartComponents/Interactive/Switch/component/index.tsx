@@ -117,8 +117,6 @@ const Switch = (props: ComponentData.CommonComponentProps<TSwitchConfig>) => {
     onChange(!!defaultChecked);
   }, []);
 
-  console.log(onColor, getHexString(onColor, true), 2222);
-
   return (
     <>
       <div
