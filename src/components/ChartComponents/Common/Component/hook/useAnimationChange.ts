@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import { useUpdateEffect } from 'ahooks';
-import echarts from 'echarts';
+import type { ECharts } from 'echarts';
 
 export function useAnimationChange(
-  instance: echarts.ECharts,
+  instance: ECharts,
   animationConfig: ComponentData.ComponentChartAnimationConfig,
   setOption: any,
 ) {

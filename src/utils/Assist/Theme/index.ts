@@ -1,4 +1,3 @@
-import { registerTheme } from 'echarts';
 import color from 'color';
 import { omit, pick } from 'lodash';
 import Eventemitter3 from 'eventemitter3';
@@ -185,7 +184,23 @@ class ThemeUtil {
 
   // 初始化
   init() {
-    this.initCurrentThemeData(WonderlandTheme.themeName);
+    this.initCurrentThemeData(WonderlandTheme.themeName, false);
+  }
+
+  registerThemeLoading = false;
+  registerThemeArray: [string, object][] = [];
+  registerTheme(themeName: string, options: any) {
+    this.registerThemeArray.push([themeName, options]);
+    if (this.registerThemeLoading) {
+      return;
+    }
+    this.registerThemeLoading = true;
+    import(/* webpackChunkName: "ECHARTS" */ 'echarts').then((echarts) => {
+      const [target] = this.registerThemeArray.slice(-1);
+      if (target) echarts.registerTheme(...target);
+      this.registerThemeArray = [];
+      this.registerThemeLoading = false;
+    });
   }
 
   // 初始化自定义主题
@@ -340,7 +355,10 @@ class ThemeUtil {
   }
 
   // 设置当前的色调
-  initCurrentThemeData(themeConfig: string | ComponentData.TScreenTheme) {
+  initCurrentThemeData(
+    themeConfig: string | ComponentData.TScreenTheme,
+    registerTheme = true,
+  ) {
     const themeName =
       typeof themeConfig === 'string' ? themeConfig : themeConfig.value;
     if (!themeName || this.currentTheme === themeName) return;
@@ -348,7 +366,8 @@ class ThemeUtil {
     if ((themeConfig as ComponentData.TScreenTheme).type === 'custom')
       this.initCustomTheme(themeConfig as ComponentData.TScreenTheme);
 
-    registerTheme(themeName, this.themeDataSource[themeName]);
+    registerTheme &&
+      this.registerTheme(themeName, this.themeDataSource[themeName]);
     const theme = this.themeDataSource[themeName];
     this.currentTheme = themeName;
     this.currentThemeColor = theme.color;

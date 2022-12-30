@@ -1,4 +1,4 @@
-import echarts from 'echarts';
+import type { ECharts } from 'echarts';
 
 class EventEmitter {
   constructor() {
@@ -18,14 +18,14 @@ class EventEmitter {
     });
   };
 
-  push = (instance: echarts.ECharts, action?: any) => {
+  push = (instance: ECharts, action?: any) => {
     this.emitters.push({
       instance,
       action,
     });
   };
 
-  pop = (instance: echarts.ECharts) => {
+  pop = (instance: ECharts) => {
     this.emitters = this.emitters.filter((item) => item.instance !== instance);
   };
 }
