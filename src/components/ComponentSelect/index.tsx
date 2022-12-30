@@ -9,7 +9,7 @@ import { Modal, Input, Row, Col } from 'antd';
 import { useDebounce } from 'ahooks';
 import classnames from 'classnames';
 import ColorSelect from '@/components/ColorSelect';
-import { COMPONENT_ONLY_TYPE_LIST } from '@/utils/constants/component';
+import { Loading } from '../PageLoading';
 import ThemeUtil from '@/utils/Assist/Theme';
 import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
 import styles from './index.less';
@@ -33,12 +33,30 @@ const ComponentSelect = forwardRef<
   const [visible, setVisible] = useState<boolean>(false);
   const [select, setSelect] = useState<string>('');
   const [searchValue, setSearchValue] = useState<string>('');
+  const [loading, setLoading] = useState(true);
+  const [componentOnlyTypeList, setComponentOnlyTypeList] = useState<
+    {
+      type: string;
+      title: string;
+      description: string;
+      icon: string;
+    }[]
+  >([]);
 
-  const open = (select?: string) => {
+  const open = async (select?: string) => {
     if (visible) return;
     setVisible(true);
+    setLoading(true);
     CopyAndPasteUtil.forceFocus();
     setSelect(select || '');
+    if (!componentOnlyTypeList.length) {
+      import('@/pages/Designer/utils/component').then((data) => {
+        setComponentOnlyTypeList(data.COMPONENT_ONLY_TYPE_LIST);
+        setLoading(false);
+      });
+    } else {
+      setLoading(false);
+    }
   };
 
   const debouncedSearchValue = useDebounce(searchValue, { wait: 500 });
@@ -56,7 +74,7 @@ const ComponentSelect = forwardRef<
   }, []);
 
   const filterComponentList = useMemo(() => {
-    return COMPONENT_ONLY_TYPE_LIST.filter((item) => {
+    return componentOnlyTypeList.filter((item) => {
       const { type, description, title } = item;
       const dataList = [type, description, title].filter(
         (item) => !!item.length,
@@ -66,7 +84,7 @@ const ComponentSelect = forwardRef<
         dataList.some((item) => isIncludes(item, debouncedSearchValue))
       );
     });
-  }, [filter, debouncedSearchValue, isIncludes]);
+  }, [filter, debouncedSearchValue, isIncludes, componentOnlyTypeList]);
 
   const close = useCallback(() => {
     setVisible(false);
@@ -139,13 +157,24 @@ const ComponentSelect = forwardRef<
       onOk={handleOk}
       title="组件切换"
     >
-      <Search
-        value={searchValue}
-        onChange={(value) => setSearchValue(value.target.value)}
-        className="w-100 m-b-24"
-      />
-      <div className={styles['component-select']}>
-        <Row gutter={24}>{componentList}</Row>
+      <div className="pos-re w-100 h-100">
+        {!loading && (
+          <>
+            <Search
+              value={searchValue}
+              onChange={(value) => setSearchValue(value.target.value)}
+              className="w-100 m-b-24"
+            />
+            <div className={styles['component-select']}>
+              <Row gutter={24}>{componentList}</Row>
+            </div>
+          </>
+        )}
+        {loading && (
+          <div className={styles['component-select-loading']}>
+            <Loading size={25} />
+          </div>
+        )}
       </div>
     </Modal>
   );

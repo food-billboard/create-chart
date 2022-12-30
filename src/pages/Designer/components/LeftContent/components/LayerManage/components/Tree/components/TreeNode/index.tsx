@@ -1,4 +1,4 @@
-import { useCallback, useRef, useMemo, useEffect, useState } from 'react';
+import { useCallback, useRef, useMemo, useEffect } from 'react';
 import { Space } from 'antd';
 import classnames from 'classnames';
 import { FolderOutlined, FolderOpenOutlined } from '@ant-design/icons';
@@ -7,8 +7,8 @@ import { useComponentHover } from '@/hooks';
 import ContextMenu from '@/components/ContextMenu';
 import { ActionItemType } from '@/components/ContextMenu/action.map';
 import DataChangePool from '@/utils/Assist/DataChangePool';
-import { COMPONENT_ICON_MAP } from '@/utils/constants/component';
 import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
+import { COMPONENT_ICON_MAP } from '../../../../../../../../utils/component';
 import VisibleEditor from './Visible';
 import NameEditor, { NameEditorRefProps } from './NameEdit';
 import LockEditor from './Lock';

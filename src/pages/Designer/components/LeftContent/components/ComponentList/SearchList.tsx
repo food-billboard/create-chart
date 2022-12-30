@@ -3,7 +3,7 @@ import { useDebounceFn } from 'ahooks';
 import classnames from 'classnames';
 import { Input, Empty, Divider } from 'antd';
 import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
-import { COMPONENT_TYPE_LIST } from '@/utils/constants';
+import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
 import {
   EVENT_NAME,
   ComponentSearchConfigEventEmitter,

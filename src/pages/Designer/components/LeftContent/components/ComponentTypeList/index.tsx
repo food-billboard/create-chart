@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { Menu } from 'antd';
 import classnames from 'classnames';
 import ComponentList from '../ComponentList';
-import { COMPONENT_TYPE_LIST } from '@/utils/constants';
+import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
 import styles from './index.less';
 
 const ComponentTypeList = (props: {

@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import { CaretRightOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import Empty from '@/components/Empty';
-import { COMPONENT_TYPE_LIST } from '@/utils/constants';
+import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
 import { ConnectState } from '@/models/connect';
 import ComponentItem from './item';
 import styles from './index.less';

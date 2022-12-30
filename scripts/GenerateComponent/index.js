@@ -94,7 +94,7 @@ async function generate(data) {
   })
   // 生成组件列表的引入文件
   .then(templateData => {
-    const filePath = path.join(__dirname, `../../src/utils/constants/component/GenerateList/${ComponentKey}Component.ts`)
+    const filePath = path.join(__dirname, `../../src/pages/Designer/utils/component/GenerateList/${ComponentKey}Component.ts`)
     console.log(chalk.green(`创建组件列表引入文件：${filePath}`))
     divider()
     return fs.writeFile(
@@ -109,7 +109,7 @@ async function generate(data) {
   })
   // 添加组件列表的引入
   .then(() => {
-    const filePath = path.join(__dirname, `../../src/utils/constants/component/GenerateList/index.tsx`)
+    const filePath = path.join(__dirname, `../../src/pages/Designer/utils/component/GenerateList/index.tsx`)
     console.log(chalk.green(`添加组件列表引入文件: ${filePath}的引入`))
     divider()
     return fs.readFile(filePath, 'utf-8')

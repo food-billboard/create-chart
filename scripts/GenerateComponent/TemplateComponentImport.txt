@@ -1,4 +1,4 @@
-import ThisIsComponentImage from '../../../../../public/components/default-chart.png'
+import ThisIsComponentImage from '../../../../../../public/components/default-chart.png'
 
 export default {
   type: 'component-type-prefix',
