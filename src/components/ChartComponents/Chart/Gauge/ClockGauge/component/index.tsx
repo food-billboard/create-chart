@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import { useDeepUpdateEffect } from '@/hooks';
 import {
@@ -8,6 +7,7 @@ import {
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
+import { init } from '@/utils/Assist/EchartsLoader';
 import { TClockGaugeConfig } from '../type';
 import { CHART_ID } from '../id';
 

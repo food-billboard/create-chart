@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { useDeepUpdateEffect } from '@/hooks';
@@ -19,6 +18,7 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import { init } from '@/utils/Assist/EchartsLoader';
 import { THorizontalBarConfig } from '../type';
 import { CHART_ID } from '../id';
 

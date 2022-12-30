@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { useDeepUpdateEffect } from '@/hooks';
@@ -15,6 +14,7 @@ import {
 } from '@/components/ChartComponents/Common/Component/hook';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import ColorSelect from '@/components/ColorSelect';
+import { init } from '@/utils/Assist/EchartsLoader';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';

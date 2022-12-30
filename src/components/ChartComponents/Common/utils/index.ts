@@ -1,4 +1,4 @@
-import * as echarts from 'echarts';
+import { RadialGradient, LinearGradient } from '@/utils/Assist/EchartsLoader';
 import ColorSelect from '@/components/ColorSelect';
 
 const { getRgbaString } = ColorSelect;
@@ -18,21 +18,21 @@ export function radialGradientColor(value: ComponentData.TGradientColorConfig) {
   ];
 
   if (type === 'radial') {
-    return new echarts.graphic.RadialGradient(
+    return new (RadialGradient()(
       radialPosition.x,
       radialPosition.y,
       radialPosition.r,
       commonStepColor,
-    );
+    ))();
   }
 
-  return new echarts.graphic.LinearGradient(
+  return new (LinearGradient()(
     linearPosition.startX,
     linearPosition.startY,
     linearPosition.endX,
     linearPosition.endY,
     commonStepColor,
-  );
+  ))();
 }
 
 export function boxShadow(value: ComponentData.TBoxShadow) {

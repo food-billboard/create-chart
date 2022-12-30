@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import * as echarts from 'echarts';
 import { useDeepUpdateEffect } from '@/hooks';
 import {
   useComponent,
@@ -14,14 +12,13 @@ import {
 } from '@/components/ChartComponents/Common/Component/hook';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import ColorSelect from '@/components/ColorSelect';
+import { init, registerMap } from '@/utils/Assist/EchartsLoader';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import chinaMap from './china.json';
 import { TScatterMapConfig } from '../type';
 import { CHART_ID } from '../id';
-
-echarts.registerMap('china', chinaMap as any);
 
 const { getRgbaString } = ColorSelect;
 
@@ -232,6 +229,7 @@ const ScatterMap = (
   useChartComponentResize(chartInstance.current!);
 
   useEffect(() => {
+    registerMap('china', chinaMap as any);
     initChart();
     return () => {
       chartInstance.current?.dispose();

@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import { message } from 'antd';
 import { get } from 'lodash';
 import { history } from 'umi';
-import ThemeUtil from '@/utils/Assist/Theme';
+import ThemeUtil, { DEFAULT_THEME_NAME } from '@/utils/Assist/Theme';
 import { DEFAULT_SCREEN_DATA } from '@/utils/constants';
 import { useIsModelHash } from '@/hooks';
 import { getScreenDetail, getScreenModelDetail } from '@/services';
@@ -72,7 +72,7 @@ const FetchScreenComponent = forwardRef<
           ...nextData
         }: ComponentData.TScreenData = BreakingChange(components, version);
         // 先注册主题色再修改数据
-        ThemeUtil.initCurrentThemeData(nextData.config.attr.theme);
+        await ThemeUtil.initCurrentThemeData(nextData.config.attr.theme);
         setScreen({
           ...nextData,
           _id: id,
@@ -90,13 +90,17 @@ const FetchScreenComponent = forwardRef<
       } catch (err) {
         message.info('数据获取失败');
       }
-    } else if (isReload) {
-      setComponentAll([], false);
-      setGuideLine({
-        show: true,
-        value: [],
-      });
-      setScreen(DEFAULT_SCREEN_DATA);
+    } else {
+      // 先注册主题色再修改数据
+      await ThemeUtil.initCurrentThemeData(DEFAULT_THEME_NAME);
+      if (isReload) {
+        setComponentAll([], false);
+        setGuideLine({
+          show: true,
+          value: [],
+        });
+        setScreen(DEFAULT_SCREEN_DATA);
+      }
     }
 
     const result = autoFitScale(width, height, flag);

@@ -85,12 +85,12 @@ const commonConfig = {
                 test: /[\\/]node_modules[\\/](@antv|antd|@ant-design)/,
                 priority: 10,
               },
-              echarts: {
-                name: 'echarts',
-                chunks: 'all',
-                test: /[\\/]node_modules[\\/](echarts|zrender)/,
-                priority: 10,
-              },
+              // echarts: {
+              //   name: 'echarts',
+              //   chunks: 'all',
+              //   test: /[\\/]node_modules[\\/](echarts|zrender)/,
+              //   priority: 10,
+              // },
               vendors: {
                 name: 'vendors',
                 chunks: 'all',
@@ -130,7 +130,7 @@ const productionConfig: any = merge({}, commonConfig, {
   // base: '/api/backend/screen/',
   base: '/',
   publicPath: '/api/backend/screen/',
-  chunks: ['echarts', 'antdesigns', 'vendors', 'commons', 'umi'],
+  chunks: ['antdesigns', 'vendors', 'commons', 'umi'],
 });
 
 export default defineConfig(

@@ -1,6 +1,7 @@
 import color from 'color';
 import { omit, pick } from 'lodash';
 import Eventemitter3 from 'eventemitter3';
+import { echartsLoader } from '../EchartsLoader';
 import WonderlandTheme from '../../../theme/wonderland.project.json';
 import ShineTheme from '../../../theme/shine.project.json';
 import EssosTheme from '../../../theme/essos.project.json';
@@ -189,13 +190,13 @@ class ThemeUtil {
 
   registerThemeLoading = false;
   registerThemeArray: [string, object][] = [];
-  registerTheme(themeName: string, options: any) {
+  async registerTheme(themeName: string, options: any) {
     this.registerThemeArray.push([themeName, options]);
     if (this.registerThemeLoading) {
       return;
     }
     this.registerThemeLoading = true;
-    import(/* webpackChunkName: "ECHARTS" */ 'echarts').then((echarts) => {
+    await echartsLoader().then((echarts) => {
       const [target] = this.registerThemeArray.slice(-1);
       if (target) echarts.registerTheme(...target);
       this.registerThemeArray = [];
@@ -355,7 +356,7 @@ class ThemeUtil {
   }
 
   // 设置当前的色调
-  initCurrentThemeData(
+  async initCurrentThemeData(
     themeConfig: string | ComponentData.TScreenTheme,
     registerTheme = true,
   ) {
@@ -367,7 +368,7 @@ class ThemeUtil {
       this.initCustomTheme(themeConfig as ComponentData.TScreenTheme);
 
     registerTheme &&
-      this.registerTheme(themeName, this.themeDataSource[themeName]);
+      (await this.registerTheme(themeName, this.themeDataSource[themeName]));
     const theme = this.themeDataSource[themeName];
     this.currentTheme = themeName;
     this.currentThemeColor = theme.color;

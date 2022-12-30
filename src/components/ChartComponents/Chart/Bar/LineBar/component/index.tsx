@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { init } from 'echarts';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { useDeepUpdateEffect } from '@/hooks';
@@ -18,6 +17,7 @@ import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
+import { init } from '@/utils/Assist/EchartsLoader';
 import { TLineBarConfig } from '../type';
 import { CHART_ID } from '../id';
 
