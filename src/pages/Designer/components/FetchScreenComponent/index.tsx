@@ -72,7 +72,11 @@ const FetchScreenComponent = forwardRef<
           ...nextData
         }: ComponentData.TScreenData = BreakingChange(components, version);
         // 先注册主题色再修改数据
-        await ThemeUtil.initCurrentThemeData(nextData.config.attr.theme);
+        await ThemeUtil.initCurrentThemeData(
+          nextData.config.attr.theme,
+          true,
+          true,
+        );
         setScreen({
           ...nextData,
           _id: id,

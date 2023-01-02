@@ -359,16 +359,18 @@ class ThemeUtil {
   async initCurrentThemeData(
     themeConfig: string | ComponentData.TScreenTheme,
     registerTheme = true,
+    force = false,
   ) {
     const themeName =
       typeof themeConfig === 'string' ? themeConfig : themeConfig.value;
-    if (!themeName || this.currentTheme === themeName) return;
+    if (!themeName || (this.currentTheme === themeName && !force)) return;
     // custom theme
     if ((themeConfig as ComponentData.TScreenTheme).type === 'custom')
       this.initCustomTheme(themeConfig as ComponentData.TScreenTheme);
 
-    registerTheme &&
-      (await this.registerTheme(themeName, this.themeDataSource[themeName]));
+    if (registerTheme) {
+      await this.registerTheme(themeName, this.themeDataSource[themeName]);
+    }
     const theme = this.themeDataSource[themeName];
     this.currentTheme = themeName;
     this.currentThemeColor = theme.color;

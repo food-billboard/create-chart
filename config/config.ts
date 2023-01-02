@@ -74,7 +74,7 @@ const commonConfig = {
         optimization: {
           minimize: true,
           splitChunks: {
-            chunks: 'async',
+            chunks: 'all',
             minSize: 30000,
             minChunks: 1,
             automaticNameDelimiter: '.',
@@ -85,12 +85,12 @@ const commonConfig = {
                 test: /[\\/]node_modules[\\/](@antv|antd|@ant-design)/,
                 priority: 10,
               },
-              // echarts: {
-              //   name: 'echarts',
-              //   chunks: 'all',
-              //   test: /[\\/]node_modules[\\/](echarts|zrender)/,
-              //   priority: 10,
-              // },
+              echarts: {
+                name: 'echarts',
+                chunks: 'async',
+                test: /[\\/]node_modules[\\/](echarts|zrender)/,
+                priority: 10,
+              },
               vendors: {
                 name: 'vendors',
                 chunks: 'all',

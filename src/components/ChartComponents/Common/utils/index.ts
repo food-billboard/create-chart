@@ -18,21 +18,21 @@ export function radialGradientColor(value: ComponentData.TGradientColorConfig) {
   ];
 
   if (type === 'radial') {
-    return new (RadialGradient()(
+    return RadialGradient(
       radialPosition.x,
       radialPosition.y,
       radialPosition.r,
       commonStepColor,
-    ))();
+    );
   }
 
-  return new (LinearGradient()(
+  return LinearGradient(
     linearPosition.startX,
     linearPosition.startY,
     linearPosition.endX,
     linearPosition.endY,
     commonStepColor,
-  ))();
+  );
 }
 
 export function boxShadow(value: ComponentData.TBoxShadow) {

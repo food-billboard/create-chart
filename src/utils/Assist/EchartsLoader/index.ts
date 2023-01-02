@@ -15,7 +15,7 @@ type EChartsInitOpts = {
 };
 
 export async function echartsLoader() {
-  return import(/* webpackChunkName: "ECHARTS" */ 'echarts').then((data) => {
+  return import('echarts').then((data) => {
     ECHARTS = data;
     return data;
   });
@@ -36,10 +36,16 @@ export function registerMap(mapName: string, ...args: any[]) {
   return ECHARTS.registerMap(mapName, ...args);
 }
 
-export function RadialGradient() {
-  return ECHARTS.graphic.RadialGradient;
+export function RadialGradient(x: any, y: any, r: any, colorStops: any) {
+  return new ECHARTS.graphic.RadialGradient(x, y, r, colorStops);
 }
 
-export function LinearGradient() {
-  return ECHARTS.graphic.LinearGradient;
+export function LinearGradient(
+  x: any,
+  y: any,
+  x1: any,
+  y1: any,
+  colorStops: any,
+) {
+  return new ECHARTS.graphic.LinearGradient(x, y, x1, y1, colorStops);
 }
