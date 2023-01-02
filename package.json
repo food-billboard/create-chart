@@ -125,6 +125,7 @@
     "@umijs/test": "^3.5.20",
     "chalk": "4.1.2",
     "commander": "^9.4.0",
+    "compression-webpack-plugin": "5.0.1",
     "cross-env": "^7.0.3",
     "inquirer": "^8.0.0",
     "lint-staged": "^10.0.7",

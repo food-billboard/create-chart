@@ -1,6 +1,8 @@
 // https://umijs.org/config/
 import { defineConfig } from 'umi';
 import { merge } from 'lodash';
+// @ts-ignore
+import CompressionPlugin from 'compression-webpack-plugin';
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 // import packageJson from '../package.json'
 // @ts-ignore
@@ -70,6 +72,13 @@ const commonConfig = {
     // ])
     // 生产环境配置
     if (REACT_APP_ENV === 'prod') {
+      config.plugin('compression-webpack-plugin').use(CompressionPlugin, [
+        {
+          test: /\.(js|css|html)$/i, // 匹配
+          threshold: 102400, // 超过10k的文件压缩
+          deleteOriginalAssets: false, // 不删除源文件
+        },
+      ]);
       config.merge({
         optimization: {
           minimize: true,
@@ -77,8 +86,16 @@ const commonConfig = {
             chunks: 'all',
             minSize: 30000,
             minChunks: 1,
+            maxAsyncRequests: 7,
             automaticNameDelimiter: '.',
             cacheGroups: {
+              vendors: {
+                name: 'vendors',
+                chunks: 'all',
+                // test: /[\\/]node_modules[\\/](lodash|moment|react|react-dom|dva|postcss)/,
+                test: /(lodash|moment|react|react-dom|dva|postcss)/,
+                priority: 10,
+              },
               antdesigns: {
                 name: 'antdesigns',
                 chunks: 'all',
@@ -91,12 +108,12 @@ const commonConfig = {
                 test: /[\\/]node_modules[\\/](echarts|zrender)/,
                 priority: 10,
               },
-              vendors: {
-                name: 'vendors',
-                chunks: 'all',
-                test: /[\\/]node_modules[\\/](lodash|moment|react|dva|postcss)/,
-                priority: 10,
-              },
+              // 'async-commons': {
+              //   name: 'async-commons',
+              //   chunks: 'async',
+              //   test: /(react-json-view|react-select|chunk-file-upload|react-slick|react-selecto|react-rnd|react-dnd|react-shepherd|react-color)/,
+              //   priority: 11,
+              // },
               commons: {
                 name: 'commons',
                 // 其余同步加载包
