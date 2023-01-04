@@ -6,6 +6,7 @@ import ComponentUtil, {
   createGroupComponent,
   isGroupComponent,
   getParentComponentIds,
+  getPath,
 } from '../Component';
 import { mergeWithoutArray } from '../../tool';
 
@@ -859,6 +860,35 @@ class GroupUtil {
     };
 
     return deepFormat(topParentComponent, true);
+  };
+
+  // ? 组内元素调整大小或者调整位置，重新计算组的尺寸和位置
+  reCalculateGroupComponentSizeAndPosition: (
+    components: ComponentData.TComponentData[],
+    targetComponent: SuperPartial<ComponentData.TComponentData>,
+  ) => ComponentMethod.SetComponentMethodParamsData[] = (
+    components,
+    targetComponent,
+  ) => {
+    let updateCompnoents: ComponentMethod.SetComponentMethodParamsData[] = [];
+    let currentComponent = targetComponent;
+
+    // 从里向外遍历修改外组的尺寸和位置
+    while (currentComponent.parent) {
+      const parentComponent: ComponentData.TComponentData = getParentComponent(
+        components,
+        getPath(currentComponent.parent),
+      );
+      currentComponent = parentComponent;
+      // 新修改先同步到组件列表中
+      const children = parentComponent.components.map((child) => {
+        if (child.id !== currentComponent.id) return child;
+        return mergeWithoutArray({}, child, currentComponent);
+      });
+      // const newConfig = this.generateGroupComponentSizeAndPosition()
+    }
+
+    return updateCompnoents;
   };
 }
 

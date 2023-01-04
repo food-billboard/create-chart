@@ -1,9 +1,10 @@
 import { useCallback, useMemo } from 'react';
 import { connect } from 'dva';
-import { get } from 'lodash';
 import { Switch } from 'antd';
 import { getComponent, getPath } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
+import GroupUtil from '@/utils/Assist/Group';
+import { mergeWithoutArray } from '@/utils';
 import { InternalBorderSelect, DEFAULT_BORDER } from '../../../InternalBorder';
 import AngleSelect from '../AngleSelect';
 import InputNumber from '../InputNumber';
@@ -25,12 +26,15 @@ const BaseConfig = (props: {
 }) => {
   const { id, components, isGroupComponent, flag } = props;
 
-  const { style, attr } = useMemo(() => {
+  const {
+    config: { style, attr },
+    parent,
+  } = useMemo(() => {
     const component: ComponentData.TComponentData = getComponent(
       id,
       components,
     );
-    return get(component, 'config') || {};
+    return component;
   }, [components, id]);
 
   const {
@@ -70,49 +74,121 @@ const BaseConfig = (props: {
     [id],
   );
 
+  const reCalGroupComponent = useCallback(
+    (updateValue: SuperPartial<ComponentData.TComponentData>) => {
+      return GroupUtil.reCalculateGroupComponentSizeAndPosition(
+        components,
+        mergeWithoutArray(
+          {
+            parent,
+            id,
+            config: {
+              style: {
+                width,
+                height,
+                left,
+                top,
+              },
+              attr: {
+                scaleX,
+                scaleY,
+              },
+            },
+          },
+          updateValue,
+        ),
+      );
+    },
+    [components, parent, height, left, top, width, scaleX, scaleY, id],
+  );
+
+  const onPosChange = useCallback(
+    (key: 'left' | 'top', value) => {
+      const updateComponents: ComponentMethod.SetComponentMethodParamsData[] =
+        [];
+      const componentPath = getPath(id);
+      let updateConfig: any = {
+        config: {
+          style: {
+            [key]: value,
+          },
+        },
+      };
+      updateComponents.push(
+        {
+          value: {
+            ...updateConfig,
+          },
+          id,
+          path: componentPath,
+          action: 'update',
+        },
+        ...reCalGroupComponent({ ...updateConfig }),
+      );
+      DataChangePool.setComponent(updateComponents);
+    },
+    [reCalGroupComponent, id],
+  );
+
   const onSizeChange = useCallback(
     (key: 'width' | 'height', value) => {
       let realValue = Math.max(value, 20);
+      const updateComponents: ComponentMethod.SetComponentMethodParamsData[] =
+        [];
+      const componentPath = getPath(id);
       if (key === 'width' && flag === 'H5')
         realValue = Math.min(realValue, 375);
+      let updateConfig: any = {
+        style: {
+          [key]: realValue,
+        },
+      };
       if (isGroupComponent) {
-        let changeState: any = {
-          style: {
-            [key]: realValue,
-          },
-        };
         if (key === 'width') {
-          changeState = {
-            ...changeState,
+          updateConfig = {
+            ...updateConfig,
             attr: {
               scaleX: (realValue / width) * (scaleX || 1),
             },
           };
         } else {
-          changeState = {
-            ...changeState,
+          updateConfig = {
+            ...updateConfig,
             attr: {
               scaleY: (realValue / height) * (scaleY || 1),
             },
           };
         }
-
-        const componentPath = getPath(id);
-        DataChangePool.setComponent({
+      }
+      const newValue = {
+        config: {
+          ...updateConfig,
+        },
+      };
+      updateComponents.push(
+        {
           value: {
-            config: {
-              ...changeState,
-            },
+            ...newValue,
           },
           id,
           path: componentPath,
           action: 'update',
-        });
-      } else {
-        onValueChange(key, realValue);
-      }
+        },
+        ...reCalGroupComponent({ ...newValue }),
+      );
+      DataChangePool.setComponent(updateComponents);
     },
-    [onValueChange, isGroupComponent, width, height, scaleX, scaleY, id, flag],
+    [
+      onValueChange,
+      isGroupComponent,
+      width,
+      height,
+      scaleX,
+      scaleY,
+      id,
+      flag,
+      reCalGroupComponent,
+    ],
   );
 
   return (
@@ -138,13 +214,13 @@ const BaseConfig = (props: {
           <HalfForm>
             <InputNumber
               value={Math.floor(left)}
-              onChange={onValueChange.bind(null, 'left')}
+              onChange={onPosChange.bind(null, 'left')}
             />
           </HalfForm>
           <HalfForm>
             <InputNumber
               value={Math.floor(top)}
-              onChange={onValueChange.bind(null, 'top')}
+              onChange={onPosChange.bind(null, 'top')}
             />
           </HalfForm>
         </Item>
