@@ -1,19 +1,17 @@
-import { useCallback, useRef, useMemo, useEffect } from 'react';
+import { useCallback, useRef, useMemo, useEffect, CSSProperties } from 'react';
 import { Space } from 'antd';
 import classnames from 'classnames';
 import { FolderOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import { useHover, useRafState } from 'ahooks';
-import { useComponentHover } from '@/hooks';
+import { useComponentHover, useLayerHover } from '@/hooks';
 import ContextMenu from '@/components/ContextMenu';
 import { ActionItemType } from '@/components/ContextMenu/action.map';
 import DataChangePool from '@/utils/Assist/DataChangePool';
-import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
 import { COMPONENT_ICON_MAP } from '../../../../../../../../utils/component';
 import VisibleEditor from './Visible';
 import NameEditor, { NameEditorRefProps } from './NameEdit';
 import LockEditor from './Lock';
 import styles from './index.less';
-import { useLayerHover } from '@/hooks';
 
 const ListItem = ({
   value,
@@ -92,11 +90,15 @@ const ListItem = ({
 
   const hoverStyle = useMemo(() => {
     if (!isHover) return {};
-    return {
-      color: DEFAULT_THEME_COLOR,
+    let style: CSSProperties = {
       opacity: 1,
     };
-  }, [isHover]);
+    return style;
+    // return {
+    //   ...style,
+    //   color: DEFAULT_THEME_COLOR,
+    // };
+  }, [isHover, id]);
 
   const handleSelect = useCallback(
     (e) => {
