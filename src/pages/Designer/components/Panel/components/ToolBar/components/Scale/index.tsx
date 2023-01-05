@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { Button, Dropdown, InputNumber, Menu, Slider, Space } from 'antd';
 import { useControllableValue } from 'ahooks';
-import classnames from 'classnames';
 import { connect } from 'dva';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import { wrapperId } from '../../../PanelWrapper/constants';
@@ -67,9 +66,7 @@ const Scale = (props: {
   }, [selectScaleSize]);
 
   return (
-    <div
-      className={classnames(styles['design-page-toolbar-scale'], 'dis-flex')}
-    >
+    <div className={styles['design-page-toolbar-scale']}>
       <Space
         style={{
           minWidth: 300,
