@@ -162,8 +162,8 @@ export const Captcha = (props: {
 const Login = (props: { login: (value: any) => any }) => {
   const { login } = props;
 
-  const [mobile, setMobile] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [mobile, setMobile] = useState<string>('18356778908');
+  const [password, setPassword] = useState<string>('123456789');
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
 
   const tips = useMemo(() => {
