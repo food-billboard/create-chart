@@ -870,25 +870,114 @@ class GroupUtil {
     components,
     targetComponent,
   ) => {
-    let updateCompnoents: ComponentMethod.SetComponentMethodParamsData[] = [];
+    let updateComponents: ComponentMethod.SetComponentMethodParamsData[] = [];
     let currentComponent = targetComponent;
+    let changed = true;
 
     // 从里向外遍历修改外组的尺寸和位置
-    while (currentComponent.parent) {
+    while (currentComponent.parent && changed) {
+      changed = false;
       const parentComponent: ComponentData.TComponentData = getParentComponent(
         components,
-        getPath(currentComponent.parent),
+        getParentPath(getPath(currentComponent.id!)),
       );
-      currentComponent = parentComponent;
-      // 新修改先同步到组件列表中
-      const children = parentComponent.components.map((child) => {
-        if (child.id !== currentComponent.id) return child;
-        return mergeWithoutArray({}, child, currentComponent);
+      const {
+        config: {
+          style: { left, top, width, height },
+          attr: { scaleX = 1, scaleY = 1 },
+        },
+      } = parentComponent;
+      const {
+        config: {
+          style: {
+            left: currLeft,
+            top: currTop,
+            width: currWidth,
+            height: currHeight,
+          },
+        },
+      } = currentComponent as ComponentData.TComponentData;
+      const calCurrLeft = currLeft * scaleX;
+      const calCurrTop = currTop * scaleY;
+      const calCurrWidth = currWidth * scaleX;
+      const calCurrHeight = currHeight * scaleY;
+
+      // 计算一下父组的新宽高及位置
+      const changeLeft = calCurrLeft < 0 ? calCurrLeft : 0;
+      const changeTop = calCurrTop < 0 ? calCurrTop : 0;
+      let changeWidth = 0;
+      let changeHeight = 0;
+      if (calCurrLeft < 0) {
+        changeWidth += changeLeft;
+        changeWidth += Math.max(0, calCurrWidth - width - changeWidth);
+      } else {
+        changeWidth += Math.max(calCurrWidth + calCurrLeft - width, 0);
+      }
+      if (calCurrTop < 0) {
+        changeHeight += changeTop;
+        changeHeight += Math.max(0, calCurrHeight - height - changeHeight);
+      } else {
+        changeHeight += Math.max(calCurrHeight + calCurrTop - height, 0);
+      }
+
+      const changedSize = !!changeWidth || !!changeHeight;
+      const changedPos = !!changeLeft || !!changeTop;
+      changed = changedPos || changedSize;
+
+      // 没有改变就不用继续更新了
+      if (!changed) break;
+      const updateStyle = {
+        config: {
+          style: {
+            left: changeLeft + left,
+            top: changeTop + top,
+            width: changeWidth + width,
+            height: changeHeight + height,
+          },
+        },
+      };
+      updateComponents.push({
+        value: { ...updateStyle },
+        id: parentComponent.id,
+        path: getPath(parentComponent.id),
+        action: 'update',
       });
-      // const newConfig = this.generateGroupComponentSizeAndPosition()
+
+      currentComponent = mergeWithoutArray({}, parentComponent, {
+        ...updateStyle,
+      });
+
+      // 位置没变但是尺寸变了的情况不需要更新子元素
+      if (!changedPos && changedSize) continue;
+
+      // 修改子元素
+      parentComponent.components.forEach((child) => {
+        const {
+          config: {
+            style: { left, top },
+          },
+          id,
+        } =
+          child.id !== currentComponent.id
+            ? child
+            : mergeWithoutArray({}, child, currentComponent);
+        updateComponents.push({
+          value: {
+            config: {
+              style: {
+                left: -changeLeft * scaleX + left,
+                top: -changeTop * scaleY + top,
+              },
+            },
+          },
+          id,
+          path: getPath(id),
+          action: 'update',
+        });
+      });
     }
 
-    return updateCompnoents;
+    return updateComponents;
   };
 }
 
