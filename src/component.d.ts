@@ -96,6 +96,24 @@ declare namespace ComponentData {
   // 组件类型
   export type TComponentSelfType = ComponentSelfType;
 
+  // 组件3d变换类型
+  export type TComponentTransformConfig = {
+    rotate: {
+      x: number;
+      y: number;
+      z: number;
+    };
+    scale: {
+      x: number;
+      y: number;
+    };
+    translate: {
+      x: number;
+      y: number;
+      z: number;
+    };
+  };
+
   // 基础组件属性
   export type TBaseConfig = {
     style: {
@@ -119,6 +137,7 @@ declare namespace ComponentData {
         disabled?: boolean;
         // TODO
       };
+      groupTransform: TComponentTransformConfig;
     };
     attr: {
       visible: boolean;
@@ -273,6 +292,13 @@ declare namespace ComponentData {
     config: TBaseConfig & {
       options: T;
     };
+  };
+
+  // 组3d变换
+  export type TGroupComponentTransformConfig = {
+    perspective: number;
+    perspectiveOrigin: [number, number];
+    show: boolean;
   };
 
   // 内部组件配置

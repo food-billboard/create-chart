@@ -1,4 +1,4 @@
-import { ReactNode, useRef, CSSProperties } from 'react';
+import { ReactNode, useRef, CSSProperties, useMemo } from 'react';
 import classnames from 'classnames';
 import { merge } from 'lodash';
 import { connect } from 'dva';
@@ -43,12 +43,26 @@ const SubGroup = (props: {
     },
   } = value;
   const { condition } = options as any;
+  const transform: ComponentData.TGroupComponentTransformConfig = (
+    options as any
+  ).transform;
 
   const requestRef = useRef<TFetchFragmentRef>(null);
 
   const childrenStyle = useComponentChildrenStyle(value, {
     isOuter,
   });
+
+  // 组的景深配置
+  const transformStyle: CSSProperties = useMemo(() => {
+    if (!transform.show) return {};
+    return {
+      perspective: transform.perspective,
+      perspectiveOrigin: transform.perspectiveOrigin
+        .map((item) => `${item}px`)
+        .join(' '),
+    };
+  }, [transform]);
 
   const { onCondition } = useGroupComponent<any>(
     {
@@ -82,7 +96,10 @@ const SubGroup = (props: {
       data-id={id}
     >
       <Wrapper border={border}>
-        <div className={classnames('pos-re w-100 h-100', className)}>
+        <div
+          className={classnames('pos-re w-100 h-100', className)}
+          style={transformStyle}
+        >
           {children}
         </div>
       </Wrapper>

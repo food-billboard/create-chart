@@ -5,10 +5,12 @@ import { getDvaApp } from 'umi';
 import { useIdPathMap } from '@/hooks';
 import { getComponentDefaultConfigByType } from '@/components/ChartComponents';
 import ColorSelect from '@/components/ColorSelect';
-import { DEFAULT_CONDITION_CONFIG } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { mergeWithoutArray } from '../../tool';
 import { EComponentType, EComponentSelfType } from '../../index';
-import { DEFAULT_CONFIG } from '../../constants/screenData';
+import {
+  DEFAULT_CONFIG,
+  DEFAULT_GROUP_CONFIG,
+} from '../../constants/screenData';
 import ThemeUtil from '../Theme';
 import ComponentUtil, { getParentPath } from './ComponentUtil';
 
@@ -86,10 +88,7 @@ export const createGroupComponent = (
       type: EComponentType.GROUP_COMPONENT,
       componentType: EComponentSelfType.GROUP_COMPONENT,
       config: {
-        ...DEFAULT_CONFIG,
-        options: {
-          condition: DEFAULT_CONDITION_CONFIG(),
-        },
+        ...DEFAULT_GROUP_CONFIG,
       },
     },
     component,

@@ -1,6 +1,10 @@
 import { nanoid } from 'nanoid';
 import IsMobile from 'is-mobile';
 import { DEFAULT_BORDER } from '@/components/InternalBorder';
+import {
+  DEFAULT_CONDITION_CONFIG,
+  DEFAULT_GROUP_COMPONENT_TRANSFORM,
+} from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import Theme from '../../theme/wonderland.project.json';
 
 const isMobile = IsMobile();
@@ -125,9 +129,38 @@ export const DEFAULT_CONFIG: ComponentData.TBaseConfig = {
       show: false,
       value: DEFAULT_BORDER,
     },
+    // 只在组内时生效
+    groupTransform: {
+      rotate: {
+        x: 0,
+        y: 30,
+        z: 0,
+      },
+      scale: {
+        x: 1,
+        y: 1,
+      },
+      translate: {
+        x: 0,
+        y: 0,
+        z: 0,
+      },
+    },
   },
   attr: {
     visible: true,
     lock: false,
+  },
+};
+
+export const DEFAULT_GROUP_OPTIONS: any = {
+  condition: DEFAULT_CONDITION_CONFIG(),
+  transform: DEFAULT_GROUP_COMPONENT_TRANSFORM,
+};
+
+export const DEFAULT_GROUP_CONFIG: ComponentData.TComponentData['config'] = {
+  ...DEFAULT_CONFIG,
+  options: {
+    ...DEFAULT_GROUP_OPTIONS,
   },
 };

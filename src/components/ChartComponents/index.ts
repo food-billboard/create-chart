@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 import { mergeWithoutArray } from '@/utils/tool';
+import { DEFAULT_GROUP_CONFIG } from '@/utils/constants/screenData';
+import { isGroupComponent } from '@/utils/Assist/Component';
 // Chart
 import BarBasic from './Chart/Bar/BarBasic';
 import LineBasic from './Chart/Line/LineBasic';
@@ -217,17 +219,31 @@ export function getComponentConfigComponentByType(
 
 export function mergeComponentDefaultConfig(
   components: ComponentData.TComponentData[] | ComponentData.TComponentData,
-) {
+): ComponentData.TComponentData[] {
   const realComponents = Array.isArray(components) ? components : [components];
   return realComponents.map((component) => {
     const { componentType } = component;
-    const defaultConfig = getComponentDefaultConfigByType(componentType);
+    let defaultConfig: any;
+    if (isGroupComponent(component)) {
+      defaultConfig = {
+        ...DEFAULT_GROUP_CONFIG,
+      };
+    } else {
+      defaultConfig = getComponentDefaultConfigByType(componentType);
+    }
     return mergeWithoutArray(
       {},
       {
         config: defaultConfig,
       },
       component,
+      ...(component.components
+        ? [
+            {
+              components: mergeComponentDefaultConfig(component.components),
+            },
+          ]
+        : []),
     );
   });
 }

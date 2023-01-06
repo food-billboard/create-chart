@@ -41,6 +41,7 @@ const ChildrenWrapper = (props: {
   const realChildren = useMemo(() => {
     return Children.map(children, (child) => {
       const className = get(child, 'props.className');
+      const propsStyle = get(child, 'props.style') || {};
       const value: ComponentData.TComponentData = get(child, 'props.value')!;
       const {
         config: {
@@ -69,6 +70,7 @@ const ChildrenWrapper = (props: {
           ? // 组件
             {
               ...realStyle,
+              ...propsStyle,
             }
           : // 组内组件
             {
@@ -78,6 +80,7 @@ const ChildrenWrapper = (props: {
               height,
               position: flag === 'H5' ? 'relative' : 'absolute',
               ...realStyle,
+              ...propsStyle,
             },
       });
     });

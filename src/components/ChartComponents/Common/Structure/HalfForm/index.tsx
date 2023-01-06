@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, CSSProperties } from 'react';
 import classnames from 'classnames';
 import styles from './index.less';
 
@@ -7,12 +7,19 @@ import styles from './index.less';
 const HalfForm = ({
   children,
   label,
+  style,
+  className,
 }: {
   children?: ReactNode;
   label?: string | ReactNode;
+  style?: CSSProperties;
+  className?: string;
 }) => {
   return (
-    <div className={styles['design-config-half-form']}>
+    <div
+      className={classnames(styles['design-config-half-form'], className)}
+      style={style}
+    >
       <div className={styles['design-config-half-form-content']}>
         {children}
       </div>

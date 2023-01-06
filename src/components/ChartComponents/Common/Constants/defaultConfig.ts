@@ -66,6 +66,13 @@ export const DEFAULT_THEME_RADIAL_COLOR_LIST: () => ComponentData.TGradientColor
       };
     });
 
+export const DEFAULT_GROUP_COMPONENT_TRANSFORM: ComponentData.TGroupComponentTransformConfig =
+  {
+    show: false,
+    perspective: 500,
+    perspectiveOrigin: [50, 50],
+  };
+
 export const BASIC_DEFAULT_CONFIG: ComponentData.TBaseConfig = {
   style: {
     width: 200,
@@ -86,6 +93,23 @@ export const BASIC_DEFAULT_CONFIG: ComponentData.TBaseConfig = {
       show: false,
       value: DEFAULT_BORDER,
       disabled: false,
+    },
+    // 只在组内时生效
+    groupTransform: {
+      rotate: {
+        x: 0,
+        y: 30,
+        z: 0,
+      },
+      scale: {
+        x: 1,
+        y: 1,
+      },
+      translate: {
+        x: 0,
+        y: 0,
+        z: 0,
+      },
     },
   },
   attr: {

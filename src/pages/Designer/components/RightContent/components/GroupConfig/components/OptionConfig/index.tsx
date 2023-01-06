@@ -10,6 +10,7 @@ import { getPath } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import KeyWordPosition from './components/KeyWordPosition';
 import ConditionConfig from './components/ConditionConfig';
+import TransformConfig from './components/TransformConfig';
 
 const OrientConfig = (props: {
   component: ComponentData.TComponentData;
@@ -20,6 +21,7 @@ const OrientConfig = (props: {
   const {
     id,
     config: { options },
+    components,
   } = component;
 
   const onChange = useCallback(
@@ -131,6 +133,22 @@ const OrientConfig = (props: {
             </ConfigList>
           ),
           key: '2',
+        },
+        {
+          label: <Tab>3d变换</Tab>,
+          children: (
+            <ConfigList level={1}>
+              <TransformConfig
+                value={
+                  ((options as any)?.transform ||
+                    {}) as ComponentData.TGroupComponentTransformConfig
+                }
+                childComponents={components}
+                onChange={onChange}
+              />
+            </ConfigList>
+          ),
+          key: '3',
         },
       ]}
     />

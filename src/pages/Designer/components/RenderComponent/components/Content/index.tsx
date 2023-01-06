@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, CSSProperties } from 'react';
 import { connect } from 'dva';
 import { get } from 'lodash';
 import { ConnectState } from '@/models/connect';
@@ -9,6 +9,7 @@ import {
 } from '@/components/InternalBorder';
 import { EComponentType } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils';
+import { isGroupComponent } from '@/utils/Assist/Component';
 import ChildrenWrapper from './ChildrenWrapper';
 import SubGroup from './SubGroup';
 import styles from './index.less';
@@ -101,6 +102,20 @@ const Content = (props: {
           },
         });
 
+        // 组内的3d变换
+        const internalComponentTransform: CSSProperties = {};
+        if (!isOuter && get(parent, 'config.options.transform.show')) {
+          const {
+            config: {
+              style: {
+                groupTransform: { scale, rotate, translate },
+              },
+            },
+          } = component;
+          internalComponentTransform.transform = `scale3d(${scale.x}, ${scale.y}, 1) translate3d(${translate.x}px, ${translate.y}px, ${translate.z}px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) rotateZ(${rotate.z}deg)`;
+          internalComponentTransform.willChange = 'transform';
+        }
+
         if (type === EComponentType.GROUP_COMPONENT) {
           return (
             <ChildrenWrapper
@@ -115,6 +130,7 @@ const Content = (props: {
                 isOuter={isOuter}
                 flag={flag}
                 wrapper={InternalBorderWrapper}
+                style={internalComponentTransform}
               >
                 {renderChildren(newComponent.components, newComponent, false)}
               </SubGroup>
@@ -157,6 +173,7 @@ const Content = (props: {
               value={newComponent}
               key={id}
               wrapper={InternalBorderWrapper}
+              style={internalComponentTransform}
               global={{
                 setParams,
                 screenType,
