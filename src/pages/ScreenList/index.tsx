@@ -47,6 +47,7 @@ function ScreenList() {
         currPage: ((paramsCurrentPage ?? currPage) || 1) - 1,
         content: paramsContent ?? searchData,
         flag: paramsFlag ?? searchType,
+        pageSize: 10,
       });
       const { total, list } = res.data.res;
       setTotal(total);
@@ -174,7 +175,12 @@ function ScreenList() {
         {list.length ? <List value={list} onChange={onChange} /> : <Empty />}
       </div>
       <div className={styles['screen-page-content-main-pagination']}>
-        <Pagination current={currPage} onChange={onPageChange} total={total} />
+        <Pagination
+          pageSize={10}
+          current={currPage}
+          onChange={onPageChange}
+          total={total}
+        />
       </div>
     </>
   );
