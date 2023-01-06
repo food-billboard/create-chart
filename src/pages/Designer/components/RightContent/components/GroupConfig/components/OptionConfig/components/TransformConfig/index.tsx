@@ -32,7 +32,7 @@ const TransformConfig = (props: {
 
   return (
     <>
-      <Item label="3d变换">
+      <Item label="应用3d变换">
         <FullForm>
           <Switch
             checked={show}
