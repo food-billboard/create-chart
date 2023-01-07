@@ -90,6 +90,7 @@ import Decoration6 from '../../../../../public/components/decoration-6.jpg';
 import Decoration7 from '../../../../../public/components/decoration-7.jpg';
 import Decoration8 from '../../../../../public/components/decoration-8.jpg';
 import Pagination from '../../../../../public/components/pagination.jpg';
+import FullScreen from '../../../../../public/components/full-screen.jpg';
 import GENERATE_COMPONENT_LIST from './GenerateList';
 
 const commonClass: string = classnames('ac-i-size-m');
@@ -680,6 +681,12 @@ const _COMPONENT_TYPE_LIST = [
             type: 'PAGINATION',
             title: '分页',
             icon: Pagination,
+            description: '',
+          },
+          {
+            type: 'FULL_SCREEN',
+            title: '全屏切换',
+            icon: FullScreen,
             description: '',
           },
         ],

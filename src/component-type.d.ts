@@ -83,5 +83,6 @@ declare type ComponentSelfType =
   | 'DECORATION_6'
   | 'DECORATION_7'
   | 'DECORATION_8'
-  | 'PAGINATION';
+  | 'PAGINATION'
+  | 'FULL_SCREEN';
 // component-type-insert-prefix
