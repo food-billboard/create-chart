@@ -5,7 +5,8 @@ export const mapStateToProps = (state: ConnectState) => {
     width: state.global.screenData.config.style.width,
     height: state.global.screenData.config.style.height,
     flag: state.global.screenData.config.flag.type,
-    scale: state.global.screenData.config.attr.scale,
+    // scale: state.global.screenData.config.attr.scale,
+    scale: 'fit-height-scroll',
   };
 };
 

@@ -161,7 +161,7 @@ const GlobalLayout = (props: any) => {
     );
 
   // 分享页不用管登录
-  if (['/share', '/', 'viewer'].includes(pathname)) return children;
+  if (['/share', '/', 'viewer', '/preview'].includes(pathname)) return children;
   if (
     pathname.startsWith('/login') ||
     pathname.startsWith('/register') ||

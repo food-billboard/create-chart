@@ -49,18 +49,19 @@ const useWrapperProps = ({
         cssText += `transform: scale(${scaleX}, ${scaleY});`;
         break;
       case 'fit-width':
-        cssText += `transform: scale(${scaleX});`;
+        cssText += `transform: scale(${scaleX}) translateY(-50%);position: relative;top:50%;`;
         break;
       case 'fit-height':
-        cssText += `transform: scale(${scaleX});`;
+        cssText += `transform: scale(${scaleX}) translateX(-50%);position: relative;left:50%;`;
         break;
       case 'none':
         break;
       case 'fit-height-scroll':
-        cssText += `transform: scale(${scaleX});`;
+        cssText += `transform: scale(${scaleX}) translateX(-50%);position: relative;left:50%;`;
         break;
     }
-    cssText += `transformOrigin: left top;width: ${containerWidth}px; height: ${containerHeight}px`;
+    cssText += `transform-origin: left top;width: ${containerWidth}px; height: ${containerHeight}px`;
+    body.style.cssText = cssText;
     if (app) app.style.overflow = 'visible';
   }, [flag, scaleX, scaleY, scaleConfig, containerWidth, containerHeight]);
 
@@ -69,9 +70,10 @@ const useWrapperProps = ({
     const html = document.querySelector('html');
     const body = document.body;
     const app = document.querySelector('#root') as any;
-    if (html) html.style.overflow = 'hidden';
-    body.style.cssText = 'transform: unset;width: auto;height: auto;';
-    if (app) app.style.overflow = 'hidden';
+    if (html) html.style.overflow = '';
+    body.style.cssText =
+      "transform: '';width: '';height: '';position:'';left:'';top:'';";
+    if (app) app.style.overflow = '';
   });
 
   if (flag === 'H5')

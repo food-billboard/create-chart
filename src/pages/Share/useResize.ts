@@ -20,10 +20,12 @@ const useResize = ({
   }>({ width: 1920, height: 1080 });
 
   const resize = () => {
-    const dom = document.querySelector('#root');
-    if (!dom) return;
-    const width = dom.clientWidth;
-    const height = dom.clientHeight;
+    const width = document.documentElement.clientWidth;
+    const height = document.documentElement.clientHeight;
+    // const dom = document.querySelector('#root');
+    // if (!dom) return;
+    // const width = dom.clientWidth;
+    // const height = dom.clientHeight;
     setSize({
       width,
       height,
@@ -36,7 +38,7 @@ const useResize = ({
     if (flag === 'H5') return [xScale, xScale];
     switch (scaleConfig) {
       case 'full':
-        [xScale, yScale];
+        return [xScale, yScale];
       case 'fit-width':
         return [xScale, xScale];
       case 'fit-height':
