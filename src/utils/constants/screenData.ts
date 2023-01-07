@@ -100,6 +100,8 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
         opacity: 100,
         grayscale: 0,
       },
+      scale: 'fit-height',
+      waterMark: false,
     },
     flag: {
       type: isMobile ? 'H5' : 'PC',

@@ -16,8 +16,16 @@ function Previewer(props: {
   height: number;
   flag: ComponentData.ScreenFlagType;
   setScale: (value: number) => void;
+  scale: ComponentData.ScreenScaleType;
 }) {
-  const { setScreenType, width, height, setScale, flag } = props;
+  const {
+    setScreenType,
+    width,
+    height,
+    setScale,
+    flag,
+    scale: scaleConfig,
+  } = props;
 
   const [needFetch, setNeedFetch] = useState<boolean>(false);
 
@@ -48,12 +56,13 @@ function Previewer(props: {
 
   useHashChangeReload(reload);
 
-  const { scale, ...wrapperProps } = useWrapperProps(
-    width,
-    height,
+  const { scale, ...wrapperProps } = useWrapperProps({
+    containerWidth: width,
+    containerHeight: height,
     setScale,
     flag,
-  );
+    scale: scaleConfig,
+  });
 
   useEffect(() => {
     setScreenType('preview');

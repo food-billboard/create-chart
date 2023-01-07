@@ -12,15 +12,24 @@ function Viewer(props: {
   height: number;
   setScale: (value: number) => void;
   flag: ComponentData.ScreenFlagType;
+  scale: ComponentData.ScreenScaleType;
 }) {
-  const { setScreenType, width, height, setScale, flag } = props;
-
-  const { scale, ...wrapperProps } = useWrapperProps(
+  const {
+    setScreenType,
     width,
     height,
     setScale,
     flag,
-  );
+    scale: scaleConfig,
+  } = props;
+
+  const { scale, ...wrapperProps } = useWrapperProps({
+    containerWidth: width,
+    containerHeight: height,
+    setScale,
+    flag,
+    scale: scaleConfig,
+  });
 
   useEffect(() => {
     setScreenType('preview');

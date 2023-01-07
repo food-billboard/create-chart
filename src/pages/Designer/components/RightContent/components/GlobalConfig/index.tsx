@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Input, Tabs } from 'antd';
+import { Input, Switch } from 'antd';
 import { connect } from 'dva';
 import { set } from 'lodash';
 import classnames from 'classnames';
@@ -14,6 +14,7 @@ import ConfigWrapper, {
 } from '@/components/ChartComponents/Common/ConfigWrapper';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import CoverSelect from '@/components/CoverSelect';
+import ScaleConfig from './components/ScaleConfig';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -29,7 +30,7 @@ const GlobalConfig = (props: {
   const {
     config: {
       style: { width, height, padding },
-      attr: { poster, grid, componentBorder },
+      attr: { poster, grid, componentBorder, scale = 'fit-height', waterMark },
       flag: { type },
     },
     description,
@@ -165,6 +166,30 @@ const GlobalConfig = (props: {
                       <InputNumber
                         value={grid || 1}
                         onChange={onValueChange.bind(null, 'config.attr.grid')}
+                      />
+                    </FullForm>
+                  </Item>
+                  {type === 'PC' && (
+                    <Item label="页面缩放方式">
+                      <FullForm>
+                        <ScaleConfig
+                          value={scale}
+                          onChange={onValueChange.bind(
+                            null,
+                            'config.attr.scale',
+                          )}
+                        />
+                      </FullForm>
+                    </Item>
+                  )}
+                  <Item label="水印">
+                    <FullForm>
+                      <Switch
+                        checked={!!waterMark}
+                        onChange={onValueChange.bind(
+                          null,
+                          'config.attr.waterMark',
+                        )}
                       />
                     </FullForm>
                   </Item>

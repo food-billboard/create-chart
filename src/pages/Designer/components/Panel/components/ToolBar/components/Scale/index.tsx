@@ -24,13 +24,13 @@ export const autoFitScale = (
   const result = Math.min(
     2,
     Math.max(
-      0.25,
+      0.1,
       (wrapperWidth * FIT_SCALE) / width,
       (wrapperHeight * FIT_SCALE) / height,
     ),
   );
 
-  return parseInt((result * 100).toFixed(0)) || 25;
+  return parseInt((result * 100).toFixed(0)) || 10;
 };
 
 const Scale = (props: {
@@ -40,7 +40,7 @@ const Scale = (props: {
   pageHeight?: number;
 }) => {
   const [value, setValue] = useControllableValue(props, {
-    defaultValue: 25,
+    defaultValue: 10,
   });
 
   const { pageWidth, pageHeight } = props;
@@ -85,11 +85,11 @@ const Scale = (props: {
         </Dropdown>
         <InputNumber
           max={200}
-          min={25}
+          min={10}
           step={5}
           value={value}
           onChange={(value) => {
-            setValue(value ?? 25);
+            setValue(value ?? 10);
           }}
         />
         <Slider
@@ -98,7 +98,7 @@ const Scale = (props: {
             setValue(value);
           }}
           max={200}
-          min={25}
+          min={10}
           step={5}
         />
       </Space>

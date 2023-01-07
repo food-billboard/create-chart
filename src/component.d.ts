@@ -215,6 +215,15 @@ declare namespace ComponentData {
   // 大屏端类型
   export type ScreenFlagType = 'PC' | 'H5';
 
+  // 大屏缩放类型
+  // 全屏铺满 等比缩放宽度铺满 等比缩放高度铺满 等比缩放高度铺满 不缩放
+  export type ScreenScaleType =
+    | 'full'
+    | 'fit-width'
+    | 'fit-height'
+    | 'fit-height-scroll'
+    | 'none';
+
   // 大屏配置
   export type TScreenData = {
     _id?: string;
@@ -249,6 +258,8 @@ declare namespace ComponentData {
           opacity: number;
           grayscale: number;
         };
+        scale: ScreenScaleType;
+        waterMark: boolean;
       };
       flag: {
         type: ScreenFlagType;

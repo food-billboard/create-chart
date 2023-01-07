@@ -23,8 +23,16 @@ function Share(props: {
   height: number;
   flag: ComponentData.ScreenFlagType;
   setScale: (value: number) => void;
+  scale: ComponentData.ScreenScaleType;
 }) {
-  const { setScreenType, width, height, setScale, flag } = props;
+  const {
+    setScreenType,
+    width,
+    height,
+    setScale,
+    flag,
+    scale: scaleConfig,
+  } = props;
 
   const [needFetch, setNeedFetch] = useState<boolean>(false);
   const [heartbeat, setHeartbeat] = useState<boolean>(true);
@@ -32,12 +40,13 @@ function Share(props: {
   const passwordConfirmRef = useRef<PasswordConfirmRef>(null);
   const timerRef = useRef<any>();
 
-  const { scale, ...wrapperProps } = useWrapperProps(
-    width,
-    height,
+  const { scale, ...wrapperProps } = useWrapperProps({
+    containerWidth: width,
+    containerHeight: height,
     setScale,
     flag,
-  );
+    scale: scaleConfig,
+  });
 
   const heartbeatFetch = async () => {
     try {
