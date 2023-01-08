@@ -4,6 +4,7 @@ export const mapStateToProps = (state: ConnectState) => {
   return {
     components: state.global.components || [],
     select: state.global.select || [],
+    componentConfigCollapse: state.local.componentConfigCollapse,
   };
 };
 

@@ -9,11 +9,9 @@ import {
   BorderOuterOutlined,
   GlobalOutlined,
   MacCommandOutlined,
-  VerticalAlignTopOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
 import { connect } from 'dva';
-import { ConnectState } from '@/models/connect';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 import CallbackManage, { CallbackManageRef } from '../CallbackManage';
 import ConstantManage, { ConstantManageRef } from '../ConstantManage';
@@ -261,45 +259,6 @@ export const LocalConfigIcon = (props: TCommonProps) => {
     </>
   );
 };
-
-// 组件列表折叠
-const InternalComponentListCollapse = (
-  props: {
-    componentCollapse: boolean;
-    setComponentCollapse: (value: boolean) => void;
-  } & TCommonProps,
-) => {
-  const { componentCollapse, setComponentCollapse } = props;
-
-  const handleClick = useCallback(() => {
-    setComponentCollapse(!componentCollapse);
-  }, [componentCollapse, setComponentCollapse]);
-
-  return (
-    <VerticalAlignTopOutlined
-      title="折叠组件列表"
-      className={classnames(
-        commonClass,
-        'c-po',
-        styles['design-left-tool-icon-hover'],
-        styles['design-left-tool-icon-rotate'],
-      )}
-      onClick={handleClick}
-    />
-  );
-};
-
-export const ComponentListCollapse = connect(
-  (state: ConnectState) => {
-    return {
-      componentCollapse: state.local.componentCollapse,
-    };
-  },
-  (dispatch: any) => ({
-    setComponentCollapse: (value: any) =>
-      dispatch({ type: 'local/setComponentCollapse', value }),
-  }),
-)(InternalComponentListCollapse);
 
 // 全局滤镜
 export const LensConfig = (props: TCommonProps) => {

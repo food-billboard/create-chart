@@ -4,6 +4,7 @@ import { ThemeMap } from '@/utils/constants';
 
 export type ILocalModelState = {
   componentCollapse: boolean;
+  componentConfigCollapse: boolean;
 };
 
 export type DragData = {

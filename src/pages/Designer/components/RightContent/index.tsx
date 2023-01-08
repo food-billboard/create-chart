@@ -29,9 +29,10 @@ const MultiConfig = LazyWrapper(async () => {
 
 const RightContent = (props: {
   select: string[];
+  componentConfigCollapse: boolean;
   components: ComponentData.TComponentData[];
 }) => {
-  const { select = [], components } = props;
+  const { select = [], components, componentConfigCollapse } = props;
 
   const children = useMemo(() => {
     if (!select.length) return <GlobalConfig />;
@@ -64,6 +65,9 @@ const RightContent = (props: {
         styles['design-page-right'],
         'normal-background',
         'design-page-right',
+        {
+          [styles['design-page-right-show']]: !componentConfigCollapse,
+        },
       )}
     >
       {children}

@@ -5,19 +5,16 @@ export default {
 
   state: {
     componentCollapse: false,
+    componentConfigCollapse: false,
   },
 
   effects: {
     // 组件列表折叠
-    *setComponentCollapse(
-      { value }: any,
-      { call, put }: { call: any; put: any },
-    ) {
+    // 组件配置折叠
+    *setLocalConfig({ value }: any, { call, put }: { call: any; put: any }) {
       yield put({
         type: 'saveData',
-        payload: {
-          componentCollapse: !!value,
-        },
+        payload: value,
       });
     },
   },

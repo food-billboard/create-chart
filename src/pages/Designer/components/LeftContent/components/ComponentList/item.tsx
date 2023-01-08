@@ -89,7 +89,8 @@ const ComponentItem = (props: ComponentItemProps) => {
         role={DRAG_TYPE}
         onClick={handleSelect}
       >
-        <Tooltip
+        {/* 暂时先不要大图预览组件了 */}
+        {/* <Tooltip
           title={
             <div className={styles['design-left-component-list-item-preview']}>
               <img src={icon} />
@@ -107,7 +108,15 @@ const ComponentItem = (props: ComponentItemProps) => {
             }}
             className={styles['design-left-component-list-item-icon']}
           ></div>
-        </Tooltip>
+        </Tooltip> */}
+        {prefix}
+        <div
+          title={title}
+          style={{
+            backgroundImage: `url(${icon})`,
+          }}
+          className={styles['design-left-component-list-item-icon']}
+        ></div>
         <div
           className={classnames(
             'ali-cen text-ellipsis',

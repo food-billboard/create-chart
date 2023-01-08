@@ -1,14 +1,15 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { SearchOutlined, FileSearchOutlined } from '@ant-design/icons';
 import EventEmitter from 'eventemitter3';
 import classnames from 'classnames';
-import { Select, Space, Tooltip } from 'antd';
+import { Select, Space, Tooltip, Button } from 'antd';
 import { connect } from 'dva';
 import {
   ID_PATH_MAP_EVENT_EMITTER,
   useIdPathMap,
 } from '@/hooks/useComponentsPath';
-import { ConnectState } from '@/models/connect';
+import IconFont from '@/components/ChartComponents/Common/Icon';
+import { ConnectState, ILocalModelState } from '@/models/connect';
 import { sleep } from '@/utils';
 import styles from './index.less';
 
@@ -20,8 +21,12 @@ export const EVENT_NAME = {
   LAYER_SEARCH: 'LAYER_SEARCH',
 };
 
+// 组件搜索
 const ComponentSearch = () => {
+  const [visible, setVisible] = useState(false);
+
   const handleClick = useCallback(() => {
+    setVisible((prev) => !prev);
     ComponentSearchConfigEventEmitter.emit(EVENT_NAME.COMPONENT_SEARCH_VISIBLE);
   }, []);
 
@@ -30,12 +35,17 @@ const ComponentSearch = () => {
       className={classnames(styles['design-header-action-component-search'])}
     >
       <Tooltip title={'组件搜索'} placement="top">
-        <SearchOutlined className={classnames('c-po')} onClick={handleClick} />
+        <Button
+          icon={<SearchOutlined />}
+          onClick={handleClick}
+          type={visible ? 'primary' : 'default'}
+        />
       </Tooltip>
     </div>
   );
 };
 
+// 图层搜索
 const _LayerSearch = (props: { setSelect: (value: string[]) => void }) => {
   const { setSelect } = props;
 
@@ -87,9 +97,10 @@ const _LayerSearch = (props: { setSelect: (value: string[]) => void }) => {
       })}
     >
       <Tooltip title="图层搜索">
-        <FileSearchOutlined
-          className={classnames('c-po m-r-4')}
+        <Button
+          icon={<FileSearchOutlined />}
           onClick={handleClick}
+          type={visible ? 'primary' : 'default'}
         />
       </Tooltip>
       <Select
@@ -119,11 +130,85 @@ const LayerSearch = connect(
   },
 )(_LayerSearch);
 
+// 折叠右侧配置列表
+const InternalCollapseConfigPanel = (props: {
+  componentConfigCollapse: boolean;
+  setLocalConfig: (value: Partial<ILocalModelState>) => void;
+}) => {
+  const { componentConfigCollapse, setLocalConfig } = props;
+
+  const handleClick = useCallback(() => {
+    setLocalConfig({
+      componentConfigCollapse: !componentConfigCollapse,
+    });
+  }, [componentConfigCollapse, setLocalConfig]);
+
+  return (
+    <Tooltip title="折叠组件配置">
+      <Button
+        icon={<IconFont title="折叠组件配置" type="icon-shangpinliebiao" />}
+        onClick={handleClick}
+        type={componentConfigCollapse ? 'default' : 'primary'}
+      />
+    </Tooltip>
+  );
+};
+
+export const CollapseConfigPanel = connect(
+  (state: ConnectState) => {
+    return {
+      componentConfigCollapse: state.local.componentConfigCollapse,
+    };
+  },
+  (dispatch: any) => ({
+    setLocalConfig: (value: any) =>
+      dispatch({ type: 'local/setLocalConfig', value }),
+  }),
+)(InternalCollapseConfigPanel);
+
+// 组件列表折叠
+const InternalComponentListCollapse = (props: {
+  componentCollapse: boolean;
+  setLocalConfig: (value: Partial<ILocalModelState>) => void;
+}) => {
+  const { componentCollapse, setLocalConfig } = props;
+
+  const handleClick = useCallback(() => {
+    setLocalConfig({
+      componentCollapse: !componentCollapse,
+    });
+  }, [componentCollapse, setLocalConfig]);
+
+  return (
+    <Tooltip title="折叠组件列表">
+      <Button
+        icon={<IconFont title="折叠组件列表" type="icon-userConfig" />}
+        onClick={handleClick}
+        type={componentCollapse ? 'default' : 'primary'}
+      />
+    </Tooltip>
+  );
+};
+
+export const ComponentListCollapse = connect(
+  (state: ConnectState) => {
+    return {
+      componentCollapse: state.local.componentCollapse,
+    };
+  },
+  (dispatch: any) => ({
+    setLocalConfig: (value: any) =>
+      dispatch({ type: 'local/setLocalConfig', value }),
+  }),
+)(InternalComponentListCollapse);
+
 const ActionList = () => {
   return (
     <Space className={styles['design-header-action']}>
       <ComponentSearch />
       <LayerSearch />
+      <ComponentListCollapse />
+      <CollapseConfigPanel />
     </Space>
   );
 };
