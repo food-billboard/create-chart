@@ -1,9 +1,11 @@
 import { nanoid } from 'nanoid';
 import IsMobile from 'is-mobile';
+import { pick } from 'lodash';
 import { DEFAULT_BORDER } from '@/components/InternalBorder';
 import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_GROUP_COMPONENT_TRANSFORM,
+  BASIC_DEFAULT_DATA_CONFIG,
 } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import Theme from '../../theme/wonderland.project.json';
 
@@ -74,6 +76,15 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
         },
         background: '',
         internal_background: 'GRADIENT_MIX_BACKGROUND',
+      },
+      request: {
+        ...pick(BASIC_DEFAULT_DATA_CONFIG!.request, [
+          'method',
+          'headers',
+          'body',
+          'serviceRequest',
+          'frequency',
+        ]),
       },
       grid: 1,
       filter: DEFAULT_FILTER_LIST,

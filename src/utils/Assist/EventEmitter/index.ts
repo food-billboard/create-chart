@@ -46,4 +46,7 @@ export enum EVENT_NAME_MAP {
 
   // 大屏的主题色被更改的时候
   SCREEN_THEME_CHANGE = 'SCREEN_THEME_CHANGE',
+
+  // 图层被展示或收起的时候
+  LAYER_VISIBLE_CHANGE = 'LAYER_VISIBLE_CHANGE',
 }

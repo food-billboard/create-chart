@@ -2,11 +2,8 @@ import { useCallback, useRef } from 'react';
 import {
   RedoOutlined,
   UndoOutlined,
-  BorderInnerOutlined,
   ToolOutlined,
-  BlockOutlined,
   ShrinkOutlined,
-  BorderOuterOutlined,
   GlobalOutlined,
   MacCommandOutlined,
 } from '@ant-design/icons';
@@ -18,6 +15,9 @@ import ConstantManage, { ConstantManageRef } from '../ConstantManage';
 import LocalConfigMange, { LocalConfigManageRef } from '../LocalConfigMange';
 import LensConfigModal, { LensConfigRef } from '../LensConfig';
 import ThemeConfigModal, { ThemeConfigRef } from '../ThemeConfig';
+import RequestDefaultConfigManage, {
+  RequestCofigRef,
+} from '../RequestDefaultConfig';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -32,11 +32,10 @@ export type TCommonProps = {
       | 'undo'
       | 'redo'
       | 'layer'
-      | 'guideline'
       | 'callback'
+      | 'requestDefault'
       | 'constant'
       | 'localConfig'
-      | 'component-collapse'
       | 'lens',
   ) => void;
 };
@@ -107,27 +106,6 @@ export const UndoIcon = connect(
   mapDispatchToProps,
 )(InternalUndoIcon);
 
-// 图层显示隐藏
-export const LayerShowIcon = (props: TCommonProps) => {
-  const { onClick } = props;
-
-  const handleOpen = useCallback(() => {
-    onClick?.('layer');
-  }, [onClick]);
-
-  return (
-    <BlockOutlined
-      title="图层管理"
-      className={classnames(
-        commonClass,
-        'c-po',
-        styles['design-left-tool-icon-hover'],
-      )}
-      onClick={handleOpen}
-    />
-  );
-};
-
 // 图层折叠展开
 export const LayerCollapseIcon = (props: TCommonProps) => {
   // <ArrowsAltOutlined />
@@ -141,43 +119,6 @@ export const LayerCollapseIcon = (props: TCommonProps) => {
     />
   );
 };
-
-// 辅助线显示隐藏
-const InternalGuideLineIcon = (
-  props: {
-    guideLineShow?: boolean;
-    setGuideLine?: (value: Partial<ComponentData.TGuideLineConfig>) => void;
-  } & TCommonProps,
-) => {
-  const { guideLineShow, setGuideLine, onClick } = props;
-
-  const handleClick = useCallback(() => {
-    setGuideLine?.({
-      show: !guideLineShow,
-    });
-    onClick?.('guideline');
-  }, [onClick, guideLineShow, setGuideLine]);
-
-  const domProps = {
-    title: '辅助线',
-    className: classnames(
-      commonClass,
-      'c-po',
-      styles['design-left-tool-icon-hover'],
-    ),
-    onClick: handleClick,
-  };
-
-  if (!guideLineShow) {
-    return <BorderOuterOutlined {...domProps} />;
-  }
-
-  return <BorderInnerOutlined {...domProps} />;
-};
-export const GuideLineIcon = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(InternalGuideLineIcon);
 
 // 回调管理
 export const CallbackIcon = (props: TCommonProps) => {
@@ -312,6 +253,34 @@ export const ThemeConfig = (props: TCommonProps) => {
         onClick={handleOpen}
       />
       <ThemeConfigModal ref={themeConfigRef} />
+    </>
+  );
+};
+
+// 默认请求配置
+export const RequestDefaultConfig = (props: TCommonProps) => {
+  const { onClick } = props;
+
+  const requestConfigRef = useRef<RequestCofigRef>(null);
+
+  const handleOpen = useCallback(() => {
+    requestConfigRef.current?.open();
+    onClick?.('requestDefault');
+  }, [onClick]);
+
+  return (
+    <>
+      <IconFont
+        type="icon-datafull"
+        title="请求默认配置"
+        className={classnames(
+          commonClass,
+          'c-po',
+          styles['design-left-tool-icon-hover'],
+        )}
+        onClick={handleOpen}
+      />
+      <RequestDefaultConfigManage ref={requestConfigRef} />
     </>
   );
 };

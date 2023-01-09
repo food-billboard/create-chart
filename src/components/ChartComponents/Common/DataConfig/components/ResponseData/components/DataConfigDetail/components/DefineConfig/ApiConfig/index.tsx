@@ -11,8 +11,6 @@ import SubTitle, { SubForm } from '../../SubTitle';
 import { TOnChange } from '../type';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
-const { Option } = Select;
-
 export const IconTooltip = () => {
   return (
     <IconTooltipBase title="可以使用全局的变量">
@@ -72,14 +70,15 @@ const ApiConfig = (props: ApiConfigProps) => {
               },
             });
           }}
-        >
-          <Option key="POST" value="POST">
-            POST
-          </Option>
-          <Option key="GET" value="GET">
-            GET
-          </Option>
-        </Select>
+          options={[
+            {
+              value: 'POST',
+            },
+            {
+              value: 'GET',
+            },
+          ]}
+        />
       </SubForm>
       <SubTitle>URL</SubTitle>
       <SubForm>
@@ -105,7 +104,7 @@ const ApiConfig = (props: ApiConfigProps) => {
         <>
           <SubTitle>
             <IconTooltip />
-            POST 请求参数
+            请求参数
           </SubTitle>
           <SubForm>
             <CodeEditor

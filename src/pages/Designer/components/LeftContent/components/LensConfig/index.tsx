@@ -78,7 +78,7 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
       open={visible}
       maskClosable={false}
       onClose={onClose}
-      title="全局过滤器"
+      title="全局滤镜"
       placement="left"
       width={400}
     >

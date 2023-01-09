@@ -1,4 +1,6 @@
 import { ReactNode } from 'react';
+import { get, omit } from 'lodash';
+import { getDvaGlobalModelData } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils/tool';
 import { DEFAULT_GROUP_CONFIG } from '@/utils/constants/screenData';
 import { isGroupComponent } from '@/utils/Assist/Component';
@@ -197,8 +199,24 @@ export function getComponentByType(component: ComponentData.TComponentData) {
 
 export function getComponentDefaultConfigByType(
   componentType: ComponentData.TComponentSelfType,
+  // 是否是新增组件
+  // ? 因为需要迎合下面的合并操作，如果是老组件，不需要去合并这个全局的配置
+  isNew = false,
 ) {
-  return COMPONENT_MAP.get(componentType)?.defaultConfig() || {};
+  const defaultConfig = COMPONENT_MAP.get(componentType)?.defaultConfig() || {};
+  // ? 合并默认的数据请求配置到默认配置中
+  if (isNew && !get(defaultConfig, 'cofing.data.disabled')) {
+    const defaultRequest =
+      get(getDvaGlobalModelData(), 'screenData.config.attr.request') || {};
+    return mergeWithoutArray(defaultConfig, {
+      data: {
+        request: {
+          ...omit(defaultRequest, ['body', 'headers']),
+        },
+      },
+    });
+  }
+  return defaultConfig;
 }
 
 export function getComponentThemeConfigByType(

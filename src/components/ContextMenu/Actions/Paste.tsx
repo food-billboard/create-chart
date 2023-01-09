@@ -16,12 +16,15 @@ function coverPreviousId(
   component: ComponentData.TComponentData,
   parent: string = '',
 ): ComponentData.TComponentData {
-  const newComponent = createComponent({
-    ...component,
-    parent,
-    // copy and paste
-    name: component.name + '_副本',
-  });
+  const newComponent = createComponent(
+    {
+      ...component,
+      parent,
+      // copy and paste
+      name: component.name + '_副本',
+    },
+    false,
+  );
 
   if (isGroupComponentMethod(newComponent)) {
     return {

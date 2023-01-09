@@ -2,14 +2,13 @@ import classnames from 'classnames';
 import {
   UndoIcon,
   RedoIcon,
-  LayerShowIcon,
-  GuideLineIcon,
   CallbackIcon,
   ConstantIcon,
   TCommonProps,
   LocalConfigIcon,
   LensConfig,
   ThemeConfig,
+  RequestDefaultConfig,
 } from './action.map';
 import styles from './index.less';
 
@@ -32,9 +31,8 @@ const ToolBar = (props: TCommonProps) => {
     >
       <UndoIcon {...nextProps} />
       <RedoIcon {...nextProps} />
-      <LayerShowIcon {...nextProps} />
-      <GuideLineIcon {...nextProps} />
       <CallbackIcon {...nextProps} />
+      <RequestDefaultConfig {...nextProps} />
       <ConstantIcon {...nextProps} />
       <LocalConfigIcon {...nextProps} />
       <LensConfig {...nextProps} />

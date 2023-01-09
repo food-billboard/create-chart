@@ -22,31 +22,34 @@ declare namespace ComponentData {
     disabled: boolean;
   };
 
+  // 数据请求配置
+  export type TCommonRequestConfig = {
+    url: string;
+    method: 'POST' | 'GET';
+    headers: string;
+    body: string;
+    serviceRequest: boolean;
+    mock: {
+      random: boolean;
+      total: number;
+      fields: {
+        key: string;
+        dataKind: string;
+        id: string;
+      }[];
+    };
+    frequency: {
+      show: boolean;
+      value: number;
+    };
+    type: 'api' | 'static' | 'mock';
+    value: any[] | object;
+    valueType?: 'object' | 'array';
+  };
+
   // 数据配置
   export type TComponentApiDataConfig = {
-    request: {
-      url: string;
-      method: 'POST' | 'GET';
-      headers: string;
-      body: string;
-      serviceRequest: boolean;
-      mock: {
-        random: boolean;
-        total: number;
-        fields: {
-          key: string;
-          dataKind: string;
-          id: string;
-        }[];
-      };
-      frequency: {
-        show: boolean;
-        value: number;
-      };
-      type: 'api' | 'static' | 'mock';
-      value: any[] | object;
-      valueType?: 'object' | 'array';
-    };
+    request: TCommonRequestConfig;
     filter: {
       show: boolean;
       value: TComponentFilterConfig[];
@@ -224,6 +227,12 @@ declare namespace ComponentData {
     | 'fit-height-scroll'
     | 'none';
 
+  // 大屏全局的请求配置
+  export type ScreenCommonRequestConfig = Pick<
+    TCommonRequestConfig,
+    'method' | 'headers' | 'body' | 'serviceRequest' | 'frequency'
+  >;
+
   // 大屏配置
   export type TScreenData = {
     _id?: string;
@@ -240,6 +249,7 @@ declare namespace ComponentData {
       attr: {
         poster: TBackgroundConfig;
         filter: TFilterConfig[];
+        request: ScreenCommonRequestConfig;
         params: TParams[];
         constants: TConstants[];
         guideLine: TGuideLineConfig;

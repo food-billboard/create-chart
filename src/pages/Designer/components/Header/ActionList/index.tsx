@@ -1,5 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
-import { SearchOutlined, FileSearchOutlined } from '@ant-design/icons';
+import {
+  SearchOutlined,
+  FileSearchOutlined,
+  BlockOutlined,
+} from '@ant-design/icons';
 import EventEmitter from 'eventemitter3';
 import classnames from 'classnames';
 import { Select, Space, Tooltip, Button } from 'antd';
@@ -9,6 +13,10 @@ import {
   useIdPathMap,
 } from '@/hooks/useComponentsPath';
 import IconFont from '@/components/ChartComponents/Common/Icon';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
 import { ConnectState, ILocalModelState } from '@/models/connect';
 import { sleep } from '@/utils';
 import styles from './index.less';
@@ -42,6 +50,48 @@ const ComponentSearch = () => {
         />
       </Tooltip>
     </div>
+  );
+};
+
+// 图层显示隐藏
+export const LayerShowIcon = (props: {}) => {
+  const [visible, setVisible] = useState(false);
+
+  const handleOpen = useCallback(() => {
+    GLOBAL_EVENT_EMITTER.emit(
+      EVENT_NAME_MAP.LAYER_VISIBLE_CHANGE,
+      !visible,
+      'LayerShowIcon',
+    );
+    setVisible(!visible);
+  }, [visible]);
+
+  const onLayerChange = useCallback((visible, target) => {
+    if (target !== 'LayerShowIcon') setVisible(visible);
+  }, []);
+
+  useEffect(() => {
+    GLOBAL_EVENT_EMITTER.addListener(
+      EVENT_NAME_MAP.LAYER_VISIBLE_CHANGE,
+      onLayerChange,
+    );
+    return () => {
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.LAYER_VISIBLE_CHANGE,
+        onLayerChange,
+      );
+    };
+  }, [onLayerChange]);
+
+  return (
+    <Tooltip title="图层">
+      <Button
+        title="图层"
+        icon={<BlockOutlined />}
+        type={visible ? 'primary' : 'default'}
+        onClick={handleOpen}
+      ></Button>
+    </Tooltip>
   );
 };
 
@@ -209,6 +259,7 @@ const ActionList = () => {
       <LayerSearch />
       <ComponentListCollapse />
       <CollapseConfigPanel />
+      <LayerShowIcon />
     </Space>
   );
 };

@@ -25,9 +25,11 @@ export const createComponent: (
   component: SuperPartial<ComponentData.TComponentData> & {
     componentType: ComponentData.TComponentSelfType;
   },
-) => ComponentData.TComponentData = (component) => {
+  isNew?: boolean,
+) => ComponentData.TComponentData = (component, isNew = true) => {
   const defaultConfig = getComponentDefaultConfigByType(
     component.componentType,
+    isNew,
   );
   return mergeWithoutArray(
     {},

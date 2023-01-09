@@ -1,7 +1,8 @@
 import json5 from 'json5';
 import mustache from 'mustache';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 import { preRequestData } from '@/services';
+import { getDvaGlobalModelData } from '../Component';
 import VariableStringUtil from '../VariableString';
 import request from '../../request';
 import { MOCK_REQUEST_URL } from '../../index';
@@ -249,9 +250,27 @@ export class FilterData {
     if (type === 'static' || (type === 'api' && !url)) return responseData;
 
     if (type === 'api') {
-      realHeaders = this.parseHeaders(headers, params, constants);
+      const defaultRequestConfig: ComponentData.ScreenCommonRequestConfig =
+        get(getDvaGlobalModelData(), 'screenData.config.attr.request') || {};
+      realHeaders = this.parseHeaders(
+        defaultRequestConfig.headers,
+        params,
+        constants,
+      );
+      realHeaders = {
+        ...realHeaders,
+        ...this.parseHeaders(headers, params, constants),
+      };
       if (method === 'POST') {
-        realBody = this.parseBody(body, params, constants);
+        realBody = this.parseHeaders(
+          defaultRequestConfig.body,
+          params,
+          constants,
+        );
+        realBody = {
+          ...realBody,
+          ...this.parseBody(body, params, constants),
+        };
       }
     } else if (type === 'mock') {
       realMethod = 'post';

@@ -9,11 +9,15 @@ const HalfForm = ({
   label,
   style,
   className,
+  prefix,
+  suffix,
 }: {
   children?: ReactNode;
   label?: string | ReactNode;
   style?: CSSProperties;
   className?: string;
+  prefix?: string;
+  suffix?: string;
 }) => {
   return (
     <div
@@ -21,7 +25,9 @@ const HalfForm = ({
       style={style}
     >
       <div className={styles['design-config-half-form-content']}>
+        {prefix}
         {children}
+        {suffix}
       </div>
       {label && (
         <div

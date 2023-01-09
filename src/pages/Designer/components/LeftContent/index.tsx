@@ -1,6 +1,11 @@
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 import classnames from 'classnames';
+import { useGetState } from 'ahooks';
 import FocusWrapper from '@/components/FocusWrapper';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
 import ToolBar from './components/ToolBar';
 import ComponentTypeList from './components/ComponentTypeList';
 import LayerManage from './components/LayerManage';
@@ -10,21 +15,40 @@ import styles from './index.less';
 import ComponentTypeListStyles from './components/ComponentTypeList/index.less';
 
 const LeftContent = () => {
-  const [layerVisible, setLayerVisible] = useState<boolean>(false);
+  const [layerVisible, setLayerVisible, getLayerVisible] =
+    useGetState<boolean>(false);
 
   const layerRef = useRef<LayerManageRef>(null);
 
   const handleClick = useCallback((type) => {
-    // * 图层按钮
-    if (type === 'layer') {
-      const visible = layerRef.current?.visible;
-      visible ? layerRef.current?.close() : layerRef.current?.open();
-      setLayerVisible(!visible);
-    }
+    // TODO
   }, []);
 
   const handleClose = useCallback(() => {
     setLayerVisible(false);
+    GLOBAL_EVENT_EMITTER.emit(
+      EVENT_NAME_MAP.LAYER_VISIBLE_CHANGE,
+      false,
+      'LeftContent',
+    );
+  }, []);
+
+  useEffect(() => {
+    const onLayerChange = (visible: boolean, target: string) => {
+      if (target === 'LeftContent') return;
+      visible ? layerRef.current?.open() : layerRef.current?.close();
+      setLayerVisible(visible);
+    };
+    GLOBAL_EVENT_EMITTER.addListener(
+      EVENT_NAME_MAP.LAYER_VISIBLE_CHANGE,
+      onLayerChange,
+    );
+    return () => {
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.LAYER_VISIBLE_CHANGE,
+        onLayerChange,
+      );
+    };
   }, []);
 
   return (
