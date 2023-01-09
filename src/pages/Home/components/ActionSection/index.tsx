@@ -36,10 +36,10 @@ const ActionSection = () => {
         <span id="home-page-action-description"></span>
       </div>
       <div className={classnames(styles['home-page-action-button'], 'w-100')}>
-        <Button onClick={handleStart} type="primary">
+        <Button onClick={handleStart} type="primary" size="large">
           开始制作
         </Button>
-        <Button onClick={gotoOperation} type="primary">
+        <Button onClick={gotoOperation} type="primary" size="large">
           操作文档
         </Button>
       </div>
