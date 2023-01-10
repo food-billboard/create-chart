@@ -1,11 +1,21 @@
 import { useCallback, useMemo } from 'react';
 import { VerticalAlignBottomOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const BottomAction = (props: CommonActionType) => {
-  const { value, path, setComponent, components, select, onClick, flag } =
-    props;
+  const {
+    value,
+    path,
+    setComponent,
+    components,
+    select,
+    onClick,
+    flag,
+    childrenType,
+    disabled,
+  } = props;
   const {
     id,
     config: {
@@ -97,19 +107,22 @@ const BottomAction = (props: CommonActionType) => {
 
   const handleClick = useCallback(
     (e: any) => {
-      e.stopPropagation();
       flag === 'PC' ? handleClickPc() : handleClickH5();
       onClick();
     },
     [flag, onClick, handleClickH5, handleClickPc],
   );
 
-  return (
-    <div key="bottom" onClick={handleClick}>
-      <VerticalAlignBottomOutlined className="m-r-4" />
-      {title}
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title,
+    icon: <VerticalAlignBottomOutlined />,
+    key: 'bottom',
+    onClick: handleClick,
+    disabled,
+    checked: isBottom,
+  });
+
+  return children;
 };
 
 export default BottomAction;

@@ -1,9 +1,19 @@
 import { useCallback } from 'react';
 import { GroupOutlined } from '@ant-design/icons';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const GroupAction = (props: CommonActionType) => {
-  const { value, select, onClick, setComponent, setSelect } = props;
+  const {
+    value,
+    select,
+    onClick,
+    setComponent,
+    setSelect,
+    childrenType,
+    disabled,
+    flag,
+  } = props;
 
   const handleClick = useCallback(
     (e: any) => {
@@ -27,12 +37,16 @@ const GroupAction = (props: CommonActionType) => {
     [setSelect, setComponent, select, onClick, value],
   );
 
-  return (
-    <div key="group" onClick={handleClick}>
-      <GroupOutlined className="m-r-4" />
-      成组
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title: '成组',
+    icon: <GroupOutlined />,
+    key: 'group',
+    onClick: handleClick,
+    disabled,
+    style: flag === 'PC' ? {} : { display: 'none' },
+  });
+
+  return children;
 };
 
 export default GroupAction;

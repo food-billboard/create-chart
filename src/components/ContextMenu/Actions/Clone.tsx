@@ -5,6 +5,7 @@ import { Message } from '@/components/RequestMessage';
 import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
 import ClipboardComponent from '@/utils/Assist/ClipboardComponent';
 import { getDvaGlobalModelData } from '@/utils/Assist/Component';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const _clone = async (
@@ -66,7 +67,7 @@ export const clone = async (
 };
 
 const CloneAction = (props: CommonActionType) => {
-  const { select, setClipboard, onClick } = props;
+  const { select, setClipboard, onClick, childrenType, disabled } = props;
 
   const handleClick = useCallback(
     (e: any) => {
@@ -77,12 +78,15 @@ const CloneAction = (props: CommonActionType) => {
     [setClipboard, select, onClick],
   );
 
-  return (
-    <div key="clone" onClick={handleClick}>
-      <CopyOutlined className="m-r-4" />
-      拷贝
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title: '拷贝',
+    icon: <CopyOutlined />,
+    key: 'clone',
+    onClick: handleClick,
+    disabled,
+  });
+
+  return children;
 };
 
 export default CloneAction;

@@ -1,10 +1,20 @@
 import { useCallback, useMemo } from 'react';
 import { UngroupOutlined } from '@ant-design/icons';
 import { isGroupComponent } from '@/utils/Assist/Component';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const UnGroupAction = (props: CommonActionType) => {
-  const { onClick, value, components, select, setComponent, setSelect } = props;
+  const {
+    onClick,
+    value,
+    components,
+    select,
+    setComponent,
+    setSelect,
+    childrenType,
+    disabled,
+  } = props;
 
   const isUnGroup = useMemo(() => {
     return select.length === 1 && isGroupComponent(value);
@@ -25,18 +35,16 @@ const UnGroupAction = (props: CommonActionType) => {
     [onClick, setComponent, components, select, setSelect, value],
   );
 
-  return (
-    <div
-      key="un_group"
-      onClick={handleClick}
-      style={{
-        display: isUnGroup ? 'block' : 'none',
-      }}
-    >
-      <UngroupOutlined className="m-r-4" />
-      取消成组
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title: '取消成组',
+    icon: <UngroupOutlined />,
+    key: 'un_group',
+    onClick: handleClick,
+    disabled,
+    style: isUnGroup ? {} : { display: 'none' },
+  });
+
+  return children;
 };
 
 export default UnGroupAction;

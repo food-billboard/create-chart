@@ -1,10 +1,20 @@
 import { useCallback, useMemo } from 'react';
 import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { getComponentDefaultConfigByType } from '../../ChartComponents';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const RecoverDefaultAction = (props: CommonActionType) => {
-  const { value, path, setComponent, components, select, onClick } = props;
+  const {
+    value,
+    path,
+    setComponent,
+    components,
+    select,
+    onClick,
+    childrenType,
+    disabled,
+  } = props;
   const { id, componentType } = value;
 
   const canRecover = useMemo(() => {
@@ -31,18 +41,16 @@ const RecoverDefaultAction = (props: CommonActionType) => {
     [id, path, componentType, components, select, onClick],
   );
 
-  return (
-    <div
-      key="recover_default"
-      onClick={handleClick}
-      style={{
-        display: canRecover ? 'block' : 'none',
-      }}
-    >
-      <Loading3QuartersOutlined className="m-r-4" />
-      恢复默认配置
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title: '恢复默认配置',
+    icon: <Loading3QuartersOutlined />,
+    key: 'recover_default',
+    onClick: handleClick,
+    disabled,
+    style: canRecover ? {} : { display: 'none' },
+  });
+
+  return children;
 };
 
 export default RecoverDefaultAction;

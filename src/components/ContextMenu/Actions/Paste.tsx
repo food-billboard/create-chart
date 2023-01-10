@@ -10,6 +10,7 @@ import {
 } from '@/utils/Assist/Component';
 import GroupUtil from '@/utils/Assist/Group';
 import ClipboardComponent from '@/utils/Assist/ClipboardComponent';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 function coverPreviousId(
@@ -219,6 +220,8 @@ const PasteAction = (props: CommonActionType) => {
     path,
     setComponent,
     actionFrom,
+    childrenType,
+    disabled,
   } = props;
   const { parent, type, components: currentComponents, id } = value;
 
@@ -268,18 +271,16 @@ const PasteAction = (props: CommonActionType) => {
     ],
   );
 
-  return (
-    <div
-      key="paste"
-      onClick={handleClick}
-      style={{
-        display: isValidPasteSelect ? 'block' : 'none',
-      }}
-    >
-      <SnippetsOutlined className="m-r-4" />
-      粘贴
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title: '粘贴',
+    icon: <SnippetsOutlined />,
+    key: 'paste',
+    onClick: handleClick,
+    disabled,
+    style: isValidPasteSelect ? {} : { display: 'none' },
+  });
+
+  return children;
 };
 
 export default PasteAction;

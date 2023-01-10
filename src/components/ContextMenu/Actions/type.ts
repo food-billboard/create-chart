@@ -1,3 +1,4 @@
+export type ChildrenType = 'menu' | 'button';
 export interface CommonActionType {
   value: ComponentData.TComponentData;
   components: ComponentData.TComponentData[];
@@ -10,5 +11,7 @@ export interface CommonActionType {
   setComponentAll: (value: ComponentData.TComponentData[]) => void;
   onClick: () => void;
   actionFrom: 'screen' | 'layer';
+  childrenType: ChildrenType;
   flag: ComponentData.ScreenFlagType;
+  disabled?: boolean;
 }

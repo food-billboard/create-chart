@@ -17,7 +17,6 @@ const LayerHeader = (props: {
         'pos-sti',
         'dis-flex',
         'p-lr-4',
-        'm-b-4',
       )}
     >
       <CaretLeftOutlined className="m-r-8 c-po" onClick={onBack} />

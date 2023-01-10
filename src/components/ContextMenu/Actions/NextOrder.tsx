@@ -1,10 +1,12 @@
 import { useCallback } from 'react';
 import { ArrowDownOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const NextOrderAction = (props: CommonActionType) => {
-  const { value, setComponent, select, onClick } = props;
+  const { value, setComponent, select, onClick, childrenType, disabled } =
+    props;
   const { id } = value;
 
   const handleClick = useCallback(
@@ -34,12 +36,15 @@ const NextOrderAction = (props: CommonActionType) => {
     [id, select, onClick],
   );
 
-  return (
-    <div key="next_order" onClick={handleClick}>
-      <ArrowDownOutlined className="m-r-4" />
-      下一个
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title: '下一个',
+    icon: <ArrowDownOutlined />,
+    key: 'next_order',
+    onClick: handleClick,
+    disabled,
+  });
+
+  return children;
 };
 
 export default NextOrderAction;

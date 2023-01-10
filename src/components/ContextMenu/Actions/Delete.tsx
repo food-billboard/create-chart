@@ -4,6 +4,7 @@ import { getDvaApp } from 'umi';
 import { get } from 'lodash';
 import InteractiveUtil from '@/utils/Assist/Interactive';
 import { useIdPathMap } from '@/hooks';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const deleteComponentInteractive = (id: string[]) => {
@@ -66,7 +67,8 @@ export const deleteAction = (
 };
 
 const DeleteAction = (props: CommonActionType) => {
-  const { setComponent, select, onClick, setSelect } = props;
+  const { setComponent, select, onClick, setSelect, childrenType, disabled } =
+    props;
 
   const handleClick = useCallback(() => {
     deleteAction(select, setComponent, setSelect);
@@ -74,12 +76,15 @@ const DeleteAction = (props: CommonActionType) => {
     onClick?.();
   }, [select, onClick]);
 
-  return (
-    <div key="delete" onClick={handleClick}>
-      <DeleteOutlined className="m-r-4" />
-      删除
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title: '删除',
+    icon: <DeleteOutlined />,
+    key: 'delete',
+    onClick: handleClick,
+    disabled,
+  });
+
+  return children;
 };
 
 export default DeleteAction;

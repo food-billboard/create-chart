@@ -3,10 +3,12 @@ import { SkinOutlined } from '@ant-design/icons';
 import { nanoid } from 'nanoid';
 import { getComponent } from '@/utils/Assist/Component';
 import { getComponentDefaultConfigByType } from '../../ChartComponents';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const CopyComponentWithStyle = (props: CommonActionType) => {
-  const { select, setComponent, onClick, components } = props;
+  const { select, setComponent, onClick, components, childrenType, disabled } =
+    props;
 
   // 组件数据
   const component = useMemo(() => {
@@ -48,20 +50,16 @@ const CopyComponentWithStyle = (props: CommonActionType) => {
     onClick?.();
   }, [component, onClick]);
 
-  return (
-    <>
-      <div
-        key="copy_component_with_style"
-        onClick={handleClick}
-        style={{
-          display: canChange ? 'block' : 'none',
-        }}
-      >
-        <SkinOutlined className="m-r-4" />
-        复制组件样式
-      </div>
-    </>
-  );
+  const children = useChildren(childrenType, {
+    title: '复制组件样式',
+    icon: <SkinOutlined />,
+    key: 'copy_component_with_style',
+    onClick: handleClick,
+    disabled,
+    style: canChange ? {} : { display: 'none' },
+  });
+
+  return children;
 };
 
 export default CopyComponentWithStyle;

@@ -1,10 +1,20 @@
 import { useCallback, useMemo } from 'react';
 import { EyeOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const ShowAction = (props: CommonActionType) => {
-  const { value, path, setComponent, components, select, onClick } = props;
+  const {
+    value,
+    path,
+    setComponent,
+    components,
+    select,
+    onClick,
+    childrenType,
+    disabled,
+  } = props;
   const {
     id,
     config: {
@@ -69,12 +79,16 @@ const ShowAction = (props: CommonActionType) => {
     [isShow, id, path, components, select, onClick],
   );
 
-  return (
-    <div key="show" onClick={handleClick}>
-      <EyeOutlined className="m-r-4" />
-      {title}
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title,
+    icon: <EyeOutlined />,
+    key: 'show',
+    onClick: handleClick,
+    disabled,
+    checked: isShow,
+  });
+
+  return children;
 };
 
 export default ShowAction;

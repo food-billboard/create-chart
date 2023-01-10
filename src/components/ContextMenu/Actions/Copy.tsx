@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { AppstoreAddOutlined } from '@ant-design/icons';
 import { paste, useIsValidPasteSelect, pasteClick } from './Paste';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 export const copy = (pasteParams: {
@@ -28,6 +29,8 @@ const CopyAction = (props: CommonActionType) => {
     actionFrom,
     path,
     setComponent,
+    childrenType,
+    disabled,
   } = props;
   const { parent, id, components: currentComponents, type } = value;
 
@@ -73,18 +76,16 @@ const CopyAction = (props: CommonActionType) => {
     ],
   );
 
-  return (
-    <div
-      key="copy"
-      onClick={handleClick}
-      style={{
-        display: isValidPasteSelect ? 'block' : 'none',
-      }}
-    >
-      <AppstoreAddOutlined className="m-r-4" />
-      复制
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title: '复制',
+    icon: <AppstoreAddOutlined />,
+    key: 'copy',
+    onClick: handleClick,
+    disabled,
+    style: isValidPasteSelect ? {} : { display: 'none' },
+  });
+
+  return children;
 };
 
 export default CopyAction;

@@ -1,9 +1,10 @@
 import { useCallback, useMemo } from 'react';
 import { EditOutlined } from '@ant-design/icons';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const CopyAction = (props: CommonActionType) => {
-  const { select, onClick } = props;
+  const { select, onClick, childrenType, disabled } = props;
 
   const canEdit = useMemo(() => {
     return select.length === 1;
@@ -13,18 +14,16 @@ const CopyAction = (props: CommonActionType) => {
     onClick?.();
   }, [onClick]);
 
-  return (
-    <div
-      key="copy"
-      onClick={handleClick}
-      style={{
-        display: canEdit ? 'block' : 'none',
-      }}
-    >
-      <EditOutlined className="m-r-4" />
-      重命名
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title: '重命名',
+    icon: <EditOutlined />,
+    key: 'edit_name',
+    onClick: handleClick,
+    disabled,
+    style: canEdit ? {} : { display: 'none' },
+  });
+
+  return children;
 };
 
 export default CopyAction;

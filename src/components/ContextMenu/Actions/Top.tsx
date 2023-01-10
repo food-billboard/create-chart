@@ -1,11 +1,21 @@
 import { useCallback, useMemo } from 'react';
 import { VerticalAlignTopOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const TopAction = (props: CommonActionType) => {
-  const { value, path, setComponent, components, select, onClick, flag } =
-    props;
+  const {
+    value,
+    path,
+    setComponent,
+    components,
+    select,
+    onClick,
+    flag,
+    childrenType,
+    disabled,
+  } = props;
   const {
     id,
     config: {
@@ -103,12 +113,16 @@ const TopAction = (props: CommonActionType) => {
     [flag, onClick, handleClickH5, handleClickPc],
   );
 
-  return (
-    <div key="top" onClick={handleClick}>
-      <VerticalAlignTopOutlined className="m-r-4" />
-      {title}
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title,
+    icon: <VerticalAlignTopOutlined />,
+    key: 'top',
+    onClick: handleClick,
+    disabled,
+    checked: isTop,
+  });
+
+  return children;
 };
 
 export default TopAction;

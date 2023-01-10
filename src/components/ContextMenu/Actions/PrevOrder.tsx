@@ -1,10 +1,12 @@
 import { useCallback } from 'react';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const PrevOrderAction = (props: CommonActionType) => {
-  const { value, setComponent, select, onClick } = props;
+  const { value, setComponent, select, onClick, childrenType, disabled } =
+    props;
   const { id } = value;
 
   const handleClick = useCallback(
@@ -35,12 +37,15 @@ const PrevOrderAction = (props: CommonActionType) => {
     [id, select, onClick, setComponent],
   );
 
-  return (
-    <div key="prev_order" onClick={handleClick}>
-      <ArrowUpOutlined className="m-r-4" />
-      上一个
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title: '上一个',
+    icon: <ArrowUpOutlined />,
+    key: 'prev_order',
+    onClick: handleClick,
+    disabled,
+  });
+
+  return children;
 };
 
 export default PrevOrderAction;

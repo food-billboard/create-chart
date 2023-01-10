@@ -1,10 +1,20 @@
 import { useCallback, useMemo } from 'react';
 import { LockOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
+import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const LockAction = (props: CommonActionType) => {
-  const { value, path, setComponent, components, select, onClick } = props;
+  const {
+    value,
+    path,
+    setComponent,
+    components,
+    select,
+    onClick,
+    childrenType,
+    disabled,
+  } = props;
   const {
     id,
     config: {
@@ -69,12 +79,16 @@ const LockAction = (props: CommonActionType) => {
     [isLock, id, path, components, select, onClick],
   );
 
-  return (
-    <div key="lock" onClick={handleClick}>
-      <LockOutlined className="m-r-4" />
-      {title}
-    </div>
-  );
+  const children = useChildren(childrenType, {
+    title,
+    icon: <LockOutlined />,
+    key: 'lock',
+    onClick: handleClick,
+    disabled,
+    checked: isLock,
+  });
+
+  return children;
 };
 
 export default LockAction;

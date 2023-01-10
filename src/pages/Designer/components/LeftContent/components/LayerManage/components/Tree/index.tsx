@@ -14,6 +14,7 @@ import {
 import { useComponentPath, useIdPathMap } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import TreeNode from './components/TreeNode';
+import { ActionHeaderBar, ActionFooterBar } from './components/ActionBar';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -230,11 +231,13 @@ const TreeFunction = (props: TreeProps) => {
 
   return (
     <div className={styles['layer-manage']}>
+      <ActionHeaderBar />
       {tree}
       <div
         className={styles['layer-manage-placeholder']}
         onClick={selectEmpty}
       />
+      <ActionFooterBar />
     </div>
   );
 };

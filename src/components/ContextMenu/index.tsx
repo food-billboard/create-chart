@@ -90,6 +90,7 @@ const ContextMenu = (
             actionFrom={actionFrom}
             select={internalSelect}
             flag={flag}
+            childrenType="menu"
           />
         ),
         key: type,

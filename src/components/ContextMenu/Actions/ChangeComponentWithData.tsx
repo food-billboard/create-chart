@@ -5,11 +5,13 @@ import ComponentSelect, {
   ComponentSelectRef,
 } from '@/components/ComponentSelect';
 import { getComponent } from '@/utils/Assist/Component';
+import useChildren from './useChildren';
 import { getComponentDefaultConfigByType } from '../../ChartComponents';
 import { CommonActionType } from './type';
 
 const ChangeComponentWithData = (props: CommonActionType) => {
-  const { select, setComponent, onClick, components } = props;
+  const { select, setComponent, onClick, components, childrenType, disabled } =
+    props;
 
   const componentSelectRef = useRef<ComponentSelectRef>(null);
 
@@ -89,18 +91,18 @@ const ChangeComponentWithData = (props: CommonActionType) => {
     [setComponent, component],
   );
 
+  const children = useChildren(childrenType, {
+    title: '根据数据切换组件',
+    icon: <SwitcherOutlined />,
+    key: 'change_component_with_data',
+    onClick: handleClick,
+    disabled,
+    style: canChange ? {} : { display: 'none' },
+  });
+
   return (
     <>
-      <div
-        key="change_component_with_data"
-        onClick={handleClick}
-        style={{
-          display: canChange ? 'block' : 'none',
-        }}
-      >
-        <SwitcherOutlined className="m-r-4" />
-        根据数据切换组件
-      </div>
+      {children}
       <ComponentSelect
         ref={componentSelectRef}
         onChange={onChangeComponent}
