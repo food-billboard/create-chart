@@ -146,8 +146,13 @@ const steps: ShepherdOptionsWithType[] = [
 
 let SHEPHERD_DONE = false;
 
-const Internal = (props: { children?: ReactNode; userId: string }) => {
-  const { children, userId } = props;
+const Internal = (props: {
+  children?: ReactNode;
+  userId: string;
+  onComplete?: () => void;
+  onStart?: () => void;
+}) => {
+  const { children, userId, onComplete, onStart } = props;
 
   const tour = useContext(ShepherdTourContext);
 
@@ -163,6 +168,16 @@ const Internal = (props: { children?: ReactNode; userId: string }) => {
     const target = value?.[userId];
     const current = Date.now();
     if (!target || current - target.timestamps > 1000 * 60 * 60 * 24 * 30) {
+      if (onComplete) {
+        const complete = () => {
+          onComplete?.();
+          tour?.off('complete', onComplete);
+          tour?.off('complete', onComplete);
+        };
+        tour?.once('complete', onComplete);
+        tour?.once('cancel', onComplete);
+      }
+      onStart?.();
       tour?.start();
     }
     SHEPHERD_DONE = true;
@@ -177,8 +192,12 @@ const Internal = (props: { children?: ReactNode; userId: string }) => {
 
 const InternalWrapper = connect(mapStateToProps, mapDispatchToProps)(Internal);
 
-const ShepherdWrapper = (props: { children?: ReactNode }) => {
-  const { children } = props;
+const ShepherdWrapper = (props: {
+  children?: ReactNode;
+  onStart?: () => void;
+  onComplete?: () => void;
+}) => {
+  const { children, onStart, onComplete } = props;
 
   return (
     <ShepherdTour
@@ -194,7 +213,9 @@ const ShepherdWrapper = (props: { children?: ReactNode }) => {
         useModalOverlay: true,
       }}
     >
-      <InternalWrapper>{children}</InternalWrapper>
+      <InternalWrapper onStart={onStart} onComplete={onComplete}>
+        {children}
+      </InternalWrapper>
     </ShepherdTour>
   );
 };

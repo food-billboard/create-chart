@@ -75,6 +75,7 @@ const Designer = (props: {
   const { setScreenType, getMockValueKindMap } = props;
 
   const [loading, setLoading] = useState<boolean>(true);
+  const [guideLoading, setGuideLoading] = useState<boolean>(false);
 
   const requestRef = useRef<FetchScreenComponentRef>(null);
   const heartValidTimerRef = useRef<any>();
@@ -192,12 +193,15 @@ const Designer = (props: {
 
   return (
     <ConfigProvider componentSize="small">
-      <ShepherdWrapper>
+      <ShepherdWrapper
+        onStart={setGuideLoading.bind(null, true)}
+        onComplete={setGuideLoading.bind(null, false)}
+      >
         <div
           className={styles['designer-page']}
           onContextMenu={preventDefaultContextMenu}
           style={{
-            pointerEvents: loading ? 'none' : 'all',
+            pointerEvents: loading || guideLoading ? 'none' : 'all',
           }}
         >
           <Header />
