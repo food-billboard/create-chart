@@ -3,13 +3,15 @@ import { Button } from 'antd';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import { pick, get } from 'lodash';
-import { useUpdateEffect } from 'ahooks';
 import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
 import ColorSelect from '@/components/ColorSelect';
 import { ConnectState } from '@/models/connect';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { getDvaGlobalModelData } from '@/utils/Assist/Component';
+import {
+  getDvaGlobalModelData,
+  getTopParentComponent,
+} from '@/utils/Assist/Component';
 import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
@@ -90,7 +92,9 @@ const InternalComponentActiveItem = (props: {
     return select.reduce<any>((acc, cur) => {
       const path = idPathMap[cur]?.path;
       if (!path) return acc;
-      const component = get(components, path);
+      // ? 同样需要高亮显示目标元素的顶级父元素
+      const component = getTopParentComponent(cur);
+      // const component = get(components, path);
       if (component) {
         const {
           width: componentWidth,
@@ -125,10 +129,13 @@ const InternalComponentActiveItem = (props: {
     actionType.current = 'drag';
     init();
     setIsActive(true);
-    const components: ComponentData.TComponentData[] =
-      getDvaGlobalModelData().components || [];
-    const component = components.find((item) => item.id === componentId);
-    activeComponentRef.current = pick(component?.config.style, [
+    // const components: ComponentData.TComponentData[] =
+    //   getDvaGlobalModelData().components || [];
+
+    // ? 可能选中的是组内组元素，但是缩略图中只需要显示最上层的元素即可
+    const targetTopComponent = getTopParentComponent(componentId);
+    // const component = components.find((item) => item.id === componentId);
+    activeComponentRef.current = pick(targetTopComponent?.config.style, [
       'left',
       'top',
       'width',

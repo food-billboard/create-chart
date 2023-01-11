@@ -193,10 +193,10 @@ export const getParentComponentIds = (
 // 获取顶级组件
 export const getTopParentComponent: (
   id: string,
-  sorceComponents?: ComponentData.TComponentData[],
-) => ComponentData.TComponentData = (id, sorceComponents) => {
+  sourceComponents?: ComponentData.TComponentData[],
+) => ComponentData.TComponentData = (id, sourceComponents) => {
   const state = getDvaGlobalModelData();
-  const components = sorceComponents || state.components;
+  const components = sourceComponents || state.components;
   const parentIds = getParentComponentIds(id);
   let [topParentId] = parentIds.slice(-1);
   const idPathMap = useIdPathMap();
