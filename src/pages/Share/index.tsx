@@ -15,6 +15,7 @@ import PasswordConfirm, {
 } from './components/PasswordConfirm';
 import PainterWrapper from './components/PainterWrapper';
 import useWrapperProps from './useWrapperProps';
+import WaterMark from './components/WaterMark';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 function Share(props: {
@@ -126,6 +127,7 @@ function Share(props: {
       {heartbeat && <NormalPainter {...wrapperProps} />}
       <FetchScreenComponent needFetch={needFetch} />
       <PasswordConfirm ref={passwordConfirmRef} onOk={onPasswordConfirm} />
+      <WaterMark />
     </PainterWrapper>
   );
 }

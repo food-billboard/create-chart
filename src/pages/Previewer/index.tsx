@@ -8,6 +8,7 @@ import { previewScreenValid, previewScreenModelValid } from '@/services';
 import { useIsModelHash, useHashChangeReload } from '@/hooks';
 import useWrapperProps from '../Share/useWrapperProps';
 import PainterWrapper from '../Share/components/PainterWrapper';
+import WaterMark from '../Share/components/WaterMark';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 function Previewer(props: {
@@ -76,6 +77,7 @@ function Previewer(props: {
     <PainterWrapper scale={scale}>
       <NormalPainter {...wrapperProps} />
       <FetchScreenComponent needFetch={needFetch} />
+      <WaterMark />
     </PainterWrapper>
   );
 }
