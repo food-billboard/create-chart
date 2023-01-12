@@ -164,10 +164,10 @@ export function getDvaGlobalModelData() {
 }
 
 // 组件的父级组件id
-export const getParentComponentIds = (
+export const getParentComponentIds: (
   id: string,
   sourceComponents?: ComponentData.TComponentData[],
-) => {
+) => [string[], ComponentData.TComponentData[]] = (id, sourceComponents) => {
   let components;
   if (sourceComponents) {
     components = sourceComponents;
@@ -177,7 +177,8 @@ export const getParentComponentIds = (
   }
   const idPathMap = useIdPathMap();
 
-  let parentIds: string[] = [];
+  const parentIds: string[] = [];
+  const parentComponents: ComponentData.TComponentData[] = [];
   let path = idPathMap[id]?.path;
   let target = get(components, path);
 
@@ -185,9 +186,10 @@ export const getParentComponentIds = (
     parentIds.push(target.parent);
     path = idPathMap[target.parent]?.path;
     target = get(components, path);
+    parentComponents.push(target);
   }
 
-  return parentIds;
+  return [parentIds, parentComponents];
 };
 
 // 获取顶级组件
@@ -197,7 +199,7 @@ export const getTopParentComponent: (
 ) => ComponentData.TComponentData = (id, sourceComponents) => {
   const state = getDvaGlobalModelData();
   const components = sourceComponents || state.components;
-  const parentIds = getParentComponentIds(id);
+  const [parentIds] = getParentComponentIds(id);
   let [topParentId] = parentIds.slice(-1);
   const idPathMap = useIdPathMap();
   if (!topParentId) topParentId = id;

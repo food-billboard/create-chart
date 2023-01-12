@@ -154,7 +154,7 @@ const TreeFunction = (props: TreeProps) => {
           if (!isGroupComponent(component)) {
             realDropKey = component.parent;
           }
-          const parentKeys = getParentComponentIds(realDropKey);
+          const [parentKeys] = getParentComponentIds(realDropKey);
           return !select.some((selectItem) =>
             [...parentKeys, realDropKey].includes(selectItem),
           );

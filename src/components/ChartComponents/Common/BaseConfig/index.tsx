@@ -1,13 +1,17 @@
 import { useCallback, useMemo } from 'react';
 import { connect } from 'dva';
 import { Switch } from 'antd';
-import { getComponent, getPath } from '@/utils/Assist/Component';
+import {
+  getComponent,
+  getParentComponentIds,
+  getPath,
+} from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import GroupUtil from '@/utils/Assist/Group';
 import { mergeWithoutArray } from '@/utils';
 import { InternalBorderSelect, DEFAULT_BORDER } from '../../../InternalBorder';
 import AngleSelect from '../AngleSelect';
-import InputNumber from '../InputNumber';
+import InputNumber, { InputNumberProps } from '../InputNumber';
 import ConfigList from '../Structure/ConfigList';
 import Opacity from '../Opacity';
 import HalfForm from '../Structure/HalfForm';
@@ -15,6 +19,29 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const { Item } = ConfigList;
+
+const FormatterInputNumber = (
+  props: InputNumberProps & {
+    scale: number;
+  },
+) => {
+  const { scale, onChange, value, ...nextProps } = props;
+
+  const handleChange = useCallback(
+    (value) => {
+      onChange?.(parseInt(((parseInt(value || '0') || 0) / scale).toFixed(0)));
+    },
+    [scale, onChange],
+  );
+
+  const realValue = useMemo(() => {
+    return ((parseInt(value as string) || 0) * scale).toFixed(0);
+  }, [value]);
+
+  return (
+    <InputNumber {...nextProps} value={realValue} onChange={handleChange} />
+  );
+};
 
 // 基础的组件配置
 
@@ -49,6 +76,25 @@ const BaseConfig = (props: {
     border = { show: false, value: DEFAULT_BORDER, disabled: false },
   } = style;
   const { scaleX, scaleY } = attr;
+
+  const { x: selfScaleX, y: selfScaleY } = useMemo(() => {
+    const scale = {
+      x: 1,
+      y: 1,
+    };
+    if (!parent) return scale;
+    const [, parentComponents] = getParentComponentIds(id);
+    return parentComponents.reduce((acc, cur) => {
+      const {
+        config: {
+          attr: { scaleX = 1, scaleY = 1 },
+        },
+      } = cur;
+      acc.x *= scaleX;
+      acc.y *= scaleY;
+      return acc;
+    }, scale);
+  }, [width, height, left, top, id, parent]);
 
   const onValueChange = useCallback(
     (path: keyof ComponentData.TBaseConfig['style'], value: any) => {
@@ -196,31 +242,35 @@ const BaseConfig = (props: {
       <ConfigList>
         <Item label="图表尺寸">
           <HalfForm>
-            <InputNumber
+            <FormatterInputNumber
               value={Math.floor(width)}
               onChange={onSizeChange.bind(null, 'width')}
               min={20}
+              scale={selfScaleX}
             />
           </HalfForm>
           <HalfForm>
-            <InputNumber
+            <FormatterInputNumber
               value={Math.floor(height)}
               onChange={onSizeChange.bind(null, 'height')}
               min={20}
+              scale={selfScaleY}
             />
           </HalfForm>
         </Item>
         <Item label="图表位置">
           <HalfForm>
-            <InputNumber
+            <FormatterInputNumber
               value={Math.floor(left)}
               onChange={onPosChange.bind(null, 'left')}
+              scale={selfScaleX}
             />
           </HalfForm>
           <HalfForm>
-            <InputNumber
+            <FormatterInputNumber
               value={Math.floor(top)}
               onChange={onPosChange.bind(null, 'top')}
+              scale={selfScaleY}
             />
           </HalfForm>
         </Item>

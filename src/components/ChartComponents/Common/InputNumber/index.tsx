@@ -1,14 +1,14 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { InputNumber as AntInputNumber } from 'antd';
-import { InputNumberProps } from 'antd/es/input-number';
+import { InputNumberProps as AntInputNumberProps } from 'antd/es/input-number';
 import classnames from 'classnames';
 import { useUnmount } from 'ahooks';
 
-const InputNumber = (
-  props: InputNumberProps & {
-    triggerOnChangeInOnChange?: boolean;
-  },
-) => {
+export type InputNumberProps = AntInputNumberProps & {
+  triggerOnChangeInOnChange?: boolean;
+};
+
+const InputNumber = (props: InputNumberProps) => {
   const {
     value,
     defaultValue,

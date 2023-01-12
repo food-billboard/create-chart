@@ -19,7 +19,7 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 type ActionProps = {
-  value: ComponentData.TComponentData;
+  value?: ComponentData.TComponentData;
   path?: string;
   components: ComponentData.TComponentData[];
   setSelect: (value: string[]) => void;

@@ -667,7 +667,10 @@ class GroupUtil {
       };
     });
 
-    const parentIds = getParentComponentIds(originGroupComponentId, components);
+    const [parentIds] = getParentComponentIds(
+      originGroupComponentId,
+      components,
+    );
     originGroupComponentId && parentIds.push(originGroupComponentId);
 
     const deepFormat: (
