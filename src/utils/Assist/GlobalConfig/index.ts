@@ -3,7 +3,13 @@ import {
   MOCK_REQUEST_URL as DEFAULT_MOCK_REQUEST_URL,
   SERVICE_REQUEST_URL,
 } from '../../constants';
+
+const isStatic = process.env.REACT_APP === 'static';
+
 class GlobalConfig {
+  // 是否是建议前端版本
+  IS_STATIC = isStatic;
+
   // 条件的最大个数
   CONDITION_COUNTER = 4;
 
@@ -41,7 +47,11 @@ class GlobalConfig {
   DEFAULT_SCREEN_COVER = defaultScreenCover;
 
   // 大屏的保存类型
-  DEFAULT_SCREEN_SAVE_TYPE: 'auto' | 'manual' | 'auto-all' = 'auto';
+  DEFAULT_SCREEN_SAVE_TYPE:
+    | 'auto'
+    | 'manual'
+    | 'auto-all'
+    | 'auto-all-storage' = isStatic ? 'auto' : 'auto-all-storage';
 
   // 是否为自动保存类型
   isAutoSaveType() {

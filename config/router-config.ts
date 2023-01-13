@@ -1,4 +1,4 @@
-export default [
+export const normalRouter = [
   {
     extra: false,
     path: '/',
@@ -65,6 +65,28 @@ export default [
       {
         redirect: '/',
         component: '@/pages/Home',
+      },
+    ],
+  },
+];
+
+export const staticRouter = [
+  {
+    extra: false,
+    path: '/',
+    component: '@/layouts/StaticLayout/index',
+    routes: [
+      {
+        path: '/',
+        component: '@/pages/Designer',
+      },
+      {
+        path: '/viewer',
+        component: '@/pages/Viewer',
+      },
+      {
+        redirect: '/',
+        component: '@/pages/Designer',
       },
     ],
   },

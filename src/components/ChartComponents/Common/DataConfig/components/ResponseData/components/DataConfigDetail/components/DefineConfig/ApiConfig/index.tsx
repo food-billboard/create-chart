@@ -6,6 +6,7 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import IconTooltipBase from '@/components/IconTooltip';
 import Checkbox from '@/components/ChartComponents/Common/Checkbox';
 import FilterDataUtil from '@/utils/Assist/FilterData';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import CodeEditor from '../SaveCodeEditor';
 import SubTitle, { SubForm } from '../../SubTitle';
 import { TOnChange } from '../type';
@@ -120,20 +121,22 @@ const ApiConfig = (props: ApiConfigProps) => {
           </SubForm>
         </>
       )}
-      <SubForm>
-        <Checkbox
-          checked={!!serviceRequest}
-          onChange={(e) => {
-            onChange?.({
-              request: {
-                serviceRequest: e.target.checked,
-              },
-            });
-          }}
-        >
-          服务端请求
-        </Checkbox>
-      </SubForm>
+      {!GlobalConfig.IS_STATIC && (
+        <SubForm>
+          <Checkbox
+            checked={!!serviceRequest}
+            onChange={(e) => {
+              onChange?.({
+                request: {
+                  serviceRequest: e.target.checked,
+                },
+              });
+            }}
+          >
+            服务端请求
+          </Checkbox>
+        </SubForm>
+      )}
     </div>
   );
 };

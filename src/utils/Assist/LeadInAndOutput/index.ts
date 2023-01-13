@@ -113,3 +113,59 @@ export async function exportData(params: {
       EXPORT_LOADING = false;
     });
 }
+
+// 静态导出
+export async function staticExportData() {
+  if (EXPORT_LOADING) return;
+
+  // EXPORT_LOADING = true;
+
+  // return postScreenExport(params)
+  //   .then((value: any) => {
+  //     const { headers } = value;
+  //     const disposition = headers['content-disposition'] || '';
+  //     const filename = disposition.replace(/.+filename=/, '');
+  //     return saveAs(
+  //       new Blob([value.data], { type: 'application/json' }),
+  //       decodeURIComponent(filename),
+  //     );
+  //   })
+  //   .catch((err) => {
+  //     message.info('导出文件失败');
+  //   })
+  //   .then((_) => {
+  //     EXPORT_LOADING = false;
+  //   });
+}
+
+// 静态导入
+export async function staticLeadIn(callback?: () => void) {
+  if (LEAD_IN_LOADING) return;
+  const input = document.createElement('input');
+  input.setAttribute('type', 'file');
+  input.setAttribute('accept', 'application/json');
+  input.addEventListener('change', (e: any) => {
+    const file = e.target?.files[0];
+    if (file) {
+      LEAD_IN_LOADING = true;
+      message.info('导入中...');
+
+      const fileReader = new FileReader();
+
+      console.log(file);
+      callback?.();
+
+      // .then((_) => {
+      //   message.info('文件导入成功');
+      // })
+      // .catch((err) => {
+      //   message.info('文件导入失败');
+      // })
+      // .then((_) => {
+      //   LEAD_IN_LOADING = false;
+      //   callback?.();
+      // });
+    }
+  });
+  input.click();
+}

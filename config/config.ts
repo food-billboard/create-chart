@@ -8,9 +8,8 @@ import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 // @ts-ignore
 // import SentryCliPlugin from '@sentry/webpack-plugin'
 import darkTheme from './theme';
-import defaultSettings from './defaultSettings';
 import proxy from './proxy';
-import routerConfig from './router-config';
+import { normalRouter, staticRouter } from './router-config';
 
 const { REACT_APP_ENV } = process.env;
 
@@ -46,7 +45,7 @@ const commonConfig = {
   targets: {
     ie: 11,
   },
-  routes: routerConfig,
+  routes: process.env.REACT_APP === 'static' ? staticRouter : normalRouter,
   theme: darkTheme,
   // @ts-ignore
   title: false,
@@ -135,12 +134,14 @@ const commonConfig = {
 const developmentConfig: any = merge({}, commonConfig, {
   define: {
     'process.env.REACT_APP_ENV': 'dev',
+    'process.env.REACT_APP': process.env.REACT_APP,
   },
 });
 
 const productionConfig: any = merge({}, commonConfig, {
   define: {
     'process.env.REACT_APP_ENV': 'prod',
+    'process.env.REACT_APP': process.env.REACT_APP,
   },
   // devtool: 'source-map',
   //-----打包配置

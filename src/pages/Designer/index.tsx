@@ -91,6 +91,7 @@ const Designer = (props: {
     handleModal(Modal.error.bind(null, { ...COMMON_MODAL_PROPS }));
   }, [handleModal]);
 
+  // 心跳检测
   const fetchHeartValid = useCallback(
     async (id: string) => {
       try {
@@ -113,7 +114,8 @@ const Designer = (props: {
 
   const onLoad = useCallback(async () => {
     setLoading(false);
-    if (GlobalConfig.isAutoSaveType()) {
+    // 自动保存且为非前端简化大屏才需要创建流式保存
+    if (GlobalConfig.isAutoSaveType() && !GlobalConfig.IS_STATIC) {
       const {
         location: { query },
       } = history;
@@ -137,10 +139,12 @@ const Designer = (props: {
 
   const reload = async (hashData: any, prevHashData: any) => {
     setLoading(true);
-    await deleteScreenPool(true, {
-      type: prevHashData.isModel ? 'model' : 'screen',
-      _id: prevHashData.id,
-    });
+    // 非前端大屏才需要
+    if (!GlobalConfig.IS_STATIC)
+      await deleteScreenPool(true, {
+        type: prevHashData.isModel ? 'model' : 'screen',
+        _id: prevHashData.id,
+      });
     await requestRef.current?.reload();
   };
 
@@ -151,7 +155,8 @@ const Designer = (props: {
   useHashChangeReload(reload);
 
   useEffect(() => {
-    getMockValueKindMap();
+    // 前端大屏不需要
+    if (!GlobalConfig.IS_STATIC) getMockValueKindMap();
     return () => {
       clearInterval(heartValidTimerRef.current);
     };
@@ -175,7 +180,7 @@ const Designer = (props: {
   // 页面关闭或者hash发生改变的时候
   // 关闭后端保存流
   useEffect(() => {
-    if (!GlobalConfig.isAutoSaveType()) {
+    if (!GlobalConfig.isAutoSaveType() || GlobalConfig.IS_STATIC) {
       return;
     }
     window.addEventListener('unload', deleteScreenPool.bind(null, false, {}));

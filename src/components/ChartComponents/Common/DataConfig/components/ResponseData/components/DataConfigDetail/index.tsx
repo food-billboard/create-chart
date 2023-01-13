@@ -143,11 +143,12 @@ const DataConfigDetail = forwardRef<
             <Option key="static" value="static">
               静态数据
             </Option>
-            {!!GlobalConfig.ENABLE_MOCK_DATA_CONFIG && (
-              <Option key="mock" value="mock">
-                Mock
-              </Option>
-            )}
+            {!!GlobalConfig.ENABLE_MOCK_DATA_CONFIG &&
+              !GlobalConfig.IS_STATIC && (
+                <Option key="mock" value="mock">
+                  Mock
+                </Option>
+              )}
             <Option key="api" value="api">
               API
             </Option>

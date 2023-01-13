@@ -1,6 +1,11 @@
 import { useMemo, useState, useCallback } from 'react';
 import { PageHeader, Input, Button, message } from 'antd';
-import { SendOutlined, FundOutlined } from '@ant-design/icons';
+import {
+  SendOutlined,
+  FundOutlined,
+  ExportOutlined,
+  ImportOutlined,
+} from '@ant-design/icons';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import FocusWrapper from '@/components/FocusWrapper';
@@ -9,6 +14,7 @@ import { goPreview, goPreviewModel } from '@/utils/tool';
 import { isModelHash } from '@/hooks';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { saveScreenData } from '@/utils/Assist/DataChangePool';
+import { staticExportData, staticLeadIn } from '@/utils/Assist/LeadInAndOutput';
 import ExchangeScreenFlagButton from '../ExchangeScreenFlag';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import ActionList from './ActionList';
@@ -81,12 +87,32 @@ const Header = (props: {
     }
   }, [_id, fetchLoading]);
 
+  // 保存
   const handleStore = useCallback(async () => {
     await saveScreenData({
       loading: fetchLoading,
       setLoading: setFetchLoading,
     });
   }, [fetchLoading]);
+
+  // 导入
+  const handleImport = useCallback(async () => {
+    setFetchLoading(true);
+    try {
+      staticLeadIn(window.location.reload);
+    } catch (err) {
+      message.info('操作失败');
+    } finally {
+      setFetchLoading(false);
+    }
+  }, []);
+
+  // 导出
+  const handleExport = useCallback(async () => {
+    setFetchLoading(false);
+    await staticExportData();
+    setFetchLoading(true);
+  }, []);
 
   const extra = useMemo(() => {
     const previewButton = (
@@ -118,8 +144,32 @@ const Header = (props: {
         setLoading={setFetchLoading}
       />
     );
+    const exportScreenButton = (
+      <Button
+        key="export"
+        size="large"
+        title="导出"
+        type="link"
+        onClick={handleExport}
+        icon={<ExportOutlined />}
+        loading={fetchLoading}
+      ></Button>
+    );
+    const leadinScreenButton = (
+      <Button
+        key="import"
+        size="large"
+        title="导入"
+        type="link"
+        onClick={handleImport}
+        icon={<ImportOutlined />}
+        loading={fetchLoading}
+      ></Button>
+    );
     let baseList: any[] = [];
+    // pc大屏有切换移动端
     if (type === 'PC') baseList.push(exchangeScreenFlagButton);
+    // 不是自动保存
     if (!GlobalConfig.isAutoSaveType()) {
       if (!_id) {
         baseList.push(storeButton);
@@ -130,9 +180,21 @@ const Header = (props: {
       if (!!_id) {
         baseList.push(previewButton);
       }
+      // 前端简化版大屏
+      if (GlobalConfig.IS_STATIC) {
+        baseList.push(exportScreenButton, leadinScreenButton);
+      }
     }
     return baseList;
-  }, [handlePreview, handleStore, _id, fetchLoading, type]);
+  }, [
+    handlePreview,
+    handleStore,
+    _id,
+    fetchLoading,
+    type,
+    handleImport,
+    handleExport,
+  ]);
 
   return (
     <FocusWrapper>
