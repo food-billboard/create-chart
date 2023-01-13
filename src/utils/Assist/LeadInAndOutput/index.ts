@@ -1,8 +1,9 @@
 import { message } from 'antd';
 import { Upload } from 'chunk-file-upload';
-import { postScreenLeadIn, postScreenExport } from '@/services';
-import { exitDataFn, uploadFn } from '../Upload';
 import { saveAs } from 'file-saver';
+import { postScreenLeadIn, postScreenExport } from '@/services';
+import LocalConfigInstance, { LocalConfig } from '../LocalConfig';
+import { exitDataFn, uploadFn } from '../Upload';
 
 // 导入 loading
 let LEAD_IN_LOADING = false;
@@ -118,24 +119,26 @@ export async function exportData(params: {
 export async function staticExportData() {
   if (EXPORT_LOADING) return;
 
-  // EXPORT_LOADING = true;
+  EXPORT_LOADING = true;
 
-  // return postScreenExport(params)
-  //   .then((value: any) => {
-  //     const { headers } = value;
-  //     const disposition = headers['content-disposition'] || '';
-  //     const filename = disposition.replace(/.+filename=/, '');
-  //     return saveAs(
-  //       new Blob([value.data], { type: 'application/json' }),
-  //       decodeURIComponent(filename),
-  //     );
-  //   })
-  //   .catch((err) => {
-  //     message.info('导出文件失败');
-  //   })
-  //   .then((_) => {
-  //     EXPORT_LOADING = false;
-  //   });
+  return LocalConfigInstance.getItem(
+    LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY_KEY,
+  )
+    .then((data) => {
+      const { value, errMsg } = data;
+      if (errMsg) return Promise.reject(errMsg);
+      const blob = new Blob([JSON.stringify(value!)], {
+        type: 'application/json',
+      });
+      return saveAs(blob, 'component.json');
+    })
+    .catch((err) => {
+      console.error(err);
+      message.info('导出文件失败');
+    })
+    .then((_) => {
+      EXPORT_LOADING = false;
+    });
 }
 
 // 静态导入
@@ -152,19 +155,29 @@ export async function staticLeadIn(callback?: () => void) {
 
       const fileReader = new FileReader();
 
-      console.log(file);
-      callback?.();
+      fileReader.onload = function (e) {
+        const data = e.target?.result;
+        if (data) {
+          LocalConfigInstance.setItem(
+            LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY_KEY,
+            JSON.parse(data as string),
+          )
+            .then(() => {
+              message.info('导入成功，即将刷新页面', 1, window.location.reload);
+            })
+            .catch((err) => {
+              console.error(err);
+              message.info('导入出错');
+              callback?.();
+              LEAD_IN_LOADING = false;
+            });
+        } else {
+          callback?.();
+          LEAD_IN_LOADING = false;
+        }
+      };
 
-      // .then((_) => {
-      //   message.info('文件导入成功');
-      // })
-      // .catch((err) => {
-      //   message.info('文件导入失败');
-      // })
-      // .then((_) => {
-      //   LEAD_IN_LOADING = false;
-      //   callback?.();
-      // });
+      return fileReader.readAsText(file);
     }
   });
   input.click();

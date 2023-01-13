@@ -40,7 +40,7 @@ export async function captureCover(
   return import(/* webpackChunkName: "HTML2CANVAS" */ 'html2canvas').then(
     (module) => {
       const html2canvas = module.default;
-      new Promise<Blob>((resolve, reject) => {
+      return new Promise<Blob>((resolve, reject) => {
         html2canvas(element as any, options).then(function (context) {
           context.toBlob(
             (data) => {

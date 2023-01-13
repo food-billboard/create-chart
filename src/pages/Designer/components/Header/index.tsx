@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons';
 import { connect } from 'dva';
 import classnames from 'classnames';
+import Marquee from 'react-fast-marquee';
 import FocusWrapper from '@/components/FocusWrapper';
 import { previewScreen, previewScreenModel } from '@/services';
 import { goPreview, goPreviewModel } from '@/utils/tool';
@@ -203,6 +204,22 @@ const Header = (props: {
         title={Title}
         extra={extra}
         backIcon={false}
+        {...(GlobalConfig.IS_STATIC
+          ? {
+              breadcrumbRender: () => (
+                <Marquee gradient={false} play pauseOnHover>
+                  当前版本为简化版本，不存在网络交互，所有功能均为纯前端实现，包括数据的存储，请及时对浏览器缓存进行处理。关于完整版本，请fork
+                  <a
+                    href="https://github.com/food-billboard/create-chart"
+                    target="blank"
+                  >
+                    github仓库
+                  </a>
+                  代码在本地运行。
+                </Marquee>
+              ),
+            }
+          : {})}
       >
         <ActionList />
       </PageHeader>

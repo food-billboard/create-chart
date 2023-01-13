@@ -1,6 +1,6 @@
 import { EventEmitter } from 'eventemitter3';
 import LocalForage from 'localforage';
-import { throttle } from 'lodash';
+import { throttle, debounce } from 'lodash';
 
 export class LocalConfig extends EventEmitter {
   constructor() {
@@ -15,6 +15,8 @@ export class LocalConfig extends EventEmitter {
   static CONFIG_KEY_SHEPHERD_INFO = 'CONFIG_KEY_SHEPHERD_INFO';
   static CONFIG_KEY_CROSS_CLIPBOARD = 'CONFIG_KEY_CROSS_CLIPBOARD';
   static CONFIG_KEY_CHROME_PROMPT = 'CONFIG_KEY_CHROME_PROMPT';
+  static STATIC_COMPONENT_DATA_SAVE_KEY_KEY =
+    'STATIC_COMPONENT_DATA_SAVE_KEY_KEY';
 
   store;
 
@@ -63,9 +65,9 @@ export class LocalConfig extends EventEmitter {
     return response;
   };
 
-  // setItem = throttle(this._setItem, 10)
+  debounceSetItem = debounce(this._setItem, 10);
 
-  // getItem = throttle(this._getItem, 10)
+  debounceGetItem = debounce(this._getItem, 10);
 
   setItem = this._setItem;
 
