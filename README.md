@@ -13,7 +13,7 @@
 
 </div>
 
-## 😈   当前版本(1.17) 
+## 😈   当前版本(1.18) 
 
 <br/>
 
@@ -58,6 +58,7 @@
 账号和密码放在[issue](https://github.com/food-billboard/create-chart/issues/2)当中，如有兴趣或有问题也可以在[issue](https://github.com/food-billboard/create-chart/issues)中联系我。     
 
 ## 👇🏻  Changelog  
+[1.18](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.18.md)   
 [1.17](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.17.md)    
 [1.16](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.16.md)   
 [1.15](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.15.md)   
@@ -79,6 +80,7 @@
 
 ## 🔗  链接  
 [官网](http://47.97.27.23/api/backend/screen/index.html#/)  
+[静态版本官网](https://food-billboard.github.io/create-chart/index.html#/)  
 [操作文档](http://47.97.27.23/api/backend/create-chart-docs/index.html#/)  
 
 ## 👀  引用  
