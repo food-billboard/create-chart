@@ -2,7 +2,7 @@ name: static deploy
 on: 
   push: 
     branches: 
-      - 1.18
+      - main
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
