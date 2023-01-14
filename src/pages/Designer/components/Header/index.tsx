@@ -16,6 +16,8 @@ import { isModelHash } from '@/hooks';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { saveScreenData } from '@/utils/Assist/DataChangePool';
 import { staticExportData, staticLeadIn } from '@/utils/Assist/LeadInAndOutput';
+import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
+import IconFont from '@/components/ChartComponents/Common/Icon';
 import ExchangeScreenFlagButton from '../ExchangeScreenFlag';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import ActionList from './ActionList';
@@ -121,6 +123,20 @@ const Header = (props: {
     setFetchLoading(true);
   }, []);
 
+  // 初始化
+  const handleReset = useCallback(async () => {
+    setFetchLoading(false);
+    const { value } = await LocalConfigInstance.removeItem(
+      LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
+    );
+    if (value) {
+      message.info('操作成功，页面即将刷新', 1, () => window.location.reload());
+    } else {
+      message.info('操作出错');
+    }
+    setFetchLoading(true);
+  }, []);
+
   const extra = useMemo(() => {
     const previewButton = (
       <Button
@@ -173,6 +189,17 @@ const Header = (props: {
         loading={fetchLoading}
       ></Button>
     );
+    const resetScreenButton = (
+      <Button
+        key="reset"
+        size="large"
+        title="初始化"
+        type="link"
+        onClick={handleReset}
+        icon={<IconFont type="icon-Initialize-o" />}
+        loading={fetchLoading}
+      ></Button>
+    );
     let baseList: any[] = [];
     // pc大屏有切换移动端
     if (type === 'PC') baseList.push(exchangeScreenFlagButton);
@@ -186,7 +213,12 @@ const Header = (props: {
     } else {
       // 前端简化版大屏
       if (GlobalConfig.IS_STATIC) {
-        baseList.push(exportScreenButton, leadinScreenButton, previewButton);
+        baseList.push(
+          exportScreenButton,
+          leadinScreenButton,
+          previewButton,
+          resetScreenButton,
+        );
       } else {
         baseList.push(previewButton);
       }
@@ -200,6 +232,7 @@ const Header = (props: {
     type,
     handleImport,
     handleExport,
+    handleReset,
   ]);
 
   return (

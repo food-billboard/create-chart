@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useState } from 'react';
-import { Tooltip as AntTooltip } from 'antd';
 import { TooltipProps } from 'antd/es/tooltip';
 import { useUpdateEffect } from 'ahooks';
 import FocusWrapper from '@/components/FocusWrapper';
+import AntTooltip from '@/components/Tooltip';
 
 const Tooltip = (props: TooltipProps) => {
   const {

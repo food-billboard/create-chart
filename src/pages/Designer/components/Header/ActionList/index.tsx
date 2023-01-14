@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import EventEmitter from 'eventemitter3';
 import classnames from 'classnames';
-import { Select, Space, Tooltip, Button } from 'antd';
+import { Select, Space, Button } from 'antd';
 import { connect } from 'dva';
 import {
   ID_PATH_MAP_EVENT_EMITTER,
@@ -18,6 +18,7 @@ import {
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
 import { ConnectState, ILocalModelState } from '@/models/connect';
+import Tooltip from '@/components/Tooltip';
 import { sleep } from '@/utils';
 import styles from './index.less';
 

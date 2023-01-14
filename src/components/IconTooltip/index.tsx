@@ -1,7 +1,7 @@
 import { ReactNode, CSSProperties } from 'react';
-import { Tooltip } from 'antd';
 import classnames from 'classnames';
 import type { TooltipProps } from 'antd/es/tooltip';
+import Tooltip from '../Tooltip';
 import styles from './index.less';
 
 const IconTooltip = (

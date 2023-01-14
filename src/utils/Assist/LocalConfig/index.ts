@@ -66,6 +66,28 @@ export class LocalConfig extends EventEmitter {
     return response;
   };
 
+  private _removeItem: <T = any>(
+    key: string,
+  ) => Promise<{
+    value?: T;
+    errMsg: null | unknown;
+  }> = async (key) => {
+    let response: any;
+    try {
+      await this.store.removeItem(key);
+      response = {
+        errMsg: null,
+        value: true,
+      };
+    } catch (err) {
+      console.error(err);
+      response = {
+        errMsg: err,
+      };
+    }
+    return response;
+  };
+
   debounceSetItem = debounce(this._setItem, 10);
 
   debounceGetItem = debounce(this._getItem, 10);
@@ -73,6 +95,8 @@ export class LocalConfig extends EventEmitter {
   setItem = this._setItem;
 
   getItem = this._getItem;
+
+  removeItem = this._removeItem;
 }
 
 export default new LocalConfig();

@@ -5,7 +5,7 @@ import {
   useMemo,
   useImperativeHandle,
 } from 'react';
-import { Button, Drawer, Table, Modal, Tooltip, Popconfirm, Empty } from 'antd';
+import { Button, Drawer, Table, Modal, Popconfirm, Empty } from 'antd';
 import { connect } from 'dva';
 import { nanoid } from 'nanoid';
 import {
@@ -15,6 +15,7 @@ import {
 } from '@ant-design/icons';
 import LazyLoadWrapper from '@/components/LazyLoad';
 import ParamsSelect from '@/components/ParamsSelect';
+import Tooltip from '@/components/Tooltip';
 import FocusWrapper from '@/components/FocusWrapper';
 import { useIdPathMap } from '@/hooks';
 import { mapStateToProps, mapDispatchToProps } from './connect';

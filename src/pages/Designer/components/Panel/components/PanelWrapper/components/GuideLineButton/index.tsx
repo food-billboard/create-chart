@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { Button, Tooltip } from 'antd';
+import { Button } from 'antd';
 import {
   EyeOutlined,
   EyeInvisibleOutlined,
@@ -9,6 +9,7 @@ import { useScroll } from 'ahooks';
 import classnames from 'classnames';
 import { connect } from 'dva';
 import ColorSelect from '@/components/ColorSelect';
+import Tooltip from '@/components/Tooltip';
 import { ConnectState } from '@/models/connect';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { wrapperId } from '../../constants';

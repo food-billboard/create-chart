@@ -1,8 +1,8 @@
-import { Tooltip } from 'antd';
 import { StopOutlined } from '@ant-design/icons';
 import RadioGroup, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
+import Tooltip from '@/components/Tooltip';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 
 export const ScaleConfig = (props: {

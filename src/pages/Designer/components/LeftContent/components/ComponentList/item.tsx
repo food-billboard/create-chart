@@ -1,4 +1,4 @@
-import { Col, Tooltip } from 'antd';
+import { Col } from 'antd';
 import classnames from 'classnames';
 import { useCallback, ReactNode } from 'react';
 import { LockOutlined } from '@ant-design/icons';
@@ -25,6 +25,7 @@ export type ComponentItemProps = ComponentData.BaseComponentItem & {
   icon: string;
   title: string;
   development?: boolean;
+  disabled?: boolean;
   isDragging: boolean;
   prefix?: ReactNode;
   suffix?: ReactNode;
@@ -42,6 +43,7 @@ const ComponentItem = (props: ComponentItemProps) => {
     description,
     type,
     development,
+    disabled,
     connectDragSource,
     connectDragPreview,
     setSelect,
@@ -51,6 +53,7 @@ const ComponentItem = (props: ComponentItemProps) => {
   } = props;
 
   const handleSelect = useCallback(() => {
+    if (disabled || development) return;
     const component = createComponent({
       name: title,
       description,
@@ -71,7 +74,7 @@ const ComponentItem = (props: ComponentItemProps) => {
     });
 
     setSelect([component.id]);
-  }, [title, description, setSelect, type]);
+  }, [title, description, setSelect, type, disabled, development]);
 
   return (
     <>
@@ -82,7 +85,8 @@ const ComponentItem = (props: ComponentItemProps) => {
           styles['design-left-component-list-item'],
           'ali-cen',
           {
-            [styles['design-left-component-list-item-disabled']]: !!development,
+            [styles['design-left-component-list-item-disabled']]:
+              !!development || !!disabled,
           },
         )}
         ref={connectDragSource}
@@ -137,6 +141,16 @@ const ComponentItem = (props: ComponentItemProps) => {
             <span>组件开发中</span>
           </div>
         )}
+        {!!disabled && (
+          <div
+            className={
+              styles['design-left-component-list-item-disabled-prefix']
+            }
+          >
+            <LockOutlined />
+            <span>组价不可用</span>
+          </div>
+        )}
       </Col>
     </>
   );
@@ -158,11 +172,12 @@ const dragSource = DragSource(
         'prefix',
         'suffix',
         'tooltip',
+        'disabled',
       ]);
     },
     endDrag(props: ComponentItemProps, monitor: DragSourceMonitor) {},
     canDrag: (props) => {
-      return !props.development;
+      return !props.development && !props.disabled;
     },
   },
   (connect: DragSourceConnector, monitor: DragSourceMonitor) => {
