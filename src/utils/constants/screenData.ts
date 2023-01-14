@@ -1,15 +1,51 @@
 import { nanoid } from 'nanoid';
 import IsMobile from 'is-mobile';
-import { pick } from 'lodash';
+import { pick, merge } from 'lodash';
 import { DEFAULT_BORDER } from '@/components/InternalBorder';
 import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_GROUP_COMPONENT_TRANSFORM,
   BASIC_DEFAULT_DATA_CONFIG,
 } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import GlobalConfig from '../Assist/GlobalConfig';
 import Theme from '../../theme/wonderland.project.json';
+import { DEFAULT_THEME_NAME } from '../Assist/Theme';
 
 const isMobile = IsMobile();
+
+export const createScreenDataRequest = ({
+  name,
+  flag,
+  extra = {},
+}: {
+  name: string;
+  flag: ComponentData.ScreenFlagType;
+  extra?: {
+    [key: string]: any;
+  };
+}) => {
+  const defaultData = merge({}, DEFAULT_SCREEN_DATA, {
+    name,
+    poster: GlobalConfig.DEFAULT_SCREEN_COVER,
+    config: {
+      attr: {
+        theme: {
+          type: 'internal',
+          value: DEFAULT_THEME_NAME,
+        },
+      },
+    },
+    ...extra,
+  });
+  if (GlobalConfig.IS_STATIC) return defaultData;
+  return {
+    name,
+    description: '',
+    poster: GlobalConfig.DEFAULT_SCREEN_COVER,
+    flag,
+    data: JSON.stringify(defaultData),
+  };
+};
 
 export const DEFAULT_FILTER_LIST: ComponentData.TFilterConfig[] = [
   {

@@ -109,6 +109,13 @@ export function goPreview(id: string) {
   window.open(url, '_blank');
 }
 
+// 无差别预览
+export function goView() {
+  const { origin, pathname } = new URL(location.href);
+  const url = origin + pathname + '#/viewer';
+  window.open(url, '_blank');
+}
+
 // 分享
 export function goShare(id: string) {
   const url = getShare(id);

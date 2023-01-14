@@ -1,6 +1,10 @@
 import { IGlobalModelState } from '@/models/connect';
 import GlobalConfig from '../GlobalConfig';
-import { saveScreenDataAuto, saveScreenDataAllAuto } from '../DataChangePool';
+import {
+  saveScreenDataAuto,
+  saveScreenDataAllAuto,
+  saveScreenDataAllAutoStatic,
+} from '../DataChangePool';
 
 class RequestPool {
   constructor(
@@ -55,11 +59,12 @@ export const SCREEN_DATA_REQUEST_POOL = new RequestPool();
 export const ScreenDataRequest = (state: IGlobalModelState, action: any) => {
   if (GlobalConfig.isAutoSaveType() && state.screenType === 'edit') {
     SCREEN_DATA_REQUEST_POOL.request(async () => {
-      return (
-        GlobalConfig.DEFAULT_SCREEN_SAVE_TYPE === 'auto'
-          ? saveScreenDataAuto
-          : saveScreenDataAllAuto
-      )({
+      let method: any = saveScreenDataAuto;
+      if (GlobalConfig.DEFAULT_SCREEN_SAVE_TYPE === 'auto-all-storage')
+        method = saveScreenDataAllAutoStatic;
+      if (GlobalConfig.DEFAULT_SCREEN_SAVE_TYPE === 'auto-all')
+        method = saveScreenDataAllAuto;
+      return method({
         state,
         action,
       });

@@ -121,9 +121,7 @@ export async function staticExportData() {
 
   EXPORT_LOADING = true;
 
-  return LocalConfigInstance.getItem(
-    LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY_KEY,
-  )
+  return LocalConfigInstance.getItem(LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY)
     .then((data) => {
       const { value, errMsg } = data;
       if (errMsg) return Promise.reject(errMsg);
@@ -159,11 +157,13 @@ export async function staticLeadIn(callback?: () => void) {
         const data = e.target?.result;
         if (data) {
           LocalConfigInstance.setItem(
-            LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY_KEY,
+            LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
             JSON.parse(data as string),
           )
             .then(() => {
-              message.info('导入成功，即将刷新页面', 1, window.location.reload);
+              message.info('导入成功，即将刷新页面', 1, () => {
+                window.location.reload();
+              });
             })
             .catch((err) => {
               console.error(err);

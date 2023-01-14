@@ -11,14 +11,17 @@ import {
   createUploadedFile,
   beforeDelete,
 } from '@/utils/Assist/Upload';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import Input, { InputRef } from './Input';
 import styles from './index.less';
 
-export function getBase64(file: File) {
+const MAX_FILE_SIZE = 1021 * 5;
+
+export function getBase64(file: File | Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
+    reader.onload = () => resolve(reader.result as string);
     reader.onerror = (error) => reject(error);
   });
 }
@@ -65,6 +68,7 @@ const PicturesWall = (
     inputRef.current?.setValue(value);
   }, []);
 
+  // 预览
   const handlePreview = useCallback(
     async (file: any) => {
       if (!file.url && !file.preview) {
@@ -86,8 +90,26 @@ const PicturesWall = (
     [setInputValue],
   );
 
-  // 自定义上传文件
-  const beforeUpload = useCallback(
+  // 静态自定义上传
+  const beforeUploadStatic = useCallback(
+    async (file) => {
+      if (file.size > MAX_FILE_SIZE) {
+        message.info('文件过大');
+      } else {
+        const fileUrl = await getBase64(file);
+        const baseUploadFile = createUploadedFile(fileUrl);
+        onRemove(value[0]);
+        setValue([baseUploadFile as any]);
+        setInputValue(fileUrl);
+      }
+
+      return false;
+    },
+    [UploadImage, setInputValue, onRemove, value],
+  );
+
+  // 默认自定义上传
+  const beforeUploadNormal = useCallback(
     async (file) => {
       const baseUploadFile = createBaseUploadFile(file);
       onRemove(value[0]);
@@ -102,6 +124,18 @@ const PicturesWall = (
       return false;
     },
     [UploadImage, setInputValue, onRemove, value],
+  );
+
+  // 自定义上传文件
+  const beforeUpload = useCallback(
+    async (file) => {
+      if (GlobalConfig.IS_STATIC) {
+        return beforeUploadStatic(file);
+      } else {
+        return beforeUploadNormal(file);
+      }
+    },
+    [beforeUploadStatic, beforeUploadNormal],
   );
 
   const onUrlChange = useCallback(

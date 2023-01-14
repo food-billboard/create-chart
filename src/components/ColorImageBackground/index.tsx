@@ -29,7 +29,11 @@ const ColorImageBackground = (props: {
         <img
           // @ts-ignore
           crossOrigin="*"
-          src={image ? `${image}?v=${Date.now()}` : ''}
+          src={
+            image && !image.startsWith('data:')
+              ? `${image}?v=${Date.now()}`
+              : image || ''
+          }
           className={styles['component-color-image-background-image']}
         />
       )}

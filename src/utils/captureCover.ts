@@ -1,4 +1,6 @@
 import type { Options } from 'html2canvas';
+import { getBase64 } from '@/components/ImageUpload';
+import GlobalConfig from './Assist/GlobalConfig';
 import { UploadImage } from './Assist/Upload';
 
 export async function captureCover(
@@ -60,6 +62,7 @@ export async function captureCover(
 }
 
 export async function captureCoverAndUpload(blob: Blob) {
+  if (GlobalConfig.IS_STATIC) return getBase64(blob);
   const file = new File([blob], `cover_${Date.now()}.png`, {
     type: 'image/png',
   });

@@ -1,11 +1,9 @@
 import { useCallback, useState, useMemo } from 'react';
 import { Button, Modal, Form, Input, message, Select } from 'antd';
-import { merge } from 'lodash';
 import { postScreen, postScreenModel } from '@/services';
 import { goDesign, goDesignModel } from '@/utils/tool';
-import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import DEFAULT_SCREEN_DATA from '@/utils/constants/screenData';
-import ThemeUtil, { DEFAULT_THEME_NAME } from '@/utils/Assist/Theme';
+import { createScreenDataRequest } from '@/utils/constants/screenData';
+import ThemeUtil from '@/utils/Assist/Theme';
 
 const { Item, useForm } = Form;
 
@@ -42,27 +40,11 @@ const AddDesigner = (props: { type: 'screen' | 'model' }) => {
 
     try {
       // 初始化大屏数据
-      const params = {
+      const params = createScreenDataRequest({
         name,
-        description: '',
-        poster: GlobalConfig.DEFAULT_SCREEN_COVER,
         flag,
-        data: JSON.stringify(
-          merge({}, DEFAULT_SCREEN_DATA, {
-            name,
-            poster: GlobalConfig.DEFAULT_SCREEN_COVER,
-            config: {
-              attr: {
-                theme: {
-                  type: 'internal',
-                  value: DEFAULT_THEME_NAME,
-                },
-              },
-            },
-          }),
-        ),
-      };
-      const result = await requestMethod(params);
+      });
+      const result = await requestMethod(params as any);
       goLink(result as string);
       setVisible(false);
       form.resetFields();

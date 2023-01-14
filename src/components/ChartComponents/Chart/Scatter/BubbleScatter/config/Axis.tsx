@@ -5,7 +5,6 @@ import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
 import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import Input from '@/components/ImageUpload/Input';

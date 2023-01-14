@@ -11,7 +11,7 @@ import classnames from 'classnames';
 import Marquee from 'react-fast-marquee';
 import FocusWrapper from '@/components/FocusWrapper';
 import { previewScreen, previewScreenModel } from '@/services';
-import { goPreview, goPreviewModel } from '@/utils/tool';
+import { goPreview, goPreviewModel, goView } from '@/utils/tool';
 import { isModelHash } from '@/hooks';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { saveScreenData } from '@/utils/Assist/DataChangePool';
@@ -73,6 +73,12 @@ const Header = (props: {
 
   const handlePreview = useCallback(async () => {
     if (fetchLoading) return;
+
+    // 纯前端大屏
+    if (GlobalConfig.IS_STATIC) {
+      return goView();
+    }
+
     setFetchLoading(true);
     try {
       const isModel = isModelHash(location.hash);
@@ -178,12 +184,11 @@ const Header = (props: {
         baseList.push(previewButton, storeButton);
       }
     } else {
-      if (!!_id) {
-        baseList.push(previewButton);
-      }
       // 前端简化版大屏
       if (GlobalConfig.IS_STATIC) {
-        baseList.push(exportScreenButton, leadinScreenButton);
+        baseList.push(exportScreenButton, leadinScreenButton, previewButton);
+      } else {
+        baseList.push(previewButton);
       }
     }
     return baseList;
@@ -208,14 +213,15 @@ const Header = (props: {
           ? {
               breadcrumbRender: () => (
                 <Marquee gradient={false} play pauseOnHover>
-                  当前版本为简化版本，不存在网络交互，所有功能均为纯前端实现，包括数据的存储，请及时对浏览器缓存进行处理。关于完整版本，请fork
+                  当前版本为简化版本，不存在网络交互，本地图片上传均转换为base64（推荐直接使用链接），所有功能均为纯前端实现，包括数据的存储，请及时对浏览器缓存进行处理。关于完整版本，请fork
                   <a
                     href="https://github.com/food-billboard/create-chart"
                     target="blank"
                   >
-                    github仓库
+                    《github仓库》
                   </a>
                   代码在本地运行。
+                  可以将本地的大屏配置文件导入的设计器当中，预览的数据也会跟着改变。
                 </Marquee>
               ),
             }

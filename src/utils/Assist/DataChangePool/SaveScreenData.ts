@@ -12,6 +12,8 @@ import {
 import { isModelHash } from '@/hooks';
 import { IGlobalModelState } from '@/models/connect';
 import { captureCover, captureCoverAndUpload } from '@/utils/captureCover';
+import LocalConfigInstance, { LocalConfig } from '../LocalConfig';
+import { SCREEN_VERSION } from '../../constants';
 
 class NProgressUtil {
   #loading = false;
@@ -130,14 +132,20 @@ export const saveScreenDataAllAuto = async ({
     const isModel = isModelHash(location.hash);
 
     const { screenData, components, guideLine } = state;
-    const { name, _id, description, poster } = screenData || {};
+    const {
+      name,
+      _id,
+      description,
+      poster,
+      config: { flag },
+    } = screenData || {};
 
     const params = {
       _id,
       name,
       description,
       poster,
-      flag: 'PC',
+      flag: flag.type,
       data: JSON.stringify({
         ...screenData,
         config: {
@@ -209,6 +217,46 @@ export const saveScreenDataAuto = async ({
     }
 
     await method(params as any);
+  } catch (err) {
+    message.info('保存失败，请重试');
+    console.error(err);
+  } finally {
+    nProgressUtil.done();
+  }
+};
+
+// 链式全量纯前端保存大屏
+export const saveScreenDataAllAutoStatic = async ({
+  state,
+  action,
+}: {
+  state: IGlobalModelState;
+  action: {
+    type: API_SCREEN.TEditScreenPoolParams['type'];
+    action?: any;
+  };
+}) => {
+  nProgressUtil.start();
+
+  try {
+    const { screenData, components, guideLine } = state;
+
+    const params = {
+      version: SCREEN_VERSION,
+      ...screenData,
+      config: {
+        ...screenData.config,
+        attr: {
+          ...screenData.config.attr,
+          guideLine,
+        },
+      },
+      components,
+    };
+    await LocalConfigInstance.setItem(
+      LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
+      params,
+    );
   } catch (err) {
     message.info('保存失败，请重试');
     console.error(err);
