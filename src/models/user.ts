@@ -11,6 +11,7 @@ import {
   ResetParamsType,
   outLogin,
 } from '@/services';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { getPageQuery } from '@/utils';
 import {
   setErrorOriginUser,
@@ -33,7 +34,7 @@ export default {
         type: 'saveCurrentUser',
         payload: response,
       });
-      setErrorOriginUser(response);
+      if (!GlobalConfig.IS_STATIC) setErrorOriginUser(response);
       return response;
     },
 
@@ -84,7 +85,7 @@ export default {
           }),
         });
       }
-      unsetErrorOriginUser();
+      if (!GlobalConfig.IS_STATIC) unsetErrorOriginUser();
     },
 
     //注册

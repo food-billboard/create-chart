@@ -1,0 +1,22 @@
+name: static deploy
+on: 
+  push: 
+    branches: 
+      - 1.18
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2 
+        with:
+          ref: 1.18  
+          persist-credentials: false
+
+      - name: Install and Build and Deploy 🔧 
+        run: |
+          npm install yarn -g 
+          yarn 
+          yarn build:static  
+          yarn deploy:static
+           

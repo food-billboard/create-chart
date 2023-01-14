@@ -1,10 +1,12 @@
 {
   "name": "create-chart",
+  "homepage": "https://food-billboard.github.io/create-chart",
   "description": "数据可视化大屏设计器",
   "author": "Daniel GLF",
   "version": "1.17",
   "private": true,
   "scripts": {
+    "deploy:static": "gh-pages -d dist",
     "build:static": "cross-env REACT_APP=static umi build",
     "analyze:static": "cross-env ANALYZE=1 REACT_APP=static umi build",
     "start:static": "cross-env PORT=8001 REACT_APP=static umi dev",
@@ -131,6 +133,7 @@
     "commander": "^9.4.0",
     "compression-webpack-plugin": "5.0.1",
     "cross-env": "^7.0.3",
+    "gh-pages": "^4.0.0",
     "inquirer": "^8.0.0",
     "lint-staged": "^10.0.7",
     "monaco-editor-webpack-plugin": "^7.0.1",
