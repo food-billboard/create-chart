@@ -151,7 +151,9 @@ const productionConfig: any = merge({}, commonConfig, {
   // base: '/api/backend/screen/',
   base: '/',
   publicPath:
-    process.env.REACT_APP === '' ? '/create-chart' : '/api/backend/screen/',
+    process.env.REACT_APP === 'static'
+      ? '/create-chart'
+      : '/api/backend/screen/',
   chunks: ['antdesigns', 'vendors', 'commons', 'umi'],
 });
 
