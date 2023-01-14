@@ -18,5 +18,11 @@ jobs:
           npm install yarn -g 
           yarn 
           yarn build:static  
-          yarn deploy:static
+
+      - name: Deploy 🚀
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/create-chart.git
+          npx gh-pages -d dist -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_DEPLOY_TOKEN }}
            
