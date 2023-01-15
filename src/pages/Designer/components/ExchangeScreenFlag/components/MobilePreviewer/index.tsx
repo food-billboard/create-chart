@@ -12,10 +12,12 @@ import { noop } from 'lodash';
 import { Loading } from '@/components/PageLoading';
 import { getDvaGlobalModelData } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { ComponentTransformOriginChange } from '@/utils/Assist/BreakingChange';
 import { ConnectState } from '@/models/connect';
 import { getComponentByType } from '@/components/ChartComponents';
 import { InternalBorderWrapper } from '@/components/InternalBorder';
+import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
 import { putScreen, putScreenModel } from '@/services';
 import { NormalPainter } from '../../../Panel/components/Painter';
 import { ExchangePreviewerContext } from './context';
@@ -151,6 +153,39 @@ const MobilePreviewer = forwardRef<MobilePreviewerRef, {}>((props, ref) => {
     setVisible(false);
   }, []);
 
+  const handleOkStatic = useCallback(async () => {
+    setLoading(true);
+    try {
+      const { errMsg, value } = await LocalConfigInstance.getItem(
+        LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
+      );
+      if (errMsg) throw new Error((errMsg as any).toString());
+      const { errMsg: setErr } = await LocalConfigInstance.setItem(
+        LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
+        mergeWithoutArray({}, value, {
+          config: {
+            style: {
+              width: 375,
+              height: 667,
+            },
+            flag: {
+              type: 'H5',
+            },
+          },
+        }),
+      );
+
+      if (setErr) throw new Error((setErr as any).toString());
+
+      message.success('转换成功，即将刷新', 1, () => {
+        window.location.reload();
+      });
+    } catch (err) {
+      message.info('转换失败!!');
+      setLoading(false);
+    }
+  }, [componentList]);
+
   const handleOk = useCallback(async () => {
     setLoading(true);
     try {
@@ -212,7 +247,11 @@ const MobilePreviewer = forwardRef<MobilePreviewerRef, {}>((props, ref) => {
           <Button className="m-r-4" onClick={handleClose} loading={loading}>
             取消
           </Button>
-          <Button type="primary" onClick={handleOk} loading={loading}>
+          <Button
+            type="primary"
+            onClick={GlobalConfig.IS_STATIC ? handleOkStatic : handleOk}
+            loading={loading}
+          >
             确认应用
           </Button>
         </div>

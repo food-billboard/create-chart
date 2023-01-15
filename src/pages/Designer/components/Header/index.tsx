@@ -118,14 +118,14 @@ const Header = (props: {
 
   // 导出
   const handleExport = useCallback(async () => {
-    setFetchLoading(false);
-    await staticExportData();
     setFetchLoading(true);
+    await staticExportData();
+    setFetchLoading(false);
   }, []);
 
   // 初始化
   const handleReset = useCallback(async () => {
-    setFetchLoading(false);
+    setFetchLoading(true);
     const { value } = await LocalConfigInstance.removeItem(
       LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
     );
@@ -134,7 +134,7 @@ const Header = (props: {
     } else {
       message.info('操作出错');
     }
-    setFetchLoading(true);
+    setFetchLoading(false);
   }, []);
 
   const extra = useMemo(() => {
