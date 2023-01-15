@@ -109,7 +109,7 @@ const FetchScreenComponent = forwardRef<
           },
         });
         // 先注册主题色再修改数据
-        await ThemeUtil.initCurrentThemeData(DEFAULT_THEME_NAME);
+        await ThemeUtil.initCurrentThemeData(DEFAULT_THEME_NAME, true, true);
         await LocalConfigInstance.setItem(
           LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
           DEFAULT_SCREEN_DATA,

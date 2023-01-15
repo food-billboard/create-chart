@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { connect } from 'dva';
+import { useHashChangeReload } from '@/hooks';
 import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
 import useWrapperProps from '../Share/useWrapperProps';
@@ -35,6 +36,8 @@ function Viewer(props: {
   useEffect(() => {
     setScreenType('preview');
   }, [setScreenType]);
+
+  useHashChangeReload(() => {});
 
   return (
     <PainterWrapper scale={scale}>
