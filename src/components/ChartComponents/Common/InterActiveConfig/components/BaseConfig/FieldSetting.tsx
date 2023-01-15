@@ -18,13 +18,15 @@ type IProps = {
   dataSource: ComponentData.TBaseInteractiveConfig[];
   params: ComponentData.TParams[];
   setParams: (value: ComponentData.TParams[]) => void;
+  disabled?: boolean;
 };
 
 const EditModal = (props: {
   onOk?: (value: { key: string; description?: string }) => void;
   fields: ComponentData.TBaseInteractiveConfigField[];
+  disabled?: boolean;
 }) => {
-  const { onOk, fields } = props;
+  const { onOk, fields, disabled = false } = props;
 
   const [form] = useForm();
 
@@ -57,7 +59,9 @@ const EditModal = (props: {
 
   return (
     <>
-      <GhostButton onClick={show}>新增字段</GhostButton>
+      <GhostButton disabled={disabled} onClick={show}>
+        新增字段
+      </GhostButton>
       <Modal title="新增字段" open={visible} onCancel={hide} onOk={handleOk}>
         <Form
           form={form}
@@ -86,7 +90,15 @@ const EditModal = (props: {
 };
 
 const FieldSetting = (props: IProps) => {
-  const { value, onChange, id, dataSource, params, setParams } = props;
+  const {
+    value,
+    onChange,
+    id,
+    dataSource,
+    params,
+    setParams,
+    disabled = false,
+  } = props;
   const { name, fields, show, type, extend } = value;
 
   const onFieldMapChange = useCallback(
@@ -215,6 +227,7 @@ const FieldSetting = (props: IProps) => {
               value={value}
               onChange={onFieldMapChange.bind(null, record)}
               placeholder="可自定义"
+              disabled={disabled}
             />
           );
         },
@@ -225,11 +238,13 @@ const FieldSetting = (props: IProps) => {
         dataIndex: 'description',
       },
     ];
-  }, [onChange, onFieldMapChange]);
+  }, [onChange, onFieldMapChange, disabled]);
 
   return (
     <>
-      {!!extend && <EditModal onOk={handleAdd} fields={fields} />}
+      {!!extend && (
+        <EditModal disabled={disabled} onOk={handleAdd} fields={fields} />
+      )}
       <MapTable
         dataSource={fields}
         columns={
@@ -246,6 +261,7 @@ const FieldSetting = (props: IProps) => {
                         <Button
                           type="link"
                           danger
+                          disabled={disabled}
                           icon={<DeleteOutlined />}
                           onClick={handleDelete.bind(null, record)}
                         />

@@ -120,6 +120,7 @@ const LinkageConfig = (props: {
             <Textarea
               value={value}
               onChange={onLinkageChange.bind(null, 'value', name)}
+              disabled={!show}
             />
           </Panel>,
         );

@@ -144,6 +144,7 @@ const BaseConfig = (props: {
               key={name}
               params={params}
               setParams={setParams}
+              disabled={!show}
             />
           </Panel>,
         );
