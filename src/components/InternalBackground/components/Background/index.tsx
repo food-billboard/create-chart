@@ -1,5 +1,13 @@
 import GradientMixBackground from './GradientMixBackground';
 import DoodleBubbleBackground from './DoodleBubbleBackground';
+import LazyLoadWrapper from '../../../LazyLoad';
+
+const ColorLineBackground = LazyLoadWrapper(async () => {
+  // @ts-ignore
+  return import(
+    /* webpackChunkName: "COLOR_LINE_BACKGROUND" */ './ColorLineBackground'
+  );
+});
 
 export default {
   GRADIENT_MIX_BACKGROUND: {
@@ -9,5 +17,9 @@ export default {
   DoodleBubbleBackground: {
     value: <DoodleBubbleBackground />,
     title: '气泡',
+  },
+  ColorLineBackground: {
+    value: <ColorLineBackground />,
+    title: '彩色线条',
   },
 };

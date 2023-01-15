@@ -1,4 +1,3 @@
-import {} from 'react';
 import { Select } from 'antd';
 import { useControllableValue } from 'ahooks';
 import BackgroundMap from './components/Background';
