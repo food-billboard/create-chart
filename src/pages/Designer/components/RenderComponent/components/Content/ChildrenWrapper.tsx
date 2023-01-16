@@ -1,4 +1,10 @@
-import { ReactNode, useMemo, Children, cloneElement } from 'react';
+import {
+  ReactNode,
+  useMemo,
+  Children,
+  cloneElement,
+  CSSProperties,
+} from 'react';
 import { connect } from 'dva';
 import classnames from 'classnames';
 import { get } from 'lodash';
@@ -17,6 +23,8 @@ const ChildrenWrapper = (props: {
   screenType: ComponentData.ScreenType;
   version: string;
   flag: ComponentData.ScreenFlagType;
+  style?: CSSProperties;
+  className?: string;
 }) => {
   const {
     value,
@@ -25,6 +33,8 @@ const ChildrenWrapper = (props: {
     screenType,
     version,
     flag,
+    style: outStyle,
+    className: outerClassName,
   } = props;
 
   const [isSelect, setIsSelect] = useRafState<boolean>(false);
@@ -65,12 +75,14 @@ const ChildrenWrapper = (props: {
         className: classnames(className, {
           [styles['render-component-wrapper-inner']]: !isSelect && !borderNone,
           'border-1-a': isSelect && !borderNone,
+          outerClassName,
         }),
         style: borderNone
           ? // 组件
             {
               ...realStyle,
               ...propsStyle,
+              ...outStyle,
             }
           : // 组内组件
             {
@@ -81,6 +93,7 @@ const ChildrenWrapper = (props: {
               position: flag === 'H5' ? 'relative' : 'absolute',
               ...realStyle,
               ...propsStyle,
+              ...outStyle,
             },
       });
     });
@@ -91,6 +104,8 @@ const ChildrenWrapper = (props: {
     componentScreenTypeStyle,
     transformOrigin,
     flag,
+    outStyle,
+    outerClassName,
   ]);
 
   return (

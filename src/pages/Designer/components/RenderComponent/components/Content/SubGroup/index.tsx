@@ -11,7 +11,8 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { ConnectState } from '@/models/connect';
-import styles from '../../index.less';
+import CarouselGroupWrapper from './CarouselGroupWrapper';
+import styles from '../../../index.less';
 
 const SubGroup = (props: {
   children?: ReactNode;
@@ -39,7 +40,7 @@ const SubGroup = (props: {
     id,
     config: {
       options,
-      style: { border },
+      style: { border, groupCarousel },
     },
   } = value;
   const { condition } = options as any;
@@ -100,7 +101,14 @@ const SubGroup = (props: {
           className={classnames('pos-re w-100 h-100', className)}
           style={transformStyle}
         >
-          {children}
+          {groupCarousel?.show ? (
+            <CarouselGroupWrapper
+              children={children}
+              groupCarousel={groupCarousel}
+            />
+          ) : (
+            children
+          )}
         </div>
       </Wrapper>
       <FetchFragment

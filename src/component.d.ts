@@ -120,10 +120,6 @@ declare namespace ComponentData {
   // 组内组件轮播
   export type TGroupComponentCarouselConfig = {
     show: boolean;
-    // 设计阶段用
-    currentIndex: number;
-    // 设计阶段用
-    previewable: boolean;
     verticalAlign: 'start' | 'center' | 'end';
     horizontalAlign: 'start' | 'center' | 'end';
     // ? 2023-01-16

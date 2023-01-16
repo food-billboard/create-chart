@@ -23,6 +23,10 @@ import RadioGroup, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
 import GhostButton from '@/components/GhostButton';
+import {
+  EVENT_NAME_MAP,
+  GLOBAL_EVENT_EMITTER,
+} from '@/utils/Assist/EventEmitter';
 import ComponentList from './components/ComponentList';
 
 const { Item } = ConfigList;
@@ -33,6 +37,9 @@ const CarouselConfig = (props: {
 }) => {
   const forceUpdate = useUpdate();
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [previewable, setPreviewable] = useState(false);
+
   const { component } = props;
 
   const {
@@ -42,7 +49,6 @@ const CarouselConfig = (props: {
     },
     components = [],
   } = component;
-  const { currentIndex, previewable } = groupCarousel!;
 
   const onChildComponentChange = useCallback(
     (
@@ -101,6 +107,22 @@ const CarouselConfig = (props: {
     },
     [id],
   );
+
+  const onComponentIndexChange = useCallback((index) => {
+    setCurrentIndex(index);
+    GLOBAL_EVENT_EMITTER.emit(
+      EVENT_NAME_MAP.GROUP_CAROUSEL_CLICK_INDEX_CHANGE,
+      index,
+    );
+  }, []);
+
+  const onPreviewableChange = useCallback(() => {
+    setPreviewable(!previewable);
+    GLOBAL_EVENT_EMITTER.emit(
+      EVENT_NAME_MAP.GROUP_CAROUSEL_CLICK_PREVIEW_CHANGE,
+      !previewable,
+    );
+  }, [previewable]);
 
   return (
     <ConfigList level={1}>
@@ -188,7 +210,7 @@ const CarouselConfig = (props: {
             <ComponentList
               components={components}
               current={currentIndex}
-              onChange={onKeyChange.bind(null, 'currentIndex')}
+              onChange={onComponentIndexChange}
             />
             <Item label="动画">
               <FullForm>
@@ -258,9 +280,7 @@ const CarouselConfig = (props: {
             </Item>
           </Collapse>
           <div className="ali-cen">
-            <GhostButton
-              onClick={onKeyChange.bind(null, 'previewable', !previewable)}
-            >
+            <GhostButton onClick={onPreviewableChange}>
               {!!previewable ? '暂停' : '预览'}
             </GhostButton>
           </div>

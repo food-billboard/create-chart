@@ -221,8 +221,6 @@ export const DEFAULT_GROUP_CONFIG: ComponentData.TComponentData['config'] = {
     ...DEFAULT_CONFIG.style,
     groupCarousel: {
       show: false,
-      currentIndex: 0,
-      previewable: false,
       verticalAlign: 'center',
       horizontalAlign: 'center',
       emitType: 'auto',
