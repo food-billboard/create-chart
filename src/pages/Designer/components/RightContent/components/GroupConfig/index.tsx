@@ -7,6 +7,7 @@ import ConfigWrapper, {
 } from '@/components/ChartComponents/Common/ConfigWrapper';
 import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';
 import OptionConfig from './components/OptionConfig';
+import CarouselConfig from './components/CarouselConfig';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -52,6 +53,15 @@ const GroupConfig = (props: {
               <ConfigItem>
                 <BaseConfig isGroupComponent id={id} />
                 <OptionConfig component={component} />
+              </ConfigItem>
+            ),
+          },
+          {
+            label: '轮播配置',
+            key: '2',
+            children: (
+              <ConfigItem>
+                <CarouselConfig component={component} />
               </ConfigItem>
             ),
           },

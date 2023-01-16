@@ -1,0 +1,47 @@
+.group-carousel-component-list-wrapper {
+  overflow: hidden;
+  width: 100%;
+  padding: 0 24px;
+}
+.group-carousel-component-list {
+  white-space: nowrap;
+  overflow: auto hidden;
+  &-btn {
+    position: absolute;
+    visibility: hidden;
+    height: 100%;
+    top: 0;
+    align-items: center;
+  }
+  &-btn-visible {
+    visibility: visible;
+  }
+  &-btn-left {
+    left: 0;
+  }
+  &-btn-right {
+    right: 0;
+  }
+}
+.group-carousel-component-list-item {
+  width: 74px;
+  height: 43px;
+  border: 1px solid transparent;
+  line-height: 43px;
+  display: inline-block;
+  cursor: pointer;
+  vertical-align: middle;
+  & img {
+    object-fit: contain;
+    vertical-align: unset;
+  }
+}
+.group-carousel-component-list
+  .group-carousel-component-list-item:nth-of-type(1) {
+  margin-left: 0;
+}
+
+.group-carousel-component-list-item-active,
+.group-carousel-component-list-item:hover {
+  border-color: var(--designer-primary-color);
+}

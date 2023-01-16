@@ -117,6 +117,32 @@ declare namespace ComponentData {
     };
   };
 
+  // 组内组件轮播
+  export type TGroupComponentCarouselConfig = {
+    show: boolean;
+    // 设计阶段用
+    currentIndex: number;
+    // 设计阶段用
+    previewable: boolean;
+    verticalAlign: 'start' | 'center' | 'end';
+    horizontalAlign: 'start' | 'center' | 'end';
+    // ? 2023-01-16
+    emitType: 'auto' | 'manual' | 'event'; // 后面加 手动和事件 manual event
+    // ? 2023-01-16
+    // 手动触发专用
+    emitKeyboard: string; // 暂时没用
+    delay: number;
+  };
+
+  // 组内组件自身的动画配置
+  export type TComponentCarouselAnimationConfig = {
+    animation: 'fade' | 'slide';
+    speed: number;
+    // 线性 先慢后快 先快后慢 低速开始和结束
+    easing: 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+    direction: 'left' | 'right' | 'top' | 'bottom';
+  };
+
   // 基础组件属性
   export type TBaseConfig = {
     style: {
@@ -140,7 +166,12 @@ declare namespace ComponentData {
         disabled?: boolean;
         // TODO
       };
+      // 3d变换
       groupTransform: TComponentTransformConfig;
+      // ? 组件的轮播配置 组内组件
+      carouselConfig: TComponentCarouselAnimationConfig;
+      // ? 组的配置 组件轮播
+      groupCarousel?: TGroupComponentCarouselConfig;
     };
     attr: {
       visible: boolean;

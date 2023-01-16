@@ -195,6 +195,14 @@ export const DEFAULT_CONFIG: ComponentData.TBaseConfig = {
         z: 0,
       },
     },
+    // 只有在组被时生效
+    carouselConfig: {
+      animation: 'slide',
+      speed: 1000,
+      // 线性 先慢后快 先快后慢 低速开始和结束
+      easing: 'linear',
+      direction: 'left',
+    },
   },
   attr: {
     visible: true,
@@ -209,6 +217,19 @@ export const DEFAULT_GROUP_OPTIONS: any = {
 
 export const DEFAULT_GROUP_CONFIG: ComponentData.TComponentData['config'] = {
   ...DEFAULT_CONFIG,
+  style: {
+    ...DEFAULT_CONFIG.style,
+    groupCarousel: {
+      show: false,
+      currentIndex: 0,
+      previewable: false,
+      verticalAlign: 'center',
+      horizontalAlign: 'center',
+      emitType: 'auto',
+      emitKeyboard: 'Shift + ↑',
+      delay: 5000,
+    },
+  },
   options: {
     ...DEFAULT_GROUP_OPTIONS,
   },
