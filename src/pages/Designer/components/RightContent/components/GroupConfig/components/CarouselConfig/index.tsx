@@ -108,13 +108,17 @@ const CarouselConfig = (props: {
     [id],
   );
 
-  const onComponentIndexChange = useCallback((index) => {
-    setCurrentIndex(index);
-    GLOBAL_EVENT_EMITTER.emit(
-      EVENT_NAME_MAP.GROUP_CAROUSEL_CLICK_INDEX_CHANGE,
-      index,
-    );
-  }, []);
+  const onComponentIndexChange = useCallback(
+    (index) => {
+      if (currentIndex === index) return;
+      setCurrentIndex(index);
+      GLOBAL_EVENT_EMITTER.emit(
+        EVENT_NAME_MAP.GROUP_CAROUSEL_CLICK_INDEX_CHANGE,
+        index,
+      );
+    },
+    [currentIndex],
+  );
 
   const onPreviewableChange = useCallback(() => {
     setPreviewable(!previewable);

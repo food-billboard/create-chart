@@ -1,19 +1,14 @@
-import {
-  ReactNode,
-  useState,
-  useMemo,
-  useEffect,
-  useRef,
-  cloneElement,
-} from 'react';
+import { ReactNode, useState, useMemo, useEffect, Children } from 'react';
 import { connect } from 'dva';
-import classnames from 'classnames';
 import { ConnectState } from '@/models/connect';
 import {
   EVENT_NAME_MAP,
   GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
-import styles from './index.less';
+import { ComponentProps } from './AbstractComponent';
+import LeftDirectionComponent from './LeftDirectionComponent';
+import FadeComponent from './FadeComponent';
+import EventEmitter from './EventEmitter';
 
 const CarouselGroupWrapper = (props: {
   children?: ReactNode;
@@ -23,32 +18,18 @@ const CarouselGroupWrapper = (props: {
   const { screenType, children, groupCarousel } = props;
   const { delay, verticalAlign, horizontalAlign } = groupCarousel;
 
-  const [stateIndex, setStateIndex] = useState(0);
-  const [previewable, setPreviewable] = useState(false);
-
-  const timerRef = useRef<NodeJS.Timeout>();
+  const [previewAble, setPreviewAble] = useState(false);
 
   const childrenLength = useMemo(() => {
     return (children as any).length;
   }, [children]);
 
-  const currentChild = useMemo(() => {
-    const child = (children as any)[stateIndex];
-    return cloneElement(child, {
-      style: {
-        left: 0,
-        top: 0,
-        position: 'static',
-      },
-    });
-  }, [stateIndex, children]);
-
   useEffect(() => {
     const onIndexChange = (index: number) => {
-      setStateIndex(index);
+      EventEmitter.emit('change', index);
     };
     const onPreviewChange = (state: boolean) => {
-      setPreviewable(state);
+      setPreviewAble(state);
     };
     GLOBAL_EVENT_EMITTER.addListener(
       EVENT_NAME_MAP.GROUP_CAROUSEL_CLICK_INDEX_CHANGE,
@@ -71,33 +52,55 @@ const CarouselGroupWrapper = (props: {
   }, []);
 
   useEffect(() => {
-    if (!previewable && screenType !== 'preview') return;
-    timerRef.current = setInterval(() => {
-      setStateIndex((prev) => (prev + 1) % childrenLength);
-    }, delay);
+    console.log(33333333);
+    if (!previewAble && screenType !== 'preview') {
+      EventEmitter.emit('change', 0);
+      return;
+    }
+    EventEmitter.emit('start');
+    EventEmitter.emit('change', 0);
     return () => {
-      clearInterval(timerRef.current);
+      EventEmitter.emit('stop');
     };
-  }, [delay, previewable, childrenLength]);
+  }, [delay, previewAble, childrenLength]);
 
   return (
-    <div
-      className={classnames(
-        styles['group-component-carousel-wrapper'],
-        'dis-flex w-100 h-100',
-      )}
-      style={{
-        justifyContent: {
-          start: 'flex-start',
-          center: 'center',
-          end: 'flex-end',
-        }[horizontalAlign],
-        alignItems: { start: 'flex-start', center: 'center', end: 'flex-end' }[
-          verticalAlign
-        ],
-      }}
-    >
-      {currentChild}
+    <div className="w-100 h-100 pos-ab over-hide">
+      {Children.map(children, (child: any, index: number) => {
+        const component: ComponentData.TComponentData = child.props.value;
+        const {
+          config: {
+            style: { carouselConfig },
+          },
+          id,
+        } = component;
+        const props: ComponentProps = {
+          style: {
+            justifyContent: {
+              start: 'flex-start',
+              center: 'center',
+              end: 'flex-end',
+            }[horizontalAlign],
+            alignItems: {
+              start: 'flex-start',
+              center: 'center',
+              end: 'flex-end',
+            }[verticalAlign],
+          },
+          config: carouselConfig,
+          index: index,
+          delay: delay,
+          length: childrenLength,
+          children: child,
+        };
+        // TODO
+        // 控制一下组件轮播的方向
+        // if(carouselConfig.direction === 'left')
+        if (carouselConfig.animation === 'fade') {
+          return <FadeComponent {...props} key={id} />;
+        }
+        return <LeftDirectionComponent {...props} key={id} />;
+      })}
     </div>
   );
 };
