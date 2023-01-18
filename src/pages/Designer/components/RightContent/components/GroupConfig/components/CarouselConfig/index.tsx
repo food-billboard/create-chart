@@ -215,10 +215,12 @@ const CarouselConfig = (props: {
               components={components}
               current={currentIndex}
               onChange={onComponentIndexChange}
+              disabled={!!previewable}
             />
             <Item label="动画">
               <FullForm>
                 <Select
+                  disabled={!!previewable}
                   className="w-100"
                   options={[
                     {
@@ -242,6 +244,7 @@ const CarouselConfig = (props: {
             <Item label="动画时长">
               <FullForm>
                 <InputNumber
+                  disabled={!!previewable}
                   value={carouselConfig.speed}
                   onChange={onChildComponentChange.bind(
                     null,
@@ -254,6 +257,7 @@ const CarouselConfig = (props: {
             <Item label="缓动效果">
               <FullForm>
                 <Select
+                  disabled={!!previewable}
                   className="w-100"
                   options={[
                     {

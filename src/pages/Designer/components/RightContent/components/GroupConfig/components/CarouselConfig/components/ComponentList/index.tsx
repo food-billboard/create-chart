@@ -1,4 +1,4 @@
-import { useCallback, useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import classnames from 'classnames';
 import { Button, Space } from 'antd';
 import { useInViewport, useDebounceFn } from 'ahooks';
@@ -11,9 +11,10 @@ import styles from './index.less';
 const ComponentList = (props: {
   components: ComponentData.TComponentData[];
   current: number;
+  disabled?: boolean;
   onChange?: (current: number) => void;
 }) => {
-  const { components, current, onChange } = props;
+  const { components, current, onChange, disabled = false } = props;
 
   const [loaded, setLoaded] = useState(false);
 
@@ -54,6 +55,9 @@ const ComponentList = (props: {
         styles['group-carousel-component-list-wrapper'],
         'pos-re',
       )}
+      style={{
+        pointerEvents: disabled ? 'none' : 'all',
+      }}
     >
       <div
         ref={listRef}

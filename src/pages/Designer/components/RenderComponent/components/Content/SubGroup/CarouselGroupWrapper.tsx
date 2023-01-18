@@ -5,9 +5,10 @@ import {
   EVENT_NAME_MAP,
   GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
-import { ComponentProps } from './AbstractComponent';
-import LeftDirectionComponent from './LeftDirectionComponent';
-import FadeComponent from './FadeComponent';
+import AbstractComponent, {
+  AbstractComponentProps,
+  CAROUSEL_COMPONENT_MAP,
+} from './AbstractComponent';
 import EventEmitter from './EventEmitter';
 
 const CarouselGroupWrapper = (props: {
@@ -18,8 +19,6 @@ const CarouselGroupWrapper = (props: {
   const { screenType, children, groupCarousel } = props;
   const { delay, verticalAlign, horizontalAlign } = groupCarousel;
 
-  const [previewAble, setPreviewAble] = useState(false);
-
   const childrenLength = useMemo(() => {
     return (children as any).length;
   }, [children]);
@@ -29,7 +28,17 @@ const CarouselGroupWrapper = (props: {
       EventEmitter.emit('change', index);
     };
     const onPreviewChange = (state: boolean) => {
-      setPreviewAble(state);
+      if (state) {
+        EventEmitter.emit('start');
+        EventEmitter.emit('change', 0);
+      } else {
+        let called = false;
+        EventEmitter.emit('stop', (index: number) => {
+          if (called) return;
+          called = true;
+          EventEmitter.emit('change', index);
+        });
+      }
     };
     GLOBAL_EVENT_EMITTER.addListener(
       EVENT_NAME_MAP.GROUP_CAROUSEL_CLICK_INDEX_CHANGE,
@@ -52,17 +61,11 @@ const CarouselGroupWrapper = (props: {
   }, []);
 
   useEffect(() => {
-    console.log(33333333);
-    if (!previewAble && screenType !== 'preview') {
-      EventEmitter.emit('change', 0);
-      return;
+    if (screenType === 'preview') {
+      EventEmitter.emit('start');
     }
-    EventEmitter.emit('start');
     EventEmitter.emit('change', 0);
-    return () => {
-      EventEmitter.emit('stop');
-    };
-  }, [delay, previewAble, childrenLength]);
+  }, []);
 
   return (
     <div className="w-100 h-100 pos-ab over-hide">
@@ -74,7 +77,7 @@ const CarouselGroupWrapper = (props: {
           },
           id,
         } = component;
-        const props: ComponentProps = {
+        let props = {
           style: {
             justifyContent: {
               start: 'flex-start',
@@ -88,18 +91,28 @@ const CarouselGroupWrapper = (props: {
             }[verticalAlign],
           },
           config: carouselConfig,
-          index: index,
+          index,
           delay: delay,
           length: childrenLength,
           children: child,
-        };
-        // TODO
-        // 控制一下组件轮播的方向
-        // if(carouselConfig.direction === 'left')
+        } as AbstractComponentProps;
+
         if (carouselConfig.animation === 'fade') {
-          return <FadeComponent {...props} key={id} />;
+          props = {
+            ...props,
+            ...CAROUSEL_COMPONENT_MAP.fade,
+          };
+        } else {
+          // TODO
+          // 控制一下组件轮播的方向
+          // if(carouselConfig.direction === 'left')
+          props = {
+            ...props,
+            ...CAROUSEL_COMPONENT_MAP.left,
+          };
         }
-        return <LeftDirectionComponent {...props} key={id} />;
+
+        return <AbstractComponent {...props} />;
       })}
     </div>
   );
