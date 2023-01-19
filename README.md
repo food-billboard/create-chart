@@ -13,7 +13,11 @@
 
 </div>
 
-## 😈   当前版本(1.18) 
+<div align="center">
+支持<b>纯前端版本</b>和<b>完整交互版本</b>。
+</div>
+
+## 😈   当前版本(1.19) 
 
 <br/>
 
@@ -46,18 +50,19 @@
 
 ## 🕷  本地调试
 
-```
+```sh
  $ git clone git@github.com:food-billboard/create-chart.git
  $ cd create-chart 
  $ yarn 
- $ yarn start 
+ $ yarn start # or yarn start:static (纯前端版本)
 ```
 
-## 🙋‍♂️  试用  
+## 🙋‍♂️  问题反馈  
 
-账号和密码放在[issue](https://github.com/food-billboard/create-chart/issues/2)当中，如有兴趣或有问题也可以在[issue](https://github.com/food-billboard/create-chart/issues)中联系我。     
+如有兴趣或有问题也可以在[issue](https://github.com/food-billboard/create-chart/issues)中联系我。     
 
 ## 👇🏻  Changelog  
+[1.19](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.19.md)  
 [1.18](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.18.md)   
 [1.17](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.17.md)    
 [1.16](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.16.md)   
@@ -80,9 +85,12 @@
 
 ## 🔗  链接  
 [官网](http://47.97.27.23/api/backend/screen/index.html#/)  
-[静态版本官网](https://food-billboard.github.io/create-chart/index.html#/)  
+[静态版本官网](https://food-billboard.github.io/create-chart/index.html#/) (访问速度可能很慢，请谅解)      
 [操作文档](http://47.97.27.23/api/backend/create-chart-docs/index.html#/)  
 
 ## 👀  引用  
 [一些边框和装饰的组件](https://github.com/DataV-Team/DataV)  
 [图片主题色获取](https://github.com/lokesh/color-thief)   
+
+## 🔚  说在后头  
+目前版本稳定在`1.19`，已经过自己简单的测试，后续如有发现问题或者各位在使用过程中发现问题，都会尽量进行迭代处理。  
