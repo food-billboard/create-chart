@@ -31,13 +31,22 @@ export const EVENT_NAME = {
 };
 
 // 组件搜索
-const ComponentSearch = () => {
+const InternalComponentSearch = (props: {
+  componentCollapse: boolean;
+  setLocalConfig: (value: Partial<ILocalModelState>) => void;
+}) => {
+  const { componentCollapse, setLocalConfig } = props;
+
   const [visible, setVisible] = useState(false);
 
   const handleClick = useCallback(() => {
+    if (componentCollapse)
+      setLocalConfig({
+        componentCollapse: !componentCollapse,
+      });
     setVisible((prev) => !prev);
     ComponentSearchConfigEventEmitter.emit(EVENT_NAME.COMPONENT_SEARCH_VISIBLE);
-  }, []);
+  }, [componentCollapse, setLocalConfig]);
 
   return (
     <div
@@ -53,6 +62,18 @@ const ComponentSearch = () => {
     </div>
   );
 };
+
+export const ComponentSearch = connect(
+  (state: ConnectState) => {
+    return {
+      componentCollapse: state.local.componentCollapse,
+    };
+  },
+  (dispatch: any) => ({
+    setLocalConfig: (value: any) =>
+      dispatch({ type: 'local/setLocalConfig', value }),
+  }),
+)(InternalComponentSearch);
 
 // 图层显示隐藏
 export const LayerShowIcon = (props: {}) => {

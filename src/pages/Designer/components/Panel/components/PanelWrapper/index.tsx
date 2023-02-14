@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { connect } from 'dva';
 import classnames from 'classnames';
-import { useEventListener } from 'ahooks';
+import { useEventListener, useSize } from 'ahooks';
 import { BackgroundConfigRender } from '@/components/DesignerBackground';
 import { mergeWithoutArray, sleep } from '@/utils/tool';
 import ClipboardComponent from '../Clipboard';
@@ -44,9 +44,15 @@ const PanelWrapper = (props: {
     flag,
   } = props;
 
-  const [size, setSize] = useState({ width: 0, height: 0 });
+  // const [size, setSize] = useState({ width: 0, height: 0 });
 
   const clickPosition = useRef<number>(0);
+  const panelRef = useRef(null);
+
+  const { width: panelWidth, height: panelHeight } = useSize(panelRef) || {
+    width: 0,
+    height: 0,
+  };
 
   const scale = useMemo(() => {
     return originScale / 100;
@@ -87,25 +93,36 @@ const PanelWrapper = (props: {
     [setGuideLine, guideLineList, guideLineShow],
   );
 
-  const resize = () => {
-    const dom = document.querySelector(`#${wrapperId}`);
-    if (!dom) return;
-    let dw = dom.clientWidth;
-    let dh = dom.clientHeight;
+  const size = useMemo(() => {
     let pw = width * scale + RIGHT_BOTTOM_PADDING;
     let ph = height * scale + RIGHT_BOTTOM_PADDING;
-    const newWidth = Math.max(dw, pw);
-    const newHeight = Math.max(dh, ph);
-    setSize({ width: newWidth, height: newHeight });
-  };
+    const newWidth = Math.max(panelWidth, pw);
+    const newHeight = Math.max(panelHeight, ph);
+    return {
+      width: newWidth,
+      height: newHeight,
+    };
+  }, [panelWidth, panelHeight]);
 
-  useEventListener('resize', resize, {
-    target: window,
-  });
+  // const resize = () => {
+  //   const dom = document.querySelector(`#${wrapperId}`);
+  //   if (!dom) return;
+  //   let dw = dom.clientWidth;
+  //   let dh = dom.clientHeight;
+  //   let pw = width * scale + RIGHT_BOTTOM_PADDING;
+  //   let ph = height * scale + RIGHT_BOTTOM_PADDING;
+  //   const newWidth = Math.max(dw, pw);
+  //   const newHeight = Math.max(dh, ph);
+  //   setSize({ width: newWidth, height: newHeight });
+  // };
 
-  useEffect(() => {
-    resize();
-  }, [flag, height, scale]);
+  // useEventListener('resize', resize, {
+  //   target: () => document.querySelector(`#${wrapperId}`),
+  // });
+
+  // useEffect(() => {
+  //   resize();
+  // }, [flag, height, scale]);
 
   return (
     <div
@@ -117,7 +134,7 @@ const PanelWrapper = (props: {
     >
       {/* background */}
       <BackgroundConfigRender />
-      <div id={wrapperId} className="w-100 h-100 pos-re">
+      <div id={wrapperId} ref={panelRef} className="w-100 h-100 pos-re">
         <div
           id={subWrapperId}
           className={classnames(styles['designer-page-main-sub'], 'pos-re')}
