@@ -17,7 +17,7 @@
 支持<b>纯前端版本</b>和<b>完整交互版本</b>。
 </div>
 
-## 😈   当前版本(1.19) 
+## 😈   当前版本(1.20) 
 
 <br/>
 
@@ -62,6 +62,7 @@
 如有兴趣或有问题也可以在[issue](https://github.com/food-billboard/create-chart/issues)中联系我。     
 
 ## 👇🏻  Changelog  
+[1.20](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.20.md)  
 [1.19](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.19.md)  
 [1.18](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.18.md)   
 [1.17](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.17.md)    
@@ -93,4 +94,4 @@
 [图片主题色获取](https://github.com/lokesh/color-thief)   
 
 ## 🔚  说在后头  
-目前版本稳定在`1.19`，已经过自己简单的测试，后续如有发现问题或者各位在使用过程中发现问题，都会尽量进行迭代处理。  
+目前版本稳定在`1.20`，已经过自己简单的测试，后续如有发现问题或者各位在使用过程中发现问题，都会尽量进行迭代处理。  
