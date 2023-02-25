@@ -3,9 +3,8 @@ import DoodleBubbleBackground from './DoodleBubbleBackground';
 import LazyLoadWrapper from '../../../LazyLoad';
 
 const ColorLineBackground = LazyLoadWrapper(async () => {
-  // @ts-ignore
   return import(
-    /* webpackChunkName: "COLOR_LINE_BACKGROUND" */ './ColorLineBackground'
+    /* webpackChunkName: "COLOR_LINE_BACKGROUND" */ './ColorLineBackground' as any
   );
 });
 

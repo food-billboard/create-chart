@@ -31,7 +31,7 @@ const ConditionCodeEditor = (props: {
         width={280}
         height={180}
         defaultValue={value?.code ?? ''}
-        onBlur={(code) => {
+        onBlur={(code: any) => {
           onChange({
             ...value,
             code,

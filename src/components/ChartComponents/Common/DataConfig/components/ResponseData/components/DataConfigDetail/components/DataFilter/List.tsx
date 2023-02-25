@@ -10,6 +10,6 @@ const SortableContainer = SortableContainerWrapper(
   ({ children }: { children: ReactNode }) => {
     return <div className="sort-list-wrapper">{children}</div>;
   },
-);
+) as any;
 
 export default SortableContainer;
