@@ -23,13 +23,13 @@ export const locale = {
   default: 'zh-CN',
 };
 
-export const dva = {
-  config: {
-    onError(error: any) {
-      console.error(error);
-    },
-  },
-};
+// export const dva = {
+//   config: {
+//     onError(error: any) {
+//       console.error(error);
+//     },
+//   },
+// };
 
 export function rootContainer(container: JSX.Element) {
   const props: ErrorBoundaryProps = {

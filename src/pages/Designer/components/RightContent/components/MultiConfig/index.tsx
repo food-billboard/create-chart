@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import classnames from 'classnames';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import ConfigWrapper, {
   ConfigItem,
 } from '@/components/ChartComponents/Common/ConfigWrapper';
@@ -15,8 +15,16 @@ import { ConnectState } from '@/models/connect';
 import KeyWordPosition from '../GroupConfig/components/OptionConfig/components/KeyWordPosition';
 import styles from './index.less';
 
-const MultiConfig = (props: { flag: ComponentData.ScreenFlagType }) => {
-  const { flag } = props;
+const MultiConfig = () => {
+  const {
+    global: {
+      screenData: {
+        config: {
+          flag: { type: flag },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const onOrientChange = useCallback((value) => {
     const { components, select } =
@@ -142,11 +150,4 @@ const MultiConfig = (props: { flag: ComponentData.ScreenFlagType }) => {
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      flag: state.global.screenData.config.flag.type,
-    };
-  },
-  () => ({}),
-)(MultiConfig);
+export default MultiConfig;

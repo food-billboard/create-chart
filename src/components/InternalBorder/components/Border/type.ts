@@ -5,4 +5,4 @@ export type CommonBorderProps = {
   style?: CSSProperties;
   className?: string;
   [key: string]: any;
-} & ComponentData.TScreenData['config']['attr']['componentBorder'];
+};

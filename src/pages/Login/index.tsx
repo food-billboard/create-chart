@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { history } from 'umi';
-import { connect } from 'dva';
 import {
   UserOutlined,
   LockOutlined,
@@ -9,9 +8,9 @@ import {
 } from '@ant-design/icons';
 import { Input, Row, Col, Button, message, Space } from 'antd';
 import classnames from 'classnames';
+import { mobxStore } from '@/hooks';
 import Icon from '@/components/ChartComponents/Common/Icon';
 import { getCaptcha } from '@/services';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import CommonBackground from './components/Background';
 import styles from './index.less';
 
@@ -159,9 +158,7 @@ export const Captcha = (props: {
   );
 };
 
-const Login = (props: { login: (value: any) => any }) => {
-  const { login } = props;
-
+const Login = () => {
   const [mobile, setMobile] = useState<string>('18356778908');
   const [password, setPassword] = useState<string>('123456789');
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
@@ -193,13 +190,13 @@ const Login = (props: { login: (value: any) => any }) => {
     }
     setFetchLoading(true);
     try {
-      await login({ mobile: realMobile, password });
+      await mobxStore.user.login({ mobile: realMobile, password } as any);
     } catch (err) {
       message.info('账号或密码错误');
     } finally {
       setFetchLoading(false);
     }
-  }, [mobile, password, login, fetchLoading]);
+  }, [mobile, password, fetchLoading]);
 
   const action = useMemo(() => {
     return (
@@ -238,4 +235,4 @@ const Login = (props: { login: (value: any) => any }) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

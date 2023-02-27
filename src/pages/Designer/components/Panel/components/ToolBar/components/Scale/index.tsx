@@ -1,8 +1,7 @@
 import { useCallback, useMemo } from 'react';
-import { Button, Dropdown, InputNumber, Menu, Slider, Space } from 'antd';
+import { Button, Dropdown, InputNumber, Slider, Space } from 'antd';
 import { useControllableValue } from 'ahooks';
-import { connect } from 'dva';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { useMobxContext } from '@/hooks';
 import { wrapperId } from '../../../PanelWrapper/constants';
 import styles from './index.less';
 
@@ -33,17 +32,28 @@ export const autoFitScale = (
   return parseInt((result * 100).toFixed(0)) || 25;
 };
 
-const Scale = (props: {
-  value?: number;
-  onChange?: (value: number) => void;
-  pageWidth?: number;
-  pageHeight?: number;
-}) => {
-  const [value, setValue] = useControllableValue(props, {
-    defaultValue: 25,
-  });
+const Scale = () => {
+  const {
+    global: {
+      setScale,
+      scale,
+      screenData: {
+        config: {
+          style: { width: pageWidth, height: pageHeight },
+        },
+      },
+    },
+  } = useMobxContext();
 
-  const { pageWidth, pageHeight } = props;
+  const [value, setValue] = useControllableValue(
+    {
+      value: scale,
+      onChange: setScale,
+    },
+    {
+      defaultValue: 25,
+    },
+  );
 
   const autoFitScaleMethod = useCallback(() => {
     const result = autoFitScale(pageWidth!, pageHeight!);
@@ -106,4 +116,4 @@ const Scale = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Scale);
+export default Scale;

@@ -8,7 +8,7 @@ import {
   MacCommandOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 import CallbackManage, { CallbackManageRef } from '../CallbackManage';
 import ConstantManage, { ConstantManageRef } from '../ConstantManage';
@@ -18,7 +18,6 @@ import ThemeConfigModal, { ThemeConfigRef } from '../ThemeConfig';
 import RequestDefaultConfigManage, {
   RequestCofigRef,
 } from '../RequestDefaultConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const commonClass: string = classnames(
@@ -41,13 +40,15 @@ export type TCommonProps = {
 };
 
 // 重做
-export const InternalRedoIcon = (
-  props: {
-    isRedoDisabled: boolean;
-    redo: () => void;
-  } & TCommonProps,
-) => {
-  const { isRedoDisabled, redo, onClick } = props;
+export const RedoIcon = (props: TCommonProps) => {
+  const { onClick } = props;
+
+  const {
+    global: {
+      redo,
+      history: { isRedoDisabled = true },
+    },
+  } = useMobxContext();
 
   const handleClick = useCallback(() => {
     if (!isRedoDisabled) {
@@ -68,19 +69,17 @@ export const InternalRedoIcon = (
     />
   );
 };
-export const RedoIcon = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(InternalRedoIcon);
 
 // 撤销
-export const InternalUndoIcon = (
-  props: {
-    isUndoDisabled: boolean;
-    undo: () => void;
-  } & TCommonProps,
-) => {
-  const { isUndoDisabled, undo, onClick } = props;
+export const UndoIcon = (props: TCommonProps) => {
+  const { onClick } = props;
+
+  const {
+    global: {
+      undo,
+      history: { isUndoDisabled = true },
+    },
+  } = useMobxContext();
 
   const handleClick = useCallback(() => {
     if (!isUndoDisabled) {
@@ -101,10 +100,6 @@ export const InternalUndoIcon = (
     />
   );
 };
-export const UndoIcon = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(InternalUndoIcon);
 
 // 图层折叠展开
 export const LayerCollapseIcon = (props: TCommonProps) => {

@@ -1,13 +1,10 @@
 import { useCallback, useMemo, useState } from 'react';
-import { connect } from 'dva';
 import { Button, message } from 'antd';
+import { mobxStore } from '@/hooks';
 import { Email, Password, Captcha } from '../Login';
 import CommonBackground from '../Login/components/Background';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
-const Forget = (props: { forger: (value: any) => any }) => {
-  const { forger } = props;
-
+const Forget = () => {
   const [password, setPassword] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [captcha, setCaptcha] = useState<string>('');
@@ -29,13 +26,17 @@ const Forget = (props: { forger: (value: any) => any }) => {
 
     setFetchLoading(true);
     try {
-      await forger({ password, captcha: realCaptcha, email: realEmail });
+      await mobxStore.user.forget({
+        password,
+        captcha: realCaptcha,
+        email: realEmail,
+      });
     } catch (err) {
       message.info('提交错误');
     } finally {
       setFetchLoading(false);
     }
-  }, [password, forger, email, captcha]);
+  }, [password, email, captcha]);
 
   const action = useMemo(() => {
     return (
@@ -65,4 +66,4 @@ const Forget = (props: { forger: (value: any) => any }) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Forget);
+export default Forget;

@@ -1,5 +1,4 @@
-import { getDvaApp } from 'umi';
-import { useIdPathMap } from '@/hooks';
+import { useIdPathMap, mobxStore } from '@/hooks';
 import { getDvaGlobalModelData } from '../Component';
 
 export * from './SaveScreenData';
@@ -72,9 +71,7 @@ class DataChangePool {
       | ComponentMethod.SetComponentMethodParamsData[],
     enqueue: boolean = true,
   ) => {
-    const app = getDvaApp();
-    const dispatch = app._store.dispatch;
-    dispatch({ type: 'global/setComponent', value, enqueue });
+    mobxStore.global.setComponent(value, enqueue);
   };
 
   // 合并更新组件
@@ -98,13 +95,7 @@ class DataChangePool {
     if (
       this.multiSetComponentUtil.counter === this.multiSetComponentUtil.total
     ) {
-      const app = getDvaApp();
-      const dispatch = app._store.dispatch;
-      dispatch({
-        type: 'global/setComponent',
-        value: this.multiSetComponentUtil.pool,
-        enqueue: true,
-      });
+      mobxStore.global.setComponent(this.multiSetComponentUtil.pool, true);
       // init
       this.multiSetComponentUtil = {
         total: -1,

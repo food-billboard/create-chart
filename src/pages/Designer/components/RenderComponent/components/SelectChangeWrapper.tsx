@@ -1,14 +1,15 @@
-import { connect } from 'dva';
 import { useUpdateEffect } from 'ahooks';
-import { useIsComponentChildrenSelect } from '@/hooks';
-import { ConnectState } from '@/models/connect';
+import { useIsComponentChildrenSelect, useMobxContext } from '@/hooks';
 
 const SelectChangeWrapper = (props: {
-  select: string[];
   value: ComponentData.TComponentData;
   onSelectChange?: (isSelect: boolean) => void;
 }) => {
-  const { value, select, onSelectChange } = props;
+  const { value, onSelectChange } = props;
+
+  const {
+    global: { select },
+  } = useMobxContext();
 
   const isSelect = useIsComponentChildrenSelect(
     [value],
@@ -22,13 +23,4 @@ const SelectChangeWrapper = (props: {
   return <span></span>;
 };
 
-const ConnectSelectChangeWrapper = connect(
-  (state: ConnectState) => {
-    return {
-      select: state.global.select,
-    };
-  },
-  () => ({}),
-)(SelectChangeWrapper);
-
-export default ConnectSelectChangeWrapper;
+export default SelectChangeWrapper;

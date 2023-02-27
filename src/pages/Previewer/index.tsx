@@ -1,32 +1,28 @@
 import { useEffect, useState } from 'react';
-import { connect } from 'dva';
 import { history } from 'umi';
 import { message } from 'antd';
+import { previewScreenValid, previewScreenModelValid } from '@/services';
+import { useIsModelHash, useHashChangeReload, useMobxContext } from '@/hooks';
 import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
-import { previewScreenValid, previewScreenModelValid } from '@/services';
-import { useIsModelHash, useHashChangeReload } from '@/hooks';
 import useWrapperProps from '../Share/useWrapperProps';
 import PainterWrapper from '../Share/components/PainterWrapper';
 import WaterMark from '../Share/components/WaterMark';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
-function Previewer(props: {
-  setScreenType: (value: ComponentData.ScreenType) => void;
-  width: number;
-  height: number;
-  flag: ComponentData.ScreenFlagType;
-  setScale: (value: number) => void;
-  scale: ComponentData.ScreenScaleType;
-}) {
+function Previewer() {
   const {
-    setScreenType,
-    width,
-    height,
-    setScale,
-    flag,
-    scale: scaleConfig,
-  } = props;
+    global: {
+      setScreenType,
+      setScale,
+      screenData: {
+        config: {
+          style: { width, height },
+          flag: { type: flag },
+          attr: { scale: scaleConfig },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const [needFetch, setNeedFetch] = useState<boolean>(false);
 
@@ -82,4 +78,4 @@ function Previewer(props: {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Previewer);
+export default Previewer;

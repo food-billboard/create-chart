@@ -1,5 +1,4 @@
 import { useCallback, useMemo } from 'react';
-import { connect } from 'dva';
 import { Switch } from 'antd';
 import {
   getComponent,
@@ -9,13 +8,13 @@ import {
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import GroupUtil from '@/utils/Assist/Group';
 import { mergeWithoutArray } from '@/utils';
+import { useMobxContext } from '@/hooks';
 import { InternalBorderSelect, DEFAULT_BORDER } from '../../../InternalBorder';
 import AngleSelect from '../AngleSelect';
 import InputNumber, { InputNumberProps } from '../InputNumber';
 import ConfigList from '../Structure/ConfigList';
 import Opacity from '../Opacity';
 import HalfForm from '../Structure/HalfForm';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const { Item } = ConfigList;
@@ -45,13 +44,19 @@ const FormatterInputNumber = (
 
 // 基础的组件配置
 
-const BaseConfig = (props: {
-  id: string;
-  isGroupComponent: boolean;
-  components: ComponentData.TComponentData[];
-  flag: ComponentData.ScreenFlagType;
-}) => {
-  const { id, components, isGroupComponent, flag } = props;
+const BaseConfig = (props: { id: string; isGroupComponent: boolean }) => {
+  const { id, isGroupComponent } = props;
+
+  const {
+    global: {
+      components,
+      screenData: {
+        config: {
+          flag: { type: flag },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const {
     config: { style, attr },
@@ -361,4 +366,4 @@ const BaseConfig = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BaseConfig);
+export default BaseConfig;

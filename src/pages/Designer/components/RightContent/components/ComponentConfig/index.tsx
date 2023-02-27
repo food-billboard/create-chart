@@ -4,7 +4,7 @@ import {
   ControlOutlined,
   ProjectOutlined,
 } from '@ant-design/icons';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import IconTooltip from '@/components/IconTooltip';
 import LazyLoadWrapper from '@/components/LazyLoad';
 import ConfigComponent from './ConfigComponent';
@@ -13,7 +13,6 @@ import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';
 import ConfigWrapper, {
   ConfigItem,
 } from '@/components/ChartComponents/Common/ConfigWrapper';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const DataConfig = LazyLoadWrapper(async () => {
@@ -31,9 +30,12 @@ const InterActiveConfig = LazyLoadWrapper(async () => {
 const ComponentConfig = (props: {
   id: string;
   component: ComponentData.TComponentData;
-  setSelect: (value: string[]) => void;
 }) => {
-  const { id, component, setSelect } = props;
+  const { id, component } = props;
+
+  const {
+    global: { setSelect },
+  } = useMobxContext();
 
   const onBack = useCallback(() => {
     const { parent } = component;
@@ -106,4 +108,4 @@ const ComponentConfig = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComponentConfig);
+export default ComponentConfig;

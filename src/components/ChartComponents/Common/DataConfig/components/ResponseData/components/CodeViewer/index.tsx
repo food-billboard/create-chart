@@ -1,19 +1,25 @@
-import { useMemo, useState, useEffect } from 'react';
-import { connect } from 'dva';
+import { useState, useEffect } from 'react';
 import CodeEditor from '@/components/CodeEditor';
 import type { EditorProps } from '@/components/SyncCodeEditor';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { useMobxContext } from '@/hooks';
 
 const CodeViewer = (
   props: {
     value: ComponentData.TComponentApiDataConfig;
-    filter: ComponentData.TFilterConfig[];
-    params: ComponentData.TParams[];
-    constants: ComponentData.TConstants[];
   } & Partial<Omit<EditorProps, 'value'>>,
 ) => {
-  const { filter, value, params, constants, ...nextProps } = props;
+  const { value, ...nextProps } = props;
+
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: { filter, params, constants },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const [responseData, setResponseData] = useState();
 
@@ -44,4 +50,4 @@ const CodeViewer = (
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CodeViewer);
+export default CodeViewer;

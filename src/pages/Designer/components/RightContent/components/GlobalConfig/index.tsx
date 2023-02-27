@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { Input, Switch } from 'antd';
-import { connect } from 'dva';
 import { set } from 'lodash';
 import classnames from 'classnames';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { useMobxContext } from '@/hooks';
 import IconTooltip from '@/components/IconTooltip';
 import BackgroundSelect from '@/components/BackgroundSelect';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
@@ -15,17 +15,15 @@ import ConfigWrapper, {
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import CoverSelect from '@/components/CoverSelect';
 import ScaleConfig from './components/ScaleConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const { Item } = ConfigList;
 const { TextArea } = Input;
 
-const GlobalConfig = (props: {
-  screenData: ComponentData.TScreenData;
-  setScreenData: (value: SuperPartial<ComponentData.TScreenData>) => void;
-}) => {
-  const { screenData, setScreenData } = props;
+const GlobalConfig = () => {
+  const {
+    global: { screenData, setScreen: setScreenData },
+  } = useMobxContext();
 
   const {
     config: {
@@ -235,4 +233,4 @@ const GlobalConfig = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GlobalConfig);
+export default GlobalConfig;

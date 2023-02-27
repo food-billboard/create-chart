@@ -3,7 +3,7 @@ import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import Anime from 'animejs';
 import { useDeepCompareEffect } from 'ahooks';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import {
   useComponent,
   useCondition,
@@ -13,7 +13,6 @@ import FilterDataUtil from '@/utils/Assist/FilterData';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
-import { ConnectState } from '@/models/connect';
 import { sleep } from '@/utils';
 import { TPathBasicConfig } from '../type';
 import { CHART_ID } from '../id';
@@ -21,21 +20,15 @@ import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
 
-const _PathBasic = (
-  props: ComponentData.CommonComponentProps<TPathBasicConfig> & {
-    scale: number;
-  },
+const PathBasic = (
+  props: ComponentData.CommonComponentProps<TPathBasicConfig>,
 ) => {
-  const {
-    className,
-    style,
-    value,
-    global,
-    scale,
-    children,
-    wrapper: Wrapper,
-  } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenTheme, screenType } = global;
+
+  const {
+    global: { scale },
+  } = useMobxContext();
 
   const {
     id,
@@ -290,15 +283,6 @@ const _PathBasic = (
     </>
   );
 };
-
-const PathBasic = connect(
-  (state: ConnectState) => {
-    return {
-      scale: state.global.scale,
-    };
-  },
-  () => ({}),
-)(_PathBasic);
 
 const WrapperPathBasic: typeof PathBasic & {
   id: ComponentData.TComponentSelfType;

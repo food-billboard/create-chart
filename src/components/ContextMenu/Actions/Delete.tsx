@@ -1,30 +1,21 @@
 import { useCallback } from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
-import { getDvaApp } from 'umi';
-import { get } from 'lodash';
 import InteractiveUtil from '@/utils/Assist/Interactive';
-import { useIdPathMap } from '@/hooks';
+import { useIdPathMap, mobxStore } from '@/hooks';
 import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
 const deleteComponentInteractive = (id: string[]) => {
-  const app = getDvaApp();
-  const dispatch = app._store.dispatch;
-  const { state } =
-    app._models.find((item: any) => item.namespace === 'global') || {};
-  const params = get(state, 'screenData.config.attr.params');
+  const params = mobxStore.global.screenData.config.attr.params;
 
   InteractiveUtil.deleteComponentInteractive(
     {
       params,
       setParams: (params) => {
-        dispatch({
-          type: 'global/setScreen',
-          value: {
-            config: {
-              attr: {
-                params,
-              },
+        mobxStore.global.setScreen({
+          config: {
+            attr: {
+              params,
             },
           },
         });

@@ -1,14 +1,13 @@
 import { useMemo, ReactNode, useCallback } from 'react';
 import { Collapse, Checkbox } from 'antd';
 import { get } from 'lodash';
-import { connect } from 'dva';
 import { InfoCircleOutlined, CaretRightOutlined } from '@ant-design/icons';
+import { useMobxContext } from '@/hooks';
 import IconTooltip from '@/components/IconTooltip';
 import { getPath } from '@/utils/Assist/Component';
 import InteractiveUtil from '@/utils/Assist/Interactive';
 import GlobalComponent from '@/utils/Assist/GlobalComponent';
 import FieldSetting from './FieldSetting';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const { Panel } = Collapse;
@@ -54,9 +53,19 @@ const BaseConfig = (props: {
   component: ComponentData.TComponentData;
   onChange?: ComponentMethod.SetComponentMethod;
   params: ComponentData.TParams[];
-  setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
 }) => {
-  const { id, component, onChange, params, setScreen } = props;
+  const { id, component, onChange } = props;
+
+  const {
+    global: {
+      setScreen,
+      screenData: {
+        config: {
+          attr: { params },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const setParams = useCallback(
     (params: ComponentData.TParams[]) => {
@@ -181,4 +190,4 @@ const BaseConfig = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BaseConfig);
+export default BaseConfig;

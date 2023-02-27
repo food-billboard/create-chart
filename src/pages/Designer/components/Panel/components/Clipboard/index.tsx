@@ -1,8 +1,7 @@
 import { ReactNode, useCallback, useRef, useMemo, useState } from 'react';
-import { connect } from 'dva';
 import { useKeyPress, useDebounceFn } from 'ahooks';
 import { merge, get } from 'lodash';
-import { useIdPathMap } from '@/hooks';
+import { useIdPathMap, useMobxContext } from '@/hooks';
 import { clone } from '@/components/ContextMenu/Actions/Clone';
 import { paste } from '@/components/ContextMenu/Actions/Paste';
 import ConfirmModal, { ConfirmModalRef } from '@/components/ConfirmModal';
@@ -12,31 +11,26 @@ import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
 import { getComponent, getTopParentComponent } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import { sleep } from '@/utils';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
-const ClipboardComponent = (props: {
-  children?: ReactNode;
-  grid: number;
-  components: ComponentData.TComponentData[];
-  clipboard: ComponentClipboard.LocalClipboardType;
-  setClipboard: (value: ComponentClipboard.LocalClipboardType) => void;
-  setComponentAll: (value: ComponentData.TComponentData[]) => void;
-  setSelect: (value: string[]) => void;
-  screenType: ComponentData.ScreenType;
-  undo: () => void;
-  redo: () => void;
-}) => {
+const ClipboardComponent = (props: { children?: ReactNode }) => {
+  const { children } = props;
+
   const {
-    children,
-    clipboard,
-    setClipboard,
-    components,
-    setSelect,
-    undo,
-    redo,
-    screenType,
-    grid,
-  } = props;
+    global: {
+      undo,
+      redo,
+      setSelect,
+      setClipboard,
+      clipboard,
+      components,
+      screenType,
+      screenData: {
+        config: {
+          attr: { grid },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const [deleteModalContent, setDeleteModalContent] =
     useState<string>('是否确定删除组件');
@@ -197,4 +191,4 @@ const ClipboardComponent = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClipboardComponent);
+export default ClipboardComponent;

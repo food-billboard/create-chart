@@ -7,10 +7,9 @@ import {
 } from '@ant-design/icons';
 import { useScroll } from 'ahooks';
 import classnames from 'classnames';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import ColorSelect from '@/components/ColorSelect';
 import Tooltip from '@/components/Tooltip';
-import { ConnectState } from '@/models/connect';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { wrapperId } from '../../constants';
 import styles from './index.less';
@@ -23,6 +22,16 @@ const GuideLineButton = (props: {
   setGuideLine: (value: ComponentData.TGuideLineConfig) => void;
 }) => {
   const { show, onClick, setGuideLine } = props;
+
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: { theme },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const { left, top } = useScroll(document.querySelector(`#${wrapperId}`)) || {
     left: 0,
@@ -72,11 +81,4 @@ const GuideLineButton = (props: {
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      theme: state.global.screenData.config.attr.theme,
-    };
-  },
-  () => ({}),
-)(GuideLineButton);
+export default GuideLineButton;

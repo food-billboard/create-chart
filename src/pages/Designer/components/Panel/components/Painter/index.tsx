@@ -13,19 +13,16 @@ import {
   DropTarget,
   DropTargetConnector,
 } from 'react-dnd';
-import { connect } from 'dva';
 import { merge } from 'lodash';
 import ColorImageBackground from '@/components/ColorImageBackground';
-import { useBackground } from '@/hooks';
+import { useBackground, useMobxContext, mobxStore } from '@/hooks';
 import { createComponent } from '@/utils/Assist/Component';
 import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants/index';
-import { DragData } from '@/models/connect';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import ComponentList from '../ComponentList';
 import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
 import H5AutoHeight from '../H5AutoHeight';
 import { ExchangePreviewerContext } from '../../../ExchangeScreenFlag/components/MobilePreviewer/context';
-import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 export const DROP_TYPE = 'PAINTER_DROP_TYPE';
@@ -34,11 +31,6 @@ export type PainterProps = {
   // canDrop: boolean;
   // isOver: boolean;
   connectDropTarget?: ConnectDropTarget;
-  dragInfo: DragData;
-  setDragInfo: (value: Partial<DragData>) => void;
-  setSelect: (value: string[]) => void;
-  scale: number;
-  config: ComponentData.TScreenData['config'];
   className?: string;
   style?: CSSProperties;
   children?: ReactNode;
@@ -47,19 +39,20 @@ export type PainterProps = {
 export const PANEL_ID = 'panel-id';
 
 const Painter = (props: PainterProps) => {
+  const { connectDropTarget, className, style, children } = props;
+
   const {
-    connectDropTarget,
-    setSelect,
-    scale: originScale,
-    config: {
-      style: { width, height, padding = [0, 0] } = {},
-      attr: { poster, lens } = {},
-      flag: { type } = {},
-    } = {},
-    className,
-    style,
-    children,
-  } = props;
+    global: {
+      scale: originScale,
+      screenData: {
+        config: {
+          style: { width, height, padding = [0, 0] } = {},
+          attr: { poster, lens } = {},
+          flag: { type } = {},
+        } = {},
+      },
+    },
+  } = useMobxContext();
 
   // ? 为了pc转h5预览用的
   const { flag } = useContext(ExchangePreviewerContext);
@@ -140,7 +133,7 @@ const Painter = (props: PainterProps) => {
       Math.abs(clientX - x) < 10 &&
       Math.abs(clientY - y) < 10
     ) {
-      setSelect([]);
+      mobxStore.global.setSelect([]);
     }
     moveCounter.current = 0;
     clickFlag.current = false;
@@ -191,14 +184,14 @@ const dropTarget = DropTarget(
         y: 0,
       };
       const {
-        setSelect,
-        setDragInfo,
-        dragInfo,
+        drag: dragInfo,
         scale,
-        config: {
-          flag: { type },
+        screenData: {
+          config: {
+            flag: { type },
+          },
         },
-      } = props;
+      } = mobxStore.global;
 
       const generateNewComponent = (
         value: ComponentData.BaseComponentItem & {
@@ -231,10 +224,10 @@ const dropTarget = DropTarget(
           path: '',
         });
 
-        setSelect([component.id]);
+        mobxStore.global.setSelect([component.id]);
 
-        setDragInfo?.({
-          value: null,
+        mobxStore.global.setDragInfo({
+          value: null as any,
         });
       };
 
@@ -255,7 +248,7 @@ const dropTarget = DropTarget(
       // )
 
       generateNewComponent({
-        ...dragInfo.value,
+        ...(dragInfo.value as any),
         left: realLeft,
         top: realTop,
       });
@@ -274,10 +267,7 @@ const dropTarget = DropTarget(
   },
 )(Painter);
 
-export const NormalPainter = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Painter);
+export const NormalPainter = Painter;
 
 // @ts-ignore
-export default connect(mapStateToProps, mapDispatchToProps)(dropTarget) as any;
+export default dropTarget as any;

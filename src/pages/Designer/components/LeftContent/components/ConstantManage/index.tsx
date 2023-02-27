@@ -8,26 +8,30 @@ import {
 import { nanoid } from 'nanoid';
 import { Button, Drawer, Table, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import FocusWrapper from '@/components/FocusWrapper';
 import GhostButton from '@/components/GhostButton';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const { TextArea } = Input;
 
 export interface ConstantManageRef {
   open: () => void;
 }
-
 export interface ConstantManageProps {
   onClose?: () => void;
 }
 
-const ConstantList = (props: {
-  constants: ComponentData.TConstants[];
-  setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
-}) => {
-  const { constants = [], setScreen } = props;
+const ConstantList = () => {
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: { constants },
+        },
+      },
+      setScreen,
+    },
+  } = useMobxContext();
 
   const onConstantsChange = useCallback(
     (value: ComponentData.TConstants[]) => {
@@ -185,11 +189,6 @@ const ConstantList = (props: {
   );
 };
 
-const WrapperConstantList = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ConstantList);
-
 const ConstantManage = forwardRef<ConstantManageRef, ConstantManageProps>(
   (props, ref) => {
     const { onClose: propsOnClose } = props;
@@ -234,7 +233,7 @@ const ConstantManage = forwardRef<ConstantManageRef, ConstantManageProps>(
         placement="left"
         width={520}
       >
-        <WrapperConstantList />
+        <ConstantList />
       </Drawer>
     );
   },

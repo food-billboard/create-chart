@@ -1,18 +1,21 @@
 import { useMemo, useCallback, useState, useEffect } from 'react';
 import { Row, Collapse } from 'antd';
-import { connect } from 'dva';
 import { CaretRightOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
+import { useMobxContext } from '@/hooks';
 import Empty from '@/components/Empty';
 import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
-import { ConnectState } from '@/models/connect';
 import ComponentItem from './item';
 import styles from './index.less';
 
 const { Panel } = Collapse;
 
-const ComponentList = (props: { type: string; componentCollapse: boolean }) => {
-  const { type, componentCollapse } = props;
+const ComponentList = (props: { type: string }) => {
+  const { type } = props;
+
+  const {
+    local: { componentCollapse },
+  } = useMobxContext();
 
   const [activeKey, setActiveKey] = useState<string[]>([]);
 
@@ -90,11 +93,4 @@ const ComponentList = (props: { type: string; componentCollapse: boolean }) => {
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      componentCollapse: state.local.componentCollapse,
-    };
-  },
-  () => ({}),
-)(ComponentList);
+export default ComponentList;

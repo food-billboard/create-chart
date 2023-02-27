@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { Select } from 'antd';
 import { merge } from 'lodash';
-import { connect } from 'dva';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { useMobxContext } from '@/hooks';
 import IconTooltipBase from '@/components/IconTooltip';
 import Checkbox from '@/components/ChartComponents/Common/Checkbox';
 import FilterDataUtil from '@/utils/Assist/FilterData';
@@ -10,7 +10,6 @@ import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import CodeEditor from '../SaveCodeEditor';
 import SubTitle, { SubForm } from '../../SubTitle';
 import { TOnChange } from '../type';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
 export const IconTooltip = () => {
   return (
@@ -23,15 +22,23 @@ export const IconTooltip = () => {
 export type ApiConfigProps = {
   onChange?: TOnChange;
   value: ComponentData.TComponentApiDataConfig;
-  params: ComponentData.TParams[];
-  constants: ComponentData.TConstants[];
 };
 
 const ApiConfig = (props: ApiConfigProps) => {
-  const { onChange, value, params, constants } = props;
+  const { onChange, value } = props;
   const {
     request: { method, url, headers, body, serviceRequest },
   } = value;
+
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: { params, constants },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const onUrlChange = useCallback(
     async (url) => {
@@ -141,4 +148,4 @@ const ApiConfig = (props: ApiConfigProps) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ApiConfig);
+export default ApiConfig;

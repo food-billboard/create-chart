@@ -1,7 +1,6 @@
 import { useMemo, useCallback, CSSProperties } from 'react';
-import { connect } from 'dva';
 import { get } from 'lodash';
-import { ConnectState } from '@/models/connect';
+import { useMobxContext } from '@/hooks';
 import { getComponentByType } from '@/components/ChartComponents';
 import {
   InternalBorderWrapper,
@@ -9,29 +8,31 @@ import {
 } from '@/components/InternalBorder';
 import { EComponentType } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils';
-import { isGroupComponent } from '@/utils/Assist/Component';
 import ChildrenWrapper from './ChildrenWrapper';
 import SubGroup from './SubGroup';
 import styles from './index.less';
 
 const Content = (props: {
-  setParams: (value: ComponentData.TParams[]) => void;
-  screenType: ComponentData.ScreenType;
   component: ComponentData.ComponentProps['component'];
   timestamps?: number;
-  screenTheme: string;
-  flag: ComponentData.ScreenFlagType;
-  componentBorder: ComponentData.TScreenData['config']['attr']['componentBorder'];
 }) => {
+  const { component, timestamps } = props;
+
   const {
-    component,
-    setParams,
-    screenType,
-    timestamps,
-    screenTheme,
-    flag,
-    componentBorder,
-  } = props;
+    global: {
+      setParams,
+      screenType,
+      screenData: {
+        config: {
+          attr: {
+            theme: { value: screenTheme },
+            componentBorder,
+          },
+          flag: { type: flag },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const getScale = useCallback((component?: ComponentData.TComponentData) => {
     if (!component)
@@ -198,19 +199,4 @@ const Content = (props: {
   return <>{children}</>;
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      screenType: state.global.screenType,
-      screenTheme: state.global.screenData.config.attr.theme.value,
-      flag: state.global.screenData.config.flag.type,
-      componentBorder: state.global.screenData.config.attr.componentBorder,
-    };
-  },
-  (dispatch) => {
-    return {
-      setParams: (value: ComponentData.TParams[]) =>
-        dispatch({ type: 'global/setParams', value }),
-    };
-  },
-)(Content);
+export default Content;

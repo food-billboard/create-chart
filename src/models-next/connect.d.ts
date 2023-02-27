@@ -1,4 +1,3 @@
-import { MenuDataItem, Settings as ProSettings } from '@ant-design/pro-layout';
 import UndoHistory from 'react-undo-component/lib/Component/history';
 import { ThemeMap } from '@/utils/constants';
 import { HistoryUtil } from '@/utils/Assist/History';
@@ -51,12 +50,7 @@ export interface Loading {
 export interface ConnectState {
   global: IGlobalModelState;
   loading: Loading;
-  settings: ProSettings;
   user: IUserModelState;
   data: IDataModelState;
   local: ILocalModelState;
-}
-
-export interface Route extends MenuDataItem {
-  routes?: Route[];
 }

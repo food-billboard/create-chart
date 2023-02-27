@@ -1,30 +1,29 @@
 import { useMemo, useRef } from 'react';
-import { uniqueId, merge, get } from 'lodash';
+import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import ColorSelect from '@/components/ColorSelect';
 import { useComponentSize } from '@/components/ChartComponents/Common/Component/hook';
-import { ConnectState } from '@/models/connect';
 import { TTicketConfig } from '../type';
 import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
 
-const Ticket = (
-  props: ComponentData.CommonComponentProps<TTicketConfig> & {
-    componentBorder: ComponentData.TScreenData['config']['attr']['componentBorder'];
-  },
-) => {
+const Ticket = (props: ComponentData.CommonComponentProps<TTicketConfig>) => {
+  const { className, style, value, children, global, wrapper: Wrapper } = props;
+
   const {
-    className,
-    style,
-    value,
-    children,
-    global,
-    wrapper: Wrapper,
-    componentBorder: { width: borderWidth, padding },
-  } = props;
+    global: {
+      screenData: {
+        config: {
+          attr: {
+            componentBorder: { width: borderWidth, padding },
+          },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const {
     config: {
@@ -108,14 +107,4 @@ const WrapperTicket: typeof Ticket & {
 
 WrapperTicket.id = CHART_ID;
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      componentBorder: get(
-        state,
-        'global.screenData.config.attr.componentBorder',
-      ),
-    };
-  },
-  () => ({}),
-)(WrapperTicket);
+export default WrapperTicket;

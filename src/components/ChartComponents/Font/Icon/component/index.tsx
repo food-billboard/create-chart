@@ -1,9 +1,8 @@
 import { CSSProperties, useMemo, useRef } from 'react';
-import { uniqueId, merge, get } from 'lodash';
+import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import ColorSelect from '@/components/ColorSelect';
-import { ConnectState } from '@/models/connect';
 import { useComponentSize } from '@/components/ChartComponents/Common/Component/hook';
 import { useLinkageInteractive } from '@/components/ChartComponents/Common/Component/hook/useLinkageInteractive';
 import { TIconConfig } from '../type';
@@ -12,21 +11,21 @@ import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
 
-const Icon = (
-  props: ComponentData.CommonComponentProps<TIconConfig> & {
-    componentBorder: ComponentData.TScreenData['config']['attr']['componentBorder'];
-  },
-) => {
-  const {
-    className,
-    style,
-    value,
-    children,
-    global,
-    wrapper: Wrapper,
-    componentBorder: { width: borderWidth, padding },
-  } = props;
+const Icon = (props: ComponentData.CommonComponentProps<TIconConfig>) => {
+  const { className, style, value, children, global, wrapper: Wrapper } = props;
   const { screenType } = global;
+
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: {
+            componentBorder: { width: borderWidth, padding },
+          },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const {
     config: {
@@ -103,14 +102,4 @@ const WrapperIcon: typeof Icon & {
 
 WrapperIcon.id = CHART_ID;
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      componentBorder: get(
-        state,
-        'global.screenData.config.attr.componentBorder',
-      ),
-    };
-  },
-  () => ({}),
-)(WrapperIcon);
+export default WrapperIcon;

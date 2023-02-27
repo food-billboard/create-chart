@@ -1,10 +1,9 @@
 import { useEffect, useState, useMemo } from 'react';
-import { connect } from 'dva';
 import { merge } from 'lodash';
+import { useMobxContext } from '@/hooks';
 import GuideLine from '@/components/GuideLine';
 import { getPath } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import {
   AbsorbUtil,
   GuideLineCallback,
@@ -17,18 +16,13 @@ const AbsorbGuideLine = (props: {
     width: number;
     height: number;
   };
-  scale: number;
-  components: ComponentData.TComponentData[];
-  guideLine: ComponentData.TGuideLineConfig;
-  setGuideLine: (value: ComponentData.TGuideLineConfig) => void;
 }) => {
+  const { size } = props;
+
   const {
-    components,
-    guideLine,
-    setGuideLine,
-    scale: originScale,
-    size,
-  } = props;
+    global: { components, guideLine, scale: originScale, setGuideLine },
+  } = useMobxContext();
+
   const [absorbGuideLine, setAbsorbGuideLine] = useState<
     ComponentData.TGuideLineConfigItem[]
   >([]);
@@ -99,4 +93,4 @@ const AbsorbGuideLine = (props: {
   return <>{domList}</>;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AbsorbGuideLine);
+export default AbsorbGuideLine;

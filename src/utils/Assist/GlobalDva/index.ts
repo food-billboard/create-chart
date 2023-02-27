@@ -1,4 +1,3 @@
-import { getDvaApp } from 'umi';
 import { getDvaGlobalModelData } from '../Component';
 
 export const getGlobalSelect: () => string[] = () => {

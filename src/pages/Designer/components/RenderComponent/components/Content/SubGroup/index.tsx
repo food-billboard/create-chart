@@ -1,8 +1,7 @@
 import { ReactNode, useRef, CSSProperties, useMemo } from 'react';
 import classnames from 'classnames';
 import { merge } from 'lodash';
-import { connect } from 'dva';
-import { useComponentChildrenStyle } from '@/hooks';
+import { useComponentChildrenStyle, useMobxContext } from '@/hooks';
 import {
   useCondition,
   useGroupComponent,
@@ -10,7 +9,6 @@ import {
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
-import { ConnectState } from '@/models/connect';
 import CarouselGroupWrapper from './CarouselGroupWrapper';
 import styles from '../../../index.less';
 
@@ -18,8 +16,6 @@ const SubGroup = (props: {
   children?: ReactNode;
   value: ComponentData.TComponentData;
   isOuter?: boolean;
-  screenType: 'edit' | 'preview' | 'production';
-  screenTheme: ComponentData.TScreenTheme;
   style?: CSSProperties;
   flag: ComponentData.ScreenFlagType;
   wrapper: any;
@@ -30,12 +26,22 @@ const SubGroup = (props: {
     value,
     className,
     isOuter = false,
-    screenType,
-    screenTheme,
     style,
     flag,
     wrapper: Wrapper,
   } = props;
+
+  const {
+    global: {
+      screenType,
+      screenData: {
+        config: {
+          attr: { theme: screenTheme },
+        },
+      },
+    },
+  } = useMobxContext();
+
   const {
     id,
     config: {
@@ -125,14 +131,4 @@ const SubGroup = (props: {
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      screenType: state.global.screenType,
-      screenTheme: state.global.screenData.config.attr.theme,
-    };
-  },
-  (dispatch: any) => {
-    return {};
-  },
-)(SubGroup);
+export default SubGroup;

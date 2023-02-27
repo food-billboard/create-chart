@@ -1,11 +1,12 @@
 import { useCallback, useMemo } from 'react';
-import { Avatar as AntAvatar, Dropdown, Menu } from 'antd';
-import { connect } from 'dva';
+import { Avatar as AntAvatar, Dropdown } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { useMobxContext } from '@/hooks';
 
-const Avatar = (props: { logout: () => void; userInfo: any }) => {
-  const { logout, userInfo: { avatar, username } = {} } = props;
+const Avatar = (props: {}) => {
+  const {
+    user: { currentUser: { avatar, username } = {}, logout },
+  } = useMobxContext();
 
   const handleLogout = useCallback(async () => {
     await logout();
@@ -29,4 +30,4 @@ const Avatar = (props: { logout: () => void; userInfo: any }) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Avatar);
+export default Avatar;

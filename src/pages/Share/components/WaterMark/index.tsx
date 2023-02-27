@@ -1,9 +1,16 @@
-import { connect } from 'dva';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { useMobxContext } from '@/hooks';
 import styles from './index.less';
 
-const WaterMark = (props: { waterMark: boolean }) => {
-  const { waterMark } = props;
+const WaterMark = () => {
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: { waterMark },
+        },
+      },
+    },
+  } = useMobxContext();
 
   return (
     <div
@@ -15,4 +22,4 @@ const WaterMark = (props: { waterMark: boolean }) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(WaterMark);
+export default WaterMark;

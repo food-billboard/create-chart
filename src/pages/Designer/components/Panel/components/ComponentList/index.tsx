@@ -1,17 +1,12 @@
-import { useMemo, useContext } from 'react';
-import { connect } from 'dva';
-import { useIdPathMap } from '@/hooks';
+import { useMemo } from 'react';
+import { useIdPathMap, useMobxContext } from '@/hooks';
 import RenderComponent from '../../../RenderComponent';
-import {
-  getPath,
-  isGroupComponent as isGroupComponentFunc,
-} from '@/utils/Assist/Component';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { getPath } from '@/utils/Assist/Component';
 
-const ComponentList = (props: {
-  components: ComponentData.TComponentData[];
-}) => {
-  const { components = [] } = props;
+const ComponentList = () => {
+  const {
+    global: { components },
+  } = useMobxContext();
 
   const list = useMemo(() => {
     useIdPathMap(true, components);
@@ -43,4 +38,4 @@ const ComponentList = (props: {
   return <>{list}</>;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComponentList);
+export default ComponentList;

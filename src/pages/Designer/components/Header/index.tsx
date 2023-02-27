@@ -6,35 +6,35 @@ import {
   ExportOutlined,
   ImportOutlined,
 } from '@ant-design/icons';
-import { connect } from 'dva';
 import classnames from 'classnames';
 import Marquee from 'react-fast-marquee';
 import FocusWrapper from '@/components/FocusWrapper';
 import { previewScreen, previewScreenModel } from '@/services';
 import { goPreview, goPreviewModel, goView } from '@/utils/tool';
-import { isModelHash } from '@/hooks';
+import { isModelHash, useMobxContext } from '@/hooks';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { saveScreenData } from '@/utils/Assist/DataChangePool';
 import { staticExportData, staticLeadIn } from '@/utils/Assist/LeadInAndOutput';
 import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 import ExchangeScreenFlagButton from '../ExchangeScreenFlag';
-import { mapDispatchToProps, mapStateToProps } from './connect';
 import ActionList from './ActionList';
 import styles from './index.less';
 
-const Header = (props: {
-  screenData: Exclude<ComponentData.TScreenData, 'components'>;
-  setScreen?: (data: ComponentMethod.GlobalUpdateScreenDataParams) => void;
-}) => {
-  const { screenData, setScreen } = props;
+const Header = () => {
   const {
-    name,
-    _id,
-    config: {
-      flag: { type },
+    global: {
+      setScreen,
+      screenData: {
+        name,
+        _id,
+        config: {
+          flag: { type },
+        },
+      },
     },
-  } = screenData || {};
+  } = useMobxContext();
+
   const [editMode, setEditMode] = useState<boolean>(false);
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
 
@@ -266,4 +266,4 @@ const Header = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

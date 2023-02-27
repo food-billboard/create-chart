@@ -1,29 +1,25 @@
 import { useEffect } from 'react';
-import { connect } from 'dva';
-import { useHashChangeReload } from '@/hooks';
+import { useHashChangeReload, useMobxContext } from '@/hooks';
 import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
 import useWrapperProps from '../Share/useWrapperProps';
 import PainterWrapper from '../Share/components/PainterWrapper';
 import WaterMark from '../Share/components/WaterMark';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
-function Viewer(props: {
-  setScreenType: (value: ComponentData.ScreenType) => void;
-  width: number;
-  height: number;
-  setScale: (value: number) => void;
-  flag: ComponentData.ScreenFlagType;
-  scale: ComponentData.ScreenScaleType;
-}) {
+function Viewer() {
   const {
-    setScreenType,
-    width,
-    height,
-    setScale,
-    flag,
-    scale: scaleConfig,
-  } = props;
+    global: {
+      setScreenType,
+      setScale,
+      screenData: {
+        config: {
+          style: { width, height },
+          flag: { type: flag },
+          attr: { scale: scaleConfig },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const { scale, ...wrapperProps } = useWrapperProps({
     containerWidth: width,
@@ -48,4 +44,4 @@ function Viewer(props: {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Viewer);
+export default Viewer;

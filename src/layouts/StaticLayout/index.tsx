@@ -1,9 +1,7 @@
 import { useEffect, useMemo } from 'react';
-import { connect } from 'dva';
-import { get } from 'lodash';
-import { ConnectState } from '@/models/connect';
 import IntroductionButton from '@/components/IntroductionButton';
 import PromptChrome from '@/components/PromptChrome';
+import { useMobxContext, MobxContext, mobxStore } from '../../hooks';
 
 const GlobalLayout = (props: any) => {
   const {
@@ -44,18 +42,26 @@ const DocumentTitleSetWrapper = (props: any) => {
 
 // 环境判断
 const EnvironmentPrompt = (props: any) => {
+  const {
+    global: {
+      screenData: { name },
+    },
+  } = useMobxContext();
+
   return (
     <PromptChrome>
-      <DocumentTitleSetWrapper {...props} />
+      <DocumentTitleSetWrapper {...props} screenName={name} />
     </PromptChrome>
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      screenName: get(state, 'global.screenData.name') || '大屏设计器',
-    };
-  },
-  () => ({}),
-)(EnvironmentPrompt);
+// 最外层的mobx包裹层
+const MobxWrapper = (props: any) => {
+  return (
+    <MobxContext.Provider value={mobxStore}>
+      <EnvironmentPrompt {...props} />
+    </MobxContext.Provider>
+  );
+};
+
+export default MobxWrapper;

@@ -1,17 +1,14 @@
 import { useEffect, ReactNode, useState, useMemo, useCallback } from 'react';
-import { connect } from 'dva';
 import { Empty, Layout as AntLayout, Menu, Breadcrumb } from 'antd';
 import classnames from 'classnames';
 import isMobileJudge from 'is-mobile';
-import { get } from 'lodash';
 import { history } from 'umi';
-import { ConnectState } from '@/models/connect';
 import Loading from '@/components/PageLoading';
 import IntroductionButton from '@/components/IntroductionButton';
 import PromptChrome from '@/components/PromptChrome';
 import { dispatchLogin } from '@/utils/request';
 import Avatar from './components/Avatar';
-import { mapDispatchToProps, mapStateToProps } from './connect';
+import { useMobxContext, MobxContext, mobxStore } from '../hooks';
 import styles from './index.less';
 
 const { Header, Content, Footer } = AntLayout;
@@ -21,16 +18,15 @@ const PATH_MAP: any = {
   '/screen': 'screen',
 };
 
-const LoginWrapper = (props: {
-  children: ReactNode;
-  location: any;
-  getUserInfo: () => Promise<any>;
-}) => {
+const LoginWrapper = (props: { children: ReactNode; location: any }) => {
   const {
     children,
     location: { pathname },
-    getUserInfo,
   } = props;
+
+  const {
+    user: { getUserInfo },
+  } = useMobxContext();
 
   const [fetchLoading, setFetchLoading] = useState<boolean>(true);
 
@@ -58,11 +54,6 @@ const LoginWrapper = (props: {
     </>
   );
 };
-
-const FetchLoginWrapper = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LoginWrapper);
 
 // 外部layout
 const Layout = (props: { children?: ReactNode; pathname: string }) => {
@@ -177,9 +168,9 @@ const GlobalLayout = (props: any) => {
 
   if (['/screen', '/model'].includes(pathname)) {
     return (
-      <FetchLoginWrapper {...props}>
+      <LoginWrapper {...props}>
         <Layout pathname={pathname}>{children}</Layout>
-      </FetchLoginWrapper>
+      </LoginWrapper>
     );
   }
 
@@ -190,7 +181,7 @@ const GlobalLayout = (props: any) => {
     return <div></div>;
   }
 
-  return <FetchLoginWrapper {...props} />;
+  return <LoginWrapper {...props} />;
 };
 
 // 设置document title
@@ -235,18 +226,26 @@ const DocumentTitleSetWrapper = (props: any) => {
 
 // 环境判断
 const EnvironmentPrompt = (props: any) => {
+  const {
+    global: {
+      screenData: { name },
+    },
+  } = useMobxContext();
+
   return (
     <PromptChrome>
-      <DocumentTitleSetWrapper {...props} />
+      <DocumentTitleSetWrapper {...props} screenName={name} />
     </PromptChrome>
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      screenName: get(state, 'global.screenData.name') || '大屏设计器',
-    };
-  },
-  () => ({}),
-)(EnvironmentPrompt);
+// 最外层的mobx包裹层
+const MobxWrapper = (props: any) => {
+  return (
+    <MobxContext.Provider value={mobxStore}>
+      <EnvironmentPrompt {...props} />
+    </MobxContext.Provider>
+  );
+};
+
+export default MobxWrapper;

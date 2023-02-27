@@ -1,20 +1,20 @@
 import { useMemo } from 'react';
-import { connect } from 'dva';
 import classnames from 'classnames';
 import { get } from 'lodash';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { useMobxContext } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import { getComponent } from '@/utils/Assist/Component';
 import BaseConfig from './components/BaseConfig';
 import LinkageConfig from './components/LinkageConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
-const InterActiveConfig = (props: {
-  id: string;
-  components: ComponentData.TComponentData[];
-}) => {
-  const { id, components } = props;
+const InterActiveConfig = (props: { id: string }) => {
+  const { id } = props;
+
+  const {
+    global: { components },
+  } = useMobxContext();
 
   const component = useMemo(() => {
     return getComponent(id, components);
@@ -59,4 +59,4 @@ const InterActiveConfig = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(InterActiveConfig);
+export default InterActiveConfig;

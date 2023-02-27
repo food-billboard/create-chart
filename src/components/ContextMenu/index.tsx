@@ -1,13 +1,12 @@
 import { ReactNode, useEffect, useState, useMemo, useCallback } from 'react';
-import { Dropdown, Menu } from 'antd';
+import { Dropdown } from 'antd';
 import type { DropDownProps } from 'antd/es/dropdown';
 import classnames from 'classnames';
-import { connect } from 'dva';
 import { isEqual } from 'lodash';
+import { useMobxContext } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
 import { ActionItemType, ActionItem, DEFAULT_ACTION_LIST } from './action.map';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const ContextMenu = (
@@ -16,14 +15,8 @@ const ContextMenu = (
     children?: ReactNode;
     value: ComponentData.TComponentData;
     path?: string;
-    clipboard: ComponentClipboard.LocalClipboardType;
-    components: ComponentData.TComponentData[];
-    setSelect: (value: string[]) => void;
-    setClipboard: (value: string[]) => void;
-    setComponentAll: (value: ComponentData.TComponentData[]) => void;
     onClick?: (actionType: ActionItemType) => void;
     actionFrom: 'layer' | 'screen';
-    flag: ComponentData.ScreenFlagType;
   } & Partial<DropDownProps>,
 ) => {
   const {
@@ -32,18 +25,27 @@ const ContextMenu = (
     onOpenChange: propsOnVisibleChange,
     value,
     path,
-    setSelect,
-    setComponentAll,
-    components,
     overlayClassName,
-    clipboard,
-    setClipboard,
     onClick,
     actionFrom,
-    flag,
     ...nextProps
   } = props;
   const { id } = value;
+
+  const {
+    global: {
+      components,
+      clipboard,
+      screenData: {
+        config: {
+          flag: { type: flag },
+        },
+      },
+      setComponentAll,
+      setSelect,
+      setClipboard,
+    },
+  } = useMobxContext();
 
   const [visible, setVisible] = useState<boolean>(false);
   const [internalSelect, setInternalSelect] = useState<string[]>([]);
@@ -150,4 +152,4 @@ const ContextMenu = (
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContextMenu);
+export default ContextMenu;

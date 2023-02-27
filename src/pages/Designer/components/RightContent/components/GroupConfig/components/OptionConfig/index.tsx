@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import { merge } from 'lodash';
-import { connect } from 'dva';
-import { ConnectState } from '@/models/connect';
+import { useMobxContext } from '@/hooks';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
@@ -12,11 +11,18 @@ import KeyWordPosition from './components/KeyWordPosition';
 import ConditionConfig from './components/ConditionConfig';
 import TransformConfig from './components/TransformConfig';
 
-const OrientConfig = (props: {
-  component: ComponentData.TComponentData;
-  flag: ComponentData.ScreenFlagType;
-}) => {
-  const { component, flag } = props;
+const OrientConfig = (props: { component: ComponentData.TComponentData }) => {
+  const { component } = props;
+
+  const {
+    global: {
+      screenData: {
+        config: {
+          flag: { type: flag },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const {
     id,
@@ -155,11 +161,4 @@ const OrientConfig = (props: {
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      flag: state.global.screenData.config.flag.type,
-    };
-  },
-  () => ({}),
-)(OrientConfig);
+export default OrientConfig;

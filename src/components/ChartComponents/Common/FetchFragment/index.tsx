@@ -1,16 +1,11 @@
 import { useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
-import { connect } from 'dva';
 import { useUpdateEffect } from 'ahooks';
 import { noop } from 'lodash';
+import { useMobxContext } from '@/hooks';
 import { CompareFilterUtil } from '@/utils/Assist/FilterData';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
 export type TFetchFragmentProps = {
   id: string;
-  params: ComponentData.TParams[];
-  filter: ComponentData.TFilterConfig[];
-  constants: ComponentData.TConstants[];
-  screenType: ComponentData.ScreenType;
   url: string;
   componentFilter: ComponentData.TComponentFilterConfig[];
   componentCondition?: ComponentData.ComponentConditionConfig;
@@ -34,9 +29,6 @@ export type TFetchFragmentRef = {
 const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
   (props, ref) => {
     const {
-      params,
-      filter,
-      constants,
       componentFilter,
       componentParams = [],
       componentCondition: componentConditionConfig = {
@@ -49,8 +41,17 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
       reGetValue,
       reCondition = noop,
       id,
-      screenType,
     } = props;
+    const {
+      global: {
+        screenData: {
+          config: {
+            attr: { params, constants, filter },
+          },
+        },
+        screenType,
+      },
+    } = useMobxContext();
 
     const { value: componentCondition = [], initialState } =
       componentConditionConfig;
@@ -116,6 +117,4 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
   },
 );
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {
-  forwardRef: true,
-})(FetchFragment);
+export default FetchFragment;

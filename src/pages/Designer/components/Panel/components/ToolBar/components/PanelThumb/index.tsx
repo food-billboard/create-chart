@@ -1,22 +1,16 @@
 import { useMemo, useState, useEffect, useRef } from 'react';
 import { Button } from 'antd';
-import { connect } from 'dva';
 import classnames from 'classnames';
-import { pick, get } from 'lodash';
+import { pick } from 'lodash';
 import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
-import { useIdPathMap } from '@/hooks';
+import { useIdPathMap, useMobxContext } from '@/hooks';
 import ColorSelect from '@/components/ColorSelect';
-import { ConnectState } from '@/models/connect';
 import ThemeUtil from '@/utils/Assist/Theme';
-import {
-  getDvaGlobalModelData,
-  getTopParentComponent,
-} from '@/utils/Assist/Component';
+import { getTopParentComponent } from '@/utils/Assist/Component';
 import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
@@ -42,20 +36,16 @@ const TransformOriginMap = {
 
 type TDirection = keyof typeof TransformOriginMap;
 
-const InternalComponentActiveItem = (props: {
-  components: ComponentData.TComponentData[];
-  select: string[];
+const ComponentActiveItem = (props: {
   width: number;
   height: number;
   scale: number;
 }) => {
+  const { width: propsWidth, height: propsHeight, scale } = props;
+
   const {
-    components,
-    select,
-    width: propsWidth,
-    height: propsHeight,
-    scale,
-  } = props;
+    global: { components, select },
+  } = useMobxContext();
 
   const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -264,16 +254,6 @@ const InternalComponentActiveItem = (props: {
   );
 };
 
-const ComponentActiveItem = connect(
-  (state: ConnectState) => {
-    return {
-      components: state.global.components,
-      select: state.global.select,
-    };
-  },
-  () => ({}),
-)(InternalComponentActiveItem);
-
 const ComponentItem = (props: {
   width: number;
   height: number;
@@ -298,12 +278,17 @@ const ComponentItem = (props: {
   );
 };
 
-const InternalPanelThumb = (props: {
-  width: number;
-  height: number;
-  components: ComponentData.TComponentData[];
-}) => {
-  const { width, height, components } = props;
+const PanelThumb = () => {
+  const {
+    global: {
+      components,
+      screenData: {
+        config: {
+          style: { width, height },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const thumbHeight = useMemo(() => {
     return (height / width) * THUMB_WIDTH;
@@ -352,11 +337,6 @@ const InternalPanelThumb = (props: {
     </div>
   );
 };
-
-const PanelThumb = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(InternalPanelThumb);
 
 const ThumbButton = () => {
   const [visible, setVisible] = useState<boolean>(true);

@@ -1,6 +1,5 @@
-import { ReactNode, useState, useMemo, useEffect, Children } from 'react';
-import { connect } from 'dva';
-import { ConnectState } from '@/models/connect';
+import { ReactNode, useMemo, useEffect, Children } from 'react';
+import { useMobxContext } from '@/hooks';
 import {
   EVENT_NAME_MAP,
   GLOBAL_EVENT_EMITTER,
@@ -13,10 +12,13 @@ import EventEmitter from './EventEmitter';
 
 const CarouselGroupWrapper = (props: {
   children?: ReactNode;
-  screenType: ComponentData.ScreenType;
   groupCarousel: ComponentData.TGroupComponentCarouselConfig;
 }) => {
-  const { screenType, children, groupCarousel } = props;
+  const {
+    global: { screenType },
+  } = useMobxContext();
+
+  const { children, groupCarousel } = props;
   const { delay, verticalAlign, horizontalAlign } = groupCarousel;
 
   const childrenLength = useMemo(() => {
@@ -118,13 +120,4 @@ const CarouselGroupWrapper = (props: {
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      screenType: state.global.screenType,
-    };
-  },
-  () => {
-    return {};
-  },
-)(CarouselGroupWrapper);
+export default CarouselGroupWrapper;

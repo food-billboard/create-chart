@@ -1,12 +1,19 @@
 import classnames from 'classnames';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import Scale from './components/Scale';
 import PanelThumb from './components/PanelThumb';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
-const ToolBar = (props: { flag: ComponentData.ScreenFlagType }) => {
-  const { flag } = props;
+const ToolBar = () => {
+  const {
+    global: {
+      screenData: {
+        config: {
+          flag: { type: flag },
+        },
+      },
+    },
+  } = useMobxContext();
 
   return (
     <div
@@ -22,4 +29,4 @@ const ToolBar = (props: { flag: ComponentData.ScreenFlagType }) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolBar);
+export default ToolBar;

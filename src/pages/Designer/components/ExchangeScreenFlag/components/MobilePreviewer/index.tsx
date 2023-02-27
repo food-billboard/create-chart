@@ -7,14 +7,13 @@ import {
 } from 'react';
 import { Drawer, Button, message } from 'antd';
 import classnames from 'classnames';
-import { connect } from 'dva';
 import { noop } from 'lodash';
+import { useMobxContext } from '@/hooks';
 import { Loading } from '@/components/PageLoading';
 import { getDvaGlobalModelData } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { ComponentTransformOriginChange } from '@/utils/Assist/BreakingChange';
-import { ConnectState } from '@/models/connect';
 import { getComponentByType } from '@/components/ChartComponents';
 import { InternalBorderWrapper } from '@/components/InternalBorder';
 import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
@@ -23,12 +22,21 @@ import { NormalPainter } from '../../../Panel/components/Painter';
 import { ExchangePreviewerContext } from './context';
 import styles from './index.less';
 
-const _ComponentList = (props: {
-  value: ComponentData.TComponentData[];
-  screenTheme: string;
-  version: string;
-}) => {
-  const { value, version, screenTheme } = props;
+const ComponentList = (props: { value: ComponentData.TComponentData[] }) => {
+  const { value } = props;
+
+  const {
+    global: {
+      version,
+      screenData: {
+        config: {
+          attr: {
+            theme: { value: screenTheme },
+          },
+        },
+      },
+    },
+  } = useMobxContext();
 
   // * 1.5版本以后设置成中心位置
   const transformOrigin = useMemo(() => {
@@ -81,16 +89,6 @@ const _ComponentList = (props: {
     </>
   );
 };
-
-const ComponentList = connect(
-  (state: ConnectState) => {
-    return {
-      version: state.global.version || '',
-      screenTheme: state.global.screenData.config.attr.theme.value,
-    };
-  },
-  () => ({}),
-)(_ComponentList);
 
 export type MobilePreviewerRef = {
   open: () => void;

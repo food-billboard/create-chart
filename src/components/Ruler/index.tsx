@@ -1,19 +1,19 @@
 import { createRef, Component } from 'react';
 import ReactRuler, { RulerProps as BaseRulerProps } from '@scena/react-ruler';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import ColorSelect from '@/components/ColorSelect';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
 export type RulerProps = Partial<BaseRulerProps>;
 
 const { getRgbaString } = ColorSelect;
 
-type Props = RulerProps & {
-  theme: ComponentData.TScreenTheme;
-};
-
-class Ruler extends Component<Props> {
+type Props = RulerProps;
+class Ruler extends Component<
+  Props & {
+    theme: ComponentData.TScreenTheme;
+  }
+> {
   rulerRef = createRef<any>();
 
   resize = () => {
@@ -55,7 +55,16 @@ class Ruler extends Component<Props> {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Ruler as any) as any;
+export default (props: Props) => {
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: { theme },
+        },
+      },
+    },
+  } = useMobxContext();
+
+  return <Ruler {...props} theme={theme} />;
+};

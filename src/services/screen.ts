@@ -1,6 +1,6 @@
-import { history, getDvaApp } from 'umi';
+import { history } from 'umi';
 import { merge } from 'lodash';
-import { isModelHash } from '@/hooks';
+import { isModelHash, mobxStore } from '@/hooks';
 import request from '../utils/request';
 import { SCREEN_VERSION, SERVICE_REQUEST_URL } from '../utils/constants';
 
@@ -66,8 +66,7 @@ export const deleteScreenPool = (
     location: { query },
   } = history;
   const { id } = query || {};
-  const app = getDvaApp();
-  const userId = app._store.getState().user.currentUser._id;
+  const userId = mobxStore.user.currentUser._id;
 
   let params = {
     type: isModelHash(location.hash) ? 'model' : 'screen',

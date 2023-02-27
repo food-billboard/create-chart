@@ -1,11 +1,9 @@
 import { useCallback, useRef } from 'react';
 import { Button } from 'antd';
 import { MobileOutlined } from '@ant-design/icons';
-import { connect } from 'dva';
 import MobilePreviewer, {
   MobilePreviewerRef,
 } from './components/MobilePreviewer';
-import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const ExchangeButton = ({
   loading,
@@ -36,4 +34,4 @@ const ExchangeButton = ({
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExchangeButton);
+export default ExchangeButton;

@@ -1,9 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { connect } from 'dva';
 import { throttle } from 'lodash';
 import ColorSelect from '@/components/ColorSelect';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { ConnectState } from '@/models/connect';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
@@ -11,7 +9,6 @@ const { getRgbaString } = ColorSelect;
 const CircleSelect = (props: {
   value?: number;
   onChange?: (value: number) => void;
-  theme: ComponentData.TScreenTheme;
 }) => {
   const { value = 0, onChange } = props;
 
@@ -127,11 +124,4 @@ const CircleSelect = (props: {
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      theme: state.global.screenData.config.attr.theme,
-    };
-  },
-  () => ({}),
-)(CircleSelect);
+export default CircleSelect;

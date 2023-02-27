@@ -1,15 +1,14 @@
 import { useMemo, useRef, useCallback } from 'react';
 import { Carousel } from 'antd';
-import { uniqueId, merge, get } from 'lodash';
+import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import {
   useComponent,
   useCondition,
   useComponentSize,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { useClipPath } from '@/hooks';
-import { ConnectState } from '@/models/connect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -20,20 +19,22 @@ import { CHART_ID } from '../id';
 import styles from './index.less';
 
 const CarouselBasic = (
-  props: ComponentData.CommonComponentProps<TCarouselConfig> & {
-    componentBorder: ComponentData.TScreenData['config']['attr']['componentBorder'];
-  },
+  props: ComponentData.CommonComponentProps<TCarouselConfig>,
 ) => {
-  const {
-    className,
-    style,
-    value,
-    global,
-    children,
-    wrapper: Wrapper,
-    componentBorder: { width: borderWidth, padding },
-  } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
+
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: {
+            componentBorder: { width: borderWidth, padding },
+          },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const {
     config: {
@@ -184,14 +185,4 @@ const WrapperCarousel: typeof CarouselBasic & {
 
 WrapperCarousel.id = CHART_ID;
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      componentBorder: get(
-        state,
-        'global.screenData.config.attr.componentBorder',
-      ),
-    };
-  },
-  () => ({}),
-)(WrapperCarousel);
+export default WrapperCarousel;

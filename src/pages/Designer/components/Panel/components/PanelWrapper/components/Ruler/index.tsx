@@ -1,14 +1,13 @@
 import { useRef, useState, useCallback, useEffect, useMemo } from 'react';
 import classnames from 'classnames';
 import { merge } from 'lodash';
-import { connect } from 'dva';
 import { useMouse, useHover, useThrottleEffect } from 'ahooks';
 import { nanoid } from 'nanoid';
+import { useMobxContext } from '@/hooks';
 import GuideLine from '@/components/GuideLine';
 import ComponentRuler from '@/components/Ruler';
 import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants';
 import { wrapperId, subWrapperId } from '../../constants';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import { AbsorbUtil } from '../AbsorbGuideLine/utils';
 import styles from './index.less';
 
@@ -24,23 +23,19 @@ const getWrapperScroll = (cover = false) => {
 };
 
 const Ruler = (props: {
-  guideLineShow: boolean;
   scale: number;
   size: { width: number; height: number };
-  guideLineList: ComponentData.TGuideLineConfigItem[];
   wrapperSetGuideLine: (value: Partial<ComponentData.TGuideLineConfig>) => void;
   width: number;
   height: number;
 }) => {
+  const { size, wrapperSetGuideLine, scale, width, height } = props;
+
   const {
-    guideLineShow,
-    size,
-    guideLineList,
-    wrapperSetGuideLine,
-    scale,
-    width,
-    height,
-  } = props;
+    global: {
+      guideLine: { show: guideLineShow, value: guideLineList },
+    },
+  } = useMobxContext();
 
   const [mouseHorizontalGuideLine, setMouseHorizontalGuideLine] =
     useState<ComponentData.TGuideLineConfigItem>();
@@ -58,7 +53,7 @@ const Ruler = (props: {
   const isVerticalRulerHover = useHover(verticalRulerRef);
 
   const onGuidelinePositionChange = useCallback(
-    (index, item) => {
+    (index, item: any) => {
       let newGuideList = [...guideLineList];
       newGuideList.splice(index, 1, item);
       wrapperSetGuideLine({
@@ -367,4 +362,4 @@ const Ruler = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Ruler);
+export default Ruler;

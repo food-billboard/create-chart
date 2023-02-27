@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
-import { connect } from 'dva';
 import { nanoid } from 'nanoid';
 import classnames from 'classnames';
 import { useControllableValue, useUnmount } from 'ahooks';
 import arrayMove from 'array-move';
+import { useMobxContext } from '@/hooks';
 import { DEFAULT_FILTER_CODE } from '@/utils';
 import {
   GLOBAL_EVENT_EMITTER,
@@ -12,18 +12,26 @@ import {
 import AddItem from './addItem';
 import ListItem, { TOnChangeType, TOnComponentChangeType } from './ListItem';
 import List from './List';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const DataFilter = (props: {
   id: string;
   disabled?: boolean;
-  filter: ComponentData.TFilterConfig[];
-  setCallbackData: (value: ComponentData.TFilterConfig[]) => void;
   value?: ComponentData.TComponentFilterConfig[];
   onChange?: (value: ComponentData.TComponentFilterConfig[]) => void;
 }) => {
-  const { disabled, filter, setCallbackData, id } = props;
+  const { disabled, id } = props;
+
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: { filter },
+        },
+      },
+      setCallbackData,
+    },
+  } = useMobxContext();
 
   const [value, setValue] = useControllableValue<
     ComponentData.TComponentFilterConfig[]
@@ -249,4 +257,4 @@ const DataFilter = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DataFilter);
+export default DataFilter;

@@ -1,5 +1,4 @@
 import { useCallback, useState, useMemo } from 'react';
-import { connect } from 'dva';
 import { Switch, Select } from 'antd';
 import { useUpdate } from 'ahooks';
 import {
@@ -10,7 +9,7 @@ import {
   BorderRightOutlined,
   BorderHorizontalOutlined,
 } from '@ant-design/icons';
-import { ConnectState } from '@/models/connect';
+import { useMobxContext } from '@/hooks';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import { getPath } from '@/utils/Assist/Component';
@@ -31,11 +30,18 @@ import ComponentList from './components/ComponentList';
 
 const { Item } = ConfigList;
 
-const CarouselConfig = (props: {
-  component: ComponentData.TComponentData;
-  flag: ComponentData.ScreenFlagType;
-}) => {
+const CarouselConfig = (props: { component: ComponentData.TComponentData }) => {
   const forceUpdate = useUpdate();
+
+  const {
+    global: {
+      screenData: {
+        config: {
+          flag: { type: flag },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [previewable, setPreviewable] = useState(false);
@@ -298,11 +304,4 @@ const CarouselConfig = (props: {
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      flag: state.global.screenData.config.flag.type,
-    };
-  },
-  () => ({}),
-)(CarouselConfig);
+export default CarouselConfig;

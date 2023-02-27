@@ -4,10 +4,8 @@ import {
   ShepherdTourContext,
   ShepherdOptionsWithType,
 } from 'react-shepherd';
-import { connect } from 'dva';
-import { useLocalStorage } from '@/hooks';
+import { useLocalStorage, useMobxContext } from '@/hooks';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import './index.less';
 
 const steps: ShepherdOptionsWithType[] = [
@@ -148,11 +146,15 @@ let SHEPHERD_DONE = false;
 
 const Internal = (props: {
   children?: ReactNode;
-  userId: string;
   onComplete?: () => void;
   onStart?: () => void;
 }) => {
-  const { children, userId, onComplete, onStart } = props;
+  const { children, onComplete, onStart } = props;
+  const {
+    user: {
+      currentUser: { _id: userId },
+    },
+  } = useMobxContext();
 
   const tour = useContext(ShepherdTourContext);
 
@@ -190,8 +192,6 @@ const Internal = (props: {
   return <>{children}</>;
 };
 
-const InternalWrapper = connect(mapStateToProps, mapDispatchToProps)(Internal);
-
 const ShepherdWrapper = (props: {
   children?: ReactNode;
   onStart?: () => void;
@@ -213,9 +213,9 @@ const ShepherdWrapper = (props: {
         useModalOverlay: true,
       }}
     >
-      <InternalWrapper onStart={onStart} onComplete={onComplete}>
+      <Internal onStart={onStart} onComplete={onComplete}>
         {children}
-      </InternalWrapper>
+      </Internal>
     </ShepherdTour>
   );
 };

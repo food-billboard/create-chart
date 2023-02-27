@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { pick, noop } from 'lodash';
-import { connect } from 'dva';
 import { Space } from 'antd';
+import { useMobxContext } from '@/hooks';
 import {
   BottomAction,
   TopAction,
@@ -15,7 +15,6 @@ import {
 import { CommonActionType } from '@/components/ContextMenu/Actions/type';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import { getPath, getComponent } from '@/utils/Assist/Component';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 type ActionProps = {
@@ -66,8 +65,28 @@ const useActionBarProps: (props: ActionProps) => CommonActionType = (props) => {
   };
 };
 
-const _ActionHeaderBar = (props: ActionProps) => {
-  const actionProps = useActionBarProps(props);
+const ActionHeaderBar = () => {
+  const {
+    global: {
+      components,
+      select,
+      screenData: {
+        config: {
+          flag: { type: flag },
+        },
+      },
+      setComponentAll,
+      setSelect,
+    },
+  } = useMobxContext();
+
+  const actionProps = useActionBarProps({
+    components,
+    select,
+    flag,
+    setComponentAll,
+    setSelect,
+  });
 
   return (
     <div
@@ -86,13 +105,28 @@ const _ActionHeaderBar = (props: ActionProps) => {
   );
 };
 
-export const ActionHeaderBar = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(_ActionHeaderBar);
+export const ActionFooterBar = () => {
+  const {
+    global: {
+      components,
+      select,
+      screenData: {
+        config: {
+          flag: { type: flag },
+        },
+      },
+      setComponentAll,
+      setSelect,
+    },
+  } = useMobxContext();
 
-const _ActionFooterBar = (props: ActionProps) => {
-  const actionProps = useActionBarProps(props);
+  const actionProps = useActionBarProps({
+    components,
+    select,
+    flag,
+    setComponentAll,
+    setSelect,
+  });
 
   return (
     <div
@@ -110,8 +144,3 @@ const _ActionFooterBar = (props: ActionProps) => {
     </div>
   );
 };
-
-export const ActionFooterBar = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(_ActionFooterBar);

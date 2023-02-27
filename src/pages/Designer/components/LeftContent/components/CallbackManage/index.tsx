@@ -6,7 +6,6 @@ import {
   useImperativeHandle,
 } from 'react';
 import { Button, Drawer, Table, Modal, Popconfirm, Empty } from 'antd';
-import { connect } from 'dva';
 import { nanoid } from 'nanoid';
 import {
   MinusSquareOutlined,
@@ -17,8 +16,7 @@ import LazyLoadWrapper from '@/components/LazyLoad';
 import ParamsSelect from '@/components/ParamsSelect';
 import Tooltip from '@/components/Tooltip';
 import FocusWrapper from '@/components/FocusWrapper';
-import { useIdPathMap } from '@/hooks';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { useIdPathMap, useMobxContext } from '@/hooks';
 
 const CodeViewer = LazyLoadWrapper(
   () => import(/* webpackChunkName: "CODE_VIEWER" */ '@/components/CodeView'),
@@ -31,12 +29,13 @@ export interface CallbackManageProps {
   onClose?: () => void;
 }
 
-const ComponentList = (props: {
-  id: string;
-  setSelect: (value: string[]) => void;
-  randomKey: number;
-}) => {
-  const { id, setSelect } = props;
+const ComponentList = (props: { id: string; randomKey: number }) => {
+  const { id } = props;
+
+  const {
+    global: { setSelect },
+  } = useMobxContext();
+
   const idPathMap = useIdPathMap();
 
   const count = useComponentNumber(id);
@@ -78,16 +77,6 @@ const ComponentList = (props: {
   );
 };
 
-const ComponentListWrapper = connect(
-  () => ({}),
-  (dispatch) => {
-    return {
-      setSelect: (value: string[]) =>
-        dispatch({ type: 'global/setSelect', value }),
-    };
-  },
-)(ComponentList);
-
 function useComponentNumber(id: string) {
   const idPathMap = useIdPathMap();
 
@@ -115,11 +104,17 @@ export const ComponentNumber = (props: { id: string }) => {
   return <>{count || 0}</>;
 };
 
-const CallbackList = (props: {
-  callback?: ComponentData.TFilterConfig[];
-  setCallbackData?: (value: ComponentData.TFilterConfig[]) => void;
-}) => {
-  const { callback = [], setCallbackData } = props;
+const CallbackList = () => {
+  const {
+    global: {
+      setCallbackData,
+      screenData: {
+        config: {
+          attr: { filter: callback = [] },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const [visible, setVisible] = useState<boolean>(false);
   const [code, setCode] = useState<string>('');
@@ -278,9 +273,7 @@ const CallbackList = (props: {
         size="small"
         expandable={{
           expandedRowRender: (record) => {
-            return (
-              <ComponentListWrapper id={record.id} randomKey={Math.random()} />
-            );
+            return <ComponentList id={record.id} randomKey={Math.random()} />;
           },
           expandIcon: ({ record, expanded, expandable, onExpand }) => {
             if (!expandable) return null;
@@ -309,11 +302,6 @@ const CallbackList = (props: {
     </FocusWrapper>
   );
 };
-
-const WrapperCallbackList = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CallbackList);
 
 const CallbackManage = forwardRef<CallbackManageRef, CallbackManageProps>(
   (props, ref) => {
@@ -359,7 +347,7 @@ const CallbackManage = forwardRef<CallbackManageRef, CallbackManageProps>(
         placement="left"
         width={680}
       >
-        <WrapperCallbackList />
+        <CallbackList />
       </Drawer>
     );
   },

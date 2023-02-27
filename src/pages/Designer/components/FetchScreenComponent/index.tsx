@@ -1,11 +1,10 @@
 import { useEffect, forwardRef, useImperativeHandle } from 'react';
-import { connect } from 'dva';
 import { message } from 'antd';
 import { get } from 'lodash';
 import { history } from 'umi';
 import { nanoid } from 'nanoid';
 import ThemeUtil, { DEFAULT_THEME_NAME } from '@/utils/Assist/Theme';
-import { useIsModelHash } from '@/hooks';
+import { useIsModelHash, useMobxContext } from '@/hooks';
 import { getScreenDetail, getScreenModelDetail } from '@/services';
 import { sleep } from '@/utils';
 import BreakingChange from '@/utils/Assist/BreakingChange';
@@ -17,7 +16,6 @@ import DEFAULT_SCREEN_DATA, {
   createScreenDataRequest,
 } from '@/utils/constants/screenData';
 import { autoFitScale } from '../Panel/components/ToolBar/components/Scale';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
 export type FetchScreenComponentRef = {
   reload: () => Promise<any>;
@@ -28,25 +26,13 @@ const FetchScreenComponent = forwardRef<
   {
     needFetch?: boolean;
     onLoad?: () => void;
-    setScale?: (scale: number) => void;
-    setVersion: (value: string) => void;
-    setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
-    setComponentAll: (
-      value: ComponentData.TComponentData[],
-      enqueue: boolean,
-    ) => void;
-    setGuideLine: (value: ComponentData.TGuideLineConfig) => void;
   }
 >((props, ref) => {
+  const { needFetch = true, onLoad } = props;
+
   const {
-    setScreen,
-    setComponentAll,
-    needFetch = true,
-    setScale,
-    setGuideLine,
-    setVersion,
-    onLoad,
-  } = props;
+    global: { setVersion, setGuideLine, setScale, setScreen, setComponentAll },
+  } = useMobxContext();
 
   const isModel = useIsModelHash();
 
@@ -65,11 +51,17 @@ const FetchScreenComponent = forwardRef<
       true,
       true,
     );
-    setScreen({
-      ...nextData,
-    });
+    setScreen(
+      {
+        ...nextData,
+      },
+      true,
+    );
     setVersion(version);
-    setGuideLine(nextData.config.attr.guideLine || { value: [], show: true });
+    setGuideLine(
+      nextData.config.attr.guideLine || { value: [], show: true },
+      true,
+    );
 
     const mergedComponentList = mergeComponentDefaultConfig(componentsList);
     setComponentAll(mergedComponentList, false);
@@ -116,12 +108,15 @@ const FetchScreenComponent = forwardRef<
         );
         if (isReload) {
           setComponentAll([], false);
-          setGuideLine({
-            show: true,
-            value: [],
-          });
+          setGuideLine(
+            {
+              show: true,
+              value: [],
+            },
+            true,
+          );
         }
-        setScreen(DEFAULT_SCREEN_DATA);
+        setScreen(DEFAULT_SCREEN_DATA, true);
       }
     } catch (err) {
       console.error(err);
@@ -170,11 +165,14 @@ const FetchScreenComponent = forwardRef<
       await ThemeUtil.initCurrentThemeData(DEFAULT_THEME_NAME);
       if (isReload) {
         setComponentAll([], false);
-        setGuideLine({
-          show: true,
-          value: [],
-        });
-        setScreen(DEFAULT_SCREEN_DATA);
+        setGuideLine(
+          {
+            show: true,
+            value: [],
+          },
+          true,
+        );
+        setScreen(DEFAULT_SCREEN_DATA, true);
       }
     }
 
@@ -207,6 +205,4 @@ const FetchScreenComponent = forwardRef<
   return <></>;
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {
-  forwardRef: true,
-})(FetchScreenComponent);
+export default FetchScreenComponent;

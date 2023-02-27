@@ -5,13 +5,12 @@ import {
   cloneElement,
   CSSProperties,
 } from 'react';
-import { connect } from 'dva';
 import classnames from 'classnames';
 import { get } from 'lodash';
 import { useRafState } from 'ahooks';
+import { useMobxContext } from '@/hooks';
 import { getComponentStyleInScreenType } from '@/utils/Assist/Component';
 import { ComponentTransformOriginChange } from '@/utils/Assist/BreakingChange';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import ConnectSelectChangeWrapper from '../SelectChangeWrapper';
 import styles from '../../index.less';
 
@@ -20,8 +19,6 @@ const ChildrenWrapper = (props: {
   value: ComponentData.TComponentData;
   parent: ComponentData.TComponentData | null;
   borderNone?: boolean;
-  screenType: ComponentData.ScreenType;
-  version: string;
   flag: ComponentData.ScreenFlagType;
   style?: CSSProperties;
   className?: string;
@@ -30,12 +27,14 @@ const ChildrenWrapper = (props: {
     value,
     children,
     borderNone = false,
-    screenType,
-    version,
     flag,
     style: outStyle,
     className: outerClassName,
   } = props;
+
+  const {
+    global: { screenType, version },
+  } = useMobxContext();
 
   const [isSelect, setIsSelect] = useRafState<boolean>(false);
 
@@ -116,4 +115,4 @@ const ChildrenWrapper = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChildrenWrapper);
+export default ChildrenWrapper;

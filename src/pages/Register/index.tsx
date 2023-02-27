@@ -1,13 +1,10 @@
 import { useCallback, useMemo, useState } from 'react';
-import { connect } from 'dva';
 import { Button, message } from 'antd';
+import { mobxStore } from '@/hooks';
 import { Mobile, Email, Password, Captcha } from '../Login';
 import CommonBackground from '../Login/components/Background';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
-const Register = (props: { register: (value: any) => any }) => {
-  const { register } = props;
-
+const Register = () => {
   const [mobile, setMobile] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -34,7 +31,7 @@ const Register = (props: { register: (value: any) => any }) => {
 
     setFetchLoading(true);
     try {
-      await register({
+      await mobxStore.user.register({
         mobile: realMobile,
         password,
         captcha: realCaptcha,
@@ -45,7 +42,7 @@ const Register = (props: { register: (value: any) => any }) => {
     } finally {
       setFetchLoading(false);
     }
-  }, [mobile, password, captcha, email, register]);
+  }, [mobile, password, captcha, email]);
 
   const action = useMemo(() => {
     return (
@@ -76,4 +73,4 @@ const Register = (props: { register: (value: any) => any }) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default Register;

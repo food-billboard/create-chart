@@ -10,12 +10,10 @@ import {
   DragPreviewImage,
   ConnectDragPreview,
 } from 'react-dnd';
-import { connect } from 'dva';
 import { pick } from 'lodash';
-import { DragData } from '@/models/connect';
+import { mobxStore } from '@/hooks';
 import { createComponent } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
-import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 export const DRAG_TYPE = 'COMPONENT_DRAG_TYPE';
@@ -32,8 +30,6 @@ export type ComponentItemProps = ComponentData.BaseComponentItem & {
   tooltip?: boolean;
   connectDragSource: ConnectDragSource;
   connectDragPreview: ConnectDragPreview;
-  setDragInfo?: (value: Partial<DragData>) => void;
-  setSelect: (value: string[]) => void;
 };
 
 const ComponentItem = (props: ComponentItemProps) => {
@@ -46,7 +42,6 @@ const ComponentItem = (props: ComponentItemProps) => {
     disabled,
     connectDragSource,
     connectDragPreview,
-    setSelect,
     suffix,
     prefix,
     tooltip = true,
@@ -73,8 +68,8 @@ const ComponentItem = (props: ComponentItemProps) => {
       path: '',
     });
 
-    setSelect([component.id]);
-  }, [title, description, setSelect, type, disabled, development]);
+    mobxStore.global.setSelect([component.id]);
+  }, [title, description, type, disabled, development]);
 
   return (
     <>
@@ -160,8 +155,8 @@ const dragSource = DragSource(
   DRAG_TYPE,
   {
     beginDrag: (props: ComponentItemProps) => {
-      props.setDragInfo?.({
-        value: pick(props, ['icon', 'title', 'description', 'type']),
+      mobxStore.global.setDragInfo({
+        value: pick(props, ['icon', 'title', 'description', 'type']) as any,
       });
       return pick(props, [
         'icon',
@@ -189,5 +184,4 @@ const dragSource = DragSource(
   },
 )(ComponentItem);
 
-// @ts-ignore
-export default connect(mapStateToProps, mapDispatchToProps)(dragSource) as any;
+export default dragSource as any;

@@ -1,15 +1,14 @@
 import { useMemo, useRef, useCallback } from 'react';
 import { merge, uniqueId, get, pick, omit } from 'lodash';
 import classnames from 'classnames';
-import { connect } from 'dva';
 // @ts-ignore
 import { LuckyWheel } from '@lucky-canvas/react';
+import { useMobxContext } from '@/hooks';
 import {
   useComponent,
   useCondition,
   useComponentSize,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ConnectState } from '@/models/connect';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
@@ -23,20 +22,22 @@ import styles from './index.less';
 const { getRgbaString } = ColorSelect;
 
 const LuckyDrawBasic = (
-  props: ComponentData.CommonComponentProps<TLuckyDrawConfig> & {
-    componentBorder: ComponentData.TScreenData['config']['attr']['componentBorder'];
-  },
+  props: ComponentData.CommonComponentProps<TLuckyDrawConfig>,
 ) => {
-  const {
-    className,
-    style,
-    value,
-    global,
-    children,
-    wrapper: Wrapper,
-    componentBorder: { width: borderWidth, padding },
-  } = props;
+  const { className, style, value, global, children, wrapper: Wrapper } = props;
   const { screenType } = global;
+
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: {
+            componentBorder: { width: borderWidth, padding },
+          },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const {
     id,
@@ -247,14 +248,4 @@ const WrapperLuckyDrawBasic: typeof LuckyDrawBasic & {
 
 WrapperLuckyDrawBasic.id = CHART_ID;
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      componentBorder: get(
-        state,
-        'global.screenData.config.attr.componentBorder',
-      ),
-    };
-  },
-  () => ({}),
-)(WrapperLuckyDrawBasic);
+export default WrapperLuckyDrawBasic;

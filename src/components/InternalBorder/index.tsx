@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
 import { Select } from 'antd';
 import { useControllableValue } from 'ahooks';
-import { connect } from 'dva';
 import { pick } from 'lodash';
 import classNames from 'classnames';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { useMobxContext } from '@/hooks';
 import BorderMap from './components/Border';
 import { CommonBorderProps } from './components/Border/type';
 import styles from './components/Border/index.less';
@@ -19,12 +18,19 @@ export const getTargetBorder = (
   return (BorderMap as any)[border.value]?.value || null;
 };
 
-const _InternalBorderWrapper = (
-  props: CommonBorderProps & {
-    border: ComponentData.TComponentData['config']['style']['border'];
-  },
-) => {
+export const InternalBorderWrapper = (props: CommonBorderProps) => {
   const { children, border = { show: false }, ...nextProps } = props;
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: {
+            componentBorder: { width, padding },
+          },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const Dom = useMemo(() => {
     return getTargetBorder(
@@ -34,7 +40,7 @@ const _InternalBorderWrapper = (
 
   return (
     <>
-      {Dom && <Dom {...nextProps}></Dom>}
+      {Dom && <Dom {...nextProps} width={width} padding={padding}></Dom>}
       <div
         className={classNames(styles['internal-border-outer'])}
         style={
@@ -47,11 +53,6 @@ const _InternalBorderWrapper = (
     </>
   );
 };
-
-export const InternalBorderWrapper = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(_InternalBorderWrapper);
 
 export const InternalBorderSelect = (props: {
   value?: string;

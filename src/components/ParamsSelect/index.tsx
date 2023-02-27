@@ -1,31 +1,30 @@
 import { Select } from 'antd';
-import { connect } from 'dva';
 import { isEqual } from 'lodash';
 import { useMemo, useCallback, useState } from 'react';
 import classnames from 'classnames';
 import { SelectProps } from 'antd/es/select';
+import { useMobxContext } from '@/hooks';
 import VariableStringUtil from '@/utils/Assist/VariableString';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
 const { Option } = Select;
 
 const ParamsSelect = (
   props: {
-    params: ComponentData.TParams[];
-    constants: ComponentData.TConstants[];
     value: string[];
     onChange?: (value: string[]) => void;
   } & Omit<SelectProps, 'value' | 'onChange'>,
 ) => {
+  const { value, onChange, className, onBlur, ...nextProps } = props;
+
   const {
-    params,
-    constants,
-    value,
-    onChange,
-    className,
-    onBlur,
-    ...nextProps
-  } = props;
+    global: {
+      screenData: {
+        config: {
+          attr: { params, constants },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const [stateValue, setStateValue] = useState<string[]>(value);
 
@@ -72,23 +71,23 @@ const ParamsSelect = (
   );
 };
 
-const InternalParamsSelectSingle = (
+export const ParamsSelectSingle = (
   props: {
-    params: ComponentData.TParams[];
-    constants: ComponentData.TConstants[];
     value: string;
     onChange?: (value: string) => void;
   } & Omit<SelectProps, 'value' | 'onChange'>,
 ) => {
+  const { value, onChange, className, onBlur, ...nextProps } = props;
+
   const {
-    params,
-    constants,
-    value,
-    onChange,
-    className,
-    onBlur,
-    ...nextProps
-  } = props;
+    global: {
+      screenData: {
+        config: {
+          attr: { params, constants },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const [stateValue, setStateValue] = useState<string>(value);
 
@@ -136,9 +135,4 @@ const InternalParamsSelectSingle = (
   );
 };
 
-export const ParamsSelectSingle = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(InternalParamsSelectSingle);
-
-export default connect(mapStateToProps, mapDispatchToProps)(ParamsSelect);
+export default ParamsSelect;

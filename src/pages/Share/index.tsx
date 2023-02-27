@@ -1,9 +1,8 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { connect } from 'dva';
 import { history } from 'umi';
 import { message } from 'antd';
 import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
-import { useHashChangeReload } from '@/hooks';
+import { useHashChangeReload, useMobxContext } from '@/hooks';
 import {
   shareScreenHeartbeat,
   shareScreenGet,
@@ -16,24 +15,21 @@ import PasswordConfirm, {
 import PainterWrapper from './components/PainterWrapper';
 import useWrapperProps from './useWrapperProps';
 import WaterMark from './components/WaterMark';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
-function Share(props: {
-  setScreenType: (value: ComponentData.ScreenType) => void;
-  width: number;
-  height: number;
-  flag: ComponentData.ScreenFlagType;
-  setScale: (value: number) => void;
-  scale: ComponentData.ScreenScaleType;
-}) {
+function Share() {
   const {
-    setScreenType,
-    width,
-    height,
-    setScale,
-    flag,
-    scale: scaleConfig,
-  } = props;
+    global: {
+      setScreenType,
+      setScale,
+      screenData: {
+        config: {
+          style: { width, height },
+          flag: { type: flag },
+          attr: { scale: scaleConfig },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const [needFetch, setNeedFetch] = useState<boolean>(false);
   const [heartbeat, setHeartbeat] = useState<boolean>(true);
@@ -132,4 +128,4 @@ function Share(props: {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Share);
+export default Share;

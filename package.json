@@ -70,6 +70,8 @@
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "matter-js": "^0.18.0",
+    "mobx": "^6.8.0",
+    "mobx-react-lite": "^3.4.0",
     "mockjs": "^1.1.0",
     "moment": "^2.29.1",
     "monaco-editor": "^0.31.1",

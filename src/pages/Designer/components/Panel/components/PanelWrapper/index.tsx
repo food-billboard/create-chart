@@ -1,48 +1,35 @@
-import {
-  useEffect,
-  useState,
-  useCallback,
-  ReactNode,
-  useMemo,
-  useRef,
-} from 'react';
-import { connect } from 'dva';
+import { useCallback, ReactNode, useMemo, useRef } from 'react';
 import classnames from 'classnames';
-import { useEventListener, useSize } from 'ahooks';
+import { useSize } from 'ahooks';
+import { useMobxContext } from '@/hooks';
 import { BackgroundConfigRender } from '@/components/DesignerBackground';
-import { mergeWithoutArray, sleep } from '@/utils/tool';
+import { mergeWithoutArray } from '@/utils/tool';
 import ClipboardComponent from '../Clipboard';
 import AbsorbGuideLine from './components/AbsorbGuideLine';
 import Ruler from './components/Ruler';
 import GuideLineButton from './components/GuideLineButton';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import { wrapperId, subWrapperId } from './constants';
 import styles from './index.less';
 
 const RIGHT_BOTTOM_PADDING = 200;
 
-const PanelWrapper = (props: {
-  scale: number;
-  width?: number;
-  height?: number;
-  children: ReactNode;
-  flag: ComponentData.ScreenFlagType;
-  guideLineList?: ComponentData.TGuideLineConfigItem[];
-  guideLineShow?: boolean;
-  setGuideLine: (value: ComponentData.TGuideLineConfig) => void;
-  setSelect: (value: string[]) => void;
-}) => {
+const PanelWrapper = (props: { children: ReactNode }) => {
+  const { children } = props;
+
   const {
-    scale: originScale,
-    width = 0,
-    height = 0,
-    children,
-    guideLineList = [],
-    guideLineShow,
-    setGuideLine,
-    setSelect,
-    flag,
-  } = props;
+    global: {
+      setGuideLine,
+      setSelect,
+      guideLine: { value: guideLineList = [], show: guideLineShow },
+      scale: originScale,
+      screenData: {
+        config: {
+          style: { width, height },
+          flag: { type: flag },
+        },
+      },
+    },
+  } = useMobxContext();
 
   // const [size, setSize] = useState({ width: 0, height: 0 });
 
@@ -165,4 +152,4 @@ const PanelWrapper = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PanelWrapper);
+export default PanelWrapper;

@@ -1,12 +1,10 @@
 import { useMemo } from 'react';
 import classnames from 'classnames';
-import { connect } from 'dva';
 import LazyWrapper from '@/components/LazyLoad';
 import FocusWrapper from '@/components/FocusWrapper';
-import { useComponentPath } from '@/hooks';
+import { useComponentPath, useMobxContext } from '@/hooks';
 import { isGroupComponent, getComponent } from '@/utils/Assist/Component';
 import GlobalConfig from './components/GlobalConfig';
-import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const GroupConfig = LazyWrapper(async () => {
@@ -27,12 +25,11 @@ const MultiConfig = LazyWrapper(async () => {
   );
 });
 
-const RightContent = (props: {
-  select: string[];
-  componentConfigCollapse: boolean;
-  components: ComponentData.TComponentData[];
-}) => {
-  const { select = [], components, componentConfigCollapse } = props;
+const RightContent = () => {
+  const {
+    global: { select, components },
+    local: { componentConfigCollapse },
+  } = useMobxContext();
 
   const children = useMemo(() => {
     if (!select.length) return <GlobalConfig />;
@@ -75,4 +72,4 @@ const RightContent = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RightContent);
+export default RightContent;

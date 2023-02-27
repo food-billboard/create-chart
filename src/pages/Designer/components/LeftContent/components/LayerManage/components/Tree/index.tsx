@@ -1,6 +1,5 @@
 import { useMemo, useCallback, useState } from 'react';
 import { Tree as AntTree } from 'antd';
-import { connect } from 'dva';
 import { pick, get } from 'lodash';
 import type { DataNode } from 'antd/es/tree';
 import arrayMove from 'array-move';
@@ -11,11 +10,10 @@ import {
   getParentComponentIds,
   isGroupComponent,
 } from '@/utils/Assist/Component';
-import { useComponentPath, useIdPathMap } from '@/hooks';
+import { useComponentPath, useIdPathMap, useMobxContext } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import TreeNode from './components/TreeNode';
 import { ActionHeaderBar, ActionFooterBar } from './components/ActionBar';
-import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 export type TreeProps = {
@@ -27,7 +25,11 @@ export type TreeProps = {
 };
 
 const TreeFunction = (props: TreeProps) => {
-  const { components, setSelect, select, iconMode, disabled } = props;
+  const { iconMode, disabled } = props;
+
+  const {
+    global: { components, setSelect, select },
+  } = useMobxContext();
 
   const [expendKeys, setExpendKeys] = useState<string[]>([]);
 
@@ -242,4 +244,4 @@ const TreeFunction = (props: TreeProps) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TreeFunction);
+export default TreeFunction;

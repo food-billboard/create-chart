@@ -7,17 +7,15 @@ import {
   useRef,
 } from 'react';
 import classnames from 'classnames';
-import { connect } from 'dva';
 import { isEqual } from 'lodash';
 import { useRafState } from 'ahooks';
-import { useComponentStyle } from '@/hooks';
+import { useComponentStyle, useMobxContext } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import ComponentWrapper from './components/Wrapper';
 import Content from './components/Content';
 import ContextMenu from '../../../../components/ContextMenu';
 import ConnectSelectChangeWrapper from './components/SelectChangeWrapper';
 import HoverChangeWrapper from './components/HoverChangeWrapper';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 export type RenderComponentProps = {
@@ -26,13 +24,8 @@ export type RenderComponentProps = {
   value: ComponentData.TComponentData;
   index: number;
   select?: string[];
-  scale: number;
-  setSelect?: (value: string[]) => void;
   path?: string;
-  screenType: ComponentData.ScreenType;
   timestamps?: number;
-  grid: number;
-  flag: ComponentData.ScreenFlagType;
 };
 
 const OnlyClickDiv = (props: {
@@ -78,14 +71,24 @@ const RenderComponent = memo(
       className,
       value,
       select = [],
-      scale,
       index,
       path,
-      screenType,
       timestamps,
-      grid,
-      flag,
     } = props;
+
+    const {
+      global: {
+        scale,
+        screenType,
+        setSelect,
+        screenData: {
+          config: {
+            flag: { type: flag },
+            attr: { grid },
+          },
+        },
+      },
+    } = useMobxContext();
 
     const {
       id,
@@ -204,4 +207,4 @@ const RenderComponent = memo(
   },
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(RenderComponent);
+export default RenderComponent;

@@ -1,20 +1,24 @@
-import { ReactNode, useMemo } from 'react';
+import { ReactNode } from 'react';
 import { Empty } from 'antd';
-import { connect } from 'dva';
 import classnames from 'classnames';
 import IsMobile from 'is-mobile';
 import { useSize } from 'ahooks';
-import { ConnectState } from '@/models/connect';
+import { useMobxContext } from '@/hooks';
 import styles from '../../index.less';
 
 const isMobile = IsMobile();
 
-function PainterWrapper(props: {
-  flag: ComponentData.ScreenFlagType;
-  scale: number;
-  children?: ReactNode;
-}) {
-  const { flag, children, scale } = props;
+function PainterWrapper(props: { scale: number; children?: ReactNode }) {
+  const { children, scale } = props;
+  const {
+    global: {
+      screenData: {
+        config: {
+          flag: { type: flag },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const { height = 0 } =
     useSize(() => document.querySelector('.page-preview-container')) || {};
@@ -69,11 +73,4 @@ function PainterWrapper(props: {
   return <>{children}</>;
 }
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      flag: state.global.screenData.config.flag.type,
-    };
-  },
-  () => ({}),
-)(PainterWrapper);
+export default PainterWrapper;

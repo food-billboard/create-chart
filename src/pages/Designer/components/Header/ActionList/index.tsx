@@ -7,17 +7,16 @@ import {
 import EventEmitter from 'eventemitter3';
 import classnames from 'classnames';
 import { Select, Space, Button } from 'antd';
-import { connect } from 'dva';
 import {
   ID_PATH_MAP_EVENT_EMITTER,
   useIdPathMap,
 } from '@/hooks/useComponentsPath';
+import { useMobxContext } from '@/hooks';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
-import { ConnectState, ILocalModelState } from '@/models/connect';
 import Tooltip from '@/components/Tooltip';
 import { sleep } from '@/utils';
 import styles from './index.less';
@@ -31,11 +30,10 @@ export const EVENT_NAME = {
 };
 
 // 组件搜索
-const InternalComponentSearch = (props: {
-  componentCollapse: boolean;
-  setLocalConfig: (value: Partial<ILocalModelState>) => void;
-}) => {
-  const { componentCollapse, setLocalConfig } = props;
+export const ComponentSearch = () => {
+  const {
+    local: { componentCollapse, setLocalConfig },
+  } = useMobxContext();
 
   const [visible, setVisible] = useState(false);
 
@@ -62,18 +60,6 @@ const InternalComponentSearch = (props: {
     </div>
   );
 };
-
-export const ComponentSearch = connect(
-  (state: ConnectState) => {
-    return {
-      componentCollapse: state.local.componentCollapse,
-    };
-  },
-  (dispatch: any) => ({
-    setLocalConfig: (value: any) =>
-      dispatch({ type: 'local/setLocalConfig', value }),
-  }),
-)(InternalComponentSearch);
 
 // 图层显示隐藏
 export const LayerShowIcon = (props: {}) => {
@@ -118,8 +104,10 @@ export const LayerShowIcon = (props: {}) => {
 };
 
 // 图层搜索
-const _LayerSearch = (props: { setSelect: (value: string[]) => void }) => {
-  const { setSelect } = props;
+export const LayerSearch = () => {
+  const {
+    global: { setSelect },
+  } = useMobxContext();
 
   const [visible, setVisible] = useState<boolean>(false);
   const [options, setOptions] = useState<{ label: string; value: string }[]>(
@@ -190,24 +178,11 @@ const _LayerSearch = (props: { setSelect: (value: string[]) => void }) => {
   );
 };
 
-const LayerSearch = connect(
-  (state: ConnectState) => {
-    return {};
-  },
-  (dispatch) => {
-    return {
-      setSelect: (value: string[]) =>
-        dispatch({ type: 'global/setSelect', value }),
-    };
-  },
-)(_LayerSearch);
-
 // 折叠右侧配置列表
-const InternalCollapseConfigPanel = (props: {
-  componentConfigCollapse: boolean;
-  setLocalConfig: (value: Partial<ILocalModelState>) => void;
-}) => {
-  const { componentConfigCollapse, setLocalConfig } = props;
+export const CollapseConfigPanel = () => {
+  const {
+    local: { componentConfigCollapse, setLocalConfig },
+  } = useMobxContext();
 
   const handleClick = useCallback(() => {
     setLocalConfig({
@@ -226,24 +201,11 @@ const InternalCollapseConfigPanel = (props: {
   );
 };
 
-export const CollapseConfigPanel = connect(
-  (state: ConnectState) => {
-    return {
-      componentConfigCollapse: state.local.componentConfigCollapse,
-    };
-  },
-  (dispatch: any) => ({
-    setLocalConfig: (value: any) =>
-      dispatch({ type: 'local/setLocalConfig', value }),
-  }),
-)(InternalCollapseConfigPanel);
-
 // 组件列表折叠
-const InternalComponentListCollapse = (props: {
-  componentCollapse: boolean;
-  setLocalConfig: (value: Partial<ILocalModelState>) => void;
-}) => {
-  const { componentCollapse, setLocalConfig } = props;
+export const ComponentListCollapse = () => {
+  const {
+    local: { componentCollapse, setLocalConfig },
+  } = useMobxContext();
 
   const handleClick = useCallback(() => {
     setLocalConfig({
@@ -261,18 +223,6 @@ const InternalComponentListCollapse = (props: {
     </Tooltip>
   );
 };
-
-export const ComponentListCollapse = connect(
-  (state: ConnectState) => {
-    return {
-      componentCollapse: state.local.componentCollapse,
-    };
-  },
-  (dispatch: any) => ({
-    setLocalConfig: (value: any) =>
-      dispatch({ type: 'local/setLocalConfig', value }),
-  }),
-)(InternalComponentListCollapse);
 
 const ActionList = () => {
   return (

@@ -1,11 +1,10 @@
 import { forwardRef, useImperativeHandle, useState, useCallback } from 'react';
 import { Switch, Drawer } from 'antd';
-import { connect } from 'dva';
 import classnames from 'classnames';
+import { useMobxContext } from '@/hooks';
 import Slider from '@/components/ChartComponents/Common/Slider';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const { Item } = ConfigList;
@@ -16,15 +15,22 @@ export type LensConfigRef = {
 
 type Value = ComponentData.TScreenData['config']['attr']['lens'];
 
-type Props = {
-  setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
-  lens: Value;
-};
+type Props = {};
 
 const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
   const [visible, setVisible] = useState<boolean>(false);
 
-  const { lens, setScreen } = props;
+  const {
+    global: {
+      setScreen,
+      screenData: {
+        config: {
+          attr: { lens },
+        },
+      },
+    },
+  } = useMobxContext();
+
   const {
     hueRotate,
     grayscale,
@@ -181,6 +187,4 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
   );
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {
-  forwardRef: true,
-})(LensConfig);
+export default LensConfig;

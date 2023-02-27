@@ -1,6 +1,6 @@
 import { useCallback, useRef, useMemo } from 'react';
 import ReactSelecto from 'react-selecto';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import { BACKGROUND_ID } from '@/components/DesignerBackground';
 import {
   isComponentDisabled,
@@ -8,23 +8,20 @@ import {
 } from '@/utils/Assist/Component';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ColorSelect from '@/components/ColorSelect';
-import { ConnectState } from '@/models/connect';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
 import { SELECTO_CLASSNAME } from '@/utils/constants';
 import { wrapperId } from '../PanelWrapper/constants';
 import { PANEL_ID } from '../Painter';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const VALID_SELECT_CONTAINER = [BACKGROUND_ID, wrapperId, PANEL_ID];
 
 const { getRgbaString } = ColorSelect;
 
-const Selecto = (props: {
-  setSelect: (value: string[]) => void;
-  screenType: ComponentData.ScreenType;
-}) => {
-  const { setSelect, screenType } = props;
+const Selecto = () => {
+  const {
+    global: { setSelect, screenType },
+  } = useMobxContext();
 
   const currentSelect = useRef<string[]>([]);
 
@@ -105,10 +102,16 @@ const Selecto = (props: {
   );
 };
 
-const InternalSelecto = connect(mapStateToProps, mapDispatchToProps)(Selecto);
-
-const OuterSelecto = (props: { theme: ComponentData.TScreenTheme }) => {
-  const { theme } = props;
+const OuterSelecto = () => {
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: { theme },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const color = useMemo(() => {
     return ThemeUtil.generateNextColor4CurrentTheme(0);
@@ -126,16 +129,9 @@ const OuterSelecto = (props: { theme: ComponentData.TScreenTheme }) => {
       }}
       className={styles['react-select-to-wrapper']}
     >
-      <InternalSelecto />
+      <Selecto />
     </div>
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      theme: state.global.screenData.config.attr.theme,
-    };
-  },
-  () => ({}),
-)(OuterSelecto);
+export default OuterSelecto;

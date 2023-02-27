@@ -1,8 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Space, Radio } from 'antd';
-import { connect } from 'dva';
 import classnames from 'classnames';
-import { ConnectState } from '@/models/connect';
+import { useMobxContext } from '@/hooks';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
 import {
@@ -15,12 +14,18 @@ import styles from './index.less';
 
 const generateName = () => `custom_${Date.now()}`;
 
-const CustomConfig = (props: {
-  theme: ComponentData.TScreenTheme;
-  setScreen: (value: any) => void;
-  setComponent: ComponentMethod.SetComponentMethod;
-}) => {
-  const { theme, setScreen, setComponent } = props;
+const CustomConfig = () => {
+  const {
+    global: {
+      setScreen,
+      setComponent,
+      screenData: {
+        config: {
+          attr: { theme },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const [colorList, setColorList] = useState<string[][]>(
     theme.color ? [theme.color] : [ThemeUtil.getThemeColorList(theme.value)],
@@ -111,17 +116,4 @@ const CustomConfig = (props: {
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      theme: state.global.screenData.config.attr.theme,
-    };
-  },
-  (dispatch) => {
-    return {
-      setScreen: (value: any) => dispatch({ type: 'global/setScreen', value }),
-      setComponent: (value: any) =>
-        dispatch({ type: 'global/setComponent', value }),
-    };
-  },
-)(CustomConfig);
+export default CustomConfig;

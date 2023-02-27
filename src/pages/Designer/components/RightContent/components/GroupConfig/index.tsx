@@ -1,6 +1,6 @@
 import { useMemo, useCallback } from 'react';
 import classnames from 'classnames';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import { isComponentDisabled } from '@/utils/Assist/Component';
 import ConfigWrapper, {
   ConfigItem,
@@ -8,15 +8,17 @@ import ConfigWrapper, {
 import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';
 import OptionConfig from './components/OptionConfig';
 import CarouselConfig from './components/CarouselConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const GroupConfig = (props: {
   id: string;
   component: ComponentData.TComponentData;
-  setSelect: (value: string[]) => void;
 }) => {
-  const { id, component, setSelect } = props;
+  const { id, component } = props;
+
+  const {
+    global: { setSelect },
+  } = useMobxContext();
 
   const title = useMemo(() => {
     return component?.name;
@@ -71,4 +73,4 @@ const GroupConfig = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupConfig);
+export default GroupConfig;

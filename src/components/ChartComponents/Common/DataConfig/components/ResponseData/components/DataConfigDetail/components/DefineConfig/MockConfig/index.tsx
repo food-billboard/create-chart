@@ -1,32 +1,32 @@
 import { useCallback, useMemo } from 'react';
-import { connect } from 'dva';
 import { Button, Select } from 'antd';
 import { nanoid } from 'nanoid';
 import { DeleteOutlined } from '@ant-design/icons';
+import { useMobxContext } from '@/hooks';
 import Input from '@/components/ChartComponents/Common/Input';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import Checkbox from '@/components/ChartComponents/Common/Checkbox';
-import { ConnectState } from '@/models/connect';
 import MapTable from '@/components/ChartComponents/Common/MapTable';
 import { mergeWithoutArray } from '@/utils';
 import SubTitle, { SubForm } from '../../SubTitle';
 import { ApiConfigProps } from '../ApiConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
 export type MockConfigProps = ApiConfigProps;
 
-const _FieldsConfig = ({
+const FieldsConfig = ({
   value = [],
   onChange,
-  mockKindList,
 }: {
   value: ComponentData.TComponentApiDataConfig['request']['mock']['fields'];
   onChange: (
     value: ComponentData.TComponentApiDataConfig['request']['mock']['fields'],
   ) => void;
-  mockKindList: API_MOCK.TGetMockKindListData[];
 }) => {
+  const {
+    data: { mockValueKindMap: mockKindList },
+  } = useMobxContext();
+
   const onValueChange = useCallback(
     (record: any, index: number, key: string, newStateValue: any) => {
       const newValue = [...value];
@@ -133,22 +133,21 @@ const _FieldsConfig = ({
   );
 };
 
-const FieldsConfig = connect(
-  (state: ConnectState) => {
-    return {
-      mockKindList: state.data.mockValueKindMap,
-    };
-  },
-  () => ({}),
-)(_FieldsConfig);
-
 const MockConfig = (props: MockConfigProps) => {
-  const { onChange: propsOnChange, value, params, constants } = props;
+  const { onChange: propsOnChange, value } = props;
   const {
     request: { mock },
   } = value;
-
   const { fields, random, total } = mock || {};
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: { params, constants },
+        },
+      },
+    },
+  } = useMobxContext();
 
   const reRequest = useCallback(
     async (newValue) => {
@@ -227,4 +226,4 @@ const MockConfig = (props: MockConfigProps) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MockConfig);
+export default MockConfig;

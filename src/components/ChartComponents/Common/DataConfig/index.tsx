@@ -1,12 +1,10 @@
-import { useMemo, useCallback } from 'react';
+import { useCallback } from 'react';
 import classnames from 'classnames';
-import { connect } from 'dva';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { getComponent, getPath } from '@/utils/Assist/Component';
+import { getPath } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import FieldMap from './components/FieldMap';
 import ResponseData from './components/ResponseData';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 // 数据配置
@@ -91,4 +89,4 @@ const DataConfig = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DataConfig);
+export default DataConfig;

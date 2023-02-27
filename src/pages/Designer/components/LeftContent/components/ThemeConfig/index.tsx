@@ -6,7 +6,7 @@ import {
   useMemo,
 } from 'react';
 import { Space, Drawer, Tabs } from 'antd';
-import { connect } from 'dva';
+import { useMobxContext } from '@/hooks';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
 import {
@@ -15,23 +15,29 @@ import {
 } from '@/utils/Assist/EventEmitter';
 import ColorItem from './ColorItem';
 import CustomConfig from './CustomConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 export type ThemeConfigRef = {
   open: () => void;
 };
 
-type Props = {
-  setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
-  setComponent: ComponentMethod.SetComponentMethod;
-  theme: ComponentData.TScreenTheme;
-};
+type Props = {};
 
 const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
   const [visible, setVisible] = useState<boolean>(false);
 
-  const { theme, setScreen, setComponent } = props;
+  const {
+    global: {
+      screenData: {
+        config: {
+          attr: { theme },
+        },
+      },
+      setScreen,
+      setComponent,
+    },
+  } = useMobxContext();
+
   const { type, value, color = [] } = theme;
 
   const COLOR_MAP: {
@@ -135,6 +141,4 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
   );
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {
-  forwardRef: true,
-})(ThemeConfig);
+export default ThemeConfig;

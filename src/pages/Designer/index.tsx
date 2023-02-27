@@ -2,10 +2,14 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { ConfigProvider, Modal } from 'antd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { connect } from 'dva';
 import { history } from 'umi';
 import { useUnmount } from 'ahooks';
-import { useHashChangeReload, isModelHash, usePrimaryColor } from '@/hooks';
+import {
+  useHashChangeReload,
+  isModelHash,
+  usePrimaryColor,
+  useMobxContext,
+} from '@/hooks';
 import FetchScreenComponent, {
   FetchScreenComponentRef,
 } from '@/pages/Designer/components/FetchScreenComponent';
@@ -22,7 +26,6 @@ import Header from './components/Header';
 import LeftContent from './components/LeftContent';
 import RightContent from './components/RightContent';
 import Panel from './components/Panel';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const COMMON_MODAL_PROPS = {
@@ -68,11 +71,11 @@ export const useSingleModal: () => [
   return [handleModal, handleClose];
 };
 
-const Designer = (props: {
-  setScreenType: (value: ComponentData.ScreenType) => void;
-  getMockValueKindMap: () => Promise<any>;
-}) => {
-  const { setScreenType, getMockValueKindMap } = props;
+const Designer = () => {
+  const {
+    global: { setScreenType },
+    data: { getMockValueKindMap },
+  } = useMobxContext();
 
   const [loading, setLoading] = useState<boolean>(true);
   const [guideLoading, setGuideLoading] = useState<boolean>(false);
@@ -229,4 +232,4 @@ const Designer = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Designer);
+export default Designer;

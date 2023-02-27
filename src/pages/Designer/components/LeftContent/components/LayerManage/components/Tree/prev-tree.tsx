@@ -7,7 +7,6 @@ import { useUpdate } from 'ahooks';
 import { EComponentType } from '@/utils/constants';
 import { useComponentPath, useIdPathMap } from '@/hooks';
 import TreeNode from './components/TreeNode';
-import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 export type TreeProps = {
