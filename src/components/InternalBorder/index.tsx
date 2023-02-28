@@ -18,7 +18,9 @@ export const getTargetBorder = (
   return (BorderMap as any)[border.value]?.value || null;
 };
 
-export const InternalBorderWrapper = (props: CommonBorderProps) => {
+export const InternalBorderWrapper = (
+  props: Omit<CommonBorderProps, 'width' | 'padding'>,
+) => {
   const { children, border = { show: false }, ...nextProps } = props;
   const {
     global: {

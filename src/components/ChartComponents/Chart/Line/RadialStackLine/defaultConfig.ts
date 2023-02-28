@@ -14,7 +14,11 @@ import {
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
-import { getDate, getNumberValue, getSeries } from '@/utils/constants';
+import {
+  getDate,
+  getNumberValue,
+  getSeries,
+} from '@/utils/constants/defaultValue';
 import { TRadialStackLineConfig } from './type';
 
 const DEFAULT_DATE_LABEL = getDate(10);

@@ -13,7 +13,7 @@ import {
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
-import { getDate, getNumberValue } from '@/utils/constants';
+import { getDate, getNumberValue } from '@/utils/constants/defaultValue';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TBubbleScatterConfig } from './type';
 

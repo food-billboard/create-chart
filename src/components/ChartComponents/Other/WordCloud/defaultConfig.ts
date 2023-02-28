@@ -9,7 +9,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
-import { getName, getNumberValue } from '@/utils/constants';
+import { getName, getNumberValue } from '@/utils/constants/defaultValue';
 import { TWordCloudBasicConfig } from './type';
 
 const DEFAULT_NAME_LABEL = getName(100);

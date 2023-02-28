@@ -52,7 +52,6 @@ const BaseConfig = (props: {
   id: string;
   component: ComponentData.TComponentData;
   onChange?: ComponentMethod.SetComponentMethod;
-  params: ComponentData.TParams[];
 }) => {
   const { id, component, onChange } = props;
 

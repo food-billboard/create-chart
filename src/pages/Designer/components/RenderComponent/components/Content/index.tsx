@@ -149,7 +149,12 @@ const Content = (props: {
                 parent={parent}
                 flag={flag}
               >
-                <SubGroup value={newComponent} isOuter={isOuter} flag={flag}>
+                <SubGroup
+                  value={newComponent}
+                  isOuter={isOuter}
+                  flag={flag}
+                  wrapper={InternalBorderWrapper}
+                >
                   {renderChildren(newComponent.components, newComponent, false)}
                 </SubGroup>
               </ChildrenWrapper>

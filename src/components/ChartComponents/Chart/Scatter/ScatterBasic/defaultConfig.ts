@@ -15,7 +15,7 @@ import {
   DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { getDate, getNumberValue } from '@/utils/constants';
+import { getDate, getNumberValue } from '@/utils/constants/defaultValue';
 import { TScatterBasicConfig } from './type';
 
 const DEFAULT_NAME_LABEL = getDate(100);

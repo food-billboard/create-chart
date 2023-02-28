@@ -14,7 +14,7 @@ import {
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
-import { getDate, getNumberValue } from '@/utils/constants';
+import { getDate, getNumberValue } from '@/utils/constants/defaultValue';
 import { TBoxPlotBasicConfig } from './type';
 
 const DEFAULT_DATE_LABEL = getDate(6);

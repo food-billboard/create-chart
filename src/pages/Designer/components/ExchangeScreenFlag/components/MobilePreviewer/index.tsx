@@ -192,7 +192,7 @@ const MobilePreviewer = forwardRef<MobilePreviewerRef, {}>((props, ref) => {
         ? putScreenModel
         : putScreen;
       await method({
-        _id: screenData._id,
+        _id: screenData._id || '',
         name: screenData.name,
         description: screenData.description,
         poster: screenData.poster,

@@ -12,7 +12,7 @@ import {
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
-import { getName } from '@/utils/constants';
+import { getName } from '@/utils/constants/defaultValue';
 import { TPercentBarConfig } from './type';
 
 const DEFAULT_NAME = getName(3);

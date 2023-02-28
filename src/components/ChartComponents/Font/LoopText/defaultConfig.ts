@@ -7,7 +7,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
-import { getText } from '@/utils/constants';
+import { getText } from '@/utils/constants/defaultValue';
 import { TLoopTextConfig } from './type';
 
 const DEFAULT_VALUE = {

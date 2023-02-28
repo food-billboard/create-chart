@@ -65,7 +65,7 @@ const useActionBarProps: (props: ActionProps) => CommonActionType = (props) => {
   };
 };
 
-const ActionHeaderBar = () => {
+export const ActionHeaderBar = () => {
   const {
     global: {
       components,

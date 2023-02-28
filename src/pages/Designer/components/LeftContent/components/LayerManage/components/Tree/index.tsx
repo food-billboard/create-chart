@@ -19,9 +19,6 @@ import styles from './index.less';
 export type TreeProps = {
   disabled?: boolean;
   iconMode: boolean;
-  components: ComponentData.TComponentData[];
-  select: string[];
-  setSelect: (value: string[]) => void;
 };
 
 const TreeFunction = (props: TreeProps) => {

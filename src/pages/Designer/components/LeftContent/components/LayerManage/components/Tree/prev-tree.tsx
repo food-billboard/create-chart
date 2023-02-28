@@ -81,7 +81,7 @@ class TreeClass extends Component<TreeProps> {
               disabled={disabled}
               isExpend
               iconMode
-              isSelect
+              // isSelect
             />
           ),
           key: id,

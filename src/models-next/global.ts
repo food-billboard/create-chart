@@ -1,7 +1,8 @@
 import { merge, cloneDeep } from 'lodash';
 import arrayMove from 'array-move';
 import { toJS } from 'mobx';
-import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
+import { DEFAULT_SCREEN_DATA } from '@/utils/constants/screenData';
+import { ThemeMap } from '@/utils/constants/theme';
 import { mergeWithoutArray } from '@/utils/tool';
 import { HistoryUtil } from '@/utils/Assist/History';
 import ComponentUtil from '@/utils/Assist/Component';

@@ -13,7 +13,7 @@ import {
   DEFAULT_LINKAGE_CONFIG,
   DEFAULT_BAR_CAROUSEL_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
-import { getName, getNumberValue } from '@/utils/constants';
+import { getName, getNumberValue } from '@/utils/constants/defaultValue';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TRankBarConfig } from './type';
 

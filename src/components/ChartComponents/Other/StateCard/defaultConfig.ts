@@ -7,7 +7,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
-import { getText } from '@/utils/constants';
+import { getText } from '@/utils/constants/defaultValue';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TStateCardConfig } from './type';
 

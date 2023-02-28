@@ -9,7 +9,7 @@ import {
   DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { getText } from '@/utils/constants';
+import { getText } from '@/utils/constants/defaultValue';
 import { TTagConfig } from './type';
 
 const DEFAULT_TEXT = getText(4);

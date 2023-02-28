@@ -14,7 +14,7 @@ import {
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_GRID_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
-import { getDate, getNumberValue } from '@/utils/constants';
+import { getDate, getNumberValue } from '@/utils/constants/defaultValue';
 import { TCandlestickBasicConfig } from './type';
 
 const DEFAULT_DATE_LABEL = getDate(10);

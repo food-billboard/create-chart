@@ -12,6 +12,16 @@ declare module '*.bmp';
 declare module '*.tiff';
 declare module 'omit.js';
 
+declare namespace JSX {
+  interface IntrinsicElements {
+    'css-doodle': {
+      grid?: string;
+      class?: string;
+      children?: any;
+    };
+  }
+}
+
 // google analytics interface
 interface GAFieldsObject {
   eventCategory: string;

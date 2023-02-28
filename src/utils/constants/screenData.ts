@@ -91,7 +91,7 @@ export const DEFAULT_FILTER_LIST: ComponentData.TFilterConfig[] = [
   },
 ];
 
-const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
+export const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
   name: '大屏名称',
   description: '',
   components: [],

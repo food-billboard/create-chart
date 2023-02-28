@@ -12,7 +12,7 @@ import {
   DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { getName, getNumberValue } from '@/utils/constants';
+import { getName, getNumberValue } from '@/utils/constants/defaultValue';
 import { TTreeBasicConfig } from './type';
 
 const DEFAULT_NAME_LABEL = getName(5);

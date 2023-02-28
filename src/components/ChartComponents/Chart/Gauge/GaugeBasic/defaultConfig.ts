@@ -7,7 +7,7 @@ import {
   DEFAULT_ANIMATION_CONFIG,
   DEFAULT_CONDITION_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
-import { getName, getNumberValue } from '@/utils/constants';
+import { getName, getNumberValue } from '@/utils/constants/defaultValue';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TGaugeBasicConfig } from './type';
 

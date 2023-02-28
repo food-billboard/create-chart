@@ -6,7 +6,7 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
-import { getName, getText } from '@/utils/constants';
+import { getName, getText } from '@/utils/constants/defaultValue';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TStepsConfig } from './type';
 

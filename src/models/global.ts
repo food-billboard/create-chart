@@ -1,11 +1,17 @@
 import { set, get, merge, cloneDeep } from 'lodash';
 import arrayMove from 'array-move';
-import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
+import {
+  DEFAULT_SCREEN_DATA,
+  DEFAULT_FILTER_LIST,
+} from '@/utils/constants/screenData';
+import { ThemeMap } from '@/utils/constants/theme';
 import { mergeWithoutArray } from '@/utils/tool';
 import { HistoryUtil } from '@/utils/Assist/History';
 import ComponentUtil from '@/utils/Assist/Component';
 import { ScreenDataRequest } from '@/utils/Assist/RequestPool';
 import { DragData } from './connect';
+
+console.log(ThemeMap, DEFAULT_SCREEN_DATA, DEFAULT_FILTER_LIST, 222222);
 
 export default {
   namespace: 'global',

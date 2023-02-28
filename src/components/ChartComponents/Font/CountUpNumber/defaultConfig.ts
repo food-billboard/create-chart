@@ -7,7 +7,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
-import { getNumberValue } from '@/utils/constants';
+import { getNumberValue } from '@/utils/constants/defaultValue';
 import { TCountUpNumberConfig } from './type';
 
 const [DEFAULT_NUMBER_VALUE] = getNumberValue(1, 2000, 200000);

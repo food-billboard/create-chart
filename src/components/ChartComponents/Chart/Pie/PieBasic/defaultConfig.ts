@@ -13,7 +13,7 @@ import {
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
-import { getName, getNumberValue } from '@/utils/constants';
+import { getName, getNumberValue } from '@/utils/constants/defaultValue';
 import { TPieBasicConfig } from './type';
 
 const DEFAULT_NAME_LABEL = getName(5);
