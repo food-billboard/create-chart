@@ -17,7 +17,7 @@ import { init } from '@/utils/Assist/EchartsLoader';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
-import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import { DEFAULT_THEME_COLOR_LIST } from '@/utils/constants/defaultComponentConfig';
 import { TRadarBasicConfig } from '../type';
 import { CHART_ID } from '../id';
 

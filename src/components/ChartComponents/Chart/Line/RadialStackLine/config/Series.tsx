@@ -5,7 +5,7 @@ import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/
 import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradientSelect';
 import ThemeUtil from '@/utils/Assist/Theme';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import { DEFAULT_RADIAL_CONFIG } from '../../../../Common/Constants/defaultConfig';
+import { DEFAULT_RADIAL_CONFIG } from '@/utils/constants/defaultComponentConfig';
 import { TRadialStackLineConfig } from '../type';
 
 const SeriesConfig = (props: {

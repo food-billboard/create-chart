@@ -3,7 +3,7 @@ import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
-} from '../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TSwitchConfig } from './type';
 

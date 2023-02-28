@@ -3,7 +3,7 @@ import { Select } from 'antd';
 import classnames from 'classnames';
 import { DeleteOutlined, PlusCircleTwoTone } from '@ant-design/icons';
 import { ParamsSelectSingle } from '@/components/ParamsSelect';
-import { DEFAULT_CONDITION_CONFIG_ITEM_RULE_VALUE } from '../../../Constants/defaultConfig';
+import { DEFAULT_CONDITION_CONFIG_ITEM_RULE_VALUE } from '@/utils/constants/defaultComponentConfig';
 import Input from '../../../Input';
 import Header from '../Header';
 import styles from './index.less';

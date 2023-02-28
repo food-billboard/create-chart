@@ -15,7 +15,7 @@ import {
   DEFAULT_THEME_RADIAL_COLOR_LIST,
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
-} from '../../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import { getDate, getNumberValue } from '@/utils/constants/defaultValue';
 import { TCachetBarConfig } from './type';
 

@@ -13,7 +13,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_GRID_CONFIG,
-} from '../../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import { getDate, getNumberValue } from '@/utils/constants/defaultValue';
 import { TCandlestickBasicConfig } from './type';
 

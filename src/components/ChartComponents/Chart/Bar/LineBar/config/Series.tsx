@@ -11,7 +11,7 @@ import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import { DEFAULT_RADIAL_CONFIG } from '../../../../Common/Constants/defaultConfig';
+import { DEFAULT_RADIAL_CONFIG } from '@/utils/constants/defaultComponentConfig';
 import { TLineBarConfig } from '../type';
 
 const { Item } = ConfigList;

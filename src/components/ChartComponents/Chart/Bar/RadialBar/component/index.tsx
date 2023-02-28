@@ -19,7 +19,7 @@ import FetchFragment, {
 import { init } from '@/utils/Assist/EchartsLoader';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
-import { DEFAULT_BORDER_RADIUS } from '../../../../Common/Constants/defaultConfig';
+import { DEFAULT_BORDER_RADIUS } from '@/utils/constants/defaultComponentConfig';
 import { TRadialBarConfig } from '../type';
 import { CHART_ID } from '../id';
 

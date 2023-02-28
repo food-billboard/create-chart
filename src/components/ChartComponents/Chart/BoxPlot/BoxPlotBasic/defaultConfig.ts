@@ -13,7 +13,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
-} from '../../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import { getDate, getNumberValue } from '@/utils/constants/defaultValue';
 import { TBoxPlotBasicConfig } from './type';
 

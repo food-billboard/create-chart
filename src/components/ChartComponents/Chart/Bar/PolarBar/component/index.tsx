@@ -17,7 +17,7 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import { init } from '@/utils/Assist/EchartsLoader';
-import { DEFAULT_OPACITY } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import { DEFAULT_OPACITY } from '@/utils/constants/defaultComponentConfig';
 import { TPolarBarConfig } from '../type';
 import { CHART_ID } from '../id';
 

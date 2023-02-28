@@ -1,6 +1,6 @@
 import { useEffect, useRef, useMemo, useState, CSSProperties } from 'react';
 import classnames from 'classnames';
-import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import { DEFAULT_THEME_COLOR_LIST } from '@/utils/constants/defaultComponentConfig';
 import ColorSelect from '@/components/ColorSelect';
 import AnimationSvg from '../AnimationSvg';
 import {

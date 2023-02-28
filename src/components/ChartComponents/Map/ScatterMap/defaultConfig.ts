@@ -10,7 +10,7 @@ import {
   DEFAULT_LABEL_CONFIG,
   DEFAULT_THEME_RADIAL_COLOR_LIST,
   DEFAULT_LINKAGE_CONFIG,
-} from '../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TScatterMapConfig } from './type';
 

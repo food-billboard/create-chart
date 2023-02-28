@@ -11,7 +11,7 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import { DEFAULT_BORDER_RADIUS } from '@/utils/constants/defaultComponentConfig';
 import { TImageConfig } from '../type';
 import { CHART_ID } from '../id';
 import styles from './index.less';

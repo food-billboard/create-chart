@@ -16,7 +16,7 @@ import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSe
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import IconTooltip from '@/components/IconTooltip';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import { DEFAULT_FONT_CONFIG } from '../../../Common/Constants/defaultConfig';
+import { DEFAULT_FONT_CONFIG } from '@/utils/constants/defaultComponentConfig';
 import ConditionConfig from './Condition';
 import { TListConfig } from '../type';
 

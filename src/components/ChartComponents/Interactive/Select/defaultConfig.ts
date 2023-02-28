@@ -4,7 +4,7 @@ import {
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
-} from '../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import { getName } from '@/utils/constants/defaultValue';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TSelectConfig } from './type';

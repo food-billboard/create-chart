@@ -7,7 +7,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
   DEFAULT_THEME_COLOR_LIST
-} from '../../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import { T{{COMPONENT_NAME}}Config } from './type';
 
 const DEFAULT_VALUE = {

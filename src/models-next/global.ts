@@ -1,6 +1,6 @@
 import { merge, cloneDeep } from 'lodash';
 import arrayMove from 'array-move';
-import { toJS } from 'mobx';
+import { toJS, makeAutoObservable } from 'mobx';
 import { DEFAULT_SCREEN_DATA } from '@/utils/constants/screenData';
 import { ThemeMap } from '@/utils/constants/theme';
 import { mergeWithoutArray } from '@/utils/tool';
@@ -10,6 +10,10 @@ import { ScreenDataRequest } from '@/utils/Assist/RequestPool';
 import { DragData, IGlobalModelState, TUndoHistory } from './connect';
 
 export default class {
+  constructor() {
+    makeAutoObservable(this);
+  }
+
   // 当前大屏的类型
   screenType: IGlobalModelState['screenType'] = 'edit';
   // 大屏
@@ -55,6 +59,7 @@ export default class {
   }
 
   setScreenType(value: ComponentData.ScreenType) {
+    console.log(this, 2222);
     this.screenType = value;
   }
 

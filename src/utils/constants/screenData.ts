@@ -1,12 +1,12 @@
 import { nanoid } from 'nanoid';
 import IsMobile from 'is-mobile';
 import { pick, merge } from 'lodash';
-import { DEFAULT_BORDER } from '@/components/InternalBorder';
 import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_GROUP_COMPONENT_TRANSFORM,
   BASIC_DEFAULT_DATA_CONFIG,
-} from '@/components/ChartComponents/Common/Constants/defaultConfig';
+  DEFAULT_BORDER,
+} from './defaultComponentConfig';
 import GlobalConfig from '../Assist/GlobalConfig';
 import Theme from '../../theme/wonderland.project.json';
 import { DEFAULT_THEME_NAME } from '../Assist/Theme';

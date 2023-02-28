@@ -13,7 +13,7 @@ import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TVideoConfig } from '../type';
 import { CHART_ID } from '../id';
 import styles from './index.less';
-import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import { DEFAULT_BORDER_RADIUS } from '@/utils/constants/defaultComponentConfig';
 
 const VideoBasic = (
   props: ComponentData.CommonComponentProps<TVideoConfig>,

@@ -6,7 +6,7 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
-} from '../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import { TTextConfig } from './type';
 
 const DEFAULT_VALUE = {

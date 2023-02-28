@@ -12,7 +12,7 @@ import FetchFragment, {
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import { DEFAULT_BORDER_RADIUS } from '@/utils/constants/defaultComponentConfig';
 import { TTagConfig } from '../type';
 import { CHART_ID } from '../id';
 import styles from './index.less';

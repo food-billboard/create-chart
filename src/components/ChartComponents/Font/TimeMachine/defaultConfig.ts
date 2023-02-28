@@ -5,7 +5,7 @@ import {
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
-} from '../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TTimeMachineConfig } from './type';
 

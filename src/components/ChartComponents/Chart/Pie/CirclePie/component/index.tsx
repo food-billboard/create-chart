@@ -17,7 +17,7 @@ import { init } from '@/utils/Assist/EchartsLoader';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
-import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import { DEFAULT_BORDER_RADIUS } from '@/utils/constants/defaultComponentConfig';
 import { TCirclePieConfig } from '../type';
 import { CHART_ID } from '../id';
 

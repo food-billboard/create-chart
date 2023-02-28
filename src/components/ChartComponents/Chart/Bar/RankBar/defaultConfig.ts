@@ -12,7 +12,7 @@ import {
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
   DEFAULT_BAR_CAROUSEL_CONFIG,
-} from '../../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import { getName, getNumberValue } from '@/utils/constants/defaultValue';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TRankBarConfig } from './type';

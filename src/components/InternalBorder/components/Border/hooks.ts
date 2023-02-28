@@ -1,7 +1,7 @@
 import { CSSProperties, useMemo } from 'react';
 import classnames from 'classnames';
 import { merge } from 'lodash';
-import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import { DEFAULT_THEME_COLOR_LIST } from '@/utils/constants/defaultComponentConfig';
 import { getRgbaString } from '@/utils/Assist/Theme';
 import { SELECTO_CLASSNAME } from '@/utils/constants';
 import { CommonBorderProps } from './type';

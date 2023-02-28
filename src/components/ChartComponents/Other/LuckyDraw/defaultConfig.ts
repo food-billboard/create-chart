@@ -7,7 +7,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
   DEFAULT_THEME_COLOR_LIST,
-} from '../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import { TLuckyDrawConfig } from './type';
 import prizes1 from '../../../../../public/other/prizes-1.png';
 import prizes2 from '../../../../../public/other/prizes-2.png';

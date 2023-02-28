@@ -11,7 +11,7 @@ import {
   DEFAULT_THEME_COLOR_LIST,
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
-} from '../../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import { getName } from '@/utils/constants/defaultValue';
 import { TPercentBarConfig } from './type';
 

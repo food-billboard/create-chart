@@ -15,7 +15,7 @@ import { useDebounceFn } from 'ahooks';
 import classnames from 'classnames';
 import IsMobile from 'is-mobile';
 import ColorSelect from '@/components/ColorSelect';
-import { DEFAULT_THEME_COLOR_LIST } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import { DEFAULT_THEME_COLOR_LIST } from '@/utils/constants/defaultComponentConfig';
 import AreaChart from '../../../../../public/home/area-chart.png';
 import BarChart from '../../../../../public/home/bar-chart.png';
 import DotChart from '../../../../../public/home/dot-chart.png';

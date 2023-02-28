@@ -18,7 +18,7 @@ import FetchFragment, {
 } from '@/components/ChartComponents/Common/FetchFragment';
 import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
 import { init } from '@/utils/Assist/EchartsLoader';
-import { DEFAULT_BORDER_RADIUS } from '../../../../Common/Constants/defaultConfig';
+import { DEFAULT_BORDER_RADIUS } from '@/utils/constants/defaultComponentConfig';
 import { TBarBasicConfig } from '../type';
 import { CHART_ID } from '../id';
 

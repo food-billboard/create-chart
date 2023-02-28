@@ -12,7 +12,7 @@ import {
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_THEME_COLOR_LIST,
   DEFAULT_LINKAGE_CONFIG,
-} from '../../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { getName, getNumberValue } from '@/utils/constants/defaultValue';
 import { TRadarBasicConfig } from './type';

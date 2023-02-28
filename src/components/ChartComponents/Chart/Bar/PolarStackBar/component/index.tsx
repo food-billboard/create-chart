@@ -16,7 +16,7 @@ import { init } from '@/utils/Assist/EchartsLoader';
 import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
-import { DEFAULT_OPACITY } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import { DEFAULT_OPACITY } from '@/utils/constants/defaultComponentConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TPolarStackBarConfig } from '../type';
 import { CHART_ID } from '../id';

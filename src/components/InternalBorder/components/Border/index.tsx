@@ -18,8 +18,6 @@ import BorderBox11 from './BorderBox11';
 import BorderBox12 from './BorderBox12';
 import BorderBox13 from './BorderBox13';
 
-export const DEFAULT_BORDER = 'GradientLoopBorder';
-
 export default {
   // GradientBorder: {
   //   value: GradientBorder,

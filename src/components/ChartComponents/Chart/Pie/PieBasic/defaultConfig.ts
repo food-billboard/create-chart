@@ -12,7 +12,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
-} from '../../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import { getName, getNumberValue } from '@/utils/constants/defaultValue';
 import { TPieBasicConfig } from './type';
 

@@ -7,7 +7,7 @@ import {
   DEFAULT_LINKAGE_CONFIG,
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_BORDER_RADIUS,
-} from '../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TButtonConfig } from './type';
 

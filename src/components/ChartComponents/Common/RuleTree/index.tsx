@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Button } from 'antd';
-import { DEFAULT_CONDITION_CONFIG_ITEM_RULE } from '../Constants/defaultConfig';
+import { DEFAULT_CONDITION_CONFIG_ITEM_RULE } from '@/utils/constants/defaultComponentConfig';
 import Header from './components/Header';
 import Condition from './components/Condition';
 import styles from './index.less';

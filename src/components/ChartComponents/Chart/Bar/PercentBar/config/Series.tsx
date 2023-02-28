@@ -10,7 +10,7 @@ import Input from '@/components/ChartComponents/Common/Input';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import { DEFAULT_RADIAL_CONFIG } from '../../../../Common/Constants/defaultConfig';
+import { DEFAULT_RADIAL_CONFIG } from '@/utils/constants/defaultComponentConfig';
 import { DEFAULT_LABEL } from '../defaultConfig';
 import { TPercentBarConfig } from '../type';
 

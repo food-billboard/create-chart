@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import moment from 'moment';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
-import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import { DEFAULT_BORDER_RADIUS } from '@/utils/constants/defaultComponentConfig';
 import { TDatePickerConfig } from '../type';
 import { CHART_ID } from '../id';
 import styles from './index.less';

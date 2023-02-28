@@ -3,7 +3,7 @@ import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
-} from '../../Common/Constants/defaultConfig';
+} from '@/utils/constants/defaultComponentConfig';
 import { TIFrameConfig } from './type';
 import { OnMessageTooltipName } from './component/MessageTooltip';
 
