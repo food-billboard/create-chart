@@ -1,4 +1,5 @@
 import { useUpdateEffect } from 'ahooks';
+import { observer } from 'mobx-react-lite';
 import { useIsComponentChildrenSelect, useMobxContext } from '@/hooks';
 
 const SelectChangeWrapper = (props: {
@@ -23,4 +24,4 @@ const SelectChangeWrapper = (props: {
   return <span></span>;
 };
 
-export default SelectChangeWrapper;
+export default observer(SelectChangeWrapper);

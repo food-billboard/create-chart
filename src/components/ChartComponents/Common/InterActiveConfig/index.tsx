@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import classnames from 'classnames';
 import { get } from 'lodash';
+import { observer } from 'mobx-react-lite';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { useMobxContext } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
@@ -59,4 +60,4 @@ const InterActiveConfig = (props: { id: string }) => {
   );
 };
 
-export default InterActiveConfig;
+export default observer(InterActiveConfig);

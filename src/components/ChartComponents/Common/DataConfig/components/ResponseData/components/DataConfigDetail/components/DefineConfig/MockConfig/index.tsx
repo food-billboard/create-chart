@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { Button, Select } from 'antd';
 import { nanoid } from 'nanoid';
+import { observer } from 'mobx-react-lite';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useMobxContext } from '@/hooks';
 import Input from '@/components/ChartComponents/Common/Input';
@@ -14,124 +15,126 @@ import { ApiConfigProps } from '../ApiConfig';
 
 export type MockConfigProps = ApiConfigProps;
 
-const FieldsConfig = ({
-  value = [],
-  onChange,
-}: {
-  value: ComponentData.TComponentApiDataConfig['request']['mock']['fields'];
-  onChange: (
-    value: ComponentData.TComponentApiDataConfig['request']['mock']['fields'],
-  ) => void;
-}) => {
-  const {
-    data: { mockValueKindMap: mockKindList },
-  } = useMobxContext();
+const FieldsConfig = observer(
+  ({
+    value = [],
+    onChange,
+  }: {
+    value: ComponentData.TComponentApiDataConfig['request']['mock']['fields'];
+    onChange: (
+      value: ComponentData.TComponentApiDataConfig['request']['mock']['fields'],
+    ) => void;
+  }) => {
+    const {
+      data: { mockValueKindMap: mockKindList },
+    } = useMobxContext();
 
-  const onValueChange = useCallback(
-    (record: any, index: number, key: string, newStateValue: any) => {
-      const newValue = [...value];
-      newValue.splice(index, 1, {
-        ...record,
-        [key]: newStateValue,
-      });
-      onChange(newValue);
-    },
-    [onChange, value],
-  );
+    const onValueChange = useCallback(
+      (record: any, index: number, key: string, newStateValue: any) => {
+        const newValue = [...value];
+        newValue.splice(index, 1, {
+          ...record,
+          [key]: newStateValue,
+        });
+        onChange(newValue);
+      },
+      [onChange, value],
+    );
 
-  const handleDelete = useCallback(
-    (record: any) => {
-      const newValue = value.filter((item) => item.id !== record.id);
-      onChange(newValue);
-    },
-    [value, onChange],
-  );
+    const handleDelete = useCallback(
+      (record: any) => {
+        const newValue = value.filter((item) => item.id !== record.id);
+        onChange(newValue);
+      },
+      [value, onChange],
+    );
 
-  const columns = useMemo(() => {
-    return [
-      {
-        key: 'key',
-        title: '字段名',
-        dataIndex: 'key',
-        render: (value: string, record: any, index: number) => {
-          return (
-            <Input
-              className="w-100"
-              value={value}
-              onChange={onValueChange.bind(null, record, index, 'key')}
-            />
-          );
+    const columns = useMemo(() => {
+      return [
+        {
+          key: 'key',
+          title: '字段名',
+          dataIndex: 'key',
+          render: (value: string, record: any, index: number) => {
+            return (
+              <Input
+                className="w-100"
+                value={value}
+                onChange={onValueChange.bind(null, record, index, 'key')}
+              />
+            );
+          },
         },
-      },
-      {
-        key: 'dataKind',
-        title: '数据种类',
-        dataIndex: 'dataKind',
-        width: 140,
-        render: (value: string, record: any, index: number) => {
-          return (
-            <Select
-              className="w-100"
-              value={value}
-              onChange={onValueChange.bind(null, record, index, 'dataKind')}
-              options={mockKindList.map((item) => {
-                return {
-                  label: item.value,
-                  value: item.id,
-                };
-              })}
-            />
-          );
+        {
+          key: 'dataKind',
+          title: '数据种类',
+          dataIndex: 'dataKind',
+          width: 140,
+          render: (value: string, record: any, index: number) => {
+            return (
+              <Select
+                className="w-100"
+                value={value}
+                onChange={onValueChange.bind(null, record, index, 'dataKind')}
+                options={mockKindList.map((item) => {
+                  return {
+                    label: item.value,
+                    value: item.id,
+                  };
+                })}
+              />
+            );
+          },
         },
-      },
-      {
-        key: 'description',
-        title: '描述',
-        dataIndex: 'description',
-        render: (_: string, record: any) => {
-          const { dataKind } = record;
-          const target = mockKindList.find((item) => item.id === dataKind);
-          return target?.description || '无描述内容';
+        {
+          key: 'description',
+          title: '描述',
+          dataIndex: 'description',
+          render: (_: string, record: any) => {
+            const { dataKind } = record;
+            const target = mockKindList.find((item) => item.id === dataKind);
+            return target?.description || '无描述内容';
+          },
         },
-      },
-      {
-        key: 'operation',
-        title: '操作',
-        dataIndex: 'operation',
-        render: (_: string, record: any) => {
-          return (
-            <Button
-              type={'link'}
-              danger
-              icon={<DeleteOutlined />}
-              onClick={handleDelete.bind(null, record)}
-            />
-          );
+        {
+          key: 'operation',
+          title: '操作',
+          dataIndex: 'operation',
+          render: (_: string, record: any) => {
+            return (
+              <Button
+                type={'link'}
+                danger
+                icon={<DeleteOutlined />}
+                onClick={handleDelete.bind(null, record)}
+              />
+            );
+          },
         },
-      },
-    ];
-  }, [onValueChange, mockKindList, handleDelete]);
+      ];
+    }, [onValueChange, mockKindList, handleDelete]);
 
-  const handleAdd = useCallback(() => {
-    onChange([
-      ...value,
-      {
-        key: `key_${Date.now()}`,
-        dataKind: '',
-        id: nanoid(),
-      },
-    ]);
-  }, [value, onChange]);
+    const handleAdd = useCallback(() => {
+      onChange([
+        ...value,
+        {
+          key: `key_${Date.now()}`,
+          dataKind: '',
+          id: nanoid(),
+        },
+      ]);
+    }, [value, onChange]);
 
-  return (
-    <>
-      <Button type="primary" onClick={handleAdd} className="m-t-8">
-        新增字段
-      </Button>
-      <MapTable columns={columns} rowKey={'id'} dataSource={value} />
-    </>
-  );
-};
+    return (
+      <>
+        <Button type="primary" onClick={handleAdd} className="m-t-8">
+          新增字段
+        </Button>
+        <MapTable columns={columns} rowKey={'id'} dataSource={value} />
+      </>
+    );
+  },
+);
 
 const MockConfig = (props: MockConfigProps) => {
   const { onChange: propsOnChange, value } = props;
@@ -226,4 +229,4 @@ const MockConfig = (props: MockConfigProps) => {
   );
 };
 
-export default MockConfig;
+export default observer(MockConfig);

@@ -1,6 +1,7 @@
 import { useCallback, ReactNode, useMemo, useRef } from 'react';
 import classnames from 'classnames';
 import { useSize } from 'ahooks';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import { BackgroundConfigRender } from '@/components/DesignerBackground';
 import { mergeWithoutArray } from '@/utils/tool';
@@ -152,4 +153,4 @@ const PanelWrapper = (props: { children: ReactNode }) => {
   );
 };
 
-export default PanelWrapper;
+export default observer(PanelWrapper);

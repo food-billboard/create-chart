@@ -7,6 +7,7 @@ import {
   GlobalOutlined,
   MacCommandOutlined,
 } from '@ant-design/icons';
+import { observer } from 'mobx-react-lite';
 import classnames from 'classnames';
 import { useMobxContext } from '@/hooks';
 import IconFont from '@/components/ChartComponents/Common/Icon';
@@ -40,7 +41,7 @@ export type TCommonProps = {
 };
 
 // 重做
-export const RedoIcon = (props: TCommonProps) => {
+export const RedoIcon = observer((props: TCommonProps) => {
   const { onClick } = props;
 
   const {
@@ -68,10 +69,10 @@ export const RedoIcon = (props: TCommonProps) => {
       })}
     />
   );
-};
+});
 
 // 撤销
-export const UndoIcon = (props: TCommonProps) => {
+export const UndoIcon = observer((props: TCommonProps) => {
   const { onClick } = props;
 
   const {
@@ -99,7 +100,7 @@ export const UndoIcon = (props: TCommonProps) => {
       })}
     />
   );
-};
+});
 
 // 图层折叠展开
 export const LayerCollapseIcon = (props: TCommonProps) => {

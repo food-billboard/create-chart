@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { Avatar as AntAvatar, Dropdown } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 
 const Avatar = (props: {}) => {
@@ -30,4 +31,4 @@ const Avatar = (props: {}) => {
   );
 };
 
-export default Avatar;
+export default observer(Avatar);

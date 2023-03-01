@@ -3,6 +3,7 @@ import { Empty } from 'antd';
 import classnames from 'classnames';
 import IsMobile from 'is-mobile';
 import { useSize } from 'ahooks';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import styles from '../../index.less';
 
@@ -73,4 +74,4 @@ function PainterWrapper(props: { scale: number; children?: ReactNode }) {
   return <>{children}</>;
 }
 
-export default PainterWrapper;
+export default observer(PainterWrapper);

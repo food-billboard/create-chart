@@ -1,6 +1,7 @@
 import { stringify } from 'querystring';
 import { history } from 'umi';
 import { message } from 'antd';
+import { makeAutoObservable } from 'mobx';
 import {
   getUserInfo,
   forgetPassword,
@@ -19,18 +20,22 @@ import {
 } from '@/utils/Assist/ErrorBoundary';
 
 export default class {
+  constructor() {
+    makeAutoObservable(this);
+  }
+
   currentUser: any = {};
 
   //获取用户信息
-  async getUserInfo() {
+  getUserInfo = async () => {
     const response = await getUserInfo();
     this.currentUser = response;
     if (!GlobalConfig.IS_STATIC) setErrorOriginUser(response);
     return response;
-  }
+  };
 
   //登录
-  async login(payload: LoginParamsType) {
+  login = async (payload: LoginParamsType) => {
     await accountLogin(payload);
 
     // Login successfully
@@ -50,10 +55,10 @@ export default class {
       }
     }
     history.replace(redirect || '/');
-  }
+  };
 
   //退出登录
-  async logout() {
+  logout = async () => {
     try {
       await outLogin();
     } catch (err) {}
@@ -70,10 +75,10 @@ export default class {
       });
     }
     if (!GlobalConfig.IS_STATIC) unsetErrorOriginUser();
-  }
+  };
 
   //注册
-  async register(payload: RegisterParamsType) {
+  register = async (payload: RegisterParamsType) => {
     const response: any = await register(payload);
 
     //注册成功跳转至登录
@@ -86,10 +91,10 @@ export default class {
         },
       });
     }
-  }
+  };
 
   //重置密码
-  async forget(payload: ResetParamsType) {
+  forget = async (payload: ResetParamsType) => {
     const response: any = await forgetPassword(payload);
     //重置成功跳转至登录
     if (response.status === 'ok') {
@@ -101,5 +106,5 @@ export default class {
         },
       });
     }
-  }
+  };
 }

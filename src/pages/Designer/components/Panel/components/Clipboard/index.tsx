@@ -1,6 +1,7 @@
 import { ReactNode, useCallback, useRef, useMemo, useState } from 'react';
 import { useKeyPress, useDebounceFn } from 'ahooks';
 import { merge, get } from 'lodash';
+import { observer } from 'mobx-react-lite';
 import { useIdPathMap, useMobxContext } from '@/hooks';
 import { clone } from '@/components/ContextMenu/Actions/Clone';
 import { paste } from '@/components/ContextMenu/Actions/Paste';
@@ -191,4 +192,4 @@ const ClipboardComponent = (props: { children?: ReactNode }) => {
   );
 };
 
-export default ClipboardComponent;
+export default observer(ClipboardComponent);

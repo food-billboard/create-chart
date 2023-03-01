@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { Switch } from 'antd';
+import { observer } from 'mobx-react-lite';
 import {
   getComponent,
   getParentComponentIds,
@@ -367,4 +368,4 @@ const BaseConfig = (props: { id: string; isGroupComponent: boolean }) => {
   );
 };
 
-export default BaseConfig;
+export default observer(BaseConfig);

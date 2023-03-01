@@ -4,6 +4,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { history } from 'umi';
 import { useUnmount } from 'ahooks';
+import { observer } from 'mobx-react-lite';
 import {
   useHashChangeReload,
   isModelHash,
@@ -71,7 +72,7 @@ export const useSingleModal: () => [
   return [handleModal, handleClose];
 };
 
-const Designer = () => {
+const Designer = observer(() => {
   const {
     global: { setScreenType },
     data: { getMockValueKindMap },
@@ -169,7 +170,7 @@ const Designer = () => {
 
   useEffect(() => {
     setScreenType('edit');
-  }, [setScreenType]);
+  }, []);
 
   // 页面关闭的时候需要提示是否保存
   // 这是在手动保存的时候才需要使用的
@@ -230,6 +231,6 @@ const Designer = () => {
       <FetchScreenComponent onLoad={onLoad} ref={requestRef} />
     </ConfigProvider>
   );
-};
+});
 
 export default Designer;

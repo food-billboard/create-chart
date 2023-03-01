@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { Button, Dropdown, InputNumber, Slider, Space } from 'antd';
 import { useControllableValue } from 'ahooks';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import { wrapperId } from '../../../PanelWrapper/constants';
 import styles from './index.less';
@@ -116,4 +117,4 @@ const Scale = () => {
   );
 };
 
-export default Scale;
+export default observer(Scale);

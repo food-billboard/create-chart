@@ -1,6 +1,7 @@
 import { useMemo, useCallback, useState, useEffect } from 'react';
 import { Row, Collapse } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
+import { observer } from 'mobx-react-lite';
 import classnames from 'classnames';
 import { useMobxContext } from '@/hooks';
 import Empty from '@/components/Empty';
@@ -93,4 +94,4 @@ const ComponentList = (props: { type: string }) => {
   );
 };
 
-export default ComponentList;
+export default observer(ComponentList);

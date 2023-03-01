@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { pick, noop } from 'lodash';
 import { Space } from 'antd';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import {
   BottomAction,
@@ -65,7 +66,7 @@ const useActionBarProps: (props: ActionProps) => CommonActionType = (props) => {
   };
 };
 
-export const ActionHeaderBar = () => {
+export const ActionHeaderBar = observer(() => {
   const {
     global: {
       components,
@@ -103,9 +104,9 @@ export const ActionHeaderBar = () => {
       )}
     </div>
   );
-};
+});
 
-export const ActionFooterBar = () => {
+export const ActionFooterBar = observer(() => {
   const {
     global: {
       components,
@@ -143,4 +144,4 @@ export const ActionFooterBar = () => {
       )}
     </div>
   );
-};
+});

@@ -3,6 +3,7 @@ import { Empty, Layout as AntLayout, Menu, Breadcrumb } from 'antd';
 import classnames from 'classnames';
 import isMobileJudge from 'is-mobile';
 import { history } from 'umi';
+import { observer } from 'mobx-react-lite';
 import Loading from '@/components/PageLoading';
 import IntroductionButton from '@/components/IntroductionButton';
 import PromptChrome from '@/components/PromptChrome';
@@ -18,42 +19,44 @@ const PATH_MAP: any = {
   '/screen': 'screen',
 };
 
-const LoginWrapper = (props: { children: ReactNode; location: any }) => {
-  const {
-    children,
-    location: { pathname },
-  } = props;
+const LoginWrapper = observer(
+  (props: { children: ReactNode; location: any }) => {
+    const {
+      children,
+      location: { pathname },
+    } = props;
 
-  const {
-    user: { getUserInfo },
-  } = useMobxContext();
+    const {
+      user: { getUserInfo },
+    } = useMobxContext();
 
-  const [fetchLoading, setFetchLoading] = useState<boolean>(true);
+    const [fetchLoading, setFetchLoading] = useState<boolean>(true);
 
-  const fetchUserInfo = async () => {
-    setFetchLoading(true);
-    try {
-      await getUserInfo();
-    } catch (err) {
-      dispatchLogin(err);
-    } finally {
-      setFetchLoading(false);
-    }
-  };
+    const fetchUserInfo = async () => {
+      setFetchLoading(true);
+      try {
+        await getUserInfo();
+      } catch (err) {
+        dispatchLogin(err);
+      } finally {
+        setFetchLoading(false);
+      }
+    };
 
-  useEffect(() => {
-    fetchUserInfo();
-  }, [pathname]);
+    useEffect(() => {
+      fetchUserInfo();
+    }, [pathname]);
 
-  if (fetchLoading) return <Loading />;
+    if (fetchLoading) return <Loading />;
 
-  return (
-    <>
-      {children}
-      <IntroductionButton />
-    </>
-  );
-};
+    return (
+      <>
+        {children}
+        <IntroductionButton />
+      </>
+    );
+  },
+);
 
 // 外部layout
 const Layout = (props: { children?: ReactNode; pathname: string }) => {
@@ -225,7 +228,7 @@ const DocumentTitleSetWrapper = (props: any) => {
 };
 
 // 环境判断
-const EnvironmentPrompt = (props: any) => {
+const EnvironmentPrompt = observer((props: any) => {
   const {
     global: {
       screenData: { name },
@@ -237,7 +240,7 @@ const EnvironmentPrompt = (props: any) => {
       <DocumentTitleSetWrapper {...props} screenName={name} />
     </PromptChrome>
   );
-};
+});
 
 // 最外层的mobx包裹层
 const MobxWrapper = (props: any) => {

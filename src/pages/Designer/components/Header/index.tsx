@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons';
 import classnames from 'classnames';
 import Marquee from 'react-fast-marquee';
+import { observer } from 'mobx-react-lite';
 import FocusWrapper from '@/components/FocusWrapper';
 import { previewScreen, previewScreenModel } from '@/services';
 import { goPreview, goPreviewModel, goView } from '@/utils/tool';
@@ -266,4 +267,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default observer(Header);

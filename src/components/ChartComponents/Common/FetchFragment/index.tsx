@@ -1,6 +1,7 @@
 import { useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { useUpdateEffect } from 'ahooks';
 import { noop } from 'lodash';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import { CompareFilterUtil } from '@/utils/Assist/FilterData';
 
@@ -117,4 +118,6 @@ const FetchFragment = forwardRef<TFetchFragmentRef, TFetchFragmentProps>(
   },
 );
 
-export default FetchFragment;
+export default observer(FetchFragment, {
+  forwardRef: true,
+});

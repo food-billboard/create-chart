@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import classnames from 'classnames';
+import { observer } from 'mobx-react-lite';
 import LazyWrapper from '@/components/LazyLoad';
 import FocusWrapper from '@/components/FocusWrapper';
 import { useComponentPath, useMobxContext } from '@/hooks';
@@ -72,4 +73,4 @@ const RightContent = () => {
   );
 };
 
-export default RightContent;
+export default observer(RightContent);

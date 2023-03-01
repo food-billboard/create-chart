@@ -4,8 +4,10 @@ import {
   useState,
   useCallback,
   useMemo,
+  ForwardedRef,
 } from 'react';
 import { Space, Drawer, Tabs } from 'antd';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
@@ -23,7 +25,7 @@ export type ThemeConfigRef = {
 
 type Props = {};
 
-const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
+const ThemeConfig = (props: Props, ref: ForwardedRef<ThemeConfigRef>) => {
   const [visible, setVisible] = useState<boolean>(false);
 
   const {
@@ -139,6 +141,6 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
       />
     </Drawer>
   );
-});
+};
 
-export default ThemeConfig;
+export default observer(ThemeConfig, { forwardRef: true });

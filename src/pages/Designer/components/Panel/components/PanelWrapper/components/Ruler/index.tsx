@@ -1,6 +1,7 @@
 import { useRef, useState, useCallback, useEffect, useMemo } from 'react';
 import classnames from 'classnames';
 import { merge } from 'lodash';
+import { observer } from 'mobx-react-lite';
 import { useMouse, useHover, useThrottleEffect } from 'ahooks';
 import { nanoid } from 'nanoid';
 import { useMobxContext } from '@/hooks';
@@ -362,4 +363,4 @@ const Ruler = (props: {
   );
 };
 
-export default Ruler;
+export default observer(Ruler);

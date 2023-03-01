@@ -9,6 +9,7 @@ import {
   BorderRightOutlined,
   BorderHorizontalOutlined,
 } from '@ant-design/icons';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
@@ -304,4 +305,4 @@ const CarouselConfig = (props: { component: ComponentData.TComponentData }) => {
   );
 };
 
-export default CarouselConfig;
+export default observer(CarouselConfig);

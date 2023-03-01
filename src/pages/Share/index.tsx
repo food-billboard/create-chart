@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { history } from 'umi';
 import { message } from 'antd';
+import { observer } from 'mobx-react-lite';
 import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { useHashChangeReload, useMobxContext } from '@/hooks';
 import {
@@ -128,4 +129,4 @@ function Share() {
   );
 }
 
-export default Share;
+export default observer(Share);

@@ -1,6 +1,13 @@
-import { forwardRef, useImperativeHandle, useState, useCallback } from 'react';
+import {
+  forwardRef,
+  useImperativeHandle,
+  useState,
+  useCallback,
+  ForwardedRef,
+} from 'react';
 import { Switch, Drawer } from 'antd';
 import classnames from 'classnames';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import Slider from '@/components/ChartComponents/Common/Slider';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
@@ -17,7 +24,7 @@ type Value = ComponentData.TScreenData['config']['attr']['lens'];
 
 type Props = {};
 
-const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
+const LensConfig = (props: Props, ref: ForwardedRef<LensConfigRef>) => {
   const [visible, setVisible] = useState<boolean>(false);
 
   const {
@@ -185,6 +192,6 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
       </ConfigList>
     </Drawer>
   );
-});
+};
 
-export default LensConfig;
+export default observer(LensConfig, { forwardRef: true });

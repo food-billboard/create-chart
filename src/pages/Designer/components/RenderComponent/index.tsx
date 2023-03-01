@@ -9,6 +9,7 @@ import {
 import classnames from 'classnames';
 import { isEqual } from 'lodash';
 import { useRafState } from 'ahooks';
+import { observer } from 'mobx-react-lite';
 import { useComponentStyle, useMobxContext } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import ComponentWrapper from './components/Wrapper';
@@ -65,7 +66,7 @@ const OnlyClickDiv = (props: {
 };
 
 const RenderComponent = memo(
-  (props: RenderComponentProps) => {
+  observer((props: RenderComponentProps) => {
     const {
       style = {},
       className,
@@ -201,7 +202,7 @@ const RenderComponent = memo(
         </ComponentWrapper>
       </ContextMenu>
     );
-  },
+  }),
   (prevProps, nextProps) => {
     return isEqual(prevProps, nextProps);
   },

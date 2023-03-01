@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { observer } from 'mobx-react-lite';
 import { useIdPathMap, useMobxContext } from '@/hooks';
 import RenderComponent from '../../../RenderComponent';
 import { getPath } from '@/utils/Assist/Component';
@@ -38,4 +39,4 @@ const ComponentList = () => {
   return <>{list}</>;
 };
 
-export default ComponentList;
+export default observer(ComponentList);

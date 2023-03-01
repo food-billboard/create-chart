@@ -1,4 +1,5 @@
 import { ReactNode, useMemo, useEffect, Children } from 'react';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import {
   EVENT_NAME_MAP,
@@ -120,4 +121,4 @@ const CarouselGroupWrapper = (props: {
   );
 };
 
-export default CarouselGroupWrapper;
+export default observer(CarouselGroupWrapper);

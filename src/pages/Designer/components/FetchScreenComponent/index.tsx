@@ -1,8 +1,9 @@
-import { useEffect, forwardRef, useImperativeHandle } from 'react';
+import { useEffect, ForwardedRef, useImperativeHandle } from 'react';
 import { message } from 'antd';
 import { get } from 'lodash';
 import { history } from 'umi';
 import { nanoid } from 'nanoid';
+import { observer } from 'mobx-react-lite';
 import ThemeUtil, { DEFAULT_THEME_NAME } from '@/utils/Assist/Theme';
 import { useIsModelHash, useMobxContext } from '@/hooks';
 import { getScreenDetail, getScreenModelDetail } from '@/services';
@@ -21,13 +22,13 @@ export type FetchScreenComponentRef = {
   reload: () => Promise<any>;
 };
 
-const FetchScreenComponent = forwardRef<
-  FetchScreenComponentRef,
-  {
+const FetchScreenComponent = (
+  props: {
     needFetch?: boolean;
     onLoad?: () => void;
-  }
->((props, ref) => {
+  },
+  ref: ForwardedRef<FetchScreenComponentRef>,
+) => {
   const { needFetch = true, onLoad } = props;
 
   const {
@@ -203,6 +204,6 @@ const FetchScreenComponent = forwardRef<
   }, [needFetch]);
 
   return <></>;
-});
+};
 
-export default FetchScreenComponent;
+export default observer(FetchScreenComponent, { forwardRef: true });

@@ -8,6 +8,7 @@ import {
 import { Drawer, Button, message } from 'antd';
 import classnames from 'classnames';
 import { noop } from 'lodash';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import { Loading } from '@/components/PageLoading';
 import { getDvaGlobalModelData } from '@/utils/Assist/Component';
@@ -22,73 +23,75 @@ import { NormalPainter } from '../../../Panel/components/Painter';
 import { ExchangePreviewerContext } from './context';
 import styles from './index.less';
 
-const ComponentList = (props: { value: ComponentData.TComponentData[] }) => {
-  const { value } = props;
+const ComponentList = observer(
+  (props: { value: ComponentData.TComponentData[] }) => {
+    const { value } = props;
 
-  const {
-    global: {
-      version,
-      screenData: {
-        config: {
-          attr: {
-            theme: { value: screenTheme },
+    const {
+      global: {
+        version,
+        screenData: {
+          config: {
+            attr: {
+              theme: { value: screenTheme },
+            },
           },
         },
       },
-    },
-  } = useMobxContext();
+    } = useMobxContext();
 
-  // * 1.5版本以后设置成中心位置
-  const transformOrigin = useMemo(() => {
-    return ComponentTransformOriginChange(version);
-  }, [version]);
+    // * 1.5版本以后设置成中心位置
+    const transformOrigin = useMemo(() => {
+      return ComponentTransformOriginChange(version);
+    }, [version]);
 
-  return (
-    <>
-      {value.map((item) => {
-        const {
-          config: {
-            style: { width, height, rotate, skew, opacity },
-            attr: { visible },
-          },
-          id,
-        } = item;
-        const TargetComponent: any = getComponentByType(item)?.render;
-        if (!TargetComponent) return null;
-        return (
-          <div
-            key={id}
-            style={{
-              width,
-              height,
-              transform: `rotate(${rotate}deg) skew(${skew?.x || 0}deg, ${
-                skew?.y || 0
-              }deg)`,
-              visibility: visible ? 'visible' : 'hidden',
-              transformOrigin,
-              opacity,
-            }}
-            className={
-              styles['component-exchange-screen-flag-component-list-item']
-            }
-          >
-            <TargetComponent
-              className={styles['render-component-children']}
-              value={item}
+    return (
+      <>
+        {value.map((item) => {
+          const {
+            config: {
+              style: { width, height, rotate, skew, opacity },
+              attr: { visible },
+            },
+            id,
+          } = item;
+          const TargetComponent: any = getComponentByType(item)?.render;
+          if (!TargetComponent) return null;
+          return (
+            <div
               key={id}
-              wrapper={InternalBorderWrapper}
-              global={{
-                setParams: noop,
-                screenType: 'preview',
-                screenTheme,
+              style={{
+                width,
+                height,
+                transform: `rotate(${rotate}deg) skew(${skew?.x || 0}deg, ${
+                  skew?.y || 0
+                }deg)`,
+                visibility: visible ? 'visible' : 'hidden',
+                transformOrigin,
+                opacity,
               }}
-            />
-          </div>
-        );
-      })}
-    </>
-  );
-};
+              className={
+                styles['component-exchange-screen-flag-component-list-item']
+              }
+            >
+              <TargetComponent
+                className={styles['render-component-children']}
+                value={item}
+                key={id}
+                wrapper={InternalBorderWrapper}
+                global={{
+                  setParams: noop,
+                  screenType: 'preview',
+                  screenTheme,
+                }}
+              />
+            </div>
+          );
+        })}
+      </>
+    );
+  },
+);
 
 export type MobilePreviewerRef = {
   open: () => void;

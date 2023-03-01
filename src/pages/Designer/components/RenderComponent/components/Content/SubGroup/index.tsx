@@ -1,6 +1,7 @@
 import { ReactNode, useRef, CSSProperties, useMemo } from 'react';
 import classnames from 'classnames';
 import { merge } from 'lodash';
+import { observer } from 'mobx-react-lite';
 import { useComponentChildrenStyle, useMobxContext } from '@/hooks';
 import {
   useCondition,
@@ -131,4 +132,4 @@ const SubGroup = (props: {
   );
 };
 
-export default SubGroup;
+export default observer(SubGroup);

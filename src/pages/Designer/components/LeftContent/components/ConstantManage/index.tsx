@@ -6,6 +6,7 @@ import {
   useImperativeHandle,
 } from 'react';
 import { nanoid } from 'nanoid';
+import { observer } from 'mobx-react-lite';
 import { Button, Drawer, Table, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useMobxContext } from '@/hooks';
@@ -21,7 +22,7 @@ export interface ConstantManageProps {
   onClose?: () => void;
 }
 
-const ConstantList = () => {
+const ConstantList = observer(() => {
   const {
     global: {
       screenData: {
@@ -187,7 +188,7 @@ const ConstantList = () => {
       </GhostButton>
     </FocusWrapper>
   );
-};
+});
 
 const ConstantManage = forwardRef<ConstantManageRef, ConstantManageProps>(
   (props, ref) => {

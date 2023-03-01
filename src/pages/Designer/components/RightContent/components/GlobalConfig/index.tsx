@@ -3,6 +3,7 @@ import { Input, Switch } from 'antd';
 import { set } from 'lodash';
 import classnames from 'classnames';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import IconTooltip from '@/components/IconTooltip';
 import BackgroundSelect from '@/components/BackgroundSelect';
@@ -46,7 +47,7 @@ const GlobalConfig = () => {
       } catch (err) {}
 
       set(newScreenData, path, newValue);
-
+      console.log(setScreenData, 2222222);
       setScreenData(newScreenData);
     },
     [setScreenData, screenData],
@@ -233,4 +234,4 @@ const GlobalConfig = () => {
   );
 };
 
-export default GlobalConfig;
+export default observer(GlobalConfig);

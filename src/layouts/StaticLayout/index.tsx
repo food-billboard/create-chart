@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import { observer } from 'mobx-react-lite';
 import IntroductionButton from '@/components/IntroductionButton';
 import PromptChrome from '@/components/PromptChrome';
 import { useMobxContext, MobxContext, mobxStore } from '../../hooks';
@@ -41,7 +42,7 @@ const DocumentTitleSetWrapper = (props: any) => {
 };
 
 // 环境判断
-const EnvironmentPrompt = (props: any) => {
+const EnvironmentPrompt = observer((props: any) => {
   const {
     global: {
       screenData: { name },
@@ -53,7 +54,7 @@ const EnvironmentPrompt = (props: any) => {
       <DocumentTitleSetWrapper {...props} screenName={name} />
     </PromptChrome>
   );
-};
+});
 
 // 最外层的mobx包裹层
 const MobxWrapper = (props: any) => {

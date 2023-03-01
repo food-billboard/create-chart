@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { merge } from 'lodash';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import ComponentOptionConfig, {
   Tab,
@@ -161,4 +162,4 @@ const OrientConfig = (props: { component: ComponentData.TComponentData }) => {
   );
 };
 
-export default OrientConfig;
+export default observer(OrientConfig);

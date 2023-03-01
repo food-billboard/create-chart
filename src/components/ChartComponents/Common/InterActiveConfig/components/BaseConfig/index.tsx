@@ -1,6 +1,7 @@
 import { useMemo, ReactNode, useCallback } from 'react';
 import { Collapse, Checkbox } from 'antd';
 import { get } from 'lodash';
+import { observer } from 'mobx-react-lite';
 import { InfoCircleOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { useMobxContext } from '@/hooks';
 import IconTooltip from '@/components/IconTooltip';
@@ -189,4 +190,4 @@ const BaseConfig = (props: {
   );
 };
 
-export default BaseConfig;
+export default observer(BaseConfig);

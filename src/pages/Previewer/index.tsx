@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { history } from 'umi';
 import { message } from 'antd';
+import { observer } from 'mobx-react-lite';
 import { previewScreenValid, previewScreenModelValid } from '@/services';
 import { useIsModelHash, useHashChangeReload, useMobxContext } from '@/hooks';
 import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
@@ -78,4 +79,4 @@ function Previewer() {
   );
 }
 
-export default Previewer;
+export default observer(Previewer);

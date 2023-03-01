@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Space, Radio } from 'antd';
 import classnames from 'classnames';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
@@ -116,4 +117,4 @@ const CustomConfig = () => {
   );
 };
 
-export default CustomConfig;
+export default observer(CustomConfig);

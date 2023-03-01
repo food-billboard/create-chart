@@ -1,5 +1,6 @@
 import { createRef, Component } from 'react';
 import ReactRuler, { RulerProps as BaseRulerProps } from '@scena/react-ruler';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import ColorSelect from '@/components/ColorSelect';
 import ThemeUtil from '@/utils/Assist/Theme';
@@ -55,7 +56,7 @@ class Ruler extends Component<
   }
 }
 
-export default (props: Props) => {
+export default observer((props: Props) => {
   const {
     global: {
       screenData: {
@@ -67,4 +68,4 @@ export default (props: Props) => {
   } = useMobxContext();
 
   return <Ruler {...props} theme={theme} />;
-};
+});

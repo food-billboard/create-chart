@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { Select } from 'antd';
 import { merge } from 'lodash';
+import { observer } from 'mobx-react-lite';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { useMobxContext } from '@/hooks';
 import IconTooltipBase from '@/components/IconTooltip';
@@ -148,4 +149,4 @@ const ApiConfig = (props: ApiConfigProps) => {
   );
 };
 
-export default ApiConfig;
+export default observer(ApiConfig);

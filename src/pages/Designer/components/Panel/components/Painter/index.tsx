@@ -13,6 +13,7 @@ import {
   DropTarget,
   DropTargetConnector,
 } from 'react-dnd';
+import { observer } from 'mobx-react-lite';
 import { merge } from 'lodash';
 import ColorImageBackground from '@/components/ColorImageBackground';
 import { useBackground, useMobxContext, mobxStore } from '@/hooks';
@@ -38,7 +39,7 @@ export type PainterProps = {
 
 export const PANEL_ID = 'panel-id';
 
-const Painter = (props: PainterProps) => {
+const Painter = observer((props: PainterProps) => {
   const { connectDropTarget, className, style, children } = props;
 
   const {
@@ -172,7 +173,7 @@ const Painter = (props: PainterProps) => {
       <H5AutoHeight />
     </ColorImageBackground>
   );
-};
+});
 
 const dropTarget = DropTarget(
   DRAG_TYPE,

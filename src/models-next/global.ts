@@ -58,15 +58,14 @@ export default class {
     };
   }
 
-  setScreenType(value: ComponentData.ScreenType) {
-    console.log(this, 2222);
+  setScreenType = (value: ComponentData.ScreenType) => {
     this.screenType = value;
-  }
+  };
 
-  setScreen(
+  setScreen = (
     value: ComponentMethod.GlobalUpdateScreenDataParams,
     init: boolean = false,
-  ) {
+  ) => {
     this.screenData = mergeWithoutArray({}, this.screenData, value);
 
     !init &&
@@ -74,13 +73,16 @@ export default class {
         type: 'screen',
         action: value,
       });
-  }
+  };
 
-  setVersion(value: string) {
+  setVersion = (value: string) => {
     this.version = value;
-  }
+  };
 
-  setGuideLine(value: IGlobalModelState['guideLine'], init: boolean = false) {
+  setGuideLine = (
+    value: IGlobalModelState['guideLine'],
+    init: boolean = false,
+  ) => {
     this.guideLine = mergeWithoutArray({}, this.guideLine, value);
 
     !init &&
@@ -88,31 +90,31 @@ export default class {
         type: 'guideLine',
         action: value,
       });
-  }
+  };
 
-  setDragInfo({ value }: { value: Partial<DragData> }) {
+  setDragInfo = ({ value }: { value: Partial<DragData> }) => {
     this.drag = merge({}, this.drag, value);
-  }
+  };
 
-  setCallbackData(value: ComponentData.TFilterConfig[]) {
+  setCallbackData = (value: ComponentData.TFilterConfig[]) => {
     this.screenData.config.attr.filter = value;
 
     ScreenDataRequest(this.getAllState(), {
       type: 'callback',
       action: value,
     });
-  }
+  };
 
-  setSelect(value: string[]) {
+  setSelect = (value: string[]) => {
     this.select = value;
-  }
+  };
 
-  setComponent(
+  setComponent = (
     value:
       | Partial<ComponentData.TComponentData>
       | Partial<ComponentData.TComponentData>[],
     enqueue: boolean = false,
-  ) {
+  ) => {
     const prevComponents = cloneDeep(toJS(this.components));
     const history = this.history.value;
 
@@ -142,12 +144,12 @@ export default class {
       // * history enqueue
       return history.enqueue(this.getAllState(), newComponents, prevComponents);
     }
-  }
+  };
 
-  setComponentAll(
+  setComponentAll = (
     newComponents: ComponentData.TComponentData[] | Function,
     enqueue: boolean = true,
-  ) {
+  ) => {
     // * history enqueue
     const history = this.history.value;
     const components = cloneDeep(toJS(this.components));
@@ -173,33 +175,33 @@ export default class {
       } as any,
       components,
     );
-  }
+  };
 
-  setScale(value: number) {
+  setScale = (value: number) => {
     this.scale = value;
-  }
+  };
 
-  setClipboard(value: ComponentClipboard.LocalClipboardType) {
+  setClipboard = (value: ComponentClipboard.LocalClipboardType) => {
     this.clipboard = value;
-  }
+  };
 
-  undo() {
+  undo = () => {
     const history = this.history.value;
     const newState = history.undo(this.getAllState());
     ScreenDataRequest(newState, {
       type: 'undo',
     });
-  }
+  };
 
-  redo() {
+  redo = () => {
     const history = this.history.value;
     const newState = history.redo(this.getAllState());
     ScreenDataRequest(newState, {
       type: 'redo',
     });
-  }
+  };
 
-  setParams({ value }: { value: ComponentData.TParams[] }) {
+  setParams = ({ value }: { value: ComponentData.TParams[] }) => {
     this.screenData.config.attr.params = value;
     ScreenDataRequest(this.getAllState(), {
       type: 'screen',
@@ -211,5 +213,5 @@ export default class {
         },
       },
     });
-  }
+  };
 }

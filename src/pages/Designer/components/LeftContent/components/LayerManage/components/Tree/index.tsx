@@ -4,6 +4,7 @@ import { pick, get } from 'lodash';
 import type { DataNode } from 'antd/es/tree';
 import arrayMove from 'array-move';
 import { useUpdate } from 'ahooks';
+import { observer } from 'mobx-react-lite';
 import { EComponentType } from '@/utils/constants';
 import {
   getComponentIds,
@@ -241,4 +242,4 @@ const TreeFunction = (props: TreeProps) => {
   );
 };
 
-export default TreeFunction;
+export default observer(TreeFunction);

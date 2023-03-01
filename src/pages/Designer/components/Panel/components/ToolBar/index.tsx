@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import Scale from './components/Scale';
 import PanelThumb from './components/PanelThumb';
@@ -29,4 +30,4 @@ const ToolBar = () => {
   );
 };
 
-export default ToolBar;
+export default observer(ToolBar);

@@ -1,5 +1,6 @@
 import { useCallback, useRef, useMemo } from 'react';
 import ReactSelecto from 'react-selecto';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import { BACKGROUND_ID } from '@/components/DesignerBackground';
 import {
@@ -18,7 +19,7 @@ const VALID_SELECT_CONTAINER = [BACKGROUND_ID, wrapperId, PANEL_ID];
 
 const { getRgbaString } = ColorSelect;
 
-const Selecto = () => {
+const Selecto = observer(() => {
   const {
     global: { setSelect, screenType },
   } = useMobxContext();
@@ -100,9 +101,9 @@ const Selecto = () => {
       onSelect={handleSelect}
     ></ReactSelecto>
   );
-};
+});
 
-const OuterSelecto = () => {
+const OuterSelecto = observer(() => {
   const {
     global: {
       screenData: {
@@ -132,6 +133,6 @@ const OuterSelecto = () => {
       <Selecto />
     </div>
   );
-};
+});
 
 export default OuterSelecto;

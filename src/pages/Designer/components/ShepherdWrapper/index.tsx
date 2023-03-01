@@ -4,6 +4,7 @@ import {
   ShepherdTourContext,
   ShepherdOptionsWithType,
 } from 'react-shepherd';
+import { observer } from 'mobx-react-lite';
 import { useLocalStorage, useMobxContext } from '@/hooks';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
 import './index.less';
@@ -144,53 +145,55 @@ const steps: ShepherdOptionsWithType[] = [
 
 let SHEPHERD_DONE = false;
 
-const Internal = (props: {
-  children?: ReactNode;
-  onComplete?: () => void;
-  onStart?: () => void;
-}) => {
-  const { children, onComplete, onStart } = props;
-  const {
-    user: {
-      currentUser: { _id: userId },
-    },
-  } = useMobxContext();
+const Internal = observer(
+  (props: {
+    children?: ReactNode;
+    onComplete?: () => void;
+    onStart?: () => void;
+  }) => {
+    const { children, onComplete, onStart } = props;
+    const {
+      user: {
+        currentUser: { _id: userId },
+      },
+    } = useMobxContext();
 
-  const tour = useContext(ShepherdTourContext);
+    const tour = useContext(ShepherdTourContext);
 
-  // 缓存中是否存在
-  const [value = {}, setValue, initialDone] = useLocalStorage<{
-    [key: string]: {
-      timestamps: number;
-    };
-  }>(LocalConfig.CONFIG_KEY_SHEPHERD_INFO, {});
+    // 缓存中是否存在
+    const [value = {}, setValue, initialDone] = useLocalStorage<{
+      [key: string]: {
+        timestamps: number;
+      };
+    }>(LocalConfig.CONFIG_KEY_SHEPHERD_INFO, {});
 
-  useEffect(() => {
-    if (SHEPHERD_DONE || !initialDone) return;
-    const target = value?.[userId];
-    const current = Date.now();
-    if (!target || current - target.timestamps > 1000 * 60 * 60 * 24 * 30) {
-      if (onComplete) {
-        const complete = () => {
-          onComplete?.();
-          tour?.off('complete', onComplete);
-          tour?.off('complete', onComplete);
-        };
-        tour?.once('complete', onComplete);
-        tour?.once('cancel', onComplete);
+    useEffect(() => {
+      if (SHEPHERD_DONE || !initialDone) return;
+      const target = value?.[userId];
+      const current = Date.now();
+      if (!target || current - target.timestamps > 1000 * 60 * 60 * 24 * 30) {
+        if (onComplete) {
+          const complete = () => {
+            onComplete?.();
+            tour?.off('complete', onComplete);
+            tour?.off('complete', onComplete);
+          };
+          tour?.once('complete', onComplete);
+          tour?.once('cancel', onComplete);
+        }
+        onStart?.();
+        tour?.start();
       }
-      onStart?.();
-      tour?.start();
-    }
-    SHEPHERD_DONE = true;
-    value[userId] = {
-      timestamps: Date.now(),
-    };
-    setValue(value);
-  }, [value, initialDone]);
+      SHEPHERD_DONE = true;
+      value[userId] = {
+        timestamps: Date.now(),
+      };
+      setValue(value);
+    }, [value, initialDone]);
 
-  return <>{children}</>;
-};
+    return <>{children}</>;
+  },
+);
 
 const ShepherdWrapper = (props: {
   children?: ReactNode;

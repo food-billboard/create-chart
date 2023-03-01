@@ -11,8 +11,6 @@ import ComponentUtil from '@/utils/Assist/Component';
 import { ScreenDataRequest } from '@/utils/Assist/RequestPool';
 import { DragData } from './connect';
 
-console.log(ThemeMap, DEFAULT_SCREEN_DATA, DEFAULT_FILTER_LIST, 222222);
-
 export default {
   namespace: 'global',
 

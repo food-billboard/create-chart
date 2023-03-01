@@ -3,6 +3,7 @@ import { Dropdown } from 'antd';
 import type { DropDownProps } from 'antd/es/dropdown';
 import classnames from 'classnames';
 import { isEqual } from 'lodash';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
@@ -152,4 +153,4 @@ const ContextMenu = (
   );
 };
 
-export default ContextMenu;
+export default observer(ContextMenu);

@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { Button, Drawer, Table, Modal, Popconfirm, Empty } from 'antd';
 import { nanoid } from 'nanoid';
+import { observer } from 'mobx-react-lite';
 import {
   MinusSquareOutlined,
   PlusSquareOutlined,
@@ -29,7 +30,7 @@ export interface CallbackManageProps {
   onClose?: () => void;
 }
 
-const ComponentList = (props: { id: string; randomKey: number }) => {
+const ComponentList = observer((props: { id: string; randomKey: number }) => {
   const { id } = props;
 
   const {
@@ -75,7 +76,7 @@ const ComponentList = (props: { id: string; randomKey: number }) => {
       {list.length ? list : <Empty description="暂无组件" />}
     </div>
   );
-};
+});
 
 function useComponentNumber(id: string) {
   const idPathMap = useIdPathMap();
@@ -104,7 +105,7 @@ export const ComponentNumber = (props: { id: string }) => {
   return <>{count || 0}</>;
 };
 
-const CallbackList = () => {
+const CallbackList = observer(() => {
   const {
     global: {
       setCallbackData,
@@ -301,7 +302,7 @@ const CallbackList = () => {
       </Modal>
     </FocusWrapper>
   );
-};
+});
 
 const CallbackManage = forwardRef<CallbackManageRef, CallbackManageProps>(
   (props, ref) => {

@@ -5,6 +5,7 @@ import {
   EyeInvisibleOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
+import { observer } from 'mobx-react-lite';
 import { useScroll } from 'ahooks';
 import classnames from 'classnames';
 import { useMobxContext } from '@/hooks';
@@ -81,4 +82,4 @@ const GuideLineButton = (props: {
   );
 };
 
-export default GuideLineButton;
+export default observer(GuideLineButton);

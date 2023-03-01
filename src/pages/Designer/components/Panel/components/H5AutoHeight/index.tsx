@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import { MOBILE_HEIGHT } from '@/utils/constants';
 
@@ -51,4 +52,4 @@ const H5AutoHeight = () => {
   return <></>;
 };
 
-export default H5AutoHeight;
+export default observer(H5AutoHeight);

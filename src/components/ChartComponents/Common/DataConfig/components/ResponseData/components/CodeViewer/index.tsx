@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 import CodeEditor from '@/components/CodeEditor';
 import type { EditorProps } from '@/components/SyncCodeEditor';
 import FilterDataUtil from '@/utils/Assist/FilterData';
@@ -50,4 +51,4 @@ const CodeViewer = (
   );
 };
 
-export default CodeViewer;
+export default observer(CodeViewer);

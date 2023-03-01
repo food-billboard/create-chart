@@ -3,6 +3,7 @@ import { Select } from 'antd';
 import { useControllableValue } from 'ahooks';
 import { pick } from 'lodash';
 import classNames from 'classnames';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import BorderMap from './components/Border';
 import { CommonBorderProps } from './components/Border/type';
@@ -18,43 +19,43 @@ export const getTargetBorder = (
   return (BorderMap as any)[border.value]?.value || null;
 };
 
-export const InternalBorderWrapper = (
-  props: Omit<CommonBorderProps, 'width' | 'padding'>,
-) => {
-  const { children, border = { show: false }, ...nextProps } = props;
-  const {
-    global: {
-      screenData: {
-        config: {
-          attr: {
-            componentBorder: { width, padding },
+export const InternalBorderWrapper = observer(
+  (props: Omit<CommonBorderProps, 'width' | 'padding'>) => {
+    const { children, border = { show: false }, ...nextProps } = props;
+    const {
+      global: {
+        screenData: {
+          config: {
+            attr: {
+              componentBorder: { width, padding },
+            },
           },
         },
       },
-    },
-  } = useMobxContext();
+    } = useMobxContext();
 
-  const Dom = useMemo(() => {
-    return getTargetBorder(
-      border as ComponentData.TComponentData['config']['style']['border'],
+    const Dom = useMemo(() => {
+      return getTargetBorder(
+        border as ComponentData.TComponentData['config']['style']['border'],
+      );
+    }, [border]);
+
+    return (
+      <>
+        {Dom && <Dom {...nextProps} width={width} padding={padding}></Dom>}
+        <div
+          className={classNames(styles['internal-border-outer'])}
+          style={
+            Dom?.getOuterStyle?.(pick(nextProps, ['width', 'padding'])) || {}
+          }
+          data-id={nextProps.id}
+        >
+          {children}
+        </div>
+      </>
     );
-  }, [border]);
-
-  return (
-    <>
-      {Dom && <Dom {...nextProps} width={width} padding={padding}></Dom>}
-      <div
-        className={classNames(styles['internal-border-outer'])}
-        style={
-          Dom?.getOuterStyle?.(pick(nextProps, ['width', 'padding'])) || {}
-        }
-        data-id={nextProps.id}
-      >
-        {children}
-      </div>
-    </>
-  );
-};
+  },
+);
 
 export const InternalBorderSelect = (props: {
   value?: string;

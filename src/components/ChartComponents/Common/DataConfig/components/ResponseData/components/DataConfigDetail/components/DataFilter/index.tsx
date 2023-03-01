@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { nanoid } from 'nanoid';
 import classnames from 'classnames';
+import { observer } from 'mobx-react-lite';
 import { useControllableValue, useUnmount } from 'ahooks';
 import arrayMove from 'array-move';
 import { useMobxContext } from '@/hooks';
@@ -257,4 +258,4 @@ const DataFilter = (props: {
   );
 };
 
-export default DataFilter;
+export default observer(DataFilter);

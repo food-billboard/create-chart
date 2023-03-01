@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons';
 import EventEmitter from 'eventemitter3';
 import classnames from 'classnames';
+import { observer } from 'mobx-react-lite';
 import { Select, Space, Button } from 'antd';
 import {
   ID_PATH_MAP_EVENT_EMITTER,
@@ -30,7 +31,7 @@ export const EVENT_NAME = {
 };
 
 // 组件搜索
-export const ComponentSearch = () => {
+export const ComponentSearch = observer(() => {
   const {
     local: { componentCollapse, setLocalConfig },
   } = useMobxContext();
@@ -59,7 +60,7 @@ export const ComponentSearch = () => {
       </Tooltip>
     </div>
   );
-};
+});
 
 // 图层显示隐藏
 export const LayerShowIcon = (props: {}) => {
@@ -104,7 +105,7 @@ export const LayerShowIcon = (props: {}) => {
 };
 
 // 图层搜索
-export const LayerSearch = () => {
+export const LayerSearch = observer(() => {
   const {
     global: { setSelect },
   } = useMobxContext();
@@ -176,10 +177,10 @@ export const LayerSearch = () => {
       />
     </div>
   );
-};
+});
 
 // 折叠右侧配置列表
-export const CollapseConfigPanel = () => {
+export const CollapseConfigPanel = observer(() => {
   const {
     local: { componentConfigCollapse, setLocalConfig },
   } = useMobxContext();
@@ -199,10 +200,10 @@ export const CollapseConfigPanel = () => {
       />
     </Tooltip>
   );
-};
+});
 
 // 组件列表折叠
-export const ComponentListCollapse = () => {
+export const ComponentListCollapse = observer(() => {
   const {
     local: { componentCollapse, setLocalConfig },
   } = useMobxContext();
@@ -222,7 +223,7 @@ export const ComponentListCollapse = () => {
       />
     </Tooltip>
   );
-};
+});
 
 const ActionList = () => {
   return (

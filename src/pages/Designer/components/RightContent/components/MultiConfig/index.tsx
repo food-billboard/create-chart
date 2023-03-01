@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import classnames from 'classnames';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import ConfigWrapper, {
   ConfigItem,
@@ -150,4 +151,4 @@ const MultiConfig = () => {
   );
 };
 
-export default MultiConfig;
+export default observer(MultiConfig);

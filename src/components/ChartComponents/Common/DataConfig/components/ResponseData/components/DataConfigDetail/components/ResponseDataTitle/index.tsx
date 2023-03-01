@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { Loading3QuartersOutlined } from '@ant-design/icons';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import IconTooltip from '@/components/IconTooltip';
 import FilterDataUtil from '@/utils/Assist/FilterData';
@@ -49,4 +50,4 @@ const ResponseDataTitle = (props: {
   );
 };
 
-export default ResponseDataTitle;
+export default observer(ResponseDataTitle);

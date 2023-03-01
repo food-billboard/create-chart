@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { merge } from 'lodash';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import GuideLine from '@/components/GuideLine';
 import { getPath } from '@/utils/Assist/Component';
@@ -93,4 +94,4 @@ const AbsorbGuideLine = (props: {
   return <>{domList}</>;
 };
 
-export default AbsorbGuideLine;
+export default observer(AbsorbGuideLine);

@@ -8,6 +8,7 @@ import {
 import classnames from 'classnames';
 import { get } from 'lodash';
 import { useRafState } from 'ahooks';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import { getComponentStyleInScreenType } from '@/utils/Assist/Component';
 import { ComponentTransformOriginChange } from '@/utils/Assist/BreakingChange';
@@ -115,4 +116,4 @@ const ChildrenWrapper = (props: {
   );
 };
 
-export default ChildrenWrapper;
+export default observer(ChildrenWrapper);

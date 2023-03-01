@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 import { useHashChangeReload, useMobxContext } from '@/hooks';
 import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
@@ -44,4 +45,4 @@ function Viewer() {
   );
 }
 
-export default Viewer;
+export default observer(Viewer);

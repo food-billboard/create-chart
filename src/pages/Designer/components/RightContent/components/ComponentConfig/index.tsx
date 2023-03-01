@@ -4,6 +4,7 @@ import {
   ControlOutlined,
   ProjectOutlined,
 } from '@ant-design/icons';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import IconTooltip from '@/components/IconTooltip';
 import LazyLoadWrapper from '@/components/LazyLoad';
@@ -108,4 +109,4 @@ const ComponentConfig = (props: {
   );
 };
 
-export default ComponentConfig;
+export default observer(ComponentConfig);

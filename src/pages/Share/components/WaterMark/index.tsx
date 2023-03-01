@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import styles from './index.less';
 
@@ -22,4 +23,4 @@ const WaterMark = () => {
   );
 };
 
-export default WaterMark;
+export default observer(WaterMark);

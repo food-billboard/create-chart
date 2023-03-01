@@ -1,5 +1,6 @@
 import { useMemo, useCallback } from 'react';
 import classnames from 'classnames';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import { isComponentDisabled } from '@/utils/Assist/Component';
 import ConfigWrapper, {
@@ -73,4 +74,4 @@ const GroupConfig = (props: {
   );
 };
 
-export default GroupConfig;
+export default observer(GroupConfig);

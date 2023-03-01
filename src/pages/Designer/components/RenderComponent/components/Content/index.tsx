@@ -1,5 +1,6 @@
 import { useMemo, useCallback, CSSProperties } from 'react';
 import { get } from 'lodash';
+import { observer } from 'mobx-react-lite';
 import { useMobxContext } from '@/hooks';
 import { getComponentByType } from '@/components/ChartComponents';
 import {
@@ -204,4 +205,4 @@ const Content = (props: {
   return <>{children}</>;
 };
 
-export default Content;
+export default observer(Content);
