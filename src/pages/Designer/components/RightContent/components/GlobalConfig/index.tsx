@@ -38,19 +38,16 @@ const GlobalConfig = () => {
 
   const onValueChange = useCallback(
     (path: string, value: any) => {
-      const newScreenData = {
-        ...screenData,
-      };
+      const screenData: any = {};
       let newValue = value;
       try {
         newValue = value.target.value;
       } catch (err) {}
 
-      set(newScreenData, path, newValue);
-      console.log(setScreenData, 2222222);
-      setScreenData(newScreenData);
+      set(screenData, path, newValue);
+      setScreenData(screenData);
     },
-    [setScreenData, screenData],
+    [setScreenData],
   );
 
   return (

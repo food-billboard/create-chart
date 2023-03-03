@@ -11,7 +11,13 @@ import { DragData, IGlobalModelState, TUndoHistory } from './connect';
 
 export default class {
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(
+      this,
+      {},
+      {
+        autoBind: true,
+      },
+    );
   }
 
   // 当前大屏的类型
@@ -93,7 +99,7 @@ export default class {
   };
 
   setDragInfo = ({ value }: { value: Partial<DragData> }) => {
-    this.drag = merge({}, this.drag, value);
+    this.drag = merge({}, this.drag, { value });
   };
 
   setCallbackData = (value: ComponentData.TFilterConfig[]) => {
@@ -146,24 +152,26 @@ export default class {
     }
   };
 
-  setComponentAll = (
+  setComponentAll(
     newComponents: ComponentData.TComponentData[] | Function,
     enqueue: boolean = true,
-  ) => {
+  ) {
     // * history enqueue
     const history = this.history.value;
-    const components = cloneDeep(toJS(this.components));
+    const components = cloneDeep(this.components);
 
-    newComponents = (
+    const nextComponents = (
       typeof newComponents === 'function'
         ? newComponents(components)
         : newComponents
     ) as ComponentData.TComponentData[];
 
     // ! 使用这种方法强制刷新
-    newComponents = arrayMove(newComponents, 0, 0);
+    // newComponents = arrayMove(newComponents, 0, 0);
 
-    this.components = newComponents;
+    console.log(nextComponents, 222222);
+    this.components = nextComponents;
+    return;
 
     if (!enqueue) return;
 
@@ -175,7 +183,7 @@ export default class {
       } as any,
       components,
     );
-  };
+  }
 
   setScale = (value: number) => {
     this.scale = value;

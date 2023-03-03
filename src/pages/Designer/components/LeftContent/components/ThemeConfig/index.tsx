@@ -143,4 +143,4 @@ const ThemeConfig = (props: Props, ref: ForwardedRef<ThemeConfigRef>) => {
   );
 };
 
-export default observer(ThemeConfig, { forwardRef: true });
+export default observer(forwardRef(ThemeConfig));

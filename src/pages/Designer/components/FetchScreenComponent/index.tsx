@@ -1,4 +1,9 @@
-import { useEffect, ForwardedRef, useImperativeHandle } from 'react';
+import {
+  useEffect,
+  ForwardedRef,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 import { message } from 'antd';
 import { get } from 'lodash';
 import { history } from 'umi';
@@ -206,4 +211,4 @@ const FetchScreenComponent = (
   return <></>;
 };
 
-export default observer(FetchScreenComponent, { forwardRef: true });
+export default observer(forwardRef(FetchScreenComponent));

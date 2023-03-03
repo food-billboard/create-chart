@@ -194,4 +194,4 @@ const LensConfig = (props: Props, ref: ForwardedRef<LensConfigRef>) => {
   );
 };
 
-export default observer(LensConfig, { forwardRef: true });
+export default observer(forwardRef(LensConfig));

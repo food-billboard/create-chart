@@ -248,6 +248,8 @@ const dropTarget = DropTarget(
       //   monitor.getSourceClientOffset() // 放置时的元素位置
       // )
 
+      console.log(mobxStore.global, 22222);
+
       generateNewComponent({
         ...(dragInfo.value as any),
         left: realLeft,

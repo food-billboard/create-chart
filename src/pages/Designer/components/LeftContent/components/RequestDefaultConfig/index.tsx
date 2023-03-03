@@ -160,4 +160,4 @@ const RequestDefaultConfig = (
   );
 };
 
-export default observer(RequestDefaultConfig, { forwardRef: true });
+export default observer(forwardRef(RequestDefaultConfig));
