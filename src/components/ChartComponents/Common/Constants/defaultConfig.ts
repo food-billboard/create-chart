@@ -111,6 +111,13 @@ export const BASIC_DEFAULT_CONFIG: ComponentData.TBaseConfig = {
         z: 0,
       },
     },
+    carouselConfig: {
+      animation: 'slide',
+      speed: 1000,
+      // 线性 先慢后快 先快后慢 低速开始和结束
+      easing: 'linear',
+      direction: 'left',
+    },
   },
   attr: {
     visible: true,

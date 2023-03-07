@@ -136,7 +136,7 @@ const CHART_CONFIG_MAP = {
   },
 };
 
-export function useChartPerConfig<T = any>(
+export function useChartPerConfig<T = object>(
   config: T,
   ignore: string[] = [],
 ): T {

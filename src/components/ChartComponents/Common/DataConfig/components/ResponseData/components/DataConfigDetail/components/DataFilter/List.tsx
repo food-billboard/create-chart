@@ -12,4 +12,4 @@ const SortableContainer = SortableContainerWrapper(
   },
 );
 
-export default SortableContainer;
+export default SortableContainer as any;

@@ -11,7 +11,7 @@ const { getRgbaString } = ColorSelect;
 const CircleSelect = (props: {
   value?: number;
   onChange?: (value: number) => void;
-  theme: string;
+  theme: ComponentData.TScreenTheme;
 }) => {
   const { value = 0, onChange } = props;
 

@@ -20,6 +20,16 @@ interface GAFieldsObject {
   eventValue?: number;
   nonInteraction?: boolean;
 }
+
+declare namespace JSX {
+  interface IntrinsicElements {
+    'css-doodle': {
+      grid?: string;
+      class?: string;
+      children?: any;
+    };
+  }
+}
 interface Window {
   ga: (
     command: 'send',

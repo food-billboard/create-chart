@@ -266,4 +266,4 @@ const DataFilter = (props: {
   );
 };
 
-export default SortableElement(DataFilter);
+export default SortableElement(DataFilter) as any;
