@@ -12,7 +12,6 @@ export type DragData = {
   value: ComponentData.BaseComponentItem | null;
 };
 export type TUndoHistory = {
-  value: HistoryUtil;
   isUndoDisabled: boolean;
   isRedoDisabled: boolean;
 };

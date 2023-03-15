@@ -1,3 +1,4 @@
+import { toJS } from 'mobx';
 import { IGlobalModelState } from '@/models/connect';
 import GlobalConfig from '../GlobalConfig';
 import {
@@ -57,7 +58,7 @@ class RequestPool {
 export const SCREEN_DATA_REQUEST_POOL = new RequestPool();
 
 export const ScreenDataRequest = (state: IGlobalModelState, action: any) => {
-  return;
+  console.log(toJS(state), 222222);
   if (GlobalConfig.isAutoSaveType() && state.screenType === 'edit') {
     SCREEN_DATA_REQUEST_POOL.request(async () => {
       let method: any = saveScreenDataAuto;

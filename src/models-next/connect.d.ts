@@ -1,6 +1,4 @@
-import UndoHistory from 'react-undo-component/lib/Component/history';
 import { ThemeMap } from '@/utils/constants';
-import { HistoryUtil } from '@/utils/Assist/History';
 
 export type ILocalModelState = {
   componentCollapse: boolean;
@@ -11,7 +9,6 @@ export type DragData = {
   value: ComponentData.BaseComponentItem | null;
 };
 export type TUndoHistory = {
-  value: HistoryUtil;
   isUndoDisabled: boolean;
   isRedoDisabled: boolean;
 };

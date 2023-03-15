@@ -728,7 +728,7 @@ class ComponentUtil {
     });
 
     // ! 使用这种方法强制刷新
-    components = arrayMove(components, 0, 0);
+    // components = arrayMove(components, 0, 0);
 
     // 上传大屏的数据到后台
     ScreenDataRequest(

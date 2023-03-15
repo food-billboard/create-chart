@@ -9,6 +9,8 @@ import ComponentUtil from '@/utils/Assist/Component';
 import { ScreenDataRequest } from '@/utils/Assist/RequestPool';
 import { DragData, IGlobalModelState, TUndoHistory } from './connect';
 
+const HISTORY = new HistoryUtil();
+
 export default class {
   constructor() {
     makeAutoObservable(
@@ -31,7 +33,6 @@ export default class {
   };
   select: string[] = [];
   history: TUndoHistory = {
-    value: new HistoryUtil(),
     isUndoDisabled: true,
     isRedoDisabled: true,
   };
@@ -48,7 +49,7 @@ export default class {
   version = '';
 
   getAllState(): IGlobalModelState {
-    return {
+    let result = {
       screenType: this.screenType,
       screenData: this.screenData,
       components: this.components,
@@ -62,6 +63,7 @@ export default class {
       scale: this.scale,
       version: this.version,
     };
+    return result;
   }
 
   setScreenType = (value: ComponentData.ScreenType) => {
@@ -122,23 +124,6 @@ export default class {
     enqueue: boolean = false,
   ) => {
     const prevComponents = cloneDeep(toJS(this.components));
-    const history = this.history.value;
-
-    // ! 先看看其他会不会有问题再说
-    // const newState = (Array.isArray(value) ? value : [value]).reduce(
-    //   (state, value) => {
-    //     const newComponents = ComponentUtil.setComponent(state, {
-    //       ...action,
-    //       payload: value,
-    //     });
-    //     set(state, 'components', newComponents);
-
-    //     return state;
-    //   },
-    //   {
-    //     ...state,
-    //   },
-    // );
 
     const newComponents = ComponentUtil.setComponent(this.getAllState(), {
       enqueue,
@@ -148,7 +133,7 @@ export default class {
 
     if (enqueue) {
       // * history enqueue
-      return history.enqueue(this.getAllState(), newComponents, prevComponents);
+      return HISTORY.enqueue(this.getAllState(), newComponents, prevComponents);
     }
   };
 
@@ -157,7 +142,6 @@ export default class {
     enqueue: boolean = true,
   ) {
     // * history enqueue
-    const history = this.history.value;
     const components = cloneDeep(this.components);
 
     const nextComponents = (
@@ -166,20 +150,15 @@ export default class {
         : newComponents
     ) as ComponentData.TComponentData[];
 
-    // ! 使用这种方法强制刷新
-    // newComponents = arrayMove(newComponents, 0, 0);
-
-    console.log(nextComponents, 222222);
     this.components = nextComponents;
-    return;
 
     if (!enqueue) return;
 
-    history.enqueue(
+    HISTORY.enqueue(
       this.getAllState(),
       {
         enqueue,
-        value: newComponents,
+        value: nextComponents,
       } as any,
       components,
     );
@@ -194,16 +173,14 @@ export default class {
   };
 
   undo = () => {
-    const history = this.history.value;
-    const newState = history.undo(this.getAllState());
+    const newState = HISTORY.undo(this.getAllState());
     ScreenDataRequest(newState, {
       type: 'undo',
     });
   };
 
   redo = () => {
-    const history = this.history.value;
-    const newState = history.redo(this.getAllState());
+    const newState = HISTORY.redo(this.getAllState());
     ScreenDataRequest(newState, {
       type: 'redo',
     });
