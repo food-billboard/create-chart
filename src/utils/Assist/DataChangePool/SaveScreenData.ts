@@ -199,7 +199,7 @@ export const saveScreenDataAuto = async ({
 
     // 不可能出现id不存在的情况
     if (!_id) {
-      throw new Error();
+      throw new Error('cant not find the component id');
     }
 
     const params = {

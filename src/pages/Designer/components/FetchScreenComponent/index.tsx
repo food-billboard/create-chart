@@ -65,6 +65,7 @@ const FetchScreenComponent = forwardRef<
       true,
       true,
     );
+
     setScreen({
       ...nextData,
     });
@@ -157,8 +158,14 @@ const FetchScreenComponent = forwardRef<
         const data = await method({
           _id: id,
         });
-        const { components, version } = data;
-        const screenData = await parseComponentData(components, version);
+        const { components, _id, version } = data;
+        const screenData = await parseComponentData(
+          {
+            ...components,
+            _id: components._id || _id,
+          },
+          version,
+        );
         width = screenData.config.style.width;
         height = screenData.config.style.height;
         flag = screenData.config.flag.type;
