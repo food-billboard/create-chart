@@ -194,7 +194,7 @@ const _COMPONENT_TYPE_LIST = [
       },
       {
         type: 'Line',
-        title: '折现图',
+        title: '折线图',
         children: [
           {
             type: 'LINE_BASIC',
