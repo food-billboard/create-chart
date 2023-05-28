@@ -1,5 +1,7 @@
 import { parse } from 'querystring';
 import { mergeWith } from 'lodash';
+import semver from 'semver';
+import { message } from 'antd';
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
 const reg =
@@ -156,13 +158,23 @@ export function versionCompare(
   versionA: string | number,
   versionB: string | number,
 ) {
-  const stringVersionA =
+  let stringVersionA =
     typeof versionA === 'number' ? versionA.toString() : versionA;
-  const stringVersionB =
+  let stringVersionB =
     typeof versionB === 'number' ? versionB.toString() : versionB;
-  const [topA, subA] = stringVersionA.split('.').map((item) => parseInt(item));
-  const [topB, subB] = stringVersionB.split('.').map((item) => parseInt(item));
-  if (topA > topB) return true;
-  if (topA === topB) return subA >= subB;
-  return false;
+
+  try {
+    stringVersionA = semver.coerce(stringVersionA)?.version || '';
+    stringVersionB = semver.coerce(stringVersionB)?.version || '';
+    return semver.gt(stringVersionA, stringVersionB);
+  } catch (err) {
+    message.error('版本号错误，请重试！');
+    throw new Error('version parse error');
+  }
+
+  // const [topA, subA] = stringVersionA.split('.').map((item) => parseInt(item));
+  // const [topB, subB] = stringVersionB.split('.').map((item) => parseInt(item));
+  // if (topA > topB) return true;
+  // if (topA === topB) return subA >= subB;
+  // return false;
 }

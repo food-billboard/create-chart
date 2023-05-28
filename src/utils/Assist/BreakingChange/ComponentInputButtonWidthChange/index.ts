@@ -5,7 +5,7 @@ export const ComponentInputButtonWidthChange = (
   components: ComponentData.TComponentData[],
   version: string,
 ) => {
-  if (versionCompare(parseFloat(version), 1.17)) return components;
+  if (versionCompare(parseFloat(version), '1.17')) return components;
   const loop: (
     components: ComponentData.TComponentData[],
   ) => ComponentData.TComponentData[] = (components) => {

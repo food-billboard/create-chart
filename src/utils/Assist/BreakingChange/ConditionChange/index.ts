@@ -4,7 +4,7 @@ export const ConditionChange = (
   components: ComponentData.TComponentData[],
   version: string,
 ) => {
-  if (versionCompare(parseFloat(version), 1.8)) return components;
+  if (versionCompare(parseFloat(version), '1.8')) return components;
   return components.map((component) => {
     const {
       config: { options },
