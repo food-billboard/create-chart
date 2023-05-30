@@ -10,9 +10,12 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v2 
         with:
-          ref: 1.18  
+          # ref: main  
           persist-credentials: false
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
       - name: Install and Build and Deploy 🔧 
         run: |
           npm install yarn -g 

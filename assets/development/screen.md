@@ -80,7 +80,7 @@ width、height、left、top、rotate、opacity
 - 翻牌器  
 ### 柱形图  
 - 基础柱形图  
-- 折现柱形图  
+- 折线柱形图  
 - 堆叠柱形图  
 ### 折线图  
 - 基础折线图  
