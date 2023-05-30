@@ -1,6 +1,7 @@
 import { useMemo, useCallback, useState } from 'react';
 import { Button, message } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
+import LoadingButton from '../LoadingButton';
 import { captureCover, captureCoverAndUpload } from '@/utils/captureCover';
 import ImageUpload from '../ImageUpload';
 
@@ -9,7 +10,6 @@ const CoverSelect = (props: {
   onChange?: (value: string) => void;
 }) => {
   const { value, onChange } = props;
-  const [fetchLoading, setFetchLoading] = useState<boolean>(false);
 
   const fileList = useMemo(() => {
     const realValue: any =
@@ -32,29 +32,25 @@ const CoverSelect = (props: {
   );
 
   const handleCaptureCover = useCallback(async () => {
-    setFetchLoading(true);
     try {
       const result = await captureCover('#panel-id');
       const url = await captureCoverAndUpload(result);
       onChange?.(url as string);
     } catch (err) {
       message.info('封面截图失败');
-    } finally {
-      setFetchLoading(false);
     }
   }, [onChange]);
 
   return (
     <>
-      <Button
+      <LoadingButton
         className="m-b-4"
         block
         type="primary"
         onClick={handleCaptureCover}
-        loading={fetchLoading}
       >
         截取封面
-      </Button>
+      </LoadingButton>
       <ImageUpload value={fileList} onChange={onBackgroundChange} />
     </>
   );
