@@ -10,7 +10,7 @@ const LoadingButton = (props: ButtonProps & { wait?: number }) => {
     (e) => {
       propsOnClick?.(e);
     },
-    { wait: 100 },
+    { wait: 200 },
   );
 
   return <Button onClick={run} {...nextProps} />;

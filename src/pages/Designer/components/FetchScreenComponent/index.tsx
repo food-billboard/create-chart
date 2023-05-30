@@ -131,8 +131,7 @@ const FetchScreenComponent = forwardRef<
     const result = autoFitScale(width, height, flag);
     setScale?.(result);
 
-    // await sleep(1000);
-    await sleep(5000);
+    await sleep(1000);
 
     onLoad?.();
   };

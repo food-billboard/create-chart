@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 import classnames from 'classnames';
 import { connect } from 'dva';
+import { useDebounceFn } from 'ahooks';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 import CallbackManage, { CallbackManageRef } from '../CallbackManage';
 import ConstantManage, { ConstantManageRef } from '../ConstantManage';
@@ -49,12 +50,17 @@ export const InternalRedoIcon = (
 ) => {
   const { isRedoDisabled, redo, onClick } = props;
 
-  const handleClick = useCallback(() => {
-    if (!isRedoDisabled) {
-      redo();
-      onClick?.('redo');
-    }
-  }, [onClick, isRedoDisabled, redo]);
+  const { run: handleClick } = useDebounceFn(
+    () => {
+      if (!isRedoDisabled) {
+        redo();
+        onClick?.('redo');
+      }
+    },
+    {
+      wait: 200,
+    },
+  );
 
   return (
     <RedoOutlined
@@ -82,12 +88,15 @@ export const InternalUndoIcon = (
 ) => {
   const { isUndoDisabled, undo, onClick } = props;
 
-  const handleClick = useCallback(() => {
-    if (!isUndoDisabled) {
-      undo();
-      onClick?.('undo');
-    }
-  }, [onClick, isUndoDisabled, undo]);
+  const { run: handleClick } = useDebounceFn(
+    () => {
+      if (!isUndoDisabled) {
+        undo();
+        onClick?.('undo');
+      }
+    },
+    { wait: 200 },
+  );
 
   return (
     <UndoOutlined
@@ -126,10 +135,13 @@ export const CallbackIcon = (props: TCommonProps) => {
 
   const callbackRef = useRef<CallbackManageRef>(null);
 
-  const handleOpen = useCallback(() => {
-    callbackRef.current?.open();
-    onClick?.('callback');
-  }, [onClick]);
+  const { run: handleOpen } = useDebounceFn(
+    () => {
+      callbackRef.current?.open();
+      onClick?.('callback');
+    },
+    { wait: 200 },
+  );
 
   return (
     <>
@@ -153,10 +165,13 @@ export const ConstantIcon = (props: TCommonProps) => {
 
   const constantRef = useRef<ConstantManageRef>(null);
 
-  const handleOpen = useCallback(() => {
-    constantRef.current?.open();
-    onClick?.('constant');
-  }, [onClick]);
+  const { run: handleOpen } = useDebounceFn(
+    () => {
+      constantRef.current?.open();
+      onClick?.('constant');
+    },
+    { wait: 200 },
+  );
 
   return (
     <>
@@ -180,10 +195,13 @@ export const LocalConfigIcon = (props: TCommonProps) => {
 
   const localConfigRef = useRef<LocalConfigManageRef>(null);
 
-  const handleOpen = useCallback(() => {
-    localConfigRef.current?.open();
-    onClick?.('localConfig');
-  }, [onClick]);
+  const { run: handleOpen } = useDebounceFn(
+    () => {
+      localConfigRef.current?.open();
+      onClick?.('localConfig');
+    },
+    { wait: 200 },
+  );
 
   return (
     <>
@@ -207,10 +225,13 @@ export const LensConfig = (props: TCommonProps) => {
 
   const lensConfigRef = useRef<LensConfigRef>(null);
 
-  const handleOpen = useCallback(() => {
-    lensConfigRef.current?.open();
-    onClick?.('lens');
-  }, [onClick]);
+  const { run: handleOpen } = useDebounceFn(
+    () => {
+      lensConfigRef.current?.open();
+      onClick?.('lens');
+    },
+    { wait: 200 },
+  );
 
   return (
     <>
@@ -235,10 +256,13 @@ export const ThemeConfig = (props: TCommonProps) => {
 
   const themeConfigRef = useRef<ThemeConfigRef>(null);
 
-  const handleOpen = useCallback(() => {
-    themeConfigRef.current?.open();
-    onClick?.('lens');
-  }, [onClick]);
+  const { run: handleOpen } = useDebounceFn(
+    () => {
+      themeConfigRef.current?.open();
+      onClick?.('lens');
+    },
+    { wait: 200 },
+  );
 
   return (
     <>
@@ -263,10 +287,13 @@ export const RequestDefaultConfig = (props: TCommonProps) => {
 
   const requestConfigRef = useRef<RequestCofigRef>(null);
 
-  const handleOpen = useCallback(() => {
-    requestConfigRef.current?.open();
-    onClick?.('requestDefault');
-  }, [onClick]);
+  const { run: handleOpen } = useDebounceFn(
+    () => {
+      requestConfigRef.current?.open();
+      onClick?.('requestDefault');
+    },
+    { wait: 200 },
+  );
 
   return (
     <>

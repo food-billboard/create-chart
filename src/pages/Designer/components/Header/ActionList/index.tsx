@@ -8,6 +8,7 @@ import EventEmitter from 'eventemitter3';
 import classnames from 'classnames';
 import { Select, Space, Button } from 'antd';
 import { connect } from 'dva';
+import DebounceButton from '@/components/DebounceButton';
 import {
   ID_PATH_MAP_EVENT_EMITTER,
   useIdPathMap,
@@ -53,7 +54,7 @@ const InternalComponentSearch = (props: {
       className={classnames(styles['design-header-action-component-search'])}
     >
       <Tooltip title={'组件搜索'} placement="top">
-        <Button
+        <DebounceButton
           icon={<SearchOutlined />}
           onClick={handleClick}
           type={visible ? 'primary' : 'default'}
@@ -107,12 +108,12 @@ export const LayerShowIcon = (props: {}) => {
 
   return (
     <Tooltip title="图层">
-      <Button
+      <DebounceButton
         title="图层"
         icon={<BlockOutlined />}
         type={visible ? 'primary' : 'default'}
         onClick={handleOpen}
-      ></Button>
+      ></DebounceButton>
     </Tooltip>
   );
 };
@@ -169,7 +170,7 @@ const _LayerSearch = (props: { setSelect: (value: string[]) => void }) => {
       })}
     >
       <Tooltip title="图层搜索">
-        <Button
+        <DebounceButton
           icon={<FileSearchOutlined />}
           onClick={handleClick}
           type={visible ? 'primary' : 'default'}
@@ -217,7 +218,7 @@ const InternalCollapseConfigPanel = (props: {
 
   return (
     <Tooltip title="折叠组件配置">
-      <Button
+      <DebounceButton
         icon={<IconFont title="折叠组件配置" type="icon-shangpinliebiao" />}
         onClick={handleClick}
         type={componentConfigCollapse ? 'default' : 'primary'}
@@ -253,7 +254,7 @@ const InternalComponentListCollapse = (props: {
 
   return (
     <Tooltip title="折叠组件列表">
-      <Button
+      <DebounceButton
         icon={<IconFont title="折叠组件列表" type="icon-userConfig" />}
         onClick={handleClick}
         type={componentCollapse ? 'default' : 'primary'}
