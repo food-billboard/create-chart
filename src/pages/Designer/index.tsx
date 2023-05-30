@@ -203,6 +203,7 @@ const Designer = (props: {
       <ShepherdWrapper
         onStart={setGuideLoading.bind(null, true)}
         onComplete={setGuideLoading.bind(null, false)}
+        loading={loading}
       >
         <div
           className={styles['designer-page']}

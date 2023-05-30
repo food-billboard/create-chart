@@ -151,8 +151,9 @@ const Internal = (props: {
   userId: string;
   onComplete?: () => void;
   onStart?: () => void;
+  loading: boolean;
 }) => {
-  const { children, userId, onComplete, onStart } = props;
+  const { children, userId, onComplete, onStart, loading } = props;
 
   const tour = useContext(ShepherdTourContext);
 
@@ -164,7 +165,7 @@ const Internal = (props: {
   }>(LocalConfig.CONFIG_KEY_SHEPHERD_INFO, {});
 
   useEffect(() => {
-    if (SHEPHERD_DONE || !initialDone) return;
+    if (SHEPHERD_DONE || !initialDone || loading) return;
     const target = value?.[userId];
     const current = Date.now();
     if (!target || current - target.timestamps > 1000 * 60 * 60 * 24 * 30) {
@@ -185,7 +186,7 @@ const Internal = (props: {
       timestamps: Date.now(),
     };
     setValue(value);
-  }, [value, initialDone]);
+  }, [value, initialDone, loading]);
 
   return <>{children}</>;
 };
@@ -196,8 +197,9 @@ const ShepherdWrapper = (props: {
   children?: ReactNode;
   onStart?: () => void;
   onComplete?: () => void;
+  loading: boolean;
 }) => {
-  const { children, onStart, onComplete } = props;
+  const { children, onStart, onComplete, loading } = props;
 
   return (
     <ShepherdTour
@@ -213,7 +215,11 @@ const ShepherdWrapper = (props: {
         useModalOverlay: true,
       }}
     >
-      <InternalWrapper onStart={onStart} onComplete={onComplete}>
+      <InternalWrapper
+        loading={loading}
+        onStart={onStart}
+        onComplete={onComplete}
+      >
         {children}
       </InternalWrapper>
     </ShepherdTour>
