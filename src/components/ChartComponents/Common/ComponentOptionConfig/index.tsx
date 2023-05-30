@@ -4,7 +4,10 @@ import type { TabsProps } from 'antd';
 import classnames from 'classnames';
 import styles from './index.less';
 
-const { TabPane } = Tabs;
+export type TabProps = {
+  icon?: ReactNode;
+  children?: ReactNode;
+};
 
 // 组件的定制化配置的tabs
 
@@ -21,7 +24,7 @@ const ComponentOptionConfig = (props: { items?: TabsProps['items'] }) => {
   );
 };
 
-export const Tab = (props: { icon?: ReactNode; children?: ReactNode }) => {
+export const Tab = (props: TabProps) => {
   const { icon, children } = props;
 
   return (
