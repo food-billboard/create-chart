@@ -48,7 +48,7 @@ export const InputNumber = (props: {
   return (
     <AntInputNumber
       onBlur={onBlur}
-      onChange={setStateValue}
+      onChange={setStateValue as any}
       value={stateValue}
       addonAfter={<Switch checked={disabled} onChange={onSwitchChange} />}
       disabled={disabled}

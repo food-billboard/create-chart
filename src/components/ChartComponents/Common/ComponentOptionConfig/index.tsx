@@ -21,7 +21,9 @@ const ComponentOptionConfig = (props: { items?: TabsProps['items'] }) => {
   );
 };
 
-export const Tab = (props: { icon?: ReactNode; children?: ReactNode }) => {
+export type TabProps = { icon?: ReactNode; children?: ReactNode };
+
+export const Tab = (props: TabProps) => {
   const { icon, children } = props;
 
   return (
