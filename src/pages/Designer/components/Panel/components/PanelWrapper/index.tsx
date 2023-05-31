@@ -102,7 +102,7 @@ const PanelWrapper = (props: {
       width: newWidth,
       height: newHeight,
     };
-  }, [panelWidth, panelHeight]);
+  }, [panelWidth, panelHeight, width, height, scale]);
 
   // const resize = () => {
   //   const dom = document.querySelector(`#${wrapperId}`);
