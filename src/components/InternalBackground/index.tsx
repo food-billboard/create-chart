@@ -13,6 +13,7 @@ export const InternalBackgroundSelect = (props: {
   return (
     <Select
       className="w-100"
+      popupClassName="design-config-select-dropdown"
       value={value}
       onChange={onChange}
       options={Object.entries(BackgroundMap).map((item) => {

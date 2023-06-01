@@ -40,7 +40,9 @@ const FORM_MAP: {
       </Collapse>
     );
   },
-  NORMAL: function () {},
+  NORMAL: function () {
+    return <div></div>;
+  },
 };
 
 export function getForm(

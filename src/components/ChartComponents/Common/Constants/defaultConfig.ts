@@ -1,7 +1,7 @@
 import { omit } from 'lodash';
 import { nanoid } from 'nanoid';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { DEFAULT_BORDER } from '@/components/InternalBorder';
+import { DEFAULT_BORDER } from '../../../InternalBorder/components/Border';
 
 // 默认的圆角
 export const DEFAULT_BORDER_RADIUS = 4;

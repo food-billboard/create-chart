@@ -48,6 +48,12 @@ const GuideLineButton = (props: {
           icon={<DeleteOutlined />}
           type="link"
           title="删除所有辅助线"
+          className={styles['designer-page-main-guide-btn-sub']}
+          style={{
+            backgroundColor: getRgbaString(
+              ThemeUtil.generateNextColor4CurrentTheme(0),
+            ),
+          }}
         />
       </>
     );

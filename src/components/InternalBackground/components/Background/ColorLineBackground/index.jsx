@@ -123,7 +123,7 @@ class Particles extends React.Component {
 
   renderProton() {
     this.proton.update();
-    this.proton.stats.update(2);
+    // this.proton.stats.update(2);
   }
 
   render() {

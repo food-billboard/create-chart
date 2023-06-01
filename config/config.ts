@@ -14,6 +14,7 @@ import { normalRouter, staticRouter } from './router-config';
 const { REACT_APP_ENV } = process.env;
 
 const commonConfig = {
+  webpack5: {},
   nodeModulesTransform: {
     type: 'none',
   },

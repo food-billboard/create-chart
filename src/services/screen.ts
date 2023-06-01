@@ -12,7 +12,7 @@ export const postScreen = (data: API_SCREEN.TAddScreenParams) => {
     method: 'POST',
     data: {
       ...data,
-      version: SCREEN_VERSION,
+      version: SCREEN_VERSION(),
     },
   });
 };
@@ -23,7 +23,7 @@ export const putScreen = (data: API_SCREEN.TEditScreenParams) => {
     method: 'PUT',
     data: {
       ...data,
-      version: SCREEN_VERSION,
+      version: SCREEN_VERSION(),
     },
   });
 };
@@ -34,7 +34,7 @@ export const putScreenPool = (data: API_SCREEN.TEditScreenPoolParams) => {
     method: 'PUT',
     data: {
       ...data,
-      version: SCREEN_VERSION,
+      version: SCREEN_VERSION(),
     },
   });
 };

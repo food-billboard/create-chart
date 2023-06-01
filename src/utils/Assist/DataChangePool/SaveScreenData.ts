@@ -242,7 +242,7 @@ export const saveScreenDataAllAutoStatic = async ({
     const { screenData, components, guideLine } = state;
 
     const params = {
-      version: SCREEN_VERSION,
+      version: SCREEN_VERSION(),
       ...screenData,
       config: {
         ...screenData.config,

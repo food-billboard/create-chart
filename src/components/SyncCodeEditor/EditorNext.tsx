@@ -9,11 +9,15 @@ import { useControllableValue } from 'ahooks';
 import MonacoEditor, {
   EditorProps as MonacoEditorProps,
   OnMount as EditorDidMount,
+  loader,
 } from '@monaco-editor/react';
+// import * as monaco from 'monaco-editor';
 import classnames from 'classnames';
 import { merge } from 'lodash';
 import { sleep } from '@/utils';
 import styles from './index.less';
+
+// loader.config({ monaco })
 
 export type EditorProps = Partial<MonacoEditorProps> & {
   autoFocus?: boolean;

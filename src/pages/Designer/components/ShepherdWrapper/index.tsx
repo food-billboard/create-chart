@@ -97,7 +97,7 @@ const steps: ShepherdOptionsWithType[] = [
     ],
     attachTo: {
       element: '#designer-page-main-sub',
-      on: 'auto',
+      on: 'left-end',
     },
     buttons: [
       {
