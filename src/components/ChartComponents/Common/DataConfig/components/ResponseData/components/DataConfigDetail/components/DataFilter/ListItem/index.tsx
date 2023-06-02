@@ -171,7 +171,7 @@ const DataFilter = (props: {
             <span>
               <ComponentNumber id={id} />
             </span>
-            个组价使用
+            个组件使用
           </div>
           <Button
             className="h-a"

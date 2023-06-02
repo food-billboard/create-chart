@@ -175,7 +175,7 @@ const ConstantList = (props: {
         size="small"
       />
       <GhostButton
-        className="m-t-8"
+        className="m-t-8 c-f-s"
         onClick={handleAdd}
         icon={<PlusOutlined />}
       >

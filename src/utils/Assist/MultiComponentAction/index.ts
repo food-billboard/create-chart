@@ -1,12 +1,13 @@
-import { EventEmitter } from 'eventemitter3';
 import { debounce, throttle } from 'lodash';
-export class MultiComponentAction extends EventEmitter {
-  static DRAG_START = 'DRAG_START';
-  static DRAG = 'DRAG';
-  static DRAG_STOP = 'DRAG_STOP';
-  static RESIZE_START = 'RESIZE_START';
-  static RESIZE = 'RESIZE';
-  static RESIZE_STOP = 'RESIZE_STOP';
+import { GLOBAL_EVENT_EMITTER_FACTORY, EVENT_NAME_MAP } from '../EventEmitter';
+
+export class MultiComponentAction extends GLOBAL_EVENT_EMITTER_FACTORY {
+  static DRAG_START = EVENT_NAME_MAP.MULTIPLE_COMPONENT_DRAG_START;
+  static DRAG = EVENT_NAME_MAP.MULTIPLE_COMPONENT_DRAG;
+  static DRAG_STOP = EVENT_NAME_MAP.MULTIPLE_COMPONENT_DRAG_STOP;
+  static RESIZE_START = EVENT_NAME_MAP.MULTIPLE_COMPONENT_RESIZE_START;
+  static RESIZE = EVENT_NAME_MAP.MULTIPLE_COMPONENT_RESIZE;
+  static RESIZE_STOP = EVENT_NAME_MAP.MULTIPLE_COMPONENT_RESIZE_STOP;
 
   _emitDebounce: any = (type: string, ...args: any[]) => {
     this.emit(type, ...args);

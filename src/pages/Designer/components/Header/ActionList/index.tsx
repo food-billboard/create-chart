@@ -4,15 +4,11 @@ import {
   FileSearchOutlined,
   BlockOutlined,
 } from '@ant-design/icons';
-import EventEmitter from 'eventemitter3';
 import classnames from 'classnames';
-import { Select, Space, Button } from 'antd';
+import { Select, Space } from 'antd';
 import { connect } from 'dva';
 import DebounceButton from '@/components/DebounceButton';
-import {
-  ID_PATH_MAP_EVENT_EMITTER,
-  useIdPathMap,
-} from '@/hooks/useComponentsPath';
+import { useIdPathMap } from '@/hooks/useComponentsPath';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 import {
   GLOBAL_EVENT_EMITTER,
@@ -22,14 +18,6 @@ import { ConnectState, ILocalModelState } from '@/models/connect';
 import Tooltip from '@/components/Tooltip';
 import { sleep } from '@/utils';
 import styles from './index.less';
-
-export const ComponentSearchConfigEventEmitter = new EventEmitter();
-
-export const EVENT_NAME = {
-  COMPONENT_SEARCH: 'COMPONENT_SEARCH',
-  COMPONENT_SEARCH_VISIBLE: 'COMPONENT_SEARCH_VISIBLE',
-  LAYER_SEARCH: 'LAYER_SEARCH',
-};
 
 // 组件搜索
 const InternalComponentSearch = (props: {
@@ -46,7 +34,7 @@ const InternalComponentSearch = (props: {
         componentCollapse: !componentCollapse,
       });
     setVisible((prev) => !prev);
-    ComponentSearchConfigEventEmitter.emit(EVENT_NAME.COMPONENT_SEARCH_VISIBLE);
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_SEARCH_VISIBLE);
   }, [componentCollapse, setLocalConfig]);
 
   return (
@@ -157,9 +145,15 @@ const _LayerSearch = (props: { setSelect: (value: string[]) => void }) => {
   };
 
   useEffect(() => {
-    ID_PATH_MAP_EVENT_EMITTER.addListener('change', onComponentsChange);
+    GLOBAL_EVENT_EMITTER.addListener(
+      EVENT_NAME_MAP.COMPONENT_ID_PATH_MAP_CHANGE,
+      onComponentsChange,
+    );
     return () => {
-      ID_PATH_MAP_EVENT_EMITTER.removeListener('change', onComponentsChange);
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.COMPONENT_ID_PATH_MAP_CHANGE,
+        onComponentsChange,
+      );
     };
   }, []);
 

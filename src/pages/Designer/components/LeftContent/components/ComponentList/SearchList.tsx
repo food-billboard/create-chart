@@ -3,11 +3,11 @@ import { useDebounceFn } from 'ahooks';
 import classnames from 'classnames';
 import { Input, Empty, Divider } from 'antd';
 import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
-import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
 import {
-  EVENT_NAME,
-  ComponentSearchConfigEventEmitter,
-} from '../../../Header/ActionList';
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
+import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
 import ComponentItem from './item';
 import styles from './index.less';
 
@@ -104,13 +104,13 @@ const ComponentSearch = () => {
   }, [searchResult]);
 
   useEffect(() => {
-    ComponentSearchConfigEventEmitter.addListener(
-      EVENT_NAME.COMPONENT_SEARCH_VISIBLE,
+    GLOBAL_EVENT_EMITTER.addListener(
+      EVENT_NAME_MAP.COMPONENT_SEARCH_VISIBLE,
       onVisibleChange,
     );
     return () => {
-      ComponentSearchConfigEventEmitter.removeListener(
-        EVENT_NAME.COMPONENT_SEARCH_VISIBLE,
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.COMPONENT_SEARCH_VISIBLE,
       );
     };
   }, []);

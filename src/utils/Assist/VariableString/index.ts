@@ -24,6 +24,7 @@ class VariableStringUtil {
       [key: string]: string;
     }>((acc, cur) => {
       const { value, key } = cur;
+      if (!key) return acc;
       acc[key] = value || '';
       return acc;
     }, {});

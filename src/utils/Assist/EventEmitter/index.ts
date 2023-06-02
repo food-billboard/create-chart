@@ -1,6 +1,9 @@
 import EventEmitter from 'eventemitter3';
 import { debounce, throttle } from 'lodash';
-class GLOBAL_EVENT_EMITTER_FACTORY extends EventEmitter {
+// 组件拖拽删除添加等相关事件
+import ComponentAboutEvent from './ComponentAbout.event';
+
+export class GLOBAL_EVENT_EMITTER_FACTORY extends EventEmitter {
   _emitDebounce: any = (type: string, ...args: any[]) => {
     this.emit(type, ...args);
   };
@@ -16,43 +19,6 @@ class GLOBAL_EVENT_EMITTER_FACTORY extends EventEmitter {
 
 export const GLOBAL_EVENT_EMITTER = new GLOBAL_EVENT_EMITTER_FACTORY();
 
-export enum EVENT_NAME_MAP {
-  // 组件被删除的时候
-  COMPONENT_DELETE_ACTION = 'COMPONENT_DELETE_ACTION',
-
-  // 组件被添加的时候
-  COMPONENT_ADD_ACTION = 'COMPONENT_ADD_ACTION',
-
-  // 组件过滤发生改变的时候
-  COMPONENT_FILTER_CHANGE = 'COMPONENT_FILTER_CHANGE',
-
-  // 组件拖拽开始
-  COMPONENT_DRAG_START = 'COMPONENT_DRAG_START',
-
-  // 组件拖拽
-  COMPONENT_DRAG = 'COMPONENT_DRAG',
-
-  // 组件拖拽结束
-  COMPONENT_DRAG_END = 'COMPONENT_DRAG_END',
-
-  // 组件缩放开始
-  COMPONENT_RESIZE_START = 'COMPONENT_RESIZE_START',
-
-  // 组件缩放
-  COMPONENT_RESIZE = 'COMPONENT_RESIZE',
-
-  // 组件缩放结束
-  COMPONENT_RESIZE_END = 'COMPONENT_RESIZE_END',
-
-  // 大屏的主题色被更改的时候
-  SCREEN_THEME_CHANGE = 'SCREEN_THEME_CHANGE',
-
-  // 图层被展示或收起的时候
-  LAYER_VISIBLE_CHANGE = 'LAYER_VISIBLE_CHANGE',
-
-  // 组的轮播配置的点击组件切换索引时
-  GROUP_CAROUSEL_CLICK_INDEX_CHANGE = 'GROUP_CAROUSEL_CLICK_INDEX_CHANGE',
-
-  // 组的轮播配置点击预览切换状态
-  GROUP_CAROUSEL_CLICK_PREVIEW_CHANGE = 'GROUP_CAROUSEL_CLICK_PREVIEW_CHANGE',
-}
+export const EVENT_NAME_MAP = {
+  ...ComponentAboutEvent,
+};

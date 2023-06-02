@@ -182,7 +182,7 @@ const CallbackList = (props: {
           return (
             <div
               title={value}
-              className="c-po text-ellipsis"
+              className="c-po text-ellipsis normal-color"
               onClick={previewCode.bind(null, value)}
             >
               {value}
@@ -221,8 +221,9 @@ const CallbackList = (props: {
           return (
             <>
               <Popconfirm
-                title="是否确定删除此过滤器？"
+                title={<span className="c-f-s">是否确定删除此过滤器？</span>}
                 onConfirm={deleteData.bind(null, record)}
+                overlayClassName="design-config-pop"
               >
                 <Button key="delete" type="link" style={{ paddingLeft: 0 }}>
                   删除
@@ -265,7 +266,11 @@ const CallbackList = (props: {
     <FocusWrapper>
       <Table
         title={() => (
-          <Popconfirm title="是否确认删除" onConfirm={handleClear}>
+          <Popconfirm
+            overlayClassName="design-config-pop"
+            title="是否确认删除"
+            onConfirm={handleClear}
+          >
             <Button icon={<DeleteOutlined />}>清空无引用过滤函数</Button>
           </Popconfirm>
         )}

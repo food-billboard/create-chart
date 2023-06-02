@@ -1,5 +1,5 @@
-import Eventemitter from 'eventemitter3';
 import { useEffect, useState } from 'react';
+import { GLOBAL_EVENT_EMITTER, EVENT_NAME_MAP } from '../EventEmitter';
 
 const DATA_SOURCE: {
   select: string[];
@@ -7,14 +7,12 @@ const DATA_SOURCE: {
   select: [],
 };
 
-const EVENT_EMITTER_INSTANCE = new Eventemitter();
-
 export function getSelect() {
   return DATA_SOURCE.select;
 }
 
 export function setSelect(select: string[]) {
-  EVENT_EMITTER_INSTANCE.emit('component-select', select);
+  GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_SELECT, select);
   return select;
 }
 
@@ -25,13 +23,13 @@ export function useSelect(onChange?: (value: string[]) => void) {
   };
 
   useEffect(() => {
-    EVENT_EMITTER_INSTANCE.addListener('component-select', onInternalChange);
+    GLOBAL_EVENT_EMITTER.addListener(
+      EVENT_NAME_MAP.COMPONENT_SELECT,
+      onInternalChange,
+    );
 
     return () => {
-      EVENT_EMITTER_INSTANCE.removeListener(
-        'component-select',
-        onInternalChange,
-      );
+      GLOBAL_EVENT_EMITTER.removeListener('component-select', onInternalChange);
     };
   }, []);
 
@@ -47,11 +45,14 @@ export function useObserverSelect(onChange?: (value: string[]) => void) {
   };
 
   useEffect(() => {
-    EVENT_EMITTER_INSTANCE.addListener('component-select', onInternalChange);
+    GLOBAL_EVENT_EMITTER.addListener(
+      EVENT_NAME_MAP.COMPONENT_SELECT,
+      onInternalChange,
+    );
 
     return () => {
-      EVENT_EMITTER_INSTANCE.removeListener(
-        'component-select',
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.COMPONENT_SELECT,
         onInternalChange,
       );
     };

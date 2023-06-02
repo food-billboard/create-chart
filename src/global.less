@@ -338,6 +338,9 @@ each(@border-size-list, {
 .normal-background {
   background-color: @component-background;
 }
+.normal-color {
+  color: @primary-color;
+}
 
 // css var
 body {
@@ -347,6 +350,12 @@ body {
 // config font-size
 .design-config-select-dropdown {
   .ant-select-item {
+    font-size: 12px;
+  }
+}
+.design-config-pop {
+  .ant-popover-buttons .ant-btn,
+  .ant-popover-message-title {
     font-size: 12px;
   }
 }
