@@ -1,4 +1,11 @@
-import { useCallback, useRef, useMemo, useEffect, CSSProperties } from 'react';
+import {
+  useCallback,
+  useRef,
+  useMemo,
+  useEffect,
+  CSSProperties,
+  useTransition,
+} from 'react';
 import { Space } from 'antd';
 import classnames from 'classnames';
 import { FolderOutlined, FolderOpenOutlined } from '@ant-design/icons';
@@ -39,6 +46,7 @@ const ListItem = ({
     componentType,
   } = value;
 
+  const [, transitionFn] = useTransition();
   const [isHover, setIsHover] = useRafState(false);
 
   const editRef = useRef<NameEditorRefProps>(null);
@@ -50,11 +58,13 @@ const ListItem = ({
 
   useHover(listItemRef, {
     onChange: (state) => {
-      if (state) {
-        setHover(id);
-      } else {
-        setHover('');
-      }
+      transitionFn(() => {
+        if (state) {
+          setHover(id);
+        } else {
+          setHover('');
+        }
+      });
     },
   });
 

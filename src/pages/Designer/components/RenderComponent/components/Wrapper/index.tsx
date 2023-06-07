@@ -6,6 +6,7 @@ import {
   useRef,
   useEffect,
   useCallback,
+  useDeferredValue,
 } from 'react';
 import { Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
 import { throttle, get, omit } from 'lodash';
@@ -64,6 +65,8 @@ export default (
     props.position,
   );
   const [stateSize, _setStateSize] = useRafState<IProps['size']>(props.size);
+  const deferredStatePosition = useDeferredValue(statePosition);
+  const deferredStateSize = useDeferredValue(stateSize);
   const [isDealing, setIsDealing] = useState<boolean>(false);
 
   const isMultiSelect = useRef<boolean>(false);
@@ -113,15 +116,15 @@ export default (
 
   const position = useMemo(() => {
     if (isDealing) {
-      return statePosition;
+      return deferredStatePosition;
     }
     return propsPosition;
-  }, [propsPosition, statePosition, isDealing, flag]);
+  }, [propsPosition, deferredStatePosition, isDealing, flag]);
 
   const size = useMemo(() => {
-    if (isDealing) return stateSize;
+    if (isDealing) return deferredStateSize;
     return propsSize;
-  }, [propsSize, stateSize, isDealing]);
+  }, [propsSize, deferredStateSize, isDealing]);
 
   // 调整大小方法
   const resizeMethod: any = (

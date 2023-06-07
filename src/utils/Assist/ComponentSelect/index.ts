@@ -29,7 +29,10 @@ export function useSelect(onChange?: (value: string[]) => void) {
     );
 
     return () => {
-      GLOBAL_EVENT_EMITTER.removeListener('component-select', onInternalChange);
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.COMPONENT_SELECT,
+        onInternalChange,
+      );
     };
   }, []);
 

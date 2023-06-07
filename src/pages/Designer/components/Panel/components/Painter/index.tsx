@@ -6,6 +6,7 @@ import {
   CSSProperties,
   useContext,
   ReactNode,
+  useState,
 } from 'react';
 import {
   ConnectDropTarget,
@@ -60,6 +61,9 @@ const Painter = (props: PainterProps) => {
     style,
     children,
   } = props;
+
+  // ? hack 第一次渲染时，因为scale问题导致图表位置显示不正确，所以选择在transform完成后再进行渲染
+  const [isFirstTransition, setIsFirstTransition] = useState(true);
 
   // ? 为了pc转h5预览用的
   const { flag } = useContext(ExchangePreviewerContext);
@@ -127,6 +131,16 @@ const Painter = (props: PainterProps) => {
     );
   }, [scale, backgroundStyle, width, height, style, filter, isExchange]);
 
+  const componentList = useMemo(() => {
+    if (isFirstTransition) return null;
+    return children || <ComponentList />;
+  }, [children, isFirstTransition]);
+
+  const onTransitionEnd = useCallback(() => {
+    if (!isFirstTransition) return;
+    setIsFirstTransition(false);
+  }, [isFirstTransition]);
+
   const onMouseMove = () => {
     moveCounter.current++;
   };
@@ -174,8 +188,9 @@ const Painter = (props: PainterProps) => {
       image={backgroundStyle.backgroundImage}
       type={poster!.type}
       onMouseDown={onMouseDown}
+      onTransitionEnd={onTransitionEnd}
     >
-      {children || <ComponentList />}
+      {componentList}
       <H5AutoHeight />
     </ColorImageBackground>
   );
