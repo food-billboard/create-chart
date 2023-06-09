@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useRef } from 'react';
 import {
   RedoOutlined,
   UndoOutlined,
@@ -10,6 +10,7 @@ import {
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { useDebounceFn } from 'ahooks';
+import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 import CallbackManage, { CallbackManageRef } from '../CallbackManage';
 import ConstantManage, { ConstantManageRef } from '../ConstantManage';
@@ -51,7 +52,7 @@ export const InternalRedoIcon = (
   const { isRedoDisabled, redo, onClick } = props;
 
   const { run: handleClick } = useDebounceFn(
-    () => {
+    async () => {
       if (!isRedoDisabled) {
         redo();
         onClick?.('redo');
@@ -63,7 +64,8 @@ export const InternalRedoIcon = (
   );
 
   return (
-    <RedoOutlined
+    <GlobalLoadingActonButton
+      Component={RedoOutlined}
       title="重做"
       onClick={handleClick}
       className={classnames(commonClass, {
@@ -89,7 +91,7 @@ export const InternalUndoIcon = (
   const { isUndoDisabled, undo, onClick } = props;
 
   const { run: handleClick } = useDebounceFn(
-    () => {
+    async () => {
       if (!isUndoDisabled) {
         undo();
         onClick?.('undo');
@@ -99,7 +101,8 @@ export const InternalUndoIcon = (
   );
 
   return (
-    <UndoOutlined
+    <GlobalLoadingActonButton
+      Component={UndoOutlined}
       title="撤销"
       onClick={handleClick}
       className={classnames(commonClass, {

@@ -4,7 +4,7 @@ import { Switch } from 'antd';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import IconTooltip from '@/components/IconTooltip';
-import { useLocalStorage } from '@/hooks';
+import { useLocalStorage, useGlobalLoading } from '@/hooks';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
 
 const { Item } = ConfigList;
@@ -16,11 +16,17 @@ const CrossClipboard = () => {
     show: true,
   });
 
+  const { isGlobalActionLoading } = useGlobalLoading();
+
   const onChange = useCallback(
     (key: keyof ComponentClipboard.StorageClipboardType, targetValue: any) => {
-      setValue({
-        ...value,
-        [key]: targetValue,
+      isGlobalActionLoading({
+        globalLoadingAction: async () => {
+          return setValue({
+            ...value,
+            [key]: targetValue,
+          });
+        },
       });
     },
     [setValue],

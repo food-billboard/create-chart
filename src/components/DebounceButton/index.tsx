@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import type { ButtonProps } from 'antd';
 import { useDebounceFn } from 'ahooks';
 
-const LoadingButton = (props: ButtonProps & { wait?: number }) => {
+const DebounceButton = (props: ButtonProps & { wait?: number }) => {
   const { onClick: propsOnClick, wait = 100, ...nextProps } = props;
 
   const { run } = useDebounceFn(
@@ -16,4 +16,4 @@ const LoadingButton = (props: ButtonProps & { wait?: number }) => {
   return <Button onClick={run} {...nextProps} />;
 };
 
-export default LoadingButton;
+export default DebounceButton;

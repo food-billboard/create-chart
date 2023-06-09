@@ -1,5 +1,4 @@
-import { getDvaApp } from 'umi';
-import { useIdPathMap } from '@/hooks';
+import { useIdPathMap, useAnyDva } from '@/hooks';
 import { getDvaGlobalModelData } from '../Component';
 
 export * from './SaveScreenData';
@@ -72,8 +71,7 @@ class DataChangePool {
       | ComponentMethod.SetComponentMethodParamsData[],
     enqueue: boolean = true,
   ) => {
-    const app = getDvaApp();
-    const dispatch = app._store.dispatch;
+    const { dispatch } = useAnyDva();
     dispatch({ type: 'global/setComponent', value, enqueue });
   };
 
@@ -98,8 +96,7 @@ class DataChangePool {
     if (
       this.multiSetComponentUtil.counter === this.multiSetComponentUtil.total
     ) {
-      const app = getDvaApp();
-      const dispatch = app._store.dispatch;
+      const { dispatch } = useAnyDva();
       dispatch({
         type: 'global/setComponent',
         value: this.multiSetComponentUtil.pool,

@@ -10,6 +10,7 @@ import { connect } from 'dva';
 import classnames from 'classnames';
 import { useEventListener, useSize } from 'ahooks';
 import { BackgroundConfigRender } from '@/components/DesignerBackground';
+import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import { mergeWithoutArray, sleep } from '@/utils/tool';
 import ClipboardComponent from '../Clipboard';
 import AbsorbGuideLine from './components/AbsorbGuideLine';
@@ -78,7 +79,7 @@ const PanelWrapper = (props: {
   };
 
   const wrapperSetGuideLine = useCallback(
-    (value: Partial<ComponentData.TGuideLineConfig>) => {
+    async (value: Partial<ComponentData.TGuideLineConfig>) => {
       const newValue = mergeWithoutArray(
         {},
         {
@@ -87,7 +88,6 @@ const PanelWrapper = (props: {
         },
         value,
       ) as ComponentData.TGuideLineConfig;
-
       setGuideLine?.(newValue);
     },
     [setGuideLine, guideLineList, guideLineShow],
@@ -151,7 +151,8 @@ const PanelWrapper = (props: {
             width={width}
             height={height}
           />
-          <GuideLineButton
+          <GlobalLoadingActonButton
+            Component={GuideLineButton}
             onClick={wrapperSetGuideLine.bind(null, { show: !guideLineShow })}
             show={!!guideLineShow}
             setGuideLine={setGuideLine}

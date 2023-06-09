@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from 'react';
-import { Button, Dropdown, InputNumber, Menu, Slider, Space } from 'antd';
+import { Dropdown, InputNumber, Slider, Space } from 'antd';
 import { useControllableValue } from 'ahooks';
 import { connect } from 'dva';
+import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import { wrapperId } from '../../../PanelWrapper/constants';
 import styles from './index.less';
@@ -45,7 +46,7 @@ const Scale = (props: {
 
   const { pageWidth, pageHeight } = props;
 
-  const autoFitScaleMethod = useCallback(() => {
+  const autoFitScaleMethod = useCallback(async () => {
     const result = autoFitScale(pageWidth!, pageHeight!);
     setValue(result);
   }, []);
@@ -79,9 +80,9 @@ const Scale = (props: {
             onSelect: selectScaleSize,
           }}
         >
-          <Button type="link" onClick={autoFitScaleMethod}>
+          <GlobalLoadingActonButton type="link" onClick={autoFitScaleMethod}>
             自适应
-          </Button>
+          </GlobalLoadingActonButton>
         </Dropdown>
         <InputNumber
           max={200}

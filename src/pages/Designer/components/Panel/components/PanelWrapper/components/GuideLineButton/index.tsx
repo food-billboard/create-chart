@@ -10,6 +10,7 @@ import classnames from 'classnames';
 import { connect } from 'dva';
 import ColorSelect from '@/components/ColorSelect';
 import Tooltip from '@/components/Tooltip';
+import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import { ConnectState } from '@/models/connect';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { wrapperId } from '../../constants';
@@ -33,7 +34,7 @@ const GuideLineButton = (props: {
     return show ? <EyeOutlined /> : <EyeInvisibleOutlined />;
   }, [show]);
 
-  const deleteGuideLine = useCallback(() => {
+  const deleteGuideLine = useCallback(async () => {
     setGuideLine({
       show,
       value: [],
@@ -43,7 +44,7 @@ const GuideLineButton = (props: {
   const title = useMemo(() => {
     return (
       <>
-        <Button
+        <GlobalLoadingActonButton
           onClick={deleteGuideLine}
           icon={<DeleteOutlined />}
           type="link"

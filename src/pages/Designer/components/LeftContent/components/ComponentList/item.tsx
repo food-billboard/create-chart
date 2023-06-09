@@ -148,7 +148,7 @@ const ComponentItem = (props: ComponentItemProps) => {
             }
           >
             <LockOutlined />
-            <span>组价不可用</span>
+            <span>组件不可用</span>
           </div>
         )}
       </Col>

@@ -1,5 +1,5 @@
 import { useMemo, useState, useCallback } from 'react';
-import { PageHeader, Input, Button, message } from 'antd';
+import { PageHeader, Input, message } from 'antd';
 import {
   SendOutlined,
   FundOutlined,
@@ -10,6 +10,7 @@ import { connect } from 'dva';
 import classnames from 'classnames';
 import Marquee from 'react-fast-marquee';
 import FocusWrapper from '@/components/FocusWrapper';
+import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import { previewScreen, previewScreenModel } from '@/services';
 import { goPreview, goPreviewModel, goView } from '@/utils/tool';
 import { isModelHash } from '@/hooks';
@@ -74,8 +75,6 @@ const Header = (props: {
   }, [editMode, name, setScreen]);
 
   const handlePreview = useCallback(async () => {
-    if (fetchLoading) return;
-
     // 纯前端大屏
     if (GlobalConfig.IS_STATIC) {
       return goView();
@@ -98,7 +97,7 @@ const Header = (props: {
 
   // 保存
   const handleStore = useCallback(async () => {
-    await saveScreenData({
+    return saveScreenData({
       loading: fetchLoading,
       setLoading: setFetchLoading,
     });
@@ -139,7 +138,7 @@ const Header = (props: {
 
   const extra = useMemo(() => {
     const previewButton = (
-      <Button
+      <GlobalLoadingActonButton
         key="preview"
         size="large"
         title="预览"
@@ -147,10 +146,10 @@ const Header = (props: {
         onClick={handlePreview}
         icon={<FundOutlined />}
         loading={fetchLoading}
-      ></Button>
+      ></GlobalLoadingActonButton>
     );
     const storeButton = (
-      <Button
+      <GlobalLoadingActonButton
         key="send"
         size="large"
         title="保存"
@@ -158,7 +157,7 @@ const Header = (props: {
         onClick={handleStore}
         icon={<SendOutlined />}
         loading={fetchLoading}
-      ></Button>
+      ></GlobalLoadingActonButton>
     );
     const exchangeScreenFlagButton = (
       <ExchangeScreenFlagButton
@@ -168,7 +167,7 @@ const Header = (props: {
       />
     );
     const exportScreenButton = (
-      <Button
+      <GlobalLoadingActonButton
         key="export"
         size="large"
         title="导出"
@@ -176,10 +175,10 @@ const Header = (props: {
         onClick={handleExport}
         icon={<ExportOutlined />}
         loading={fetchLoading}
-      ></Button>
+      ></GlobalLoadingActonButton>
     );
     const leadinScreenButton = (
-      <Button
+      <GlobalLoadingActonButton
         key="import"
         size="large"
         title="导入"
@@ -187,10 +186,10 @@ const Header = (props: {
         onClick={handleImport}
         icon={<ImportOutlined />}
         loading={fetchLoading}
-      ></Button>
+      ></GlobalLoadingActonButton>
     );
     const resetScreenButton = (
-      <Button
+      <GlobalLoadingActonButton
         key="reset"
         size="large"
         title="初始化"
@@ -198,7 +197,7 @@ const Header = (props: {
         onClick={handleReset}
         icon={<IconFont type="icon-Initialize-o" />}
         loading={fetchLoading}
-      ></Button>
+      ></GlobalLoadingActonButton>
     );
     let baseList: any[] = [];
     // pc大屏有切换移动端

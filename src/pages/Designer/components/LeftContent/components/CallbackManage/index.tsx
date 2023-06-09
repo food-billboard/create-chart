@@ -17,6 +17,7 @@ import LazyLoadWrapper from '@/components/LazyLoad';
 import ParamsSelect from '@/components/ParamsSelect';
 import Tooltip from '@/components/Tooltip';
 import FocusWrapper from '@/components/FocusWrapper';
+import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import { useIdPathMap } from '@/hooks';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
@@ -50,15 +51,15 @@ const ComponentList = (props: {
         filter?.value.some((item) => item.id === id && !item.disabled)
       ) {
         acc.push(
-          <Button
+          <GlobalLoadingActonButton
             type="link"
-            onClick={() => {
+            onClick={async () => {
               setSelect([componentId]);
             }}
             key={componentId}
           >
             {name}
-          </Button>,
+          </GlobalLoadingActonButton>,
         );
       }
 
@@ -220,21 +221,23 @@ const CallbackList = (props: {
         render: (_: any, record: ComponentData.TFilterConfig) => {
           return (
             <>
-              <Popconfirm
+              <GlobalLoadingActonButton
+                Component={Popconfirm}
                 title="是否确定删除此过滤器？"
-                onConfirm={deleteData.bind(null, record)}
+                onClick={deleteData.bind(null, record)}
+                triggerName="onConfirm"
               >
                 <Button key="delete" type="link" style={{ paddingLeft: 0 }}>
                   删除
                 </Button>
-              </Popconfirm>
-              <Button
+              </GlobalLoadingActonButton>
+              <GlobalLoadingActonButton
                 key="copy"
                 type="link"
                 onClick={copyData.bind(null, record)}
               >
                 复制
-              </Button>
+              </GlobalLoadingActonButton>
             </>
           );
         },
@@ -265,9 +268,14 @@ const CallbackList = (props: {
     <FocusWrapper>
       <Table
         title={() => (
-          <Popconfirm title="是否确认删除" onConfirm={handleClear}>
+          <GlobalLoadingActonButton
+            Component={Popconfirm}
+            title="是否确认删除"
+            onClick={handleClear}
+            triggerName="onConfirm"
+          >
             <Button icon={<DeleteOutlined />}>清空无引用过滤函数</Button>
-          </Popconfirm>
+          </GlobalLoadingActonButton>
         )}
         dataSource={callback}
         rowKey={(record) => record.id}

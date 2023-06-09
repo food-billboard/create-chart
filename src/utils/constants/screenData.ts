@@ -232,3 +232,6 @@ export const DEFAULT_GROUP_CONFIG: ComponentData.TComponentData['config'] = {
     ...DEFAULT_GROUP_OPTIONS,
   },
 };
+
+// 图表能被添加的组件的上限
+export const MAX_CHART_TO_BE_ADD_IN_PANEL = 50;

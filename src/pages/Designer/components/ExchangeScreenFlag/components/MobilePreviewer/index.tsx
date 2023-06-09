@@ -5,11 +5,12 @@ import {
   useCallback,
   useMemo,
 } from 'react';
-import { Drawer, Button, message } from 'antd';
+import { Drawer, message } from 'antd';
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { noop } from 'lodash';
 import { Loading } from '@/components/PageLoading';
+import GlobalLoadingActionButton from '@/components/GlobalLoadingActionButton';
 import { getDvaGlobalModelData } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
@@ -149,58 +150,21 @@ const MobilePreviewer = forwardRef<MobilePreviewerRef, {}>((props, ref) => {
     setLoading(false);
   }, []);
 
-  const handleClose = useCallback(() => {
+  const handleClose = useCallback(async () => {
     setVisible(false);
   }, []);
 
-  const handleOkStatic = useCallback(async () => {
-    setLoading(true);
-    try {
-      const { errMsg, value } = await LocalConfigInstance.getItem(
-        LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
-      );
-      if (errMsg) throw new Error((errMsg as any).toString());
-      const { errMsg: setErr } = await LocalConfigInstance.setItem(
-        LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
-        mergeWithoutArray({}, value, {
-          config: {
-            style: {
-              width: 375,
-              height: 667,
-            },
-            flag: {
-              type: 'H5',
-            },
-          },
-        }),
-      );
-
-      if (setErr) throw new Error((setErr as any).toString());
-
-      message.success('转换成功，即将刷新', 1, () => {
-        window.location.reload();
-      });
-    } catch (err) {
-      message.info('转换失败!!');
-      setLoading(false);
-    }
-  }, [componentList]);
-
-  const handleOk = useCallback(async () => {
-    setLoading(true);
-    try {
-      const { screenData } = getDvaGlobalModelData();
-      const method = location.href.includes('/model-designer')
-        ? putScreenModel
-        : putScreen;
-      await method({
-        _id: screenData._id,
-        name: screenData.name,
-        description: screenData.description,
-        poster: screenData.poster,
-        flag: 'H5',
-        data: JSON.stringify(
-          mergeWithoutArray({}, screenData, {
+  const handleOkStatic = useCallback(
+    async (cancelLoading) => {
+      setLoading(true);
+      try {
+        const { errMsg, value } = await LocalConfigInstance.getItem(
+          LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
+        );
+        if (errMsg) throw new Error((errMsg as any).toString());
+        const { errMsg: setErr } = await LocalConfigInstance.setItem(
+          LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
+          mergeWithoutArray({}, value, {
             config: {
               style: {
                 width: 375,
@@ -210,18 +174,63 @@ const MobilePreviewer = forwardRef<MobilePreviewerRef, {}>((props, ref) => {
                 type: 'H5',
               },
             },
-            components: componentList,
           }),
-        ),
-      });
-      message.success('转换成功，即将刷新', 1, () => {
-        window.location.reload();
-      });
-    } catch (err) {
-      message.info('转换失败!!');
-      setLoading(false);
-    }
-  }, [componentList]);
+        );
+
+        if (setErr) throw new Error((setErr as any).toString());
+
+        message.success('转换成功，即将刷新', 1, () => {
+          window.location.reload();
+        });
+      } catch (err) {
+        message.info('转换失败!!');
+        setLoading(false);
+        cancelLoading();
+      }
+    },
+    [componentList],
+  );
+
+  const handleOk = useCallback(
+    async (cancelLoading) => {
+      setLoading(true);
+      try {
+        const { screenData } = getDvaGlobalModelData();
+        const method = location.href.includes('/model-designer')
+          ? putScreenModel
+          : putScreen;
+        await method({
+          _id: screenData._id,
+          name: screenData.name,
+          description: screenData.description,
+          poster: screenData.poster,
+          flag: 'H5',
+          data: JSON.stringify(
+            mergeWithoutArray({}, screenData, {
+              config: {
+                style: {
+                  width: 375,
+                  height: 667,
+                },
+                flag: {
+                  type: 'H5',
+                },
+              },
+              components: componentList,
+            }),
+          ),
+        });
+        message.success('转换成功，即将刷新', 1, () => {
+          window.location.reload();
+        });
+      } catch (err) {
+        message.info('转换失败!!');
+        setLoading(false);
+        cancelLoading();
+      }
+    },
+    [componentList],
+  );
 
   useImperativeHandle(
     ref,
@@ -244,16 +253,22 @@ const MobilePreviewer = forwardRef<MobilePreviewerRef, {}>((props, ref) => {
       destroyOnClose
       footer={
         <div className={styles['component-exchange-screen-flag-drawer-footer']}>
-          <Button className="m-r-4" onClick={handleClose} loading={loading}>
+          <GlobalLoadingActionButton
+            className="m-r-4"
+            onClick={handleClose}
+            loading={loading}
+            needLoading={false}
+            force
+          >
             取消
-          </Button>
-          <Button
+          </GlobalLoadingActionButton>
+          <GlobalLoadingActionButton
             type="primary"
             onClick={GlobalConfig.IS_STATIC ? handleOkStatic : handleOk}
             loading={loading}
           >
             确认应用
-          </Button>
+          </GlobalLoadingActionButton>
         </div>
       }
     >
