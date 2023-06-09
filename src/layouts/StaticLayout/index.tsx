@@ -11,7 +11,7 @@ const GlobalLayout = (props: any) => {
     location: { pathname },
   } = props;
 
-  if (['viewer'].includes(pathname)) return children;
+  if (['viewer'].some((path) => pathname.includes(path))) return children;
 
   return (
     <>
