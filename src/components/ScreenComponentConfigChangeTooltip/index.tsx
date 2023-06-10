@@ -1,16 +1,11 @@
-import {
-  ReactNode,
-  useCallback,
-  useMemo,
-  useState,
-  CSSProperties,
-} from 'react';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { Pagination, Button } from 'antd';
 import { connect } from 'dva';
 import { findLast } from 'lodash';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import { versionCompare } from '@/utils';
+import { useAnyDva } from '@/hooks';
 import IconTooltip from '../IconTooltip';
 import type { Props as IconTooltipProps } from '../IconTooltip';
 import allConfigVersionMap from './Constants';
@@ -19,9 +14,7 @@ import styles from './index.less';
 
 type Props = {
   id: string;
-  setVersionChangeTooltip: (
-    value: SuperPartial<ComponentData.VersionChangeTooltip>,
-  ) => void;
+  setVersionChangeTooltip: (value: ComponentData.VersionChangeTooltip) => void;
   versionChangeTooltip: ComponentData.VersionChangeTooltip;
   children?: ReactNode;
 } & IconTooltipProps;
@@ -36,6 +29,9 @@ const ScreenComponentConfigChangeTooltip = (props: Props) => {
   } = props;
 
   const [current, setCurrent] = useState(1);
+  const [open, setOpen] = useState(false);
+
+  const { getState } = useAnyDva();
 
   const versionTooltip = useMemo(() => {
     return Object.entries(versionChangeTooltip)
@@ -58,14 +54,39 @@ const ScreenComponentConfigChangeTooltip = (props: Props) => {
       });
   }, [configId, versionChangeTooltip]);
 
+  const onOpenChange = useCallback((open) => {
+    setOpen(open);
+  }, []);
+
+  const isAllRead = (version: ComponentData.VersionChangeTooltipItem) => {
+    return Object.values(version).every((item) => item.read);
+  };
+
   const handleRead = useCallback((version: string) => {
-    setVersionChangeTooltip({
-      [version]: {
-        [configId]: {
-          read: true,
-        },
-      },
-    });
+    setOpen(false);
+    // ? 直接关闭会出现tooltip空白的情况
+    setTimeout(() => {
+      const versionChangeTooltip =
+        getState().global.screenData.extra.versionChangeTooltip;
+      versionChangeTooltip[version][configId].read = true;
+      const currentVersion = versionChangeTooltip[version];
+      // 全部已读且前面没有版本，就把当前的tooltip剔除
+      if (isAllRead(currentVersion)) {
+        const currentVersionPrev = Object.keys(versionChangeTooltip).filter(
+          (item) => versionCompare(version, item),
+        );
+        // 前面版本都是已读
+        if (
+          currentVersionPrev.every((version) =>
+            isAllRead(versionChangeTooltip[version]),
+          )
+        ) {
+          delete versionChangeTooltip[version];
+        }
+      }
+
+      setVersionChangeTooltip({ ...versionChangeTooltip });
+    }, 300);
   }, []);
 
   const children = useMemo(() => {
@@ -103,6 +124,8 @@ const ScreenComponentConfigChangeTooltip = (props: Props) => {
   return (
     <IconTooltip
       {...nextProps}
+      open={open}
+      onOpenChange={onOpenChange}
       title={
         <div className={styles['screen-component-config-change-tooltip']}>
           {children}
@@ -120,6 +143,7 @@ const ScreenComponentConfigChangeTooltip = (props: Props) => {
       }
       iconStyle={{
         visibility: versionTooltip.length ? 'visible' : 'hidden',
+        pointerEvents: versionTooltip.length ? 'all' : 'none',
       }}
     >
       <InfoCircleOutlined />
@@ -131,6 +155,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(ScreenComponentConfigChangeTooltip);
-
-// 去除老版本全部已经阅读过的tooltip
-// 手动控制tooltip的显示隐藏(先隐藏再删除)顺带控制一下删除时的隐藏规则

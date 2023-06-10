@@ -9,7 +9,7 @@ export const mapStateToProps = (state: ConnectState) => {
 export const mapDispatchToProps = (dispatch: any) => ({
   setVersionChangeTooltip: (value: any) =>
     dispatch({
-      type: 'global/setScreen',
-      value: { extra: { versionChangeTooltip: value } },
+      type: 'global/setConfigChangeTooltip',
+      value,
     }),
 });

@@ -1,6 +1,6 @@
 import { EventEmitter } from 'eventemitter3';
 import LocalForage from 'localforage';
-import { throttle, debounce } from 'lodash';
+import { debounce } from 'lodash';
 
 export class LocalConfig extends EventEmitter {
   constructor() {
