@@ -7,6 +7,7 @@ import {
   DEFAULT_GROUP_COMPONENT_TRANSFORM,
   BASIC_DEFAULT_DATA_CONFIG,
 } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import ScreenComponentConfigChangeTooltipMap from '@/components/ScreenComponentConfigChangeTooltip/Constants';
 import GlobalConfig from '../Assist/GlobalConfig';
 import Theme from '../../theme/wonderland.project.json';
 import { DEFAULT_THEME_NAME } from '../Assist/Theme';
@@ -91,6 +92,26 @@ export const DEFAULT_FILTER_LIST: ComponentData.TFilterConfig[] = [
   },
 ];
 
+export const DEFAULT_VERSION_CHANGE_TOOLTIP_ITEM = {
+  read: false,
+};
+
+export const DEFAULT_VERSION_CHANGE_TOOLTIP =
+  ScreenComponentConfigChangeTooltipMap.slice(
+    -1,
+  ).reduce<ComponentData.VersionChangeTooltip>((acc, cur) => {
+    const { version, tooltip } = cur;
+    acc[version] = Object.keys(
+      tooltip,
+    ).reduce<ComponentData.VersionChangeTooltipItem>((acc, cur) => {
+      acc[cur] = {
+        ...DEFAULT_VERSION_CHANGE_TOOLTIP_ITEM,
+      };
+      return acc;
+    }, {});
+    return acc;
+  }, {});
+
 const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
   name: '大屏名称',
   description: '',
@@ -153,6 +174,10 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
     flag: {
       type: isMobile ? 'H5' : 'PC',
     },
+  },
+  extra: {
+    // 新创建的保留最近一个版本的数据
+    versionChangeTooltip: {},
   },
 };
 
@@ -232,3 +257,6 @@ export const DEFAULT_GROUP_CONFIG: ComponentData.TComponentData['config'] = {
     ...DEFAULT_GROUP_OPTIONS,
   },
 };
+
+// 图表能被添加的组件的上限
+export const MAX_CHART_TO_BE_ADD_IN_PANEL = 50;

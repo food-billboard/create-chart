@@ -6,6 +6,8 @@ export default {
   state: {
     componentCollapse: false,
     componentConfigCollapse: false,
+    // ? 设计器的操作loading 属于是操作禁用，不会有ui的效果
+    globalActionLoading: false,
   },
 
   effects: {
@@ -15,6 +17,16 @@ export default {
       yield put({
         type: 'saveData',
         payload: value,
+      });
+    },
+
+    // 全局操作loading
+    *setGlobalActionLoading({ value }: any, { put }: { put: any }) {
+      yield put({
+        type: 'saveData',
+        payload: {
+          globalActionLoading: !!value,
+        },
       });
     },
   },

@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react';
-import { Button } from 'antd';
 import { MobileOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
+import GlobalLoadingActionButton from '@/components/GlobalLoadingActionButton';
 import MobilePreviewer, {
   MobilePreviewerRef,
 } from './components/MobilePreviewer';
@@ -16,13 +16,13 @@ const ExchangeButton = ({
 }) => {
   const ref = useRef<MobilePreviewerRef>(null);
 
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback(async () => {
     ref.current?.open();
-  }, [setLoading, setLoading]);
+  }, []);
 
   return (
     <>
-      <Button
+      <GlobalLoadingActionButton
         key="exchange"
         size="large"
         title="切换为移动端"
@@ -30,7 +30,8 @@ const ExchangeButton = ({
         onClick={handleClick}
         icon={<MobileOutlined />}
         loading={loading}
-      ></Button>
+        needLoading={false}
+      ></GlobalLoadingActionButton>
       <MobilePreviewer ref={ref} />
     </>
   );

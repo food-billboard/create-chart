@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { Checkbox } from 'antd';
 import classnames from 'classnames';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import ScreenComponentConfigChangeTooltip from '@/components/ScreenComponentConfigChangeTooltip';
 import styles from './index.less';
 
 export type TValue = Partial<
@@ -56,6 +57,10 @@ const AutoUpdate = (props: {
         controls={false}
       />
       {'  秒一次'}
+      <ScreenComponentConfigChangeTooltip
+        iconClassName="m-l-4"
+        id="/DataConfig/ResponseData/AutoUpdate"
+      />
     </div>
   );
 };

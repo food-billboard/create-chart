@@ -1,8 +1,9 @@
 import { notification, message } from 'antd';
 import axios, { AxiosRequestConfig } from 'axios';
-import { getDvaApp, history } from 'umi';
+import { history } from 'umi';
 import { debounce } from 'lodash';
 import { stringify } from 'querystring';
+import { useAnyDva } from '@/hooks';
 import { REQUEST_TIMEOUT } from './constants';
 import { formatQuery } from './tool';
 
@@ -33,8 +34,7 @@ interface RequestOptions extends AxiosRequestConfig {
 // 未登录的多次触发处理
 export const dispatchLogin = debounce(
   function (err) {
-    const app = getDvaApp();
-    const dispatch = app._store.dispatch;
+    const { dispatch } = useAnyDva();
     const querystring = stringify({
       redirect: window.location.href,
     });

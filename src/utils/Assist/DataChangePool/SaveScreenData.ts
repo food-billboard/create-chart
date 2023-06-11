@@ -1,5 +1,4 @@
 import { message } from 'antd';
-import { getDvaApp } from 'umi';
 import {
   postScreen,
   putScreen,
@@ -8,7 +7,7 @@ import {
   putScreenPool,
   putScreenModelPool,
 } from '@/services';
-import { isModelHash } from '@/hooks';
+import { isModelHash, useAnyDva } from '@/hooks';
 import { IGlobalModelState } from '@/models/connect';
 import { captureCover, captureCoverAndUpload } from '@/utils/captureCover';
 import LocalConfigInstance, { LocalConfig } from '../LocalConfig';
@@ -29,9 +28,8 @@ export const saveScreenData = async ({
 
   try {
     const isModel = isModelHash(location.hash);
-    const app = getDvaApp();
-    const store = app._store.getState().global;
-    const dispatch = app._store.dispatch;
+    const { dispatch, getState } = useAnyDva();
+    const store = getState().global;
     const { screenData, components, guideLine } = store;
     const { name, _id, description, poster } = screenData || {};
 

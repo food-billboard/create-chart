@@ -14,6 +14,7 @@ import { SCREEN_VERSION } from '@/utils/constants';
 import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
 import { mergeComponentDefaultConfig } from '@/components/ChartComponents';
 import DEFAULT_SCREEN_DATA, {
+  DEFAULT_VERSION_CHANGE_TOOLTIP,
   createScreenDataRequest,
 } from '@/utils/constants/screenData';
 import { autoFitScale } from '../Panel/components/ToolBar/components/Scale';
@@ -122,7 +123,16 @@ const FetchScreenComponent = forwardRef<
             value: [],
           });
         }
-        setScreen(DEFAULT_SCREEN_DATA);
+        // 添加新增独有的tooltip配置
+        setScreen({
+          ...DEFAULT_SCREEN_DATA,
+          extra: {
+            // @ts-ignore
+            ...DEFAULT_SCREEN_DATA.extra,
+            versionChangeTooltip: DEFAULT_VERSION_CHANGE_TOOLTIP,
+          },
+        });
+        // setScreen(DEFAULT_SCREEN_DATA);
       }
     } catch (err) {
       console.error(err);
@@ -181,7 +191,14 @@ const FetchScreenComponent = forwardRef<
           show: true,
           value: [],
         });
-        setScreen(DEFAULT_SCREEN_DATA);
+        // 添加新增独有的tooltip配置
+        setScreen({
+          ...DEFAULT_SCREEN_DATA,
+          extra: {
+            ...DEFAULT_SCREEN_DATA.extra,
+            versionChangeTooltip: DEFAULT_VERSION_CHANGE_TOOLTIP,
+          },
+        });
       }
     }
 

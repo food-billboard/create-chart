@@ -29,7 +29,7 @@ export const OnMessageTooltip = () => {
             type="link"
             icon={<DownloadOutlined />}
           >
-            点击下载ifrmae数据发送示例代码
+            点击下载iframe数据发送示例代码
           </Button>
         </div>
       }
@@ -61,7 +61,7 @@ export const PostMessageTooltip = () => {
             type="link"
             icon={<DownloadOutlined />}
           >
-            点击下载ifrmae数据接收示例代码
+            点击下载iframe数据接收示例代码
           </Button>
         </div>
       }

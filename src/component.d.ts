@@ -260,6 +260,17 @@ declare namespace ComponentData {
     'method' | 'headers' | 'body' | 'serviceRequest' | 'frequency'
   >;
 
+  export type VersionChangeTooltipItem = {
+    [configId: string]: {
+      read: boolean;
+    };
+  };
+
+  // 版本升级带来的配置变化提示
+  export type VersionChangeTooltip = {
+    [version: string]: VersionChangeTooltipItem;
+  };
+
   // 大屏配置
   export type TScreenData = {
     _id?: string;
@@ -301,6 +312,9 @@ declare namespace ComponentData {
       flag: {
         type: ScreenFlagType;
       };
+    };
+    extra: {
+      versionChangeTooltip: VersionChangeTooltip;
     };
   };
 

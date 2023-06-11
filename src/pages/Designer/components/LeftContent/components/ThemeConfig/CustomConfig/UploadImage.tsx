@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { Upload, message } from 'antd';
 import type { UploadFile } from 'antd';
 import Color from 'color';
+import { useGlobalLoading } from '@/hooks';
 import { UploadButton } from '@/components/ImageUpload';
 import getImageColor from '@/utils/getImageColor';
 import styles from './index.less';
@@ -11,25 +12,32 @@ const UploadImage = (props: { onChange?: (value: string[][]) => void }) => {
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
+  const { isGlobalActionLoading } = useGlobalLoading();
+
   const handleChange = useCallback(
     async ({ fileList }: any) => {
-      if (fileList.length) {
-        const [target] = fileList;
-        setFileList([target]);
-        try {
-          const colorList = await getImageColor(target.originFileObj);
-          onChange?.([
-            colorList.slice(0, 6).map((item) => {
-              return Color(item).hex();
-            }),
-          ]);
-        } catch (err) {
-          message.info('图片解析失败');
-          setFileList([]);
-        }
-      } else {
-        setFileList([]);
-      }
+      return isGlobalActionLoading({
+        globalLoadingAction: async (cancelLoading) => {
+          if (fileList.length) {
+            const [target] = fileList;
+            setFileList([target]);
+            try {
+              const colorList = await getImageColor(target.originFileObj);
+              onChange?.([
+                colorList.slice(0, 6).map((item) => {
+                  return Color(item).hex();
+                }),
+              ]);
+            } catch (err) {
+              message.info('图片解析失败');
+              setFileList([]);
+            }
+          } else {
+            setFileList([]);
+          }
+          cancelLoading();
+        },
+      });
     },
     [onChange],
   );

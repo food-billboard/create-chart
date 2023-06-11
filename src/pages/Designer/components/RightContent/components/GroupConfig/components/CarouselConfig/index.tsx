@@ -19,6 +19,7 @@ import Input from '@/components/ChartComponents/Common/Input';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import RadioGroup, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
@@ -38,7 +39,7 @@ const CarouselConfig = (props: {
   const forceUpdate = useUpdate();
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [previewable, setPreviewable] = useState(false);
+  const [previewAble, setPreviewAble] = useState(false);
 
   const { component } = props;
 
@@ -120,13 +121,13 @@ const CarouselConfig = (props: {
     [currentIndex],
   );
 
-  const onPreviewableChange = useCallback(() => {
-    setPreviewable(!previewable);
+  const onPreviewAbleChange = useCallback(async () => {
+    setPreviewAble(!previewAble);
     GLOBAL_EVENT_EMITTER.emit(
       EVENT_NAME_MAP.GROUP_CAROUSEL_CLICK_PREVIEW_CHANGE,
-      !previewable,
+      !previewAble,
     );
-  }, [previewable]);
+  }, [previewAble]);
 
   return (
     <ConfigList level={1}>
@@ -215,12 +216,12 @@ const CarouselConfig = (props: {
               components={components}
               current={currentIndex}
               onChange={onComponentIndexChange}
-              disabled={!!previewable}
+              disabled={!!previewAble}
             />
             <Item label="动画">
               <FullForm>
                 <Select
-                  disabled={!!previewable}
+                  disabled={!!previewAble}
                   className="w-100"
                   options={[
                     {
@@ -244,7 +245,7 @@ const CarouselConfig = (props: {
             <Item label="动画时长">
               <FullForm>
                 <InputNumber
-                  disabled={!!previewable}
+                  disabled={!!previewAble}
                   value={carouselConfig.speed}
                   onChange={onChildComponentChange.bind(
                     null,
@@ -257,7 +258,7 @@ const CarouselConfig = (props: {
             <Item label="缓动效果">
               <FullForm>
                 <Select
-                  disabled={!!previewable}
+                  disabled={!!previewAble}
                   className="w-100"
                   options={[
                     {
@@ -288,9 +289,12 @@ const CarouselConfig = (props: {
             </Item>
           </Collapse>
           <div className="ali-cen">
-            <GhostButton onClick={onPreviewableChange}>
-              {!!previewable ? '暂停' : '预览'}
-            </GhostButton>
+            <GlobalLoadingActonButton
+              Component={GhostButton}
+              onClick={onPreviewAbleChange}
+            >
+              {!!previewAble ? '暂停' : '预览'}
+            </GlobalLoadingActonButton>
           </div>
         </>
       )}

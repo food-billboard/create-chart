@@ -6,13 +6,11 @@ import {
 } from '@ant-design/icons';
 import EventEmitter from 'eventemitter3';
 import classnames from 'classnames';
-import { Select, Space, Button } from 'antd';
+import { Select, Space } from 'antd';
 import { connect } from 'dva';
 import DebounceButton from '@/components/DebounceButton';
-import {
-  ID_PATH_MAP_EVENT_EMITTER,
-  useIdPathMap,
-} from '@/hooks/useComponentsPath';
+import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
+import { ID_PATH_MAP_EVENT_EMITTER, useIdPathMap } from '@/hooks';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 import {
   GLOBAL_EVENT_EMITTER,
@@ -40,11 +38,10 @@ const InternalComponentSearch = (props: {
 
   const [visible, setVisible] = useState(false);
 
-  const handleClick = useCallback(() => {
-    if (componentCollapse)
-      setLocalConfig({
-        componentCollapse: !componentCollapse,
-      });
+  const handleClick = useCallback(async () => {
+    setLocalConfig({
+      componentCollapse: !componentCollapse,
+    });
     setVisible((prev) => !prev);
     ComponentSearchConfigEventEmitter.emit(EVENT_NAME.COMPONENT_SEARCH_VISIBLE);
   }, [componentCollapse, setLocalConfig]);
@@ -54,10 +51,12 @@ const InternalComponentSearch = (props: {
       className={classnames(styles['design-header-action-component-search'])}
     >
       <Tooltip title={'组件搜索'} placement="top">
-        <DebounceButton
+        <GlobalLoadingActonButton
           icon={<SearchOutlined />}
           onClick={handleClick}
           type={visible ? 'primary' : 'default'}
+          Component={DebounceButton}
+          needLoading={false}
         />
       </Tooltip>
     </div>

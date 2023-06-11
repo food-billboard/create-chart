@@ -1,8 +1,7 @@
 import { CSSProperties } from 'react';
 import { get, omit } from 'lodash';
 import { nanoid } from 'nanoid';
-import { getDvaApp } from 'umi';
-import { useIdPathMap } from '@/hooks';
+import { useIdPathMap, useAnyDva } from '@/hooks';
 import { getComponentDefaultConfigByType } from '@/components/ChartComponents';
 import ColorSelect from '@/components/ColorSelect';
 import { mergeWithoutArray } from '../../tool';
@@ -159,8 +158,8 @@ export const isComponentSelect = (id: string, select: string[]) => {
 
 // 获取dva的global
 export function getDvaGlobalModelData() {
-  const app = getDvaApp();
-  return app._store.getState().global;
+  const { getState } = useAnyDva();
+  return getState().global;
 }
 
 // 组件的父级组件id

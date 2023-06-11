@@ -4,7 +4,7 @@ import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import IconTooltip from '@/components/IconTooltip';
 import { CompatColorSelect } from '@/components/ColorSelect';
-import { useLocalStorage } from '@/hooks';
+import { useLocalStorage, useGlobalLoading } from '@/hooks';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
 
 const { Item } = ConfigList;
@@ -16,9 +16,15 @@ const BackgroundConfig = () => {
     b: 17,
   });
 
+  const { isGlobalActionLoading } = useGlobalLoading();
+
   const onChange = useCallback(
     (value) => {
-      setValue(value);
+      isGlobalActionLoading({
+        globalLoadingAction: async () => {
+          return setValue(value);
+        },
+      });
     },
     [setValue],
   );

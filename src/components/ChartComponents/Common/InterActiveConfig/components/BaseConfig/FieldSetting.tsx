@@ -183,7 +183,7 @@ const FieldSetting = (props: IProps) => {
 
   const handleDelete = useCallback(
     (record) => {
-      const newFileds = [...fields].filter((item) => item.key !== record.key);
+      const newFields = [...fields].filter((item) => item.key !== record.key);
       onChange?.({
         value: {
           config: {
@@ -192,7 +192,7 @@ const FieldSetting = (props: IProps) => {
                 if (item.name !== name) return item;
                 return {
                   ...item,
-                  fields: newFileds,
+                  fields: newFields,
                 };
               }),
             },

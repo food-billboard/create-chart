@@ -64,6 +64,13 @@ export default {
       });
     },
 
+    *setConfigChangeTooltip({ value }: { value: string }, { put }: any) {
+      yield put({
+        type: 'setConfigChangeTooltipData',
+        payload: value,
+      });
+    },
+
     *setVersion({ value }: { value: string }, { put }: any) {
       yield put({
         type: 'setVersionData',
@@ -178,6 +185,19 @@ export default {
   },
 
   reducers: {
+    // ? 因为有删除的情况，所以是全量覆盖
+    setConfigChangeTooltipData(state: any, action: any) {
+      set(state, 'screenData.extra.versionChangeTooltip', action.payload);
+      ScreenDataRequest(state, {
+        type: 'screen',
+        action: {
+          extra: {
+            versionChangeTooltip: action.payload,
+          },
+        },
+      });
+      return state;
+    },
     setVersionData(state: any, action: any) {
       set(state, 'version', action.payload);
       return state;

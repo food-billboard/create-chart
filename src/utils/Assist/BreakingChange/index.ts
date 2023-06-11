@@ -2,6 +2,7 @@ import { get } from 'lodash';
 import { ConditionChange } from './ConditionChange';
 import { ScreenThemeTypeChange } from './ScreenThemeTypeChange';
 import { ComponentInputButtonWidthChange } from './ComponentInputButtonWidthChange';
+import { ScreenComponentConfigChangeTooltip } from './ScreenComponentConfigChangeTooltip';
 import { mergeWithoutArray } from '../../tool';
 
 export * from './ComponentTransformOriginChange';
@@ -27,8 +28,15 @@ const BreakingChange: (
     version,
   );
 
+  // * breaking change 1.21
+  const configTooltipConfig1P21 = ScreenComponentConfigChangeTooltip(
+    screenData,
+    version,
+  );
+
   return {
     ...nextScreenData,
+    ...configTooltipConfig1P21,
     config: mergeWithoutArray({}, config, {
       attr: {
         theme: newTheme,

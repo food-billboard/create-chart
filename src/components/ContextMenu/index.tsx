@@ -4,6 +4,7 @@ import type { DropDownProps } from 'antd/es/dropdown';
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { isEqual } from 'lodash';
+import { useGlobalLoading } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
 import { ActionItemType, ActionItem, DEFAULT_ACTION_LIST } from './action.map';
@@ -49,6 +50,8 @@ const ContextMenu = (
   const [internalSelect, setInternalSelect] = useState<string[]>([]);
   const [actionList, setActionList] =
     useState<ActionItem[]>(DEFAULT_ACTION_LIST);
+
+  const { isGlobalActionLoading } = useGlobalLoading();
 
   const resetActionList = (actionIgnore?: ActionItemType[]) => {
     const baseActionIgnore = flag === 'H5' ? ['group', 'un_group'] : [];
@@ -116,17 +119,27 @@ const ContextMenu = (
 
   const onVisibleChange = useCallback(
     (visible: boolean) => {
-      const select = getGlobalSelect();
-      if (visible) {
-        if (!select.includes(id)) {
-          setSelect([id]);
-          setInternalSelect([id]);
-        } else if (!isEqual(select, internalSelect)) {
-          setInternalSelect(select);
+      const action = async () => {
+        const select = getGlobalSelect();
+        if (visible) {
+          if (!select.includes(id)) {
+            setSelect([id]);
+            setInternalSelect([id]);
+          } else if (!isEqual(select, internalSelect)) {
+            setInternalSelect(select);
+          }
         }
+        propsOnVisibleChange?.(visible);
+        setVisible(visible);
+      };
+      if (visible) {
+        isGlobalActionLoading({
+          needLoading: false,
+          globalLoadingAction: action,
+        });
+      } else {
+        action();
       }
-      propsOnVisibleChange?.(visible);
-      setVisible(visible);
     },
     [id, propsOnVisibleChange, internalSelect],
   );

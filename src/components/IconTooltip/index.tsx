@@ -4,13 +4,13 @@ import type { TooltipProps } from 'antd/es/tooltip';
 import Tooltip from '../Tooltip';
 import styles from './index.less';
 
-const IconTooltip = (
-  props: {
-    children?: ReactNode;
-    iconClassName?: string;
-    iconStyle?: CSSProperties;
-  } & TooltipProps,
-) => {
+export type Props = {
+  children?: ReactNode;
+  iconClassName?: string;
+  iconStyle?: CSSProperties;
+} & TooltipProps;
+
+const IconTooltip = (props: Props) => {
   const {
     children,
     title,
