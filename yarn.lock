@@ -6290,6 +6290,11 @@ p-map@^4.0.0:
   dependencies:
     aggregate-error "^3.0.0"
 
+p-map@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.npmmirror.com/p-map/-/p-map-6.0.0.tgz#4d9c40d3171632f86c47601b709f4b4acd70fed4"
+  integrity sha512-T8BatKGY+k5rU+Q/GTYgrEf2r4xRMevAN5mtXc2aPc4rS1j3s+vWTaO2Wag94neXuCAUAs8cxBL9EeB5EA6diw==
+
 p-try@^2.0.0:
   version "2.2.0"
   resolved "https://registry.npmmirror.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
