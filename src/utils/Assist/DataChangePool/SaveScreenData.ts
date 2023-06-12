@@ -1,5 +1,4 @@
 import { message } from 'antd';
-import NProgress from 'nprogress';
 import {
   postScreen,
   putScreen,
@@ -12,32 +11,8 @@ import { isModelHash, useAnyDva } from '@/hooks';
 import { IGlobalModelState } from '@/models/connect';
 import { captureCover, captureCoverAndUpload } from '@/utils/captureCover';
 import LocalConfigInstance, { LocalConfig } from '../LocalConfig';
+import nProgressUtil from '../Progress';
 import { SCREEN_VERSION } from '../../constants';
-
-class NProgressUtil {
-  #loading = false;
-
-  internalStart = () => {
-    NProgress.start();
-    this.#loading = true;
-  };
-
-  start() {
-    if (this.#loading) {
-      NProgress.done();
-      setTimeout(this.internalStart, 50);
-    } else {
-      this.internalStart();
-    }
-  }
-
-  done() {
-    this.#loading = false;
-    NProgress.done();
-  }
-}
-
-const nProgressUtil = new NProgressUtil();
 
 // 正常保存大屏
 export const saveScreenData = async ({
