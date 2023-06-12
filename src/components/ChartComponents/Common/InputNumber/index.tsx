@@ -3,21 +3,27 @@ import { InputNumber as AntInputNumber } from 'antd';
 import { InputNumberProps as AntInputNumberProps } from 'antd/es/input-number';
 import classnames from 'classnames';
 import { useUnmount } from 'ahooks';
+import { Validator, useValidatorChange } from '@/hooks';
 
 export type InputNumberProps = AntInputNumberProps & {
   triggerOnChangeInOnChange?: boolean;
+  validator?: Validator[];
 };
 
 const InputNumber = (props: InputNumberProps) => {
+  const {
+    triggerOnChangeInOnChange = false,
+    validator = [],
+    ...nextProps
+  } = props;
   const {
     value,
     defaultValue,
     onChange: propsOnChange,
     onBlur: propsOnBlur,
-    triggerOnChangeInOnChange = false,
     className,
     onFocus: propsOnFocus,
-  } = props;
+  } = nextProps;
 
   const [stateValue, setStateValue] = useState<number | string>(
     value ?? defaultValue ?? 0,
@@ -32,13 +38,16 @@ const InputNumber = (props: InputNumberProps) => {
     [propsOnChange, triggerOnChangeInOnChange],
   );
 
+  const { validator: validatorValue } = useValidatorChange(onChange);
+
   const onBlur = useCallback(
     (e) => {
-      if (value !== stateValue) propsOnChange?.(stateValue);
+      const realValue = validatorValue(value, '', validator);
+      if (realValue !== stateValue) propsOnChange?.(stateValue);
       propsOnBlur?.(e);
       focus.current = false;
     },
-    [propsOnBlur, propsOnChange, stateValue, value],
+    [propsOnBlur, propsOnChange, stateValue, value, validator],
   );
 
   const onFocus = useCallback(
@@ -61,7 +70,7 @@ const InputNumber = (props: InputNumberProps) => {
 
   return (
     <AntInputNumber
-      {...props}
+      {...nextProps}
       className={classnames('w-100', className)}
       onChange={onChange}
       onBlur={onBlur}

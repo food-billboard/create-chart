@@ -55,6 +55,12 @@ const AutoUpdate = (props: {
         disabled={!value.show}
         onChange={onInputChange}
         controls={false}
+        validator={[
+          {
+            validator: (value) => parseInt(value) > 1,
+            correctValue: 1,
+          },
+        ]}
       />
       {'  秒一次'}
       <ScreenComponentConfigChangeTooltip

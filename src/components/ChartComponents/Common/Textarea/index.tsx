@@ -2,20 +2,26 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { Input as AntInput } from 'antd';
 import { TextAreaProps } from 'antd/es/input';
 import { useUnmount } from 'ahooks';
+import { Validator, useValidatorChange } from '@/hooks';
 
 const Textarea = (
   props: TextAreaProps & {
     triggerOnChangeInOnChange?: boolean;
+    validator?: Validator[];
   },
 ) => {
+  const {
+    triggerOnChangeInOnChange = false,
+    validator = [],
+    ...nextProps
+  } = props;
   const {
     value,
     defaultValue,
     onChange: propsOnChange,
     onBlur: propsOnBlur,
-    triggerOnChangeInOnChange = false,
     onFocus: propsOnFocus,
-  } = props;
+  } = nextProps;
 
   const [stateValue, setStateValue] = useState<any>(value ?? defaultValue);
   const focus = useRef<boolean>(!!props.autoFocus);
@@ -29,13 +35,16 @@ const Textarea = (
     [propsOnChange, triggerOnChangeInOnChange],
   );
 
+  const { validator: validatorValue } = useValidatorChange(onChange);
+
   const onBlur = useCallback(
     (e) => {
-      if (value !== stateValue) propsOnChange?.(stateValue);
+      const realValue = validatorValue(value, '', validator);
+      if (realValue !== stateValue) propsOnChange?.(stateValue);
       propsOnBlur?.(e);
       focus.current = false;
     },
-    [propsOnBlur, propsOnChange, stateValue, value],
+    [propsOnBlur, propsOnChange, stateValue, value, validator],
   );
 
   const onFocus = useCallback(
@@ -58,7 +67,7 @@ const Textarea = (
 
   return (
     <AntInput.TextArea
-      {...props}
+      {...nextProps}
       onChange={onChange}
       onBlur={onBlur}
       value={stateValue}

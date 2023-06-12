@@ -15,3 +15,4 @@ export * from './useComponentHover';
 export * from './useFirstChange';
 export * from './useAnyDva';
 export * from './useGlobalLoading';
+export * from './useValidatorChange';
