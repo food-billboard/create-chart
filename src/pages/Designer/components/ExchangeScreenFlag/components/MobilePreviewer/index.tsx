@@ -47,6 +47,7 @@ const _ComponentList = (props: {
           id,
         } = item;
         const TargetComponent: any = getComponentByType(item)?.render;
+        console.log(TargetComponent, 22222);
         if (!TargetComponent) return null;
         return (
           <div

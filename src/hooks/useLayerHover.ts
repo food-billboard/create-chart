@@ -1,10 +1,11 @@
 import { useCallback } from 'react';
-import EventEmitter from 'eventemitter3';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
 
 let HOVER_SELECT = '';
 let CHANGE_DEALING = 0;
-
-const EVENT_EMITTER = new EventEmitter();
 
 export const useLayerHover: () => [
   string,
@@ -27,25 +28,36 @@ export const useLayerHover: () => [
         CHANGE_DEALING--;
       } else {
         let hovered = false;
-        EVENT_EMITTER.emit('change', value, prevSelect, {
-          getter: () => {
-            // 此步骤为了优化频繁调用hover的情况
-            // ? 应该还可以再优化，就先这样吧
-            return CHANGE_DEALING > 1; // || hovered;
+        GLOBAL_EVENT_EMITTER.emit(
+          EVENT_NAME_MAP.LAYER_HOVER_CHANGE,
+          value,
+          prevSelect,
+          {
+            getter: () => {
+              // 此步骤为了优化频繁调用hover的情况
+              // ? 应该还可以再优化，就先这样吧
+              return CHANGE_DEALING > 1; // || hovered;
+            },
+            setter: () => {
+              hovered = true;
+            },
           },
-          setter: () => {
-            hovered = true;
-          },
-        });
+        );
         CHANGE_DEALING = 0;
       }
     }, 100);
   }, []);
 
   const eventBinder = useCallback((callback) => {
-    EVENT_EMITTER.addListener('change', callback);
+    GLOBAL_EVENT_EMITTER.addListener(
+      EVENT_NAME_MAP.LAYER_HOVER_CHANGE,
+      callback,
+    );
     return () => {
-      EVENT_EMITTER.removeListener('change', callback);
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.LAYER_HOVER_CHANGE,
+        callback,
+      );
     };
   }, []);
 

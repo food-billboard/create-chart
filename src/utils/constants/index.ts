@@ -1,4 +1,4 @@
-import { version } from '../../../package.json';
+// import * as packageInfo from '../../../package.json';
 
 export { default as DEFAULT_SCREEN_DATA } from './screenData';
 export * from './another';
@@ -28,8 +28,18 @@ export const PANEL_ABSOLUTE_POSITION = {
 
 export const ECHARTS_URL = 'https://echarts.apache.org/zh/index.html';
 
-export const SCREEN_VERSION = version;
-export const SCREEN_MODEL_VERSION = version;
+let VERSION: string;
+
+export const SCREEN_VERSION = () => {
+  if (VERSION) return VERSION;
+  VERSION = require('../../../package.json').version;
+  return VERSION;
+};
+export const SCREEN_MODEL_VERSION = () => {
+  if (VERSION) return VERSION;
+  VERSION = require('../../../package.json').version;
+  return VERSION;
+};
 
 // mock 数据请求的后端地址
 export const MOCK_REQUEST_URL = '/api/screen/mock';

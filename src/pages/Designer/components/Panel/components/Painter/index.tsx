@@ -6,6 +6,8 @@ import {
   CSSProperties,
   useContext,
   ReactNode,
+  useState,
+  useEffect,
 } from 'react';
 import {
   ConnectDropTarget,
@@ -15,6 +17,7 @@ import {
 } from 'react-dnd';
 import { connect } from 'dva';
 import { merge } from 'lodash';
+import { useDebounceFn } from 'ahooks';
 import ColorImageBackground from '@/components/ColorImageBackground';
 import { useBackground } from '@/hooks';
 import { createComponent } from '@/utils/Assist/Component';
@@ -42,6 +45,7 @@ export type PainterProps = {
   className?: string;
   style?: CSSProperties;
   children?: ReactNode;
+  // ? hack h5转换预览时用
 };
 
 export const PANEL_ID = 'panel-id';
@@ -60,6 +64,9 @@ const Painter = (props: PainterProps) => {
     style,
     children,
   } = props;
+
+  // ? hack 第一次渲染时，因为scale问题导致图表位置显示不正确，所以选择在transform完成后再进行渲染
+  const [isFirstTransition, setIsFirstTransition] = useState(true);
 
   // ? 为了pc转h5预览用的
   const { flag } = useContext(ExchangePreviewerContext);
@@ -127,6 +134,21 @@ const Painter = (props: PainterProps) => {
     );
   }, [scale, backgroundStyle, width, height, style, filter, isExchange]);
 
+  const componentList = useMemo(() => {
+    if (isFirstTransition) return null;
+    return children || <ComponentList />;
+  }, [children, isFirstTransition]);
+
+  const { run: onTransitionEnd } = useDebounceFn(
+    () => {
+      if (!isFirstTransition) return;
+      setIsFirstTransition(false);
+    },
+    {
+      wait: 200,
+    },
+  );
+
   const onMouseMove = () => {
     moveCounter.current++;
   };
@@ -160,6 +182,10 @@ const Painter = (props: PainterProps) => {
     document.addEventListener('mouseup', onMouseUp);
   }, []);
 
+  useEffect(() => {
+    setIsFirstTransition(false);
+  }, [type]);
+
   return (
     <ColorImageBackground
       id={PANEL_ID}
@@ -174,8 +200,9 @@ const Painter = (props: PainterProps) => {
       image={backgroundStyle.backgroundImage}
       type={poster!.type}
       onMouseDown={onMouseDown}
+      onTransitionEnd={onTransitionEnd}
     >
-      {children || <ComponentList />}
+      {componentList}
       <H5AutoHeight />
     </ColorImageBackground>
   );

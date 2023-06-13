@@ -106,7 +106,7 @@ const FetchScreenComponent = forwardRef<
           name: 'screen',
           flag: 'PC',
           extra: {
-            version: SCREEN_VERSION,
+            version: SCREEN_VERSION(),
             _id: nanoid(),
           },
         });

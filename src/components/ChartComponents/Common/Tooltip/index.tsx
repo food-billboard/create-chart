@@ -23,7 +23,11 @@ const Tooltip = (props: TooltipProps) => {
   );
 
   const title = useMemo(() => {
-    return <FocusWrapper force={visible}>{propsTitle}</FocusWrapper>;
+    return (
+      <FocusWrapper force={visible}>
+        {typeof propsTitle === 'function' ? propsTitle() : propsTitle}
+      </FocusWrapper>
+    );
   }, [propsTitle, visible]);
 
   useUpdateEffect(() => {

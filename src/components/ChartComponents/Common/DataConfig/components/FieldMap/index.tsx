@@ -76,7 +76,7 @@ const FieldMap = (props: {
     ];
   }, [onValueChange]);
 
-  return <MapTable columns={columns} rowKey={'id'} dataSource={value} />;
+  return <MapTable columns={columns} rowKey={'field'} dataSource={value} />;
 };
 
 export default FieldMap;

@@ -303,6 +303,7 @@ const MatterBoxes = () => {
   );
 
   useEffect(() => {
+    let element = elementRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.length && entries[0].isIntersecting) {
@@ -318,8 +319,9 @@ const MatterBoxes = () => {
     observer.observe(elementRef.current!);
 
     return () => {
-      observer.unobserve(elementRef.current!);
+      observer.unobserve(element!);
       observer.disconnect();
+      element = null;
     };
   }, []);
 

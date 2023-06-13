@@ -1,8 +1,8 @@
-import { EventEmitter } from 'eventemitter3';
 import LocalForage from 'localforage';
 import { debounce } from 'lodash';
+import { GLOBAL_EVENT_EMITTER_FACTORY, EVENT_NAME_MAP } from '../EventEmitter';
 
-export class LocalConfig extends EventEmitter {
+export class LocalConfig extends GLOBAL_EVENT_EMITTER_FACTORY {
   constructor() {
     super();
     this.store = LocalForage.createInstance({
@@ -10,14 +10,17 @@ export class LocalConfig extends EventEmitter {
     });
   }
 
-  static CONFIG_KEY_BACKGROUND = 'CONFIG_KEY_BACKGROUND';
-  static CONFIG_KEY_LAYER_WIDTH = 'CONFIG_KEY_LAYER_WIDTH';
-  static CONFIG_KEY_SHEPHERD_INFO = 'CONFIG_KEY_SHEPHERD_INFO';
-  static CONFIG_KEY_CROSS_CLIPBOARD = 'CONFIG_KEY_CROSS_CLIPBOARD';
-  static CONFIG_KEY_CHROME_PROMPT = 'CONFIG_KEY_CHROME_PROMPT';
-  static STATIC_COMPONENT_DATA_SAVE_KEY = 'STATIC_COMPONENT_DATA_SAVE_KEY_KEY';
+  // * 记得这里的key其实是从总的事件那边复制来的
+  // * 所以需要那边存一份，这样方便统一管理
+  static CONFIG_KEY_BACKGROUND = EVENT_NAME_MAP.CONFIG_KEY_BACKGROUND;
+  static CONFIG_KEY_LAYER_WIDTH = EVENT_NAME_MAP.CONFIG_KEY_LAYER_WIDTH;
+  static CONFIG_KEY_SHEPHERD_INFO = EVENT_NAME_MAP.CONFIG_KEY_SHEPHERD_INFO;
+  static CONFIG_KEY_CROSS_CLIPBOARD = EVENT_NAME_MAP.CONFIG_KEY_CROSS_CLIPBOARD;
+  static CONFIG_KEY_CHROME_PROMPT = EVENT_NAME_MAP.CONFIG_KEY_CHROME_PROMPT;
+  static STATIC_COMPONENT_DATA_SAVE_KEY =
+    EVENT_NAME_MAP.STATIC_COMPONENT_DATA_SAVE_KEY;
   static STATIC_COMPONENT_DATA_SAVE_TIMESTAMPS =
-    'STATIC_COMPONENT_DATA_SAVE_TIMESTAMPS';
+    EVENT_NAME_MAP.STATIC_COMPONENT_DATA_SAVE_TIMESTAMPS;
 
   store;
 

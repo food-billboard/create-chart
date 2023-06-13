@@ -5,7 +5,6 @@ import {
   useRef,
   cloneElement,
   CSSProperties,
-  useState,
   useCallback,
   useLayoutEffect,
 } from 'react';
@@ -13,7 +12,10 @@ import { useUpdateEffect } from 'ahooks';
 import classnames from 'classnames';
 import AnimeJs from 'animejs';
 import { uniqueId, isEqual } from 'lodash';
-import EventEmitter from './EventEmitter';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
 import styles from './index.less';
 
 export const CAROUSEL_COMPONENT_MAP = {
@@ -131,7 +133,10 @@ const AbstractComponent = (props: AbstractComponentProps) => {
           isPlaying.current = false;
           reset();
           if (!isStop.current)
-            EventEmitter.emit('change', (index + 1) % length);
+            GLOBAL_EVENT_EMITTER.emit(
+              EVENT_NAME_MAP.GROUP_CAROUSEL_INDEX_CHANGE,
+              (index + 1) % length,
+            );
         },
       });
     },
@@ -191,13 +196,31 @@ const AbstractComponent = (props: AbstractComponentProps) => {
       animeStop();
       isStop.current = false;
     };
-    EventEmitter.addListener('change', onIndexChange);
-    EventEmitter.addListener('stop', onStop);
-    EventEmitter.addListener('start', onStart);
+    GLOBAL_EVENT_EMITTER.addListener(
+      EVENT_NAME_MAP.GROUP_CAROUSEL_INDEX_CHANGE,
+      onIndexChange,
+    );
+    GLOBAL_EVENT_EMITTER.addListener(
+      EVENT_NAME_MAP.GROUP_CAROUSEL_STOP,
+      onStop,
+    );
+    GLOBAL_EVENT_EMITTER.addListener(
+      EVENT_NAME_MAP.GROUP_CAROUSEL_START,
+      onStart,
+    );
     return () => {
-      EventEmitter.removeListener('change', onIndexChange);
-      EventEmitter.removeListener('stop', onStop);
-      EventEmitter.removeListener('stop', onStart);
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.GROUP_CAROUSEL_INDEX_CHANGE,
+        onIndexChange,
+      );
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.GROUP_CAROUSEL_STOP,
+        onStop,
+      );
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.GROUP_CAROUSEL_START,
+        onStart,
+      );
     };
   }, [index, animeStart, animeEnd, animeStop]);
 

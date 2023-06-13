@@ -183,7 +183,7 @@ const CallbackList = (props: {
           return (
             <div
               title={value}
-              className="c-po text-ellipsis"
+              className="c-po text-ellipsis normal-color"
               onClick={previewCode.bind(null, value)}
             >
               {value}

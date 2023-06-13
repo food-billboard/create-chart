@@ -103,8 +103,8 @@ const COMPONENT_MAP = new Map<
       convert: (colorList: string[], options: any) => any;
     };
     defaultConfig: () => object;
-    configComponent: ReactNode;
-    render: ReactNode;
+    configComponent: (props: any) => JSX.Element;
+    render: (props: any) => JSX.Element;
   }
 >();
 

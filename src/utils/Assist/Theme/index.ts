@@ -1,6 +1,6 @@
 import color from 'color';
 import { omit, pick } from 'lodash';
-import Eventemitter3 from 'eventemitter3';
+import { GLOBAL_EVENT_EMITTER, EVENT_NAME_MAP } from '../EventEmitter';
 import { echartsLoader } from '../EchartsLoader';
 import WonderlandTheme from '../../../theme/wonderland.project.json';
 import ShineTheme from '../../../theme/shine.project.json';
@@ -138,10 +138,6 @@ export function getHexString(
   result += (alphaHexMap as any)[a] || 'FF';
   return prefix ? result : result.slice(1);
 }
-
-export const ThemeEventEmitter = new Eventemitter3();
-
-export const THEM_EVENT_NAME = 'THEM_EVENT_NAME';
 
 export const DEFAULT_THEME_COLOR = WonderlandTheme.theme.color[0];
 export const DEFAULT_THEME_NAME = WonderlandTheme.themeName;
@@ -375,7 +371,10 @@ class ThemeUtil {
     this.currentTheme = themeName;
     this.currentThemeColor = theme.color;
 
-    ThemeEventEmitter.emit(THEM_EVENT_NAME, this.currentThemeColor[0]);
+    GLOBAL_EVENT_EMITTER.emit(
+      EVENT_NAME_MAP.THEME_CHANGE,
+      this.currentThemeColor[0],
+    );
   }
 
   // 生成下一个当前色调的颜色

@@ -1,4 +1,4 @@
-import { ReactNode, useState, useMemo, useEffect, Children } from 'react';
+import { ReactNode, useMemo, useEffect, Children } from 'react';
 import { connect } from 'dva';
 import { ConnectState } from '@/models/connect';
 import {
@@ -9,7 +9,6 @@ import AbstractComponent, {
   AbstractComponentProps,
   CAROUSEL_COMPONENT_MAP,
 } from './AbstractComponent';
-import EventEmitter from './EventEmitter';
 
 const CarouselGroupWrapper = (props: {
   children?: ReactNode;
@@ -25,19 +24,31 @@ const CarouselGroupWrapper = (props: {
 
   useEffect(() => {
     const onIndexChange = (index: number) => {
-      EventEmitter.emit('change', index);
+      GLOBAL_EVENT_EMITTER.emit(
+        EVENT_NAME_MAP.GROUP_CAROUSEL_INDEX_CHANGE,
+        index,
+      );
     };
     const onPreviewChange = (state: boolean) => {
       if (state) {
-        EventEmitter.emit('start');
-        EventEmitter.emit('change', 0);
+        GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.GROUP_CAROUSEL_START);
+        GLOBAL_EVENT_EMITTER.emit(
+          EVENT_NAME_MAP.GROUP_CAROUSEL_INDEX_CHANGE,
+          0,
+        );
       } else {
         let called = false;
-        EventEmitter.emit('stop', (index: number) => {
-          if (called) return;
-          called = true;
-          EventEmitter.emit('change', index);
-        });
+        GLOBAL_EVENT_EMITTER.emit(
+          EVENT_NAME_MAP.GROUP_CAROUSEL_STOP,
+          (index: number) => {
+            if (called) return;
+            called = true;
+            GLOBAL_EVENT_EMITTER.emit(
+              EVENT_NAME_MAP.GROUP_CAROUSEL_INDEX_CHANGE,
+              index,
+            );
+          },
+        );
       }
     };
     GLOBAL_EVENT_EMITTER.addListener(
@@ -62,9 +73,9 @@ const CarouselGroupWrapper = (props: {
 
   useEffect(() => {
     if (screenType === 'preview') {
-      EventEmitter.emit('start');
+      GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.GROUP_CAROUSEL_START);
     }
-    EventEmitter.emit('change', 0);
+    GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.GROUP_CAROUSEL_INDEX_CHANGE, 0);
   }, []);
 
   return (
