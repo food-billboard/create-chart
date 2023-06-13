@@ -7,6 +7,7 @@ import {
   useContext,
   ReactNode,
   useState,
+  useEffect,
 } from 'react';
 import {
   ConnectDropTarget,
@@ -16,6 +17,7 @@ import {
 } from 'react-dnd';
 import { connect } from 'dva';
 import { merge } from 'lodash';
+import { useDebounceFn } from 'ahooks';
 import ColorImageBackground from '@/components/ColorImageBackground';
 import { useBackground } from '@/hooks';
 import { createComponent } from '@/utils/Assist/Component';
@@ -43,6 +45,7 @@ export type PainterProps = {
   className?: string;
   style?: CSSProperties;
   children?: ReactNode;
+  // ? hack h5转换预览时用
 };
 
 export const PANEL_ID = 'panel-id';
@@ -136,10 +139,15 @@ const Painter = (props: PainterProps) => {
     return children || <ComponentList />;
   }, [children, isFirstTransition]);
 
-  const onTransitionEnd = useCallback(() => {
-    if (!isFirstTransition) return;
-    setIsFirstTransition(false);
-  }, [isFirstTransition]);
+  const { run: onTransitionEnd } = useDebounceFn(
+    () => {
+      if (!isFirstTransition) return;
+      setIsFirstTransition(false);
+    },
+    {
+      wait: 200,
+    },
+  );
 
   const onMouseMove = () => {
     moveCounter.current++;
@@ -173,6 +181,10 @@ const Painter = (props: PainterProps) => {
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   }, []);
+
+  useEffect(() => {
+    setIsFirstTransition(false);
+  }, [type]);
 
   return (
     <ColorImageBackground
