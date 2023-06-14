@@ -7,6 +7,11 @@ declare namespace ComponentData {
   // 组件上级大类类型
   export type TComponentType = 'GROUP_COMPONENT' | 'COMPONENT';
 
+  // 辅助线吸附
+  export type GuideLineSticky = {
+    show: boolean;
+  };
+
   // 数据字段映射
   export type TComponentMapData = {
     field: string;

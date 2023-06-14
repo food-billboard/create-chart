@@ -9,17 +9,17 @@ import { LocalConfig } from '@/utils/Assist/LocalConfig';
 
 const { Item } = ConfigList;
 
-const CrossClipboard = () => {
+const GuideLineSticky = () => {
   const [value, setValue] = useLocalStorage<
     Partial<ComponentClipboard.StorageClipboardType>
-  >(LocalConfig.CONFIG_KEY_CROSS_CLIPBOARD, {
+  >(LocalConfig.STATIC_GUIDE_LINE_DRAG_INTEGER_STICKY, {
     show: true,
   });
 
   const { isGlobalActionLoading } = useGlobalLoading();
 
   const onChange = useCallback(
-    (key: keyof ComponentClipboard.StorageClipboardType, targetValue: any) => {
+    (key: keyof ComponentData.GuideLineSticky, targetValue: any) => {
       isGlobalActionLoading({
         globalLoadingAction: async () => {
           return setValue({
@@ -34,9 +34,9 @@ const CrossClipboard = () => {
 
   return (
     <Item
-      label="跨屏复制"
+      label="辅助线整数吸附"
       placeholder={
-        <IconTooltip title="设计时允许跨屏进行复制屏内组件或组">
+        <IconTooltip title="辅助线拖拽结束时，允许吸附其最近的整数坐标">
           <InfoCircleOutlined />
         </IconTooltip>
       }
@@ -48,4 +48,4 @@ const CrossClipboard = () => {
   );
 };
 
-export default CrossClipboard;
+export default GuideLineSticky;

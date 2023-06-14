@@ -23,6 +23,7 @@ type Props = {
   lineStyle?: 'dashed' | 'solid';
   scale: number;
   size: { width: number; height: number };
+  isGuideLineSticky?: boolean;
 } & ComponentData.TGuideLineConfigItem;
 class GuideLine extends Component<Props> {
   constructor(props: Props) {
@@ -55,7 +56,8 @@ class GuideLine extends Component<Props> {
 
   onChange = (value: SuperPartial<ComponentData.TGuideLineConfigItem>) => {
     const { style } = this.state;
-    const newStyle = merge({}, style, value);
+    const { style: updateStyle } = value;
+    const newStyle = merge({}, style, updateStyle);
     this.setState({
       style: newStyle,
     });
@@ -129,8 +131,15 @@ class GuideLine extends Component<Props> {
   throttleOnMouseMove = throttle(this.onMouseMove, 30);
 
   onMouseUp = () => {
-    const { disabled, onMouseUp, onCompleteChange, type, id, lineStyle } =
-      this.props;
+    const {
+      disabled,
+      onMouseUp,
+      onCompleteChange,
+      type,
+      id,
+      lineStyle,
+      isGuideLineSticky,
+    } = this.props;
     const { style } = this.state;
     if (!this.flag || disabled) return;
     this.flag = false;
@@ -144,8 +153,9 @@ class GuideLine extends Component<Props> {
       id,
       lineStyle,
     };
-    this.AbsorbGuideLineUtil.onMouseUp();
-    onCompleteChange?.(newItem);
+    this.AbsorbGuideLineUtil.onMouseUp(newItem).then((newItem) => {
+      onCompleteChange?.(newItem);
+    });
   };
 
   onDoubleClick = (e: any) => {

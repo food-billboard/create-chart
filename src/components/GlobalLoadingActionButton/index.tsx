@@ -24,19 +24,10 @@ const GlobalLoadingActonButton = (
 
   const handleClick = useCallback(async () => {
     return isGlobalActionLoading({
-      globalLoadingAction: async (callback) => {
-        let called = false;
-        let _callback = () => {
-          if (called) return;
-          called = true;
-          callback();
-        };
+      globalLoadingAction: async () => {
         try {
-          await onClick?.(_callback);
-        } catch (err) {
-        } finally {
-          _callback();
-        }
+          return onClick?.();
+        } catch (err) {}
       },
       needLoading,
       force,

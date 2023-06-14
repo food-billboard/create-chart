@@ -1,6 +1,9 @@
 import { merge } from 'lodash';
 import { PANEL_ABSOLUTE_POSITION, GUIDE_LINE_PADDING } from '@/utils/constants';
 import { getDvaGlobalModelData } from '@/utils/Assist/Component';
+import LocalConfig, {
+  LocalConfig as LocalConfigClass,
+} from '@/utils/Assist/LocalConfig';
 import { AbsorbUtil } from '../../pages/Designer/components/Panel/components/PanelWrapper/components/AbsorbGuideLine/utils';
 
 type NearlyData = {
@@ -116,8 +119,42 @@ class AbsorbGuideLine {
     }
   };
 
-  onMouseUp = () => {
+  onMouseUp = async (guideLineInfo: ComponentData.TGuideLineConfigItem) => {
+    // * 根据是否吸附来修改最新值
+    const {
+      type,
+      style: { left, top },
+    } = guideLineInfo;
+    const { errMsg, value } =
+      await LocalConfig.getItem<ComponentData.GuideLineSticky>(
+        LocalConfigClass.STATIC_GUIDE_LINE_DRAG_INTEGER_STICKY,
+      );
+    if (errMsg || (value && !value.show)) return guideLineInfo;
+    let changeValue: {
+      left: number;
+      top: number;
+    } = {
+      left,
+      top,
+    };
+    function toInt(number: number) {
+      return Math.round(number / 10) * 10;
+    }
+    if (type === 'vertical') {
+      const int = toInt(changeValue.left);
+      // changeValue.left = Math.abs(int - changeValue.left) < 10 ? int : changeValue.left
+      changeValue.left = int;
+    } else {
+      const int = toInt(changeValue.top);
+      // changeValue.top = Math.abs(int - changeValue.top) < 10 ? int : changeValue.top
+      changeValue.top = int;
+    }
     this.components = [];
+    const newData = merge({}, guideLineInfo, {
+      style: changeValue,
+    });
+    this.onChange(newData);
+    return newData;
   };
 }
 

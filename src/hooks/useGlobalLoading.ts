@@ -4,7 +4,7 @@ import { useAnyDva } from './useAnyDva';
 // 全局的设计loading状态控制
 
 export type IsGlobalActionLoadingParams = {
-  globalLoadingAction?: (callback: () => void) => any;
+  globalLoadingAction?: () => any;
   needLoading?: boolean;
   force?: boolean;
 };
@@ -19,7 +19,9 @@ export function useGlobalLoading() {
       if (globalLoadingAction) {
         if (!isLoading || force) {
           needLoading && setGlobalActionLoading(true);
-          return globalLoadingAction(setGlobalActionLoading.bind(null, false));
+          const result = await Promise.resolve(globalLoadingAction());
+          setGlobalActionLoading(false);
+          return result;
         }
       }
       return isLoading;

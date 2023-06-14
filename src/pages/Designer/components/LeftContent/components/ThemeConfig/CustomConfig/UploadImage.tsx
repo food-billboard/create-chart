@@ -17,7 +17,7 @@ const UploadImage = (props: { onChange?: (value: string[][]) => void }) => {
   const handleChange = useCallback(
     async ({ fileList }: any) => {
       return isGlobalActionLoading({
-        globalLoadingAction: async (cancelLoading) => {
+        globalLoadingAction: async () => {
           if (fileList.length) {
             const [target] = fileList;
             setFileList([target]);
@@ -35,7 +35,6 @@ const UploadImage = (props: { onChange?: (value: string[][]) => void }) => {
           } else {
             setFileList([]);
           }
-          cancelLoading();
         },
       });
     },
