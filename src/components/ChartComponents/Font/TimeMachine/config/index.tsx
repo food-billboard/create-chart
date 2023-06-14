@@ -148,7 +148,11 @@ class Config extends Component<
                       title={
                         <>
                           可以参考
-                          <a target="_blank" href="http://momentjs.cn/">
+                          <a
+                            className="underline-anime underline-anime-color-white"
+                            target="_blank"
+                            href="http://momentjs.cn/"
+                          >
                             这里
                           </a>
                         </>

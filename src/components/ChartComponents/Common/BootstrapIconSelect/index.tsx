@@ -35,7 +35,11 @@ const BootstrapIconSelect = (props: {
           title={
             <>
               可以参考
-              <a target="_blank" href="https://icons.bootcss.com/">
+              <a
+                className="underline-anime underline-anime-color-white"
+                target="_blank"
+                href="https://icons.bootcss.com/"
+              >
                 这里
               </a>
             </>

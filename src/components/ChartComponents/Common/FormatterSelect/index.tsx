@@ -25,7 +25,11 @@ const FormatterSelect = (props: {
           title={
             <div>
               内容格式的语法可以参照
-              <a target="_blank" href={ECHARTS_URL}>
+              <a
+                className="underline-anime underline-anime-color-white"
+                target="_blank"
+                href={ECHARTS_URL}
+              >
                 echarts
               </a>
               官网

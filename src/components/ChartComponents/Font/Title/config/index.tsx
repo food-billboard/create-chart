@@ -101,7 +101,11 @@ class Config extends Component<
                         title={
                           <>
                             动画名称可以参考
-                            <a target="_blank" href="https://animate.style/">
+                            <a
+                              className="underline-anime underline-anime-color-white"
+                              target="_blank"
+                              href="https://animate.style/"
+                            >
                               这里
                             </a>
                           </>

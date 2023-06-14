@@ -373,6 +373,7 @@ class Config extends Component<
                             <>
                               详细写法查看：
                               <a
+                                className="underline-anime underline-anime-color-white"
                                 target="_blank"
                                 href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/stroke-dasharray"
                               >

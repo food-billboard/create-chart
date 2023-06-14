@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { Button } from 'antd';
 import { InfoCircleOutlined, DownloadOutlined } from '@ant-design/icons';
 import { saveAs } from 'file-saver';
 import GlobalComponent from '@/utils/Assist/GlobalComponent';
@@ -24,13 +23,14 @@ export const OnMessageTooltip = () => {
       title={
         <div className={styles['component-iframe-message-tooltip']}>
           iframe页面数据发生改变会通知当前页面。
-          <Button
+          <br />
+          <span
+            className="underline-anime-color-white underline-anime c-po"
             onClick={handleDownLoad}
-            type="link"
-            icon={<DownloadOutlined />}
           >
+            <DownloadOutlined className="m-r-4" />
             点击下载iframe数据发送示例代码
-          </Button>
+          </span>
         </div>
       }
     >
@@ -56,13 +56,14 @@ export const PostMessageTooltip = () => {
       title={
         <div className={styles['component-iframe-message-tooltip']}>
           选中的参数在数据发生改变时均会通知iframe页面。
-          <Button
+          <br />
+          <span
+            className="underline-anime-color-white underline-anime c-po"
             onClick={handleDownLoad}
-            type="link"
-            icon={<DownloadOutlined />}
           >
+            <DownloadOutlined className="m-r-4" />
             点击下载iframe数据接收示例代码
-          </Button>
+          </span>
         </div>
       }
     >
