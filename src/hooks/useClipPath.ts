@@ -39,7 +39,7 @@ export const PathStyleMap = {
   //   label: '矩形'
   // },
   triangle: {
-    value: 'polygon(50% 0%, 0% 100% 100% 100%)',
+    value: 'polygon(50% 0%, 0% 100%, 100% 100%)',
     label: '三角形',
   },
   diamond: {
