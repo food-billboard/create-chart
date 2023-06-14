@@ -27,7 +27,11 @@ const IconTooltip = (props: Props) => {
         overlayClassName,
       )}
       {...nextProps}
-      title={title || '提示'}
+      title={
+        <div onClick={(e) => e.stopPropagation()}>
+          {(title as any) || '提示'}
+        </div>
+      }
     >
       <span className={classnames('c-po', iconClassName)} style={iconStyle}>
         {children}
