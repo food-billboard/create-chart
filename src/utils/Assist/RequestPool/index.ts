@@ -1,3 +1,4 @@
+import pMap from 'p-map';
 import { IGlobalModelState } from '@/models/connect';
 import GlobalConfig from '../GlobalConfig';
 import {
@@ -11,12 +12,14 @@ class RequestPool {
     props: {
       onError?: (error: any) => void;
       stopOnError?: boolean;
+      concurrency?: number;
     } = {},
   ) {
-    const { onError, stopOnError } = props || {};
+    const { onError, stopOnError, concurrency = 1 } = props || {};
 
     this.errorMethod = onError;
     this.stopOnError = !!stopOnError;
+    this.concurrency = concurrency;
   }
 
   #POOL: any[] = [];
@@ -27,6 +30,8 @@ class RequestPool {
 
   stopOnError: boolean = true;
 
+  concurrency: number = 1;
+
   request = async (method?: any) => {
     if (typeof method !== 'function' && method !== undefined) return;
 
@@ -36,18 +41,22 @@ class RequestPool {
 
     this.#REQUEST_LOADING = true;
 
-    const targetMethod = this.#POOL[0];
+    const currentDealCount = this.#POOL.length;
+    const targetMethods = this.#POOL.slice(0, currentDealCount);
     let errored = false;
 
     try {
-      await targetMethod();
+      await pMap(targetMethods, (method) => method(), {
+        concurrency: this.concurrency ?? 1,
+        stopOnError: false,
+      });
     } catch (err) {
       this.errorMethod?.(err);
       console.error(err);
       errored = true;
     } finally {
       if (errored && this.stopOnError) return;
-      this.#POOL.shift();
+      this.#POOL.splice(0, currentDealCount);
       this.#REQUEST_LOADING = false;
       await this.request();
     }
