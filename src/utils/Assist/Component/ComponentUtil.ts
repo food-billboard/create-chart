@@ -400,19 +400,21 @@ class ComponentUtil {
         });
 
       let addIndex = 0;
-      updateResult.forEach((item) => {
-        if (item.action === 'add') {
-          realUpdateResult.push({
-            ...item,
-            extra: {
-              index: dropIndex + addIndex,
-            },
-          });
-          addIndex++;
-        } else {
-          realUpdateResult.push(item);
-        }
-      });
+      updateResult
+        .map((item) => ({ ...item, originAction: item.originAction ?? 'drag' }))
+        .forEach((item) => {
+          if (item.action === 'add') {
+            realUpdateResult.push({
+              ...item,
+              extra: {
+                index: dropIndex + addIndex,
+              },
+            });
+            addIndex++;
+          } else {
+            realUpdateResult.push(item);
+          }
+        });
 
       return realUpdateResult;
     }

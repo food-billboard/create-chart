@@ -162,6 +162,18 @@ export function getDvaGlobalModelData() {
   return getState().global;
 }
 
+// 组件的铺平状态
+// 用于组件没有被添加的时
+export const getFlatComponents: (
+  components: ComponentData.TComponentData[],
+) => ComponentData.TComponentData[] = (components) => {
+  return components.reduce<ComponentData.TComponentData[]>((acc, cur) => {
+    const { components = [] } = cur;
+    acc.push(cur, ...getFlatComponents(components));
+    return acc;
+  }, []);
+};
+
 // 组件的父级组件id
 export const getParentComponentIds: (
   id: string,

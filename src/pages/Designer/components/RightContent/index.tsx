@@ -49,7 +49,7 @@ const RightContent = (props: {
     if (!component) {
       useComponentPath(components);
       component = getComponent(selectId, components);
-      if (!component) return null;
+      if (!component) return <GlobalConfig />;
     }
 
     if (isGroupComponent(component)) {

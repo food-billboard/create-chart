@@ -1,5 +1,6 @@
 import { useIdPathMap, useAnyDva } from '@/hooks';
 import { getDvaGlobalModelData } from '../Component';
+import ComponentActionValidator from '../Component/ComponentActionValidator';
 
 export * from './SaveScreenData';
 class DataChangePool {
@@ -71,8 +72,12 @@ class DataChangePool {
       | ComponentMethod.SetComponentMethodParamsData[],
     enqueue: boolean = true,
   ) => {
-    const { dispatch } = useAnyDva();
-    dispatch({ type: 'global/setComponent', value, enqueue });
+    ComponentActionValidator.beforeSetComponent(value, enqueue)
+      .then(() => {
+        const { dispatch } = useAnyDva();
+        dispatch({ type: 'global/setComponent', value, enqueue });
+      })
+      .catch((err) => {});
   };
 
   // 合并更新组件
@@ -96,18 +101,25 @@ class DataChangePool {
     if (
       this.multiSetComponentUtil.counter === this.multiSetComponentUtil.total
     ) {
-      const { dispatch } = useAnyDva();
-      dispatch({
-        type: 'global/setComponent',
-        value: this.multiSetComponentUtil.pool,
-        enqueue: true,
-      });
-      // init
-      this.multiSetComponentUtil = {
-        total: -1,
-        counter: 0,
-        pool: [],
-      };
+      ComponentActionValidator.beforeSetComponent(
+        this.multiSetComponentUtil.pool,
+        true,
+      )
+        .then(() => {
+          const { dispatch } = useAnyDva();
+          dispatch({
+            type: 'global/setComponent',
+            value: this.multiSetComponentUtil.pool,
+            enqueue: true,
+          });
+          // init
+          this.multiSetComponentUtil = {
+            total: -1,
+            counter: 0,
+            pool: [],
+          };
+        })
+        .catch((err) => {});
     }
   };
 }

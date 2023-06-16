@@ -524,7 +524,10 @@ class GroupUtil {
 
     callback?.(newGroupComponent.id);
 
-    return realResult;
+    return realResult.map((item) => ({
+      ...item,
+      originAction: item.originAction ?? 'group',
+    }));
   };
 
   // 取消成组

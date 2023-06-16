@@ -695,21 +695,24 @@ declare namespace ComponentClipboard {
 }
 
 declare namespace ComponentMethod {
+  type Action =
+    | 'add'
+    | 'update'
+    | 'delete'
+    | 'move'
+    | 'cover_update'
+    | 'group'
+    | 'un_group'
+    | 'drag';
   type SetComponentMethodParamsData = {
     value: SuperPartial<ComponentData.TComponentData>;
     extra?: any;
     id: string;
     path?: string;
     callback?: (components: ComponentData.TComponentData[], extra: any) => void;
-    action:
-      | 'add'
-      | 'update'
-      | 'delete'
-      | 'move'
-      | 'cover_update'
-      | 'group'
-      | 'un_group'
-      | 'drag';
+    action: Action;
+    // ? 有些稍微复杂的交互行为时，可能会被拆分成多个子行为，所以拿这个做下区分吧
+    originAction?: Action;
     index?: number | 'last' | 'first' | 'next' | 'prev'; // * 移动时用，这里暂时只存在同级移动
   };
 
