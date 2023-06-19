@@ -72,7 +72,6 @@ const ComponentList = (props: { type: string; componentCollapse: boolean }) => {
         {
           [styles['design-left-component-list-show']]: !componentCollapse,
         },
-        'border-r-8',
         'normal-background',
         'zero-scrollbar',
         'design-left-component-list',
