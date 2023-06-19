@@ -183,7 +183,8 @@ const Painter = (props: PainterProps) => {
   }, []);
 
   useEffect(() => {
-    setIsFirstTransition(false);
+    // ? h5的大屏一开始是没有缩放的
+    if (type === 'H5') setIsFirstTransition(false);
   }, [type]);
 
   return (
