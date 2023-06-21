@@ -48,6 +48,9 @@ const _ComponentList = (props: {
         } = item;
         const TargetComponent: any = getComponentByType(item)?.render;
         if (!TargetComponent) return null;
+
+        const viewportQuery = `exchange-mobile-component-${id}`;
+
         return (
           <div
             key={id}
@@ -61,11 +64,13 @@ const _ComponentList = (props: {
               transformOrigin,
               opacity,
             }}
+            id={viewportQuery}
             className={
               styles['component-exchange-screen-flag-component-list-item']
             }
           >
             <TargetComponent
+              viewportQuery={`#${viewportQuery}`}
               className={styles['render-component-children']}
               value={item}
               key={id}
@@ -233,6 +238,8 @@ const MobilePreviewer = forwardRef<MobilePreviewerRef, {}>((props, ref) => {
     },
     [],
   );
+
+  console.log(loading, 28888);
 
   return (
     <Drawer

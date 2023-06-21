@@ -9,7 +9,7 @@ import {
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { isEqual } from 'lodash';
-import { useRafState } from 'ahooks';
+import { useRafState, useInViewport } from 'ahooks';
 import { useComponentStyle } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import ComponentWrapper from './components/Wrapper';
@@ -42,7 +42,7 @@ const OnlyClickDiv = (props: {
   children?: ReactNode;
   [key: string]: any;
 }) => {
-  const { children, onClick, ...nextProps } = props;
+  const { children, onClick, id, ...nextProps } = props;
   const currentPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const onMouseDown = useCallback((e) => {
@@ -145,6 +145,7 @@ const RenderComponent = memo(
               'c-po': !isSelect,
             },
           )}
+          id={id}
           data-id={id}
         >
           {content}

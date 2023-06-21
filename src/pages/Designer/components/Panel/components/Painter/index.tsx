@@ -80,6 +80,10 @@ const Painter = (props: PainterProps) => {
 
   const backgroundStyle = useBackground(poster);
 
+  const flagType = useMemo(() => {
+    return flag || type;
+  }, [flag, type]);
+
   const isExchange = useMemo(() => {
     return !!flag && flag !== type;
   }, [flag, type]);
@@ -184,8 +188,8 @@ const Painter = (props: PainterProps) => {
 
   useEffect(() => {
     // ? h5的大屏一开始是没有缩放的
-    if (type === 'H5') setIsFirstTransition(false);
-  }, [type]);
+    if (flagType === 'H5') setIsFirstTransition(false);
+  }, [flagType]);
 
   return (
     <ColorImageBackground

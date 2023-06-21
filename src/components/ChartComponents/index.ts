@@ -4,6 +4,7 @@ import { getDvaGlobalModelData } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils/tool';
 import { DEFAULT_GROUP_CONFIG } from '@/utils/constants/screenData';
 import { isGroupComponent } from '@/utils/Assist/Component';
+import InViewportWrapper from './Common/InViewportWrapper';
 // Chart
 import BarBasic from './Chart/Bar/BarBasic';
 import LineBasic from './Chart/Line/LineBasic';
@@ -96,17 +97,17 @@ import Decoration7 from './Source/Decoration7';
 import Decoration8 from './Source/Decoration8';
 // component-map-import-prefix
 
-const COMPONENT_MAP = new Map<
-  ComponentData.TComponentSelfType,
-  {
-    themeConfig: {
-      convert: (colorList: string[], options: any) => any;
-    };
-    defaultConfig: () => object;
-    configComponent: (props: any) => JSX.Element;
-    render: (props: any) => JSX.Element;
-  }
->();
+type MapKey = ComponentData.TComponentSelfType;
+type MapValue = {
+  themeConfig: {
+    convert: (colorList: string[], options: any) => any;
+  };
+  defaultConfig: () => object;
+  configComponent: (props: any) => JSX.Element;
+  render: (props: any) => JSX.Element;
+};
+
+const COMPONENT_MAP = new Map<MapKey, MapValue>();
 
 COMPONENT_MAP.set(BarBasic.type, BarBasic);
 COMPONENT_MAP.set(LineBasic.type, LineBasic);
@@ -193,8 +194,16 @@ COMPONENT_MAP.set(Pagination.type, Pagination);
 COMPONENT_MAP.set(FullScreen.type, FullScreen);
 // component-map-insert-prefix
 
-export function getComponentByType(component: ComponentData.TComponentData) {
-  return COMPONENT_MAP.get(component.componentType);
+export function getComponentByType(
+  component: Partial<ComponentData.TComponentData> &
+    Pick<ComponentData.TComponentData, 'componentType'>,
+): MapValue {
+  const config = COMPONENT_MAP.get(component.componentType);
+  const { render, ...nextConfig } = config as MapValue;
+  return {
+    ...nextConfig,
+    render: InViewportWrapper(render),
+  };
 }
 
 export function getComponentDefaultConfigByType(
@@ -203,9 +212,10 @@ export function getComponentDefaultConfigByType(
   // ? 因为需要迎合下面的合并操作，如果是老组件，不需要去合并这个全局的配置
   isNew = false,
 ) {
-  const defaultConfig = COMPONENT_MAP.get(componentType)?.defaultConfig() || {};
+  const defaultConfig =
+    getComponentByType({ componentType })?.defaultConfig() || {};
   // ? 合并默认的数据请求配置到默认配置中
-  if (isNew && !get(defaultConfig, 'cofing.data.disabled')) {
+  if (isNew && !get(defaultConfig, 'config.data.disabled')) {
     const defaultRequest =
       get(getDvaGlobalModelData(), 'screenData.config.attr.request') || {};
     return mergeWithoutArray(defaultConfig, {
@@ -228,13 +238,13 @@ export function getComponentThemeConfigByType(
 export function getComponentRenderByType(
   componentType: ComponentData.TComponentSelfType,
 ) {
-  return COMPONENT_MAP.get(componentType)?.render;
+  return getComponentByType({ componentType })?.render;
 }
 
 export function getComponentConfigComponentByType(
   componentType: ComponentData.TComponentSelfType,
 ) {
-  return COMPONENT_MAP.get(componentType)?.configComponent;
+  return getComponentByType({ componentType })?.configComponent;
 }
 
 export function mergeComponentDefaultConfig(
