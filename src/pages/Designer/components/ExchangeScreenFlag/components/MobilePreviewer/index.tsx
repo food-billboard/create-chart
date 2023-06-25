@@ -239,8 +239,6 @@ const MobilePreviewer = forwardRef<MobilePreviewerRef, {}>((props, ref) => {
     [],
   );
 
-  console.log(loading, 28888);
-
   return (
     <Drawer
       open={visible}

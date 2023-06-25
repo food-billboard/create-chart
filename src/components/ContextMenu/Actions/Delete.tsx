@@ -1,35 +1,16 @@
 import { useCallback } from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
-import { get } from 'lodash';
-import InteractiveUtil from '@/utils/Assist/Interactive';
-import { useIdPathMap, useAnyDva } from '@/hooks';
+import { useIdPathMap } from '@/hooks';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
 import useChildren from './useChildren';
 import { CommonActionType } from './type';
 
+// 删除组件后，手动删除其相关的关联属性
 const deleteComponentInteractive = (id: string[]) => {
-  const { dispatch, getState } = useAnyDva();
-
-  const state = getState().global;
-  const params = get(state, 'screenData.config.attr.params');
-
-  InteractiveUtil.deleteComponentInteractive(
-    {
-      params,
-      setParams: (params) => {
-        dispatch({
-          type: 'global/setScreen',
-          value: {
-            config: {
-              attr: {
-                params,
-              },
-            },
-          },
-        });
-      },
-    },
-    id,
-  );
+  GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_DELETE_ACTION, id);
 };
 
 export const deleteAction = (

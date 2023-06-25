@@ -10,6 +10,10 @@ import Loading from '@/components/PageLoading';
 import IntroductionButton from '@/components/IntroductionButton';
 import PromptChrome from '@/components/PromptChrome';
 import { dispatchLogin } from '@/utils/request';
+import {
+  presetRegisterEvent,
+  presetUnRegisterEvent,
+} from '@/utils/Assist/EventEmitter/PresetEmit';
 import Avatar from './components/Avatar';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
@@ -242,6 +246,16 @@ const EnvironmentPrompt = (props: any) => {
   );
 };
 
+// 事件订阅
+const EventEmitWrapper = (props: any) => {
+  useEffect(() => {
+    presetRegisterEvent();
+    return presetUnRegisterEvent;
+  }, []);
+
+  return <EnvironmentPrompt {...props} />;
+};
+
 export default connect(
   (state: ConnectState) => {
     return {
@@ -249,4 +263,4 @@ export default connect(
     };
   },
   () => ({}),
-)(EnvironmentPrompt);
+)(EventEmitWrapper);
