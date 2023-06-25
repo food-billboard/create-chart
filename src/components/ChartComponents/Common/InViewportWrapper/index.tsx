@@ -1,26 +1,35 @@
 import { useInViewport } from 'ahooks';
 
-const InViewportWrapper = (Component: (props: any) => JSX.Element) => {
-  return function (props: any) {
-    const {
-      // ? 特殊的query逻辑，用于在切换移动端时的标识
-      viewportQuery,
-      value,
-      ...nextProps
-    } = props;
-    const { id } = value;
-    const query =
-      typeof viewportQuery === 'function'
-        ? viewportQuery
-        : () => document.querySelector(viewportQuery || `div[data-id='${id}']`);
-    const [inViewport] = useInViewport(query, {
-      threshold: 0.25,
-    });
+const ChartComponentMap: any = {};
 
-    if (inViewport) return <Component value={value} {...nextProps} />;
+const InViewportWrapper = (
+  Component: (props: any) => JSX.Element,
+  type: ComponentData.TComponentSelfType,
+) => {
+  if (!ChartComponentMap[type]) {
+    ChartComponentMap[type] = function (props: any) {
+      const {
+        // ? 特殊的query逻辑，用于在切换移动端时的标识
+        viewportQuery,
+        value,
+        ...nextProps
+      } = props;
+      const { id } = value;
+      const query =
+        typeof viewportQuery === 'function'
+          ? viewportQuery
+          : () =>
+              document.querySelector(viewportQuery || `div[data-id='${id}']`);
+      const [inViewport] = useInViewport(query, {
+        threshold: 0.25,
+      });
 
-    return <></>;
-  };
+      if (inViewport) return <Component value={value} {...nextProps} />;
+
+      return <></>;
+    };
+  }
+  return ChartComponentMap[type];
 };
 
 export default InViewportWrapper;

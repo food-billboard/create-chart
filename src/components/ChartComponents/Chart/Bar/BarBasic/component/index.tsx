@@ -108,6 +108,7 @@ const BarBasic = (
       },
     );
     chartInstance.current = chart;
+    console.log(77777);
     setOption();
   };
 
@@ -159,6 +160,7 @@ const BarBasic = (
   };
 
   const setOption = () => {
+    console.log(222222222);
     const { animation, ...nextTooltip } = tooltip;
 
     const realSeries = getSeries();
@@ -215,11 +217,13 @@ const BarBasic = (
 
   // 数据发生变化时
   useDeepUpdateEffect(() => {
+    console.log(44444);
     setOption();
   }, [processedValue, xAxisKeys, yAxisValues, seriesKeys]);
 
   // 配置发生变化时
   useDeepUpdateEffect(() => {
+    console.log(66666);
     setOption();
     chartInstance.current?.resize();
   }, [options]);

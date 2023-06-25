@@ -202,7 +202,7 @@ export function getComponentByType(
   const { render, ...nextConfig } = config as MapValue;
   return {
     ...nextConfig,
-    render: InViewportWrapper(render),
+    render: InViewportWrapper(render, component.componentType),
   };
 }
 
