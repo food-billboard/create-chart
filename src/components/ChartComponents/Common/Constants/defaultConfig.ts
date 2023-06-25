@@ -13,6 +13,11 @@ export const DEFAULT_LINKAGE_CONFIG = {
   value: '',
 };
 
+// 默认interactive base
+export const DEFAULT_INTERACTIVE_BASE_CONFIG = {
+  show: false,
+};
+
 // 默认柱图轮播配置
 export const DEFAULT_BAR_CAROUSEL_CONFIG = {
   show: false,

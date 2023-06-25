@@ -89,6 +89,30 @@ const BaseConfig = (props: {
     }, [component]);
 
   const { keys, domList } = useMemo(() => {
+    const onKeyChange = (
+      newValue: Partial<ComponentData.TBaseInteractiveConfig>,
+    ) => {
+      const path = getPath(id);
+      onChange?.({
+        value: {
+          config: {
+            interactive: {
+              base: baseInteractive.map((item) => {
+                if (item.name !== newValue.name) return item;
+                return {
+                  ...item,
+                  ...newValue,
+                };
+              }),
+            },
+          },
+        },
+        id,
+        path,
+        action: 'update',
+      });
+    };
+
     return (baseInteractive || []).reduce<{
       keys: string[];
       domList: ReactNode[];
@@ -108,27 +132,11 @@ const BaseConfig = (props: {
                 checked={show}
                 onClick={(e) => e.stopPropagation()}
                 onChange={(e) => {
-                  const path = getPath(id);
                   const value = e.target.checked;
-                  onChange?.({
-                    value: {
-                      config: {
-                        interactive: {
-                          base: baseInteractive.map((item) => {
-                            if (item.name !== name) return item;
-                            return {
-                              ...item,
-                              show: value,
-                            };
-                          }),
-                        },
-                      },
-                    },
-                    id,
-                    path,
-                    action: 'update',
+                  onKeyChange({
+                    name,
+                    show: value,
                   });
-
                   enableComponentInteractive(value, type);
                 }}
               >

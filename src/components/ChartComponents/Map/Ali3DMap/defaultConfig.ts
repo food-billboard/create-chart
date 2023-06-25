@@ -9,6 +9,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
   DEFAULT_THEME_COLOR_LIST,
+  DEFAULT_INTERACTIVE_BASE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { TAli3DMapConfig } from './type';
 
@@ -41,9 +42,9 @@ export default () => {
       interactive: {
         base: [
           {
+            ...DEFAULT_INTERACTIVE_BASE_CONFIG,
             type: 'click',
             name: '当点击坐标时',
-            show: false,
             fields: [
               {
                 key: 'position',
@@ -53,9 +54,9 @@ export default () => {
             ],
           },
           {
+            ...DEFAULT_INTERACTIVE_BASE_CONFIG,
             type: 'modal-show',
             name: '当模态框显示时',
-            show: false,
             fields: [
               {
                 key: 'image',

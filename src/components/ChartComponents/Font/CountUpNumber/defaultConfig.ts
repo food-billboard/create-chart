@@ -6,6 +6,7 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
+  DEFAULT_INTERACTIVE_BASE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { getNumberValue } from '@/utils/constants';
 import { TCountUpNumberConfig } from './type';
@@ -22,9 +23,9 @@ export default () => {
       interactive: {
         base: [
           {
+            ...DEFAULT_INTERACTIVE_BASE_CONFIG,
             type: 'click',
             name: '当点击项时',
-            show: false,
             fields: [
               {
                 key: 'value',

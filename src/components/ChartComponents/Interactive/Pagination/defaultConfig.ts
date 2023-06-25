@@ -6,6 +6,7 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_BORDER_RADIUS,
+  DEFAULT_INTERACTIVE_BASE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TPaginationConfig } from './type';
@@ -16,9 +17,9 @@ export default () => {
       interactive: {
         base: [
           {
+            ...DEFAULT_INTERACTIVE_BASE_CONFIG,
             type: 'page_change',
             name: '当页数发生变化时',
-            show: false,
             fields: [
               {
                 key: 'current',

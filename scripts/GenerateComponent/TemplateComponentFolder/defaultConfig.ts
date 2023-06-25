@@ -6,7 +6,8 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
-  DEFAULT_THEME_COLOR_LIST
+  DEFAULT_THEME_COLOR_LIST,
+  DEFAULT_INTERACTIVE_BASE_CONFIG
 } from '../../../Common/Constants/defaultConfig';
 import { T{{COMPONENT_NAME}}Config } from './type';
 
@@ -20,9 +21,9 @@ export default () => {
       interactive: {
         base: [
           {
+            ...DEFAULT_INTERACTIVE_BASE_CONFIG,
             type: 'click',
             name: '当点击项时',
-            show: false,
             fields: [
               {
                 key: 'value',

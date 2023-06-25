@@ -7,6 +7,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
   DEFAULT_THEME_COLOR_LIST,
+  DEFAULT_INTERACTIVE_BASE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { TLuckyDrawConfig } from './type';
 import prizes1 from '../../../../../public/other/prizes-1.png';
@@ -56,9 +57,9 @@ export default () => {
       interactive: {
         base: [
           {
+            ...DEFAULT_INTERACTIVE_BASE_CONFIG,
             type: 'end',
             name: '当抽奖结束时',
-            show: false,
             fields: [
               {
                 key: 'title',

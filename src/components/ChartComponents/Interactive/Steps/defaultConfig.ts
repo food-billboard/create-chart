@@ -5,6 +5,7 @@ import {
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
+  DEFAULT_INTERACTIVE_BASE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { getName, getText } from '@/utils/constants';
 import ThemeUtil from '@/utils/Assist/Theme';
@@ -34,9 +35,9 @@ export default () => {
     interactive: {
       base: [
         {
+          ...DEFAULT_INTERACTIVE_BASE_CONFIG,
           type: 'click',
           name: '当点击项时',
-          show: false,
           fields: [
             {
               key: 'title',

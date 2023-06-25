@@ -3,6 +3,7 @@ import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
+  DEFAULT_INTERACTIVE_BASE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import { TIFrameConfig } from './type';
 import { OnMessageTooltipName } from './component/MessageTooltip';
@@ -16,9 +17,9 @@ export default () => {
     interactive: {
       base: [
         {
+          ...DEFAULT_INTERACTIVE_BASE_CONFIG,
           type: 'message',
           name: 'iframe通信',
-          show: false,
           extend: true,
           description: `component_${OnMessageTooltipName}`,
           fields: [

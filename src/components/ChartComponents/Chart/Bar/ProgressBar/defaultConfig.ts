@@ -9,6 +9,7 @@ import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_RADIAL_CONFIG,
   DEFAULT_GRID_CONFIG,
+  DEFAULT_INTERACTIVE_BASE_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
@@ -24,9 +25,9 @@ export default () => {
       interactive: {
         base: [
           {
+            ...DEFAULT_INTERACTIVE_BASE_CONFIG,
             type: 'click',
             name: '当点击项时',
-            show: false,
             fields: [
               {
                 key: 'value',

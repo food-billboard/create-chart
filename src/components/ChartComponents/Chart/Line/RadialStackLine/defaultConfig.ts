@@ -13,6 +13,7 @@ import {
   DEFAULT_THEME_RADIAL_COLOR_LIST,
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
+  DEFAULT_INTERACTIVE_BASE_CONFIG,
 } from '../../../Common/Constants/defaultConfig';
 import { getDate, getNumberValue, getSeries } from '@/utils/constants';
 import { TRadialStackLineConfig } from './type';
@@ -50,9 +51,9 @@ export default () => {
       interactive: {
         base: [
           {
+            ...DEFAULT_INTERACTIVE_BASE_CONFIG,
             type: 'click',
             name: '当点击项时',
-            show: false,
             fields: [
               {
                 key: 'x',

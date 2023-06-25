@@ -4,6 +4,7 @@ import {
   BASIC_DEFAULT_DATA_CONFIG,
   BASIC_DEFAULT_INTERACTIVE_CONFIG,
   DEFAULT_FONT_CONFIG,
+  DEFAULT_INTERACTIVE_BASE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { TRadioConfig } from './type';
@@ -28,9 +29,9 @@ export default () => {
     interactive: {
       base: [
         {
+          ...DEFAULT_INTERACTIVE_BASE_CONFIG,
           type: 'change',
           name: '当选中改变时',
-          show: false,
           fields: [
             {
               key: 'value',
