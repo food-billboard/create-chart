@@ -15,6 +15,7 @@ import MonacoEditor, {
 import classnames from 'classnames';
 import { merge } from 'lodash';
 import { sleep } from '@/utils';
+import { Loading } from '../PageLoading';
 import styles from './index.less';
 
 // loader.config({ monaco })
@@ -163,6 +164,7 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
         },
         className,
       )}
+      loading={<Loading size={40} className="w-100 h-100" />}
       theme={'vs-dark'}
       onMount={editorDidMount}
       // 设置代码提示
