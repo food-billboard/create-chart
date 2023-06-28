@@ -269,11 +269,14 @@ each(@border-size-list, {
 .dis-flex {
   display: flex;
 }
+.flex-al-cen {
+  align-items: center;
+}
 
 .dis-flex-cen {
   &:extend(.dis-flex);
+  &:extend(.flex-al-cen);
   justify-content: center;
-  align-items: center;
 }
 
 // display inline-block
@@ -326,6 +329,9 @@ each(@border-size-list, {
 }
 
 // text-align
+.ali-l {
+  text-align: left;
+}
 .ali-cen {
   text-align: center;
 }

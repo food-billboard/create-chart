@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Select } from 'antd';
+import { Select, Typography } from 'antd';
 import { merge } from 'lodash';
 import { connect } from 'dva';
 import { InfoCircleOutlined } from '@ant-design/icons';
@@ -7,10 +7,12 @@ import IconTooltipBase from '@/components/IconTooltip';
 import Checkbox from '@/components/ChartComponents/Common/Checkbox';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import { API_CONTAIN_PARAMS_REQUEST_URL_FLAG } from '@/utils/constants/another';
 import CodeEditor from '../SaveCodeEditor';
 import SubTitle, { SubForm } from '../../SubTitle';
 import { TOnChange } from '../type';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+import styles from './index.less';
 
 export const IconTooltip = () => {
   return (
@@ -81,7 +83,34 @@ const ApiConfig = (props: ApiConfigProps) => {
           ]}
         />
       </SubForm>
-      <SubTitle>URL</SubTitle>
+      <SubTitle>
+        <IconTooltipBase
+          title={
+            <div className="ali-l">
+              可以使用全局变量
+              <br />
+              可在"url"最后添加特殊标识
+              <Typography.Paragraph
+                className={styles['api-config-copy-text']}
+                italic
+                copyable
+              >
+                {API_CONTAIN_PARAMS_REQUEST_URL_FLAG}
+              </Typography.Paragraph>
+              表示不会根据"变量"的改变而请求数据。
+              <br />
+              比如：
+              <Typography.Paragraph style={{ marginBottom: 0 }} code>
+                /api/request/url?userId={'{{userId}}'}
+                {API_CONTAIN_PARAMS_REQUEST_URL_FLAG}
+              </Typography.Paragraph>
+            </div>
+          }
+        >
+          <InfoCircleOutlined className="m-r-4" />
+        </IconTooltipBase>
+        URL
+      </SubTitle>
       <SubForm>
         <CodeEditor language="txt" value={url} onChange={onUrlChange} />
       </SubForm>

@@ -1,7 +1,8 @@
 import json5 from 'json5';
 import mustache from 'mustache';
-import { cloneDeep, get } from 'lodash';
+import { cloneDeep, get, noop } from 'lodash';
 import { preRequestData } from '@/services';
+import { API_CONTAIN_PARAMS_REQUEST_URL_FLAG } from '../../constants/another';
 import { getDvaGlobalModelData } from '../Component';
 import VariableStringUtil from '../VariableString';
 import request from '../../request';
@@ -241,7 +242,7 @@ export class FilterData {
       },
     } = value;
 
-    let realUrl = url;
+    let realUrl = url.replaceAll(API_CONTAIN_PARAMS_REQUEST_URL_FLAG, '');
     let realMethod = method?.toLowerCase() as any;
     let realBody = {};
     let realHeaders = {};
@@ -445,20 +446,22 @@ export class CompareFilterUtil {
 
   // 条件参数初始化
   initComponentCondition(condition: ComponentData.ComponentCondition[]) {
-    return condition.reduce<
-      {
-        variables: string[];
-        action: any;
-      }[]
-    >((acc, cur) => {
+    type Result = {
+      variables: string[];
+      action: any;
+    };
+    return condition.reduce<Result[]>((acc, cur) => {
       const { type, value } = cur;
       const { code, condition } = value;
+      const baseMap: Result = {
+        variables: [],
+        action: this.onCondition.bind(this, cur),
+      };
+      // 自定义代码条件
+      // 有自己的关联参数
       if (type === 'code') {
         const { relation } = code;
-        acc.push({
-          variables: relation,
-          action: this.onCondition.bind(this, cur),
-        });
+        baseMap.variables = relation;
       } else {
         let variables = (condition?.rule || []).reduce<string[]>(
           (acc, item) => {
@@ -469,11 +472,9 @@ export class CompareFilterUtil {
           },
           [],
         );
-        acc.push({
-          variables,
-          action: this.onCondition.bind(this, cur),
-        });
+        baseMap.variables = variables;
       }
+      acc.push(baseMap);
       return acc;
     }, []);
   }
@@ -564,6 +565,20 @@ export class CompareFilterUtil {
     }
   }
 
+  // 数据请求url上面的关联参数
+  initComponentUrlParamsMap(url: string) {
+    let action: any = this.onFetch;
+    // 如果包含标识就返回noop
+    if (url.endsWith(API_CONTAIN_PARAMS_REQUEST_URL_FLAG)) action = noop;
+
+    return {
+      action: this.onFetch,
+      variables: url.endsWith(API_CONTAIN_PARAMS_REQUEST_URL_FLAG)
+        ? []
+        : this.getVariableInString(url),
+    };
+  }
+
   // 参数初始化
   initParamsMap(
     url: string,
@@ -571,10 +586,11 @@ export class CompareFilterUtil {
     condition: ComponentData.ComponentCondition[],
   ) {
     [
-      {
-        action: this.onFetch,
-        variables: this.getVariableInString(url),
-      },
+      // 数据请求url上面的关联参数
+      // 调接口
+      this.initComponentUrlParamsMap(url),
+      // 组件的数据过滤器所关联的参数
+      // 调过滤器
       ...filter.map((filterItem) => {
         const { params } = filterItem;
         return {
@@ -582,10 +598,14 @@ export class CompareFilterUtil {
           variables: params,
         };
       }),
+      // 组件自带的一些关联参数(比如iframe组件)
+      // 回调改变的params
       {
         action: this.onParams,
         variables: this.componentParams,
       },
+      // 一些条件的关联参数
+      // 条件重新计算
       ...this.initComponentCondition(condition),
     ].forEach((item) => {
       const { action, variables } = item;

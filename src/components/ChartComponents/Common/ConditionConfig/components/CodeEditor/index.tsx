@@ -1,5 +1,6 @@
 import CodeEditor from '@/components/CodeEditor';
 import ParamsSelect from '@/components/ParamsSelect';
+import FunctionHeader from '@/components/SyncCodeEditor/FunctionHeader';
 
 type TValue = ComponentData.ComponentCondition['value']['code'];
 
@@ -20,11 +21,11 @@ const ConditionCodeEditor = (props: {
               relation,
             });
           }}
-          className="m-t-4 m-b-8"
+          wrapperClassName="m-t-4 m-b-8"
         />
       </div>
 
-      <p>{'function condition( data ) {'}</p>
+      <FunctionHeader functionName="condition" />
       <CodeEditor
         language="javascript"
         action={['copy', 'full-screen']}

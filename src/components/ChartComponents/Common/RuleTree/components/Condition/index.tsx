@@ -51,9 +51,11 @@ const ConditionItem = (props: {
     >
       <ParamsSelectSingle
         value={params}
+        wrapperStyle={{
+          width: 74,
+        }}
         style={{
           height: 24,
-          width: 74,
         }}
         onChange={(newParams) => {
           onChange({
@@ -61,7 +63,7 @@ const ConditionItem = (props: {
             params: newParams as any,
           });
         }}
-        className={classnames(COMMON_CONDITION_ITEM_CLASS, 'dis-in-b')}
+        wrapperClassName={classnames(COMMON_CONDITION_ITEM_CLASS, 'dis-in-b')}
       />
       <Select
         className={classnames(COMMON_CONDITION_ITEM_CLASS, 'dis-in-b')}

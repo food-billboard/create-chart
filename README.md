@@ -1,3 +1,4 @@
+<!-- 关于开发当中的一些逻辑细节，存在了 /assets/development/attention 中 -->
 
 <div align="center">
   <img src="public/logo.jpg" />

@@ -12,6 +12,7 @@ import { SortableHandle, SortableElement } from 'react-sortable-hoc';
 import CodeEditor from '@/components/CodeEditor';
 import ParamsSelect from '@/components/ParamsSelect';
 import IconTooltip from '@/components/IconTooltip';
+import FunctionHeader from '@/components/SyncCodeEditor/FunctionHeader';
 import { ComponentNumber } from '@/pages/Designer/components/LeftContent/components/CallbackManage';
 import StepDataButton from './StepData';
 import NameEditor from './NameEditor';
@@ -237,11 +238,10 @@ const DataFilter = (props: {
           <ParamsSelect
             value={updateFilter?.params ?? params}
             onChange={onUpdateFilterChange.bind(null, 'params')}
-            className="m-t-4 m-b-8"
+            wrapperClassName="m-t-4 m-b-8"
           />
         </div>
-
-        <p>{'function filter( data, global, options ) {'}</p>
+        <FunctionHeader functionName="filter" />
         <CodeEditor
           language="javascript"
           width={426}

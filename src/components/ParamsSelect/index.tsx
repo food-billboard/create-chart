@@ -1,29 +1,45 @@
-import { Select } from 'antd';
+import { Select, Checkbox } from 'antd';
 import { connect } from 'dva';
-import { isEqual } from 'lodash';
-import { useMemo, useCallback, useState } from 'react';
+import { isEqual, merge } from 'lodash';
+import { useMemo, useCallback, useState, CSSProperties } from 'react';
 import classnames from 'classnames';
 import { SelectProps } from 'antd/es/select';
 import VariableStringUtil from '@/utils/Assist/VariableString';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+import styles from './index.less';
 
 const { Option } = Select;
 
+type CommonProps = {
+  params: ComponentData.TParams[];
+  constants: ComponentData.TConstants[];
+  needChangeLazy?: boolean;
+  changeLazy?: boolean;
+  onChangeLazyChange?: (changeLazy: boolean) => void;
+};
+
+// 关联参数多选
 const ParamsSelect = (
   props: {
-    params: ComponentData.TParams[];
-    constants: ComponentData.TConstants[];
     value: string[];
     onChange?: (value: string[]) => void;
-  } & Omit<SelectProps, 'value' | 'onChange'>,
+    wrapperClassName?: string;
+    wrapperStyle?: CSSProperties;
+  } & Omit<SelectProps, 'value' | 'onChange'> &
+    CommonProps,
 ) => {
   const {
     params,
     constants,
     value,
     onChange,
-    className,
     onBlur,
+    needChangeLazy = false,
+    changeLazy,
+    style,
+    onChangeLazyChange,
+    wrapperClassName,
+    wrapperStyle,
     ...nextProps
   } = props;
 
@@ -56,37 +72,66 @@ const ParamsSelect = (
     setStateValue(value);
   }, []);
 
+  const changeLazyNode = useMemo(() => {
+    if (!needChangeLazy) return null;
+    return (
+      <Checkbox
+        checked={changeLazy}
+        onChange={(e) => onChangeLazyChange?.(e.target.checked)}
+        className={styles['params-select-checkbox']}
+        style={{ marginLeft: 8 }}
+      >
+        懒更新
+      </Checkbox>
+    );
+  }, [needChangeLazy, changeLazy, onChangeLazyChange]);
+
   return (
-    <Select
-      mode="tags"
-      allowClear
-      className={classnames('w-100', className)}
-      placeholder="选择全局参数"
-      value={stateValue}
-      onChange={handleChange}
-      onBlur={handleBlur}
-      {...nextProps}
+    <div
+      className={classnames('dis-flex flex-al-cen', wrapperClassName)}
+      style={wrapperStyle}
     >
-      {domList}
-    </Select>
+      <Select
+        mode="tags"
+        allowClear
+        style={merge(style, {
+          width: needChangeLazy ? 'calc(100% - 80px)' : '100%',
+        })}
+        placeholder="选择全局参数"
+        value={stateValue}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        {...nextProps}
+      >
+        {domList}
+      </Select>
+      {changeLazyNode}
+    </div>
   );
 };
 
+// 关联参数单选
 const InternalParamsSelectSingle = (
   props: {
-    params: ComponentData.TParams[];
-    constants: ComponentData.TConstants[];
     value: string;
     onChange?: (value: string) => void;
-  } & Omit<SelectProps, 'value' | 'onChange'>,
+    wrapperClassName?: string;
+    wrapperStyle?: CSSProperties;
+  } & Omit<SelectProps, 'value' | 'onChange'> &
+    CommonProps,
 ) => {
   const {
     params,
     constants,
     value,
     onChange,
-    className,
     onBlur,
+    needChangeLazy = false,
+    changeLazy,
+    onChangeLazyChange,
+    style,
+    wrapperClassName,
+    wrapperStyle,
     ...nextProps
   } = props;
 
@@ -120,19 +165,41 @@ const InternalParamsSelectSingle = (
     setStateValue(target || '');
   }, []);
 
+  const changeLazyNode = useMemo(() => {
+    if (!needChangeLazy) return null;
+    return (
+      <Checkbox
+        checked={changeLazy}
+        onChange={(e) => onChangeLazyChange?.(e.target.checked)}
+        className={styles['params-select-checkbox']}
+        style={{ marginLeft: 8 }}
+      >
+        懒更新
+      </Checkbox>
+    );
+  }, [needChangeLazy, changeLazy, onChangeLazyChange]);
+
   return (
-    <Select
-      mode="tags"
-      allowClear
-      className={classnames('w-100', className)}
-      placeholder="选择全局参数"
-      value={stateValue ? [stateValue] : []}
-      onChange={handleChange}
-      onBlur={handleBlur}
-      {...nextProps}
+    <div
+      className={classnames('dis-flex flex-al-cen', wrapperClassName)}
+      style={wrapperStyle}
     >
-      {domList}
-    </Select>
+      <Select
+        mode="tags"
+        allowClear
+        style={merge(style, {
+          width: needChangeLazy ? 'calc(100% - 80px)' : '100%',
+        })}
+        placeholder="选择全局参数"
+        value={stateValue ? [stateValue] : []}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        {...nextProps}
+      >
+        {domList}
+      </Select>
+      {changeLazyNode}
+    </div>
   );
 };
 
