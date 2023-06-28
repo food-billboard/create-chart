@@ -16,6 +16,17 @@ const IFRAME_COMPONENT_ON_MESSAGE_CODE_EXAMPLE = `
   function onMessage(e) {
     const { data, origin } = e 
     const parseData = JSON.parse(data)
+    const {  
+      // 唯一标识id
+      id,
+      // 操作类型
+      // INIT_RELATION_PARAMS 初始化 关联属性
+      // RELATION_PARAMS_CHANGE 关联属性 发生改变
+      // POST_PARAMS 传递所有params
+      actionType,
+      // 实际返回的数据
+      value
+    } = parseData
     console.log('新改变的数据：' + parseData)
     console.log('发送数据的页面：' + origin)
   }
@@ -26,7 +37,11 @@ const IFRAME_COMPONENT_POST_MESSAGE_CODE_EXAMPLE = `
   function postMessage() {
     const sendValue = {
       custom_field: '需要发送的数据',
-      id: '来自上层页面传递下来的id，在onmessage事件中可以获取到'
+      id: '来自上层页面传递下来的id，在onmessage事件中可以获取到，比如上面的actionType==INIT_RELATION_PARAMS',
+      // 操作类型，如果格式不对可能会被忽略
+      // GET_PARAMS 获取大屏指定的 全局 params
+      // RELATION_PARAMS_CHANGE 在ifrmae中修改大屏的属性时
+      actionType: 'RELATION_PARAMS_CHANGE'
     }
     // 接收数据的目标页面域名
     const domain = 'http://www.example.com'

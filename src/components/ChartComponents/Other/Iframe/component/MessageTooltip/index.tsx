@@ -55,7 +55,7 @@ export const PostMessageTooltip = () => {
     <IconTooltip
       title={
         <div className={styles['component-iframe-message-tooltip']}>
-          选中的参数在数据发生改变时均会通知iframe页面。
+          选中的参数在数据发生改变时均会通知iframe页面(如果不想响应式可以不设置，iframe页面可主动获取想要的参数)。
           <br />
           <span
             className="underline-anime-color-white underline-anime c-po"

@@ -331,7 +331,7 @@ export function useComponent<P extends object = {}>(
       const { params = [] } = requestRef.current || {};
       return syncInteractiveAction(params, baseInteractiveType, value);
     },
-    [syncInteractiveAction, baseInteractive],
+    [syncInteractiveAction],
   );
 
   // 外部调用条件判断
