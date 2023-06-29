@@ -79,6 +79,7 @@ export default () => {
       backgroundColor: ThemeUtil.generateNextColor4CurrentTheme(0),
       icon: 'bi-star-fill',
       type: 'primary',
+      actionType: 'normal',
       textStyle: {
         ...DEFAULT_FONT_CONFIG,
       },

@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Select } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
@@ -10,6 +11,7 @@ import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import IconTooltip from '@/components/IconTooltip';
 import { TButtonConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -30,7 +32,14 @@ class Config extends Component<
     const { value } = this.props;
     const {
       config: {
-        options: { backgroundColor, textStyle, icon, borderRadius, type },
+        options: {
+          backgroundColor,
+          textStyle,
+          icon,
+          borderRadius,
+          type,
+          actionType,
+        },
       },
     } = value;
 
@@ -97,6 +106,42 @@ class Config extends Component<
               </ConfigList>
             ),
             key: '1',
+          },
+          {
+            label: <Tab>交互</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <Item
+                  label="交互类型"
+                  placeholder={
+                    <IconTooltip
+                      title={`设置为 "提交按钮" 时，当点击按钮时，交互的值会在按钮内容后加一个时间戳以达到每次都变化的目的，这样在其他组件的 "url" 上设置了按钮的交互属性时，就可以达到触发响应的目的。`}
+                    >
+                      <InfoCircleOutlined />
+                    </IconTooltip>
+                  }
+                >
+                  <FullForm>
+                    <Select
+                      value={actionType}
+                      className="w-100"
+                      onChange={this.onKeyChange.bind(this, 'actionType')}
+                      options={[
+                        {
+                          label: '普通按钮',
+                          value: 'normal',
+                        },
+                        {
+                          label: '提交按钮',
+                          value: 'submit',
+                        },
+                      ]}
+                    />
+                  </FullForm>
+                </Item>
+              </ConfigList>
+            ),
+            key: '2',
           },
         ]}
       />

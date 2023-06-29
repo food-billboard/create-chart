@@ -36,6 +36,7 @@ export const DROP_TYPE = 'PAINTER_DROP_TYPE';
 export type PainterProps = {
   // canDrop: boolean;
   // isOver: boolean;
+  screenType: ComponentData.TGlobalData['screenType'];
   connectDropTarget?: ConnectDropTarget;
   dragInfo: DragData;
   setDragInfo: (value: Partial<DragData>) => void;
@@ -63,6 +64,7 @@ const Painter = (props: PainterProps) => {
     className,
     style,
     children,
+    screenType,
   } = props;
 
   // ? hack 第一次渲染时，因为scale问题导致图表位置显示不正确，所以选择在transform完成后再进行渲染
@@ -188,8 +190,8 @@ const Painter = (props: PainterProps) => {
 
   useEffect(() => {
     // ? h5的大屏一开始是没有缩放的
-    if (flagType === 'H5') setIsFirstTransition(false);
-  }, [flagType]);
+    if (flagType === 'H5' || screenType !== 'edit') setIsFirstTransition(false);
+  }, [flagType, screenType]);
 
   return (
     <ColorImageBackground

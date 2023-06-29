@@ -4,5 +4,6 @@ export type TButtonConfig = {
   icon: string;
   borderRadius: number;
   type: 'primary' | 'default';
+  actionType: 'submit' | 'normal';
   condition: ComponentData.ComponentConditionConfig;
 };

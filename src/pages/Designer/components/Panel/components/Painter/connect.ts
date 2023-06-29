@@ -5,6 +5,7 @@ export const mapStateToProps = (state: ConnectState) => {
     dragInfo: state.global.drag,
     config: state.global.screenData.config,
     scale: state.global.scale,
+    screenType: state.global.screenType,
   };
 };
 

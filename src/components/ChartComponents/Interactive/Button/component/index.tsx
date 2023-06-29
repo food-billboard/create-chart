@@ -11,6 +11,7 @@ import FetchFragment, {
   TFetchFragmentRef,
 } from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
+import { API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG } from '@/utils/constants/another';
 import { TButtonConfig } from '../type';
 import { CHART_ID } from '../id';
 import styles from './index.less';
@@ -27,8 +28,15 @@ const Button = (props: ComponentData.CommonComponentProps<TButtonConfig>) => {
       style: { border },
     },
   } = value;
-  const { backgroundColor, icon, borderRadius, type, textStyle, condition } =
-    options;
+  const {
+    backgroundColor,
+    icon,
+    borderRadius,
+    type,
+    textStyle,
+    condition,
+    actionType,
+  } = options;
   const { fontSize } = textStyle;
   const { screenType } = global;
 
@@ -67,12 +75,16 @@ const Button = (props: ComponentData.CommonComponentProps<TButtonConfig>) => {
 
   const onClick = useCallback(() => {
     syncInteractiveAction('click', {
-      value: finalValue.value,
+      value:
+        finalValue.value +
+        (actionType === 'submit'
+          ? `${API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG}(${Date.now()})`
+          : ''),
     });
     linkageMethod('click', {
       value: finalValue.value,
     });
-  }, [syncInteractiveAction, finalValue]);
+  }, [syncInteractiveAction, finalValue, actionType]);
 
   const componentClassName = useMemo(() => {
     return classnames(

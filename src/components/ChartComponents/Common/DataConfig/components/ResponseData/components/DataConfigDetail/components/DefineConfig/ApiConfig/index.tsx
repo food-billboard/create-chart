@@ -7,7 +7,7 @@ import IconTooltipBase from '@/components/IconTooltip';
 import Checkbox from '@/components/ChartComponents/Common/Checkbox';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import { API_CONTAIN_PARAMS_REQUEST_URL_FLAG } from '@/utils/constants/another';
+import { API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG } from '@/utils/constants/another';
 import CodeEditor from '../SaveCodeEditor';
 import SubTitle, { SubForm } from '../../SubTitle';
 import { TOnChange } from '../type';
@@ -95,14 +95,14 @@ const ApiConfig = (props: ApiConfigProps) => {
                 italic
                 copyable
               >
-                {API_CONTAIN_PARAMS_REQUEST_URL_FLAG}
+                {API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG}
               </Typography.Paragraph>
               表示不会根据"变量"的改变而请求数据。
               <br />
               比如：
               <Typography.Paragraph style={{ marginBottom: 0 }} code>
                 /api/request/url?userId={'{{userId}}'}
-                {API_CONTAIN_PARAMS_REQUEST_URL_FLAG}
+                {API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG}
               </Typography.Paragraph>
             </div>
           }

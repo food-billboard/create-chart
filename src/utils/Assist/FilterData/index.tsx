@@ -2,7 +2,10 @@ import json5 from 'json5';
 import mustache from 'mustache';
 import { cloneDeep, get, noop } from 'lodash';
 import { preRequestData } from '@/services';
-import { API_CONTAIN_PARAMS_REQUEST_URL_FLAG } from '../../constants/another';
+import {
+  API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG,
+  API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG,
+} from '../../constants/another';
 import { getDvaGlobalModelData } from '../Component';
 import VariableStringUtil from '../VariableString';
 import request from '../../request';
@@ -184,14 +187,23 @@ export class FilterData {
     return Object.entries(value).reduce<{ [key: string]: string }>(
       (acc, cur) => {
         const [key, value] = cur;
-        acc[key] = VariableStringUtil.variableStringToRealString(
-          value,
-          params,
-          constants,
-        );
+        acc[key] = this.parseVariableString(value, params, constants);
         return acc;
       },
       {},
+    );
+  }
+
+  // 解析字符串变量
+  parseVariableString(
+    value: string,
+    params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
+  ) {
+    return VariableStringUtil.variableStringToRealString(
+      value,
+      params,
+      constants,
     );
   }
 
@@ -223,6 +235,27 @@ export class FilterData {
     }
   }
 
+  // 解析变量url
+  parseUrl(
+    value: string,
+    params: ComponentData.TParams[],
+    constants: ComponentData.TConstants[],
+  ) {
+    try {
+      const parseUrl = this.parseVariableString(value, params, constants);
+      return parseUrl
+        .replace(API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG, '')
+        .replace(
+          new RegExp(
+            `${API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG}\\([0-9]+\\)`,
+          ),
+          '',
+        );
+    } catch {
+      return '';
+    }
+  }
+
   async requestData(
     value: ComponentData.TComponentApiDataConfig,
     params: ComponentData.TParams[],
@@ -242,13 +275,13 @@ export class FilterData {
       },
     } = value;
 
-    let realUrl = url.replaceAll(API_CONTAIN_PARAMS_REQUEST_URL_FLAG, '');
+    let realUrl = this.parseUrl(url, params, constants);
     let realMethod = method?.toLowerCase() as any;
     let realBody = {};
     let realHeaders = {};
     const realServiceRequest = type === 'api' && serviceRequest;
 
-    if (type === 'static' || (type === 'api' && !url)) return responseData;
+    if (type === 'static' || (type === 'api' && !realUrl)) return responseData;
 
     if (type === 'api') {
       const defaultRequestConfig: ComponentData.ScreenCommonRequestConfig =
@@ -407,13 +440,16 @@ export class CompareFilterUtil {
   } = {};
   prevParams: ComponentData.TParams[] = [];
 
-  getVariableInString(value: string) {
+  getVariableInString(
+    value: string,
+    withKey = false,
+  ): string[] | [string, string][] {
     try {
       // * 暂时只支持变量，不支持条件和循环
-      return mustache
-        .parse(value)
-        .filter((item) => item[0] === 'name')
-        .map((item) => item[1]);
+      const map = mustache.parse(value).filter((item) => item[0] === 'name');
+      return (withKey ? map : map.map((item) => item[1])) as
+        | string[]
+        | [string, string][];
     } catch (err) {
       return [];
     }
@@ -466,7 +502,8 @@ export class CompareFilterUtil {
         let variables = (condition?.rule || []).reduce<string[]>(
           (acc, item) => {
             item.rule.forEach((item) => {
-              if (!acc.includes(item.params)) acc.push(item.params);
+              if (item.params && !acc.includes(item.params))
+                acc.push(item.params);
             });
             return acc;
           },
@@ -483,12 +520,12 @@ export class CompareFilterUtil {
   getParamsOrigin(variable: string) {
     // params
     const paramsIndex = this.prevParams.findIndex(
-      (param) => param.id === variable,
+      (param) => param.variable === variable,
     );
 
     // constants
     const constantsIndex = this.constants.findIndex(
-      (constant) => constant.id === variable,
+      (constant) => constant.key === variable,
     );
 
     // href
@@ -567,15 +604,43 @@ export class CompareFilterUtil {
 
   // 数据请求url上面的关联参数
   initComponentUrlParamsMap(url: string) {
-    let action: any = this.onFetch;
-    // 如果包含标识就返回noop
-    if (url.endsWith(API_CONTAIN_PARAMS_REQUEST_URL_FLAG)) action = noop;
+    const isLazy = url.endsWith(API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG);
+    const _variables = this.getVariableInString(url, true) as [
+      string,
+      string,
+    ][];
+    let variables: string[] = [];
+    // 懒加载且存在提交按钮
+    if (
+      url.endsWith(API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG) &&
+      url.includes(API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG)
+    ) {
+      variables = _variables
+        .filter((item) =>
+          item[1].includes(API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG),
+        )
+        .map((item) => item[1]);
+    }
+    // 懒加载
+    else if (url.endsWith(API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG)) {
+      variables = [];
+    } else {
+      variables = _variables.map((item) => item[1]);
+    }
 
     return {
-      action: this.onFetch,
-      variables: url.endsWith(API_CONTAIN_PARAMS_REQUEST_URL_FLAG)
-        ? []
-        : this.getVariableInString(url),
+      action: async (currentTarget: any, currentTargetValue: any) => {
+        // 非懒加载或者是按钮action
+        if (
+          !isLazy ||
+          currentTargetValue.includes(
+            API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG,
+          )
+        ) {
+          return this.onFetch();
+        }
+      },
+      variables: (variables = _variables.map((item) => item[1])),
     };
   }
 
@@ -610,6 +675,7 @@ export class CompareFilterUtil {
     ].forEach((item) => {
       const { action, variables } = item;
       variables.forEach((variable) => {
+        if (!variable) return;
         if (this.mapParams[variable]) {
           this.mapParams[variable].action.push(action);
         } else {
