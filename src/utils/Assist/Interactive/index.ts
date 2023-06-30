@@ -23,12 +23,14 @@ class InteractiveUtil {
 
     if (!id && !variable) return '';
 
+    // 相当于是删除了
     if (!variable) {
       const newParams = params.filter((param) => param.id !== id);
       setParams(newParams);
       return '';
     }
 
+    // 新增
     if (!id) {
       const newParam: ComponentData.TParams = {
         show: true,
@@ -41,6 +43,7 @@ class InteractiveUtil {
       return newParam.id;
     }
 
+    // 更新
     const index = params.findIndex((param) => param.id === id);
     const target = params[index];
     const newParams = [...params];

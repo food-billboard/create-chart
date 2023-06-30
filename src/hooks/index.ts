@@ -16,3 +16,4 @@ export * from './useFirstChange';
 export * from './useAnyDva';
 export * from './useGlobalLoading';
 export * from './useValidatorChange';
+export * from './useControlModalDisabledKeyPressVisible';

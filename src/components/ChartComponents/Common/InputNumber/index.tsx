@@ -4,6 +4,7 @@ import { InputNumberProps as AntInputNumberProps } from 'antd/es/input-number';
 import classnames from 'classnames';
 import { useUnmount } from 'ahooks';
 import { Validator, useValidatorChange } from '@/hooks';
+import FormModal from '../FormModal';
 
 export type InputNumberProps = AntInputNumberProps & {
   triggerOnChangeInOnChange?: boolean;
@@ -79,5 +80,7 @@ const InputNumber = (props: InputNumberProps) => {
     />
   );
 };
+
+export const InputNumberModal = FormModal<InputNumberProps>(InputNumber);
 
 export default InputNumber;

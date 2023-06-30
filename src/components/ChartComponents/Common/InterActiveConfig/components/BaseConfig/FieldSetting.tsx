@@ -1,7 +1,7 @@
 import { useMemo, useCallback, useState } from 'react';
 import { Button, Space, Modal, Form, message } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import Input from '@/components/ChartComponents/Common/Input';
+import Input, { InputModal } from '@/components/ChartComponents/Common/Input';
 import GhostButton from '@/components/GhostButton';
 import { getPath } from '@/utils/Assist/Component';
 import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
@@ -102,11 +102,17 @@ const FieldSetting = (props: IProps) => {
   const { name, fields, show, type, extend } = value;
 
   const onFieldMapChange = useCallback(
-    (value: ComponentData.TBaseInteractiveConfigField, mapValue) => {
+    (
+      value: ComponentData.TBaseInteractiveConfigField,
+      key: keyof ComponentData.TBaseInteractiveConfigField,
+      mapValue,
+    ) => {
       const path = getPath(id);
-      const { variable } = value;
+      const updateValue = value[key];
+      const variable = key === 'variable' ? mapValue : value.variable;
+      const realValue = key === 'defaultValue' ? mapValue : value.defaultValue;
 
-      if (variable === mapValue) return;
+      if (updateValue === mapValue) return;
 
       // sync the global params
       const mapId = InteractiveUtil.updateBaseInteractiveVariable(
@@ -115,12 +121,13 @@ const FieldSetting = (props: IProps) => {
           setParams,
         },
         {
-          variable: mapValue,
+          variable,
           id: value.mapId,
           origin: id,
           key: value.key,
           show,
           originId: type,
+          value: realValue,
         },
       );
 
@@ -136,8 +143,8 @@ const FieldSetting = (props: IProps) => {
                     if (item.key !== value.key) return item;
                     return {
                       ...item,
-                      variable: mapValue,
                       mapId,
+                      [key]: mapValue,
                     };
                   }),
                 };
@@ -216,17 +223,38 @@ const FieldSetting = (props: IProps) => {
         key: 'variable',
         title: '绑定到变量',
         dataIndex: 'variable',
-        width: 140,
+        width: 90,
         render: (
           value: string,
           record: ComponentData.TBaseInteractiveConfigField,
         ) => {
           return (
-            <Input
+            <InputModal
               className="w-100"
               value={value}
-              onChange={onFieldMapChange.bind(null, record)}
+              onChange={onFieldMapChange.bind(null, record, 'variable')}
               placeholder="可自定义"
+              disabled={disabled}
+            />
+          );
+        },
+      },
+      {
+        key: 'defaultValue',
+        title: '默认值',
+        dataIndex: 'defaultValue',
+        width: 90,
+        render: (
+          value: string | false,
+          record: ComponentData.TBaseInteractiveConfigField,
+        ) => {
+          if (value === false) return '-';
+          return (
+            <InputModal
+              className="w-100"
+              value={value}
+              onChange={onFieldMapChange.bind(null, record, 'defaultValue')}
+              placeholder="初始默认值"
               disabled={disabled}
             />
           );

@@ -137,7 +137,7 @@ const LinkageConfig = (props: {
   return (
     <div className={baseStyles['design-config-interactive-base']}>
       <Collapse
-        defaultActiveKey={['1']}
+        defaultActiveKey={['2']}
         expandIcon={Icon}
         bordered={false}
         className={baseStyles['design-config-interactive-base-collapse']}
@@ -149,7 +149,7 @@ const LinkageConfig = (props: {
               <InfoCircleOutlined className="m-l-4" />
             </IconTooltip>
           }
-          key="1"
+          key="2"
         >
           <Collapse
             defaultActiveKey={keys}

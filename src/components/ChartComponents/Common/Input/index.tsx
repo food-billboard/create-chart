@@ -3,13 +3,14 @@ import { Input as AntInput } from 'antd';
 import { InputProps } from 'antd/es/input';
 import { useUnmount } from 'ahooks';
 import { Validator, useValidatorChange } from '@/hooks';
+import FormModal from '../FormModal';
 
-const Input = (
-  props: InputProps & {
-    triggerOnChangeInOnChange?: boolean;
-    validator?: Validator[];
-  },
-) => {
+type Props = InputProps & {
+  triggerOnChangeInOnChange?: boolean;
+  validator?: Validator[];
+};
+
+const Input = (props: Props) => {
   const {
     triggerOnChangeInOnChange = false,
     validator = [],
@@ -75,5 +76,7 @@ const Input = (
     />
   );
 };
+
+export const InputModal = FormModal<Props>(Input);
 
 export default Input;

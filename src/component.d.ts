@@ -67,6 +67,9 @@ declare namespace ComponentData {
   export type TBaseInteractiveConfigField = {
     key: string;
     variable: string;
+    // 默认值 1.21
+    // false 表示不可编辑
+    defaultValue?: string | false;
     description: string;
     // TParams id
     mapId?: string;
@@ -78,6 +81,7 @@ declare namespace ComponentData {
     name: string;
     show: boolean;
     // version 1.11
+    // 是否可扩展新字段
     extend?: boolean;
     // version 1.11
     description?: string;
