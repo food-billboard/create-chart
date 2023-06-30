@@ -1,10 +1,11 @@
 import { Component } from 'react';
-import { Tabs, Select, Switch } from 'antd';
+import { Tabs, Switch } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { merge } from 'lodash';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
+import Select from '@/components/ChartComponents/Common/Select';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
@@ -95,8 +96,7 @@ class Config extends Component<
                             },
                           });
                         }}
-                      >
-                        {[
+                        options={[
                           {
                             label: '逐条滚动',
                             value: 'column',
@@ -105,15 +105,8 @@ class Config extends Component<
                             label: '整页滚动',
                             value: 'page',
                           },
-                        ].map((item) => {
-                          const { label, value } = item;
-                          return (
-                            <Select.Option key={value} value={value}>
-                              {label}
-                            </Select.Option>
-                          );
-                        })}
-                      </Select>
+                        ]}
+                      />
                     </FullForm>
                   </Item>
                   <Item label="时间">

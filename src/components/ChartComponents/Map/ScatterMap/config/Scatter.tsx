@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
-import { Select } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import Select from '@/components/ChartComponents/Common/Select';
 import IconTooltip from '@/components/IconTooltip';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';

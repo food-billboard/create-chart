@@ -1,5 +1,5 @@
-import { Select } from 'antd';
 import { useControllableValue } from 'ahooks';
+import Select from '@/components/ChartComponents/Common/Select';
 import BackgroundMap from './components/Background';
 
 export { default as BackgroundMap } from './components/Background';
@@ -13,7 +13,6 @@ export const InternalBackgroundSelect = (props: {
   return (
     <Select
       className="w-100"
-      popupClassName="design-config-select-dropdown"
       value={value}
       onChange={onChange}
       options={Object.entries(BackgroundMap).map((item) => {

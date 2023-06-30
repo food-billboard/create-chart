@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Select } from 'antd';
+import Select from '@/components/ChartComponents/Common/Select';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
@@ -227,15 +227,12 @@ class Config extends Component<
                         easingFn: value,
                       });
                     }}
-                  >
-                    {['easeOutExpo', 'outQuintic', 'outCubic'].map((item) => {
-                      return (
-                        <Select.Option key={item} value={item}>
-                          {item}
-                        </Select.Option>
-                      );
-                    })}
-                  </Select>
+                    options={[
+                      { label: 'easeOutExpo' },
+                      { label: 'outQuintic' },
+                      { label: 'outCubic' },
+                    ]}
+                  />
                 </Item>
               </ConfigList>
             ),

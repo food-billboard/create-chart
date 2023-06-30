@@ -1,126 +1,126 @@
-import { Select } from 'antd';
+import Select from '../Select';
 
 const { Option } = Select;
 
 const LINE_STYLE_MAP = [
   {
-    key: 'linear',
+    label: 'linear',
     value: 'linear',
   },
   {
-    key: 'quadraticIn',
+    label: 'quadraticIn',
     value: 'quadraticIn',
   },
   {
-    key: 'quadraticOut',
+    label: 'quadraticOut',
     value: 'quadraticOut',
   },
   {
-    key: 'quadraticInOut',
+    label: 'quadraticInOut',
     value: 'quadraticInOut',
   },
   {
-    key: 'cubicIn',
+    label: 'cubicIn',
     value: 'cubicIn',
   },
   {
-    key: 'cubicOut',
+    label: 'cubicOut',
     value: 'cubicOut',
   },
   {
-    key: 'cubicInOut',
+    label: 'cubicInOut',
     value: 'cubicInOut',
   },
   {
-    key: 'quarticIn',
+    label: 'quarticIn',
     value: 'quarticIn',
   },
   {
-    key: 'quarticInOut',
+    label: 'quarticInOut',
     value: 'quarticInOut',
   },
   {
-    key: 'quinticIn',
+    label: 'quinticIn',
     value: 'quinticIn',
   },
   {
-    key: 'quinticOut',
+    label: 'quinticOut',
     value: 'quinticOut',
   },
   {
-    key: 'quinticInOut',
+    label: 'quinticInOut',
     value: 'quinticInOut',
   },
   {
-    key: 'sinusoidalIn',
+    label: 'sinusoidalIn',
     value: 'sinusoidalIn',
   },
   {
-    key: 'sinusoidalOut',
+    label: 'sinusoidalOut',
     value: 'sinusoidalOut',
   },
   {
-    key: 'sinusoidalInOut',
+    label: 'sinusoidalInOut',
     value: 'sinusoidalInOut',
   },
   {
-    key: 'exponentialIn',
+    label: 'exponentialIn',
     value: 'exponentialIn',
   },
   {
-    key: 'exponentialOut',
+    label: 'exponentialOut',
     value: 'exponentialOut',
   },
   {
-    key: 'exponentialInOut',
+    label: 'exponentialInOut',
     value: 'exponentialInOut',
   },
   {
-    key: 'circularIn',
+    label: 'circularIn',
     value: 'circularIn',
   },
   {
-    key: 'circularOut',
+    label: 'circularOut',
     value: 'circularOut',
   },
   {
-    key: 'circularInOut',
+    label: 'circularInOut',
     value: 'circularInOut',
   },
   {
-    key: 'elasticIn',
+    label: 'elasticIn',
     value: 'elasticIn',
   },
   {
-    key: 'elasticOut',
+    label: 'elasticOut',
     value: 'elasticOut',
   },
   {
-    key: 'elasticInOut',
+    label: 'elasticInOut',
     value: 'elasticInOut',
   },
   {
-    key: 'backIn',
+    label: 'backIn',
     value: 'backIn',
   },
   {
-    key: 'backOut',
+    label: 'backOut',
     value: 'backOut',
   },
   {
-    key: 'backInOut',
+    label: 'backInOut',
     value: 'backInOut',
   },
   {
-    key: 'bounceIn',
+    label: 'bounceIn',
     value: 'bounceIn',
   },
   {
-    key: 'bounceOut',
+    label: 'bounceOut',
     value: 'bounceOut',
   },
   {
-    key: 'bounceInOut',
+    label: 'bounceInOut',
     value: 'bounceInOut',
   },
 ];
@@ -132,16 +132,12 @@ const ChartAnimationTypeSelect = (props: {
   const { value, onChange } = props;
 
   return (
-    <Select value={value} onChange={onChange} className="w-100">
-      {LINE_STYLE_MAP.map((item) => {
-        const { key, value } = item;
-        return (
-          <Option key={value} value={value}>
-            {key}
-          </Option>
-        );
-      })}
-    </Select>
+    <Select
+      value={value}
+      onChange={onChange}
+      className="w-100"
+      options={LINE_STYLE_MAP}
+    />
   );
 };
 

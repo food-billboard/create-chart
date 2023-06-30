@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Select } from 'antd';
+import Select from '@/components/ChartComponents/Common/Select';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';

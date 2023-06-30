@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { Select } from 'antd';
+import Select from '@/components/ChartComponents/Common/Select';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
@@ -156,17 +156,21 @@ const SeriesConfig = (props: {
               }
               onKeyChange('symbolRepeat', realValue);
             }}
-          >
-            <Option key="true" value="true">
-              重复
-            </Option>
-            <Option key="false" value="false">
-              不重复
-            </Option>
-            <Option key="fixed" value="fixed">
-              固定重复
-            </Option>
-          </Select>
+            options={[
+              {
+                label: '重复',
+                value: 'true',
+              },
+              {
+                label: '不重复',
+                value: 'false',
+              },
+              {
+                label: '固定重复',
+                value: 'fixed',
+              },
+            ]}
+          />
         </FullForm>
       </Item>
     );
@@ -180,14 +184,8 @@ const SeriesConfig = (props: {
             className="w-100"
             value={symbolRepeatDirection}
             onChange={onKeyChange.bind(null, 'symbolRepeatDirection')}
-          >
-            <Option key="start" value="start">
-              start
-            </Option>
-            <Option key="end" value="end">
-              end
-            </Option>
-          </Select>
+            options={[{ label: 'start' }, { label: 'end' }]}
+          />
         </FullForm>
       </Item>
     );

@@ -1,6 +1,7 @@
 import { forwardRef, useImperativeHandle, useState, useCallback } from 'react';
-import { Switch, Drawer, Select } from 'antd';
+import { Switch, Drawer } from 'antd';
 import { connect } from 'dva';
+import Select from '@/components/ChartComponents/Common/Select';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';

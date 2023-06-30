@@ -1,7 +1,8 @@
 import { ReactNode, useCallback, useMemo } from 'react';
-import { Radio, Select } from 'antd';
+import { Radio } from 'antd';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import Select from '../Select';
 import CodeEditor from './components/CodeEditor';
 import { DEFAULT_CONDITION_CONFIG } from '../Constants/defaultConfig';
 import ConfigList from '../Structure/ConfigList';

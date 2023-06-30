@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
-import { Select } from 'antd';
 import { pick } from 'lodash';
+import Select from '@/components/ChartComponents/Common/Select';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
@@ -257,14 +257,8 @@ const RadarConfig = (props: {
             value={shape}
             onChange={onKeyChange.bind(null, 'shape')}
             className="w-100"
-          >
-            <Select.Option key="polygon" value="polygon">
-              polygon
-            </Select.Option>
-            <Select.Option key="circle" value="circle">
-              circle
-            </Select.Option>
-          </Select>
+            options={[{ label: 'polygon' }, { label: 'circle' }]}
+          />
         </FullForm>
       </Item>
     );

@@ -1,4 +1,4 @@
-import { Drawer, Select, Checkbox as AntCheckbox } from 'antd';
+import { Drawer, Checkbox as AntCheckbox } from 'antd';
 import {
   forwardRef,
   useCallback,
@@ -7,6 +7,7 @@ import {
   useState,
 } from 'react';
 import { useResponseData } from '@/hooks';
+import Select from '@/components/ChartComponents/Common/Select';
 import FocusWrapper from '@/components/FocusWrapper';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import {
@@ -114,6 +115,14 @@ const DataConfigDetail = forwardRef<
     [onChange],
   );
 
+  const dataSourceOptions = useMemo(() => {
+    const options = [{ label: '静态数据', value: 'static' }];
+    if (!!GlobalConfig.ENABLE_MOCK_DATA_CONFIG && !GlobalConfig.IS_STATIC)
+      options.push({ label: 'Mock', value: 'mock' });
+    options.push({ label: 'API', value: 'api' });
+    return options;
+  }, []);
+
   // --- end
 
   return (
@@ -134,25 +143,12 @@ const DataConfigDetail = forwardRef<
         <SubTitle>数据源类型</SubTitle>
         <SubForm>
           <Select
-            className="w-100 c-f-s"
-            popupClassName="design-config-select-dropdown"
+            className="w-100"
             value={type}
             defaultValue="static"
             onChange={onDataTypeChange}
-          >
-            <Option key="static" value="static">
-              静态数据
-            </Option>
-            {!!GlobalConfig.ENABLE_MOCK_DATA_CONFIG &&
-              !GlobalConfig.IS_STATIC && (
-                <Option key="mock" value="mock">
-                  Mock
-                </Option>
-              )}
-            <Option key="api" value="api">
-              API
-            </Option>
-          </Select>
+            options={dataSourceOptions}
+          />
         </SubForm>
         <DefineConfig
           type={type}

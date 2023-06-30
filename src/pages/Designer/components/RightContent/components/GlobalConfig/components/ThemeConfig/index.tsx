@@ -1,5 +1,5 @@
 import { useMemo, useCallback, useState } from 'react';
-import { Select } from 'antd';
+import Select from '@/components/ChartComponents/Common/Select';
 import { useHash } from '@/hooks';
 import ThemeUtil from '@/utils/Assist/Theme';
 
@@ -33,16 +33,8 @@ export const BaseThemeConfig = (props: {
       onChange={onChange}
       className="w-100"
       disabled={!!disabled}
-    >
-      {dataSource.map((item) => {
-        const { label, value } = item;
-        return (
-          <Select.Option key={value} value={value}>
-            {label}
-          </Select.Option>
-        );
-      })}
-    </Select>
+      options={dataSource}
+    />
   );
 };
 

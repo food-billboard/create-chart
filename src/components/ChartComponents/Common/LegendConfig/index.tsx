@@ -1,7 +1,8 @@
 import { ReactNode, useCallback, useMemo } from 'react';
-import { Select, Switch } from 'antd';
+import { Switch } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import IconTooltip from '@/components/IconTooltip';
+import Select from '../Select';
 import ConfigList from '../Structure/ConfigList';
 import { SingleCollapse as Collapse } from '../Collapse';
 import { FontConfigList } from '../FontConfig';
@@ -92,14 +93,17 @@ const LegendConfig = (props: LegendConfigProps) => {
             value={type}
             onChange={onKeyChange.bind(null, 'type')}
             className="w-100"
-          >
-            <Select.Option key="plain" value="plain">
-              普通图例
-            </Select.Option>
-            <Select.Option key="scroll" value="scroll">
-              可滚动翻页的图例
-            </Select.Option>
-          </Select>
+            options={[
+              {
+                label: '普通图例',
+                value: 'plain',
+              },
+              {
+                label: '可滚动翻页的图例',
+                value: 'scroll',
+              },
+            ]}
+          />
         </FullForm>
       </Item>
     );

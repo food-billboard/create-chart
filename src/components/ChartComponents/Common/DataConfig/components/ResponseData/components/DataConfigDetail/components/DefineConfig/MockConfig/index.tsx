@@ -1,8 +1,9 @@
 import { useCallback, useMemo } from 'react';
 import { connect } from 'dva';
-import { Button, Select } from 'antd';
+import { Button } from 'antd';
 import { nanoid } from 'nanoid';
 import { DeleteOutlined } from '@ant-design/icons';
+import Select from '@/components/ChartComponents/Common/Select';
 import Input from '@/components/ChartComponents/Common/Input';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';

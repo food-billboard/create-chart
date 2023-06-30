@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { Select } from 'antd';
 import { useControllableValue } from 'ahooks';
 import { connect } from 'dva';
 import { pick } from 'lodash';
 import classNames from 'classnames';
+import Select from '@/components/ChartComponents/Common/Select';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import BorderMap from './components/Border';
 import { CommonBorderProps } from './components/Border/type';

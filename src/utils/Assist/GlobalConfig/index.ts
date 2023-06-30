@@ -7,7 +7,7 @@ import {
 const isStatic = process.env.REACT_APP === 'static';
 
 class GlobalConfig {
-  // 是否是建议前端版本
+  // 是否是简易前端版本
   IS_STATIC = isStatic;
 
   // 条件的最大个数

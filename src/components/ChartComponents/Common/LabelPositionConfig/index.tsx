@@ -1,5 +1,4 @@
-import { useMemo } from 'react';
-import { Select } from 'antd';
+import Select from '../Select';
 import ConfigList from '../Structure/ConfigList';
 import FullForm from '../Structure/FullForm';
 
@@ -47,23 +46,15 @@ const LabelPositionConfig = (props: {
 }) => {
   const { value, onChange, level } = props;
 
-  const list = useMemo(() => {
-    return POSITION_MAP.map((item) => {
-      const { value, label } = item;
-      return (
-        <Select.Option key={value} value={value}>
-          {label}
-        </Select.Option>
-      );
-    });
-  }, []);
-
   return (
     <Item label="位置" labelProps={{ level }}>
       <FullForm>
-        <Select value={value} onChange={onChange as any} className="w-100">
-          {list}
-        </Select>
+        <Select
+          value={value}
+          onChange={onChange as any}
+          className="w-100"
+          options={POSITION_MAP}
+        />
       </FullForm>
     </Item>
   );

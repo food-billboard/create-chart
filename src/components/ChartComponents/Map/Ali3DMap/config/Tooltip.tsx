@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Select } from 'antd';
+import Select from '@/components/ChartComponents/Common/Select';
 import TooltipConfigCommon from '@/components/ChartComponents/Common/TooltipCommon';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import TooltipAnimationConfig from '@/components/ChartComponents/Common/TooltipAnimationConfig';

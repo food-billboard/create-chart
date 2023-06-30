@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { Select } from 'antd';
 import IconTooltip from '@/components/IconTooltip';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import Select from '@/components/ChartComponents/Common/Select';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';

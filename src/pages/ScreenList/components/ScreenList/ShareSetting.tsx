@@ -218,16 +218,8 @@ const ShareSetting = forwardRef<
               setTime(value);
             }}
             className="w-100"
-          >
-            {TIME_MAP.map((item) => {
-              const { value, label } = item;
-              return (
-                <Select.Option key={value} value={value}>
-                  {label}
-                </Select.Option>
-              );
-            })}
-          </Select>
+            options={TIME_MAP}
+          />
         </Item>
         <Item label="密码" help="不用密码可不设">
           <Password

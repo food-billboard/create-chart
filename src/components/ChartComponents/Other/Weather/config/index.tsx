@@ -1,7 +1,8 @@
 import { Component } from 'react';
-import { Tabs, Select, Switch } from 'antd';
+import { Tabs, Switch } from 'antd';
 import { merge } from 'lodash';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import Select from '@/components/ChartComponents/Common/Select';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';

@@ -1,5 +1,4 @@
-import {} from 'react';
-import { Select } from 'antd';
+import Select from '../../../Select';
 
 const DATASOURCE = [
   {

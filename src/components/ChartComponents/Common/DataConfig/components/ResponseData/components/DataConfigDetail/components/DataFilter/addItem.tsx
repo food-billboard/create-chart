@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from 'react';
-import { Select, Button } from 'antd';
+import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
+import Select from '@/components/ChartComponents/Common/Select';
 import styles from './index.less';
 
 const { Option } = Select;
@@ -45,16 +46,11 @@ const DataFilter = (props: {
         onSelect={onSelect}
         size="middle"
         value=""
-      >
-        {realCallback.map((callback) => {
-          const { id, name } = callback;
-          return (
-            <Option value={id} key={id}>
-              {name}
-            </Option>
-          );
-        })}
-      </Select>
+        options={realCallback.map((item) => ({
+          label: item.name,
+          value: item.id,
+        }))}
+      />
       <Button
         className={styles['design-config-data-filter-add-item-btn']}
         onClick={onClick}

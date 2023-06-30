@@ -55,14 +55,17 @@ const SeriesConfig = (props: {
                   position: value,
                 });
               }}
-            >
-              <Select.Option key="inside" value="inside">
-                内部
-              </Select.Option>
-              <Select.Option key="outside" value="outside">
-                外部
-              </Select.Option>
-            </Select>
+              options={[
+                {
+                  label: '内部',
+                  value: 'inside',
+                },
+                {
+                  label: '外部',
+                  value: 'outside',
+                },
+              ]}
+            />
           </FullForm>
         </Item>
         <FormatterSelect

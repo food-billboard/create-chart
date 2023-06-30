@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
-import { Select, Typography } from 'antd';
+import { Typography } from 'antd';
 import { merge } from 'lodash';
 import { connect } from 'dva';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import Select from '@/components/ChartComponents/Common/Select';
 import IconTooltipBase from '@/components/IconTooltip';
 import Checkbox from '@/components/ChartComponents/Common/Checkbox';
 import FilterDataUtil from '@/utils/Assist/FilterData';
@@ -62,8 +63,7 @@ const ApiConfig = (props: ApiConfigProps) => {
       <SubTitle>请求方式</SubTitle>
       <SubForm>
         <Select
-          className="w-100 c-f-s"
-          popupClassName="design-config-select-dropdown"
+          className="w-100"
           defaultValue="POST"
           value={method}
           onChange={(value) => {
@@ -75,10 +75,10 @@ const ApiConfig = (props: ApiConfigProps) => {
           }}
           options={[
             {
-              value: 'POST',
+              label: 'POST',
             },
             {
-              value: 'GET',
+              label: 'GET',
             },
           ]}
         />

@@ -1,8 +1,8 @@
 import { useCallback, useMemo, CSSProperties } from 'react';
-import { Select } from 'antd';
 import classnames from 'classnames';
 import { DeleteOutlined, PlusCircleTwoTone } from '@ant-design/icons';
 import { ParamsSelectSingle } from '@/components/ParamsSelect';
+import Select from '@/components/ChartComponents/Common/Select';
 import { DEFAULT_CONDITION_CONFIG_ITEM_RULE_VALUE } from '../../../Constants/defaultConfig';
 import Input from '../../../Input';
 import Header from '../Header';

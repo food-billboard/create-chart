@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
-import { Select, Switch } from 'antd';
+import { Switch } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import Select from '@/components/ChartComponents/Common/Select';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';

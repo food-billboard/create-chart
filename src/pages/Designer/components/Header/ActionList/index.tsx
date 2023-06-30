@@ -5,8 +5,9 @@ import {
   BlockOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
-import { Select, Space } from 'antd';
+import { Space } from 'antd';
 import { connect } from 'dva';
+import Select from '@/components/ChartComponents/Common/Select';
 import DebounceButton from '@/components/DebounceButton';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import { useIdPathMap } from '@/hooks';

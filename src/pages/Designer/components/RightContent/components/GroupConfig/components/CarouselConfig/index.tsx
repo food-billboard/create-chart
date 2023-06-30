@@ -1,6 +1,6 @@
 import { useCallback, useState, useMemo } from 'react';
 import { connect } from 'dva';
-import { Switch, Select } from 'antd';
+import { Switch } from 'antd';
 import { useUpdate } from 'ahooks';
 import {
   BorderTopOutlined,
@@ -10,6 +10,7 @@ import {
   BorderRightOutlined,
   BorderHorizontalOutlined,
 } from '@ant-design/icons';
+import Select from '@/components/ChartComponents/Common/Select';
 import { ConnectState } from '@/models/connect';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';

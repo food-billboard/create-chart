@@ -1,38 +1,38 @@
-import { Select } from 'antd';
+import Select from '../Select';
 
 const { Option } = Select;
 
 const LINE_STYLE_MAP = [
   {
-    key: 'circle',
+    label: 'circle',
     value: 'circle',
   },
   {
-    key: 'rect',
+    label: 'rect',
     value: 'rect',
   },
   {
-    key: 'roundRect',
+    label: 'roundRect',
     value: 'roundRect',
   },
   {
-    key: 'triangle',
+    label: 'triangle',
     value: 'triangle',
   },
   {
-    key: 'diamond',
+    label: 'diamond',
     value: 'diamond',
   },
   {
-    key: 'pin',
+    label: 'pin',
     value: 'pin',
   },
   {
-    key: 'arrow',
+    label: 'arrow',
     value: 'arrow',
   },
   {
-    key: 'none',
+    label: 'none',
     value: 'none',
   },
 ];
@@ -44,16 +44,12 @@ const SymbolSelect = (props: {
   const { value, onChange } = props;
 
   return (
-    <Select value={value} onChange={onChange} className="w-100">
-      {LINE_STYLE_MAP.map((item) => {
-        const { key, value } = item;
-        return (
-          <Option key={value} value={value}>
-            {key}
-          </Option>
-        );
-      })}
-    </Select>
+    <Select
+      value={value}
+      onChange={onChange}
+      className="w-100"
+      options={LINE_STYLE_MAP}
+    />
   );
 };
 

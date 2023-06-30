@@ -1,18 +1,18 @@
-import { Select } from 'antd';
+import Select from '../Select';
 
 const { Option } = Select;
 
 const LINE_STYLE_MAP = [
   {
-    key: 'solid',
+    label: 'solid',
     value: 'solid',
   },
   {
-    key: 'dashed',
+    label: 'dashed',
     value: 'dashed',
   },
   {
-    key: 'dotted',
+    label: 'dotted',
     value: 'dotted',
   },
 ];
@@ -24,16 +24,12 @@ const LineStyle = (props: {
   const { value, onChange } = props;
 
   return (
-    <Select value={value} onChange={onChange} className="w-100">
-      {LINE_STYLE_MAP.map((item) => {
-        const { key, value } = item;
-        return (
-          <Option key={value} value={value}>
-            {key}
-          </Option>
-        );
-      })}
-    </Select>
+    <Select
+      value={value}
+      onChange={onChange}
+      className="w-100"
+      options={LINE_STYLE_MAP}
+    />
   );
 };
 

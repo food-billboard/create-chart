@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { Select } from 'antd';
+import Select from '@/components/ChartComponents/Common/Select';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
@@ -164,24 +164,33 @@ const SeriesConfig = (props: {
             value={shape}
             onChange={onKeyChange.bind(null, 'shape')}
             className="w-100"
-          >
-            {[
-              'cardioid',
-              'circle',
-              'diamond',
-              'square',
-              'triangle-forward',
-              'triangle',
-              'pentagon',
-              'star',
-            ].map((item) => {
-              return (
-                <Select.Option key={item} value={item}>
-                  {item}
-                </Select.Option>
-              );
-            })}
-          </Select>
+            options={[
+              {
+                label: 'cardioid',
+              },
+              {
+                label: 'circle',
+              },
+              {
+                label: 'diamond',
+              },
+              {
+                label: 'square',
+              },
+              {
+                label: 'triangle-forward',
+              },
+              {
+                label: 'triangle',
+              },
+              {
+                label: 'pentagon',
+              },
+              {
+                label: 'star',
+              },
+            ]}
+          />
         </FullForm>
       </Item>
     );

@@ -1,9 +1,10 @@
-import { Select, Checkbox } from 'antd';
+import { Checkbox } from 'antd';
 import { connect } from 'dva';
 import { isEqual, merge } from 'lodash';
 import { useMemo, useCallback, useState, CSSProperties } from 'react';
 import classnames from 'classnames';
 import { SelectProps } from 'antd/es/select';
+import Select from '@/components/ChartComponents/Common/Select';
 import VariableStringUtil from '@/utils/Assist/VariableString';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
@@ -49,14 +50,13 @@ const ParamsSelect = (
     return VariableStringUtil.getAllGlobalParams4Array(params, constants);
   }, [params, constants]);
 
-  const domList = useMemo(() => {
+  const options = useMemo(() => {
     return dataSource.map((item) => {
       const { key, id } = item;
-      return (
-        <Option key={id} value={id}>
-          {key}
-        </Option>
-      );
+      return {
+        label: key,
+        value: id,
+      };
     });
   }, [dataSource]);
 
@@ -102,9 +102,8 @@ const ParamsSelect = (
         onChange={handleChange}
         onBlur={handleBlur}
         {...nextProps}
-      >
-        {domList}
-      </Select>
+        options={options}
+      />
       {changeLazyNode}
     </div>
   );
@@ -141,14 +140,13 @@ const InternalParamsSelectSingle = (
     return VariableStringUtil.getAllGlobalParams4Array(params, constants);
   }, [params, constants]);
 
-  const domList = useMemo(() => {
+  const options = useMemo(() => {
     return dataSource.map((item) => {
       const { key, value, id } = item;
-      return (
-        <Option key={id} value={id}>
-          {key}
-        </Option>
-      );
+      return {
+        label: key,
+        value: id,
+      };
     });
   }, [dataSource]);
 
@@ -195,9 +193,8 @@ const InternalParamsSelectSingle = (
         onChange={handleChange}
         onBlur={handleBlur}
         {...nextProps}
-      >
-        {domList}
-      </Select>
+        options={options}
+      />
       {changeLazyNode}
     </div>
   );

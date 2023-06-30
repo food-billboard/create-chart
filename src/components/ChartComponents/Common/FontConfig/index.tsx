@@ -1,6 +1,6 @@
 import { useCallback, useMemo, ReactNode } from 'react';
-import { Select } from 'antd';
 import { useControllableValue } from 'ahooks';
+import Select from '../Select';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import ConfigList, { TConfigListItemProps } from '../Structure/ConfigList';
 import HalfForm from '../Structure/HalfForm';
@@ -31,23 +31,23 @@ const FONT_WEIGHT_ENUM = [
 
 // const FONT_TYPE_ENUM = [
 //   {
-//     key: '默认',
+//     label: '默认',
 //     value: 'sans-serif'
 //   },
 //   {
-//     key: '宋体',
+//     label: '宋体',
 //     value: 'SimSun STSong',
 //   },
 //   {
-//     key: '黑体',
+//     label: '黑体',
 //     value: 'SimHei STHeiti',
 //   },
 //   {
-//     key: '楷体',
+//     label: '楷体',
 //     value: 'KaiTi STKaiti',
 //   },
 //   {
-//     key: '仿宋',
+//     label: '仿宋',
 //     value: 'FangSong STFangsong',
 //   },
 // ];
@@ -56,27 +56,27 @@ const FONT_WEIGHT_ENUM = [
 // * 待改进
 const FONT_TYPE_ENUM = [
   {
-    key: 'sans-serif',
+    label: 'sans-serif',
     value: 'sans-serif',
   },
   {
-    key: 'serif',
+    label: 'serif',
     value: 'serif',
   },
   {
-    key: 'monospace',
+    label: 'monospace',
     value: 'monospace',
   },
   {
-    key: 'Arial',
+    label: 'Arial',
     value: 'Arial',
   },
   {
-    key: 'Courier New',
+    label: 'Courier New',
     value: 'Courier New',
   },
   {
-    key: 'Microsoft YaHei',
+    label: 'Microsoft YaHei',
     value: 'Microsoft YaHei',
   },
 ];
@@ -131,16 +131,8 @@ const FontConfig = (props: {
           onChange={onChange.bind(null, 'fontFamily')}
           className="w-100"
           allowClear
-        >
-          {FONT_TYPE_ENUM.map((item) => {
-            const { key, value } = item;
-            return (
-              <Option key={value} value={value}>
-                {key}
-              </Option>
-            );
-          })}
-        </Select>
+          options={FONT_TYPE_ENUM}
+        />
       </HalfForm>
     );
   }, [ignore, fontFamily, onChange]);
@@ -153,15 +145,8 @@ const FontConfig = (props: {
           defaultValue={fontWeight}
           onChange={onChange.bind(null, 'fontWeight')}
           className="w-100"
-        >
-          {FONT_WEIGHT_ENUM.map((item) => {
-            return (
-              <Option key={item} value={item}>
-                {item}
-              </Option>
-            );
-          })}
-        </Select>
+          options={FONT_WEIGHT_ENUM.map((item) => ({ label: item }))}
+        />
       </HalfForm>
     );
   }, [ignore, fontWeight, onChange]);
@@ -264,16 +249,8 @@ export const FontConfigList = (props: {
             defaultValue={fontFamily}
             onChange={onChange.bind(null, 'fontFamily')}
             className="w-100"
-          >
-            {FONT_TYPE_ENUM.map((item) => {
-              const { key, value } = item;
-              return (
-                <Option key={value} value={value}>
-                  {key}
-                </Option>
-              );
-            })}
-          </Select>
+            options={FONT_TYPE_ENUM}
+          />
         </FullForm>
       </Item>
     );
@@ -288,15 +265,8 @@ export const FontConfigList = (props: {
             defaultValue={fontWeight}
             onChange={onChange.bind(null, 'fontWeight')}
             className="w-100"
-          >
-            {FONT_WEIGHT_ENUM.map((item) => {
-              return (
-                <Option key={item} value={item}>
-                  {item}
-                </Option>
-              );
-            })}
-          </Select>
+            options={FONT_WEIGHT_ENUM.map((item) => ({ label: item }))}
+          />
         </FullForm>
       </Item>
     );

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Select } from 'antd';
+import Select from '../Select';
 import ConfigList from '../Structure/ConfigList';
 import HalfForm from '../Structure/HalfForm';
 

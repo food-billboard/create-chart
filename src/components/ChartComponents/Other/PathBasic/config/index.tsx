@@ -1,9 +1,10 @@
 import { Component } from 'react';
-import { Switch, Select } from 'antd';
+import { Switch } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
+import Select from '@/components/ChartComponents/Common/Select';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import LocalUpload from '@/components/ChartComponents/Common/LocalUpload';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';

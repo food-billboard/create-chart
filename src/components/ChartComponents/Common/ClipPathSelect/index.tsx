@@ -1,4 +1,4 @@
-import { Select } from 'antd';
+import Select from '../Select';
 import { PathStyleMap } from '@/hooks/useClipPath';
 import ConfigList from '../Structure/ConfigList';
 import FullForm from '../Structure/FullForm';

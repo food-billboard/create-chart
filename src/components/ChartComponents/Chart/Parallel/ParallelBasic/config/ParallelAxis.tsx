@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { Select } from 'antd';
+import Select from '@/components/ChartComponents/Common/Select';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
@@ -94,15 +94,12 @@ const ParallelAxisConfig = (props: {
               className="w-100"
               value={nameLocation}
               onChange={onKeyChange.bind(null, 'nameLocation')}
-            >
-              {['start', 'center', 'end'].map((item) => {
-                return (
-                  <Select.Option key={item} value={item}>
-                    {item}
-                  </Select.Option>
-                );
-              })}
-            </Select>
+              options={[
+                { label: 'start' },
+                { label: 'center' },
+                { label: 'end' },
+              ]}
+            />
           </FullForm>
         </Item>
         <Collapse

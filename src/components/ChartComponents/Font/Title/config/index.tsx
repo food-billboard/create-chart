@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import { Select } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import Select from '@/components/ChartComponents/Common/Select';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
@@ -147,8 +147,7 @@ class Config extends Component<
                           speed: value,
                         });
                       }}
-                    >
-                      {[
+                      options={[
                         {
                           label: '正常',
                           value: '',
@@ -169,15 +168,8 @@ class Config extends Component<
                           label: '很快',
                           value: 'animate__faster',
                         },
-                      ].map((item) => {
-                        const { label, value } = item;
-                        return (
-                          <Select.Option key={value} value={value}>
-                            {label}
-                          </Select.Option>
-                        );
-                      })}
-                    </Select>
+                      ]}
+                    />
                   </Item>
                   <Item label="延迟">
                     <Select
@@ -188,8 +180,7 @@ class Config extends Component<
                           delay: value,
                         });
                       }}
-                    >
-                      {[
+                      options={[
                         {
                           label: '不延迟',
                           value: '',
@@ -210,15 +201,8 @@ class Config extends Component<
                           label: '延迟5秒',
                           value: 'animate__delay-5s',
                         },
-                      ].map((item) => {
-                        const { label, value } = item;
-                        return (
-                          <Select.Option key={value} value={value}>
-                            {label}
-                          </Select.Option>
-                        );
-                      })}
-                    </Select>
+                      ]}
+                    />
                   </Item>
                   <Item label="重复">
                     <Select
@@ -229,8 +213,7 @@ class Config extends Component<
                           repeat: value,
                         });
                       }}
-                    >
-                      {[
+                      options={[
                         {
                           label: '重复一次',
                           value: 'animate__repeat-1',
@@ -247,15 +230,8 @@ class Config extends Component<
                           label: '无限重复',
                           value: 'animate__infinite',
                         },
-                      ].map((item) => {
-                        const { label, value } = item;
-                        return (
-                          <Select.Option key={value} value={value}>
-                            {label}
-                          </Select.Option>
-                        );
-                      })}
-                    </Select>
+                      ]}
+                    />
                   </Item>
                 </Collapse>
               </ConfigList>

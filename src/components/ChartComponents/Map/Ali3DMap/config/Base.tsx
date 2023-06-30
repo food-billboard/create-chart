@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Select } from 'antd';
+import Select from '@/components/ChartComponents/Common/Select';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';

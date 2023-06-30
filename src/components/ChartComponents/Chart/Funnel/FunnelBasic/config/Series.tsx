@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { Select } from 'antd';
+import Select from '@/components/ChartComponents/Common/Select';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
@@ -70,14 +70,17 @@ const SeriesConfig = (props: {
                   position: value,
                 });
               }}
-            >
-              <Select.Option key="inside" value="inside">
-                内部
-              </Select.Option>
-              <Select.Option key="outside" value="outside">
-                外部
-              </Select.Option>
-            </Select>
+              options={[
+                {
+                  label: '内部',
+                  value: 'inside',
+                },
+                {
+                  label: '外部',
+                  value: 'outside',
+                },
+              ]}
+            />
           </FullForm>
         </Item>
         <FormatterSelect

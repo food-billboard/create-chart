@@ -1,8 +1,9 @@
 import { Component } from 'react';
-import { Select, Switch } from 'antd';
+import { Switch } from 'antd';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
+import Select from '@/components/ChartComponents/Common/Select';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
