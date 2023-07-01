@@ -9,26 +9,32 @@ import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import Input from '@/components/ChartComponents/Common/Input';
+import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
 import { TTabConfig } from '../type';
 
 const { Item } = ConfigList;
 
 class Config extends Component<ComponentData.ComponentConfigProps<TTabConfig>> {
   onKeyChange = (key: keyof TTabConfig, value: any) => {
-    this.props.onChange({
-      config: {
-        options: {
-          [key]: value,
+    this.props.onChange(
+      updateInteractiveAndSyncParams4Component<TTabConfig>({
+        key,
+        defaultValueKey: 'defaultValue',
+        callback: (field) => {
+          return field.key === 'value' && field._defaultValue_ === false;
         },
-      },
-    });
+        props: this.props,
+        newValue: value,
+      }),
+    );
   };
 
   render() {
     const { value } = this.props;
     const {
       config: {
-        options: { base, active, loop },
+        options: { base, active, loop, defaultValue },
       },
     } = value;
 
@@ -120,6 +126,23 @@ class Config extends Component<ComponentData.ComponentConfigProps<TTabConfig>> {
               </ConfigList>
             ),
             key: '2',
+          },
+          {
+            label: <Tab>交互</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <Item label="默认值">
+                  <FullForm>
+                    <Input
+                      className="w-100"
+                      value={defaultValue}
+                      onChange={this.onKeyChange.bind(this, 'defaultValue')}
+                    />
+                  </FullForm>
+                </Item>
+              </ConfigList>
+            ),
+            key: '4',
           },
           {
             label: <Tab>轮播</Tab>,

@@ -59,6 +59,12 @@ export default () => {
               variable: '',
               description: '状态',
             },
+            {
+              key: 'current',
+              variable: '',
+              description: '当前索引',
+              _defaultValue_: false,
+            },
           ],
         },
         {
@@ -85,6 +91,12 @@ export default () => {
               key: 'status',
               variable: '',
               description: '状态',
+            },
+            {
+              key: 'current',
+              variable: '',
+              description: '当前索引',
+              _defaultValue_: false,
             },
           ],
         },
@@ -138,7 +150,7 @@ export default () => {
       click: {
         show: false,
       },
-      defaultCurrent: 1,
+      defaultCurrent: 0,
       carousel: {
         show: false,
         loop: true,

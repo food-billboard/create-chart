@@ -1,4 +1,5 @@
 export type TSelectConfig = {
+  defaultValue: string;
   base: {
     textStyle: ComponentData.TFontConfig;
     backgroundColor: ComponentData.TColorConfig;

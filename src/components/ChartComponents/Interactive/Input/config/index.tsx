@@ -10,6 +10,7 @@ import Input from '@/components/ChartComponents/Common/Input';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
 import { TInputConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -17,13 +18,17 @@ class Config extends Component<
   ComponentData.ComponentConfigProps<TInputConfig>
 > {
   onKeyChange = (key: keyof TInputConfig, value: any) => {
-    this.props.onChange({
-      config: {
-        options: {
-          [key]: value,
+    this.props.onChange(
+      updateInteractiveAndSyncParams4Component<TInputConfig>({
+        key,
+        defaultValueKey: 'defaultValue',
+        callback: (field) => {
+          return field.key === 'value' && field._defaultValue_ === false;
         },
-      },
-    });
+        props: this.props,
+        newValue: value,
+      }),
+    );
   };
 
   render() {
@@ -37,6 +42,7 @@ class Config extends Component<
           textStyle,
           placeholder,
           search,
+          defaultValue,
         },
       },
     } = value;
@@ -93,6 +99,14 @@ class Config extends Component<
             label: <Tab>交互</Tab>,
             children: (
               <ConfigList level={1}>
+                <Item label="默认值">
+                  <FullForm>
+                    <Input
+                      value={defaultValue}
+                      onChange={this.onKeyChange.bind(this, 'defaultValue')}
+                    />
+                  </FullForm>
+                </Item>
                 <Collapse
                   child={{
                     header: '占位符',

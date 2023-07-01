@@ -11,6 +11,7 @@ import Input from '@/components/ChartComponents/Common/Input';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import IconTooltip from '@/components/IconTooltip';
+import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
 import { TCheckboxConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -18,13 +19,17 @@ class Config extends Component<
   ComponentData.ComponentConfigProps<TCheckboxConfig>
 > {
   onKeyChange = (key: keyof TCheckboxConfig, value: any) => {
-    this.props.onChange({
-      config: {
-        options: {
-          [key]: value,
+    this.props.onChange(
+      updateInteractiveAndSyncParams4Component<TCheckboxConfig>({
+        key,
+        defaultValueKey: 'defaultChecked',
+        callback: (field) => {
+          return field.key === 'value' && field._defaultValue_ === false;
         },
-      },
-    });
+        props: this.props,
+        newValue: value,
+      }),
+    );
   };
 
   render() {

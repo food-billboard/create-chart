@@ -3,6 +3,7 @@ import { uniqueId, merge } from 'lodash';
 import { DatePicker as AntDatePicker } from 'antd';
 import classnames from 'classnames';
 import moment from 'moment';
+import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
@@ -243,13 +244,9 @@ const DatePicker = (
     );
   }, [className]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     setDateValue(moment(defaultDate));
   }, [defaultDate]);
-
-  useEffect(() => {
-    onChange(dateValue);
-  }, []);
 
   return (
     <>

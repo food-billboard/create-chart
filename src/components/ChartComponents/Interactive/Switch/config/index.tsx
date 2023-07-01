@@ -11,6 +11,7 @@ import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIc
 import { CompatColorSelect } from '@/components/ColorSelect';
 import Input from '@/components/ChartComponents/Common/Input';
 import BoxShadowConfig from '@/components/ChartComponents/Common/BoxShadowConfig';
+import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
 import { TSwitchConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -18,13 +19,17 @@ class Config extends Component<
   ComponentData.ComponentConfigProps<TSwitchConfig>
 > {
   onKeyChange = (key: keyof TSwitchConfig, value: any) => {
-    this.props.onChange({
-      config: {
-        options: {
-          [key]: value,
+    this.props.onChange(
+      updateInteractiveAndSyncParams4Component<TSwitchConfig>({
+        key,
+        defaultValueKey: 'defaultChecked',
+        callback: (field) => {
+          return field.key === 'value' && field._defaultValue_ === false;
         },
-      },
-    });
+        props: this.props,
+        newValue: value,
+      }),
+    );
   };
 
   render() {

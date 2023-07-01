@@ -36,6 +36,7 @@ export default () => {
       disabled: true,
     },
     options: {
+      defaultValue: '',
       border: {
         type: 'solid',
         width: 1,

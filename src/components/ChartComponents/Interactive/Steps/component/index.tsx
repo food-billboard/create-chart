@@ -1,6 +1,7 @@
 import { useMemo, useRef, useCallback, useState, useEffect } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
+import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -68,8 +69,12 @@ const Steps = (props: ComponentData.CommonComponentProps<TStepsConfig>) => {
 
   const onClick = useCallback(
     (item: any, index: number) => {
-      syncInteractiveAction('click', item);
-      linkageMethod('click-item', item);
+      const realItem = {
+        ...item,
+        current: index,
+      };
+      syncInteractiveAction('click', realItem);
+      linkageMethod('click-item', realItem);
       setActiveStep(index);
       clearInterval(timerRef.current);
       if (screenType === 'edit' && carousel.show) return;
@@ -83,7 +88,10 @@ const Steps = (props: ComponentData.CommonComponentProps<TStepsConfig>) => {
       setActiveStep((prev) => {
         const newTarget = change(prev);
         const target = finalValue[newTarget];
-        resolve(target);
+        resolve({
+          ...target,
+          current: newTarget,
+        });
         return newTarget;
       });
     }).then((data) => {
@@ -196,7 +204,7 @@ const Steps = (props: ComponentData.CommonComponentProps<TStepsConfig>) => {
     return status === 'error' ? 'error' : 'finish';
   }, [isInteractive, finalValue, activeStep]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     setActiveStep(defaultCurrent);
   }, [defaultCurrent]);
 

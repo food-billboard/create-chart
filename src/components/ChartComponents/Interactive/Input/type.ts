@@ -1,4 +1,5 @@
 export type TInputConfig = {
+  defaultValue: string;
   border: ComponentData.ComponentLineGroupConfig;
   borderRadius: number;
   placeholder: {

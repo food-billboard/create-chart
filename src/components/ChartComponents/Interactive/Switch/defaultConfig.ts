@@ -21,6 +21,7 @@ export default () => {
               key: 'value',
               variable: '',
               description: '状态',
+              _defaultValue_: false,
             },
           ],
         },

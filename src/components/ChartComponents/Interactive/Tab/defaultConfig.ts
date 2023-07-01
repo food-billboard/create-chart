@@ -31,6 +31,7 @@ export default () => {
               key: 'value',
               variable: '',
               description: '数据值',
+              _defaultValue_: false,
             },
             {
               key: 'name',
@@ -48,6 +49,7 @@ export default () => {
               key: 'value',
               variable: '',
               description: '数据值',
+              _defaultValue_: false,
             },
             {
               key: 'name',
@@ -89,6 +91,7 @@ export default () => {
       },
     },
     options: {
+      defaultValue: DEFAULT_VALUE[0].value,
       base: {
         textStyle: {
           ...DEFAULT_FONT_CONFIG,

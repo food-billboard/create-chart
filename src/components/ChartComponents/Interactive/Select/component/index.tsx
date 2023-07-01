@@ -37,9 +37,10 @@ const SelectBasic = (
     activeHover,
     activeSelect: activeSelectStyle,
     placeholder,
+    defaultValue,
   } = options;
 
-  const [activeSelect, setActiveSelect] = useState<number>(0);
+  const [activeSelect, setActiveSelect] = useState<any>(defaultValue);
   const [selectOpen, setSelectOpen] = useState<boolean>(false);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
@@ -66,6 +67,21 @@ const SelectBasic = (
       map: componentFilterMap,
     });
   }, [processedValue, componentFilterMap]);
+
+  const selectOptions = useMemo(() => {
+    return finalValue.map((item: any) => ({
+      ...item,
+      label: item.name,
+    }));
+  }, [finalValue]);
+
+  // 从外部传入字符串的value需要单独处理
+  const realActiveSelect = useMemo(() => {
+    if (typeof activeSelect === 'string') {
+      return selectOptions.find((item: any) => item.value === activeSelect);
+    }
+    return activeSelect;
+  }, [activeSelect, selectOptions]);
 
   const onClick = useCallback(
     (item: any) => {
@@ -153,7 +169,7 @@ const SelectBasic = (
           {children}
           <Select
             placeholder="请选择..."
-            value={activeSelect}
+            value={realActiveSelect}
             onMenuOpen={setSelectOpen.bind(null, true)}
             onMenuClose={setSelectOpen.bind(null, false)}
             onChange={onClick}
@@ -226,10 +242,7 @@ const SelectBasic = (
                 };
               },
             }}
-            options={finalValue.map((item: any) => ({
-              label: item.name,
-              value: item.value,
-            }))}
+            options={selectOptions}
           ></Select>
         </Wrapper>
       </div>

@@ -1,6 +1,7 @@
-import { useMemo, useRef, useState, useEffect } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
+import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import { boxShadow as boxShadowMethod } from '@/components/ChartComponents/Common/utils';
 import ColorSelect from '@/components/ColorSelect';
@@ -109,13 +110,9 @@ const Switch = (props: ComponentData.CommonComponentProps<TSwitchConfig>) => {
     );
   }, [className]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     setChecked(!!defaultChecked);
   }, [defaultChecked]);
-
-  useEffect(() => {
-    onChange(!!defaultChecked);
-  }, []);
 
   return (
     <>

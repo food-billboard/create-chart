@@ -18,12 +18,13 @@ export default () => {
           {
             ...DEFAULT_INTERACTIVE_BASE_CONFIG,
             type: 'change',
-            name: '当状态改变时',
+            name: '日期改变时',
             fields: [
               {
                 key: 'value',
                 variable: '',
-                description: '状态',
+                description: '日期',
+                _defaultValue_: false,
               },
             ],
           },

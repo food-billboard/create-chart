@@ -15,6 +15,7 @@ import ColorSelect from '@/components/ColorSelect';
 import { TPaginationConfig } from '../type';
 import { CHART_ID } from '../id';
 import styles from './index.less';
+import { useUpdateEffect } from 'ahooks';
 
 const { getRgbaString } = ColorSelect;
 
@@ -43,10 +44,12 @@ const Pagination = (
     condition,
     textStyle,
     active,
+    defaultValue = 1,
+    defaultPageSize = 10,
   } = options;
 
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(defaultValue);
+  const [pageSize, setPageSize] = useState<number>(defaultPageSize);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -96,11 +99,6 @@ const Pagination = (
   }, [className, conditionClassName]);
 
   const onChange = (value: number, pageSize: number) => {
-    if (value !== currentPage) {
-      syncInteractiveAction('page_change', {
-        current: value,
-      });
-    }
     setCurrentPage(value);
     setPageSize(pageSize);
   };
@@ -154,13 +152,19 @@ const Pagination = (
   }, [pageButton, paginationBorder]);
 
   useEffect(() => {
-    onChange(1, 10);
-  }, []);
-
-  useEffect(() => {
     setCurrentPage(requestCurrent);
     setPageSize(requestPageSize);
-  }, [requestCurrent, requestPageSize]);
+    syncInteractiveAction('page_change', {
+      current: requestCurrent,
+      pageSize: requestPageSize,
+      total,
+    });
+  }, [requestCurrent, requestPageSize, total]);
+
+  useUpdateEffect(() => {
+    setCurrentPage(defaultValue);
+    setPageSize(defaultPageSize);
+  }, [defaultPageSize, defaultValue]);
 
   return (
     <div

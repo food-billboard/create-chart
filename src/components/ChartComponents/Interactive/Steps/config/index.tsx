@@ -13,6 +13,7 @@ import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
 import OrientSelect from '@/components/ChartComponents/Common/OrientSelect';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
 import { DEFAULT_ICON } from '../defaultConfig';
 import { TStepsConfig } from '../type';
 
@@ -21,13 +22,17 @@ class Config extends Component<
   ComponentData.ComponentConfigProps<TStepsConfig>
 > {
   onKeyChange = (key: keyof TStepsConfig, value: any) => {
-    this.props.onChange({
-      config: {
-        options: {
-          [key]: value,
+    this.props.onChange(
+      updateInteractiveAndSyncParams4Component<TStepsConfig>({
+        key,
+        defaultValueKey: 'defaultCurrent',
+        callback: (field) => {
+          return field.key === 'current' && field._defaultValue_ === false;
         },
-      },
-    });
+        props: this.props,
+        newValue: value,
+      }),
+    );
   };
 
   render() {

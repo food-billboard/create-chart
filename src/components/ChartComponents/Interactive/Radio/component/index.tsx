@@ -2,6 +2,7 @@ import { useMemo, useRef, useState, useEffect } from 'react';
 import { uniqueId, merge } from 'lodash';
 import { Radio as AntRadio } from 'antd';
 import classnames from 'classnames';
+import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
@@ -76,17 +77,9 @@ const Radio = (props: ComponentData.CommonComponentProps<TRadioConfig>) => {
     );
   }, [className]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     setCheckedValue(defaultChecked);
   }, [defaultChecked]);
-
-  useEffect(() => {
-    onChange({
-      target: {
-        value: checkedValue,
-      },
-    });
-  }, []);
 
   return (
     <>

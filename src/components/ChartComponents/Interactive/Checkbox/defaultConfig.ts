@@ -39,6 +39,7 @@ export default () => {
                 key: 'value',
                 variable: '',
                 description: '选中值',
+                _defaultValue_: false,
               },
             ],
           },

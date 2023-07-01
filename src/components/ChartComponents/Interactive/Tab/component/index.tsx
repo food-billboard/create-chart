@@ -1,6 +1,7 @@
 import { useMemo, useRef, useCallback, useEffect, useState } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
+import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -24,10 +25,11 @@ const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
       style: { border },
     },
   } = value;
-  const { active, base, loop } = options;
+  const { active, base, loop, defaultValue } = options;
   const { screenType } = global;
 
-  const [activeTab, setActiveTab] = useState<number>(0);
+  // @ts-ignore
+  const [activeTab, setActiveTab] = useState<number>(defaultValue);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -55,6 +57,16 @@ const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
       map: componentFilterMap,
     });
   }, [processedValue, componentFilterMap]);
+
+  const realActiveTab: number = useMemo(() => {
+    if (typeof activeTab === 'string') {
+      const index = finalValue.findIndex(
+        (item: any) => item.value == activeTab,
+      );
+      return !!~index ? index : 0;
+    }
+    return activeTab;
+  }, [activeTab, finalValue]);
 
   const valueWidth = useMemo(() => {
     return 100 / finalValue.length;
@@ -117,7 +129,7 @@ const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
           key={name}
           className={styles['component-interactive-tab-item']}
           onClick={onClick.bind(null, item, index)}
-          style={merge({}, activeTab === index ? activeStyle : baseStyle, {
+          style={merge({}, realActiveTab === index ? activeStyle : baseStyle, {
             borderRadius: DEFAULT_BORDER_RADIUS,
           })}
         >
@@ -125,7 +137,7 @@ const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
         </div>
       );
     });
-  }, [finalValue, activeTab, onClick, baseStyle, activeStyle]);
+  }, [finalValue, realActiveTab, onClick, baseStyle, activeStyle]);
 
   const componentClassName = useMemo(() => {
     return classnames(
@@ -148,9 +160,10 @@ const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
     };
   }, [loop, finalValue, screenType]);
 
-  useEffect(() => {
-    syncInteractiveAction('loop', finalValue?.[0] || '');
-  }, []);
+  useUpdateEffect(() => {
+    // @ts-ignore
+    setActiveTab(defaultValue);
+  }, [defaultValue]);
 
   return (
     <>

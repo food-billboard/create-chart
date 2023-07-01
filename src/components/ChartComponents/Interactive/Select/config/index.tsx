@@ -9,6 +9,8 @@ import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import Input from '@/components/ChartComponents/Common/Input';
+import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
 import { TSelectConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -16,13 +18,17 @@ class Config extends Component<
   ComponentData.ComponentConfigProps<TSelectConfig>
 > {
   onKeyChange = (key: keyof TSelectConfig, value: any) => {
-    this.props.onChange({
-      config: {
-        options: {
-          [key]: value,
+    this.props.onChange(
+      updateInteractiveAndSyncParams4Component<TSelectConfig>({
+        key,
+        defaultValueKey: 'defaultValue',
+        callback: (field) => {
+          return field.key === 'value' && field._defaultValue_ === false;
         },
-      },
-    });
+        props: this.props,
+        newValue: value,
+      }),
+    );
   };
 
   render() {
@@ -38,6 +44,7 @@ class Config extends Component<
           placeholder,
           menu,
           indicator,
+          defaultValue,
         },
       },
     } = value;
@@ -336,6 +343,22 @@ class Config extends Component<
               </ConfigList>
             ),
             key: '4',
+          },
+          {
+            label: <Tab>交互</Tab>,
+            children: (
+              <ConfigList level={1}>
+                <Item label="默认值">
+                  <FullForm>
+                    <Input
+                      value={defaultValue}
+                      onChange={this.onKeyChange.bind(this, 'defaultValue')}
+                    />
+                  </FullForm>
+                </Item>
+              </ConfigList>
+            ),
+            key: '5',
           },
         ]}
       />

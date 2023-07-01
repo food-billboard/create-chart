@@ -1,11 +1,13 @@
 import { useMemo, useCallback, useState } from 'react';
 import { Button, Space, Modal, Form, message } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import Input, { InputModal } from '@/components/ChartComponents/Common/Input';
 import GhostButton from '@/components/GhostButton';
+import IconTooltip from '@/components/IconTooltip';
 import { getPath } from '@/utils/Assist/Component';
 import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
 import InteractiveUtil from '@/utils/Assist/Interactive';
+import { updateInteractiveAndSyncParams } from '../../../utils';
 import MapTable from '../../../MapTable';
 import styles from './index.less';
 
@@ -108,54 +110,75 @@ const FieldSetting = (props: IProps) => {
       mapValue,
     ) => {
       const path = getPath(id);
-      const updateValue = value[key];
-      const variable = key === 'variable' ? mapValue : value.variable;
-      const realValue = key === 'defaultValue' ? mapValue : value.defaultValue;
 
-      if (updateValue === mapValue) return;
-
-      // sync the global params
-      const mapId = InteractiveUtil.updateBaseInteractiveVariable(
-        {
-          params,
-          setParams,
+      const updateConfig = updateInteractiveAndSyncParams({
+        componentId: id,
+        isDefaultValue: key === 'defaultValue' || (key as 'variable'),
+        interactive: dataSource,
+        newValue: mapValue,
+        targetInteractiveName: name,
+        callback: (field) => {
+          return field.key === value.key;
         },
-        {
-          variable,
-          id: value.mapId,
-          origin: id,
-          key: value.key,
-          show,
-          originId: type,
-          value: realValue,
-        },
-      );
-
-      onChange?.({
-        value: {
-          config: {
-            interactive: {
-              base: dataSource.map((item) => {
-                if (item.name !== name) return item;
-                return {
-                  ...item,
-                  fields: item.fields.map((item) => {
-                    if (item.key !== value.key) return item;
-                    return {
-                      ...item,
-                      mapId,
-                      [key]: mapValue,
-                    };
-                  }),
-                };
-              }),
-            },
-          },
-        },
-        id,
-        path,
-        action: 'update',
       });
+      if (updateConfig) {
+        onChange?.({
+          value: updateConfig,
+          id,
+          path,
+          action: 'update',
+        });
+      }
+
+      // ! 上面没问题的话把下面删了
+      // const updateValue = value[key];
+      // const variable = key === 'variable' ? mapValue : value.variable;
+      // const realValue = key === 'defaultValue' ? mapValue : value.defaultValue;
+
+      // if (updateValue === mapValue) return;
+
+      // // sync the global params
+      // const mapId = InteractiveUtil.updateBaseInteractiveVariable(
+      //   {
+      //     params,
+      //     setParams,
+      //   },
+      //   {
+      //     variable,
+      //     id: value.mapId,
+      //     origin: id,
+      //     key: value.key,
+      //     show,
+      //     originId: type,
+      //     value: realValue,
+      //   },
+      // );
+
+      // onChange?.({
+      //   value: {
+      //     config: {
+      //       interactive: {
+      //         base: dataSource.map((item) => {
+      //           if (item.name !== name) return item;
+      //           return {
+      //             ...item,
+      //             fields: item.fields.map((item) => {
+      //               if (item.key !== value.key) return item;
+      //               return {
+      //                 ...item,
+      //                 mapId,
+      //                 [key]: mapValue,
+      //               };
+      //             }),
+      //           };
+      //         }),
+      //       },
+      //     },
+      //   },
+      //   id,
+      //   path,
+      //   action: 'update',
+      // });
     },
     [id, onChange, params, setParams, dataSource, show, type],
   );
@@ -241,18 +264,39 @@ const FieldSetting = (props: IProps) => {
       },
       {
         key: 'defaultValue',
-        title: '默认值',
+        title: (
+          <>
+            默认值
+            <IconTooltip
+              title={
+                <div className="ali-l">
+                  若不可编辑可在基础配置中寻找是否存在默认值的配置
+                  <br />
+                  <h5 className="ali-cen">注意📢</h5>
+                  同名字段会出现来回覆盖的问题，建议先设置绑定变量字段，然后设置默认值。
+                  并且假如先设置了一个字段为"value"，并设置了默认值，之后又设置了一个同名字段为"value"，且设置了默认值，则先前设置的默认值会被覆盖，
+                  同时就算将之后设置的字段进行改名，先前的字段的默认值仍然是后设置的，所以需要
+                  <span className="f-b">手动更正</span>！！！
+                  <br />
+                  目前暂时没有比较好的解决办法。╮(╯▽╰)╭
+                </div>
+              }
+            >
+              <InfoCircleOutlined className="m-l-4" />
+            </IconTooltip>
+          </>
+        ),
         dataIndex: 'defaultValue',
         width: 90,
         render: (
           value: string | false,
           record: ComponentData.TBaseInteractiveConfigField,
         ) => {
-          if (value === false) return '-';
+          if (record._defaultValue_ === false) return value || '-';
           return (
             <InputModal
               className="w-100"
-              value={value}
+              value={value || ''}
               onChange={onFieldMapChange.bind(null, record, 'defaultValue')}
               placeholder="初始默认值"
               disabled={disabled}

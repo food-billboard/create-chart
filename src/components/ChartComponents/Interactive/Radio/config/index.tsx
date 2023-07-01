@@ -9,6 +9,7 @@ import { CompatColorSelect } from '@/components/ColorSelect';
 import Input from '@/components/ChartComponents/Common/Input';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
 import { TRadioConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -16,13 +17,17 @@ class Config extends Component<
   ComponentData.ComponentConfigProps<TRadioConfig>
 > {
   onKeyChange = (key: keyof TRadioConfig, value: any) => {
-    this.props.onChange({
-      config: {
-        options: {
-          [key]: value,
+    this.props.onChange(
+      updateInteractiveAndSyncParams4Component<TRadioConfig>({
+        key,
+        defaultValueKey: 'defaultChecked',
+        callback: (field) => {
+          return field.key === 'value' && field._defaultValue_ === false;
         },
-      },
-    });
+        props: this.props,
+        newValue: value,
+      }),
+    );
   };
 
   render() {

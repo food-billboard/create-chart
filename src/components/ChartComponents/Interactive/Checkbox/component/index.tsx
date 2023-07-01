@@ -2,6 +2,7 @@ import { useMemo, useRef, useState, useEffect } from 'react';
 import { uniqueId, merge } from 'lodash';
 import { Checkbox as AntCheckbox } from 'antd';
 import classnames from 'classnames';
+import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
 import FetchFragment, {
@@ -80,13 +81,9 @@ const Checkbox = (
     );
   }, [className]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     setCheckedValue(defaultChecked.split(',').map((item) => item.trim()));
   }, [defaultChecked]);
-
-  useEffect(() => {
-    onChange(checkedValue);
-  }, []);
 
   return (
     <>

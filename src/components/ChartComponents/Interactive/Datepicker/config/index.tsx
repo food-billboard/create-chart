@@ -13,6 +13,7 @@ import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import CodeEditor from './components/CodeEditor';
 import IconTooltip from '@/components/IconTooltip';
+import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
 import { TDatePickerConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -20,13 +21,17 @@ class Config extends Component<
   ComponentData.ComponentConfigProps<TDatePickerConfig>
 > {
   onKeyChange = (key: keyof TDatePickerConfig, value: any) => {
-    this.props.onChange({
-      config: {
-        options: {
-          [key]: value,
+    this.props.onChange(
+      updateInteractiveAndSyncParams4Component<TDatePickerConfig>({
+        key,
+        defaultValueKey: 'defaultDate',
+        callback: (field) => {
+          return field.key === 'value' && field._defaultValue_ === false;
         },
-      },
-    });
+        props: this.props,
+        newValue: value,
+      }),
+    );
   };
 
   render() {

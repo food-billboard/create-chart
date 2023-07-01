@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
+import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
 import { TInputConfig } from '../type';
@@ -25,10 +26,11 @@ const Input = (props: ComponentData.CommonComponentProps<TInputConfig>) => {
     borderRadius,
     placeholder,
     search,
+    defaultValue = '',
   } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>(defaultValue);
 
   const { syncInteractiveAction } = useComponent<TInputConfig>(
     {
@@ -41,9 +43,8 @@ const Input = (props: ComponentData.CommonComponentProps<TInputConfig>) => {
   );
 
   const onChange = () => {
-    if (!inputValue) return;
     syncInteractiveAction('change', {
-      value: inputValue,
+      value: typeof value === 'string' ? value : inputValue,
     });
   };
 
@@ -54,6 +55,10 @@ const Input = (props: ComponentData.CommonComponentProps<TInputConfig>) => {
       styles['component-interactive-input'],
     );
   }, [className]);
+
+  useUpdateEffect(() => {
+    setInputValue(defaultValue);
+  }, [defaultValue]);
 
   return (
     <>

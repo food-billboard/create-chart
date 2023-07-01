@@ -25,6 +25,18 @@ export default () => {
                 key: 'current',
                 variable: '',
                 description: '当前分页',
+                _defaultValue_: false,
+              },
+              {
+                key: 'pageSize',
+                variable: '',
+                description: '每页数量',
+                _defaultValue_: false,
+              },
+              {
+                key: 'total',
+                variable: '',
+                description: '总数',
               },
             ],
           },
@@ -68,6 +80,8 @@ export default () => {
         },
       },
       options: {
+        defaultValue: 1,
+        defaultPageSize: 10,
         borderRadius: DEFAULT_BORDER_RADIUS,
         textStyle: {
           ...DEFAULT_FONT_CONFIG,

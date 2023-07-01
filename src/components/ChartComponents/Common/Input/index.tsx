@@ -5,7 +5,7 @@ import { useUnmount } from 'ahooks';
 import { Validator, useValidatorChange } from '@/hooks';
 import FormModal from '../FormModal';
 
-type Props = InputProps & {
+export type Props = InputProps & {
   triggerOnChangeInOnChange?: boolean;
   validator?: Validator[];
 };

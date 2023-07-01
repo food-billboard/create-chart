@@ -1,7 +1,8 @@
-import { useMemo, useRef, useState, useEffect } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { Rate as AntRate } from 'antd';
+import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
 import { TRateConfig } from '../type';
@@ -64,9 +65,9 @@ const Rate = (props: ComponentData.CommonComponentProps<TRateConfig>) => {
     return <span className={classnames('bi', shape)} />;
   }, [shape, size]);
 
-  useEffect(() => {
-    onChange(rateValue);
-  }, []);
+  useUpdateEffect(() => {
+    setRateValue(defaultValue);
+  }, [defaultValue]);
 
   return (
     <div

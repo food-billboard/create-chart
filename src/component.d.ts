@@ -67,9 +67,10 @@ declare namespace ComponentData {
   export type TBaseInteractiveConfigField = {
     key: string;
     variable: string;
+    // 是否需要默认值 false 表示不可编辑(仅不显示)
+    _defaultValue_?: boolean;
     // 默认值 1.21
-    // false 表示不可编辑
-    defaultValue?: string | false;
+    defaultValue?: string;
     description: string;
     // TParams id
     mapId?: string;

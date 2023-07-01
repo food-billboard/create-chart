@@ -8,6 +8,7 @@ import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { CompatColorSelect } from '@/components/ColorSelect';
 import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
 import { TRateConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -15,13 +16,17 @@ class Config extends Component<
   ComponentData.ComponentConfigProps<TRateConfig>
 > {
   onKeyChange = (key: keyof TRateConfig, value: any) => {
-    this.props.onChange({
-      config: {
-        options: {
-          [key]: value,
+    this.props.onChange(
+      updateInteractiveAndSyncParams4Component<TRateConfig>({
+        key,
+        defaultValueKey: 'defaultValue',
+        callback: (field) => {
+          return field.key === 'value' && field._defaultValue_ === false;
         },
-      },
-    });
+        props: this.props,
+        newValue: value,
+      }),
+    );
   };
 
   render() {
