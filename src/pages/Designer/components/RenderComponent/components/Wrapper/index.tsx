@@ -838,7 +838,7 @@ export default (
       {...nextProps}
       resizeMethod={resizeMethod}
       dragMethod={dragMethod}
-      onResizeStart={(_, direction) => {
+      onResizeStart={(_: any, direction) => {
         getIsMultiSelect();
         MultiComponentActionUtil.emit(
           MultiComponentAction.RESIZE_START,
