@@ -48,7 +48,7 @@
     "antd": "4.24.4",
     "array-move": "3.0.1",
     "axios": "^0.24.0",
-    "bootstrap-icons": "^1.8.2",
+    "bootstrap-icons": "1.8.2",
     "chunk-file-upload": "^1.0.11",
     "classnames": "^2.3.1",
     "clipboard": "^2.0.10",

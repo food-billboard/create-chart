@@ -17,7 +17,6 @@ import IconRadio, {
 } from '@/components/ChartComponents/Common/IconRadio';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import Input from '@/components/ChartComponents/Common/Input';
-import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
 import ConditionConfig from './Condition';
 import { TPaginationConfig } from '../type';
 
@@ -26,20 +25,13 @@ class Config extends Component<
   ComponentData.ComponentConfigProps<TPaginationConfig>
 > {
   onKeyChange = (key: keyof TPaginationConfig, value: any) => {
-    this.props.onChange(
-      updateInteractiveAndSyncParams4Component<TPaginationConfig>({
-        key,
-        defaultValueKey: ['defaultValue', 'defaultPageSize'],
-        callback: (field) => {
-          if (field.key === 'current' && key === 'defaultValue') return true;
-          if (field.key === 'pageSize' && key === 'defaultPageSize')
-            return true;
-          return false;
+    this.props.onChange({
+      config: {
+        options: {
+          [key]: value,
         },
-        props: this.props,
-        newValue: value,
-      }),
-    );
+      },
+    });
   };
 
   render() {
@@ -58,8 +50,6 @@ class Config extends Component<
           pageNumChanger,
           skip,
           condition,
-          defaultValue = 1,
-          defaultPageSize = 10,
         },
       },
     } = value;
@@ -422,30 +412,6 @@ class Config extends Component<
               </ConfigList>
             ),
             key: '1',
-          },
-          {
-            label: <Tab>交互</Tab>,
-            children: (
-              <ConfigList level={1}>
-                <Item label="默认页码">
-                  <FullForm>
-                    <InputNumber
-                      value={defaultValue}
-                      onChange={this.onKeyChange.bind(this, 'defaultValue')}
-                    />
-                  </FullForm>
-                </Item>
-                <Item label="默认每页数量">
-                  <FullForm>
-                    <InputNumber
-                      value={defaultPageSize}
-                      onChange={this.onKeyChange.bind(this, 'defaultPageSize')}
-                    />
-                  </FullForm>
-                </Item>
-              </ConfigList>
-            ),
-            key: '3',
           },
           {
             label: <Tab>条件</Tab>,

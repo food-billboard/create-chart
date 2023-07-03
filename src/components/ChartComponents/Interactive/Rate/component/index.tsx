@@ -32,7 +32,7 @@ const Rate = (props: ComponentData.CommonComponentProps<TRateConfig>) => {
     shape,
   } = options;
 
-  const [rateValue, setRateValue] = useState<number>(defaultValue);
+  const [rateValue, setRateValue] = useState<number>(defaultValue ?? 5);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
 
@@ -62,7 +62,7 @@ const Rate = (props: ComponentData.CommonComponentProps<TRateConfig>) => {
   };
 
   const iconNode = useMemo(() => {
-    return <span className={classnames('bi', shape)} />;
+    return <i className={classnames('bi', shape)}></i>;
   }, [shape, size]);
 
   useUpdateEffect(() => {

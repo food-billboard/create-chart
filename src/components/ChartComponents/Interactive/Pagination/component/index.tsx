@@ -44,12 +44,10 @@ const Pagination = (
     condition,
     textStyle,
     active,
-    defaultValue = 1,
-    defaultPageSize = 10,
   } = options;
 
-  const [currentPage, setCurrentPage] = useState<number>(defaultValue);
-  const [pageSize, setPageSize] = useState<number>(defaultPageSize);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(10);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const requestRef = useRef<TFetchFragmentRef>(null);
@@ -160,11 +158,6 @@ const Pagination = (
       total,
     });
   }, [requestCurrent, requestPageSize, total]);
-
-  useUpdateEffect(() => {
-    setCurrentPage(defaultValue);
-    setPageSize(defaultPageSize);
-  }, [defaultPageSize, defaultValue]);
 
   return (
     <div

@@ -1,6 +1,4 @@
 export type TPaginationConfig = {
-  defaultValue: number;
-  defaultPageSize: number;
   borderRadius: number;
   textStyle: ComponentData.TFontConfig;
   margin: number;

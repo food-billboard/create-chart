@@ -3,6 +3,7 @@ import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import Select from 'react-select';
 import { CaretRightOutlined } from '@ant-design/icons';
+import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment, {
   TFetchFragmentRef,
@@ -151,6 +152,10 @@ const SelectBasic = (
       },
     };
   }, [indicator, selectOpen]);
+
+  useUpdateEffect(() => {
+    setActiveSelect(defaultValue);
+  }, [defaultValue]);
 
   return (
     <>
