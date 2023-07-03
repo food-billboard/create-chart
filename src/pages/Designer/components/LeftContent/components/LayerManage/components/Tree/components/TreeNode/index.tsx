@@ -92,7 +92,7 @@ const ListItem = ({
     [setComponent],
   );
 
-  const handleEditName = useCallback((type: ActionItemType) => {
+  const handleEditName: any = useCallback((type: ActionItemType) => {
     if (type === 'edit_name') {
       editRef.current?.changeEditStatus(true);
     }

@@ -1,8 +1,9 @@
 import { useCallback, useMemo } from 'react';
-import { Dropdown, InputNumber, Slider, Space } from 'antd';
+import { InputNumber, Slider, Space } from 'antd';
 import { useControllableValue } from 'ahooks';
 import { connect } from 'dva';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
+import Dropdown from '@/components/ChartComponents/Common/Dropdown';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import { wrapperId } from '../../../PanelWrapper/constants';
 import styles from './index.less';
