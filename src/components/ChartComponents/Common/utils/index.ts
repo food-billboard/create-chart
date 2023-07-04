@@ -102,6 +102,7 @@ export function updateInteractiveAndSyncParams(
                 // 当前值
                 const updateValue = item[key];
                 // 变量名称
+                // ? 如果variable为空可能无法绑定到params上，看是否后续支持没有variable直接绑定到key上
                 const variable = key === 'variable' ? newValue : item.variable;
                 // 默认值
                 const realValue =
@@ -111,23 +112,25 @@ export function updateInteractiveAndSyncParams(
                 // 直接中断更新
                 if (updateValue === newValue) throw new Error();
 
-                if (['defaultValue', 'variable'].includes(key)) {
-                  // sync the global params
-                  mapId = InteractiveUtil.updateBaseInteractiveVariable(
-                    {
-                      params,
-                      setParams,
-                    },
-                    {
-                      variable,
-                      id: item.mapId,
-                      origin: componentId,
-                      key: item.key,
-                      show: interactive.show,
-                      originId: interactive.type,
-                      value: realValue,
-                    },
-                  );
+                function genMapId() {
+                  if (['defaultValue', 'variable'].includes(key)) {
+                    // sync the global params
+                    mapId = InteractiveUtil.updateBaseInteractiveVariable(
+                      {
+                        params,
+                        setParams,
+                      },
+                      {
+                        variable,
+                        id: item.mapId,
+                        origin: componentId,
+                        key: item.key,
+                        show: interactive.show,
+                        originId: interactive.type,
+                        value: realValue,
+                      },
+                    );
+                  }
                 }
 
                 if (callback) {
@@ -135,6 +138,7 @@ export function updateInteractiveAndSyncParams(
                   const result = callback(item, { mapId });
                   if (typeof result === 'boolean') {
                     if (result) {
+                      genMapId();
                       newItem = {
                         ...newItem,
                         mapId,
@@ -149,6 +153,7 @@ export function updateInteractiveAndSyncParams(
                   }
                   return newItem;
                 }
+                genMapId();
                 return {
                   ...item,
                   [key]: newValue,

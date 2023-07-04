@@ -1,8 +1,9 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { Modal, Button } from 'antd';
 import type { ModalProps } from 'antd';
 import classnames from 'classnames';
 import { useControlDisableKeyPressVisible } from '@/hooks';
+import { sleep } from '@/utils';
 
 // 用于在一些表单容器很小的情况下，方便编辑
 
@@ -14,7 +15,8 @@ function FormModal<T extends object & { onClick?: (...args: any[]) => void }>(
 
     const [visible, setVisible] = useControlDisableKeyPressVisible(false);
 
-    const close = useCallback(() => {
+    const close = useCallback(async () => {
+      await sleep(100);
       setVisible(false);
     }, []);
 
@@ -35,6 +37,7 @@ function FormModal<T extends object & { onClick?: (...args: any[]) => void }>(
           onCancel={close}
           footer={<Button onClick={close}>关闭</Button>}
           width={420}
+          destroyOnClose
           {...modalProps}
           wrapClassName={classnames(
             modalProps?.wrapClassName,

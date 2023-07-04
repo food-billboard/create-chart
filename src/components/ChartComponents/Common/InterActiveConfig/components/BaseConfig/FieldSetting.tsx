@@ -180,7 +180,7 @@ const FieldSetting = (props: IProps) => {
       //   action: 'update',
       // });
     },
-    [id, onChange, params, setParams, dataSource, show, type],
+    [id, onChange, dataSource],
   );
 
   const handleAdd = useCallback(
@@ -244,9 +244,22 @@ const FieldSetting = (props: IProps) => {
       },
       {
         key: 'variable',
-        title: '绑定到变量',
+        title: (
+          <>
+            绑定到变量
+            <IconTooltip
+              title={
+                <div className="ali-l">
+                  当前逻辑为：只有设置了绑定变量才可使用（默认值同样需要在此值设置的情况下）。
+                </div>
+              }
+            >
+              <InfoCircleOutlined className="m-l-4" />
+            </IconTooltip>
+          </>
+        ),
         dataIndex: 'variable',
-        width: 90,
+        width: 100,
         render: (
           value: string,
           record: ComponentData.TBaseInteractiveConfigField,
@@ -271,14 +284,6 @@ const FieldSetting = (props: IProps) => {
               title={
                 <div className="ali-l">
                   若不可编辑可在基础配置中寻找是否存在默认值的配置
-                  <br />
-                  <h5 className="ali-cen">注意📢</h5>
-                  同名字段会出现来回覆盖的问题，建议先设置绑定变量字段，然后设置默认值。
-                  并且假如先设置了一个字段为"value"，并设置了默认值，之后又设置了一个同名字段为"value"，且设置了默认值，则先前设置的默认值会被覆盖，
-                  同时就算将之后设置的字段进行改名，先前的字段的默认值仍然是后设置的，所以需要
-                  <span className="f-b">手动更正</span>！！！
-                  <br />
-                  目前暂时没有比较好的解决办法。╮(╯▽╰)╭
                 </div>
               }
             >
