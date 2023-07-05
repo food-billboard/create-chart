@@ -6,6 +6,10 @@ export default {
   state: {
     componentCollapse: false,
     componentConfigCollapse: false,
+    debug: {
+      show: true,
+      showComponentId: true,
+    },
     // ? 设计器的操作loading 属于是操作禁用，不会有ui的效果
     globalActionLoading: false,
   },
@@ -29,11 +33,21 @@ export default {
         },
       });
     },
+
+    // debug
+    *setDebug({ value }: any, { put }: { put: any }) {
+      yield put({
+        type: 'saveData',
+        payload: {
+          debug: value,
+        },
+      });
+    },
   },
 
   reducers: {
     saveData(state: any, action: any) {
-      const newState = mergeWithoutArray(state, action.payload);
+      const newState = mergeWithoutArray({}, state, action.payload);
       return newState;
     },
   },

@@ -167,8 +167,8 @@ class ThemeUtil {
     return Object.keys(this.themeDataSource);
   }
 
-  getThemeColorList(name: string) {
-    return this.themeDataSource[name].color;
+  getThemeColorList(name?: string) {
+    return this.themeDataSource[name || this.currentTheme].color;
   }
 
   isThemeNameValid(name: string) {

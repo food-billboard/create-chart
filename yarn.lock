@@ -8114,6 +8114,13 @@ react-undo-component@^1.0.1:
   dependencies:
     "@babel/runtime" "^7.16.3"
 
+react-winbox@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.npmmirror.com/react-winbox/-/react-winbox-1.5.0.tgz#a60dea07ae5445619fb730dab5f568ae9e95de3f"
+  integrity sha512-8QaLrw+y5M7KO1vxJXcOtgIijPEpAm0qy/cAZhR0ZU/x5uiqCOy7QzIjr8whHLYKQWfl9YotnwDxv9FVL64l2w==
+  dependencies:
+    winbox "=0.2.6"
+
 react@16.x:
   version "16.14.0"
   resolved "https://registry.npmmirror.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
@@ -9847,6 +9854,11 @@ which@^2.0.1, which@^2.0.2:
   integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==
   dependencies:
     isexe "^2.0.0"
+
+winbox@=0.2.6:
+  version "0.2.6"
+  resolved "https://registry.npmmirror.com/winbox/-/winbox-0.2.6.tgz#9e46eb23c09394166262e5bcb074e4f240c8ba4c"
+  integrity sha512-P/Tqjcf4bA0Hr1lqR1YliQsisV8xf+t56xgCtqWN8Urw9RLonYSVQGYw+qILp9tgkPs1o7e1dsl6dskaS6GudQ==
 
 word-wrap@~1.2.3:
   version "1.2.3"

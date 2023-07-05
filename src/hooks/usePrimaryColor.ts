@@ -8,8 +8,36 @@ import {
 
 const { getRgbaString } = ColorSelect;
 
-export const usePrimaryColor = () => {
+export const useColorList = () => {
+  const [colorList, setColorList] = useState<string[]>([
+    '#4ea397',
+    '#22c3aa',
+    '#7bd9a5',
+    '#d0648a',
+    '#f58db2',
+    '#f2b3c9',
+  ]);
+
+  useEffect(() => {
+    const onChange = () => {
+      const color = ThemeUtil.getThemeColorList();
+      setColorList(color);
+    };
+    GLOBAL_EVENT_EMITTER.addListener(EVENT_NAME_MAP.THEME_CHANGE, onChange);
+    return () => {
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.THEME_CHANGE,
+        onChange,
+      );
+    };
+  }, []);
+
+  return colorList;
+};
+
+export const usePrimaryColor = (colorCount = 1) => {
   const [color, setColor] = useState<string>('#4ea397');
+  const [colorList, setColorList] = useState<string[]>([]);
 
   useEffect(() => {
     const onChange = () => {
@@ -25,5 +53,5 @@ export const usePrimaryColor = () => {
     };
   }, []);
 
-  return color;
+  if (colorCount > 1) return color;
 };

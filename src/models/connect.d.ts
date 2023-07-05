@@ -6,6 +6,10 @@ export type ILocalModelState = {
   componentCollapse: boolean;
   componentConfigCollapse: boolean;
   globalActionLoading: boolean;
+  debug: {
+    show: boolean;
+    showComponentId: boolean;
+  };
 };
 
 export type DragData = {

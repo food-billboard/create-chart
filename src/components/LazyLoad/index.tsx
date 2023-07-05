@@ -6,7 +6,7 @@ const requestPool = new RequestPool({
   concurrency: 5,
 });
 
-export default function LazyLoadWrapper<T = any>(
+export default function LazyLoadWrapper<T = any, RK = any>(
   loader: Parameters<typeof lazy>[0],
 ) {
   const Component = lazy(async () => {
@@ -34,10 +34,14 @@ export default function LazyLoadWrapper<T = any>(
       }, 15000);
     });
   });
-  return (props: T) => {
+  return (props: T & { wrapperComponentRef?: RK }) => {
+    const { wrapperComponentRef, ...nextProps } = props;
     return (
       <Suspense fallback={<Loading size={25} />}>
-        <Component {...props} />
+        <Component
+          {...nextProps}
+          {...(wrapperComponentRef ? { ref: wrapperComponentRef } : {})}
+        />
       </Suspense>
     );
   };
