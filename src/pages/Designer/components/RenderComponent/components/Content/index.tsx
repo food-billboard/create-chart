@@ -3,14 +3,12 @@ import { connect } from 'dva';
 import { get } from 'lodash';
 import { ConnectState } from '@/models/connect';
 import { getComponentByType } from '@/components/ChartComponents';
-import {
-  InternalBorderWrapper,
-  getTargetBorder,
-} from '@/components/InternalBorder';
+import { getTargetBorder } from '@/components/InternalBorder';
 import { EComponentType } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils';
 import { isGroupComponent } from '@/utils/Assist/Component';
-import ChildrenWrapper from './ChildrenWrapper';
+import ComponentWrapper from './ComponentWrapper';
+import ComponentInternalWrapper from './ComponentInternalWrapper';
 import SubGroup from './SubGroup';
 import styles from './index.less';
 
@@ -118,7 +116,7 @@ const Content = (props: {
 
         if (type === EComponentType.GROUP_COMPONENT) {
           return (
-            <ChildrenWrapper
+            <ComponentWrapper
               value={newComponent}
               borderNone={isOuter}
               parent={parent}
@@ -129,20 +127,20 @@ const Content = (props: {
                 value={newComponent}
                 isOuter={isOuter}
                 flag={flag}
-                wrapper={InternalBorderWrapper}
+                wrapper={ComponentInternalWrapper}
                 style={internalComponentTransform}
               >
                 {renderChildren(newComponent.components, newComponent, false)}
               </SubGroup>
-            </ChildrenWrapper>
+            </ComponentWrapper>
           );
           return (
-            <InternalBorderWrapper
+            <ComponentInternalWrapper
               border={border}
               key={component.id}
               id={component.id}
             >
-              <ChildrenWrapper
+              <ComponentWrapper
                 value={newComponent}
                 borderNone={isOuter}
                 parent={parent}
@@ -151,8 +149,8 @@ const Content = (props: {
                 <SubGroup value={newComponent} isOuter={isOuter} flag={flag}>
                   {renderChildren(newComponent.components, newComponent, false)}
                 </SubGroup>
-              </ChildrenWrapper>
-            </InternalBorderWrapper>
+              </ComponentWrapper>
+            </ComponentInternalWrapper>
           );
         }
 
@@ -161,7 +159,7 @@ const Content = (props: {
         if (!TargetComponent) return null;
 
         return (
-          <ChildrenWrapper
+          <ComponentWrapper
             value={newComponent}
             key={newComponent.id}
             borderNone={isOuter}
@@ -172,7 +170,7 @@ const Content = (props: {
               className={styles['render-component-children']}
               value={newComponent}
               key={id}
-              wrapper={InternalBorderWrapper}
+              wrapper={ComponentInternalWrapper}
               style={internalComponentTransform}
               global={{
                 setParams,
@@ -180,7 +178,7 @@ const Content = (props: {
                 screenTheme,
               }}
             />
-          </ChildrenWrapper>
+          </ComponentWrapper>
         );
       });
     };

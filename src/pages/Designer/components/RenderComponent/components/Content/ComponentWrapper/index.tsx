@@ -11,11 +11,11 @@ import { get } from 'lodash';
 import { useRafState } from 'ahooks';
 import { getComponentStyleInScreenType } from '@/utils/Assist/Component';
 import { ComponentTransformOriginChange } from '@/utils/Assist/BreakingChange';
+import ConnectSelectChangeWrapper from '../../SelectChangeWrapper';
 import { mapStateToProps, mapDispatchToProps } from './connect';
-import ConnectSelectChangeWrapper from '../SelectChangeWrapper';
-import styles from '../../index.less';
+import styles from './index.less';
 
-const ChildrenWrapper = (props: {
+const ComponentWrapper = (props: {
   children?: ReactNode;
   value: ComponentData.TComponentData;
   parent: ComponentData.TComponentData | null;
@@ -116,4 +116,4 @@ const ChildrenWrapper = (props: {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChildrenWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(ComponentWrapper);

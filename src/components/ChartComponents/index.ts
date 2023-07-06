@@ -4,7 +4,7 @@ import { getDvaGlobalModelData } from '@/utils/Assist/Component';
 import { mergeWithoutArray } from '@/utils/tool';
 import { DEFAULT_GROUP_CONFIG } from '@/utils/constants/screenData';
 import { isGroupComponent } from '@/utils/Assist/Component';
-import InViewportWrapper from './Common/InViewportWrapper';
+import RenderWrapper from './Common/RenderWrapper';
 // Chart
 import BarBasic from './Chart/Bar/BarBasic';
 import LineBasic from './Chart/Line/LineBasic';
@@ -202,7 +202,7 @@ export function getComponentByType(
   const { render, ...nextConfig } = config as MapValue;
   return {
     ...nextConfig,
-    render: InViewportWrapper(render, component.componentType),
+    render: RenderWrapper(render, component.componentType),
   };
 }
 
