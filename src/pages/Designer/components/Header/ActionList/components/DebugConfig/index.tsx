@@ -1,6 +1,7 @@
 import { useCallback, useRef } from 'react';
 import { connect } from 'dva';
 import { BugOutlined } from '@ant-design/icons';
+import { useKeyPress } from 'ahooks';
 import DebounceButton from '@/components/DebounceButton';
 import { ConnectState, ILocalModelState } from '@/models/connect';
 import Tooltip from '@/components/Tooltip';
@@ -10,8 +11,9 @@ import Winbox, { WinBoxRef } from './Winbox';
 const InternalDebugConfig = (props: {
   debug: ConnectState['local']['debug'];
   setDebugConfig: (value: Partial<ILocalModelState>) => void;
+  screenType: ComponentData.ScreenType;
 }) => {
-  const { debug, setDebugConfig } = props;
+  const { debug, setDebugConfig, screenType } = props;
   const { show } = debug;
 
   const boxRef = useRef<WinBoxRef>(null);
@@ -23,6 +25,14 @@ const InternalDebugConfig = (props: {
   const handleClick = useCallback(() => {
     boxRef.current?.open();
   }, []);
+
+  useKeyPress(['ctrl.q'], () => {
+    if (screenType === 'edit') {
+      handleClick();
+    }
+  });
+
+  return <Winbox ref={boxRef} debug={debug} onChange={onChange} />;
 
   return (
     <Tooltip title="开启调试">
@@ -40,6 +50,7 @@ const DebugConfig = connect(
   (state: ConnectState) => {
     return {
       debug: state.local.debug,
+      screenType: state.global.screenType,
     };
   },
   (dispatch: any) => ({
