@@ -58,6 +58,20 @@ const API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG = '(LAZY_REQUEST_FLAG)';
 const API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG =
   'IMMEDIATELY_REQUEST_FLAG';
 
+// 键盘操作快捷键
+const KEY_PRESS_MAP = {
+  'Ctrl + Q': '打开调试面板',
+  'Ctrl + C': '复制',
+  'Ctrl + V': '粘贴',
+  'Ctrl + Z': '撤销',
+  'Ctrl + Y': '重做',
+  Backspace: '删除',
+  'Shift + ↑': '上移动',
+  'Shift + ↓': '下移动',
+  'Shift + ←': '左移动',
+  'Shift + →': '右移动',
+};
+
 export {
   IMAGE_FALLBACK,
   MIN_LAYER_WIDTH,
@@ -70,4 +84,5 @@ export {
   SELECTO_CLASSNAME,
   API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG,
   API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG,
+  KEY_PRESS_MAP,
 };

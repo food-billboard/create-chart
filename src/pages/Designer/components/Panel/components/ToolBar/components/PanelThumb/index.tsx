@@ -1,23 +1,22 @@
-import { useMemo, useState, useEffect, useRef } from 'react';
+import { useMemo, useState, useEffect, useRef, ReactNode } from 'react';
 import { Button } from 'antd';
 import { connect } from 'dva';
 import classnames from 'classnames';
-import { pick, get } from 'lodash';
+import { pick } from 'lodash';
+import EventEmitter from 'eventemitter3';
 import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { useIdPathMap } from '@/hooks';
 import ColorSelect from '@/components/ColorSelect';
 import { ConnectState } from '@/models/connect';
 import ThemeUtil from '@/utils/Assist/Theme';
-import {
-  getDvaGlobalModelData,
-  getTopParentComponent,
-} from '@/utils/Assist/Component';
+import { getTopParentComponent } from '@/utils/Assist/Component';
 import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
+import { useUpdateEffect } from 'ahooks';
 
 const { getRgbaString } = ColorSelect;
 
@@ -358,6 +357,50 @@ const PanelThumb = connect(
   mapDispatchToProps,
 )(InternalPanelThumb);
 
+const EventEmitterInstance = new EventEmitter();
+
+export const Tooltip = (props: {
+  visible: boolean;
+  children?: ReactNode;
+  onHide?: () => void;
+  uniqueKey: string;
+}) => {
+  const { visible, children, uniqueKey, onHide } = props;
+
+  useUpdateEffect(() => {
+    EventEmitterInstance.emit('change', uniqueKey, visible);
+  }, [visible]);
+
+  useEffect(() => {
+    const onChange = (visibleKey: string, visible: boolean) => {
+      if (visibleKey !== uniqueKey && visible) {
+        onHide?.();
+      }
+    };
+    EventEmitterInstance.addListener('change', onChange);
+    return () => {
+      EventEmitterInstance.removeListener('change', onChange);
+    };
+  }, []);
+
+  return (
+    <div
+      className={classnames(
+        styles['component-panel-thumb-tooltip'],
+        'border-r-4',
+      )}
+    >
+      <div
+        style={{
+          transform: `scale(${visible ? 1 : 0})`,
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
+
 const ThumbButton = () => {
   const [visible, setVisible] = useState<boolean>(true);
 
@@ -369,15 +412,13 @@ const ThumbButton = () => {
     <div
       className={classnames(styles['component-panel-thumb-wrapper'], 'pos-re')}
     >
-      <div className={styles['component-panel-thumb-tooltip']}>
-        <div
-          style={{
-            transform: `scale(${visible ? 1 : 0})`,
-          }}
-        >
-          <PanelThumb />
-        </div>
-      </div>
+      <Tooltip
+        visible={visible}
+        uniqueKey="thumb"
+        onHide={setVisible.bind(null, false)}
+      >
+        <PanelThumb />
+      </Tooltip>
       <Button
         type="link"
         icon={icon}

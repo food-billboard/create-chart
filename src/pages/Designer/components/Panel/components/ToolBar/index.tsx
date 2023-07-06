@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import { connect } from 'dva';
 import Scale from './components/Scale';
 import PanelThumb from './components/PanelThumb';
+import ShortcutKeys from './components/ShortcutKeys';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -16,6 +17,7 @@ const ToolBar = (props: { flag: ComponentData.ScreenFlagType }) => {
         'normal-background',
       )}
     >
+      <ShortcutKeys />
       {flag === 'PC' && <PanelThumb />}
       <Scale />
     </div>

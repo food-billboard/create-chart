@@ -1,0 +1,21 @@
+.shortcut-keys-wrapper {
+  display: inline-block;
+}
+.shortcut-keys {
+  width: 200px;
+  min-height: 100px;
+  &-item {
+    justify-content: space-between;
+    line-height: 1.5;
+    &:nth-last-of-type(1) {
+      margin: 0;
+    }
+    & span {
+      display: inline-block;
+      width: 50%;
+    }
+    & span:nth-of-type(1) {
+      text-align: left;
+    }
+  }
+}

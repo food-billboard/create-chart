@@ -35,9 +35,8 @@ export const useColorList = () => {
   return colorList;
 };
 
-export const usePrimaryColor = (colorCount = 1) => {
+export const usePrimaryColor = () => {
   const [color, setColor] = useState<string>('#4ea397');
-  const [colorList, setColorList] = useState<string[]>([]);
 
   useEffect(() => {
     const onChange = () => {
@@ -53,5 +52,5 @@ export const usePrimaryColor = (colorCount = 1) => {
     };
   }, []);
 
-  if (colorCount > 1) return color;
+  return color;
 };
