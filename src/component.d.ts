@@ -729,3 +729,26 @@ declare namespace ComponentMethod {
     Exclude<ComponentData.TScreenData, 'components'>
   >;
 }
+
+declare namespace Logger {
+  export type LoggerItemType = 'request' | 'normal';
+  export type LoggerLevel = 'Info' | 'Log' | 'Error' | 'Warn';
+  export type LoggerContentItem = {
+    title: string;
+    titleColor?: string;
+    content: string;
+    contentColor?: string;
+  };
+  export type LoggerItem = {
+    type: 'request';
+  } & {
+    url: string;
+    method: string;
+    params: object;
+    headers?: object;
+    response: object;
+    error?: any;
+    component: string;
+    requestType: 'static' | 'mock' | 'api';
+  }; // | another log type
+}

@@ -28,10 +28,11 @@ export type ApiConfigProps = {
   value: ComponentData.TComponentApiDataConfig;
   params: ComponentData.TParams[];
   constants: ComponentData.TConstants[];
+  componentId: string;
 };
 
 const ApiConfig = (props: ApiConfigProps) => {
-  const { onChange, value, params, constants } = props;
+  const { onChange, value, params, constants, componentId } = props;
   const {
     request: { method, url, headers, body, serviceRequest },
   } = value;
@@ -39,6 +40,7 @@ const ApiConfig = (props: ApiConfigProps) => {
   const onUrlChange = useCallback(
     async (url) => {
       const result: any = await FilterDataUtil.requestData(
+        componentId,
         merge({}, value, {
           request: {
             url,

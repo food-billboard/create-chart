@@ -53,6 +53,9 @@ export default {
   // 组件选择
   COMPONENT_SELECT: 'COMPONENT_SELECT',
 
+  // 组件数据请求（包括静态或mock）
+  COMPONENT_REQUEST_DATA: 'COMPONENT_REQUEST_DATA',
+
   // 色调修改
   THEME_CHANGE: 'THEME_CHANGE',
 

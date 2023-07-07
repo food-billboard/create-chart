@@ -60,7 +60,12 @@ class Component<P extends object = {}, S = {}> extends ReactComponent<
 
     const { component } = this.props;
     const value = get(component, 'config.data')!;
-    const result = await FilterDataUtil.requestData(value, params, constants);
+    const result = await FilterDataUtil.requestData(
+      component.id,
+      value,
+      params,
+      constants,
+    );
 
     callback?.(result);
 

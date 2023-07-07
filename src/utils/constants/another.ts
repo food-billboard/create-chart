@@ -61,6 +61,7 @@ const API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG =
 // 键盘操作快捷键
 const KEY_PRESS_MAP = {
   'Ctrl + Q': '打开调试面板',
+  'Ctrl + T': '打开日志面板',
   'Ctrl + C': '复制',
   'Ctrl + V': '粘贴',
   'Ctrl + Z': '撤销',

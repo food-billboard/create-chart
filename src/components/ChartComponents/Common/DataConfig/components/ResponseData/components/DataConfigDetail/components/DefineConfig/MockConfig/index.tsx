@@ -144,7 +144,13 @@ const FieldsConfig = connect(
 )(_FieldsConfig);
 
 const MockConfig = (props: MockConfigProps) => {
-  const { onChange: propsOnChange, value, params, constants } = props;
+  const {
+    onChange: propsOnChange,
+    value,
+    params,
+    constants,
+    componentId,
+  } = props;
   const {
     request: { mock },
   } = value;
@@ -154,6 +160,7 @@ const MockConfig = (props: MockConfigProps) => {
   const reRequest = useCallback(
     async (newValue) => {
       const result: any = await FilterDataUtil.requestData(
+        componentId,
         newValue,
         params,
         constants,

@@ -17,6 +17,7 @@ import Content from './components/Content';
 import ContextMenu from '../../../../components/ContextMenu';
 import ConnectSelectChangeWrapper from './components/SelectChangeWrapper';
 import HoverChangeWrapper from './components/HoverChangeWrapper';
+import NameTag from './components/NameTag';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
@@ -154,6 +155,7 @@ const RenderComponent = memo(
             onSelectChange={setIsSelect}
           />
           <HoverChangeWrapper id={id} />
+          <NameTag componentName={value.name} componentId={id} />
         </OnlyClickDiv>
       );
     }, [isSelect, id, content, value]);

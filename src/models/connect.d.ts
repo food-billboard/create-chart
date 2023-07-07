@@ -10,6 +10,7 @@ export type ILocalModelState = {
     show: boolean;
     showComponentId: boolean;
   };
+  loggerMode: boolean;
 };
 
 export type DragData = {

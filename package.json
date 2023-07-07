@@ -109,7 +109,8 @@
     "ua-parser-js": "^1.0.32",
     "umi": "^3.5.20",
     "viewerjs": "^1.10.5",
-    "vivus": "^0.4.6"
+    "vivus": "^0.4.6",
+    "winbox": "^0.2.6"
   },
   "devDependencies": {
     "@types/animejs": "^3.1.5",
@@ -131,9 +132,9 @@
     "@types/three": "^0.144.0",
     "@types/ua-parser-js": "^0.7.36",
     "@types/vivus": "^0.4.4",
+    "@types/winbox": "^0.2.1",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.5.20",
-    "chalk": "4.1.2",
     "commander": "^9.4.0",
     "compression-webpack-plugin": "5.0.1",
     "cross-env": "^7.0.3",

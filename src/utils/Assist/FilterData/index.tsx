@@ -10,6 +10,7 @@ import { getDvaGlobalModelData } from '../Component';
 import VariableStringUtil from '../VariableString';
 import request from '../../request';
 import { MOCK_REQUEST_URL } from '../../index';
+import Logger from '../Logger';
 
 export const FILTER_STEP_MAP_DATA: {
   [id: string]: {
@@ -256,7 +257,12 @@ export class FilterData {
     }
   }
 
+  requestLog(log: Logger.LoggerItem) {
+    Logger.log(log);
+  }
+
   async requestData(
+    componentId: string,
     value: ComponentData.TComponentApiDataConfig,
     params: ComponentData.TParams[],
     constants: ComponentData.TConstants[],
@@ -281,8 +287,23 @@ export class FilterData {
     let realHeaders = {};
     const realServiceRequest = type === 'api' && serviceRequest;
 
-    if (type === 'static' || (type === 'api' && !realUrl)) return responseData;
+    if (type === 'static' || (type === 'api' && !url)) {
+      this.requestLog({
+        type: 'request',
+        url: 'static',
+        method: 'static',
+        params: {},
+        headers: {},
+        response: responseData,
+        component: componentId,
+        requestType: 'static',
+      });
+      return responseData;
+    }
 
+    let log: Partial<Logger.LoggerItem> = {
+      component: componentId,
+    };
     if (type === 'api') {
       const defaultRequestConfig: ComponentData.ScreenCommonRequestConfig =
         get(getDvaGlobalModelData(), 'screenData.config.attr.request') || {};
@@ -296,16 +317,21 @@ export class FilterData {
         ...this.parseHeaders(headers, params, constants),
       };
       if (method === 'POST') {
-        realBody = this.parseHeaders(
-          defaultRequestConfig.body,
-          params,
-          constants,
-        );
+        realBody = this.parseBody(defaultRequestConfig.body, params, constants);
         realBody = {
           ...realBody,
           ...this.parseBody(body, params, constants),
         };
       }
+      log = {
+        ...log,
+        type: 'request',
+        url: realUrl,
+        method,
+        params: realBody,
+        headers: realHeaders,
+        requestType: 'api',
+      };
     } else if (type === 'mock') {
       realMethod = 'post';
       realUrl = MOCK_REQUEST_URL;
@@ -313,9 +339,23 @@ export class FilterData {
         ...mock,
         random: mock.random ? '1' : '0',
       };
+      log = {
+        ...log,
+        type: 'request',
+        url: realUrl,
+        method: realMethod,
+        params: realBody,
+        headers: {},
+        requestType: 'mock',
+      };
       // 需要的字段不完整时，不需要调用接口
-      if (!mock.fields.filter((item) => !!item.key && !!item.dataKind).length)
+      if (!mock.fields.filter((item) => !!item.key && !!item.dataKind).length) {
+        this.requestLog({
+          ...(log as Logger.LoggerItem),
+          response: [],
+        });
         return [];
+      }
     }
 
     try {
@@ -329,12 +369,20 @@ export class FilterData {
           header: JSON.stringify(realHeaders) || '{}',
           url: realUrl,
         });
+        this.requestLog({
+          ...(log as Logger.LoggerItem),
+          response: result,
+        });
       } else {
         result = await request(realUrl, {
           method: realMethod,
           data: realBody,
           headers: realHeaders as any,
           mis: false,
+        });
+        this.requestLog({
+          ...(log as Logger.LoggerItem),
+          response: result,
         });
       }
       return result;
@@ -343,6 +391,11 @@ export class FilterData {
       console.error(`request error for: ${url}`);
       console.error(err);
       console.error('-----------error generate end-----------');
+      this.requestLog({
+        ...(log as Logger.LoggerItem),
+        response: responseData,
+        error: err,
+      });
       return responseData;
     }
   }

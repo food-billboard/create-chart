@@ -24,6 +24,7 @@ import { createComponent } from '@/utils/Assist/Component';
 import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants/index';
 import { DragData } from '@/models/connect';
 import DataChangePool from '@/utils/Assist/DataChangePool';
+import LogWinbox from '@/utils/Assist/Logger/Window';
 import ComponentList from '../ComponentList';
 import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
 import H5AutoHeight from '../H5AutoHeight';
@@ -211,6 +212,7 @@ const Painter = (props: PainterProps) => {
     >
       {componentList}
       <H5AutoHeight />
+      <LogWinbox />
     </ColorImageBackground>
   );
 };

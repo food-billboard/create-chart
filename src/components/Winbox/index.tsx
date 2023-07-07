@@ -11,7 +11,19 @@ export type WinBoxRef = {
   open: () => void;
 };
 
-const Winbox = forwardRef<WinBoxRef, WinBoxPropType>((props, ref) => {
+const Winbox = forwardRef<
+  WinBoxRef,
+  WinBoxPropType & {
+    widthRate?: [number, number];
+    heightRate?: [number, number];
+  }
+>((props, ref) => {
+  const {
+    widthRate = [0.3, 0.6],
+    heightRate = [0.3, 0.6],
+    ...nextProps
+  } = props;
+
   const { width = 0, height = 0 } = useSize(() => document.body) || {};
 
   const [visible, setVisible] = useState(true);
@@ -38,14 +50,14 @@ const Winbox = forwardRef<WinBoxRef, WinBoxPropType>((props, ref) => {
 
   return (
     <WinBox
-      minWidth={Math.max(width * 0.3, 350)}
-      minHeight={height * 0.3}
-      maxWidth={width * 0.6}
-      maxHeight={height * 0.6}
+      minWidth={Math.max(width * widthRate[0], 350)}
+      minHeight={height * heightRate[0]}
+      maxWidth={width * widthRate[1]}
+      maxHeight={height * heightRate[1]}
       x="right"
       y="bottom"
       ref={boxRef}
-      {...props}
+      {...nextProps}
       className={classnames(props.className, 'modern')}
       background={`linear-gradient(90deg, ${colorA}, ${colorB})`}
       hide={visible}

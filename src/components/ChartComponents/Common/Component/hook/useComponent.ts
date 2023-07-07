@@ -86,7 +86,7 @@ export function useComponent<P extends object = {}>(
   }, [requestDataConfig]);
 
   // 之前请求的value
-  const previouseRequestDataValue = useRef<any>(requestDataValue);
+  const previousRequestDataValue = useRef<any>(requestDataValue);
 
   // 数据请求的地址
   const requestUrl = useMemo(() => {
@@ -116,6 +116,7 @@ export function useComponent<P extends object = {}>(
 
       try {
         const result = await FilterDataUtil.requestData(
+          id,
           requestDataConfig,
           params,
           constants,
@@ -356,8 +357,8 @@ export function useComponent<P extends object = {}>(
   }, []);
 
   useUpdateEffect(() => {
-    if (!isEqual(requestDataValue, previouseRequestDataValue.current)) {
-      previouseRequestDataValue.current = requestDataValue;
+    if (!isEqual(requestDataValue, previousRequestDataValue.current)) {
+      previousRequestDataValue.current = requestDataValue;
       outerGetValue(requestDataValue);
     } else if (!isEqual(requestResult, requestDataValue)) {
       outerGetValue(requestResult);

@@ -159,10 +159,12 @@ const DataConfigDetail = forwardRef<
           apiProps={{
             onChange,
             value: props.value,
+            componentId: id,
           }}
           mockProps={{
             onChange,
             value: props.value,
+            componentId: id,
           }}
         />
 
@@ -179,7 +181,11 @@ const DataConfigDetail = forwardRef<
         />
         <ResponseDataMap value={map} valueType={valueType} />
 
-        <ResponseDataTitle value={props.value!} onChange={onChange} />
+        <ResponseDataTitle
+          value={props.value!}
+          onChange={onChange}
+          componentId={id}
+        />
 
         <CodeViewer width={454} height={238} value={props.value!} />
       </FocusWrapper>

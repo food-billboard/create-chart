@@ -12,6 +12,8 @@ export default {
     },
     // ? 设计器的操作loading 属于是操作禁用，不会有ui的效果
     globalActionLoading: false,
+    // logger
+    loggerMode: false,
   },
 
   effects: {
@@ -40,6 +42,15 @@ export default {
         type: 'saveData',
         payload: {
           debug: value,
+        },
+      });
+    },
+    // 日志模式
+    *setLoggerModel({ value }: any, { put }: { put: any }) {
+      yield put({
+        type: 'saveData',
+        payload: {
+          loggerMode: !!value,
         },
       });
     },
