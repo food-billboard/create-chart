@@ -194,6 +194,7 @@ COMPONENT_MAP.set(Pagination.type, Pagination);
 COMPONENT_MAP.set(FullScreen.type, FullScreen);
 // component-map-insert-prefix
 
+// 根据组件类型获取组件信息
 export function getComponentByType(
   component: Partial<ComponentData.TComponentData> &
     Pick<ComponentData.TComponentData, 'componentType'>,
@@ -206,6 +207,7 @@ export function getComponentByType(
   };
 }
 
+// 根据组件类型获取组件默认配置
 export function getComponentDefaultConfigByType(
   componentType: ComponentData.TComponentSelfType,
   // 是否是新增组件
@@ -229,24 +231,28 @@ export function getComponentDefaultConfigByType(
   return defaultConfig;
 }
 
+// 根据组件类型获取组件色调配置
 export function getComponentThemeConfigByType(
   componentType: ComponentData.TComponentSelfType,
 ) {
   return COMPONENT_MAP.get(componentType)?.themeConfig || {};
 }
 
+// 根据组件类型获取组件render
 export function getComponentRenderByType(
   componentType: ComponentData.TComponentSelfType,
 ) {
   return getComponentByType({ componentType })?.render;
 }
 
+// 根据组件类型获取组件配置
 export function getComponentConfigComponentByType(
   componentType: ComponentData.TComponentSelfType,
 ) {
   return getComponentByType({ componentType })?.configComponent;
 }
 
+// 合并组件配置和默认配置
 export function mergeComponentDefaultConfig(
   components: ComponentData.TComponentData[] | ComponentData.TComponentData,
 ): ComponentData.TComponentData[] {
@@ -276,4 +282,20 @@ export function mergeComponentDefaultConfig(
         : []),
     );
   });
+}
+
+// 获取当前所有的组件
+export function getAllComponent() {
+  return Array.from(COMPONENT_MAP.entries()).map((item) => {
+    const [key, value] = item;
+    return {
+      ...value,
+      type: key,
+    };
+  });
+}
+
+// 获取当前组件的数量
+export function getComponentLength() {
+  return COMPONENT_MAP.size;
 }

@@ -115,6 +115,6 @@ export default {
   // 多选缩放 缩放中
   MULTIPLE_COMPONENT_RESIZE: 'MULTIPLE_COMPONENT_RESIZE',
 
-  // 多选缩放 缩放安亭
+  // 多选缩放 缩放暂停
   MULTIPLE_COMPONENT_RESIZE_STOP: 'MULTIPLE_COMPONENT_RESIZE_STOP',
 };

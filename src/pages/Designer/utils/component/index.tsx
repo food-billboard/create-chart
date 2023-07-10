@@ -769,7 +769,23 @@ const _COMPONENT_TYPE_LIST = [
   },
 ];
 
-export const COMPONENT_TYPE_LIST = [
+export const COMPONENT_TYPE_LIST: {
+  type: string;
+  title: string;
+  icon: JSX.Element;
+  children: {
+    type: string;
+    title: string;
+    children: {
+      type: string;
+      title: string;
+      icon: any;
+      description: string;
+      disabled?: boolean;
+      development?: boolean;
+    }[];
+  }[];
+}[] = [
   ..._COMPONENT_TYPE_LIST.reduce<typeof _COMPONENT_TYPE_LIST>((acc, cur) => {
     const { type, children } = cur;
     let newChildren = [...children];
@@ -808,6 +824,8 @@ export const COMPONENT_ONLY_TYPE_LIST = COMPONENT_TYPE_LIST.reduce<
     title: string;
     description: string;
     icon: string;
+    disabled?: boolean;
+    development?: boolean;
   }[]
 >((acc, cur) => {
   const { children } = cur;
