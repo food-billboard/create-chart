@@ -101,6 +101,7 @@ export class FilterData {
       FILTER_STEP_MAP_DATA[id] = cloneDeep(error ? errorMsg : result);
 
       if (error) {
+        console.error(error);
         break;
       }
     }
@@ -573,7 +574,8 @@ export class CompareFilterUtil {
   getParamsOrigin(variable: string) {
     // params
     const paramsIndex = this.prevParams.findIndex(
-      (param) => param.variable === variable,
+      // ? variable 可能是id也可能是实际的字段
+      (param) => param.id === variable || param.variable === variable,
     );
 
     // constants
@@ -662,6 +664,7 @@ export class CompareFilterUtil {
       string,
       string,
     ][];
+
     let variables: string[] = [];
     // 懒加载且存在提交按钮
     if (
@@ -693,7 +696,7 @@ export class CompareFilterUtil {
           return this.onFetch();
         }
       },
-      variables: (variables = _variables.map((item) => item[1])),
+      variables,
     };
   }
 

@@ -26,6 +26,7 @@ function levelInfo(level: Logger.LoggerLevel) {
 }
 
 export default function logRequest(context: any, log: Logger.LoggerItem) {
+  return;
   const {
     url,
     method,
