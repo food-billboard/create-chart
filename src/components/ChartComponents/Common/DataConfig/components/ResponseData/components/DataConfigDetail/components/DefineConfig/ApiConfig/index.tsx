@@ -91,7 +91,7 @@ const ApiConfig = (props: ApiConfigProps) => {
             <div className="ali-l">
               可以使用全局变量
               <br />
-              可在"url"最后添加特殊标识
+              可以根据需要对参数添加特殊标识
               <Typography.Paragraph
                 className={styles['api-config-copy-text']}
                 italic
@@ -103,8 +103,10 @@ const ApiConfig = (props: ApiConfigProps) => {
               <br />
               比如：
               <Typography.Paragraph style={{ marginBottom: 0 }} code>
-                /api/request/url?userId={'{{userId}}'}
-                {API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG}
+                /api/request/
+                {`{{${API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG}params}}`}
+                /url?userId=
+                {`{{${API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG}userId}}`}
               </Typography.Paragraph>
             </div>
           }

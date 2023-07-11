@@ -1,6 +1,6 @@
 import json5 from 'json5';
 import mustache from 'mustache';
-import { cloneDeep, get, noop } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 import { preRequestData } from '@/services';
 import {
   API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG,
@@ -244,15 +244,25 @@ export class FilterData {
     constants: ComponentData.TConstants[],
   ) {
     try {
-      const parseUrl = this.parseVariableString(value, params, constants);
-      return parseUrl
-        .replace(API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG, '')
-        .replace(
+      let parseUrl = value;
+      while (parseUrl.includes(API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG)) {
+        parseUrl = parseUrl.replace(
+          API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG,
+          '',
+        );
+      }
+      while (
+        parseUrl.includes(API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG)
+      ) {
+        parseUrl = parseUrl.replace(
           new RegExp(
             `${API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG}\\([0-9]+\\)`,
           ),
           '',
         );
+      }
+      parseUrl = this.parseVariableString(parseUrl, params, constants);
+      return parseUrl;
     } catch {
       return '';
     }
@@ -659,43 +669,12 @@ export class CompareFilterUtil {
 
   // 数据请求url上面的关联参数
   initComponentUrlParamsMap(url: string) {
-    const isLazy = url.endsWith(API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG);
-    const _variables = this.getVariableInString(url, true) as [
-      string,
-      string,
-    ][];
-
-    let variables: string[] = [];
-    // 懒加载且存在提交按钮
-    if (
-      url.endsWith(API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG) &&
-      url.includes(API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG)
-    ) {
-      variables = _variables
-        .filter((item) =>
-          item[1].includes(API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG),
-        )
-        .map((item) => item[1]);
-    }
-    // 懒加载
-    else if (url.endsWith(API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG)) {
-      variables = [];
-    } else {
-      variables = _variables.map((item) => item[1]);
-    }
+    const variables = (this.getVariableInString(url, false) as string[]).filter(
+      (item) => !item.includes(API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG),
+    );
 
     return {
-      action: async (currentTarget: any, currentTargetValue: any) => {
-        // 非懒加载或者是按钮action
-        if (
-          !isLazy ||
-          currentTargetValue.includes(
-            API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG,
-          )
-        ) {
-          return this.onFetch();
-        }
-      },
+      action: this.onFetch,
       variables,
     };
   }
