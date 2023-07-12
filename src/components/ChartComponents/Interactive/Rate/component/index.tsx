@@ -44,15 +44,10 @@ const Rate = (props: ComponentData.CommonComponentProps<TRateConfig>) => {
     );
   }, [className]);
 
-  const { syncInteractiveAction } = useComponent<TRateConfig>(
-    {
-      component: value,
-      global,
-    },
-    {
-      current: {},
-    } as any,
-  );
+  const { syncInteractiveAction } = useComponent<TRateConfig>({
+    component: value,
+    global,
+  });
 
   const onChange = (value: any) => {
     syncInteractiveAction('change', {

@@ -5,9 +5,7 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TTitleConfig } from '../type';
@@ -32,7 +30,6 @@ const TitleBasic = (
   const { screenType } = global;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   const {
     request,
@@ -44,13 +41,10 @@ const TitleBasic = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TTitleConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TTitleConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -132,7 +126,6 @@ const TitleBasic = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

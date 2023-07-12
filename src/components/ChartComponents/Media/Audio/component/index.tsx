@@ -5,9 +5,7 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TAudioConfig } from '../type';
 import { CHART_ID } from '../id';
@@ -29,7 +27,6 @@ const AudioBasic = (
   const { screenType } = global;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   const {
     request,
@@ -40,13 +37,10 @@ const AudioBasic = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TAudioConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TAudioConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -112,7 +106,6 @@ const AudioBasic = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

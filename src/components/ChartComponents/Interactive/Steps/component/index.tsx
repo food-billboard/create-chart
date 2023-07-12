@@ -3,9 +3,7 @@ import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import RcSteps, { Step as RcStep } from './components/RcSteps';
@@ -41,7 +39,6 @@ const Steps = (props: ComponentData.CommonComponentProps<TStepsConfig>) => {
   const [activeStep, setActiveStep] = useState<number>(defaultCurrent || 0);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
   const timerRef = useRef<any>();
 
   const {
@@ -53,13 +50,10 @@ const Steps = (props: ComponentData.CommonComponentProps<TStepsConfig>) => {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
-  } = useComponent<TStepsConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TStepsConfig>({
+    component: value,
+    global,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -252,7 +246,6 @@ const Steps = (props: ComponentData.CommonComponentProps<TStepsConfig>) => {
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         componentFilter={componentFilter}

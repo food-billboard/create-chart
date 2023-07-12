@@ -6,9 +6,7 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import ThemeUtil from '@/utils/Assist/Theme';
@@ -33,7 +31,6 @@ const Tag = (props: ComponentData.CommonComponentProps<TTagConfig>) => {
   const { margin, textStyle, series, icon, condition } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   const {
     request,
@@ -45,13 +42,10 @@ const Tag = (props: ComponentData.CommonComponentProps<TTagConfig>) => {
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TTagConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TTagConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -151,7 +145,6 @@ const Tag = (props: ComponentData.CommonComponentProps<TTagConfig>) => {
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

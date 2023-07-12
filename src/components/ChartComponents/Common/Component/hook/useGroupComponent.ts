@@ -1,10 +1,9 @@
-import { useCallback, RefObject } from 'react';
+import { useCallback } from 'react';
 import VariableStringUtil from '@/utils/Assist/VariableString';
-import { TFetchFragmentRef } from '@/components/ChartComponents/Common/FetchFragment';
+import { getGlobalParamsAndFilterAndConstants } from './useComponent';
 
 export function useGroupComponent<P extends object = {}>(
   props: ComponentData.ComponentProps<P>,
-  requestRef: RefObject<TFetchFragmentRef>,
 ) {
   const { global } = props;
   const { screenType } = global;
@@ -76,7 +75,8 @@ export function useGroupComponent<P extends object = {}>(
   // 外部调用条件判断
   const outerGetConditionResult = useCallback(
     (condition: ComponentData.ComponentCondition) => {
-      const { params = [], constants = [] } = requestRef.current || {};
+      const { params = [], constants = [] } =
+        getGlobalParamsAndFilterAndConstants();
       return getConditionResult(params, constants, condition);
     },
     [getConditionResult],

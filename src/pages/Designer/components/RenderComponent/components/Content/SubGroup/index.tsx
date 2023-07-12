@@ -7,9 +7,7 @@ import {
   useCondition,
   useGroupComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { ConnectState } from '@/models/connect';
 import CarouselGroupWrapper from './CarouselGroupWrapper';
 import styles from '../../../index.less';
@@ -48,8 +46,6 @@ const SubGroup = (props: {
     options as any
   ).transform;
 
-  const requestRef = useRef<TFetchFragmentRef>(null);
-
   const childrenStyle = useComponentChildrenStyle(value, {
     isOuter,
   });
@@ -65,17 +61,14 @@ const SubGroup = (props: {
     };
   }, [transform]);
 
-  const { onCondition } = useGroupComponent<any>(
-    {
-      component: value,
-      global: {
-        setParams: () => {},
-        screenType,
-        screenTheme,
-      },
+  const { onCondition } = useGroupComponent<any>({
+    component: value,
+    global: {
+      setParams: () => {},
+      screenType,
+      screenTheme,
     },
-    requestRef,
-  );
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -113,7 +106,6 @@ const SubGroup = (props: {
       </Wrapper>
       <FetchFragment
         id={id}
-        ref={requestRef}
         reCondition={propsOnCondition}
         componentCondition={condition}
         componentFilter={[]}

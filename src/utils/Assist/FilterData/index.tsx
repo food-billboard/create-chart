@@ -725,7 +725,6 @@ export class CompareFilterUtil {
 
   async compare(params: ComponentData.TParams[]) {
     const actionList: any[] = [];
-
     Object.entries(this.mapParams).forEach((param) => {
       const [variable, value] = param;
       const { action, index, value: prevValue } = value;

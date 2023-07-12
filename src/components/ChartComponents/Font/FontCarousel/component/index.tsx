@@ -6,9 +6,7 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TFontCarouselConfig } from '../type';
@@ -34,7 +32,6 @@ const TFontCarousel = (
     options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   const {
     request,
@@ -46,13 +43,10 @@ const TFontCarousel = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TFontCarouselConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TFontCarouselConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -134,7 +128,6 @@ const TFontCarousel = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

@@ -3,9 +3,7 @@ import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { useUpdateEffect, useUnmount } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import MessageUtil from './MessageUitl';
 import { TIFrameConfig } from '../type';
@@ -25,7 +23,6 @@ const IframeBasic = (
   } = value;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
   const chartLoaded = useRef<boolean>(false);
 
   const {
@@ -36,13 +33,10 @@ const IframeBasic = (
     value: processedValue = [],
     componentFilterMap,
     syncInteractiveAction,
-  } = useComponent<TIFrameConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TIFrameConfig>({
+    component: value,
+    global,
+  });
 
   const messageUtil = useRef(
     new MessageUtil(chartId.current, syncInteractiveAction),
@@ -130,7 +124,6 @@ const IframeBasic = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reParams={reParams}

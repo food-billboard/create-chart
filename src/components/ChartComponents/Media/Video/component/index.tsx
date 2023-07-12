@@ -6,9 +6,7 @@ import {
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { useClipPath } from '@/hooks';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TVideoConfig } from '../type';
 import { CHART_ID } from '../id';
@@ -40,7 +38,6 @@ const VideoBasic = (
   const clipPathStyle = useClipPath(clipPath);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   const {
     request,
@@ -51,13 +48,10 @@ const VideoBasic = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TVideoConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TVideoConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -121,7 +115,6 @@ const VideoBasic = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

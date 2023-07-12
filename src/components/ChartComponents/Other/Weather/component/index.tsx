@@ -3,9 +3,7 @@ import { merge, uniqueId, noop } from 'lodash';
 import classnames from 'classnames';
 import moment from 'moment';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { getWeatherData } from '@/services';
@@ -38,7 +36,6 @@ const Weather = (props: ComponentData.CommonComponentProps<TWeatherConfig>) => {
   const { show, textStyle, widMap, align } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
   const timerRef = useRef<any>();
   const currentDate = useRef<number>();
 
@@ -50,13 +47,10 @@ const Weather = (props: ComponentData.CommonComponentProps<TWeatherConfig>) => {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
-  } = useComponent<TWeatherConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TWeatherConfig>({
+    component: value,
+    global,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -170,7 +164,6 @@ const Weather = (props: ComponentData.CommonComponentProps<TWeatherConfig>) => {
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={noop}

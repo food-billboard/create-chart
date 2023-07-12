@@ -14,9 +14,7 @@ import { init } from '@/utils/Assist/EchartsLoader';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { TWaterBallConfig } from '../type';
 import { CHART_ID } from '../id';
 
@@ -40,7 +38,6 @@ const WaterBall = (
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -56,13 +53,10 @@ const WaterBall = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TWaterBallConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TWaterBallConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -190,7 +184,6 @@ const WaterBall = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

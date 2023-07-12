@@ -7,9 +7,7 @@ import {
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG } from '@/utils/constants/another';
 import { TButtonConfig } from '../type';
@@ -41,7 +39,6 @@ const Button = (props: ComponentData.CommonComponentProps<TButtonConfig>) => {
   const { screenType } = global;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   const {
     request,
@@ -53,13 +50,10 @@ const Button = (props: ComponentData.CommonComponentProps<TButtonConfig>) => {
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TButtonConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TButtonConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -148,7 +142,6 @@ const Button = (props: ComponentData.CommonComponentProps<TButtonConfig>) => {
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

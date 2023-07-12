@@ -10,9 +10,7 @@ import {
 } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { ConnectState } from '@/models/connect';
 import { sleep } from '@/utils';
 import { TPathBasicConfig } from '../type';
@@ -49,7 +47,6 @@ const _PathBasic = (
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<Anime.AnimeInstance>();
-  const requestRef = useRef<TFetchFragmentRef>(null);
   const svgId = useRef<string>(uniqueId(CHART_ID + '_svg'));
   const shapeId = useRef<string>(uniqueId(CHART_ID + '_shape'));
 
@@ -62,13 +59,10 @@ const _PathBasic = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TPathBasicConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TPathBasicConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -129,15 +123,15 @@ const _PathBasic = (
     }
   }, [target]);
 
-  const getOpacity = useCallback((opacity: typeof animation['opacity']) => {
+  const getOpacity = useCallback((opacity: (typeof animation)['opacity']) => {
     if (opacity === 'none') return 1;
     return opacity.split('-').map((item) => parseInt(item));
   }, []);
 
   const getLoop = useCallback(
     (
-      loop: typeof animation['type'],
-      moveType: typeof animation['moveType'],
+      loop: (typeof animation)['type'],
+      moveType: (typeof animation)['moveType'],
     ) => {
       if (loop === 'to' || loop === 'from') {
         const base = {
@@ -280,7 +274,6 @@ const _PathBasic = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

@@ -12,9 +12,7 @@ import {
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { init } from '@/utils/Assist/EchartsLoader';
 import { TRadialStackLineConfig } from '../type';
 import { CHART_ID } from '../id';
@@ -38,7 +36,6 @@ const RadialStackLine = (
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -54,13 +51,10 @@ const RadialStackLine = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TRadialStackLineConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TRadialStackLineConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -226,7 +220,6 @@ const RadialStackLine = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

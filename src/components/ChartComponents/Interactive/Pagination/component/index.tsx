@@ -7,9 +7,7 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import ColorSelect from '@/components/ColorSelect';
 import { TPaginationConfig } from '../type';
@@ -50,7 +48,6 @@ const Pagination = (
   const [pageSize, setPageSize] = useState<number>(10);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   const {
     request,
@@ -61,13 +58,10 @@ const Pagination = (
     value: processedValue = [],
     componentFilterMap = [],
     onCondition,
-  } = useComponent<TPaginationConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TPaginationConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -245,7 +239,6 @@ const Pagination = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

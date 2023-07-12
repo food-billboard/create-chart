@@ -1,23 +1,31 @@
-import {
-  useRef,
-  useCallback,
-  useEffect,
-  useState,
-  useMemo,
-  RefObject,
-} from 'react';
+import { useRef, useCallback, useEffect, useState, useMemo } from 'react';
 import { get, isEqual, noop } from 'lodash';
 import { useUpdateEffect } from 'ahooks';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import VariableStringUtil from '@/utils/Assist/VariableString';
 import { mergeWithoutArray } from '@/utils';
-import { TFetchFragmentRef } from '@/components/ChartComponents/Common/FetchFragment';
+import { getDvaGlobalModelData } from '@/utils/Assist/Component';
 import { useFilterChange } from './useFilterChange';
 import { useLinkageInteractive } from './useLinkageInteractive';
 
+// 全局的 params filter constants
+export const getGlobalParamsAndFilterAndConstants = () => {
+  const {
+    screenData: {
+      config: {
+        attr: { filter, constants, params },
+      },
+    },
+  } = getDvaGlobalModelData();
+  return {
+    filter,
+    constants,
+    params,
+  };
+};
+
 export function useComponent<P extends object = {}>(
   props: ComponentData.ComponentProps<P>,
-  requestRef: RefObject<TFetchFragmentRef>,
 ) {
   const { component, global } = props;
   const { screenType } = global;
@@ -293,7 +301,8 @@ export function useComponent<P extends object = {}>(
   // 外部调用的request
   const outerRequest = useCallback(
     async (callback?: (value: any) => void) => {
-      const { params = [], constants = [] } = requestRef.current || {};
+      const { params = [], constants = [] } =
+        getGlobalParamsAndFilterAndConstants();
       return requestDataInterval(params, constants, callback);
     },
     [requestDataInterval],
@@ -303,7 +312,11 @@ export function useComponent<P extends object = {}>(
   const outerGetValue = useCallback(
     (
       value?: any,
-      options?: Partial<TFetchFragmentRef> & {
+      options?: Partial<{
+        params: ComponentData.TParams[];
+        constants: ComponentData.TConstants[];
+        filter: ComponentData.TFilterConfig[];
+      }> & {
         config?: SuperPartial<ComponentData.TComponentApiDataConfig>;
       },
     ) => {
@@ -311,7 +324,7 @@ export function useComponent<P extends object = {}>(
         params = [],
         constants = [],
         filter = [],
-      } = requestRef.current || {};
+      } = getGlobalParamsAndFilterAndConstants();
       if (value) {
         setRequestResult(value);
       }
@@ -329,7 +342,7 @@ export function useComponent<P extends object = {}>(
   // 外部调用的同步全部参数
   const outerSyncInteractiveAction = useCallback(
     (baseInteractiveType: string, value: any) => {
-      const { params = [] } = requestRef.current || {};
+      const { params = [] } = getGlobalParamsAndFilterAndConstants();
       return syncInteractiveAction(params, baseInteractiveType, value);
     },
     [syncInteractiveAction],
@@ -338,7 +351,8 @@ export function useComponent<P extends object = {}>(
   // 外部调用条件判断
   const outerGetConditionResult = useCallback(
     (condition: ComponentData.ComponentCondition) => {
-      const { params = [], constants = [] } = requestRef.current || {};
+      const { params = [], constants = [] } =
+        getGlobalParamsAndFilterAndConstants();
       return getConditionResult(params, constants, condition);
     },
     [getConditionResult],

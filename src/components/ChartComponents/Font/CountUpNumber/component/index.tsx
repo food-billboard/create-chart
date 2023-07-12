@@ -7,9 +7,7 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TCountUpNumberConfig } from '../type';
@@ -58,7 +56,6 @@ const CountUpNumberBasic = (
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<CountUp>();
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   const {
     request,
@@ -70,13 +67,10 @@ const CountUpNumberBasic = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TCountUpNumberConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TCountUpNumberConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -177,7 +171,6 @@ const CountUpNumberBasic = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

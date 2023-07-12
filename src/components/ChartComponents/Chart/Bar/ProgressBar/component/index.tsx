@@ -14,9 +14,7 @@ import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import ColorSelect from '@/components/ColorSelect';
 import { init } from '@/utils/Assist/EchartsLoader';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { TProgressBarConfig } from '../type';
 import { CHART_ID } from '../id';
 
@@ -41,7 +39,6 @@ const ProgressBar = (
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -57,13 +54,10 @@ const ProgressBar = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TProgressBarConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TProgressBarConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -243,7 +237,6 @@ const ProgressBar = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

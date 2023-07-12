@@ -14,9 +14,7 @@ import {
 } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
 import { init } from '@/utils/Assist/EchartsLoader';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { TCandlestickBasicConfig } from '../type';
 import { CHART_ID } from '../id';
 
@@ -41,7 +39,6 @@ const CandlestickBasic = (
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -55,13 +52,10 @@ const CandlestickBasic = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TCandlestickBasicConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TCandlestickBasicConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -231,7 +225,6 @@ const CandlestickBasic = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

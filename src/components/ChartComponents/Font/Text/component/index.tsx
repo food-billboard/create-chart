@@ -6,9 +6,7 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TTextConfig } from '../type';
@@ -32,7 +30,6 @@ const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const textRef = useRef<any>(null);
-  const requestRef = useRef<TFetchFragmentRef>(null);
   const textSize = useSize(textRef);
 
   const {
@@ -45,13 +42,10 @@ const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TTextConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TTextConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -145,7 +139,6 @@ const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

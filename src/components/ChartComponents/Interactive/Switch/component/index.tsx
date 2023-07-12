@@ -37,15 +37,10 @@ const Switch = (props: ComponentData.CommonComponentProps<TSwitchConfig>) => {
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const [checked, setChecked] = useState<boolean>(!!defaultChecked);
 
-  const { syncInteractiveAction } = useComponent<TSwitchConfig>(
-    {
-      component: value,
-      global,
-    },
-    {
-      current: {},
-    } as any,
-  );
+  const { syncInteractiveAction } = useComponent<TSwitchConfig>({
+    component: value,
+    global,
+  });
 
   const onChange = (value: any) => {
     setChecked(value);

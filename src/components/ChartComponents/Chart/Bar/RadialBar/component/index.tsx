@@ -13,9 +13,7 @@ import {
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { init } from '@/utils/Assist/EchartsLoader';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
@@ -45,7 +43,6 @@ const RadialBar = (
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -61,13 +58,10 @@ const RadialBar = (
     value: _processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TRadialBarConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TRadialBarConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -251,7 +245,6 @@ const RadialBar = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

@@ -15,9 +15,7 @@ import {
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import ColorSelect from '@/components/ColorSelect';
 import { init } from '@/utils/Assist/EchartsLoader';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { TRadialLineConfig } from '../type';
 import { CHART_ID } from '../id';
 
@@ -42,7 +40,6 @@ const RadialLine = (
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -58,13 +55,10 @@ const RadialLine = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TRadialLineConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TRadialLineConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -251,7 +245,6 @@ const RadialLine = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

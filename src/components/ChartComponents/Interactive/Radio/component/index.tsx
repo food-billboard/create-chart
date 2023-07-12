@@ -5,9 +5,7 @@ import classnames from 'classnames';
 import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TRadioConfig } from '../type';
 import { CHART_ID } from '../id';
@@ -36,7 +34,6 @@ const Radio = (props: ComponentData.CommonComponentProps<TRadioConfig>) => {
   } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
   const [checkedValue, setCheckedValue] = useState<string>(defaultChecked);
 
   const {
@@ -47,13 +44,10 @@ const Radio = (props: ComponentData.CommonComponentProps<TRadioConfig>) => {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
-  } = useComponent<TRadioConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TRadioConfig>({
+    component: value,
+    global,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -137,7 +131,6 @@ const Radio = (props: ComponentData.CommonComponentProps<TRadioConfig>) => {
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={() => {}}

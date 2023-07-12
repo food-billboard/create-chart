@@ -10,9 +10,7 @@ import {
   useComponentSize,
 } from '@/components/ChartComponents/Common/Component/hook';
 import { ConnectState } from '@/models/connect';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TLuckyDrawConfig } from '../type';
@@ -55,7 +53,6 @@ const LuckyDrawBasic = (
   const { stop, speed } = config;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
   const luckyDrawRef = useRef<any>();
   const loadingRef = useRef(false);
 
@@ -69,13 +66,10 @@ const LuckyDrawBasic = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TLuckyDrawConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TLuckyDrawConfig>({
+    component: value,
+    global,
+  });
 
   const componentSize = useComponentSize(
     `.${chartId.current}`,
@@ -230,7 +224,6 @@ const LuckyDrawBasic = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

@@ -4,9 +4,7 @@ import classnames from 'classnames';
 import GridLoader from 'react-spinners/GridLoader';
 import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { usePrimaryColor } from '@/hooks';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { DEFAULT_THREE_D_MODEL_URL } from '@/utils/constants';
@@ -42,7 +40,6 @@ const ModelBasic = (
   } = value;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
   const iframeRef = useRef<any>();
 
   const {
@@ -53,13 +50,10 @@ const ModelBasic = (
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
-  } = useComponent<TModelConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TModelConfig>({
+    component: value,
+    global,
+  });
 
   const onIframeLoad = useCallback((e) => {
     setPageLoading(false);
@@ -164,7 +158,6 @@ const ModelBasic = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={noop}

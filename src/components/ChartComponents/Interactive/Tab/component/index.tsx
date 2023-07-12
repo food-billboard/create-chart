@@ -3,9 +3,7 @@ import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
@@ -32,7 +30,6 @@ const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
   const [activeTab, setActiveTab] = useState<number>(defaultValue);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
   const loopTimerRef = useRef<any>();
 
   const {
@@ -44,13 +41,10 @@ const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
     componentFilter = [],
     value: processedValue = [],
     componentFilterMap = [],
-  } = useComponent<TTabConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TTabConfig>({
+    component: value,
+    global,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -186,7 +180,6 @@ const TabBasic = (props: ComponentData.CommonComponentProps<TTabConfig>) => {
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         componentFilter={componentFilter}

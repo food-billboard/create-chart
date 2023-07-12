@@ -7,9 +7,7 @@ import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import ScrollText from '@/components/ScrollText';
 import FilterDataUtil from '@/utils/Assist/FilterData';
@@ -57,7 +55,6 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
   } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   const {
     request,
@@ -69,13 +66,10 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TListConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TListConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -331,7 +325,6 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

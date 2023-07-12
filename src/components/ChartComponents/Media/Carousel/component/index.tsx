@@ -10,9 +10,7 @@ import {
 } from '@/components/ChartComponents/Common/Component/hook';
 import { useClipPath } from '@/hooks';
 import { ConnectState } from '@/models/connect';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TCarouselConfig } from '../type';
@@ -48,7 +46,6 @@ const CarouselBasic = (
   const clipPathStyle = useClipPath(clipPath);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   const { width: componentWidth, height: componentHeight } = useComponentSize(
     `.${chartId.current}`,
@@ -66,13 +63,10 @@ const CarouselBasic = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TCarouselConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TCarouselConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -167,7 +161,6 @@ const CarouselBasic = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

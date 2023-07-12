@@ -5,9 +5,7 @@ import Select from 'react-select';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
@@ -45,7 +43,6 @@ const SelectBasic = (
   const [selectOpen, setSelectOpen] = useState<boolean>(false);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   const {
     request,
@@ -55,13 +52,10 @@ const SelectBasic = (
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
-  } = useComponent<TSelectConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TSelectConfig>({
+    component: value,
+    global,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -254,7 +248,6 @@ const SelectBasic = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         componentFilter={componentFilter}

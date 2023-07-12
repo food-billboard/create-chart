@@ -5,9 +5,7 @@ import classnames from 'classnames';
 import { useUpdateEffect } from 'ahooks';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TCheckboxConfig } from '../type';
 import { CHART_ID } from '../id';
@@ -39,7 +37,6 @@ const Checkbox = (
   } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
   const [checkedValue, setCheckedValue] = useState<string[]>(() => {
     return defaultChecked.split(',').map((item) => item.trim());
   });
@@ -52,13 +49,10 @@ const Checkbox = (
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
-  } = useComponent<TCheckboxConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TCheckboxConfig>({
+    component: value,
+    global,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -143,7 +137,6 @@ const Checkbox = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={() => {}}

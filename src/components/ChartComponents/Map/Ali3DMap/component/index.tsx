@@ -9,9 +9,7 @@ import {
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
 import ColorSelect from '@/components/ColorSelect';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { TAli3DMapConfig } from '../type';
 import { CHART_ID } from '../id';
 import styles from './index.less';
@@ -50,7 +48,6 @@ const Ali3DMap = (
   const mapId = useRef<string>(uniqueId(CHART_ID + 'MAP'));
   const mapInstance = useRef<any>();
   const mapLayerRef = useRef<any>();
-  const requestRef = useRef<TFetchFragmentRef>(null);
   const mapInfoWindow = useRef<any>(
     new AMapFactory.InfoWindow({
       isCustom: true,
@@ -71,13 +68,10 @@ const Ali3DMap = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TAli3DMapConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TAli3DMapConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -388,7 +382,6 @@ const Ali3DMap = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

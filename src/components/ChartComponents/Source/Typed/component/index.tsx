@@ -3,9 +3,7 @@ import { uniqueId, merge, noop } from 'lodash';
 import classnames from 'classnames';
 import TypedJs from 'typed.js';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { TTypedConfig } from '../type';
@@ -28,7 +26,6 @@ const Typed = (props: ComponentData.CommonComponentProps<TTypedConfig>) => {
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const textId = useRef<string>(uniqueId(CHART_ID + 'text'));
-  const requestRef = useRef<TFetchFragmentRef>(null);
   const typedRef = useRef<TypedJs>();
 
   const {
@@ -38,13 +35,10 @@ const Typed = (props: ComponentData.CommonComponentProps<TTypedConfig>) => {
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
-  } = useComponent<TTypedConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TTypedConfig>({
+    component: value,
+    global,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -97,7 +91,6 @@ const Typed = (props: ComponentData.CommonComponentProps<TTypedConfig>) => {
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={noop}

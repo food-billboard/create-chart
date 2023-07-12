@@ -13,9 +13,7 @@ import {
 import { useDeepUpdateEffect } from '@/hooks';
 import ColorSelect from '@/components/ColorSelect';
 import { init } from '@/utils/Assist/EchartsLoader';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { TParallelBasicConfig } from '../type';
 import { CHART_ID } from '../id';
 
@@ -40,7 +38,6 @@ const ParallelBasic = (
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -55,13 +52,10 @@ const ParallelBasic = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TParallelBasicConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TParallelBasicConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -246,7 +240,6 @@ const ParallelBasic = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

@@ -46,15 +46,10 @@ const DatePicker = (
     moment(defaultDate),
   );
 
-  const { syncInteractiveAction } = useComponent<TDatePickerConfig>(
-    {
-      component: value,
-      global,
-    },
-    {
-      current: {},
-    } as any,
-  );
+  const { syncInteractiveAction } = useComponent<TDatePickerConfig>({
+    component: value,
+    global,
+  });
 
   const onChange = (value: any) => {
     setDateValue(value);

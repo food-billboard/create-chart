@@ -15,9 +15,7 @@ import {
 import { init } from '@/utils/Assist/EchartsLoader';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import ColorSelect from '@/components/ColorSelect';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
 import { TRankBarConfig } from '../type';
 import { CHART_ID } from '../id';
@@ -42,7 +40,6 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -58,13 +55,10 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
     value: _processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TRankBarConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TRankBarConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -354,7 +348,6 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

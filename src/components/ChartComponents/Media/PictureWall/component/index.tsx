@@ -3,9 +3,7 @@ import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
 import Viewer from 'viewerjs';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import { TPictureWallConfig } from '../type';
@@ -29,7 +27,6 @@ const PictureWall = (
   const { maxCount, margin, columnCount, preview } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   const {
     linkageMethod,
@@ -39,13 +36,10 @@ const PictureWall = (
     componentFilter,
     value: processedValue = [],
     componentFilterMap,
-  } = useComponent<TPictureWallConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TPictureWallConfig>({
+    component: value,
+    global,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -125,7 +119,6 @@ const PictureWall = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={() => {}}

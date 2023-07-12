@@ -13,9 +13,7 @@ import {
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import ColorSelect from '@/components/ColorSelect';
 import { init, registerMap } from '@/utils/Assist/EchartsLoader';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import chinaMap from './china.json';
 import { TScatterMapConfig } from '../type';
 import { CHART_ID } from '../id';
@@ -40,7 +38,6 @@ const ScatterMap = (
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -56,13 +53,10 @@ const ScatterMap = (
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TScatterMapConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TScatterMapConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -273,7 +267,6 @@ const ScatterMap = (
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}

@@ -32,15 +32,10 @@ const Input = (props: ComponentData.CommonComponentProps<TInputConfig>) => {
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const [inputValue, setInputValue] = useState<string>(defaultValue);
 
-  const { syncInteractiveAction } = useComponent<TInputConfig>(
-    {
-      component: value,
-      global,
-    },
-    {
-      current: {},
-    } as any,
-  );
+  const { syncInteractiveAction } = useComponent<TInputConfig>({
+    component: value,
+    global,
+  });
 
   const onChange = () => {
     syncInteractiveAction('change', {

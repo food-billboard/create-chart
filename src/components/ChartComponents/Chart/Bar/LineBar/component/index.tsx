@@ -14,9 +14,7 @@ import {
 } from '@/components/ChartComponents/Common/Component/hook';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import ColorSelect from '@/components/ColorSelect';
-import FetchFragment, {
-  TFetchFragmentRef,
-} from '@/components/ChartComponents/Common/FetchFragment';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { init } from '@/utils/Assist/EchartsLoader';
 import { TLineBarConfig } from '../type';
 import { CHART_ID } from '../id';
@@ -49,7 +47,6 @@ const LineBar = (props: ComponentData.CommonComponentProps<TLineBarConfig>) => {
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
-  const requestRef = useRef<TFetchFragmentRef>(null);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -65,13 +62,10 @@ const LineBar = (props: ComponentData.CommonComponentProps<TLineBarConfig>) => {
     value: processedValue = [],
     componentFilterMap,
     onCondition,
-  } = useComponent<TLineBarConfig>(
-    {
-      component: value,
-      global,
-    },
-    requestRef,
-  );
+  } = useComponent<TLineBarConfig>({
+    component: value,
+    global,
+  });
 
   const {
     onCondition: propsOnCondition,
@@ -391,7 +385,6 @@ const LineBar = (props: ComponentData.CommonComponentProps<TLineBarConfig>) => {
       <FetchFragment
         id={id}
         url={requestUrl}
-        ref={requestRef}
         reFetchData={request}
         reGetValue={getValue}
         reCondition={propsOnCondition}
