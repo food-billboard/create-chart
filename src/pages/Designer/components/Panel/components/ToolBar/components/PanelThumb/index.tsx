@@ -389,6 +389,9 @@ export const Tooltip = (props: {
         styles['component-panel-thumb-tooltip'],
         'border-r-4',
       )}
+      style={{
+        visibility: visible ? 'visible' : 'hidden',
+      }}
     >
       <div
         style={{
