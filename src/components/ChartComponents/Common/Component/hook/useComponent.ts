@@ -98,7 +98,8 @@ export function useComponent<P extends object = {}>(
 
   // 数据请求的地址
   const requestUrl = useMemo(() => {
-    return get(requestDataConfig, 'request.url') || '';
+    const { url, type } = requestDataConfig.request || {};
+    return type !== 'static' ? url : '';
   }, [requestDataConfig]);
 
   // 是否需要定时请求
