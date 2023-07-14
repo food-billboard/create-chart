@@ -75,26 +75,30 @@ const ContextMenu = (
   const menu = useMemo(() => {
     return actionList.map((item) => {
       const { type, children: Action } = item;
+      const label = (
+        <Action
+          key={type}
+          value={value}
+          path={path}
+          setComponent={DataChangePool.setComponent}
+          setSelect={setSelect}
+          setComponentAll={setComponentAll}
+          components={components}
+          onClick={hiddenMenu.bind(null, type)}
+          clipboard={clipboard}
+          setClipboard={setClipboard}
+          actionFrom={actionFrom}
+          select={internalSelect}
+          flag={flag}
+          childrenType="menu"
+        />
+      );
       return {
-        label: (
-          <Action
-            key={type}
-            value={value}
-            path={path}
-            setComponent={DataChangePool.setComponent}
-            setSelect={setSelect}
-            setComponentAll={setComponentAll}
-            components={components}
-            onClick={hiddenMenu.bind(null, type)}
-            clipboard={clipboard}
-            setClipboard={setClipboard}
-            actionFrom={actionFrom}
-            select={internalSelect}
-            flag={flag}
-            childrenType="menu"
-          />
-        ),
+        label,
         key: type,
+        style: {
+          padding: 0,
+        },
       };
     });
   }, [

@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, CSSProperties } from 'react';
+import { ReactNode, useCallback, CSSProperties, useMemo } from 'react';
 import { Button } from 'antd';
 import { ChildrenType } from './type';
 
@@ -15,8 +15,26 @@ const useChildren = (
     className?: string;
   },
 ) => {
-  const { icon, title, disabled, onClick, key, style, className, checked } =
-    options;
+  const {
+    icon,
+    title,
+    disabled,
+    onClick,
+    key,
+    style: _style,
+    className,
+    checked,
+  } = options;
+
+  const style = useMemo(() => {
+    if (_style?.display !== 'none') {
+      return {
+        ..._style,
+        padding: '3px 6px',
+      };
+    }
+    return _style;
+  }, [_style]);
 
   const handleClick = useCallback(
     (e) => {
