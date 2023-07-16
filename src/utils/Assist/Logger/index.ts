@@ -1,4 +1,3 @@
-import { message } from 'antd';
 import type { ReactNode } from 'react';
 import RequestLogger from './RequestLogger';
 
@@ -8,7 +7,7 @@ class Logger {
       value: ReactNode[];
     };
   } = {
-    0: {
+    request: {
       value: [],
     },
   };
@@ -33,11 +32,15 @@ class Logger {
     }
   }
 
-  log(log: Logger.LoggerItem) {
+  log(log: Logger.LoggerItemWithoutId) {
+    const realLog: Logger.LoggerItem = {
+      ...log,
+      id: Date.now().toString() + '_' + Math.random(),
+    };
     switch (log.type) {
       case 'request':
       default:
-        RequestLogger(this, log);
+        this.insertLog(log.type, RequestLogger(this, realLog));
     }
   }
 }

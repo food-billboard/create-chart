@@ -741,6 +741,7 @@ declare namespace Logger {
   };
   export type LoggerItem = {
     type: 'request';
+    id: string;
   } & {
     url: string;
     method: string;
@@ -751,4 +752,6 @@ declare namespace Logger {
     component: string;
     requestType: 'static' | 'mock' | 'api';
   }; // | another log type
+
+  export type LoggerItemWithoutId = Omit<LoggerItem, 'id'>;
 }

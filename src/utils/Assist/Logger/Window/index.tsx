@@ -1,6 +1,7 @@
 import { useState, ReactNode, useEffect, useRef, useCallback } from 'react';
 import { useKeyPress } from 'ahooks';
-import { Tabs, Button } from 'antd';
+import { Tabs, Button, Collapse } from 'antd';
+import { CaretRightOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import type { WinBoxRef } from '@/components/Winbox';
 import LazyLoadWrapper from '@/components/LazyLoad';
@@ -13,7 +14,7 @@ const WinBox = LazyLoadWrapper<any, WinBoxRef>(() => {
 
 const WindowBoxWrapper = () => {
   const [dataSource, setDataSource] = useState<ReactNode>([]);
-  const [currentTab, setCurrentTab] = useState('0');
+  const [currentTab, setCurrentTab] = useState('request');
 
   const boxRef = useRef<WinBoxRef>(null);
 
@@ -45,18 +46,29 @@ const WindowBoxWrapper = () => {
         className={classnames(styles['logger-window'], 'p-4 dis-flex h-100')}
       >
         <Tabs
-          defaultActiveKey="0"
+          defaultActiveKey="request"
           onChange={setCurrentTab}
           items={[
             {
-              key: '0',
+              key: 'request',
               label: 'request',
             },
           ].map((item) => {
             return {
               ...item,
               children: (
-                <div className={styles['logger-window-main']}>{dataSource}</div>
+                <div
+                  className={classnames(styles['logger-window-main'], 'p-4')}
+                >
+                  <Collapse
+                    bordered={false}
+                    expandIcon={({ isActive }) => (
+                      <CaretRightOutlined rotate={isActive ? 90 : 0} />
+                    )}
+                  >
+                    {dataSource}
+                  </Collapse>
+                </div>
               ),
             };
           })}

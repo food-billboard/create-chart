@@ -268,7 +268,7 @@ export class FilterData {
     }
   }
 
-  requestLog(log: Logger.LoggerItem) {
+  requestLog(log: Logger.LoggerItemWithoutId) {
     Logger.log(log);
   }
 
