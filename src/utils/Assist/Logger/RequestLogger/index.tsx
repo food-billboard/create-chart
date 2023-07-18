@@ -46,13 +46,17 @@ export default function logRequest(context: any, log: Logger.LoggerItem) {
   const idPathMap = useIdPathMap();
   const { name } = idPathMap[component] || {};
 
+  console.log(error.toString(), 2888);
+
   return (
     <Panel
+      className={styles['request-log-item']}
       key={id}
       header={
         // title
-        <div style={{ color }}>
-          {`[${level}]{request}--${name}(${component})`}
+        <div>
+          <span style={{ color }}>{`[${level}]`}</span>
+          {`{request}--${name}(${component})`}
         </div>
       }
     >
@@ -109,20 +113,24 @@ export default function logRequest(context: any, log: Logger.LoggerItem) {
       {/* response */}
       <div>
         {`this is the ${error ? 'error' : ''} response`}
-        {/* @ts-ignore */}
-        <ReactJson
-          src={response}
-          theme="greenscreen"
-          enableClipboard={true}
-          onEdit={false}
-          onDelete={false}
-          onAdd={false}
-          displayDataTypes={false}
-          displayObjectSize
-          indentWidth={2}
-          collapseStringsAfterLength={10}
-          iconStyle="square"
-        ></ReactJson>
+        {error ? (
+          <div style={{ color: 'red' }}>{error.toString()}</div>
+        ) : (
+          // @ts-ignore
+          <ReactJson
+            src={error || response}
+            theme="greenscreen"
+            enableClipboard={true}
+            onEdit={false}
+            onDelete={false}
+            onAdd={false}
+            displayDataTypes={false}
+            displayObjectSize
+            indentWidth={2}
+            collapseStringsAfterLength={10}
+            iconStyle="square"
+          ></ReactJson>
+        )}
       </div>
     </Panel>
   );
