@@ -63,7 +63,7 @@
 如有兴趣或有问题也可以在[issue](https://github.com/food-billboard/create-chart/issues)中联系我。     
 
 ## 👇🏻  Changelog  
-[1.1](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.21.md)  
+[1.21](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.21.md)  
 [1.20](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.20.md)  
 [1.19](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.19.md)  
 [1.18](https://github.com/food-billboard/create-chart/blob/main/assets/docs/1.18.md)   
