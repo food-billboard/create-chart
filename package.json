@@ -14,13 +14,15 @@
     "start": "cross-env PORT=8001 umi dev",
     "start:dev": "cross-env REACT_APP_ENV=dev umi dev",
     "build": "cross-env REACT_APP_ENV=prod umi build",
+    "build:debug": "cross-env REACT_APP=static REACT_APP_ENV=prod DEBUG=true umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
     "check": "tsc --noEmit",
     "create-chart": "node ./scripts/GenerateComponent/index.js",
-    "help": "umi help"
+    "help": "umi help",
+    "static-dev": "nodemon ./scripts/StaticFileDebug/index.js"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -135,11 +137,15 @@
     "@types/winbox": "^0.2.1",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.5.20",
+    "chalk": "4",
     "commander": "^9.4.0",
     "compression-webpack-plugin": "5.0.1",
     "cross-env": "^7.0.3",
     "gh-pages": "^4.0.0",
     "inquirer": "^8.0.0",
+    "koa": "^2.14.2",
+    "koa-cors": "^0.0.16",
+    "koa-static": "^5.0.0",
     "lint-staged": "^10.0.7",
     "monaco-editor-webpack-plugin": "^7.0.1",
     "prettier": "^2.2.0",

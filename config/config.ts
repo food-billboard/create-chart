@@ -151,6 +151,7 @@ const productionConfig: any = merge({}, commonConfig, {
   //-----打包配置
   // base: '/api/backend/screen/',
   base: '/',
+  outputPath: process.env.DEBUG ? 'dist/create-chart' : 'dist',
   publicPath:
     process.env.REACT_APP === 'static'
       ? '/create-chart/'
