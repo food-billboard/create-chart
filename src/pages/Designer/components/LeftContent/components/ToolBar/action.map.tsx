@@ -1,26 +1,26 @@
-import { useRef } from 'react';
+import IconFont from '@/components/ChartComponents/Common/Icon';
+import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import {
-  RedoOutlined,
-  UndoOutlined,
-  ToolOutlined,
-  ShrinkOutlined,
   GlobalOutlined,
   MacCommandOutlined,
+  RedoOutlined,
+  ShrinkOutlined,
+  ToolOutlined,
+  UndoOutlined,
 } from '@ant-design/icons';
-import classnames from 'classnames';
-import { connect } from 'dva';
 import { useDebounceFn } from 'ahooks';
-import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
-import IconFont from '@/components/ChartComponents/Common/Icon';
+import classnames from 'classnames';
+import { useRef } from 'react';
+import { connect } from 'umi';
 import CallbackManage, { CallbackManageRef } from '../CallbackManage';
 import ConstantManage, { ConstantManageRef } from '../ConstantManage';
-import LocalConfigMange, { LocalConfigManageRef } from '../LocalConfigMange';
 import LensConfigModal, { LensConfigRef } from '../LensConfig';
-import ThemeConfigModal, { ThemeConfigRef } from '../ThemeConfig';
+import LocalConfigMange, { LocalConfigManageRef } from '../LocalConfigMange';
 import RequestDefaultConfigManage, {
   RequestCofigRef,
 } from '../RequestDefaultConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import ThemeConfigModal, { ThemeConfigRef } from '../ThemeConfig';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const commonClass: string = classnames(

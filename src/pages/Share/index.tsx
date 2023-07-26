@@ -1,22 +1,22 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
-import { connect } from 'dva';
-import { history } from 'umi';
-import { message } from 'antd';
-import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { useHashChangeReload } from '@/hooks';
 import {
-  shareScreenHeartbeat,
   shareScreenGet,
+  shareScreenHeartbeat,
   shareScreenPost,
 } from '@/services';
+import { getLocationQuery } from '@/utils';
+import { message } from 'antd';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { connect } from 'umi';
+import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
+import PainterWrapper from './components/PainterWrapper';
 import PasswordConfirm, {
   PasswordConfirmRef,
 } from './components/PasswordConfirm';
-import PainterWrapper from './components/PainterWrapper';
-import useWrapperProps from './useWrapperProps';
 import WaterMark from './components/WaterMark';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
+import useWrapperProps from './useWrapperProps';
 
 function Share(props: {
   setScreenType: (value: ComponentData.ScreenType) => void;
@@ -51,7 +51,7 @@ function Share(props: {
 
   const heartbeatFetch = async () => {
     try {
-      const { id } = history.location.query || {};
+      const { id } = getLocationQuery() || {};
       const result = await shareScreenHeartbeat({ _id: id as string });
       if (!result) {
         setHeartbeat(false);
@@ -76,7 +76,7 @@ function Share(props: {
   };
 
   const fetchValidInfo = async () => {
-    const { id } = history.location.query || {};
+    const { id } = getLocationQuery() || {};
     if (!id) return;
     try {
       const { password } = await shareScreenGet({ _id: id as string });
@@ -92,7 +92,7 @@ function Share(props: {
   };
 
   const onPasswordConfirm = useCallback(async (value) => {
-    const { id } = history.location.query || {};
+    const { id } = getLocationQuery() || {};
     const data = await shareScreenPost({
       _id: id as string,
       password: value,

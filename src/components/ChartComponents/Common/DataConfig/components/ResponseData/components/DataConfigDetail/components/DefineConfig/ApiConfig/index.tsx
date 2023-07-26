@@ -1,18 +1,18 @@
-import { useCallback } from 'react';
-import { Typography } from 'antd';
-import { merge } from 'lodash';
-import { connect } from 'dva';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import Checkbox from '@/components/ChartComponents/Common/Checkbox';
 import Select from '@/components/ChartComponents/Common/Select';
 import IconTooltipBase from '@/components/IconTooltip';
-import Checkbox from '@/components/ChartComponents/Common/Checkbox';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import { API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG } from '@/utils/constants/another';
-import CodeEditor from '../SaveCodeEditor';
+import { API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG } from '@/utils/constants';
+import { InfoCircleOutlined } from '@ant-design/icons';
+import { Typography } from 'antd';
+import { merge } from 'lodash';
+import { useCallback } from 'react';
+import { connect } from 'umi';
 import SubTitle, { SubForm } from '../../SubTitle';
+import CodeEditor from '../SaveCodeEditor';
 import { TOnChange } from '../type';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 export const IconTooltip = () => {

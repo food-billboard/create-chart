@@ -1,15 +1,15 @@
-import { useEffect, useState, useMemo } from 'react';
-import { connect } from 'dva';
-import { merge } from 'lodash';
 import GuideLine from '@/components/GuideLine';
 import { getPath } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { merge } from 'lodash';
+import { useEffect, useMemo, useState } from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import {
-  AbsorbUtil,
-  GuideLineCallback,
-  ComponentCallback,
   AbsorbEndCallback,
+  AbsorbUtil,
+  ComponentCallback,
+  GuideLineCallback,
 } from './utils';
 
 const AbsorbGuideLine = (props: {

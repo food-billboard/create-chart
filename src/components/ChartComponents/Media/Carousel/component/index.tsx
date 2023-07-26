@@ -1,20 +1,20 @@
-import { useMemo, useRef, useCallback } from 'react';
-import { Carousel } from 'antd';
-import { uniqueId, merge, get } from 'lodash';
-import classnames from 'classnames';
-import { connect } from 'dva';
 import {
   useComponent,
-  useCondition,
   useComponentSize,
+  useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { useClipPath } from '@/hooks';
 import { ConnectState } from '@/models/connect';
-import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
-import { TCarouselConfig } from '../type';
+import { Carousel } from 'antd';
+import classnames from 'classnames';
+import { get, merge, uniqueId } from 'lodash';
+import { useCallback, useMemo, useRef } from 'react';
+import { connect } from 'umi';
 import { CHART_ID } from '../id';
+import { TCarouselConfig } from '../type';
 import styles from './index.less';
 
 const CarouselBasic = (

@@ -1,13 +1,10 @@
-import { Component, useMemo, useCallback, useState } from 'react';
+import { useComponentPath, useIdPathMap } from '@/hooks';
+import { EComponentType } from '@/utils/constants';
 import { Tree as AntTree } from 'antd';
-import { connect } from 'dva';
 import type { DataNode } from 'antd/es/tree';
 import arrayMove from 'array-move';
-import { useUpdate } from 'ahooks';
-import { EComponentType } from '@/utils/constants';
-import { useComponentPath, useIdPathMap } from '@/hooks';
+import { Component } from 'react';
 import TreeNode from './components/TreeNode';
-import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 export type TreeProps = {

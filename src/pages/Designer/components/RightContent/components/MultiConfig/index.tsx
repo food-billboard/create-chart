@@ -1,17 +1,17 @@
-import { useCallback } from 'react';
-import classnames from 'classnames';
-import { connect } from 'dva';
 import ConfigWrapper, {
   ConfigItem,
 } from '@/components/ChartComponents/Common/ConfigWrapper';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import { ConnectState } from '@/models/connect';
 import {
+  getDvaGlobalModelData,
   getTopParentComponent,
   isComponentDisabled,
-  getDvaGlobalModelData,
 } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
-import { ConnectState } from '@/models/connect';
+import classnames from 'classnames';
+import { useCallback } from 'react';
+import { connect } from 'umi';
 import KeyWordPosition from '../GroupConfig/components/OptionConfig/components/KeyWordPosition';
 import styles from './index.less';
 

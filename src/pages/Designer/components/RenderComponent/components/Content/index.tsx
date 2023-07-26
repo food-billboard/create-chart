@@ -1,16 +1,15 @@
-import { useMemo, useCallback, CSSProperties } from 'react';
-import { connect } from 'dva';
-import { get } from 'lodash';
-import { ConnectState } from '@/models/connect';
 import { getComponentByType } from '@/components/ChartComponents';
 import { getTargetBorder } from '@/components/InternalBorder';
-import { EComponentType } from '@/utils/constants';
+import { ConnectState } from '@/models/connect';
 import { mergeWithoutArray } from '@/utils';
-import { isGroupComponent } from '@/utils/Assist/Component';
-import ComponentWrapper from './ComponentWrapper';
+import { EComponentType } from '@/utils/constants';
+import { get } from 'lodash';
+import { CSSProperties, useCallback, useMemo } from 'react';
+import { connect } from 'umi';
 import ComponentInternalWrapper from './ComponentInternalWrapper';
-import SubGroup from './SubGroup';
+import ComponentWrapper from './ComponentWrapper';
 import styles from './index.less';
+import SubGroup from './SubGroup';
 
 const Content = (props: {
   setParams: (value: ComponentData.TParams[]) => void;
@@ -205,7 +204,7 @@ export default connect(
       componentBorder: state.global.screenData.config.attr.componentBorder,
     };
   },
-  (dispatch) => {
+  (dispatch: any) => {
     return {
       setParams: (value: ComponentData.TParams[]) =>
         dispatch({ type: 'global/setParams', value }),

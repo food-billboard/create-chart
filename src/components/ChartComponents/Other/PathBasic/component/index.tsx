@@ -1,20 +1,20 @@
-import { useCallback, useRef, useMemo } from 'react';
-import { uniqueId, merge } from 'lodash';
-import classnames from 'classnames';
-import Anime from 'animejs';
-import { useDeepCompareEffect } from 'ahooks';
-import { connect } from 'dva';
 import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import ColorSelect from '@/components/ColorSelect';
-import FilterDataUtil from '@/utils/Assist/FilterData';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
+import ColorSelect from '@/components/ColorSelect';
 import { ConnectState } from '@/models/connect';
 import { sleep } from '@/utils';
-import { TPathBasicConfig } from '../type';
+import FilterDataUtil from '@/utils/Assist/FilterData';
+import { useDeepCompareEffect } from 'ahooks';
+import Anime from 'animejs';
+import classnames from 'classnames';
+import { merge, uniqueId } from 'lodash';
+import { useCallback, useMemo, useRef } from 'react';
+import { connect } from 'umi';
 import { CHART_ID } from '../id';
+import { TPathBasicConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;

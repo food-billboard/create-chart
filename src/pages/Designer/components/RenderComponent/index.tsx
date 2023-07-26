@@ -1,24 +1,24 @@
-import {
-  CSSProperties,
-  useMemo,
-  useCallback,
-  memo,
-  ReactNode,
-  useRef,
-} from 'react';
-import classnames from 'classnames';
-import { connect } from 'dva';
-import { isEqual } from 'lodash';
-import { useRafState, useInViewport } from 'ahooks';
 import { useComponentStyle } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
-import ComponentWrapper from './components/Wrapper';
-import Content from './components/Content';
+import { useRafState } from 'ahooks';
+import classnames from 'classnames';
+import { isEqual } from 'lodash';
+import {
+  CSSProperties,
+  memo,
+  ReactNode,
+  useCallback,
+  useMemo,
+  useRef,
+} from 'react';
+import { connect } from 'umi';
 import ContextMenu from '../../../../components/ContextMenu';
-import ConnectSelectChangeWrapper from './components/SelectChangeWrapper';
+import Content from './components/Content';
 import HoverChangeWrapper from './components/HoverChangeWrapper';
 import NameTag from './components/NameTag';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import ConnectSelectChangeWrapper from './components/SelectChangeWrapper';
+import ComponentWrapper from './components/Wrapper';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 export type RenderComponentProps = {

@@ -1,12 +1,19 @@
 // import * as packageInfo from '../../../package.json';
 
-export { default as DEFAULT_SCREEN_DATA } from './screenData';
 export * from './another';
-export * from './theme';
 export * from './color';
 export * from './data';
 export * from './defaultValue';
 export * from './mobile';
+export { default as DEFAULT_SCREEN_DATA } from './screenData';
+export * from './theme';
+
+// 按钮标识强制更新的标识
+export const API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG =
+  'IMMEDIATELY_REQUEST_FLAG';
+
+// 懒更新api请求的标识
+export const API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG = '(LAZY_REQUEST_FLAG)';
 
 export enum EComponentType {
   GROUP_COMPONENT = 'GROUP_COMPONENT',

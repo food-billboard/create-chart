@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
-import { connect } from 'dva';
 import type { ConnectState } from '@/models/connect';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { useMemo } from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const ShowIdWrapper = (

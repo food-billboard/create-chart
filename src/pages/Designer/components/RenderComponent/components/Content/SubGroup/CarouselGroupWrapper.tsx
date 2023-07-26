@@ -1,10 +1,10 @@
-import { ReactNode, useMemo, useEffect, Children } from 'react';
-import { connect } from 'dva';
 import { ConnectState } from '@/models/connect';
 import {
   EVENT_NAME_MAP,
   GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
+import { Children, ReactNode, useEffect, useMemo } from 'react';
+import { connect } from 'umi';
 import AbstractComponent, {
   AbstractComponentProps,
   CAROUSEL_COMPONENT_MAP,

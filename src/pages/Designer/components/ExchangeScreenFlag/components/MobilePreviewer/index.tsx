@@ -1,25 +1,25 @@
-import {
-  forwardRef,
-  useImperativeHandle,
-  useState,
-  useCallback,
-  useMemo,
-} from 'react';
+import { getComponentByType } from '@/components/ChartComponents';
+import GlobalLoadingActionButton from '@/components/GlobalLoadingActionButton';
+import { InternalBorderWrapper } from '@/components/InternalBorder';
+import { Loading } from '@/components/PageLoading';
+import { ConnectState } from '@/models/connect';
+import { putScreen, putScreenModel } from '@/services';
+import { mergeWithoutArray } from '@/utils';
+import { ComponentTransformOriginChange } from '@/utils/Assist/BreakingChange';
+import { getDvaGlobalModelData } from '@/utils/Assist/Component';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
 import { Drawer, message } from 'antd';
 import classnames from 'classnames';
-import { connect } from 'dva';
 import { noop } from 'lodash';
-import { Loading } from '@/components/PageLoading';
-import GlobalLoadingActionButton from '@/components/GlobalLoadingActionButton';
-import { getDvaGlobalModelData } from '@/utils/Assist/Component';
-import { mergeWithoutArray } from '@/utils';
-import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import { ComponentTransformOriginChange } from '@/utils/Assist/BreakingChange';
-import { ConnectState } from '@/models/connect';
-import { getComponentByType } from '@/components/ChartComponents';
-import { InternalBorderWrapper } from '@/components/InternalBorder';
-import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
-import { putScreen, putScreenModel } from '@/services';
+import {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from 'react';
+import { connect } from 'umi';
 import { NormalPainter } from '../../../Panel/components/Painter';
 import { ExchangePreviewerContext } from './context';
 import styles from './index.less';

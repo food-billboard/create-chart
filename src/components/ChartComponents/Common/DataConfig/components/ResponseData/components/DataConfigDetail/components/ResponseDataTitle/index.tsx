@@ -1,11 +1,11 @@
-import { useCallback } from 'react';
-import { Loading3QuartersOutlined } from '@ant-design/icons';
 import IconTooltip from '@/components/IconTooltip';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { connect } from 'dva';
-import Title from '../NormalTitle';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
+import { useCallback } from 'react';
+import { connect } from 'umi';
 import { TOnChange } from '../DefineConfig/type';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import Title from '../NormalTitle';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const ResponseDataTitle = (props: {
   onChange?: TOnChange;

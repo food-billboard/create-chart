@@ -1,5 +1,5 @@
-import { connect } from 'dva';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const WaterMark = (props: { waterMark: boolean }) => {

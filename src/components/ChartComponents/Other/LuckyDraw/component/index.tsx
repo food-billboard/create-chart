@@ -1,22 +1,22 @@
-import { useMemo, useRef, useCallback } from 'react';
-import { merge, uniqueId, get, pick, omit } from 'lodash';
 import classnames from 'classnames';
-import { connect } from 'dva';
+import { get, merge, omit, pick, uniqueId } from 'lodash';
+import { useCallback, useMemo, useRef } from 'react';
+import { connect } from 'umi';
 // @ts-ignore
-import { LuckyWheel } from '@lucky-canvas/react';
 import {
   useComponent,
-  useCondition,
   useComponentSize,
+  useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { ConnectState } from '@/models/connect';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
+import { ConnectState } from '@/models/connect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { TLuckyDrawConfig } from '../type';
+import { LuckyWheel } from '@lucky-canvas/react';
 import { CHART_ID } from '../id';
-import { BUTTON_MAP, BLOCK_MAP, BACKGROUND_PADDING } from './util';
+import { TLuckyDrawConfig } from '../type';
 import styles from './index.less';
+import { BACKGROUND_PADDING, BLOCK_MAP, BUTTON_MAP } from './util';
 
 const { getRgbaString } = ColorSelect;
 

@@ -1,16 +1,16 @@
-import json5 from 'json5';
-import mustache from 'mustache';
-import { cloneDeep, get } from 'lodash';
 import { preRequestData } from '@/services';
+import json5 from 'json5';
+import { cloneDeep, get } from 'lodash';
+import mustache from 'mustache';
 import {
-  API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG,
   API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG,
-} from '../../constants/another';
-import { getDvaGlobalModelData } from '../Component';
-import VariableStringUtil from '../VariableString';
-import request from '../../request';
+  API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG,
+} from '../../constants';
 import { MOCK_REQUEST_URL } from '../../index';
+import request from '../../request';
+import { getDvaGlobalModelData } from '../Component';
 import Logger from '../Logger';
+import VariableStringUtil from '../VariableString';
 
 export const FILTER_STEP_MAP_DATA: {
   [id: string]: {

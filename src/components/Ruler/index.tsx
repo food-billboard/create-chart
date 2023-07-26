@@ -1,9 +1,9 @@
-import { createRef, Component } from 'react';
-import ReactRuler, { RulerProps as BaseRulerProps } from '@scena/react-ruler';
-import { connect } from 'dva';
 import ColorSelect from '@/components/ColorSelect';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import ReactRuler, { RulerProps as BaseRulerProps } from '@scena/react-ruler';
+import { Component, createRef } from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 export type RulerProps = Partial<BaseRulerProps>;
 

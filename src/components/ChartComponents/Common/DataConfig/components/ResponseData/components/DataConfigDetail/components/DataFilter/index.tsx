@@ -1,19 +1,19 @@
-import { useCallback, useMemo, useState } from 'react';
-import { connect } from 'dva';
-import { nanoid } from 'nanoid';
-import classnames from 'classnames';
-import { useControllableValue, useUnmount } from 'ahooks';
-import arrayMove from 'array-move';
 import { DEFAULT_FILTER_CODE } from '@/utils';
 import {
-  GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
+  GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
+import { useControllableValue, useUnmount } from 'ahooks';
+import arrayMove from 'array-move';
+import classnames from 'classnames';
+import { nanoid } from 'nanoid';
+import { useCallback, useMemo, useState } from 'react';
+import { connect } from 'umi';
 import AddItem from './addItem';
-import ListItem, { TOnChangeType, TOnComponentChangeType } from './ListItem';
-import List from './List';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
+import List from './List';
+import ListItem, { TOnChangeType, TOnComponentChangeType } from './ListItem';
 
 const DataFilter = (props: {
   id: string;

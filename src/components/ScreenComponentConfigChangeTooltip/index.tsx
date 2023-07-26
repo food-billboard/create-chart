@@ -1,15 +1,15 @@
-import { ReactNode, useCallback, useMemo, useState } from 'react';
-import { Pagination, Button } from 'antd';
-import { connect } from 'dva';
-import { findLast } from 'lodash';
-import { InfoCircleOutlined } from '@ant-design/icons';
-import classnames from 'classnames';
-import { versionCompare } from '@/utils';
 import { useAnyDva } from '@/hooks';
-import IconTooltip from '../IconTooltip';
+import { versionCompare } from '@/utils';
+import { InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Pagination } from 'antd';
+import classnames from 'classnames';
+import { findLast } from 'lodash';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { connect } from 'umi';
 import type { Props as IconTooltipProps } from '../IconTooltip';
+import IconTooltip from '../IconTooltip';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import allConfigVersionMap from './Constants';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 type Props = {

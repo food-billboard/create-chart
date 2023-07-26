@@ -1,12 +1,12 @@
-import { connect } from 'dva';
-import { get } from 'lodash';
 import { ConnectState } from '@/models/connect';
+import { get } from 'lodash';
+import { connect } from 'umi';
 import CommonLayout, {
-  EventEmitterWrapper,
-  EnvironmentPrompt,
-  DocumentTitleSetWrapper,
   ContainerWrapper,
-} from './components/CommonLayout';
+  DocumentTitleSetWrapper,
+  EnvironmentPrompt,
+  EventEmitterWrapper,
+} from '../components/CommonLayout';
 
 export default connect(
   (state: ConnectState) => {

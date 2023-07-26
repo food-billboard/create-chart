@@ -1,12 +1,9 @@
-import { useMemo, useContext } from 'react';
-import { connect } from 'dva';
 import { useIdPathMap } from '@/hooks';
+import { getPath } from '@/utils/Assist/Component';
+import { useMemo } from 'react';
+import { connect } from 'umi';
 import RenderComponent from '../../../RenderComponent';
-import {
-  getPath,
-  isGroupComponent as isGroupComponentFunc,
-} from '@/utils/Assist/Component';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const ComponentList = (props: {
   components: ComponentData.TComponentData[];

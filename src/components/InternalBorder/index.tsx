@@ -1,16 +1,16 @@
-import { useMemo } from 'react';
-import { useControllableValue } from 'ahooks';
-import { connect } from 'dva';
-import { pick } from 'lodash';
-import classNames from 'classnames';
 import Select from '@/components/ChartComponents/Common/Select';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { useControllableValue } from 'ahooks';
+import classNames from 'classnames';
+import { pick } from 'lodash';
+import { useMemo } from 'react';
+import { connect } from 'umi';
 import BorderMap from './components/Border';
-import { CommonBorderProps } from './components/Border/type';
 import styles from './components/Border/index.less';
+import { CommonBorderProps } from './components/Border/type';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
-export { default as BorderMap } from './components/Border';
 export * from './components/Border';
+export { default as BorderMap } from './components/Border';
 
 export const getTargetBorder = (
   border: ComponentData.TComponentData['config']['style']['border'],

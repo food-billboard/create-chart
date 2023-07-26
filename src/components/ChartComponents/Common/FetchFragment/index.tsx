@@ -1,9 +1,9 @@
-import { useRef, useEffect } from 'react';
-import { connect } from 'dva';
+import { CompareFilterUtil } from '@/utils/Assist/FilterData';
 import { useUpdateEffect } from 'ahooks';
 import { noop } from 'lodash';
-import { CompareFilterUtil } from '@/utils/Assist/FilterData';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { useEffect, useRef } from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 export type TFetchFragmentProps = {
   id: string;

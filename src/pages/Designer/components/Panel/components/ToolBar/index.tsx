@@ -1,9 +1,9 @@
 import classnames from 'classnames';
-import { connect } from 'dva';
-import Scale from './components/Scale';
+import { connect } from 'umi';
 import PanelThumb from './components/PanelThumb';
+import Scale from './components/Scale';
 import ShortcutKeys from './components/ShortcutKeys';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const ToolBar = (props: { flag: ComponentData.ScreenFlagType }) => {

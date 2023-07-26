@@ -1,13 +1,13 @@
-import { CSSProperties, useMemo, useRef } from 'react';
-import { uniqueId, merge, get } from 'lodash';
-import classnames from 'classnames';
-import { connect } from 'dva';
-import ColorSelect from '@/components/ColorSelect';
-import { ConnectState } from '@/models/connect';
 import { useComponentSize } from '@/components/ChartComponents/Common/Component/hook';
 import { useLinkageInteractive } from '@/components/ChartComponents/Common/Component/hook/useLinkageInteractive';
-import { TIconConfig } from '../type';
+import ColorSelect from '@/components/ColorSelect';
+import { ConnectState } from '@/models/connect';
+import classnames from 'classnames';
+import { get, merge, uniqueId } from 'lodash';
+import { CSSProperties, useMemo, useRef } from 'react';
+import { connect } from 'umi';
 import { CHART_ID } from '../id';
+import { TIconConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;

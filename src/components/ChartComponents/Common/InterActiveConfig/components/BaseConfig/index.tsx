@@ -1,14 +1,14 @@
-import { useMemo, ReactNode, useCallback } from 'react';
-import { Collapse, Checkbox } from 'antd';
-import { get } from 'lodash';
-import { connect } from 'dva';
-import { InfoCircleOutlined, CaretRightOutlined } from '@ant-design/icons';
 import IconTooltip from '@/components/IconTooltip';
 import { getPath } from '@/utils/Assist/Component';
-import InteractiveUtil from '@/utils/Assist/Interactive';
 import GlobalComponent from '@/utils/Assist/GlobalComponent';
+import InteractiveUtil from '@/utils/Assist/Interactive';
+import { CaretRightOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Checkbox, Collapse } from 'antd';
+import { get } from 'lodash';
+import { ReactNode, useCallback, useMemo } from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import FieldSetting from './FieldSetting';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 const { Panel } = Collapse;

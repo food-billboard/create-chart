@@ -1,11 +1,11 @@
-import { forwardRef, useImperativeHandle, useState, useCallback } from 'react';
-import { Switch, Drawer } from 'antd';
-import { connect } from 'dva';
-import classnames from 'classnames';
 import Slider from '@/components/ChartComponents/Common/Slider';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { Drawer, Switch } from 'antd';
+import classnames from 'classnames';
+import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const { Item } = ConfigList;
@@ -181,6 +181,6 @@ const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
   );
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {
+export default connect(mapStateToProps, mapDispatchToProps, undefined, {
   forwardRef: true,
 })(LensConfig);

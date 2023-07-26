@@ -1,9 +1,9 @@
-import { useCallback, useMemo, useState } from 'react';
-import { connect } from 'dva';
 import { Button, message } from 'antd';
-import { Mobile, Email, Password, Captcha } from '../Login';
+import { useCallback, useMemo, useState } from 'react';
+import { connect } from 'umi';
+import { Captcha, Email, Mobile, Password } from '../Login';
 import CommonBackground from '../Login/components/Background';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const Register = (props: { register: (value: any) => any }) => {
   const { register } = props;

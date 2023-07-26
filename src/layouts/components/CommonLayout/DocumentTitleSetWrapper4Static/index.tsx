@@ -1,9 +1,10 @@
 import { useEffect, useMemo } from 'react';
+import { useLocation } from 'umi';
 
 // 设置document title
 const DocumentTitleSetWrapper = (props: any) => {
   const { screenName, Component, ...nextProps } = props;
-  const { pathname } = nextProps.location || {};
+  const { pathname } = useLocation();
 
   const reload = () => {
     let title = screenName || '大屏设计器';

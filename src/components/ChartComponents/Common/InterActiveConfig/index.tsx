@@ -1,13 +1,13 @@
-import { useMemo } from 'react';
-import { connect } from 'dva';
+import { getComponent } from '@/utils/Assist/Component';
+import DataChangePool from '@/utils/Assist/DataChangePool';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import { get } from 'lodash';
-import { InfoCircleOutlined } from '@ant-design/icons';
-import DataChangePool from '@/utils/Assist/DataChangePool';
-import { getComponent } from '@/utils/Assist/Component';
+import { useMemo } from 'react';
+import { connect } from 'umi';
 import BaseConfig from './components/BaseConfig';
 import LinkageConfig from './components/LinkageConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const InterActiveConfig = (props: {

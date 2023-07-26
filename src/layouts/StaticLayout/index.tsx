@@ -1,10 +1,10 @@
-import { connect } from 'dva';
-import { get } from 'lodash';
 import { ConnectState } from '@/models/connect';
+import { get } from 'lodash';
+import { connect, Outlet } from 'umi';
 import CommonLayout, {
-  EnvironmentPrompt,
-  DocumentTitleSetWrapper4Static,
   ContainerWrapper4Static,
+  DocumentTitleSetWrapper4Static,
+  EnvironmentPrompt,
   EventEmitterWrapper,
 } from '../components/CommonLayout';
 
@@ -21,5 +21,6 @@ export default connect(
     EnvironmentPrompt,
     DocumentTitleSetWrapper4Static,
     ContainerWrapper4Static,
+    Outlet,
   ]),
 );

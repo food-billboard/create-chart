@@ -1,8 +1,8 @@
-import { useCallback, useMemo } from 'react';
-import { Avatar as AntAvatar, Dropdown, Menu } from 'antd';
-import { connect } from 'dva';
 import { UserOutlined } from '@ant-design/icons';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { Avatar as AntAvatar, Dropdown } from 'antd';
+import { useCallback, useMemo } from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const Avatar = (props: { logout: () => void; userInfo: any }) => {
   const { logout, userInfo: { avatar, username } = {} } = props;

@@ -1,7 +1,7 @@
-import { useEffect, useMemo } from 'react';
-import { connect } from 'dva';
 import { ConnectState } from '@/models/connect';
 import { MOBILE_HEIGHT } from '@/utils/constants';
+import { useEffect, useMemo } from 'react';
+import { connect } from 'umi';
 
 const H5AutoHeight = (props: {
   config: ComponentData.TScreenData['config'];
@@ -58,7 +58,7 @@ export default connect(
       screenType: state.global.screenType,
     };
   },
-  (dispatch) => {
+  (dispatch: any) => {
     return {
       setScreenData: (value: any) =>
         dispatch({ type: 'global/setScreen', value, init: true }),

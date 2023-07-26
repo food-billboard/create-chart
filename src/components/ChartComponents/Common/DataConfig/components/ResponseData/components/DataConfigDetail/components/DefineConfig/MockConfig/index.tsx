@@ -1,19 +1,19 @@
-import { useCallback, useMemo } from 'react';
-import { connect } from 'dva';
+import Checkbox from '@/components/ChartComponents/Common/Checkbox';
+import Input from '@/components/ChartComponents/Common/Input';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import MapTable from '@/components/ChartComponents/Common/MapTable';
+import Select from '@/components/ChartComponents/Common/Select';
+import { ConnectState } from '@/models/connect';
+import { mergeWithoutArray } from '@/utils';
+import FilterDataUtil from '@/utils/Assist/FilterData';
+import { DeleteOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { nanoid } from 'nanoid';
-import { DeleteOutlined } from '@ant-design/icons';
-import Select from '@/components/ChartComponents/Common/Select';
-import Input from '@/components/ChartComponents/Common/Input';
-import FilterDataUtil from '@/utils/Assist/FilterData';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import Checkbox from '@/components/ChartComponents/Common/Checkbox';
-import { ConnectState } from '@/models/connect';
-import MapTable from '@/components/ChartComponents/Common/MapTable';
-import { mergeWithoutArray } from '@/utils';
+import { useCallback, useMemo } from 'react';
+import { connect } from 'umi';
 import SubTitle, { SubForm } from '../../SubTitle';
 import { ApiConfigProps } from '../ApiConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 export type MockConfigProps = ApiConfigProps;
 

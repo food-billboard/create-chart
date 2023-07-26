@@ -1,14 +1,13 @@
-import { ReactNode, useEffect, useState, useMemo, useCallback } from 'react';
-import type { DropDownProps } from 'antd/es/dropdown';
-import classnames from 'classnames';
-import { connect } from 'dva';
-import { isEqual } from 'lodash';
 import { useGlobalLoading } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
+import type { DropDownProps } from 'antd/es/dropdown';
+import { isEqual } from 'lodash';
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import { connect } from 'umi';
 import Dropdown from '../ChartComponents/Common/Dropdown';
-import { ActionItemType, ActionItem, DEFAULT_ACTION_LIST } from './action.map';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { ActionItem, ActionItemType, DEFAULT_ACTION_LIST } from './action.map';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const ContextMenu = (
   props: {

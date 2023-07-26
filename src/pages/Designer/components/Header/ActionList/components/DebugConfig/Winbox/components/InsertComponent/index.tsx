@@ -1,15 +1,15 @@
-import { useState, useRef, useCallback } from 'react';
-import { Button } from 'antd';
-import { useUnmount, useDebounceFn } from 'ahooks';
-import { connect } from 'dva';
 import {
   getAllComponent,
   getComponentLength,
 } from '@/components/ChartComponents';
 import { createComponent } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
+import { useDebounceFn, useUnmount } from 'ahooks';
+import { Button } from 'antd';
+import { useCallback, useRef, useState } from 'react';
+import { connect } from 'umi';
 import { COMPONENT_ONLY_TYPE_LIST } from '../../../../../../../../utils/component';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const IS_EMPTY = COMPONENT_ONLY_TYPE_LIST.every(
   (item) => item.disabled || item.development,

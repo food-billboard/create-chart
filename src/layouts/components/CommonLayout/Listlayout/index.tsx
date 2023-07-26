@@ -1,8 +1,8 @@
-import { useState, useCallback } from 'react';
-import type { ReactNode } from 'react';
-import { Layout as AntLayout, Menu, Breadcrumb } from 'antd';
-import { history } from 'umi';
+import { Breadcrumb, Layout as AntLayout, Menu } from 'antd';
 import classnames from 'classnames';
+import type { ReactNode } from 'react';
+import { useCallback, useState } from 'react';
+import { history, useLocation } from 'umi';
 import Avatar from '../../Avatar';
 import styles from './index.less';
 
@@ -14,8 +14,8 @@ const PATH_MAP: any = {
 };
 
 // 外部layout
-const Layout = (props: { children?: ReactNode; pathname: string }) => {
-  const { pathname } = props;
+const Layout = (props: { children?: ReactNode }) => {
+  const { pathname } = useLocation();
 
   const [activeKey, setActiveKey] = useState<string>(() => {
     return PATH_MAP[pathname] || 'screen';

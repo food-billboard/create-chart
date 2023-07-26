@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import type { ReactNode } from 'react';
-import { connect } from 'dva';
-import Loading from '@/components/PageLoading';
 import IntroductionButton from '@/components/IntroductionButton';
+import Loading from '@/components/PageLoading';
 import { dispatchLogin } from '@/utils/request';
+import type { ReactNode } from 'react';
+import { useEffect, useState } from 'react';
+import { connect, useLocation } from 'umi';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const LoginWrapper = (props: {
@@ -11,11 +11,9 @@ const LoginWrapper = (props: {
   location: any;
   getUserInfo: () => Promise<any>;
 }) => {
-  const {
-    children,
-    location: { pathname },
-    getUserInfo,
-  } = props;
+  const { children, getUserInfo } = props;
+
+  const { pathname } = useLocation();
 
   const [fetchLoading, setFetchLoading] = useState<boolean>(true);
 

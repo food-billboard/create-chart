@@ -1,9 +1,9 @@
-import { useCallback, useMemo, useState } from 'react';
-import { connect } from 'dva';
 import { Button, message } from 'antd';
-import { Email, Password, Captcha } from '../Login';
+import { useCallback, useMemo, useState } from 'react';
+import { connect } from 'umi';
+import { Captcha, Email, Password } from '../Login';
 import CommonBackground from '../Login/components/Background';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const Forget = (props: { forger: (value: any) => any }) => {
   const { forger } = props;

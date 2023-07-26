@@ -1,21 +1,21 @@
-import { useMemo } from 'react';
-import { pick, noop } from 'lodash';
-import { connect } from 'dva';
-import { Space } from 'antd';
 import {
   BottomAction,
-  TopAction,
-  LockAction,
   DeleteAction,
-  ShowAction,
   GroupAction,
+  LockAction,
   NextOrderAction,
   PrevOrderAction,
+  ShowAction,
+  TopAction,
 } from '@/components/ContextMenu/Actions';
 import { CommonActionType } from '@/components/ContextMenu/Actions/type';
+import { getComponent, getPath } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
-import { getPath, getComponent } from '@/utils/Assist/Component';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { Space } from 'antd';
+import { noop, pick } from 'lodash';
+import { useMemo } from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 type ActionProps = {

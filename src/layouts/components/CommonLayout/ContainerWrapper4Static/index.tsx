@@ -1,16 +1,16 @@
 import IntroductionButton from '@/components/IntroductionButton';
+import { useLocation } from 'umi';
 
 const GlobalLayout = (props: any) => {
-  const {
-    children,
-    location: { pathname },
-  } = props;
+  const { Component } = props;
 
-  if (['viewer'].some((path) => pathname.includes(path))) return children;
+  const { pathname } = useLocation();
+
+  if (['viewer'].some((path) => pathname.includes(path))) return <Component />;
 
   return (
     <>
-      {children}
+      <Component />
       <IntroductionButton />
     </>
   );

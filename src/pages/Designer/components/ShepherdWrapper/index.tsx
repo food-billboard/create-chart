@@ -1,13 +1,13 @@
-import { ReactNode, useContext, useEffect } from 'react';
-import {
-  ShepherdTour,
-  ShepherdTourContext,
-  ShepherdOptionsWithType,
-} from 'react-shepherd';
-import { connect } from 'dva';
 import { useLocalStorage } from '@/hooks';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { ReactNode, useContext, useEffect } from 'react';
+import {
+  ShepherdOptionsWithType,
+  ShepherdTour,
+  ShepherdTourContext,
+} from 'react-shepherd';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import './index.less';
 
 const steps: ShepherdOptionsWithType[] = [

@@ -1,7 +1,7 @@
-import { useCallback, useRef } from 'react';
-import { MobileOutlined } from '@ant-design/icons';
-import { connect } from 'dva';
 import GlobalLoadingActionButton from '@/components/GlobalLoadingActionButton';
+import { MobileOutlined } from '@ant-design/icons';
+import { useCallback, useRef } from 'react';
+import { connect } from 'umi';
 import MobilePreviewer, {
   MobilePreviewerRef,
 } from './components/MobilePreviewer';

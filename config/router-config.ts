@@ -2,7 +2,7 @@ export const normalRouter = [
   {
     extra: false,
     path: '/',
-    component: '@/layouts/index',
+    component: '@/layouts/CommonLayout/index',
     routes: [
       {
         path: '/',
@@ -72,10 +72,13 @@ export const normalRouter = [
 
 export const staticRouter = [
   {
-    extra: false,
     path: '/',
     component: '@/layouts/StaticLayout/index',
     routes: [
+      {
+        path: '/test',
+        component: '@/pages/Test/index',
+      },
       {
         path: '/designer',
         component: '@/pages/Designer',

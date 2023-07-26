@@ -1,8 +1,10 @@
-import {} from 'react';
 import { useGetUserInfo } from '@/hooks';
+import { useLocation } from 'umi';
 
 const AuthLayout = (props: any) => {
-  const { location, children } = props;
+  const { children } = props;
+
+  const location = useLocation();
 
   useGetUserInfo(location);
 

@@ -1,15 +1,15 @@
-import { useState, useCallback } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
-import classnames from 'classnames';
-import { connect } from 'dva';
 import DebounceButton from '@/components/DebounceButton';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
-import {
-  GLOBAL_EVENT_EMITTER,
-  EVENT_NAME_MAP,
-} from '@/utils/Assist/EventEmitter';
-import { ConnectState, ILocalModelState } from '@/models/connect';
 import Tooltip from '@/components/Tooltip';
+import { ConnectState, ILocalModelState } from '@/models/connect';
+import {
+  EVENT_NAME_MAP,
+  GLOBAL_EVENT_EMITTER,
+} from '@/utils/Assist/EventEmitter';
+import { SearchOutlined } from '@ant-design/icons';
+import classnames from 'classnames';
+import { useCallback, useState } from 'react';
+import { connect } from 'umi';
 import styles from './index.less';
 
 // 组件搜索

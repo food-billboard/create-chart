@@ -1,17 +1,17 @@
-import { useState, useCallback } from 'react';
-import { Space, Radio } from 'antd';
-import { connect } from 'dva';
-import classnames from 'classnames';
 import { ConnectState } from '@/models/connect';
-import ThemeUtil from '@/utils/Assist/Theme';
 import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
 import {
-  GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
+  GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
-import UploadImage from './UploadImage';
+import ThemeUtil from '@/utils/Assist/Theme';
+import { Radio, Space } from 'antd';
+import classnames from 'classnames';
+import { useCallback, useState } from 'react';
+import { connect } from 'umi';
 import ColorItem from '../ColorItem';
 import styles from './index.less';
+import UploadImage from './UploadImage';
 
 const generateName = () => `custom_${Date.now()}`;
 
@@ -117,7 +117,7 @@ export default connect(
       theme: state.global.screenData.config.attr.theme,
     };
   },
-  (dispatch) => {
+  (dispatch: any) => {
     return {
       setScreen: (value: any) => dispatch({ type: 'global/setScreen', value }),
       setComponent: (value: any) =>

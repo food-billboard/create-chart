@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import { connect } from 'dva';
-import { history } from 'umi';
+import { useHashChangeReload, useIsModelHash } from '@/hooks';
+import { previewScreenModelValid, previewScreenValid } from '@/services';
+import { getLocationQuery } from '@/utils';
 import { message } from 'antd';
+import { useEffect, useState } from 'react';
+import { connect } from 'umi';
 import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
-import { previewScreenValid, previewScreenModelValid } from '@/services';
-import { useIsModelHash, useHashChangeReload } from '@/hooks';
-import useWrapperProps from '../Share/useWrapperProps';
 import PainterWrapper from '../Share/components/PainterWrapper';
 import WaterMark from '../Share/components/WaterMark';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import useWrapperProps from '../Share/useWrapperProps';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 function Previewer(props: {
   setScreenType: (value: ComponentData.ScreenType) => void;
@@ -33,7 +33,7 @@ function Previewer(props: {
   const isModel = useIsModelHash();
 
   const fetchValid = async () => {
-    const { id } = history.location.query || {};
+    const { id } = getLocationQuery() || {};
     if (!id) return;
     try {
       const method = isModel ? previewScreenModelValid : previewScreenValid;

@@ -1,7 +1,7 @@
-import classnames from 'classnames';
-import { connect } from 'dva';
 import { usePrimaryColor } from '@/hooks';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import classnames from 'classnames';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const NameTag = (props: {

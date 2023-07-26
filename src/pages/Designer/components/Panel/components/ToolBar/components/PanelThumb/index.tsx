@@ -1,22 +1,22 @@
-import { useMemo, useState, useEffect, useRef, ReactNode } from 'react';
-import { Button } from 'antd';
-import { connect } from 'dva';
-import classnames from 'classnames';
-import { pick } from 'lodash';
-import EventEmitter from 'eventemitter3';
-import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
-import { useIdPathMap } from '@/hooks';
 import ColorSelect from '@/components/ColorSelect';
+import { useIdPathMap } from '@/hooks';
 import { ConnectState } from '@/models/connect';
-import ThemeUtil from '@/utils/Assist/Theme';
 import { getTopParentComponent } from '@/utils/Assist/Component';
 import {
-  GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
+  GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
-import { mapStateToProps, mapDispatchToProps } from './connect';
-import styles from './index.less';
+import ThemeUtil from '@/utils/Assist/Theme';
+import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { useUpdateEffect } from 'ahooks';
+import { Button } from 'antd';
+import classnames from 'classnames';
+import EventEmitter from 'eventemitter3';
+import { pick } from 'lodash';
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
+import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
 

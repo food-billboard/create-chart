@@ -1,20 +1,20 @@
-import { useMemo, useCallback, useState } from 'react';
-import { Tree as AntTree } from 'antd';
-import { connect } from 'dva';
-import { pick, get } from 'lodash';
-import type { DataNode } from 'antd/es/tree';
-import arrayMove from 'array-move';
-import { useUpdate } from 'ahooks';
-import { EComponentType } from '@/utils/constants';
+import { useComponentPath, useIdPathMap } from '@/hooks';
 import {
   getComponentIds,
   getParentComponentIds,
   isGroupComponent,
 } from '@/utils/Assist/Component';
-import { useComponentPath, useIdPathMap } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
+import { EComponentType } from '@/utils/constants';
+import { useUpdate } from 'ahooks';
+import { Tree as AntTree } from 'antd';
+import type { DataNode } from 'antd/es/tree';
+import arrayMove from 'array-move';
+import { get, pick } from 'lodash';
+import { useCallback, useMemo, useState } from 'react';
+import { connect } from 'umi';
+import { ActionFooterBar, ActionHeaderBar } from './components/ActionBar';
 import TreeNode from './components/TreeNode';
-import { ActionHeaderBar, ActionFooterBar } from './components/ActionBar';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 

@@ -1,10 +1,10 @@
-import { useMemo } from 'react';
-import classnames from 'classnames';
-import { connect } from 'dva';
-import LazyWrapper from '@/components/LazyLoad';
 import FocusWrapper from '@/components/FocusWrapper';
+import LazyWrapper from '@/components/LazyLoad';
 import { useComponentPath } from '@/hooks';
-import { isGroupComponent, getComponent } from '@/utils/Assist/Component';
+import { getComponent, isGroupComponent } from '@/utils/Assist/Component';
+import classnames from 'classnames';
+import { useMemo } from 'react';
+import { connect } from 'umi';
 import GlobalConfig from './components/GlobalConfig';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';

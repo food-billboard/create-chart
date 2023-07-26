@@ -1,9 +1,9 @@
-import { useCallback } from 'react';
-import { connect } from 'dva';
-import DebounceButton from '@/components/DebounceButton';
 import IconFont from '@/components/ChartComponents/Common/Icon';
-import { ConnectState, ILocalModelState } from '@/models/connect';
+import DebounceButton from '@/components/DebounceButton';
 import Tooltip from '@/components/Tooltip';
+import { ConnectState, ILocalModelState } from '@/models/connect';
+import { useCallback } from 'react';
+import { connect } from 'umi';
 
 // 折叠右侧配置列表
 const InternalCollapseConfigPanel = (props: {

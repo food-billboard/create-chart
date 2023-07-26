@@ -1,15 +1,15 @@
-import { useCallback } from 'react';
-import { merge } from 'lodash';
-import { connect } from 'dva';
-import { ConnectState } from '@/models/connect';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import { ConnectState } from '@/models/connect';
 import { getPath } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
-import KeyWordPosition from './components/KeyWordPosition';
+import { merge } from 'lodash';
+import { useCallback } from 'react';
+import { connect } from 'umi';
 import ConditionConfig from './components/ConditionConfig';
+import KeyWordPosition from './components/KeyWordPosition';
 import TransformConfig from './components/TransformConfig';
 
 const OrientConfig = (props: {

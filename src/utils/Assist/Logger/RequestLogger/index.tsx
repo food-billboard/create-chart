@@ -1,6 +1,6 @@
+import { useIdPathMap } from '@/hooks';
 import { Collapse, Table } from 'antd';
 import ReactJson from 'react-json-view';
-import { useIdPathMap } from '@/hooks';
 import styles from './index.less';
 
 const { Panel } = Collapse;
@@ -45,8 +45,6 @@ export default function logRequest(context: any, log: Logger.LoggerItem) {
   const { color } = levelInfo(level);
   const idPathMap = useIdPathMap();
   const { name } = idPathMap[component] || {};
-
-  console.log(error.toString(), 2888);
 
   return (
     <Panel

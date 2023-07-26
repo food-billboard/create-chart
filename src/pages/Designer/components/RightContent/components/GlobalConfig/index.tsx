@@ -1,21 +1,21 @@
-import { useCallback } from 'react';
-import { Input, Switch } from 'antd';
-import { connect } from 'dva';
-import { set } from 'lodash';
-import classnames from 'classnames';
-import { InfoCircleOutlined } from '@ant-design/icons';
-import IconTooltip from '@/components/IconTooltip';
 import BackgroundSelect from '@/components/BackgroundSelect';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import ConfigWrapper, {
   ConfigItem,
 } from '@/components/ChartComponents/Common/ConfigWrapper';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import CoverSelect from '@/components/CoverSelect';
+import IconTooltip from '@/components/IconTooltip';
+import { InfoCircleOutlined } from '@ant-design/icons';
+import { Input, Switch } from 'antd';
+import classnames from 'classnames';
+import { set } from 'lodash';
+import { useCallback } from 'react';
+import { connect } from 'umi';
 import ScaleConfig from './components/ScaleConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const { Item } = ConfigList;

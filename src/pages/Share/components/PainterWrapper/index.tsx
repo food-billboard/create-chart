@@ -1,10 +1,10 @@
-import { ReactNode, useMemo } from 'react';
+import { ConnectState } from '@/models/connect';
+import { useSize } from 'ahooks';
 import { Empty } from 'antd';
-import { connect } from 'dva';
 import classnames from 'classnames';
 import IsMobile from 'is-mobile';
-import { useSize } from 'ahooks';
-import { ConnectState } from '@/models/connect';
+import { ReactNode } from 'react';
+import { connect } from 'umi';
 import styles from '../../index.less';
 
 const isMobile = IsMobile();

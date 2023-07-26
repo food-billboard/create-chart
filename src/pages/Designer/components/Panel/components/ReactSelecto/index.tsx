@@ -1,19 +1,19 @@
-import { useCallback, useRef, useMemo } from 'react';
-import ReactSelecto from 'react-selecto';
-import { connect } from 'dva';
+import ColorSelect from '@/components/ColorSelect';
 import { BACKGROUND_ID } from '@/components/DesignerBackground';
+import { ConnectState } from '@/models/connect';
 import {
   isComponentDisabled,
   isComponentSelect,
 } from '@/utils/Assist/Component';
-import ThemeUtil from '@/utils/Assist/Theme';
-import ColorSelect from '@/components/ColorSelect';
-import { ConnectState } from '@/models/connect';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { SELECTO_CLASSNAME } from '@/utils/constants';
-import { wrapperId } from '../PanelWrapper/constants';
+import { useCallback, useMemo, useRef } from 'react';
+import ReactSelecto from 'react-selecto';
+import { connect } from 'umi';
 import { PANEL_ID } from '../Painter';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { wrapperId } from '../PanelWrapper/constants';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const VALID_SELECT_CONTAINER = [BACKGROUND_ID, wrapperId, PANEL_ID];

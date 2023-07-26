@@ -1,21 +1,21 @@
-import {
-  forwardRef,
-  useImperativeHandle,
-  useState,
-  useCallback,
-  useMemo,
-} from 'react';
-import { Space, Drawer, Tabs } from 'antd';
-import { connect } from 'dva';
-import ThemeUtil from '@/utils/Assist/Theme';
 import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
 import {
-  GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
+  GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
+import ThemeUtil from '@/utils/Assist/Theme';
+import { Drawer, Space, Tabs } from 'antd';
+import {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from 'react';
+import { connect } from 'umi';
 import ColorItem from './ColorItem';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import CustomConfig from './CustomConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import styles from './index.less';
 
 export type ThemeConfigRef = {
@@ -135,6 +135,6 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
   );
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {
+export default connect(mapStateToProps, mapDispatchToProps, undefined, {
   forwardRef: true,
 })(ThemeConfig);

@@ -1,20 +1,20 @@
-import { Col } from 'antd';
-import classnames from 'classnames';
-import { useCallback, ReactNode } from 'react';
-import { LockOutlined } from '@ant-design/icons';
-import {
-  DragSourceMonitor,
-  ConnectDragSource,
-  DragSource,
-  DragSourceConnector,
-  DragPreviewImage,
-  ConnectDragPreview,
-} from 'react-dnd';
-import { connect } from 'dva';
-import { pick } from 'lodash';
 import { DragData } from '@/models/connect';
 import { createComponent } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
+import { LockOutlined } from '@ant-design/icons';
+import { Col } from 'antd';
+import classnames from 'classnames';
+import { pick } from 'lodash';
+import { ReactNode, useCallback } from 'react';
+import {
+  ConnectDragPreview,
+  ConnectDragSource,
+  DragPreviewImage,
+  DragSource,
+  DragSourceConnector,
+  DragSourceMonitor,
+} from 'react-dnd';
+import { connect } from 'umi';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 

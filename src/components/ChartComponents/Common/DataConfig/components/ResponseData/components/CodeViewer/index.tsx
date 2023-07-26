@@ -1,9 +1,9 @@
-import { useMemo, useState, useEffect } from 'react';
-import { connect } from 'dva';
 import CodeEditor from '@/components/CodeEditor';
 import type { EditorProps } from '@/components/SyncCodeEditor';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { useEffect, useState } from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const CodeViewer = (
   props: {

@@ -1,25 +1,25 @@
-import {
-  useState,
-  forwardRef,
-  useCallback,
-  useMemo,
-  useImperativeHandle,
-} from 'react';
-import { Button, Drawer, Table, Modal, Popconfirm, Empty } from 'antd';
-import { connect } from 'dva';
-import { nanoid } from 'nanoid';
-import {
-  MinusSquareOutlined,
-  PlusSquareOutlined,
-  DeleteOutlined,
-} from '@ant-design/icons';
+import FocusWrapper from '@/components/FocusWrapper';
+import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import LazyLoadWrapper from '@/components/LazyLoad';
 import ParamsSelect from '@/components/ParamsSelect';
 import Tooltip from '@/components/Tooltip';
-import FocusWrapper from '@/components/FocusWrapper';
-import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import { useIdPathMap } from '@/hooks';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import {
+  DeleteOutlined,
+  MinusSquareOutlined,
+  PlusSquareOutlined,
+} from '@ant-design/icons';
+import { Button, Drawer, Empty, Modal, Popconfirm, Table } from 'antd';
+import { nanoid } from 'nanoid';
+import {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const CodeViewer = LazyLoadWrapper(
   () => import(/* webpackChunkName: "CODE_VIEWER" */ '@/components/CodeView'),
@@ -81,7 +81,7 @@ const ComponentList = (props: {
 
 const ComponentListWrapper = connect(
   () => ({}),
-  (dispatch) => {
+  (dispatch: any) => {
     return {
       setSelect: (value: string[]) =>
         dispatch({ type: 'global/setSelect', value }),

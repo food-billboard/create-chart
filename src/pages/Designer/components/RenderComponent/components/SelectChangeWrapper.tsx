@@ -1,7 +1,7 @@
-import { connect } from 'dva';
-import { useUpdateEffect } from 'ahooks';
 import { useIsComponentChildrenSelect } from '@/hooks';
 import { ConnectState } from '@/models/connect';
+import { useUpdateEffect } from 'ahooks';
+import { connect } from 'umi';
 
 const SelectChangeWrapper = (props: {
   select: string[];

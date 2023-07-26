@@ -1,12 +1,12 @@
-import { Checkbox } from 'antd';
-import { connect } from 'dva';
-import { isEqual, merge } from 'lodash';
-import { useMemo, useCallback, useState, CSSProperties } from 'react';
-import classnames from 'classnames';
-import { SelectProps } from 'antd/es/select';
 import Select from '@/components/ChartComponents/Common/Select';
 import VariableStringUtil from '@/utils/Assist/VariableString';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { Checkbox } from 'antd';
+import { SelectProps } from 'antd/es/select';
+import classnames from 'classnames';
+import { isEqual, merge } from 'lodash';
+import { CSSProperties, useCallback, useMemo, useState } from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const { Option } = Select;

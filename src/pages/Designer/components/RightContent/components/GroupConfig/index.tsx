@@ -1,14 +1,14 @@
-import { useMemo, useCallback } from 'react';
-import classnames from 'classnames';
-import { connect } from 'dva';
-import { isComponentDisabled } from '@/utils/Assist/Component';
+import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';
 import ConfigWrapper, {
   ConfigItem,
 } from '@/components/ChartComponents/Common/ConfigWrapper';
-import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';
-import OptionConfig from './components/OptionConfig';
+import { isComponentDisabled } from '@/utils/Assist/Component';
+import classnames from 'classnames';
+import { useCallback, useMemo } from 'react';
+import { connect } from 'umi';
 import CarouselConfig from './components/CarouselConfig';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import OptionConfig from './components/OptionConfig';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const GroupConfig = (props: {

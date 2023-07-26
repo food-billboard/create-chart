@@ -1,27 +1,27 @@
-import { useMemo, useState, useCallback } from 'react';
-import { PageHeader, Input, message } from 'antd';
-import {
-  SendOutlined,
-  FundOutlined,
-  ExportOutlined,
-  ImportOutlined,
-} from '@ant-design/icons';
-import { connect } from 'dva';
-import classnames from 'classnames';
-import Marquee from 'react-fast-marquee';
+import IconFont from '@/components/ChartComponents/Common/Icon';
 import FocusWrapper from '@/components/FocusWrapper';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
-import { previewScreen, previewScreenModel } from '@/services';
-import { goPreview, goPreviewModel, goView } from '@/utils/tool';
 import { isModelHash } from '@/hooks';
-import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import { previewScreen, previewScreenModel } from '@/services';
 import { saveScreenData } from '@/utils/Assist/DataChangePool';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { staticExportData, staticLeadIn } from '@/utils/Assist/LeadInAndOutput';
 import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
-import IconFont from '@/components/ChartComponents/Common/Icon';
+import { goPreview, goPreviewModel, goView } from '@/utils/tool';
+import {
+  ExportOutlined,
+  FundOutlined,
+  ImportOutlined,
+  SendOutlined,
+} from '@ant-design/icons';
+import { Input, message, PageHeader } from 'antd';
+import classnames from 'classnames';
+import { useCallback, useMemo, useState } from 'react';
+import Marquee from 'react-fast-marquee';
+import { connect } from 'umi';
 import ExchangeScreenFlagButton from '../ExchangeScreenFlag';
-import { mapDispatchToProps, mapStateToProps } from './connect';
 import ActionList from './ActionList';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const Header = (props: {

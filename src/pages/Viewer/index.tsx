@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
-import { connect } from 'dva';
 import { useHashChangeReload } from '@/hooks';
+import { useEffect } from 'react';
+import { connect } from 'umi';
 import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
-import useWrapperProps from '../Share/useWrapperProps';
 import PainterWrapper from '../Share/components/PainterWrapper';
 import WaterMark from '../Share/components/WaterMark';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import useWrapperProps from '../Share/useWrapperProps';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 function Viewer(props: {
   setScreenType: (value: ComponentData.ScreenType) => void;

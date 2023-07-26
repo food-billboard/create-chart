@@ -1,10 +1,10 @@
-import { useCallback, useRef } from 'react';
-import { connect } from 'dva';
+import DebounceButton from '@/components/DebounceButton';
+import Tooltip from '@/components/Tooltip';
+import { ConnectState, ILocalModelState } from '@/models/connect';
 import { BugOutlined } from '@ant-design/icons';
 import { useKeyPress } from 'ahooks';
-import DebounceButton from '@/components/DebounceButton';
-import { ConnectState, ILocalModelState } from '@/models/connect';
-import Tooltip from '@/components/Tooltip';
+import { useCallback, useRef } from 'react';
+import { connect } from 'umi';
 import Winbox, { WinBoxRef } from './Winbox';
 
 // 折叠右侧配置列表

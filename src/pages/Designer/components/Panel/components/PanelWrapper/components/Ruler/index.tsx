@@ -1,15 +1,15 @@
-import { useRef, useState, useCallback, useEffect, useMemo } from 'react';
-import classnames from 'classnames';
-import { merge } from 'lodash';
-import { connect } from 'dva';
-import { useMouse, useHover, useThrottleEffect } from 'ahooks';
-import { nanoid } from 'nanoid';
 import GuideLine from '@/components/GuideLine';
 import ComponentRuler from '@/components/Ruler';
 import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants';
-import { wrapperId, subWrapperId } from '../../constants';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { useHover, useMouse, useThrottleEffect } from 'ahooks';
+import classnames from 'classnames';
+import { merge } from 'lodash';
+import { nanoid } from 'nanoid';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { connect } from 'umi';
+import { subWrapperId, wrapperId } from '../../constants';
 import { AbsorbUtil } from '../AbsorbGuideLine/utils';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 let scroll = {

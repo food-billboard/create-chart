@@ -1,13 +1,13 @@
-import { useMemo, useCallback, useState, useEffect } from 'react';
-import { Row, Collapse } from 'antd';
-import { connect } from 'dva';
-import { CaretRightOutlined } from '@ant-design/icons';
-import classnames from 'classnames';
 import Empty from '@/components/Empty';
-import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
 import { ConnectState } from '@/models/connect';
-import ComponentItem from './item';
+import { CaretRightOutlined } from '@ant-design/icons';
+import { Collapse, Row } from 'antd';
+import classnames from 'classnames';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { connect } from 'umi';
+import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
 import styles from './index.less';
+import ComponentItem from './item';
 
 const { Panel } = Collapse;
 

@@ -1,7 +1,8 @@
-import { parse } from 'querystring';
-import { mergeWith } from 'lodash';
-import semver from 'semver';
 import { message } from 'antd';
+import { mergeWith } from 'lodash';
+import { parse } from 'querystring';
+import semver from 'semver';
+import { history } from 'umi';
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
 const reg =
@@ -10,6 +11,10 @@ const reg =
 export const isUrl = (path: string): boolean => reg.test(path);
 
 export const getPageQuery = () => parse(window.location.href.split('?')[1]);
+
+export function getLocationQuery(): { [key: string]: string } {
+  return parse(history.location.search) as any;
+}
 
 export const getLocalStorage = (key: string) => {
   const data = localStorage.getItem(key);

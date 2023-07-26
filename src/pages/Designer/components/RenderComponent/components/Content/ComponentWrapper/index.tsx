@@ -1,18 +1,18 @@
+import { ComponentTransformOriginChange } from '@/utils/Assist/BreakingChange';
+import { getComponentStyleInScreenType } from '@/utils/Assist/Component';
+import { useRafState } from 'ahooks';
+import classnames from 'classnames';
+import { get } from 'lodash';
 import {
-  ReactNode,
-  useMemo,
   Children,
   cloneElement,
   CSSProperties,
+  ReactNode,
+  useMemo,
 } from 'react';
-import { connect } from 'dva';
-import classnames from 'classnames';
-import { get } from 'lodash';
-import { useRafState } from 'ahooks';
-import { getComponentStyleInScreenType } from '@/utils/Assist/Component';
-import { ComponentTransformOriginChange } from '@/utils/Assist/BreakingChange';
+import { connect } from 'umi';
 import ConnectSelectChangeWrapper from '../../SelectChangeWrapper';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const ComponentWrapper = (props: {

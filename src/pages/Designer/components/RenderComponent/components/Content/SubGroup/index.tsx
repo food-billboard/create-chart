@@ -1,16 +1,16 @@
-import { ReactNode, useRef, CSSProperties, useMemo } from 'react';
-import classnames from 'classnames';
-import { merge } from 'lodash';
-import { connect } from 'dva';
-import { useComponentChildrenStyle } from '@/hooks';
 import {
   useCondition,
   useGroupComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
+import { useComponentChildrenStyle } from '@/hooks';
 import { ConnectState } from '@/models/connect';
-import CarouselGroupWrapper from './CarouselGroupWrapper';
+import classnames from 'classnames';
+import { merge } from 'lodash';
+import { CSSProperties, ReactNode, useMemo } from 'react';
+import { connect } from 'umi';
 import styles from '../../../index.less';
+import CarouselGroupWrapper from './CarouselGroupWrapper';
 
 const SubGroup = (props: {
   children?: ReactNode;

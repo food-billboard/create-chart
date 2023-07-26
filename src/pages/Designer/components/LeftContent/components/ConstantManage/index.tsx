@@ -1,17 +1,17 @@
-import {
-  useState,
-  forwardRef,
-  useCallback,
-  useMemo,
-  useImperativeHandle,
-} from 'react';
-import { nanoid } from 'nanoid';
-import { Button, Drawer, Table, Input } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { connect } from 'dva';
 import FocusWrapper from '@/components/FocusWrapper';
 import GhostButton from '@/components/GhostButton';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Drawer, Input, Table } from 'antd';
+import { nanoid } from 'nanoid';
+import {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const { TextArea } = Input;
 

@@ -1,16 +1,15 @@
-import { useMemo } from 'react';
+import IntroductionButton from '@/components/IntroductionButton';
 import { Empty } from 'antd';
 import isMobileJudge from 'is-mobile';
-import { history } from 'umi';
-import IntroductionButton from '@/components/IntroductionButton';
+import { useMemo } from 'react';
+import { history, Outlet, useLocation } from 'umi';
 import FetchLoginWrapper from '../FetchLoginWrapper';
 import Layout from '../Listlayout';
 
 const GlobalLayout = (props: any) => {
-  const {
-    children,
-    location: { pathname, search },
-  } = props;
+  const { Component } = props;
+
+  const { pathname, search } = useLocation();
 
   const isMobile = useMemo(() => {
     return isMobileJudge();
@@ -32,7 +31,9 @@ const GlobalLayout = (props: any) => {
     );
 
   // 分享页不用管登录
-  if (['/share', '/', 'viewer', '/preview'].includes(pathname)) return children;
+  if (['/share', '/', 'viewer', '/preview'].includes(pathname)) {
+    return <Outlet />;
+  }
   if (
     pathname.startsWith('/login') ||
     pathname.startsWith('/register') ||
@@ -40,7 +41,7 @@ const GlobalLayout = (props: any) => {
   ) {
     return (
       <>
-        {children}
+        <Outlet />
         <IntroductionButton />
       </>
     );
@@ -49,7 +50,9 @@ const GlobalLayout = (props: any) => {
   if (['/screen', '/model'].includes(pathname)) {
     return (
       <FetchLoginWrapper {...props}>
-        <Layout pathname={pathname}>{children}</Layout>
+        <Layout>
+          <Outlet />
+        </Layout>
       </FetchLoginWrapper>
     );
   }

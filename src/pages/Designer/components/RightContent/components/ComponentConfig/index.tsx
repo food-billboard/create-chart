@@ -1,19 +1,19 @@
-import { useCallback, useMemo } from 'react';
+import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';
+import ConfigWrapper, {
+  ConfigItem,
+} from '@/components/ChartComponents/Common/ConfigWrapper';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import IconTooltip from '@/components/IconTooltip';
+import LazyLoadWrapper from '@/components/LazyLoad';
 import {
   CodeOutlined,
   ControlOutlined,
   ProjectOutlined,
 } from '@ant-design/icons';
-import { connect } from 'dva';
-import IconTooltip from '@/components/IconTooltip';
-import LazyLoadWrapper from '@/components/LazyLoad';
+import { useCallback, useMemo } from 'react';
+import { connect } from 'umi';
 import ConfigComponent from './ConfigComponent';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';
-import ConfigWrapper, {
-  ConfigItem,
-} from '@/components/ChartComponents/Common/ConfigWrapper';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const DataConfig = LazyLoadWrapper(async () => {

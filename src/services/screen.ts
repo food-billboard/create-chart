@@ -1,8 +1,8 @@
-import { history } from 'umi';
-import { merge } from 'lodash';
 import { isModelHash, useAnyDva } from '@/hooks';
-import request from '../utils/request';
+import { merge } from 'lodash';
+import { getLocationQuery } from '../utils';
 import { SCREEN_VERSION, SERVICE_REQUEST_URL } from '../utils/constants';
+import request from '../utils/request';
 
 const { REACT_APP_ENV } = process.env;
 
@@ -62,10 +62,7 @@ export const deleteScreenPool = (
   sync: boolean = false,
   customParams?: Partial<{ _id: string; type: string }>,
 ) => {
-  const {
-    location: { query },
-  } = history;
-  const { id } = query || {};
+  const { id } = getLocationQuery() || {};
   const { getState } = useAnyDva();
   const userId = getState().user.currentUser._id;
 

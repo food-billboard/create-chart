@@ -1,18 +1,18 @@
-import { useCallback, useMemo } from 'react';
-import { Button } from 'antd';
-import {
-  EyeOutlined,
-  EyeInvisibleOutlined,
-  DeleteOutlined,
-} from '@ant-design/icons';
-import { useScroll } from 'ahooks';
-import classnames from 'classnames';
-import { connect } from 'dva';
 import ColorSelect from '@/components/ColorSelect';
-import Tooltip from '@/components/Tooltip';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
+import Tooltip from '@/components/Tooltip';
 import { ConnectState } from '@/models/connect';
 import ThemeUtil from '@/utils/Assist/Theme';
+import {
+  DeleteOutlined,
+  EyeInvisibleOutlined,
+  EyeOutlined,
+} from '@ant-design/icons';
+import { useScroll } from 'ahooks';
+import { Button } from 'antd';
+import classnames from 'classnames';
+import { useCallback, useMemo } from 'react';
+import { connect } from 'umi';
 import { wrapperId } from '../../constants';
 import styles from './index.less';
 

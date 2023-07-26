@@ -1,34 +1,34 @@
-import { useCallback, useState, useMemo } from 'react';
-import { connect } from 'dva';
-import { Switch } from 'antd';
-import { useUpdate } from 'ahooks';
-import {
-  BorderTopOutlined,
-  BorderBottomOutlined,
-  BorderVerticleOutlined,
-  BorderLeftOutlined,
-  BorderRightOutlined,
-  BorderHorizontalOutlined,
-} from '@ant-design/icons';
-import Select from '@/components/ChartComponents/Common/Select';
-import { ConnectState } from '@/models/connect';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import { getPath } from '@/utils/Assist/Component';
-import DataChangePool from '@/utils/Assist/DataChangePool';
-import Input from '@/components/ChartComponents/Common/Input';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
-import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import RadioGroup, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
+import Input from '@/components/ChartComponents/Common/Input';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import Select from '@/components/ChartComponents/Common/Select';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import GhostButton from '@/components/GhostButton';
+import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
+import { ConnectState } from '@/models/connect';
+import { getPath } from '@/utils/Assist/Component';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import {
   EVENT_NAME_MAP,
   GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
+import {
+  BorderBottomOutlined,
+  BorderHorizontalOutlined,
+  BorderLeftOutlined,
+  BorderRightOutlined,
+  BorderTopOutlined,
+  BorderVerticleOutlined,
+} from '@ant-design/icons';
+import { useUpdate } from 'ahooks';
+import { Switch } from 'antd';
+import { useCallback, useMemo, useState } from 'react';
+import { connect } from 'umi';
 import ComponentList from './components/ComponentList';
 
 const { Item } = ConfigList;

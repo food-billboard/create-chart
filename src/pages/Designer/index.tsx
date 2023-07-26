@@ -1,28 +1,27 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
-import { ConfigProvider, Modal } from 'antd';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { connect } from 'dva';
-import { history } from 'umi';
-import { useUnmount } from 'ahooks';
-import { useHashChangeReload, isModelHash, usePrimaryColor } from '@/hooks';
+import { isModelHash, useHashChangeReload, usePrimaryColor } from '@/hooks';
 import FetchScreenComponent, {
   FetchScreenComponentRef,
 } from '@/pages/Designer/components/FetchScreenComponent';
-import { closeWindow } from '@/utils';
-import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import {
-  putScreenPoolValid,
   createPutScreenPool,
   deleteScreenPool,
+  putScreenPoolValid,
 } from '@/services';
-import PageLoading from './components/PageLoading';
-import ShepherdWrapper from './components/ShepherdWrapper';
+import { closeWindow, getLocationQuery } from '@/utils';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import { useUnmount } from 'ahooks';
+import { ConfigProvider, Modal } from 'antd';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { connect } from 'umi';
 import Header from './components/Header';
 import LeftContent from './components/LeftContent';
-import RightContent from './components/RightContent';
+import PageLoading from './components/PageLoading';
 import Panel from './components/Panel';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import RightContent from './components/RightContent';
+import ShepherdWrapper from './components/ShepherdWrapper';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const COMMON_MODAL_PROPS = {
@@ -118,10 +117,7 @@ const Designer = (props: {
     setLoading(false);
     // 自动保存且为非前端简化大屏才需要创建流式保存
     if (GlobalConfig.isAutoSaveType() && !GlobalConfig.IS_STATIC) {
-      const {
-        location: { query },
-      } = history;
-      const { id } = query || {};
+      const { id } = getLocationQuery() || {};
       clearInterval(heartValidTimerRef.current);
       await createPutScreenPool({
         _id: id as string,

@@ -1,23 +1,15 @@
-import {
-  useEffect,
-  useState,
-  useCallback,
-  ReactNode,
-  useMemo,
-  useRef,
-} from 'react';
-import { connect } from 'dva';
-import classnames from 'classnames';
-import { useEventListener, useSize } from 'ahooks';
 import { BackgroundConfigRender } from '@/components/DesignerBackground';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
-import { mergeWithoutArray, sleep } from '@/utils/tool';
+import { mergeWithoutArray } from '@/utils/tool';
+import { useSize } from 'ahooks';
+import classnames from 'classnames';
+import { ReactNode, useCallback, useMemo, useRef } from 'react';
+import { connect } from 'umi';
 import ClipboardComponent from '../Clipboard';
-import AbsorbGuideLine from './components/AbsorbGuideLine';
-import Ruler from './components/Ruler';
 import GuideLineButton from './components/GuideLineButton';
-import { mapStateToProps, mapDispatchToProps } from './connect';
-import { wrapperId, subWrapperId } from './constants';
+import Ruler from './components/Ruler';
+import { mapDispatchToProps, mapStateToProps } from './connect';
+import { subWrapperId, wrapperId } from './constants';
 import styles from './index.less';
 
 const RIGHT_BOTTOM_PADDING = 200;

@@ -1,17 +1,17 @@
-import { useMemo, useRef, useCallback } from 'react';
-import { uniqueId, merge } from 'lodash';
-import classnames from 'classnames';
-import { Button as AntButton } from 'antd';
 import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import ColorSelect from '@/components/ColorSelect';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
+import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG } from '@/utils/constants/another';
-import { TButtonConfig } from '../type';
+import { API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG } from '@/utils/constants';
+import { Button as AntButton } from 'antd';
+import classnames from 'classnames';
+import { merge, uniqueId } from 'lodash';
+import { useCallback, useMemo, useRef } from 'react';
 import { CHART_ID } from '../id';
+import { TButtonConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;

@@ -1,23 +1,15 @@
-import React from 'react';
-import moment from 'moment';
-import { Button, Result } from 'antd';
 import { FrownOutlined } from '@ant-design/icons';
-import 'pathseg';
-import 'css-doodle';
-import * as Sentry from '@sentry/react';
 import type { ErrorBoundaryProps } from '@sentry/react';
-import 'moment/locale/zh-cn';
+import * as Sentry from '@sentry/react';
 import 'animate.css';
-import ThemeUtil from './utils/Assist/Theme';
-import GlobalConfig from './utils/Assist/GlobalConfig';
+import { Button, Result } from 'antd';
+import 'css-doodle';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+import 'pathseg';
+import React from 'react';
 
 moment.locale('zh-cn');
-
-// 色调初始化
-ThemeUtil.init();
-
-// 设置全局初始化配置
-GlobalConfig.enableConfig({});
 
 export const locale = {
   default: 'zh-CN',
@@ -32,6 +24,12 @@ export const dva = {
 };
 
 export function rootContainer(container: JSX.Element) {
+  // // 色调初始化
+  // ThemeUtil.init();
+
+  // // 设置全局初始化配置
+  // GlobalConfig.enableConfig({});
+
   const props: ErrorBoundaryProps = {
     fallback: ({ error, componentStack, resetError }) => {
       return (
@@ -82,4 +80,12 @@ export function rootContainer(container: JSX.Element) {
 
 export const render = (nextRender: any) => {
   nextRender();
+
+  // setTimeout(() => {
+  //   // 色调初始化
+  //   ThemeUtil.init();
+
+  //   // 设置全局初始化配置
+  //   GlobalConfig.enableConfig({});
+  // }, 1000)
 };

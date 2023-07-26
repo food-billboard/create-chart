@@ -1,18 +1,18 @@
-import { ReactNode, useCallback, useRef, useMemo, useState } from 'react';
-import { connect } from 'dva';
-import { useKeyPress, useDebounceFn } from 'ahooks';
-import { merge, get } from 'lodash';
-import { useIdPathMap } from '@/hooks';
-import { clone } from '@/components/ContextMenu/Actions/Clone';
-import { paste } from '@/components/ContextMenu/Actions/Paste';
 import ConfirmModal, { ConfirmModalRef } from '@/components/ConfirmModal';
+import { clone } from '@/components/ContextMenu/Actions/Clone';
 import { deleteAction } from '@/components/ContextMenu/Actions/Delete';
-import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
-import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
-import { getComponent, getTopParentComponent } from '@/utils/Assist/Component';
-import DataChangePool from '@/utils/Assist/DataChangePool';
+import { paste } from '@/components/ContextMenu/Actions/Paste';
+import { useIdPathMap } from '@/hooks';
 import { sleep } from '@/utils';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { getComponent, getTopParentComponent } from '@/utils/Assist/Component';
+import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
+import DataChangePool from '@/utils/Assist/DataChangePool';
+import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
+import { useDebounceFn, useKeyPress } from 'ahooks';
+import { get, merge } from 'lodash';
+import { ReactNode, useCallback, useMemo, useRef, useState } from 'react';
+import { connect } from 'umi';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const ClipboardComponent = (props: {
   children?: ReactNode;

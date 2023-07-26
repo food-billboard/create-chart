@@ -1,13 +1,13 @@
-import { forwardRef, useImperativeHandle, useState, useCallback } from 'react';
-import { Switch, Drawer } from 'antd';
-import { connect } from 'dva';
-import Select from '@/components/ChartComponents/Common/Select';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import Select from '@/components/ChartComponents/Common/Select';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import CodeEditor from './CodeEditor';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import { Drawer, Switch } from 'antd';
+import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
+import { connect } from 'umi';
+import CodeEditor from './CodeEditor';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const { Item } = ConfigList;
@@ -145,6 +145,6 @@ const LensConfig = forwardRef<RequestCofigRef, Props>((props, ref) => {
   );
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {
+export default connect(mapStateToProps, mapDispatchToProps, undefined, {
   forwardRef: true,
 })(LensConfig);

@@ -1,6 +1,4 @@
-import { useCallback, useMemo } from 'react';
-import { connect } from 'dva';
-import { Switch } from 'antd';
+import { mergeWithoutArray } from '@/utils';
 import {
   getComponent,
   getParentComponentIds,
@@ -8,14 +6,16 @@ import {
 } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import GroupUtil from '@/utils/Assist/Group';
-import { mergeWithoutArray } from '@/utils';
-import { InternalBorderSelect, DEFAULT_BORDER } from '../../../InternalBorder';
+import { Switch } from 'antd';
+import { useCallback, useMemo } from 'react';
+import { connect } from 'umi';
+import { DEFAULT_BORDER, InternalBorderSelect } from '../../../InternalBorder';
 import AngleSelect from '../AngleSelect';
 import InputNumber, { InputNumberProps } from '../InputNumber';
-import ConfigList from '../Structure/ConfigList';
 import Opacity from '../Opacity';
+import ConfigList from '../Structure/ConfigList';
 import HalfForm from '../Structure/HalfForm';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const { Item } = ConfigList;

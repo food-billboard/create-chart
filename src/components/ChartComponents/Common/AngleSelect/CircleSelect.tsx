@@ -1,9 +1,9 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
-import { connect } from 'dva';
-import { throttle } from 'lodash';
 import ColorSelect from '@/components/ColorSelect';
-import ThemeUtil from '@/utils/Assist/Theme';
 import { ConnectState } from '@/models/connect';
+import ThemeUtil from '@/utils/Assist/Theme';
+import { throttle } from 'lodash';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { connect } from 'umi';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;

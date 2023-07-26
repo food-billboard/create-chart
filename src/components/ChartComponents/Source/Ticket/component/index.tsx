@@ -1,12 +1,12 @@
-import { useMemo, useRef } from 'react';
-import { uniqueId, merge, get } from 'lodash';
-import classnames from 'classnames';
-import { connect } from 'dva';
-import ColorSelect from '@/components/ColorSelect';
 import { useComponentSize } from '@/components/ChartComponents/Common/Component/hook';
+import ColorSelect from '@/components/ColorSelect';
 import { ConnectState } from '@/models/connect';
-import { TTicketConfig } from '../type';
+import classnames from 'classnames';
+import { get, merge, uniqueId } from 'lodash';
+import { useMemo, useRef } from 'react';
+import { connect } from 'umi';
 import { CHART_ID } from '../id';
+import { TTicketConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;

@@ -1,18 +1,17 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { history } from 'umi';
-import { connect } from 'dva';
-import {
-  UserOutlined,
-  LockOutlined,
-  MobileOutlined,
-  BarcodeOutlined,
-} from '@ant-design/icons';
-import { Input, Row, Col, Button, message, Space } from 'antd';
-import classnames from 'classnames';
 import Icon from '@/components/ChartComponents/Common/Icon';
 import { getCaptcha } from '@/services';
-import { mapStateToProps, mapDispatchToProps } from './connect';
+import {
+  BarcodeOutlined,
+  LockOutlined,
+  MobileOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+import { Button, Col, Input, message, Row, Space } from 'antd';
+import classnames from 'classnames';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { connect, history } from 'umi';
 import CommonBackground from './components/Background';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const { Password: InputPassword } = Input;

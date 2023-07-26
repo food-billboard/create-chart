@@ -1,34 +1,34 @@
+import ColorImageBackground from '@/components/ColorImageBackground';
+import { useBackground } from '@/hooks';
+import { DragData } from '@/models/connect';
+import { createComponent } from '@/utils/Assist/Component';
+import DataChangePool from '@/utils/Assist/DataChangePool';
+import LogWinbox from '@/utils/Assist/Logger/Window';
+import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants/index';
+import { useDebounceFn } from 'ahooks';
 import classnames from 'classnames';
+import { merge } from 'lodash';
 import {
-  useCallback,
-  useRef,
-  useMemo,
   CSSProperties,
-  useContext,
   ReactNode,
-  useState,
+  useCallback,
+  useContext,
   useEffect,
+  useMemo,
+  useRef,
+  useState,
 } from 'react';
 import {
   ConnectDropTarget,
-  DropTargetMonitor,
   DropTarget,
   DropTargetConnector,
+  DropTargetMonitor,
 } from 'react-dnd';
-import { connect } from 'dva';
-import { merge } from 'lodash';
-import { useDebounceFn } from 'ahooks';
-import ColorImageBackground from '@/components/ColorImageBackground';
-import { useBackground } from '@/hooks';
-import { createComponent } from '@/utils/Assist/Component';
-import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants/index';
-import { DragData } from '@/models/connect';
-import DataChangePool from '@/utils/Assist/DataChangePool';
-import LogWinbox from '@/utils/Assist/Logger/Window';
-import ComponentList from '../ComponentList';
-import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
-import H5AutoHeight from '../H5AutoHeight';
+import { connect } from 'umi';
 import { ExchangePreviewerContext } from '../../../ExchangeScreenFlag/components/MobilePreviewer/context';
+import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
+import ComponentList from '../ComponentList';
+import H5AutoHeight from '../H5AutoHeight';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
