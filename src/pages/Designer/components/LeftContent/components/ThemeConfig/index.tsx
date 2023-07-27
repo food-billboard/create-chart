@@ -26,12 +26,13 @@ type Props = {
   setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
   setComponent: ComponentMethod.SetComponentMethod;
   theme: ComponentData.TScreenTheme;
+  setSelect: (select: string[]) => void;
 };
 
 const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
   const [visible, setVisible] = useState<boolean>(false);
 
-  const { theme, setScreen, setComponent } = props;
+  const { theme, setScreen, setComponent, setSelect } = props;
   const { type, value, color = [] } = theme;
 
   const COLOR_MAP: {
@@ -45,7 +46,7 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
   }, []);
 
   const onChange = useCallback(
-    (type: ComponentData.TScreenTheme['type'], value) => {
+    async (type: ComponentData.TScreenTheme['type'], value) => {
       let realValue = value;
       try {
         realValue = value.target.value;
@@ -61,7 +62,7 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
         },
       });
       // 更改色调
-      ThemeUtil.initCurrentThemeData(realValue);
+      await ThemeUtil.initCurrentThemeData(realValue);
       // 修改组件颜色
       setComponent(ComponentThemeChange(realValue));
       // 通知组件更新
@@ -71,6 +72,7 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
   );
 
   const open = () => {
+    setSelect([]);
     setVisible(true);
   };
 
@@ -90,7 +92,6 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
 
   return (
     <Drawer
-      mask={false}
       open={visible}
       maskClosable={false}
       onClose={onClose}

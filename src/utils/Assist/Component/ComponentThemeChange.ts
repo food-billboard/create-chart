@@ -28,7 +28,6 @@ function covertComponentsThemeColor(
       };
     })
     .filter(Boolean);
-
   return changeComponents as ComponentMethod.SetComponentMethodParamsData[];
 }
 
