@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcreate_chart=self.webpackChunkcreate_chart||[]).push([[6390],{96390:function(a,n,t){t.r(n),t.d(n,{default:function(){return c}});var r=t(67294),u=t(34104),e=t(85893);function c(){var E=(0,u.useOutletContext)();return(0,e.jsx)(u.Outlet,{context:E})}}}]);
