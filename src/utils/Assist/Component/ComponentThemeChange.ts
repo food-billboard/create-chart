@@ -1,8 +1,8 @@
 import { getComponentThemeConfigByType } from '@/components/ChartComponents';
-import { getDvaGlobalModelData } from './index';
 import ThemeUtil from '../Theme';
+import { getDvaGlobalModelData } from './index';
 
-function covertComponentsThemecOLOR(
+function covertComponentsThemeColor(
   themeName: string,
 ): ComponentMethod.SetComponentMethodParamsData[] {
   const state = getDvaGlobalModelData();
@@ -32,4 +32,4 @@ function covertComponentsThemecOLOR(
   return changeComponents as ComponentMethod.SetComponentMethodParamsData[];
 }
 
-export default covertComponentsThemecOLOR;
+export default covertComponentsThemeColor;

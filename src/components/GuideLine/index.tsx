@@ -1,14 +1,11 @@
-import { Component, CSSProperties } from 'react';
-import { merge, throttle } from 'lodash';
-import classnames from 'classnames';
-import ThemeUtil from '@/utils/Assist/Theme';
+import { usePrimaryColor } from '@/hooks';
 import { GUIDE_LINE_PADDING } from '@/utils/constants';
-import ColorSelect from '../ColorSelect';
-import AbsorbGuideLine from './utils';
+import type { SuperPartial } from 'chunk-file-upload';
+import classnames from 'classnames';
+import { merge, throttle } from 'lodash';
+import { Component, CSSProperties } from 'react';
 import styles from './index.less';
-import { SuperPartial } from 'chunk-file-upload';
-
-const { getRgbaString } = ColorSelect;
+import AbsorbGuideLine from './utils';
 
 type Props = {
   disabled?: boolean;
@@ -25,8 +22,8 @@ type Props = {
   size: { width: number; height: number };
   isGuideLineSticky?: boolean;
 } & ComponentData.TGuideLineConfigItem;
-class GuideLine extends Component<Props> {
-  constructor(props: Props) {
+class GuideLine extends Component<Props & { primaryColor: string }> {
+  constructor(props: Props & { primaryColor: string }) {
     super(props);
     const { type, style, lineStyle, id } = props;
     this.AbsorbGuideLineUtil = new AbsorbGuideLine(
@@ -185,7 +182,7 @@ class GuideLine extends Component<Props> {
   }
 
   render() {
-    const { type, lineStyle = 'dashed', className } = this.props;
+    const { type, lineStyle = 'dashed', className, primaryColor } = this.props;
     const { style } = this.state;
 
     return (
@@ -202,9 +199,7 @@ class GuideLine extends Component<Props> {
         <div
           className={styles[`ruler-guide-line-flag-${type}`]}
           style={{
-            backgroundColor: getRgbaString(
-              ThemeUtil.generateNextColor4CurrentTheme(0),
-            ),
+            backgroundColor: primaryColor,
           }}
         >
           {Math.round(style.left ?? style.top) || 0}
@@ -216,9 +211,7 @@ class GuideLine extends Component<Props> {
             {},
             {
               borderStyle: lineStyle,
-              borderColor: getRgbaString(
-                ThemeUtil.generateNextColor4CurrentTheme(0),
-              ),
+              borderColor: primaryColor,
             },
             type === 'horizontal'
               ? { top: GUIDE_LINE_PADDING * 2 }
@@ -230,4 +223,10 @@ class GuideLine extends Component<Props> {
   }
 }
 
-export default GuideLine;
+const GuideLineWrapper = (props: Props) => {
+  const color = usePrimaryColor();
+
+  return <GuideLine {...props} primaryColor={color} />;
+};
+
+export default GuideLineWrapper;

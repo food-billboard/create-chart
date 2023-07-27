@@ -1,8 +1,7 @@
-import ColorSelect from '@/components/ColorSelect';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import Tooltip from '@/components/Tooltip';
+import { usePrimaryColor } from '@/hooks';
 import { ConnectState } from '@/models/connect';
-import ThemeUtil from '@/utils/Assist/Theme';
 import {
   DeleteOutlined,
   EyeInvisibleOutlined,
@@ -16,14 +15,14 @@ import { connect } from 'umi';
 import { wrapperId } from '../../constants';
 import styles from './index.less';
 
-const { getRgbaString } = ColorSelect;
-
 const GuideLineButton = (props: {
   show: boolean;
   onClick?: any;
   setGuideLine: (value: ComponentData.TGuideLineConfig) => void;
 }) => {
   const { show, onClick, setGuideLine } = props;
+
+  const primaryColor = usePrimaryColor();
 
   const { left, top } = useScroll(document.querySelector(`#${wrapperId}`)) || {
     left: 0,
@@ -51,9 +50,7 @@ const GuideLineButton = (props: {
           title="删除所有辅助线"
           className={styles['designer-page-main-guide-btn-sub']}
           style={{
-            backgroundColor: getRgbaString(
-              ThemeUtil.generateNextColor4CurrentTheme(0),
-            ),
+            backgroundColor: primaryColor,
           }}
         />
       </>
@@ -69,9 +66,7 @@ const GuideLineButton = (props: {
         style={{
           left,
           top,
-          backgroundColor: getRgbaString(
-            ThemeUtil.generateNextColor4CurrentTheme(0),
-          ),
+          backgroundColor: primaryColor,
         }}
         icon={guideLineShowIcon}
       ></Button>

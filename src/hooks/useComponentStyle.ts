@@ -1,10 +1,7 @@
-import { CSSProperties, useMemo } from 'react';
-import { merge } from 'lodash';
+import { usePrimaryColor } from '@/hooks';
 import { useHover } from 'ahooks';
-import ThemeUtil from '@/utils/Assist/Theme';
-import ColorSelect from '@/components/ColorSelect';
-
-const { getRgbaString } = ColorSelect;
+import { merge } from 'lodash';
+import { CSSProperties, useMemo } from 'react';
 
 export const useComponentStyle: (
   value: ComponentData.TComponentData,
@@ -25,6 +22,8 @@ export const useComponentStyle: (
   } = value;
   const { isSelect, style, scale, query, screenType, flag } = options;
 
+  const primaryColor = usePrimaryColor();
+
   const isHover = useHover(() => document.querySelector(query));
 
   const styles = useMemo(() => {
@@ -42,10 +41,7 @@ export const useComponentStyle: (
       ...nextComponentStyle
     } = componentStyle;
     const borderWidth = screenType === 'edit' ? (1 / scale) * 100 : 0;
-    const borderColor =
-      isSelect || isHover
-        ? getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0))
-        : 'transparent';
+    const borderColor = isSelect || isHover ? primaryColor : 'transparent';
     return merge(
       {},
       nextComponentStyle,

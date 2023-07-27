@@ -1,20 +1,12 @@
-import { useMemo, CSSProperties } from 'react';
 import classnames from 'classnames';
 import { merge } from 'lodash';
-import ThemeUtil from '@/utils/Assist/Theme';
-import ColorSelect from '../../../../ColorSelect';
-import { CommonBorderProps } from '../type';
+import { CSSProperties } from 'react';
 import commonStyles from '../index.less';
+import { CommonBorderProps } from '../type';
 import './index.less';
-
-const { getRgbaString } = ColorSelect;
 
 const RotateLoopBorder = (props: CommonBorderProps) => {
   const { children, className, style, width, padding, ...nextProps } = props;
-
-  const color = useMemo(() => {
-    return getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0));
-  }, []);
 
   return (
     <div

@@ -1,17 +1,17 @@
-import { useMemo, useRef, useState, useEffect } from 'react';
-import { merge, uniqueId, noop } from 'lodash';
-import classnames from 'classnames';
-import moment from 'moment';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
-import FilterDataUtil from '@/utils/Assist/FilterData';
+import { usePrimaryColor } from '@/hooks';
 import { getWeatherData } from '@/services';
-import ThemeUtil from '@/utils/Assist/Theme';
-import { TWeatherConfig } from '../type';
-import { CHART_ID } from '../id';
-import styles from './index.less';
+import FilterDataUtil from '@/utils/Assist/FilterData';
 import { Space } from 'antd';
+import classnames from 'classnames';
+import { merge, noop, uniqueId } from 'lodash';
+import moment from 'moment';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { CHART_ID } from '../id';
+import { TWeatherConfig } from '../type';
+import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
 
@@ -34,6 +34,8 @@ const Weather = (props: ComponentData.CommonComponentProps<TWeatherConfig>) => {
     },
   } = value;
   const { show, textStyle, widMap, align } = options;
+
+  const primaryColor = usePrimaryColor();
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const timerRef = useRef<any>();
@@ -106,10 +108,9 @@ const Weather = (props: ComponentData.CommonComponentProps<TWeatherConfig>) => {
                       style={{
                         ...textStyle,
                         fontSize: textStyle.fontSize + 'px',
-                        color: getRgbaString(
-                          target.color ||
-                            ThemeUtil.generateNextColor4CurrentTheme(0),
-                        ),
+                        color: target.color
+                          ? getRgbaString(target.color)
+                          : primaryColor,
                       }}
                     />
                   )}{' '}

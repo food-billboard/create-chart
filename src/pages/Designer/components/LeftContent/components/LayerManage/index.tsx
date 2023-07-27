@@ -1,36 +1,35 @@
-import {
-  useState,
-  forwardRef,
-  useCallback,
-  useImperativeHandle,
-  useRef,
-  useEffect,
-  Component,
-} from 'react';
-import classnames from 'classnames';
-import { throttle } from 'lodash';
 import FocusWrapper from '@/components/FocusWrapper';
-import ColorSelect from '@/components/ColorSelect';
-import { useLocalStorage, useIsScrolling } from '@/hooks';
+import { useIsScrolling, useLocalStorage, usePrimaryColor } from '@/hooks';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
 import { MAX_LAYER_WIDTH, MIN_LAYER_WIDTH } from '@/utils/constants';
-import ThemeUtil from '@/utils/Assist/Theme';
+import classnames from 'classnames';
+import { throttle } from 'lodash';
+import {
+  Component,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import Header from './components/Header';
 import LayerList from './components/Tree';
-import { LayerManageRef } from './type';
 import styles from './index.less';
-
-const { getRgbaString } = ColorSelect;
+import { LayerManageRef } from './type';
 
 export interface LayerManageProps {
   onClose?: () => void;
 }
-class ResizeLine extends Component<{
+
+type ResizeLineProps = {
   value: number;
   onChange?: (value: number) => void;
   onResizeEnd?: () => void;
   onResizeStart?: () => void;
-}> {
+};
+
+class ResizeLine extends Component<ResizeLineProps & { primaryColor: string }> {
   sizeValueRef = 0;
 
   onMouseDown = (e: any) => {
@@ -69,15 +68,19 @@ class ResizeLine extends Component<{
         <div
           className={styles['design-layer-manage-resize-content']}
           style={{
-            backgroundColor: getRgbaString(
-              ThemeUtil.generateNextColor4CurrentTheme(0),
-            ),
+            backgroundColor: this.props.primaryColor,
           }}
         ></div>
       </div>
     );
   }
 }
+
+const ResizeWrapper = (props: ResizeLineProps) => {
+  const primaryColor = usePrimaryColor();
+
+  return <ResizeLine {...props} primaryColor={primaryColor} />;
+};
 
 const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
   (props, ref) => {
@@ -150,7 +153,7 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
           {(!!disabled || isScroll) && (
             <div className={styles['design-layer-manage-content-cover']}></div>
           )}
-          <ResizeLine
+          <ResizeWrapper
             value={stateLayerWidth}
             onChange={setStateLayerWidth}
             onResizeStart={setDisabled.bind(null, true)}

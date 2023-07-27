@@ -1,12 +1,9 @@
-import ColorSelect from '@/components/ColorSelect';
+import { usePrimaryColor } from '@/hooks';
 import { ConnectState } from '@/models/connect';
-import ThemeUtil from '@/utils/Assist/Theme';
 import { throttle } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
 import styles from './index.less';
-
-const { getRgbaString } = ColorSelect;
 
 const CircleSelect = (props: {
   value?: number;
@@ -16,6 +13,8 @@ const CircleSelect = (props: {
   const { value = 0, onChange } = props;
 
   const [stateValue, setStateValue] = useState<number>(value);
+
+  const primaryColor = usePrimaryColor();
 
   const selectRef = useRef<{
     x: number;
@@ -117,9 +116,7 @@ const CircleSelect = (props: {
       className={styles['component-circle-select']}
       style={{
         // @ts-ignore
-        '--component-circle-select-color': getRgbaString(
-          ThemeUtil.generateNextColor4CurrentTheme(0),
-        ),
+        '--component-circle-select-color': primaryColor,
         '--component-circle-select-value': `rotate(${stateValue}deg)`,
       }}
       onMouseDown={onMouseDown}

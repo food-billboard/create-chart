@@ -1,27 +1,30 @@
-import {} from 'react';
-import {
-  SmileOutlined,
-  GithubOutlined,
-  ContactsOutlined,
-  QuestionCircleOutlined,
-} from '@ant-design/icons';
-import { Fab, Action } from 'react-tiny-fab';
-import ColorSelect from '@/components/ColorSelect';
-import ThemeUtil from '@/utils/Assist/Theme';
+import { useColorList } from '@/hooks';
 import { gotoBlog, gotoGithub, gotoOperation } from '@/utils/Assist/About';
+import {
+  ContactsOutlined,
+  GithubOutlined,
+  QuestionCircleOutlined,
+  SmileOutlined,
+} from '@ant-design/icons';
+import { Action, Fab } from 'react-tiny-fab';
 import 'react-tiny-fab/dist/styles.css';
 import styles from './index.less';
 
-const { getRgbaString } = ColorSelect;
+const commonStyle = {
+  color: 'white',
+  width: 30,
+  height: 30,
+  fontSize: '12px',
+};
 
 const IntroductionButton = () => {
+  const [primaryColor, subColor, thirdColor, forthColor] = useColorList();
+
   return (
     <div className={styles['introduction-button']}>
       <Fab
         mainButtonStyles={{
-          backgroundColor: getRgbaString(
-            ThemeUtil.generateNextColor4CurrentTheme(0),
-          ),
+          backgroundColor: primaryColor,
           color: 'white',
           width: 34,
           height: 34,
@@ -38,13 +41,8 @@ const IntroductionButton = () => {
           text="Github"
           onClick={gotoGithub}
           style={{
-            backgroundColor: getRgbaString(
-              ThemeUtil.generateNextColor4CurrentTheme(1),
-            ),
-            color: 'white',
-            width: 30,
-            height: 30,
-            fontSize: '12px',
+            backgroundColor: subColor,
+            ...commonStyle,
           }}
         >
           <GithubOutlined />
@@ -53,13 +51,8 @@ const IntroductionButton = () => {
           text="Blog"
           onClick={gotoBlog}
           style={{
-            color: 'white',
-            width: 30,
-            height: 30,
-            backgroundColor: getRgbaString(
-              ThemeUtil.generateNextColor4CurrentTheme(2),
-            ),
-            fontSize: '12px',
+            backgroundColor: thirdColor,
+            ...commonStyle,
           }}
         >
           <ContactsOutlined />
@@ -68,13 +61,8 @@ const IntroductionButton = () => {
           text="操作文档"
           onClick={gotoOperation}
           style={{
-            color: 'white',
-            width: 30,
-            height: 30,
-            backgroundColor: getRgbaString(
-              ThemeUtil.generateNextColor4CurrentTheme(3),
-            ),
-            fontSize: '12px',
+            backgroundColor: forthColor,
+            ...commonStyle,
           }}
         >
           <QuestionCircleOutlined />

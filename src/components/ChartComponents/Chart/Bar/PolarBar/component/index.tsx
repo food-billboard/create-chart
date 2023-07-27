@@ -1,23 +1,22 @@
-import { useEffect, useRef } from 'react';
-import { uniqueId, merge } from 'lodash';
-import classnames from 'classnames';
-import { useDeepUpdateEffect } from '@/hooks';
 import {
-  useComponent,
-  useChartComponentResize,
-  useChartValueMapField,
-  useComponentResize,
   useAnimationChange,
-  useCondition,
+  useChartComponentResize,
   useChartPerConfig,
+  useChartValueMapField,
+  useComponent,
+  useComponentResize,
+  useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
-import ColorSelect from '@/components/ColorSelect';
-import ThemeUtil from '@/utils/Assist/Theme';
-import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
-import { init } from '@/utils/Assist/EchartsLoader';
 import { DEFAULT_OPACITY } from '@/components/ChartComponents/Common/Constants/defaultConfig';
-import { TPolarBarConfig } from '../type';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
+import ColorSelect from '@/components/ColorSelect';
+import { useDeepUpdateEffect, usePrimaryColorObject } from '@/hooks';
+import { init } from '@/utils/Assist/EchartsLoader';
+import classnames from 'classnames';
+import { merge, uniqueId } from 'lodash';
+import { useEffect, useMemo, useRef } from 'react';
 import { CHART_ID } from '../id';
+import { TPolarBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
 
@@ -35,11 +34,20 @@ const PolarBar = (
     },
   } = value;
 
+  const primaryColor = usePrimaryColorObject();
+
   const { legend, series, polar, angleAxis, tooltip, animation, condition } =
     useChartPerConfig<TPolarBarConfig>(options);
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
   const chartInstance = useRef<echarts.ECharts>();
+
+  const lineStyleColor = useMemo(() => {
+    return getRgbaString({
+      ...primaryColor,
+      a: DEFAULT_OPACITY,
+    });
+  }, [primaryColor]);
 
   useComponentResize(value, () => {
     chartInstance?.current?.resize();
@@ -170,10 +178,7 @@ const PolarBar = (
           },
           splitLine: {
             lineStyle: {
-              color: getRgbaString({
-                ...ThemeUtil.generateNextColor4CurrentTheme(0),
-                a: DEFAULT_OPACITY,
-              }),
+              color: lineStyleColor,
             },
           },
         },
@@ -207,7 +212,7 @@ const PolarBar = (
   // 数据发生变化时
   useDeepUpdateEffect(() => {
     setOption();
-  }, [processedValue, xAxisKeys, yAxisValues]);
+  }, [processedValue, xAxisKeys, yAxisValues, lineStyleColor]);
 
   // 配置发生变化时
   useDeepUpdateEffect(() => {

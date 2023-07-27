@@ -1,12 +1,10 @@
-import ColorSelect from '@/components/ColorSelect';
-import { useIdPathMap } from '@/hooks';
+import { useIdPathMap, usePrimaryColor } from '@/hooks';
 import { ConnectState } from '@/models/connect';
 import { getTopParentComponent } from '@/utils/Assist/Component';
 import {
   EVENT_NAME_MAP,
   GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
-import ThemeUtil from '@/utils/Assist/Theme';
 import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { useUpdateEffect } from 'ahooks';
 import { Button } from 'antd';
@@ -17,8 +15,6 @@ import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { connect } from 'umi';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
-
-const { getRgbaString } = ColorSelect;
 
 const THUMB_WIDTH = 240;
 
@@ -64,6 +60,8 @@ const InternalComponentActiveItem = (props: {
   const [top, setTop] = useState<number>(0);
   const [widthScale, setWidthScale] = useState<number>(1);
   const [heightScale, setHeightScale] = useState<number>(1);
+
+  const primaryColor = usePrimaryColor();
 
   const activeComponentRef = useRef<{
     left: number;
@@ -112,9 +110,7 @@ const InternalComponentActiveItem = (props: {
               height: componentHeight * scale,
               left: left * scale,
               top: top * scale,
-              backgroundColor: getRgbaString(
-                ThemeUtil.generateNextColor4CurrentTheme(0),
-              ),
+              backgroundColor: primaryColor,
             }}
             key={component.id}
           ></div>,
@@ -122,7 +118,7 @@ const InternalComponentActiveItem = (props: {
       }
       return acc;
     }, []);
-  }, [isActive, select, scale, components]);
+  }, [isActive, select, scale, components, primaryColor]);
 
   const onDragStart = ({ componentId }: CommonEventType) => {
     actionType.current = 'drag';

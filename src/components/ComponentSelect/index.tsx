@@ -1,21 +1,19 @@
+import { usePrimaryColor } from '@/hooks';
+import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
+import { useDebounce } from 'ahooks';
+import { Col, Input, Modal, Row } from 'antd';
+import classnames from 'classnames';
 import {
   forwardRef,
-  useImperativeHandle,
   useCallback,
-  useState,
+  useImperativeHandle,
   useMemo,
+  useState,
 } from 'react';
-import { Modal, Input, Row, Col } from 'antd';
-import { useDebounce } from 'ahooks';
-import classnames from 'classnames';
-import ColorSelect from '@/components/ColorSelect';
 import { Loading } from '../PageLoading';
-import ThemeUtil from '@/utils/Assist/Theme';
-import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
 import styles from './index.less';
 
 const { Search } = Input;
-const { getRgbaString } = ColorSelect;
 
 export type ComponentSelectRef = {
   open: (select?: string) => void;
@@ -42,6 +40,8 @@ const ComponentSelect = forwardRef<
       icon: string;
     }[]
   >([]);
+
+  const primaryColor = usePrimaryColor();
 
   const open = async (select?: string) => {
     if (visible) return;
@@ -120,9 +120,7 @@ const ComponentSelect = forwardRef<
             style={
               isSelect
                 ? {
-                    borderColor: getRgbaString(
-                      ThemeUtil.generateNextColor4CurrentTheme(0),
-                    ),
+                    borderColor: primaryColor,
                   }
                 : {}
             }
@@ -134,7 +132,7 @@ const ComponentSelect = forwardRef<
         </Col>
       );
     });
-  }, [select, filterComponentList]);
+  }, [select, filterComponentList, primaryColor]);
 
   useImperativeHandle(
     ref,

@@ -1,14 +1,13 @@
 import ColorSelect from '@/components/ColorSelect';
 import { BACKGROUND_ID } from '@/components/DesignerBackground';
-import { ConnectState } from '@/models/connect';
+import { usePrimaryColorObject } from '@/hooks';
 import {
   isComponentDisabled,
   isComponentSelect,
 } from '@/utils/Assist/Component';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
-import ThemeUtil from '@/utils/Assist/Theme';
 import { SELECTO_CLASSNAME } from '@/utils/constants';
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import ReactSelecto from 'react-selecto';
 import { connect } from 'umi';
 import { PANEL_ID } from '../Painter';
@@ -107,20 +106,16 @@ const Selecto = (props: {
 
 const InternalSelecto = connect(mapStateToProps, mapDispatchToProps)(Selecto);
 
-const OuterSelecto = (props: { theme: ComponentData.TScreenTheme }) => {
-  const { theme } = props;
-
-  const color = useMemo(() => {
-    return ThemeUtil.generateNextColor4CurrentTheme(0);
-  }, [theme.value]);
+const OuterSelecto = () => {
+  const primaryColor = usePrimaryColorObject();
 
   return (
     <div
       style={{
         // @ts-ignore
-        '--react-select-to-border': getRgbaString(color),
+        '--react-select-to-border': getRgbaString(primaryColor),
         '--react-select-to-background': getRgbaString({
-          ...color,
+          ...primaryColor,
           a: 0.4,
         }),
       }}
@@ -131,11 +126,4 @@ const OuterSelecto = (props: { theme: ComponentData.TScreenTheme }) => {
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      theme: state.global.screenData.config.attr.theme,
-    };
-  },
-  () => ({}),
-)(OuterSelecto);
+export default OuterSelecto;

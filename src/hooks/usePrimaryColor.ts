@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
 import ColorSelect from '@/components/ColorSelect';
-import ThemeUtil from '@/utils/Assist/Theme';
 import {
-  GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
+  GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
+import ThemeUtil from '@/utils/Assist/Theme';
+import { useEffect, useState } from 'react';
 
 const { getRgbaString } = ColorSelect;
 
@@ -33,6 +33,30 @@ export const useColorList = () => {
   }, []);
 
   return colorList;
+};
+
+export const usePrimaryColorObject = () => {
+  const [color, setColor] = useState<ComponentData.TColorConfig>({
+    r: 78,
+    g: 163,
+    b: 151,
+  });
+
+  useEffect(() => {
+    const onChange = () => {
+      const color = ThemeUtil.generateNextColor4CurrentTheme(0);
+      setColor(color);
+    };
+    GLOBAL_EVENT_EMITTER.addListener(EVENT_NAME_MAP.THEME_CHANGE, onChange);
+    return () => {
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.THEME_CHANGE,
+        onChange,
+      );
+    };
+  }, []);
+
+  return color;
 };
 
 export const usePrimaryColor = () => {
