@@ -6,6 +6,7 @@ import CommonLayout, {
   DocumentTitleSetWrapper4Static,
   EnvironmentPrompt,
   EventEmitterWrapper,
+  InitialConfigWrapper,
 } from '../components/CommonLayout';
 
 export default connect(
@@ -17,6 +18,7 @@ export default connect(
   () => ({}),
 )(
   CommonLayout([
+    InitialConfigWrapper,
     EventEmitterWrapper,
     EnvironmentPrompt,
     DocumentTitleSetWrapper4Static,

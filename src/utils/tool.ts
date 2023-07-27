@@ -13,7 +13,8 @@ export const isUrl = (path: string): boolean => reg.test(path);
 export const getPageQuery = () => parse(window.location.href.split('?')[1]);
 
 export function getLocationQuery(): { [key: string]: string } {
-  return parse(history.location.search) as any;
+  const search = history.location.search;
+  return parse(search.startsWith('?') ? search.slice(1) : search) as any;
 }
 
 export const getLocalStorage = (key: string) => {

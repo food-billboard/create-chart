@@ -76,10 +76,6 @@ export const staticRouter = [
     component: '@/layouts/StaticLayout/index',
     routes: [
       {
-        path: '/test',
-        component: '@/pages/Test/index',
-      },
-      {
         path: '/designer',
         component: '@/pages/Designer',
       },
@@ -88,8 +84,8 @@ export const staticRouter = [
         component: '@/pages/Viewer',
       },
       {
+        path: '/',
         redirect: '/designer',
-        component: '@/pages/Designer',
       },
     ],
   },

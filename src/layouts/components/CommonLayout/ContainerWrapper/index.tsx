@@ -2,12 +2,12 @@ import IntroductionButton from '@/components/IntroductionButton';
 import { Empty } from 'antd';
 import isMobileJudge from 'is-mobile';
 import { useMemo } from 'react';
-import { history, Outlet, useLocation } from 'umi';
+import { history, useLocation } from 'umi';
 import FetchLoginWrapper from '../FetchLoginWrapper';
 import Layout from '../Listlayout';
 
 const GlobalLayout = (props: any) => {
-  const { Component } = props;
+  const { Component, ...nextProps } = props;
 
   const { pathname, search } = useLocation();
 
@@ -32,7 +32,7 @@ const GlobalLayout = (props: any) => {
 
   // 分享页不用管登录
   if (['/share', '/', 'viewer', '/preview'].includes(pathname)) {
-    return <Outlet />;
+    return <Component />;
   }
   if (
     pathname.startsWith('/login') ||
@@ -41,7 +41,7 @@ const GlobalLayout = (props: any) => {
   ) {
     return (
       <>
-        <Outlet />
+        <Component />
         <IntroductionButton />
       </>
     );
@@ -51,7 +51,7 @@ const GlobalLayout = (props: any) => {
     return (
       <FetchLoginWrapper {...props}>
         <Layout>
-          <Outlet />
+          <Component />
         </Layout>
       </FetchLoginWrapper>
     );
@@ -64,7 +64,11 @@ const GlobalLayout = (props: any) => {
     return <div></div>;
   }
 
-  return <FetchLoginWrapper {...props} />;
+  return (
+    <FetchLoginWrapper {...nextProps}>
+      <Component />
+    </FetchLoginWrapper>
+  );
 };
 
 export default GlobalLayout;

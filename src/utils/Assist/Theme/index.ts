@@ -1,13 +1,13 @@
 import color from 'color';
 import { omit, pick } from 'lodash';
-import { GLOBAL_EVENT_EMITTER, EVENT_NAME_MAP } from '../EventEmitter';
-import { echartsLoader } from '../EchartsLoader';
-import WonderlandTheme from '../../../theme/wonderland.project.json';
-import ShineTheme from '../../../theme/shine.project.json';
 import EssosTheme from '../../../theme/essos.project.json';
 import MacaronsTheme from '../../../theme/macarons.project.json';
 import RomaTheme from '../../../theme/roma.project.json';
+import ShineTheme from '../../../theme/shine.project.json';
 import WesterosTheme from '../../../theme/westeros.project.json';
+import WonderlandTheme from '../../../theme/wonderland.project.json';
+import { echartsLoader } from '../EchartsLoader';
+import { EVENT_NAME_MAP, GLOBAL_EVENT_EMITTER } from '../EventEmitter';
 
 const alphaHexMap = {
   '1.00': 'FF',

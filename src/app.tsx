@@ -24,12 +24,6 @@ export const dva = {
 };
 
 export function rootContainer(container: JSX.Element) {
-  // // 色调初始化
-  // ThemeUtil.init();
-
-  // // 设置全局初始化配置
-  // GlobalConfig.enableConfig({});
-
   const props: ErrorBoundaryProps = {
     fallback: ({ error, componentStack, resetError }) => {
       return (
