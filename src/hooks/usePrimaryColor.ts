@@ -60,7 +60,9 @@ export const usePrimaryColorObject = () => {
 };
 
 export const usePrimaryColor = () => {
-  const [color, setColor] = useState<string>('#4ea397');
+  const [color, setColor] = useState<string>(() =>
+    getRgbaString(ThemeUtil.generateNextColor4CurrentTheme(0)),
+  );
 
   useEffect(() => {
     const onChange = () => {
