@@ -1,10 +1,10 @@
+import { useEffect, useState } from 'react';
 import ColorSelect from '@/components/ColorSelect';
 import {
   EVENT_NAME_MAP,
   GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { useEffect, useState } from 'react';
 
 const { getRgbaString } = ColorSelect;
 

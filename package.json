@@ -44,6 +44,7 @@
     "@sentry/react": "^7.12.1",
     "@sentry/tracing": "^7.12.1",
     "@svgdotjs/svg.js": "^3.1.2",
+    "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "ahooks": "^3.7.0",
     "animate.css": "^4.1.1",
     "animejs": "^3.2.1",
