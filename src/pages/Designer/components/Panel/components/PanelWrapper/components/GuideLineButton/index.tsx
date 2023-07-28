@@ -1,3 +1,7 @@
+import { useScroll } from 'ahooks';
+import { Button } from 'antd';
+import { useCallback, useMemo } from 'react';
+import { connect } from 'umi';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import Tooltip from '@/components/Tooltip';
 import { usePrimaryColor } from '@/hooks';
@@ -7,11 +11,6 @@ import {
   EyeInvisibleOutlined,
   EyeOutlined,
 } from '@ant-design/icons';
-import { useScroll } from 'ahooks';
-import { Button } from 'antd';
-import classnames from 'classnames';
-import { useCallback, useMemo } from 'react';
-import { connect } from 'umi';
 import { wrapperId } from '../../constants';
 import styles from './index.less';
 
@@ -55,14 +54,14 @@ const GuideLineButton = (props: {
         />
       </>
     );
-  }, []);
+  }, [primaryColor]);
 
   return (
     <Tooltip title={title}>
       <Button
         onClick={onClick}
         type="link"
-        className={classnames('pos-ab', styles['designer-page-main-guide-btn'])}
+        className={styles['designer-page-main-guide-btn']}
         style={{
           left,
           top,
