@@ -36,8 +36,8 @@
     ]
   },
   "dependencies": {
-    "@ant-design/icons": "^4.7.0",
-    "@ant-design/pro-layout": "^6.5.0",
+    "@ant-design/icons": "^5.1.4",
+    "@ant-design/pro-layout": "^7.16.4",
     "@lucky-canvas/react": "^0.1.13",
     "@monaco-editor/react": "^4.5.1",
     "@scena/react-ruler": "^0.9.1",
@@ -48,7 +48,7 @@
     "ahooks": "^3.7.0",
     "animate.css": "^4.1.1",
     "animejs": "^3.2.1",
-    "antd": "4.24.4",
+    "antd": "^5.7.3",
     "array-move": "3.0.1",
     "axios": "^0.24.0",
     "bootstrap-icons": "1.8.2",
@@ -72,7 +72,6 @@
     "lodash": "^4.17.21",
     "matter-js": "^0.18.0",
     "mockjs": "^1.1.0",
-    "moment": "^2.29.1",
     "monaco-editor": "^0.31.1",
     "mustache": "^4.2.0",
     "nanoid": "^3.1.30",

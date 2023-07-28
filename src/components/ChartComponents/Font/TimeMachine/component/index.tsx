@@ -1,11 +1,11 @@
-import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react';
-import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import { uniqueId, merge } from 'lodash';
+import { CSSProperties, useMemo, useRef, useState, useEffect } from 'react';
 import { useLinkageInteractive } from '@/components/ChartComponents/Common/Component/hook/useLinkageInteractive';
 import ColorSelect from '@/components/ColorSelect';
-import { TTimeMachineConfig } from '../type';
 import { CHART_ID } from '../id';
+import { TTimeMachineConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
@@ -16,7 +16,7 @@ const TimeMachineBasic = (
   const { className, style, value, children, global, wrapper: Wrapper } = props;
   const { screenType } = global;
 
-  const [currentTime, setCurrentTime] = useState<moment.Moment>(moment());
+  const [currentTime, setCurrentTime] = useState<dayjs.Dayjs>(dayjs());
 
   const {
     config: {
@@ -72,7 +72,7 @@ const TimeMachineBasic = (
 
   useEffect(() => {
     timerRef.current = setInterval(() => {
-      setCurrentTime(moment());
+      setCurrentTime(dayjs());
     }, 1000);
     return () => {
       clearInterval(timerRef.current);

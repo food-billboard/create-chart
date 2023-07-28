@@ -1,3 +1,8 @@
+import { Input, message } from 'antd';
+import classnames from 'classnames';
+import { useCallback, useMemo, useState } from 'react';
+import Marquee from 'react-fast-marquee';
+import { connect } from 'umi';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 import FocusWrapper from '@/components/FocusWrapper';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
@@ -14,11 +19,7 @@ import {
   ImportOutlined,
   SendOutlined,
 } from '@ant-design/icons';
-import { Input, message, PageHeader } from 'antd';
-import classnames from 'classnames';
-import { useCallback, useMemo, useState } from 'react';
-import Marquee from 'react-fast-marquee';
-import { connect } from 'umi';
+import { PageHeader } from '@ant-design/pro-layout';
 import ExchangeScreenFlagButton from '../ExchangeScreenFlag';
 import ActionList from './ActionList';
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -67,7 +68,7 @@ const Header = (props: {
           'c-po',
           'text-ellipsis',
         )}
-        onClick={setEditMode.bind(null, true, undefined)}
+        onClick={setEditMode.bind(null, true)}
       >
         {name}
       </div>

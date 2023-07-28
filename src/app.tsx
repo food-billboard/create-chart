@@ -1,15 +1,15 @@
-import { FrownOutlined } from '@ant-design/icons';
-import type { ErrorBoundaryProps } from '@sentry/react';
-import * as Sentry from '@sentry/react';
 import 'animate.css';
 import { Button, Result } from 'antd';
 import 'css-doodle';
-import moment from 'moment';
-import 'moment/locale/zh-cn';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
 import 'pathseg';
 import React from 'react';
+import { FrownOutlined } from '@ant-design/icons';
+import type { ErrorBoundaryProps } from '@sentry/react';
+import * as Sentry from '@sentry/react';
 
-moment.locale('zh-cn');
+dayjs.locale('zh-cn');
 
 export const locale = {
   default: 'zh-CN',

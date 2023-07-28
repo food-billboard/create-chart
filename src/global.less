@@ -1,4 +1,5 @@
 @import '~antd/es/style/themes/default.less';
+@import '~antd/dist/reset.css';
 @import '~bootstrap-icons/font/bootstrap-icons.css';
 @import '~shepherd.js/dist/css/shepherd.css';
 @import '~nprogress/nprogress.css';
@@ -76,9 +77,6 @@ body,
 #root {
   height: 100%;
   overflow: hidden;
-  & * {
-    // font-size: 12px;
-  }
 }
 
 .colorWeak {
@@ -89,22 +87,7 @@ body,
   min-height: 100vh;
 }
 
-canvas {
-  display: block;
-}
-
-body {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-ul,
-ol {
-  list-style: none;
-}
-
-@media (max-width: @screen-xs) {
+@media (max-width: 480px) {
   .ant-table {
     width: 100%;
     overflow-x: auto;

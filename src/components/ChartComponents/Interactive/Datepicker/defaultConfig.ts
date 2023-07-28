@@ -1,5 +1,6 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { mergeWithoutArray } from '@/utils';
+import ThemeUtil from '@/utils/Assist/Theme';
 import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
@@ -7,7 +8,6 @@ import {
   DEFAULT_FONT_CONFIG,
   DEFAULT_INTERACTIVE_BASE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
-import ThemeUtil from '@/utils/Assist/Theme';
 import { TDatePickerConfig } from './type';
 
 export default () => {
@@ -38,7 +38,7 @@ export default () => {
         disabled: true,
       },
       options: {
-        defaultDate: moment().format('YYYY-MM-DD'),
+        defaultDate: dayjs().format('YYYY-MM-DD'),
         mode: 'date',
         format: 'YYYY-MM-DD',
         filterDate: 'return false',

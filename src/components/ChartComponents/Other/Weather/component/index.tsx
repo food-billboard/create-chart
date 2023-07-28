@@ -1,14 +1,14 @@
+import { Space } from 'antd';
+import classnames from 'classnames';
+import dayjs from 'dayjs';
+import { merge, noop, uniqueId } from 'lodash';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import { usePrimaryColor } from '@/hooks';
 import { getWeatherData } from '@/services';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { Space } from 'antd';
-import classnames from 'classnames';
-import { merge, noop, uniqueId } from 'lodash';
-import moment from 'moment';
-import { useEffect, useMemo, useRef, useState } from 'react';
 import { CHART_ID } from '../id';
 import { TWeatherConfig } from '../type';
 import styles from './index.less';
@@ -139,7 +139,7 @@ const Weather = (props: ComponentData.CommonComponentProps<TWeatherConfig>) => {
     fetchData();
 
     timerRef.current = setInterval(async () => {
-      if (moment(Date.now()).isSame(currentDate.current || 0, 'day')) {
+      if (dayjs(Date.now()).isSame(currentDate.current || 0, 'day')) {
         await fetchData();
       }
     }, 1000 * 60 * 60);

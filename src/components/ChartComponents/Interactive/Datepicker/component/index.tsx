@@ -1,14 +1,14 @@
-import { useMemo, useRef, useState, useEffect, cloneElement } from 'react';
-import { uniqueId, merge } from 'lodash';
+import { useUpdateEffect } from 'ahooks';
 import { DatePicker as AntDatePicker } from 'antd';
 import classnames from 'classnames';
-import moment from 'moment';
-import { useUpdateEffect } from 'ahooks';
+import dayjs from 'dayjs';
+import { uniqueId, merge } from 'lodash';
+import { useMemo, useRef, useState, useEffect, cloneElement } from 'react';
 import { useComponent } from '@/components/ChartComponents/Common/Component/hook';
-import ColorSelect from '@/components/ColorSelect';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
-import { TDatePickerConfig } from '../type';
+import ColorSelect from '@/components/ColorSelect';
 import { CHART_ID } from '../id';
+import { TDatePickerConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
@@ -42,9 +42,7 @@ const DatePicker = (
   } = options;
 
   const chartId = useRef<string>(uniqueId(CHART_ID));
-  const [dateValue, setDateValue] = useState<moment.Moment>(
-    moment(defaultDate),
-  );
+  const [dateValue, setDateValue] = useState<dayjs.Dayjs>(dayjs(defaultDate));
 
   const { syncInteractiveAction } = useComponent<TDatePickerConfig>({
     component: value,
@@ -205,9 +203,9 @@ const DatePicker = (
           <WeekPicker
             {...commonProps}
             format={(value) => {
-              return `${moment(value)
-                .startOf('week')
-                .format(format)} ~ ${moment(value)
+              return `${dayjs(value).startOf('week').format(format)} ~ ${dayjs(
+                value,
+              )
                 .endOf('week')
                 .format(format)}`;
             }}
@@ -240,7 +238,7 @@ const DatePicker = (
   }, [className]);
 
   useUpdateEffect(() => {
-    setDateValue(moment(defaultDate));
+    setDateValue(dayjs(defaultDate));
   }, [defaultDate]);
 
   return (
