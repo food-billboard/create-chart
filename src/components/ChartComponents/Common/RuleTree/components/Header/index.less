@@ -1,5 +1,3 @@
-@import '~antd/es/style/themes/default.less';
-
 .component-rule-tree-header {
   &-action {
     display: flex;
@@ -21,12 +19,12 @@
     &-or {
     }
     &-active {
-      background-color: @primary-color;
+      background-color: var(--primary-color);
       color: white;
     }
     &-and:not(&-active):hover,
     &-or:not(&-active):hover {
-      background-color: @primary-color;
+      background-color: var(--primary-color);
       color: white;
     }
   }
@@ -40,10 +38,10 @@
     &-active {
       :global {
         .component-rule-tree-curve {
-          stroke: @primary-color;
+          stroke: var(--primary-color);
         }
         .component-rule-tree-cap {
-          fill: @primary-color;
+          fill: var(--primary-color);
         }
       }
     }

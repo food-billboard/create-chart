@@ -1,5 +1,3 @@
-@import '~antd/es/style/themes/default.less';
-
 .design-config-wrapper-item-title {
   position: relative;
   height: 60px;
@@ -9,7 +7,7 @@
   justify-content: space-between;
   padding-right: 8px;
   padding-top: 12px;
-  background-color: @layout-header-background;
+  background-color: var(--layout-header-background);
   &-content {
     flex: 1;
     padding-left: 10px;
@@ -62,7 +60,7 @@
     }
     .ant-tabs-nav {
       margin: 0;
-      background-color: @component-background;
+      background-color: var(--component-background);
       &:before {
         border: none;
       }
@@ -84,7 +82,7 @@
       }
     }
     .ant-tabs-tab-active {
-      background-color: @layout-header-background;
+      background-color: var(--layout-header-background);
     }
   }
 }

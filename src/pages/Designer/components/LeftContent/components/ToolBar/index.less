@@ -1,5 +1,3 @@
-@import '~antd/es/style/themes/default.less';
-
 .page-design-left-tool-bar {
   width: 48px;
   min-width: 48px;
@@ -7,7 +5,7 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   top: 0;
-  background-color: @layout-header-background;
+  background-color: var(--layout-header-background);
   overflow: auto;
   .design-left-tool-icon {
     height: 38px;
@@ -19,7 +17,7 @@
     cursor: not-allowed;
   }
   .design-left-tool-icon-hover:hover {
-    color: @menu-dark-highlight-color;
+    color: var(--menu-dark-highlight-color);
   }
   .design-left-tool-icon-rotate {
     transform: rotate(-90deg);

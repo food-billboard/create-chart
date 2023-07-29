@@ -1,7 +1,5 @@
-@import '~antd/es/style/themes/default.less';
-
 .component-rule-tree-condition {
-  border: 1px solid @primary-color;
+  border: 1px solid var(--primary-color);
   padding: 12px;
   padding-bottom: 0;
   margin-bottom: 16px;
@@ -17,7 +15,7 @@
     bottom: -16px;
     height: 12px;
     width: 2px;
-    background: @primary-color;
+    background: var(--primary-color);
     transform: translateX(-1px);
   }
   &-connect-inner {
@@ -30,7 +28,7 @@
     margin-bottom: 12px;
     background-color: rgb(115, 124, 128);
     &-form {
-      background-color: @layout-header-background;
+      background-color: var(--layout-header-background);
     }
   }
   &-add {
@@ -42,7 +40,7 @@
     z-index: 1;
     path:nth-of-type(1),
     path:nth-of-type(3) {
-      fill: @primary-color;
+      fill: var(--primary-color);
     }
   }
 }

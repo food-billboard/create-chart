@@ -1,5 +1,3 @@
-@import '~antd/es/style/themes/default.less';
-
 .design-left-component-list {
   transition-property: opacity, width;
   transition-duration: 0.2s, 0.5s;
@@ -8,9 +6,9 @@
   margin: 0;
   overflow: auto;
   border-radius: 0 8px 8px 0;
-  background-color: @layout-header-background !important;
-  border-top: 1px solid @border-color-base !important;
-  border-right: 1px solid @border-color-base !important;
+  background-color: var(--layout-header-background) !important;
+  border-top: 1px solid var(--border-color-base) !important;
+  border-right: 1px solid var(--border-color-base) !important;
   :global {
     .ant-collapse-header {
       padding: 8px 12px !important;
@@ -20,7 +18,7 @@
       line-height: 22px;
     }
     .ant-collapse-content {
-      background-color: @component-background !important;
+      background-color: var(--component-background) !important;
     }
     .ant-empty-img-default {
       width: 100%;
@@ -90,7 +88,7 @@
   height: 100%;
   padding: 24px;
   overflow: hidden;
-  background-color: @layout-header-background;
+  background-color: var(--layout-header-background);
   transition: transform 0.5s;
   transform: translateX(100%);
   position: absolute;

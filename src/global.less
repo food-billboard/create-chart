@@ -1,4 +1,3 @@
-@import '~antd/es/style/themes/default.less';
 @import '~antd/dist/reset.css';
 @import '~bootstrap-icons/font/bootstrap-icons.css';
 @import '~shepherd.js/dist/css/shepherd.css';
@@ -87,7 +86,7 @@ body,
   min-height: 100vh;
 }
 
-@media (max-width: 480px) {
+@media (max-width: var(--screen-xs, 480px)) {
   .ant-table {
     width: 100%;
     overflow-x: auto;
@@ -196,10 +195,10 @@ each(@size-list, {
 
 each(@border-size-list, {
   .border-@{key} {
-    border: @value solid @border-color-base;
+    border: @value solid var(--border-color-base);
   }
   .border-@{key}-a {
-    border: @value solid @primary-color;
+    border: @value solid var(--primary-color);
   }
   .p-tb-@{key} {
     padding: @value 0;
@@ -325,10 +324,10 @@ each(@border-size-list, {
 
 // background
 .normal-background {
-  background-color: @component-background;
+  background-color: var(--component-background);
 }
 .normal-color {
-  color: @primary-color;
+  color: var(--primary-color);
 }
 
 // css var
@@ -518,7 +517,7 @@ body {
 }
 
 .component-rule-tree-cap {
-  stroke: @component-background;
+  stroke: var(--component-background);
   stroke-width: 1px;
   fill: rgb(115, 124, 128);
 }
@@ -538,7 +537,7 @@ body {
     height: 6px;
     border-radius: 50%;
     border: 1px solid black;
-    background-color: @primary-color;
+    background-color: var(--primary-color);
     position: absolute;
     left: 50%;
     box-sizing: content-box;
@@ -601,14 +600,14 @@ body {
 // nprogress ----------start
 
 #nprogress .bar {
-  background: @primary-color;
+  background: var(--primary-color);
 }
 #nprogress .peg {
-  box-shadow: 0 0 10px @primary-color, 0 0 5px @primary-color;
+  box-shadow: 0 0 10px var(--primary-color), 0 0 5px var(--primary-color);
 }
 #nprogress .spinner-icon {
-  border-top-color: @primary-color;
-  border-left-color: @primary-color;
+  border-top-color: var(--primary-color);
+  border-left-color: var(--primary-color);
 }
 
 // nprogress ----------end

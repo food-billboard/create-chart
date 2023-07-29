@@ -1,4 +1,3 @@
-@import '~antd/es/style/themes/default.less';
 @import '../index.less';
 
 .design-config-data-empty {
@@ -7,7 +6,7 @@
 }
 
 .design-config-data {
-  background-color: @layout-header-background;
+  background-color: var(--layout-header-background);
   &-title {
     box-sizing: border-box;
     display: flex;
@@ -18,7 +17,7 @@
     padding-left: 10px;
     padding-right: 34px;
     font-size: 12px;
-    background-color: @layout-header-background;
+    background-color: var(--layout-header-background);
     // border-top: 1px solid var(--datav-panel-border-color);
     border-left: none;
     border-right: none;

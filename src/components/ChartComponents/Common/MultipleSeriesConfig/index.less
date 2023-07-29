@@ -1,5 +1,3 @@
-@import '~antd/es/style/themes/default.less';
-
 .multiple-series-config {
   :global {
     .ant-tabs-nav {
@@ -9,11 +7,11 @@
       width: auto !important;
     }
     .ant-tabs-tab {
-      background-color: @component-background !important;
+      background-color: var(--component-background) !important;
       border: none !important;
     }
     .ant-tabs-tab.ant-tabs-tab-active {
-      background-color: @layout-header-background !important;
+      background-color: var(--layout-header-background) !important;
     }
     .ant-tabs-tab {
       padding-top: 4px !important;
