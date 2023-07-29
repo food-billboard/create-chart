@@ -8,7 +8,7 @@
   align-items: center;
   z-index: 9999;
   visibility: visible;
-  opacity: var(--default-opacity);
+  opacity: @default-opacity;
   &-name {
     flex: 1;
     text-align: left;
@@ -71,11 +71,11 @@
   }
 }
 .design-page-layer-item-disabled {
-  opacity: var(--disable-opacity);
+  opacity: @disable-opacity;
   & * {
     cursor: default;
   }
 }
 .design-page-layer-item-lock {
-  opacity: var(--lock-opacity);
+  opacity: @lock-opacity;
 }

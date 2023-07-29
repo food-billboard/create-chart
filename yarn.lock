@@ -297,7 +297,7 @@
     rc-util "^5.0.6"
     swr "^2.0.0"
 
-"@ant-design/pro-utils@2.12.6":
+"@ant-design/pro-utils@2.12.6", "@ant-design/pro-utils@^2.12.6":
   version "2.12.6"
   resolved "https://registry.npmmirror.com/@ant-design/pro-utils/-/pro-utils-2.12.6.tgz#a2eac2a756d574614f9d8f3438788dbe922488d8"
   integrity sha512-zBCD+uH0dZFM+ThRNDKHfLNCFfBa1vL/2KlPGGAOEIphx/Lt2PREELAHE6GnurlDEmNuBQFtAAV8Pgs9ccMeRg==

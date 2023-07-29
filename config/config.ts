@@ -1,23 +1,17 @@
 // https://umijs.org/config/
-import { merge } from 'lodash';
-import { defineConfig } from 'umi';
 // @ts-ignore
 import CompressionPlugin from 'compression-webpack-plugin';
+import { merge } from 'lodash';
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
-// import packageJson from '../package.json'
+import { defineConfig } from 'umi';
 // @ts-ignore
 // import SentryCliPlugin from '@sentry/webpack-plugin'
 import proxy from './proxy';
 import { normalRouter, staticRouter } from './router-config';
-import darkTheme from './theme';
 
 const { REACT_APP_ENV } = process.env;
 
 const commonConfig = {
-  // nodeModulesTransform: {
-  //   type: 'none',
-  // },
-  // msfu: {},
   define: {
     'process.env.REACT_APP': process.env.REACT_APP,
   },
@@ -44,15 +38,10 @@ const commonConfig = {
     antd: true,
     baseNavigator: true,
   },
-  // dynamicImport: {
-  //   loading: '@/components/PageLoading/index',
-  // },
   // targets: {
   //   ie: 11,
   // },
   routes: process.env.REACT_APP === 'static' ? staticRouter : normalRouter,
-  theme: darkTheme,
-  // @ts-ignore
   title: false,
   ignoreMomentLocale: true,
   proxy: (proxy as any)[REACT_APP_ENV || 'prod'],

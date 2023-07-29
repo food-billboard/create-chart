@@ -7,5 +7,6 @@ export { default as DocumentTitleSetWrapper4Static } from './DocumentTitleSetWra
 export { default as EnvironmentPrompt } from './EnvironmentPrompt';
 export { default as EventEmitterWrapper } from './EventEmitWrapper';
 export { default as InitialConfigWrapper } from './InitialConfigWrapper';
+export { default as CssVarWrapper } from './CssVarWrapper';
 
 export default DeepStructureComponent;

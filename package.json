@@ -38,6 +38,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.1.4",
     "@ant-design/pro-layout": "^7.16.4",
+    "@ant-design/pro-utils": "^2.12.6",
     "@lucky-canvas/react": "^0.1.13",
     "@monaco-editor/react": "^4.5.1",
     "@scena/react-ruler": "^0.9.1",

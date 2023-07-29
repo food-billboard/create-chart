@@ -1,15 +1,14 @@
+import { Collapse, Row } from 'antd';
+import classnames from 'classnames';
+import type { ItemType } from 'rc-collapse/es/interface';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { connect } from 'umi';
 import Empty from '@/components/Empty';
 import { ConnectState } from '@/models/connect';
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Collapse, Row } from 'antd';
-import classnames from 'classnames';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { connect } from 'umi';
 import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
 import styles from './index.less';
 import ComponentItem from './item';
-
-const { Panel } = Collapse;
 
 const ComponentList = (props: { type: string; componentCollapse: boolean }) => {
   const { type, componentCollapse } = props;
@@ -24,12 +23,14 @@ const ComponentList = (props: { type: string; componentCollapse: boolean }) => {
     setActiveKey(key);
   }, []);
 
-  const list = useMemo(() => {
-    if (!target?.children.length) return null;
+  const list: ItemType[] = useMemo(() => {
+    if (!target?.children.length) return [];
     return target.children.map((item) => {
       const { type, title, children } = item;
-      return (
-        <Panel key={type} header={title}>
+      return {
+        key: type,
+        label: title,
+        children: (
           <Row gutter={24}>
             {children && children.length ? (
               children.map((item) => {
@@ -39,8 +40,8 @@ const ComponentList = (props: { type: string; componentCollapse: boolean }) => {
               <Empty />
             )}
           </Row>
-        </Panel>
-      );
+        ),
+      };
     });
   }, [target]);
 
@@ -83,9 +84,8 @@ const ComponentList = (props: { type: string; componentCollapse: boolean }) => {
         <CaretRightOutlined rotate={isActive ? 90 : 0} />
       )}
       onChange={onCollapseChange}
-    >
-      {list}
-    </Collapse>
+      items={list}
+    />
   );
 };
 

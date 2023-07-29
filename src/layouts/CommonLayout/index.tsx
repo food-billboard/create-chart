@@ -1,12 +1,13 @@
-import { ConnectState } from '@/models/connect';
 import { get } from 'lodash';
 import { connect, Outlet } from 'umi';
+import { ConnectState } from '@/models/connect';
 import CommonLayout, {
   ContainerWrapper,
   DocumentTitleSetWrapper,
   EnvironmentPrompt,
   EventEmitterWrapper,
   InitialConfigWrapper,
+  CssVarWrapper,
 } from '../components/CommonLayout';
 
 export default connect(
@@ -18,6 +19,7 @@ export default connect(
   () => ({}),
 )(
   CommonLayout([
+    CssVarWrapper,
     InitialConfigWrapper,
     EventEmitterWrapper,
     EnvironmentPrompt,

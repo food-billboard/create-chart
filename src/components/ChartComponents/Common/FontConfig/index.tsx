@@ -1,16 +1,13 @@
-import { useCallback, useMemo, ReactNode } from 'react';
 import { useControllableValue } from 'ahooks';
-import Select from '../Select';
+import { useCallback, useMemo, ReactNode } from 'react';
 import { CompatColorSelect } from '@/components/ColorSelect';
-import ConfigList, { TConfigListItemProps } from '../Structure/ConfigList';
-import HalfForm from '../Structure/HalfForm';
-import Collapse from '../Collapse';
-import FullForm from '../Structure/FullForm';
 import InputNumber from '../InputNumber';
+import Select from '../Select';
+import ConfigList, { TConfigListItemProps } from '../Structure/ConfigList';
+import FullForm from '../Structure/FullForm';
+import HalfForm from '../Structure/HalfForm';
 
 const { Item } = ConfigList;
-const { Option } = Select;
-const { Panel } = Collapse;
 
 // 文字配置
 

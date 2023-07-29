@@ -1,21 +1,21 @@
-import { ReactNode, useCallback, useMemo, Children, cloneElement } from 'react';
 import {
   Collapse as AntCollapse,
   CollapsePanelProps,
   CollapseProps,
 } from 'antd';
+import classnames from 'classnames';
+import type { ItemType } from 'rc-collapse/es/interface';
+import { ReactNode, useCallback, useMemo, Children, cloneElement } from 'react';
 import {
   EyeOutlined,
   EyeInvisibleOutlined,
   CaretRightOutlined,
 } from '@ant-design/icons';
-import classnames from 'classnames';
-import PlaceHolder from '../Structure/PlaceHolder';
 import WrapperConfigList from '../Structure/ConfigList';
+import PlaceHolder from '../Structure/PlaceHolder';
 import Switch from '../Switch';
 import styles from './index.less';
 
-const { Panel: AntPanel } = AntCollapse;
 const { Item } = WrapperConfigList;
 
 // 重写样式的折叠列表
@@ -30,8 +30,7 @@ export type TCollapsePanelProps = Exclude<CollapsePanelProps, 'extra'> & {
   onChange?: (value: boolean) => void;
   children?: ReactNode;
 };
-
-const Panel = (props: TCollapsePanelProps) => {
+const usePanel: (props: TCollapsePanelProps) => ItemType = (props) => {
   const {
     value,
     onChange,
@@ -82,11 +81,11 @@ const Panel = (props: TCollapsePanelProps) => {
     );
   }, [realVisibleRender, header, extra]);
 
-  return (
-    <AntPanel {...nextProps} header={realHeader}>
-      <WrapperConfigList>{children}</WrapperConfigList>
-    </AntPanel>
-  );
+  return {
+    ...nextProps,
+    label: realHeader,
+    children: <WrapperConfigList>{children}</WrapperConfigList>,
+  };
 };
 
 const Collapse = (props: TCollapseProps) => {
@@ -105,12 +104,6 @@ const Collapse = (props: TCollapseProps) => {
     />
   );
 };
-
-const WrapperCollapse: typeof Collapse & {
-  Panel: typeof Panel;
-} = Collapse as any;
-
-WrapperCollapse.Panel = Panel;
 
 export type SingleCollapseProps = {
   parent?: TCollapseProps;
@@ -154,6 +147,11 @@ export const SingleCollapse = (props: SingleCollapseProps) => {
     });
   }, [children, level]);
 
+  const items = usePanel({
+    ...child,
+    children: realChildren,
+  });
+
   return (
     <Collapse
       collapsible={collapsible}
@@ -166,10 +164,9 @@ export const SingleCollapse = (props: SingleCollapseProps) => {
             collapsible === 'disabled',
         },
       )}
-    >
-      <Panel {...child}>{realChildren}</Panel>
-    </Collapse>
+      items={[items]}
+    />
   );
 };
 
-export default WrapperCollapse;
+export default Collapse;
