@@ -192,12 +192,16 @@ class ThemeUtil {
       return;
     }
     this.registerThemeLoading = true;
-    await echartsLoader().then((echarts) => {
-      const [target] = this.registerThemeArray.slice(-1);
-      if (target) echarts.registerTheme(...target);
-      this.registerThemeArray = [];
-      this.registerThemeLoading = false;
-    });
+    await echartsLoader()
+      .then((echarts) => {
+        const [target] = this.registerThemeArray.slice(-1);
+        if (target) echarts.registerTheme(...target);
+        this.registerThemeArray = [];
+        this.registerThemeLoading = false;
+      })
+      .catch((err) => {
+        this.registerThemeLoading = false;
+      });
   }
 
   // 初始化自定义主题

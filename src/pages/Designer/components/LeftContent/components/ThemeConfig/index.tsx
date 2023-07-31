@@ -1,10 +1,5 @@
-import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
-import {
-  EVENT_NAME_MAP,
-  GLOBAL_EVENT_EMITTER,
-} from '@/utils/Assist/EventEmitter';
-import ThemeUtil from '@/utils/Assist/Theme';
 import { Drawer, Space, Tabs } from 'antd';
+import classnames from 'classnames';
 import {
   forwardRef,
   useCallback,
@@ -13,9 +8,16 @@ import {
   useState,
 } from 'react';
 import { connect } from 'umi';
+import { Loading } from '@/components/PageLoading';
+import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
+import {
+  EVENT_NAME_MAP,
+  GLOBAL_EVENT_EMITTER,
+} from '@/utils/Assist/EventEmitter';
+import ThemeUtil from '@/utils/Assist/Theme';
 import ColorItem from './ColorItem';
-import { mapDispatchToProps, mapStateToProps } from './connect';
 import CustomConfig from './CustomConfig';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 export type ThemeConfigRef = {
@@ -31,6 +33,7 @@ type Props = {
 
 const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
   const [visible, setVisible] = useState<boolean>(false);
+  const [changeLoading, setChangeLoading] = useState(false);
 
   const { theme, setScreen, setComponent, setSelect } = props;
   const { type, value, color = [] } = theme;
@@ -47,10 +50,13 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
 
   const onChange = useCallback(
     async (type: ComponentData.TScreenTheme['type'], value) => {
+      setChangeLoading(true);
       let realValue = value;
       try {
         realValue = value.target.value;
       } catch (err) {}
+      // 更改色调
+      await ThemeUtil.initCurrentThemeData(realValue);
       setScreen({
         config: {
           attr: {
@@ -61,12 +67,11 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
           },
         },
       });
-      // 更改色调
-      await ThemeUtil.initCurrentThemeData(realValue);
       // 修改组件颜色
       setComponent(ComponentThemeChange(realValue));
       // 通知组件更新
       GLOBAL_EVENT_EMITTER.emitDebounce(EVENT_NAME_MAP.SCREEN_THEME_CHANGE);
+      setChangeLoading(false);
     },
     [setScreen],
   );
@@ -98,7 +103,21 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
       title="主题色修改"
       placement="left"
       width={400}
+      bodyStyle={{
+        position: 'relative',
+        pointerEvents: changeLoading ? 'none' : 'all',
+      }}
     >
+      {changeLoading && (
+        <div
+          className={classnames(
+            styles['designer-theme-config-loading'],
+            'w-100 h-100 pos-ab',
+          )}
+        >
+          <Loading size={25} />
+        </div>
+      )}
       <Tabs
         className={styles['designer-theme-config']}
         centered
@@ -128,7 +147,7 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
             key: 'custom',
             label: '自定义主题',
             forceRender: true,
-            children: <CustomConfig />,
+            children: <CustomConfig setLoading={setChangeLoading} />,
           },
         ]}
       />

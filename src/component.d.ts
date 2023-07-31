@@ -659,7 +659,7 @@ declare namespace ComponentData {
   export type TGlobalData = {
     setParams: (params: TParams[]) => void;
     screenType: 'edit' | 'preview' | 'production';
-    screenTheme: TScreenTheme;
+    screenTheme: TScreenTheme['value'];
   };
 
   export type ComponentProps<P extends object = {}> = {

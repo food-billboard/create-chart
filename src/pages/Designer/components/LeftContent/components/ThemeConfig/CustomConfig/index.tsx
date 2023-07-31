@@ -1,3 +1,7 @@
+import { Radio, Space } from 'antd';
+import classnames from 'classnames';
+import { useCallback, useState } from 'react';
+import { connect } from 'umi';
 import { ConnectState } from '@/models/connect';
 import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
 import {
@@ -5,13 +9,9 @@ import {
   GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { Radio, Space } from 'antd';
-import classnames from 'classnames';
-import { useCallback, useState } from 'react';
-import { connect } from 'umi';
 import ColorItem from '../ColorItem';
-import styles from './index.less';
 import UploadImage from './UploadImage';
+import styles from './index.less';
 
 const generateName = () => `custom_${Date.now()}`;
 
@@ -19,8 +19,9 @@ const CustomConfig = (props: {
   theme: ComponentData.TScreenTheme;
   setScreen: (value: any) => void;
   setComponent: ComponentMethod.SetComponentMethod;
+  setLoading: (loading: boolean) => void;
 }) => {
-  const { theme, setScreen, setComponent } = props;
+  const { theme, setScreen, setComponent, setLoading } = props;
 
   const [colorList, setColorList] = useState<string[][]>(
     theme.color ? [theme.color] : [ThemeUtil.getThemeColorList(theme.value)],
@@ -29,7 +30,14 @@ const CustomConfig = (props: {
     return theme.type === 'custom' ? theme.value : generateName();
   });
 
-  const handleSelectTheme = useCallback((value, themeName) => {
+  const handleSelectTheme = useCallback(async (value, themeName) => {
+    setLoading(true);
+    // 更改色调
+    await ThemeUtil.initCurrentThemeData({
+      type: 'custom',
+      value: themeName,
+      color: value,
+    });
     setScreen({
       config: {
         attr: {
@@ -41,16 +49,11 @@ const CustomConfig = (props: {
         },
       },
     });
-    // 更改色调
-    ThemeUtil.initCurrentThemeData({
-      type: 'custom',
-      value: themeName,
-      color: value,
-    });
     // 修改组件颜色
     setComponent(ComponentThemeChange(themeName));
     // 通知组件更新
     GLOBAL_EVENT_EMITTER.emitDebounce(EVENT_NAME_MAP.SCREEN_THEME_CHANGE);
+    setLoading(false);
   }, []);
 
   const onColorChange = useCallback(

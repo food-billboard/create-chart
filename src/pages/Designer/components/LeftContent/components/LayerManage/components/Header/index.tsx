@@ -20,7 +20,7 @@ const LayerHeader = (props: {
       )}
     >
       <CaretLeftOutlined className="m-r-8 c-po" onClick={onBack} />
-      <div className="text-ellipsis">图层管理</div>
+      <div className="text-ellipsis c-f-s-big">图层管理</div>
       {iconMode ? (
         <Icon
           type="icon-icon_list"
