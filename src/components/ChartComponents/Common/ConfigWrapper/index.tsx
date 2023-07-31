@@ -1,9 +1,9 @@
-import { ReactNode, useMemo, cloneElement, useRef } from 'react';
-import { Tabs } from 'antd';
-import type { TabsProps } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
+import { Tabs, ConfigProvider } from 'antd';
+import type { TabsProps } from 'antd';
 import classnames from 'classnames';
 import { uniqueId } from 'lodash';
+import { ReactNode, useMemo, cloneElement, useRef } from 'react';
 import styles from './index.less';
 
 // 配置项顶部的tab切换
@@ -32,16 +32,26 @@ const ConfigWrapper = (props: {
   }, [items]);
 
   return (
-    <Tabs
-      centered
-      className={classnames(
-        'h-100',
-        styles['design-config-wrapper-header'],
-        styles[`design-config-wrapper-header-${tabCounter}`],
-      )}
-      tabBarGutter={0}
-      items={realItems}
-    />
+    <ConfigProvider
+      theme={{
+        components: {
+          Tabs: {
+            titleFontSizeSM: 14,
+          },
+        },
+      }}
+    >
+      <Tabs
+        centered
+        className={classnames(
+          'h-100',
+          styles['design-config-wrapper-header'],
+          styles[`design-config-wrapper-header-${tabCounter}`],
+        )}
+        tabBarGutter={0}
+        items={realItems}
+      />
+    </ConfigProvider>
   );
 };
 

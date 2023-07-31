@@ -1,6 +1,5 @@
 import { Select as AntSelect } from 'antd';
 import type { SelectProps } from 'antd';
-import classnames from 'classnames';
 
 const { OptGroup, Option } = AntSelect;
 
@@ -9,19 +8,9 @@ const Select = (
     children?: React.ReactNode;
   },
 ) => {
-  const { popupClassName, className, ...nextProps } = props;
+  const { ...nextProps } = props;
 
-  return (
-    <AntSelect
-      size="small"
-      {...nextProps}
-      className={classnames('c-f-s', className)}
-      popupClassName={classnames(
-        popupClassName,
-        'design-config-select-dropdown',
-      )}
-    />
-  );
+  return <AntSelect size="small" {...nextProps} />;
 };
 
 const Wrapper: typeof Select & {

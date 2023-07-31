@@ -1,3 +1,10 @@
+import {
+  ExportOutlined,
+  FundOutlined,
+  ImportOutlined,
+  SendOutlined,
+} from '@ant-design/icons';
+import { PageHeader } from '@ant-design/pro-layout';
 import { Input, message } from 'antd';
 import classnames from 'classnames';
 import { useCallback, useMemo, useState } from 'react';
@@ -13,13 +20,6 @@ import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { staticExportData, staticLeadIn } from '@/utils/Assist/LeadInAndOutput';
 import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
 import { goPreview, goPreviewModel, goView } from '@/utils/tool';
-import {
-  ExportOutlined,
-  FundOutlined,
-  ImportOutlined,
-  SendOutlined,
-} from '@ant-design/icons';
-import { PageHeader } from '@ant-design/pro-layout';
 import ExchangeScreenFlagButton from '../ExchangeScreenFlag';
 import ActionList from './ActionList';
 import { mapDispatchToProps, mapStateToProps } from './connect';

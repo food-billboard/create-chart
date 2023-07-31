@@ -1,4 +1,9 @@
 import {
+  EyeOutlined,
+  EyeInvisibleOutlined,
+  CaretRightOutlined,
+} from '@ant-design/icons';
+import {
   Collapse as AntCollapse,
   CollapsePanelProps,
   CollapseProps,
@@ -6,11 +11,6 @@ import {
 import classnames from 'classnames';
 import type { ItemType } from 'rc-collapse/es/interface';
 import { ReactNode, useCallback, useMemo, Children, cloneElement } from 'react';
-import {
-  EyeOutlined,
-  EyeInvisibleOutlined,
-  CaretRightOutlined,
-} from '@ant-design/icons';
 import WrapperConfigList from '../Structure/ConfigList';
 import PlaceHolder from '../Structure/PlaceHolder';
 import Switch from '../Switch';
@@ -94,7 +94,6 @@ const Collapse = (props: TCollapseProps) => {
   return (
     <AntCollapse
       bordered={false}
-      // defaultActiveKey={['1']}
       expandIcon={({ isActive }) => (
         <CaretRightOutlined rotate={isActive ? 90 : 0} />
       )}

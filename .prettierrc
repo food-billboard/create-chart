@@ -4,7 +4,7 @@
   "printWidth": 80,
   "importOrder": [
     "<THIRD_PARTY_MODULES>",
-    "^@(.*)",
+    "^@/(.*)",
     "^[./]"
   ],
   "overrides": [

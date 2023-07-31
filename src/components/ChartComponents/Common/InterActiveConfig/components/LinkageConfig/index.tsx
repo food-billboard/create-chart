@@ -1,7 +1,8 @@
-import { useMemo, ReactNode, useCallback } from 'react';
+import { InfoCircleOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { Collapse, Checkbox } from 'antd';
 import { get } from 'lodash';
-import { InfoCircleOutlined, CaretRightOutlined } from '@ant-design/icons';
+import type { ItemType } from 'rc-collapse/es/interface';
+import { useMemo, ReactNode, useCallback } from 'react';
 import IconTooltip from '@/components/IconTooltip';
 import { getPath } from '@/utils/Assist/Component';
 import GlobalComponent from '@/utils/Assist/GlobalComponent';
@@ -90,40 +91,36 @@ const LinkageConfig = (props: {
   const { keys, domList } = useMemo(() => {
     return (linkageInteractive || []).reduce<{
       keys: string[];
-      domList: ReactNode[];
+      domList: ItemType[];
     }>(
       (acc, cur) => {
         const { type, name, show, value } = cur;
 
         acc.keys.push(type);
-
-        acc.domList.push(
-          <Panel
-            header={<PanelHeader value={cur} />}
-            key={type}
-            extra={
-              <Checkbox
-                className={
-                  baseStyles['design-config-interactive-base-checkbox']
-                }
-                checked={show}
-                onClick={(e) => e.stopPropagation()}
-                onChange={(e) => {
-                  const value = e.target.checked;
-                  onLinkageChange('show', name, value);
-                }}
-              >
-                <span onClick={(e) => e.stopPropagation()}>启用</span>
-              </Checkbox>
-            }
-          >
+        acc.domList.push({
+          key: type,
+          label: <PanelHeader value={cur} />,
+          extra: (
+            <Checkbox
+              className={baseStyles['design-config-interactive-base-checkbox']}
+              checked={show}
+              onClick={(e) => e.stopPropagation()}
+              onChange={(e) => {
+                const value = e.target.checked;
+                onLinkageChange('show', name, value);
+              }}
+            >
+              <span onClick={(e) => e.stopPropagation()}>启用</span>
+            </Checkbox>
+          ),
+          children: (
             <Textarea
               value={value}
               onChange={onLinkageChange.bind(null, 'value', name)}
               disabled={!show}
             />
-          </Panel>,
-        );
+          ),
+        });
 
         return acc;
       },
@@ -141,26 +138,29 @@ const LinkageConfig = (props: {
         expandIcon={Icon}
         bordered={false}
         className={baseStyles['design-config-interactive-base-collapse']}
-      >
-        <Panel
-          header={
-            <IconTooltip title='链接地址支持变量，使用"{{}}"包含变量'>
-              跳转交互
-              <InfoCircleOutlined className="m-l-4" />
-            </IconTooltip>
-          }
-          key="2"
-        >
-          <Collapse
-            defaultActiveKey={keys}
-            expandIcon={Icon}
-            bordered={false}
-            className={baseStyles['design-config-interactive-base-collapse']}
-          >
-            {domList}
-          </Collapse>
-        </Panel>
-      </Collapse>
+        items={[
+          {
+            label: (
+              <IconTooltip title='链接地址支持变量，使用"{{}}"包含变量'>
+                跳转交互
+                <InfoCircleOutlined className="m-l-4" />
+              </IconTooltip>
+            ),
+            key: '2',
+            children: (
+              <Collapse
+                defaultActiveKey={keys}
+                expandIcon={Icon}
+                bordered={false}
+                className={
+                  baseStyles['design-config-interactive-base-collapse']
+                }
+                items={domList}
+              />
+            ),
+          },
+        ]}
+      />
     </div>
   );
 };

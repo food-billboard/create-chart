@@ -1,21 +1,21 @@
-import { useState, useCallback, useMemo, useRef } from 'react';
-import { Button, Checkbox, Collapse, Badge, Space } from 'antd';
-import classnames from 'classnames';
-import { useHover } from 'ahooks';
 import {
   DeleteOutlined,
   CaretRightOutlined,
   HolderOutlined,
   QuestionCircleOutlined,
 } from '@ant-design/icons';
+import { useHover } from 'ahooks';
+import { Button, Checkbox, Collapse, Badge, Space } from 'antd';
+import classnames from 'classnames';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import { SortableHandle, SortableElement } from 'react-sortable-hoc';
 import CodeEditor from '@/components/CodeEditor';
-import ParamsSelect from '@/components/ParamsSelect';
 import IconTooltip from '@/components/IconTooltip';
+import ParamsSelect from '@/components/ParamsSelect';
 import FunctionHeader from '@/components/SyncCodeEditor/FunctionHeader';
 import { ComponentNumber } from '@/pages/Designer/components/LeftContent/components/CallbackManage';
-import StepDataButton from './StepData';
 import NameEditor from './NameEditor';
+import StepDataButton from './StepData';
 import styles from './index.less';
 
 export type TOnChangeType = (
@@ -26,8 +26,6 @@ export type TOnComponentChangeType = (
   action: 'delete' | 'update' | 'name-update',
   value: Partial<ComponentData.TComponentFilterConfig> & { id: string },
 ) => void;
-
-const { Panel } = Collapse;
 
 const DragHandle = SortableHandle(() => {
   return <HolderOutlined className="c-po" />;
@@ -218,51 +216,61 @@ const DataFilter = (props: {
       onChange={onPanelCloseChange}
       style={{ zIndex: 9999, opacity: 1, visibility: 'visible' }}
       {...nextProps}
-    >
-      <Panel
-        header={header}
-        key={id}
-        className={classnames({
-          [styles['design-config-data-filter-list-item-content']]:
-            !!updateFilter,
-        })}
-      >
-        <p className="m-t-4">
-          全局参数
-          <IconTooltip title="可响应式更新数据">
-            <QuestionCircleOutlined className="m-l-4" />
-          </IconTooltip>
-          {' ：'}
-        </p>
-        <div className="p-lr-8">
-          <ParamsSelect
-            value={updateFilter?.params ?? params}
-            onChange={onUpdateFilterChange.bind(null, 'params')}
-            wrapperClassName="m-t-4 m-b-8"
-          />
-        </div>
-        <FunctionHeader functionName="filter" />
-        <CodeEditor
-          language="javascript"
-          width={426}
-          height={180}
-          value={updateFilter?.code ?? code}
-          onChange={onUpdateFilterChange.bind(null, 'code')}
-        />
-        <p>{'}'}</p>
-        <div className={styles['design-config-data-filter-list-item-action']}>
-          <div>{updateFilter && <Badge status="warning" text="未保存" />}</div>
-          <div>
-            <Space>
-              <Button onClick={onCodeCancel}>{isTemp ? '取消' : '撤销'}</Button>
-              <Button type="primary" onClick={onConfirm}>
-                {isTemp ? '保存' : '完成'}
-              </Button>
-            </Space>
-          </div>
-        </div>
-      </Panel>
-    </Collapse>
+      items={[
+        {
+          key: id,
+          label: header,
+          className: classnames({
+            [styles['design-config-data-filter-list-item-content']]:
+              !!updateFilter,
+          }),
+          children: (
+            <>
+              <p className="m-t-4">
+                全局参数
+                <IconTooltip title="可响应式更新数据">
+                  <QuestionCircleOutlined className="m-l-4" />
+                </IconTooltip>
+                {' ：'}
+              </p>
+              <div className="p-lr-8">
+                <ParamsSelect
+                  value={updateFilter?.params ?? params}
+                  onChange={onUpdateFilterChange.bind(null, 'params')}
+                  wrapperClassName="m-t-4 m-b-8"
+                />
+              </div>
+              <FunctionHeader functionName="filter" />
+              <CodeEditor
+                language="javascript"
+                width={426}
+                height={180}
+                value={updateFilter?.code ?? code}
+                onChange={onUpdateFilterChange.bind(null, 'code')}
+              />
+              <p>{'}'}</p>
+              <div
+                className={styles['design-config-data-filter-list-item-action']}
+              >
+                <div>
+                  {updateFilter && <Badge status="warning" text="未保存" />}
+                </div>
+                <div>
+                  <Space>
+                    <Button onClick={onCodeCancel}>
+                      {isTemp ? '取消' : '撤销'}
+                    </Button>
+                    <Button type="primary" onClick={onConfirm}>
+                      {isTemp ? '保存' : '完成'}
+                    </Button>
+                  </Space>
+                </div>
+              </div>
+            </>
+          ),
+        },
+      ]}
+    />
   );
 };
 

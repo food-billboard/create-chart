@@ -1,3 +1,9 @@
+import { useUnmount } from 'ahooks';
+import { ConfigProvider, Modal } from 'antd';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { connect } from 'umi';
 import { isModelHash, useHashChangeReload, usePrimaryColor } from '@/hooks';
 import FetchScreenComponent, {
   FetchScreenComponentRef,
@@ -9,12 +15,6 @@ import {
 } from '@/services';
 import { closeWindow, getLocationQuery } from '@/utils';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import { useUnmount } from 'ahooks';
-import { ConfigProvider, Modal } from 'antd';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { connect } from 'umi';
 import Header from './components/Header';
 import LeftContent from './components/LeftContent';
 import PageLoading from './components/PageLoading';

@@ -1,11 +1,10 @@
-import { useCallback, useMemo } from 'react';
-import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import classnames from 'classnames';
+import { useCallback, useMemo } from 'react';
 import Select from '@/components/ChartComponents/Common/Select';
+import GhostButton from '@/components/GhostButton';
 import styles from './index.less';
-
-const { Option } = Select;
 
 const DataFilter = (props: {
   dataSource: ComponentData.TFilterConfig[];
@@ -56,7 +55,7 @@ const DataFilter = (props: {
         onClick={onClick}
         size="middle"
         type="default"
-        ghost
+        // ghost
         icon={<PlusOutlined />}
         disabled={!!btnDisabled}
       ></Button>

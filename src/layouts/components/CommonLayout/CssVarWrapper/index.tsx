@@ -10,9 +10,18 @@ const CssVarWrapper = (props: any) => {
   return (
     <ConfigProvider
       theme={{
+        components: {
+          Tabs: {
+            verticalItemPadding: '16px 0px',
+            titleFontSizeSM: 12,
+            verticalItemMargin: '0px',
+          },
+        },
         algorithm: theme.darkAlgorithm,
         token: {
           colorPrimary: primaryColor,
+          colorLink: primaryColor,
+          fontSize: 12,
         },
       }}
     >

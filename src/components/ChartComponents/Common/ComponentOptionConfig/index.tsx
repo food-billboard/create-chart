@@ -1,10 +1,8 @@
-import { ReactNode } from 'react';
-import { Tabs } from 'antd';
+import { Tabs, ConfigProvider } from 'antd';
 import type { TabsProps } from 'antd';
 import classnames from 'classnames';
+import { ReactNode } from 'react';
 import styles from './index.less';
-
-const { TabPane } = Tabs;
 
 // 组件的定制化配置的tabs
 
@@ -12,12 +10,22 @@ const ComponentOptionConfig = (props: { items?: TabsProps['items'] }) => {
   const { items = [] } = props;
 
   return (
-    <Tabs
-      tabPosition={'left'}
-      defaultActiveKey="0"
-      className={styles['design-config-default-tab']}
-      items={items}
-    />
+    <ConfigProvider
+      theme={{
+        components: {
+          Tabs: {
+            titleFontSizeSM: 12,
+          },
+        },
+      }}
+    >
+      <Tabs
+        tabPosition={'left'}
+        defaultActiveKey="0"
+        className={styles['design-config-default-tab']}
+        items={items}
+      />
+    </ConfigProvider>
   );
 };
 
