@@ -1,13 +1,15 @@
-import { Component } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { Component } from 'react';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import LocalUpload, {
+  MAX_FILE_SIZE,
+} from '@/components/ChartComponents/Common/LocalUpload';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { CompatColorSelect } from '@/components/ColorSelect';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import LocalUpload from '@/components/ChartComponents/Common/LocalUpload';
 import IconTooltip from '@/components/IconTooltip';
 import { TFullScreenConfig } from '../type';
 
@@ -43,7 +45,9 @@ class Config extends Component<
                 <Item
                   label="全屏显示"
                   placeholder={
-                    <IconTooltip title="尽量上传小一点的图片">
+                    <IconTooltip
+                      title={`尽量上传小一点的图片(${MAX_FILE_SIZE / 1024}KB)`}
+                    >
                       <InfoCircleOutlined />
                     </IconTooltip>
                   }
@@ -62,7 +66,9 @@ class Config extends Component<
                 <Item
                   label="退出全屏"
                   placeholder={
-                    <IconTooltip title="尽量上传小一点的图片">
+                    <IconTooltip
+                      title={`尽量上传小一点的图片(${MAX_FILE_SIZE / 1024}KB)`}
+                    >
                       <InfoCircleOutlined />
                     </IconTooltip>
                   }

@@ -1,20 +1,21 @@
-import { useCallback, useMemo } from 'react';
-import Select from '@/components/ChartComponents/Common/Select';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import { useCallback, useMemo } from 'react';
 import AngleSelect from '@/components/ChartComponents/Common/AngleSelect';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import LocalUpload, {
+  MAX_FILE_SIZE,
+} from '@/components/ChartComponents/Common/LocalUpload';
+import Select from '@/components/ChartComponents/Common/Select';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
+import { CompatColorSelect } from '@/components/ColorSelect';
 import IconTooltip from '@/components/IconTooltip';
-import LocalUpload from '@/components/ChartComponents/Common/LocalUpload';
 import { TPictorialBarBasicConfig } from '../type';
 
 const { Item } = ConfigList;
-const { Option } = Select;
 
 const SeriesConfig = (props: {
   value: TPictorialBarBasicConfig['series'];
@@ -91,7 +92,9 @@ const SeriesConfig = (props: {
         <Item
           label="图形"
           placeholder={
-            <IconTooltip title="尽量上传小一点的图片">
+            <IconTooltip
+              title={`尽量上传小一点的图片(${MAX_FILE_SIZE / 1024}KB)`}
+            >
               <InfoCircleOutlined />
             </IconTooltip>
           }

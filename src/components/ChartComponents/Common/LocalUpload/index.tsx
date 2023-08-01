@@ -1,10 +1,10 @@
-import { Component } from 'react';
-import { uniqueId } from 'lodash';
 import { Upload, Modal, message } from 'antd';
+import { uniqueId } from 'lodash';
+import { Component } from 'react';
 import { getBase64, UploadButton } from '@/components/ImageUpload';
 import styles from './index.less';
 
-const MAX_FILE_SIZE = 1021 * 5;
+export const MAX_FILE_SIZE = 1021 * 5;
 
 class LocalUpload extends Component<{
   value: string;
