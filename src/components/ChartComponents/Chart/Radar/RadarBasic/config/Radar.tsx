@@ -1,17 +1,17 @@
-import { useCallback, useMemo } from 'react';
 import { pick } from 'lodash';
-import Select from '@/components/ChartComponents/Common/Select';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import { useCallback, useMemo } from 'react';
 import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
-import { TRadarBasicConfig } from '../type';
+import Select from '@/components/ChartComponents/Common/Select';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import ColorSelect from '@/components/ColorSelect';
+import { TRadarBasicConfig } from '../type';
 
 const { Item } = ConfigList;
 
@@ -160,7 +160,7 @@ const RadarConfig = (props: {
       >
         <Item label="区域一颜色">
           <FullForm>
-            <CompatColorSelect
+            <ColorSelect
               value={splitArea.areaStyle.color[0]}
               onChange={(value) => {
                 onKeyChange('splitArea', {
@@ -174,7 +174,7 @@ const RadarConfig = (props: {
         </Item>
         <Item label="区域二颜色">
           <FullForm>
-            <CompatColorSelect
+            <ColorSelect
               value={splitArea.areaStyle.color[1]}
               onChange={(value) => {
                 onKeyChange('splitArea', {

@@ -1,20 +1,20 @@
-import { Component } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { Component } from 'react';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
-import Select from '@/components/ChartComponents/Common/Select';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import Input from '@/components/ChartComponents/Common/Input';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import CodeEditor from './components/CodeEditor';
-import IconTooltip from '@/components/IconTooltip';
+import Select from '@/components/ChartComponents/Common/Select';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
+import ColorSelect from '@/components/ColorSelect';
+import IconTooltip from '@/components/IconTooltip';
 import { TDatePickerConfig } from '../type';
+import CodeEditor from './components/CodeEditor';
 
 const { Item } = ConfigList;
 class Config extends Component<
@@ -69,7 +69,7 @@ class Config extends Component<
                 >
                   <Item label="边框颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={input.borderColor}
                         onChange={(value) => {
                           this.onKeyChange('input', {
@@ -81,7 +81,7 @@ class Config extends Component<
                   </Item>
                   <Item label="选中边框颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={input.activeBorderColor}
                         onChange={(value) => {
                           this.onKeyChange('input', {
@@ -157,7 +157,7 @@ class Config extends Component<
                   </Item>
                   <Item label="背景色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={dateAndTime.backgroundColor}
                         onChange={(value) => {
                           this.onKeyChange('dateAndTime', {
@@ -190,7 +190,7 @@ class Config extends Component<
                   >
                     <Item label="背景色">
                       <FullForm>
-                        <CompatColorSelect
+                        <ColorSelect
                           value={dateAndTime.prevAndNext.backgroundColor}
                           onChange={(value) => {
                             this.onKeyChange('dateAndTime', {
@@ -228,7 +228,7 @@ class Config extends Component<
                   >
                     <Item label="背景色">
                       <FullForm>
-                        <CompatColorSelect
+                        <ColorSelect
                           value={dateAndTime.hover.backgroundColor}
                           onChange={(value) => {
                             this.onKeyChange('dateAndTime', {
@@ -266,7 +266,7 @@ class Config extends Component<
                   >
                     <Item label="背景色">
                       <FullForm>
-                        <CompatColorSelect
+                        <ColorSelect
                           value={dateAndTime.active.backgroundColor}
                           onChange={(value) => {
                             this.onKeyChange('dateAndTime', {
@@ -304,7 +304,7 @@ class Config extends Component<
                   >
                     <Item label="背景色">
                       <FullForm>
-                        <CompatColorSelect
+                        <ColorSelect
                           value={dateAndTime.disabled.backgroundColor}
                           onChange={(value) => {
                             this.onKeyChange('dateAndTime', {
@@ -343,7 +343,7 @@ class Config extends Component<
                 >
                   <Item label="颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={arrow.color}
                         onChange={(value) =>
                           this.onKeyChange('arrow', {
@@ -355,7 +355,7 @@ class Config extends Component<
                   </Item>
                   <Item label="移入颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={arrow.active.color}
                         onChange={(value) =>
                           this.onKeyChange('arrow', {

@@ -1,15 +1,15 @@
 import { useCallback, useMemo } from 'react';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
-import ThemeUtil from '@/utils/Assist/Theme';
 import BoxShadowConfig from '@/components/ChartComponents/Common/BoxShadowConfig';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
+import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
+import ColorSelect from '@/components/ColorSelect';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { TScatterBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -71,7 +71,7 @@ const SeriesConfig = (props: {
             <>
               <Item label="颜色">
                 <FullForm>
-                  <CompatColorSelect
+                  <ColorSelect
                     value={color}
                     onChange={(value) => {
                       const newItemStyle = [...itemStyle];

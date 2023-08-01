@@ -1,16 +1,16 @@
-import { useCallback, useMemo } from 'react';
-import { Switch } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
-import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
+import { Switch } from 'antd';
+import { useCallback, useMemo } from 'react';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import IconTooltip from '@/components/IconTooltip';
-import KeyWordPosition from '@/components/ChartComponents/Common/KeyWordPosition';
-import { CompatColorSelect } from '@/components/ColorSelect';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
+import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import KeyWordPosition from '@/components/ChartComponents/Common/KeyWordPosition';
+import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
+import IconTooltip from '@/components/IconTooltip';
 import { TTreeMapBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -129,7 +129,7 @@ const SeriesConfig = (props: {
         }}
       >
         <Item label="背景颜色">
-          <CompatColorSelect
+          <ColorSelect
             value={breadcrumb.itemStyle.color}
             onChange={(value) => {
               onKeyChange('breadcrumb', {

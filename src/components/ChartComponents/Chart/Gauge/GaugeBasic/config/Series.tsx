@@ -1,17 +1,17 @@
-import { useCallback, useMemo } from 'react';
 import { Switch } from 'antd';
 import { pick } from 'lodash';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import { useCallback, useMemo } from 'react';
+import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
 import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
-import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import ColorSelect from '@/components/ColorSelect';
 import { TGaugeBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -87,7 +87,7 @@ const SeriesConfig = (props: {
         </Item>
         <Item label="颜色">
           <FullForm>
-            <CompatColorSelect
+            <ColorSelect
               value={axisLine.lineStyle.color}
               onChange={(value) => {
                 onKeyChange('axisLine', {
@@ -162,7 +162,7 @@ const SeriesConfig = (props: {
         </Item>
         <Item label="颜色">
           <FullForm>
-            <CompatColorSelect
+            <ColorSelect
               value={splitLine.color}
               onChange={(value) => {
                 onKeyChange('splitLine', {
@@ -423,7 +423,7 @@ const SeriesConfig = (props: {
         </Item>
         <Item label="颜色">
           <FullForm>
-            <CompatColorSelect
+            <ColorSelect
               value={pointer.itemStyle.color}
               onChange={(value) => {
                 onKeyChange('pointer', {

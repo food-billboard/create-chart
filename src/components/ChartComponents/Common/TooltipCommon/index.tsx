@@ -1,10 +1,10 @@
 import { ReactNode, useCallback, useMemo } from 'react';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import ConfigList from '../Structure/ConfigList';
+import ColorSelect from '@/components/ColorSelect';
 import { SingleCollapse as Collapse } from '../Collapse';
 import { FontConfigList } from '../FontConfig';
-import FullForm from '../Structure/FullForm';
 import FormatterSelect from '../FormatterSelect';
+import ConfigList from '../Structure/ConfigList';
+import FullForm from '../Structure/FullForm';
 
 const { Item } = ConfigList;
 
@@ -59,7 +59,7 @@ const TooltipConfig = (props: TooltipConfigProps) => {
     return (
       <Item label="背景颜色">
         <FullForm>
-          <CompatColorSelect
+          <ColorSelect
             defaultValue={backgroundColor}
             onChange={onKeyChange.bind(null, 'backgroundColor')}
           />

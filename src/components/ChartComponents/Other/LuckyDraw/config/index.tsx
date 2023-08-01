@@ -1,23 +1,23 @@
-import { Component } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { merge } from 'lodash';
-import Select from '@/components/ChartComponents/Common/Select';
+import { Component } from 'react';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import IconTooltip from '@/components/IconTooltip';
 import Input from '@/components/ChartComponents/Common/Input';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
+import Select from '@/components/ChartComponents/Common/Select';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
+import IconTooltip from '@/components/IconTooltip';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
-import ConditionConfig from './Condition';
 import { TLuckyDrawConfig } from '../type';
+import ConditionConfig from './Condition';
 
 const { Item } = ConfigList;
 
@@ -51,7 +51,7 @@ class Config extends Component<
               <ConfigList level={1}>
                 <Item label="背景色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={global.style.background}
                       onChange={(value) => {
                         this.onKeyChange('global', {
@@ -148,7 +148,7 @@ class Config extends Component<
                 </Item>
                 <Item label="颜色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={buttons.color}
                       onChange={(value) => {
                         this.onKeyChange('buttons', {
@@ -279,7 +279,7 @@ class Config extends Component<
                       <>
                         <Item label="背景色">
                           <FullForm>
-                            <CompatColorSelect
+                            <ColorSelect
                               value={background}
                               onChange={(value) => {
                                 const newData = [...prizes.config];

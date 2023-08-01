@@ -1,24 +1,24 @@
-import { Component } from 'react';
-import { Switch } from 'antd';
 import { FontSizeOutlined, RocketOutlined } from '@ant-design/icons';
+import { Switch } from 'antd';
+import { Component } from 'react';
+import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import IconRadio, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import Input from '@/components/ChartComponents/Common/Input';
-import ConditionConfig from './Condition';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import ColorSelect from '@/components/ColorSelect';
 import { TPaginationConfig } from '../type';
+import ConditionConfig from './Condition';
 
 const { Item } = ConfigList;
 class Config extends Component<
@@ -79,7 +79,7 @@ class Config extends Component<
                 </Item>
                 <Item label="背景颜色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={backgroundColor}
                       onChange={this.onKeyChange.bind(this, 'backgroundColor')}
                     />
@@ -114,7 +114,7 @@ class Config extends Component<
                 >
                   <Item label="背景颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={active.backgroundColor}
                         onChange={(value) =>
                           this.onKeyChange('active', {
@@ -241,7 +241,7 @@ class Config extends Component<
                   </Item>
                   <Item label="颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={pageButton.color}
                         onChange={(value) =>
                           this.onKeyChange('pageButton', {
@@ -253,7 +253,7 @@ class Config extends Component<
                   </Item>
                   <Item label="背景颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={pageButton.backgroundColor}
                         onChange={(value) =>
                           this.onKeyChange('pageButton', {
@@ -316,7 +316,7 @@ class Config extends Component<
                       />
                     </FullForm>
                     <FullForm label="颜色">
-                      <CompatColorSelect
+                      <ColorSelect
                         value={pageNumChanger.arrow.color}
                         onChange={(value) =>
                           this.onKeyChange('pageNumChanger', {

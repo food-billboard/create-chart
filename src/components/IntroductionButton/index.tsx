@@ -1,5 +1,3 @@
-import { useColorList } from '@/hooks';
-import { gotoBlog, gotoGithub, gotoOperation } from '@/utils/Assist/About';
 import {
   ContactsOutlined,
   GithubOutlined,
@@ -8,6 +6,8 @@ import {
 } from '@ant-design/icons';
 import { Action, Fab } from 'react-tiny-fab';
 import 'react-tiny-fab/dist/styles.css';
+import { useColorThemeList } from '@/hooks';
+import { gotoBlog, gotoGithub, gotoOperation } from '@/utils/Assist/About';
 import styles from './index.less';
 
 const commonStyle = {
@@ -18,7 +18,7 @@ const commonStyle = {
 };
 
 const IntroductionButton = () => {
-  const [primaryColor, subColor, thirdColor, forthColor] = useColorList();
+  const [primaryColor, subColor, thirdColor, forthColor] = useColorThemeList();
 
   return (
     <div className={styles['introduction-button']}>

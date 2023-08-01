@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from 'react';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
 import { TPercentPieConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -97,7 +97,7 @@ const LegendConfig = (props: {
             >
               <Item label="线条">
                 <FullForm>
-                  <CompatColorSelect
+                  <ColorSelect
                     value={item.line}
                     onChange={(value) => {
                       const newColor = [...color];
@@ -112,7 +112,7 @@ const LegendConfig = (props: {
               </Item>
               <Item label="圆点">
                 <FullForm>
-                  <CompatColorSelect
+                  <ColorSelect
                     value={item.point}
                     onChange={(value) => {
                       const newColor = [...color];

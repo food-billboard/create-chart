@@ -1,29 +1,29 @@
-import { Component } from 'react';
 import {
   InfoCircleOutlined,
   BorderLeftOutlined,
   BorderRightOutlined,
 } from '@ant-design/icons';
 import { merge } from 'lodash';
+import { Component } from 'react';
+import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import RadioGroup, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
 import IconTooltip from '@/components/IconTooltip';
-import ThemeUtil from '@/utils/Assist/Theme';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
-import ConditionConfig from './Condition';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { TTagConfig } from '../type';
+import ConditionConfig from './Condition';
 
 const { Item } = ConfigList;
 
@@ -157,7 +157,7 @@ class Config extends Component<ComponentData.ComponentConfigProps<TTagConfig>> {
                           }
                         >
                           <FullForm>
-                            <CompatColorSelect
+                            <ColorSelect
                               value={color}
                               onChange={(value) => {
                                 const newData = [...series];

@@ -1,25 +1,25 @@
-import { Component } from 'react';
 import {
   InfoCircleOutlined,
   BorderLeftOutlined,
   BorderRightOutlined,
 } from '@ant-design/icons';
+import { Component } from 'react';
+import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import IconTooltip from '@/components/IconTooltip';
-import Input from '@/components/ChartComponents/Common/Input';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
-import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
 import RadioGroup, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
+import Input from '@/components/ChartComponents/Common/Input';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import ColorSelect from '@/components/ColorSelect';
+import IconTooltip from '@/components/IconTooltip';
 import { TTimeMachineConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -117,7 +117,7 @@ class Config extends Component<
                   </Item>
                   <Item label="颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={icon.color}
                         onChange={(value) => {
                           this.onKeyChange('icon', {

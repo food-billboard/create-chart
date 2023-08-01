@@ -1,19 +1,19 @@
-import { useCallback, useMemo } from 'react';
 import { Select } from 'antd';
 import { merge } from 'lodash';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
+import { useCallback, useMemo } from 'react';
 import AngleSelect from '@/components/ChartComponents/Common/AngleSelect';
-import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
-import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
-import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
 import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
+import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
+import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
+import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
+import ColorSelect from '@/components/ColorSelect';
 import {
   TCandlestickBasicConfig,
   markPointTypeConfig,
@@ -61,7 +61,7 @@ const SeriesConfig = (props: {
         >
           <Item label="背景颜色">
             <FullForm>
-              <CompatColorSelect
+              <ColorSelect
                 value={itemStyle.color}
                 onChange={(value) => {
                   onKeyChange('itemStyle', {
@@ -73,7 +73,7 @@ const SeriesConfig = (props: {
           </Item>
           <Item label="边框颜色">
             <FullForm>
-              <CompatColorSelect
+              <ColorSelect
                 value={itemStyle.borderColor}
                 onChange={(value) => {
                   onKeyChange('itemStyle', {
@@ -92,7 +92,7 @@ const SeriesConfig = (props: {
         >
           <Item label="背景颜色">
             <FullForm>
-              <CompatColorSelect
+              <ColorSelect
                 value={itemStyle.color0}
                 onChange={(value) => {
                   onKeyChange('itemStyle', {
@@ -104,7 +104,7 @@ const SeriesConfig = (props: {
           </Item>
           <Item label="边框颜色">
             <FullForm>
-              <CompatColorSelect
+              <ColorSelect
                 value={itemStyle.borderColor0}
                 onChange={(value) => {
                   onKeyChange('itemStyle', {
@@ -218,7 +218,7 @@ const SeriesConfig = (props: {
             />
             <Item label="标注颜色">
               <FullForm>
-                <CompatColorSelect
+                <ColorSelect
                   value={value.itemStyle.color}
                   onChange={(value) => {
                     onChange({

@@ -1,14 +1,14 @@
-import { Component } from 'react';
 import { Switch } from 'antd';
+import { Component } from 'react';
+import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
+import ColorSelect from '@/components/ColorSelect';
 import { TRateConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -56,7 +56,7 @@ class Config extends Component<
               <ConfigList level={1}>
                 <Item label="分数颜色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={rateBackgroundColor}
                       onChange={this.onKeyChange.bind(
                         this,
@@ -67,7 +67,7 @@ class Config extends Component<
                 </Item>
                 <Item label="背景色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={backgroundColor}
                       onChange={this.onKeyChange.bind(this, 'backgroundColor')}
                     />

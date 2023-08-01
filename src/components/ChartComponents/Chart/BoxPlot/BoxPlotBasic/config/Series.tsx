@@ -1,12 +1,12 @@
 import { useCallback, useMemo } from 'react';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
-import ThemeUtil from '@/utils/Assist/Theme';
+import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
+import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { TBoxPlotBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -60,7 +60,7 @@ const SeriesConfig = (props: {
             <>
               <Item label="颜色">
                 <FullForm>
-                  <CompatColorSelect
+                  <ColorSelect
                     value={color}
                     onChange={(value) => {
                       const newItemStyle = [...itemStyle];

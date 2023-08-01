@@ -1,8 +1,8 @@
 import { ReactNode, useCallback, useMemo } from 'react';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import ColorSelect from '@/components/ColorSelect';
+import InputNumber from '../InputNumber';
 import ConfigList from '../Structure/ConfigList';
 import FullForm from '../Structure/FullForm';
-import InputNumber from '../InputNumber';
 import HalfForm from '../Structure/HalfForm';
 
 const { Item } = ConfigList;
@@ -50,7 +50,7 @@ const ShadowConfig = (props: ShadowConfigProps) => {
     return (
       <Item label="颜色">
         <FullForm>
-          <CompatColorSelect
+          <ColorSelect
             value={shadowColor}
             onChange={onKeyChange.bind(null, 'shadowColor')}
           />

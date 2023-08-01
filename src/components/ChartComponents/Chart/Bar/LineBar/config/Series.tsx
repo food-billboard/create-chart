@@ -1,16 +1,16 @@
-import { useCallback, useMemo } from 'react';
 import { Switch } from 'antd';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
-import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
+import { useCallback, useMemo } from 'react';
 import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradientSelect';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import ThemeUtil from '@/utils/Assist/Theme';
+import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
 import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
+import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { DEFAULT_RADIAL_CONFIG } from '../../../../Common/Constants/defaultConfig';
 import { TLineBarConfig } from '../type';
 
@@ -97,7 +97,7 @@ const SeriesConfig = (props: {
               >
                 <Item label="线条颜色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={line.color}
                       onChange={(value) => {
                         const newItemStyle = [...itemStyle];

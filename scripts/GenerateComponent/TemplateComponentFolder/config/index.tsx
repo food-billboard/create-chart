@@ -4,7 +4,7 @@ import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import ColorSelect from '@/components/ColorSelect';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import IconTooltip from '@/components/IconTooltip';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
@@ -58,7 +58,7 @@ class Config extends Component<
                   label="颜色配置"
                 >
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={color}
                       onChange={this.onKeyChange.bind(null, 'color')}
                     />

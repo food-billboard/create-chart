@@ -1,9 +1,9 @@
-import { useCallback } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { useCallback } from 'react';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
 import IconTooltip from '@/components/IconTooltip';
-import { CompatColorSelect } from '@/components/ColorSelect';
 import { useLocalStorage, useGlobalLoading } from '@/hooks';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
 
@@ -39,7 +39,7 @@ const BackgroundConfig = () => {
       }
     >
       <FullForm>
-        <CompatColorSelect value={value} onChange={onChange} />
+        <ColorSelect value={value} onChange={onChange} />
       </FullForm>
     </Item>
   );

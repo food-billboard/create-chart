@@ -1,16 +1,16 @@
-import { useCallback, useMemo } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import IconTooltip from '@/components/IconTooltip';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
+import { useCallback, useMemo } from 'react';
 import AngleSelect from '@/components/ChartComponents/Common/AngleSelect';
-import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
+import BarCarouselConfig from '@/components/ChartComponents/Common/BarCarouselConfig';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import { InputNumber as AutoInputNumber } from '@/components/ChartComponents/Common/NumberPositionConfig';
-import BarCarouselConfig from '@/components/ChartComponents/Common/BarCarouselConfig';
+import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
+import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
+import IconTooltip from '@/components/IconTooltip';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TBarBasicConfig } from '../type';
 
@@ -59,7 +59,7 @@ const SeriesConfig = (props: {
       >
         <Item label="颜色">
           <FullForm>
-            <CompatColorSelect
+            <ColorSelect
               defaultValue={backgroundStyle.color}
               onChange={(value) => {
                 onKeyChange('backgroundStyle', {

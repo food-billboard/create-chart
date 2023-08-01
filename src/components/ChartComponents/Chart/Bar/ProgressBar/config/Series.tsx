@@ -1,13 +1,13 @@
 import { useCallback, useMemo } from 'react';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradientSelect';
-import { TProgressBarConfig } from '../type';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
+import { TProgressBarConfig } from '../type';
 
 const { Item } = ConfigList;
 
@@ -49,7 +49,7 @@ const SeriesConfig = (props: {
       >
         <Item label="颜色">
           <FullForm>
-            <CompatColorSelect
+            <ColorSelect
               defaultValue={backgroundStyle.color}
               onChange={(value) => {
                 onKeyChange('backgroundStyle', {

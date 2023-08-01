@@ -1,16 +1,16 @@
 import { Component } from 'react';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import Input from '@/components/ChartComponents/Common/Input';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
+import ColorSelect from '@/components/ColorSelect';
 import { TSelectConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -79,7 +79,7 @@ class Config extends Component<
                   </Collapse>
                   <Item label="背景颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={active.backgroundColor}
                         onChange={(value) => {
                           this.onKeyChange('active', {
@@ -144,7 +144,7 @@ class Config extends Component<
                   </Item>
                   <Item label="颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={indicator.color}
                         onChange={(value) => {
                           this.onKeyChange('indicator', {
@@ -186,7 +186,7 @@ class Config extends Component<
                   </Collapse>
                   <Item label="背景颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={activeSelect.backgroundColor}
                         onChange={(value) => {
                           this.onKeyChange('activeSelect', {
@@ -219,7 +219,7 @@ class Config extends Component<
                     />
                     <Item label="背景颜色">
                       <FullForm>
-                        <CompatColorSelect
+                        <ColorSelect
                           value={base.backgroundColor}
                           onChange={(value) => {
                             this.onKeyChange('base', {
@@ -262,7 +262,7 @@ class Config extends Component<
                   </Collapse>
                   <Item label="背景颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={baseHover.backgroundColor}
                         onChange={(value) => {
                           this.onKeyChange('baseHover', {
@@ -296,7 +296,7 @@ class Config extends Component<
                   </Collapse>
                   <Item label="背景颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={activeHover.backgroundColor}
                         onChange={(value) => {
                           this.onKeyChange('activeHover', {
@@ -330,7 +330,7 @@ class Config extends Component<
                 </Item>
                 <Item label="背景颜色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={menu.backgroundColor}
                       onChange={(value) => {
                         this.onKeyChange('menu', {

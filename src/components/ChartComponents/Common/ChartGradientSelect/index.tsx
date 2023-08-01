@@ -1,15 +1,15 @@
-import { useCallback } from 'react';
-import { Radio } from 'antd';
-import { useControllableValue } from 'ahooks';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { useControllableValue } from 'ahooks';
+import { Radio } from 'antd';
 import { merge } from 'lodash';
+import { useCallback } from 'react';
+import ColorSelect from '@/components/ColorSelect';
 import IconTooltip from '@/components/IconTooltip';
-import { CompatColorSelect } from '@/components/ColorSelect';
 import { DEFAULT_GRADIENT_COLOR } from '@/utils/constants';
-import ConfigList from '../Structure/ConfigList';
-import HalfForm from '../Structure/HalfForm';
-import FullForm from '../Structure/FullForm';
 import InputNumber from '../InputNumber';
+import ConfigList from '../Structure/ConfigList';
+import FullForm from '../Structure/FullForm';
+import HalfForm from '../Structure/HalfForm';
 
 const { Item } = ConfigList;
 
@@ -67,18 +67,12 @@ const ChartGradientSelect = (props: {
       </Item>
       <Item label="起始颜色" labelProps={labelProps}>
         <FullForm>
-          <CompatColorSelect
-            value={start}
-            onChange={onChange.bind(null, 'start')}
-          />
+          <ColorSelect value={start} onChange={onChange.bind(null, 'start')} />
         </FullForm>
       </Item>
       <Item label="结束颜色" labelProps={labelProps}>
         <FullForm>
-          <CompatColorSelect
-            value={end}
-            onChange={onChange.bind(null, 'end')}
-          />
+          <ColorSelect value={end} onChange={onChange.bind(null, 'end')} />
         </FullForm>
       </Item>
       {type === 'linear' && (

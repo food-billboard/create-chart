@@ -1,11 +1,11 @@
 import { Component } from 'react';
+import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
 import { TIconConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -43,7 +43,7 @@ class Config extends Component<
                 />
                 <Item label="颜色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={color}
                       onChange={this.onKeyChange.bind(this, 'color')}
                     />

@@ -1,16 +1,16 @@
 import { useCallback, useMemo } from 'react';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
-import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
-import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
+import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
+import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
+import ColorSelect from '@/components/ColorSelect';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { CompatColorSelect } from '@/components/ColorSelect';
 import { TRadarBasicConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -122,7 +122,7 @@ const SeriesConfig = (props: {
               />
               <Item label="拐点颜色">
                 <FullForm>
-                  <CompatColorSelect
+                  <ColorSelect
                     value={targetItemStyleColor}
                     onChange={(value) => {
                       const newItemColorStyle = [...itemStyle.color];
@@ -145,7 +145,7 @@ const SeriesConfig = (props: {
               </Item>
               <Item label="区域颜色">
                 <FullForm>
-                  <CompatColorSelect
+                  <ColorSelect
                     value={targetAreaStyleColor}
                     onChange={(value) => {
                       const newAreaColorStyle = [...areaStyle.color];

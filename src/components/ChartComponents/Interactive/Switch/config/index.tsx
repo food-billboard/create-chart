@@ -1,17 +1,17 @@
-import { Component } from 'react';
 import { Switch } from 'antd';
+import { Component } from 'react';
+import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
+import BoxShadowConfig from '@/components/ChartComponents/Common/BoxShadowConfig';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
+import Input from '@/components/ChartComponents/Common/Input';
 import Select from '@/components/ChartComponents/Common/Select';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import Input from '@/components/ChartComponents/Common/Input';
-import BoxShadowConfig from '@/components/ChartComponents/Common/BoxShadowConfig';
 import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
+import ColorSelect from '@/components/ColorSelect';
 import { TSwitchConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -68,7 +68,7 @@ class Config extends Component<
                 >
                   <Item label="背景色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={onColor}
                         ignoreAlpha
                         onChange={this.onKeyChange.bind(this, 'onColor')}
@@ -77,7 +77,7 @@ class Config extends Component<
                   </Item>
                   <Item label="按钮颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={onHandleColor}
                         ignoreAlpha
                         onChange={this.onKeyChange.bind(this, 'onHandleColor')}
@@ -146,7 +146,7 @@ class Config extends Component<
                     )}
                     <Item label="颜色">
                       <FullForm>
-                        <CompatColorSelect
+                        <ColorSelect
                           value={checkedIcon.color}
                           onChange={(value) => {
                             this.onKeyChange('checkedIcon', {
@@ -169,7 +169,7 @@ class Config extends Component<
                 >
                   <Item label="背景色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={offColor}
                         ignoreAlpha
                         onChange={this.onKeyChange.bind(this, 'offColor')}
@@ -178,7 +178,7 @@ class Config extends Component<
                   </Item>
                   <Item label="按钮颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={offHandleColor}
                         ignoreAlpha
                         onChange={this.onKeyChange.bind(this, 'offHandleColor')}
@@ -247,7 +247,7 @@ class Config extends Component<
                     )}
                     <Item label="颜色">
                       <FullForm>
-                        <CompatColorSelect
+                        <ColorSelect
                           value={uncheckedIcon.color}
                           onChange={(value) => {
                             this.onKeyChange('uncheckedIcon', {

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import ColorSelect from '@/components/ColorSelect';
 import { TAli3DMapConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -32,7 +32,7 @@ const SeriesConfig = (props: {
     <ConfigList>
       <Item label="样式">
         <FullForm>
-          <CompatColorSelect
+          <ColorSelect
             className="w-100"
             value={color}
             onChange={onKeyChange.bind(null, 'color')}

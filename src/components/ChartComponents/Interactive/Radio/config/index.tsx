@@ -1,15 +1,15 @@
 import { Component } from 'react';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import Input from '@/components/ChartComponents/Common/Input';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
+import Input from '@/components/ChartComponents/Common/Input';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
+import ColorSelect from '@/components/ColorSelect';
 import { TRadioConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -55,7 +55,7 @@ class Config extends Component<
               <ConfigList level={1}>
                 <Item label="边框颜色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={borderColor}
                       onChange={this.onKeyChange.bind(this, 'borderColor')}
                     />
@@ -63,7 +63,7 @@ class Config extends Component<
                 </Item>
                 <Item label="背景色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={backgroundColor}
                       onChange={this.onKeyChange.bind(this, 'backgroundColor')}
                     />
@@ -96,7 +96,7 @@ class Config extends Component<
                 >
                   <Item label="边框颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={active.borderColor}
                         onChange={(value) =>
                           this.onKeyChange('active', {
@@ -108,7 +108,7 @@ class Config extends Component<
                   </Item>
                   <Item label="背景颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={active.backgroundColor}
                         onChange={(value) =>
                           this.onKeyChange('active', {
@@ -120,7 +120,7 @@ class Config extends Component<
                   </Item>
                   <Item label="符号颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={check.color}
                         onChange={(value) =>
                           this.onKeyChange('check', {

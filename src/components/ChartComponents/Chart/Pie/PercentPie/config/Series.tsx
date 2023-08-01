@@ -1,10 +1,10 @@
 import { useCallback, useMemo } from 'react';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import ColorSelect from '@/components/ColorSelect';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TPercentPieConfig } from '../type';
 
@@ -115,7 +115,7 @@ const SeriesConfig = (props: {
     return (
       <Item label="背景色">
         <FullForm>
-          <CompatColorSelect
+          <ColorSelect
             value={backgroundColor}
             onChange={onKeyChange.bind(null, 'backgroundColor')}
           />

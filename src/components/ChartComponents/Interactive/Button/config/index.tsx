@@ -1,16 +1,16 @@
-import { Component } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { Component } from 'react';
+import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
+import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import Select from '@/components/ChartComponents/Common/Select';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import ColorSelect from '@/components/ColorSelect';
 import IconTooltip from '@/components/IconTooltip';
 import { TButtonConfig } from '../type';
 
@@ -71,7 +71,7 @@ class Config extends Component<
                 </Item>
                 <Item label="背景色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={backgroundColor}
                       onChange={this.onKeyChange.bind(this, 'backgroundColor')}
                     />

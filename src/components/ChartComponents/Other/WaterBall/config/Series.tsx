@@ -1,13 +1,13 @@
-import { useCallback, useMemo } from 'react';
 import { Switch } from 'antd';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradientSelect';
+import { useCallback, useMemo } from 'react';
 import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradientSelect';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
 import { TWaterBallConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -61,7 +61,7 @@ const SeriesConfig = (props: {
     return (
       <Item label="背景色">
         <FullForm>
-          <CompatColorSelect
+          <ColorSelect
             value={backgroundStyle.color}
             onChange={(value) =>
               onKeyChange('backgroundStyle', {

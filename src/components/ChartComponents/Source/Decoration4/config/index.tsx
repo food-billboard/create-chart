@@ -1,12 +1,12 @@
-import { Component } from 'react';
 import { Switch } from 'antd';
+import { Component } from 'react';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
+import InputNumbr from '@/components/ChartComponents/Common/InputNumber';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import InputNumbr from '@/components/ChartComponents/Common/InputNumber';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import ColorSelect from '@/components/ColorSelect';
 import { TDecoration4Config } from '../type';
 
 const { Item } = ConfigList;
@@ -40,7 +40,7 @@ class Config extends Component<
               <ConfigList level={1}>
                 <Item label="颜色">
                   <FullForm label="主色调">
-                    <CompatColorSelect
+                    <ColorSelect
                       value={color[0]}
                       onChange={(value) =>
                         this.onKeyChange('color', [value, color[1]])
@@ -48,7 +48,7 @@ class Config extends Component<
                     />
                   </FullForm>
                   <FullForm label="副色调">
-                    <CompatColorSelect
+                    <ColorSelect
                       value={color[1]}
                       onChange={(value) =>
                         this.onKeyChange('color', [color[0], value])

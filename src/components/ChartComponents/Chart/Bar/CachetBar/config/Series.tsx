@@ -1,11 +1,11 @@
 import { useCallback, useMemo } from 'react';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
 import { SimpleHueRadialSelect } from '@/components/ChartComponents/Common/SimpleHueSelect';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TCachetBarConfig } from '../type';
 
@@ -43,7 +43,7 @@ const SeriesConfig = (props: {
       >
         <Item label="背景色">
           <FullForm>
-            <CompatColorSelect
+            <ColorSelect
               defaultValue={backgroundStyle.backgroundColor}
               onChange={(value) => {
                 onKeyChange('backgroundStyle', {
@@ -55,7 +55,7 @@ const SeriesConfig = (props: {
         </Item>
         <Item label="边框色">
           <FullForm>
-            <CompatColorSelect
+            <ColorSelect
               defaultValue={backgroundStyle.borderColor}
               onChange={(value) => {
                 onKeyChange('backgroundStyle', {

@@ -1,10 +1,10 @@
-import { useCallback } from 'react';
-import { Slider, Row, Col } from 'antd';
 import { useControllableValue } from 'ahooks';
-import { merge } from 'lodash';
+import { Slider, Row, Col } from 'antd';
 import classnames from 'classnames';
-import ColorSelect, { CompatColorSelect } from '../ColorSelect';
+import { merge } from 'lodash';
+import { useCallback } from 'react';
 import { DEFAULT_GRADIENT_COLOR } from '@/utils/constants';
+import ColorSelect from '../ColorSelect';
 import styles from './index.less';
 
 const ColorGradientSelect = (props: {
@@ -56,14 +56,11 @@ const ColorGradientSelect = (props: {
           ></div>
         </Col>
         <Col span={20} className="dis-flex-column-between">
-          <CompatColorSelect
+          <ColorSelect
             value={start}
             onChange={onColorChange.bind(null, 'start')}
           />
-          <CompatColorSelect
-            value={end}
-            onChange={onColorChange.bind(null, 'end')}
-          />
+          <ColorSelect value={end} onChange={onColorChange.bind(null, 'end')} />
         </Col>
         <Col span={24}>
           <Slider

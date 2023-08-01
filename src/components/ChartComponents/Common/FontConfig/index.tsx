@@ -1,6 +1,6 @@
 import { useControllableValue } from 'ahooks';
 import { useCallback, useMemo, ReactNode } from 'react';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import ColorSelect from '@/components/ColorSelect';
 import InputNumber from '../InputNumber';
 import Select from '../Select';
 import ConfigList, { TConfigListItemProps } from '../Structure/ConfigList';
@@ -165,7 +165,7 @@ const FontConfig = (props: {
     if (ignore?.includes('color')) return null;
     return (
       <HalfForm label="颜色">
-        <CompatColorSelect
+        <ColorSelect
           defaultValue={color}
           onChange={onChange.bind(null, 'color')}
         />
@@ -289,7 +289,7 @@ export const FontConfigList = (props: {
     return (
       <Item label="颜色" labelProps={labelProps}>
         <FullForm>
-          <CompatColorSelect
+          <ColorSelect
             defaultValue={color}
             onChange={onChange.bind(null, 'color')}
           />

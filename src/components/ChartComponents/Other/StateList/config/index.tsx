@@ -1,19 +1,19 @@
-import { Component } from 'react';
 import { merge } from 'lodash';
+import { Component } from 'react';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import { CompatColorSelect } from '@/components/ColorSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import TextAlignConfig from '@/components/ChartComponents/Common/TextAlignConfig';
-import ThemeUtil from '@/utils/Assist/Theme';
+import ColorSelect from '@/components/ColorSelect';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { TStateListConfig } from '../type';
 import ConditionConfig from './Condition';
 
@@ -149,7 +149,7 @@ class Config extends Component<
                       <>
                         <Item label="背景颜色">
                           <FullForm>
-                            <CompatColorSelect
+                            <ColorSelect
                               value={backgroundColor}
                               onChange={(value) => {
                                 const newData = [...stateList];

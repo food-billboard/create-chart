@@ -1,27 +1,27 @@
-import { Component } from 'react';
-import { Switch } from 'antd';
-import type { UploadFile } from 'antd/es/upload/interface';
 import {
   InfoCircleOutlined,
   PictureOutlined,
   BgColorsOutlined,
 } from '@ant-design/icons';
+import { Switch } from 'antd';
+import type { UploadFile } from 'antd/es/upload/interface';
+import { Component } from 'react';
+import ClipPathSelect from '@/components/ChartComponents/Common/ClipPathSelect';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import ColorSelect, { CompatColorSelect } from '@/components/ColorSelect';
-import IconTooltip from '@/components/IconTooltip';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import RadioGroup, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
-import ImageUpload from '@/components/ImageUpload';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
-import ClipPathSelect from '@/components/ChartComponents/Common/ClipPathSelect';
+import ColorSelect from '@/components/ColorSelect';
+import IconTooltip from '@/components/IconTooltip';
+import ImageUpload from '@/components/ImageUpload';
 import ThemeUtil from '@/utils/Assist/Theme';
-import ConditionConfig from './Condition';
 import { TImageConfig } from '../type';
+import ConditionConfig from './Condition';
 
 const { Item } = ConfigList;
 
@@ -145,7 +145,7 @@ class Config extends Component<
                 >
                   <FullForm>
                     {type === 'color' && (
-                      <CompatColorSelect
+                      <ColorSelect
                         value={content as ComponentData.TColorConfig}
                         onChange={this.onContentChange}
                       />

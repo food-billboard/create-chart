@@ -1,22 +1,22 @@
-import { Component } from 'react';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { Tabs, Switch } from 'antd';
 import { merge } from 'lodash';
-import { InfoCircleOutlined } from '@ant-design/icons';
-import Select from '@/components/ChartComponents/Common/Select';
+import { Component } from 'react';
+import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
-import IconTooltip from '@/components/IconTooltip';
+import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
+import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
+import Select from '@/components/ChartComponents/Common/Select';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import TextAlignConfig from '@/components/ChartComponents/Common/TextAlignConfig';
-import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
-import { TWeatherConfig } from '../type';
+import ColorSelect from '@/components/ColorSelect';
+import IconTooltip from '@/components/IconTooltip';
 import { KEY_MAP } from '../defaultConfig';
+import { TWeatherConfig } from '../type';
 
 const { TabPane } = Tabs;
 const { Item } = ConfigList;
@@ -119,7 +119,7 @@ class Config extends Component<
                         <>
                           <Item label="颜色">
                             <FullForm>
-                              <CompatColorSelect
+                              <ColorSelect
                                 value={color}
                                 onChange={(value) => {
                                   const newData = [...widMap.value];

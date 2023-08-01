@@ -1,15 +1,15 @@
 import { useCallback, useMemo } from 'react';
-import Select from '@/components/ChartComponents/Common/Select';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import { SimpleHueRadialSelect } from '@/components/ChartComponents/Common/SimpleHueSelect';
-import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradientSelect';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import BarCarouselConfig from '@/components/ChartComponents/Common/BarCarouselConfig';
+import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradientSelect';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
+import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import Select from '@/components/ChartComponents/Common/Select';
+import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
+import { SimpleHueRadialSelect } from '@/components/ChartComponents/Common/SimpleHueSelect';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TRankBarConfig } from '../type';
 
@@ -54,7 +54,7 @@ const SeriesConfig = (props: {
       >
         <Item label="颜色">
           <FullForm>
-            <CompatColorSelect
+            <ColorSelect
               value={backgroundStyle.color}
               onChange={(value) => {
                 onKeyChange('backgroundStyle', {

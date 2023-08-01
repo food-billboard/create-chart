@@ -8,7 +8,7 @@ import ThemeUtil from '@/utils/Assist/Theme';
 
 const { getRgbaString } = ColorSelect;
 
-export const useColorList = () => {
+export const useColorThemeList = () => {
   const [colorList, setColorList] = useState<string[]>([
     '#4ea397',
     '#22c3aa',

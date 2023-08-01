@@ -11,7 +11,7 @@ import Select from '@/components/ChartComponents/Common/Select';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import ColorSelect from '@/components/ColorSelect';
 import IconTooltip from '@/components/IconTooltip';
 import { TPictorialBarBasicConfig } from '../type';
 
@@ -65,7 +65,7 @@ const SeriesConfig = (props: {
     return (
       <Item label="图形颜色">
         <FullForm>
-          <CompatColorSelect
+          <ColorSelect
             value={symbolColor}
             onChange={onKeyChange.bind(null, 'symbolColor')}
           />

@@ -1,13 +1,13 @@
-import { useCallback, useMemo } from 'react';
 import { pick } from 'lodash';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import { useCallback, useMemo } from 'react';
 import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
 import ChartGradientSelect from '@/components/ChartComponents/Common/ChartGradientSelect';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import ShadowConfig from '@/components/ChartComponents/Common/ShadowConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
 import { TScatterMapConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -79,7 +79,7 @@ const GeoConfig = (props: {
               />
             </FullForm>
             <FullForm label="颜色">
-              <CompatColorSelect
+              <ColorSelect
                 value={itemStyle.normal.borderColor}
                 onChange={(value) => {
                   onKeyChange('itemStyle', {
@@ -149,7 +149,7 @@ const GeoConfig = (props: {
               />
             </FullForm>
             <FullForm label="颜色">
-              <CompatColorSelect
+              <ColorSelect
                 value={itemStyle.emphasis.borderColor}
                 onChange={(value) => {
                   onKeyChange('itemStyle', {

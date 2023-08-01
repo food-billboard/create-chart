@@ -1,5 +1,5 @@
-import { Component } from 'react';
 import { Switch } from 'antd';
+import { Component } from 'react';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
@@ -7,7 +7,7 @@ import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import ColorSelect from '@/components/ColorSelect';
 import { TTicketConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -41,7 +41,7 @@ class Config extends Component<
               <ConfigList level={1}>
                 <Item label="背景颜色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={color}
                       onChange={this.onKeyChange.bind(this, 'color')}
                     />
@@ -74,7 +74,7 @@ class Config extends Component<
                   </FullForm>
                   {dashed.show && (
                     <FullForm label="颜色">
-                      <CompatColorSelect
+                      <ColorSelect
                         value={dashed.color}
                         onChange={(value) =>
                           this.onKeyChange('dashed', {

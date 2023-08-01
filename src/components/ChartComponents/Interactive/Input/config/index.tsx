@@ -1,16 +1,16 @@
 import { Component } from 'react';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import Input from '@/components/ChartComponents/Common/Input';
 import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
+import Input from '@/components/ChartComponents/Common/Input';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { updateInteractiveAndSyncParams4Component } from '@/components/ChartComponents/Common/utils';
+import ColorSelect from '@/components/ColorSelect';
 import { TInputConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -66,7 +66,7 @@ class Config extends Component<
                 />
                 <Item label="背景色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={backgroundColor}
                       onChange={this.onKeyChange.bind(this, 'backgroundColor')}
                     />
@@ -127,7 +127,7 @@ class Config extends Component<
                   </Item>
                   <Item label="颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={placeholder.color}
                         onChange={(value) =>
                           this.onKeyChange('placeholder', {
@@ -176,7 +176,7 @@ class Config extends Component<
                   </Item>
                   <Item label="背景颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={search.backgroundColor}
                         onChange={(value) =>
                           this.onKeyChange('search', {

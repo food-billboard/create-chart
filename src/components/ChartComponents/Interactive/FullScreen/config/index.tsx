@@ -9,7 +9,7 @@ import LocalUpload, {
 } from '@/components/ChartComponents/Common/LocalUpload';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { CompatColorSelect } from '@/components/ColorSelect';
+import ColorSelect from '@/components/ColorSelect';
 import IconTooltip from '@/components/IconTooltip';
 import { TFullScreenConfig } from '../type';
 
@@ -86,7 +86,7 @@ class Config extends Component<
                 </Item>
                 <Item label="背景色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={backgroundColor}
                       onChange={this.onKeyChange.bind(this, 'backgroundColor')}
                     />

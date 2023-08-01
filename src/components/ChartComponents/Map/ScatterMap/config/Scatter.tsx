@@ -1,15 +1,15 @@
-import { useCallback, useMemo } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import Select from '@/components/ChartComponents/Common/Select';
-import IconTooltip from '@/components/IconTooltip';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import { useCallback, useMemo } from 'react';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
-import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import Select from '@/components/ChartComponents/Common/Select';
+import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import SymbolSelect from '@/components/ChartComponents/Common/SymbolSelect';
+import ColorSelect from '@/components/ColorSelect';
+import IconTooltip from '@/components/IconTooltip';
 import { TScatterMapConfig } from '../type';
 
 const { Item } = ConfigList;
@@ -67,7 +67,7 @@ const SeriesConfig = (props: {
       >
         <Item label="颜色">
           <FullForm>
-            <CompatColorSelect
+            <ColorSelect
               value={rippleEffect.color}
               onChange={(value) => {
                 onKeyChange('rippleEffect', {
@@ -198,7 +198,7 @@ const SeriesConfig = (props: {
     return (
       <Item label="标记颜色">
         <FullForm>
-          <CompatColorSelect
+          <ColorSelect
             value={itemStyle.color}
             onChange={(value) => {
               onKeyChange('itemStyle', {

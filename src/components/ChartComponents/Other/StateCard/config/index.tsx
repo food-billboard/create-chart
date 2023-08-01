@@ -1,31 +1,31 @@
-import { Component } from 'react';
 import {
   InfoCircleOutlined,
   PicLeftOutlined,
   PicRightOutlined,
 } from '@ant-design/icons';
 import { merge } from 'lodash';
+import { Component } from 'react';
+import AngleSelect from '@/components/ChartComponents/Common/AngleSelect';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
 import IconRadio, {
   Radio,
 } from '@/components/ChartComponents/Common/IconRadio';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import Input from '@/components/ChartComponents/Common/Input';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import { FontConfigList } from '@/components/ChartComponents/Common/FontConfig';
-import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
-import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
+import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import ColorSelect from '@/components/ColorSelect';
 import IconTooltip from '@/components/IconTooltip';
-import AngleSelect from '@/components/ChartComponents/Common/AngleSelect';
-import ThemeUtil from '@/utils/Assist/Theme';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import ConditionConfig from './Condition';
+import ThemeUtil from '@/utils/Assist/Theme';
 import { TStateCardConfig } from '../type';
+import ConditionConfig from './Condition';
 
 const { Item } = ConfigList;
 
@@ -144,7 +144,7 @@ class Config extends Component<
                         >
                           <Item label="颜色">
                             <FullForm>
-                              <CompatColorSelect
+                              <ColorSelect
                                 value={stateIcon.color}
                                 onChange={(value) => {
                                   const newData = [...stateList];

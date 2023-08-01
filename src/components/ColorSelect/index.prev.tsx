@@ -1,19 +1,32 @@
 import { useControllableValue, useUpdateEffect, useUnmount } from 'ahooks';
-import { Input, InputNumber, ColorPicker } from 'antd';
-import type { ColorPickerProps } from 'antd';
-import type { Color } from 'antd/es/color-picker/color';
+import { Input, InputNumber } from 'antd';
+import classnames from 'classnames';
 import color from 'color';
-import { merge, isEqual } from 'lodash';
+import { merge, debounce, isEqual } from 'lodash';
 import {
   useCallback,
   useEffect,
   useState,
   CSSProperties,
-  useMemo,
+  ReactNode,
 } from 'react';
-import { useColorThemeList } from '@/hooks';
-import { getRgbaString, getHexString, getOpacity } from '@/utils/Assist/Theme';
+import {
+  SketchPicker,
+  SketchPickerProps,
+  ColorChangeHandler,
+} from 'react-color';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
+import ThemeUtil, {
+  getRgbaString,
+  getHexString,
+  getOpacity,
+} from '@/utils/Assist/Theme';
 import { DEFAULT_COLOR } from '@/utils/constants';
+import Tooltip from '../ChartComponents/Common/Tooltip';
+import styles from './index.less';
 
 const DEFAULT_PRESET_COLOR_LIST = [
   '#D0021B',
@@ -36,62 +49,98 @@ const DEFAULT_PRESET_COLOR_LIST = [
 // * 颜色选择组件
 
 type TColorSelectProps = Partial<
-  Omit<ColorPickerProps, 'value' | 'onChange' | 'defaultValue'>
+  Exclude<SketchPickerProps, 'color' | 'onChange'>
 > & {
   value?: ComponentData.TColorConfig;
   defaultValue?: ComponentData.TColorConfig;
   onChange?: (color: ComponentData.TColorConfig) => void;
+  children?: ReactNode;
 };
 
 const ColorSelect = (props: TColorSelectProps) => {
-  const { value, onChange, defaultValue, ...nextProps } = props;
+  const { value, onChange, children, ...nextProps } = props;
 
-  const [stateValue, setStateValue] =
-    useControllableValue<ComponentData.TColorConfig>(props, {
-      defaultValue: DEFAULT_COLOR,
-    });
-
-  const colorThemeList = useColorThemeList();
-
-  const presetColorList = useMemo(() => {
+  const [stateValue, setStateValue] = useState<ComponentData.TColorConfig>(
+    value || DEFAULT_COLOR,
+  );
+  const [presetColorList, setPresetColorList] = useState<string[]>(() => {
+    const colorList = ThemeUtil.currentThemeColor;
     return [
-      {
-        label: '推荐颜色',
-        colors: [
-          ...colorThemeList,
-          ...DEFAULT_PRESET_COLOR_LIST.filter(
-            (item) => !colorThemeList.includes(item),
-          ),
-        ],
-      },
+      ...colorList,
+      ...DEFAULT_PRESET_COLOR_LIST.filter((item) => !colorList.includes(item)),
     ];
-  }, [colorThemeList]);
+  });
 
-  const colorValue = useMemo(() => {
-    return getRgbaString(stateValue);
-  }, [stateValue]);
-
-  const onInternalChange = useCallback((value: Color) => {
-    const rgb = value.toRgb();
+  const onInternalChange: ColorChangeHandler = useCallback((value) => {
+    const rgb = value.rgb;
     setStateValue(rgb);
   }, []);
 
-  // useUpdateEffect(() => {
-  //   value && setStateValue(value);
-  // }, [value]);
+  const onVisibleChange = useCallback(
+    (visible) => {
+      if (!visible) onChange?.(stateValue);
+    },
+    [stateValue],
+  );
+
+  const onThemeChange = () => {
+    const colorList = ThemeUtil.currentThemeColor;
+    setPresetColorList((prev) => {
+      return [
+        ...colorList,
+        ...prev.filter((item) => !colorList.includes(item)),
+      ];
+    });
+  };
+
+  useUpdateEffect(() => {
+    value && setStateValue(value);
+  }, [value]);
+
+  useEffect(() => {
+    GLOBAL_EVENT_EMITTER.addListener(
+      EVENT_NAME_MAP.SCREEN_THEME_CHANGE,
+      onThemeChange,
+    );
+    return () => {
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.SCREEN_THEME_CHANGE,
+        onThemeChange,
+      );
+    };
+  }, []);
 
   useUnmount(() => {
     if (!isEqual(value, stateValue)) onChange?.(stateValue);
   });
 
   return (
-    <ColorPicker
-      showText
-      {...nextProps}
-      presets={presetColorList}
-      value={colorValue}
-      onChangeComplete={onInternalChange}
-    />
+    <Tooltip
+      title={
+        <SketchPicker
+          {...nextProps}
+          onChange={debounce(onInternalChange, 20)}
+          color={stateValue}
+          presetColors={presetColorList}
+        />
+      }
+      trigger="click"
+      overlayClassName={styles['component-color-select-tooltip']}
+      onOpenChange={onVisibleChange}
+    >
+      {children || (
+        <div
+          className={classnames(
+            styles['component-color-select'],
+            'border-1',
+            'c-po',
+          )}
+          style={{
+            backgroundColor: getRgbaString(stateValue),
+          }}
+        ></div>
+      )}
+    </Tooltip>
   );
 };
 

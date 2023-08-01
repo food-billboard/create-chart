@@ -1,19 +1,19 @@
-import { Component } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import IconTooltip from '@/components/IconTooltip';
+import { Component } from 'react';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import LocalUpload from '@/components/ChartComponents/Common/LocalUpload';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
-import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import ConditionConfig from './Condition';
+import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleGroupConfig';
+import LocalUpload from '@/components/ChartComponents/Common/LocalUpload';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import ColorSelect from '@/components/ColorSelect';
+import IconTooltip from '@/components/IconTooltip';
 import { TQrCodeConfig } from '../type';
+import ConditionConfig from './Condition';
 
 const { Item } = ConfigList;
 class Config extends Component<
@@ -53,7 +53,7 @@ class Config extends Component<
                   }
                 >
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={base.codeColor}
                       onChange={(value) => {
                         this.onKeyChange('base', {
@@ -65,7 +65,7 @@ class Config extends Component<
                 </Item>
                 <Item label="背景颜色">
                   <FullForm>
-                    <CompatColorSelect
+                    <ColorSelect
                       value={base.backgroundColor}
                       onChange={(value) => {
                         this.onKeyChange('base', {

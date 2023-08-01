@@ -1,13 +1,13 @@
-import { useCallback, useMemo } from 'react';
-import { Button } from 'antd';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import classnames from 'classnames';
+import { useCallback, useMemo } from 'react';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
+import ColorSelect from '@/components/ColorSelect';
 import GhostButton from '@/components/GhostButton';
-import { CompatColorSelect } from '@/components/ColorSelect';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ChartGradientSelect from '../ChartGradientSelect';
 import { DEFAULT_RADIAL_CONFIG } from '../Constants/defaultConfig';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import FullForm from '../Structure/FullForm';
 import styles from './index.less';
 
@@ -143,7 +143,7 @@ const SimpleHueSelect = (props: {
                 styles['simple-hue-select-wrapper'],
               )}
             >
-              <CompatColorSelect
+              <ColorSelect
                 value={color}
                 onChange={onColorChange.bind(null, index)}
               />

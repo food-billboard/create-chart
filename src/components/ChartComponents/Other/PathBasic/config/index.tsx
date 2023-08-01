@@ -1,20 +1,20 @@
-import { Component } from 'react';
-import { Switch } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { Switch } from 'antd';
+import { Component } from 'react';
+import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
+import Input from '@/components/ChartComponents/Common/Input';
+import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import LocalUpload from '@/components/ChartComponents/Common/LocalUpload';
 import Select from '@/components/ChartComponents/Common/Select';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import LocalUpload from '@/components/ChartComponents/Common/LocalUpload';
-import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import InputNumber from '@/components/ChartComponents/Common/InputNumber';
-import { CompatColorSelect } from '@/components/ColorSelect';
-import IconTooltip from '@/components/IconTooltip';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import Input from '@/components/ChartComponents/Common/Input';
-import ConditionConfig from './Condition';
+import ColorSelect from '@/components/ColorSelect';
+import IconTooltip from '@/components/IconTooltip';
 import { TPathBasicConfig } from '../type';
+import ConditionConfig from './Condition';
 
 const { Item } = ConfigList;
 class Config extends Component<
@@ -98,7 +98,7 @@ class Config extends Component<
                     </Item>
                     <Item label="填充色">
                       <FullForm>
-                        <CompatColorSelect
+                        <ColorSelect
                           value={target.circle.color}
                           onChange={(value) =>
                             this.onKeyChange('target', {
@@ -144,7 +144,7 @@ class Config extends Component<
                     </Item>
                     <Item label="填充色">
                       <FullForm>
-                        <CompatColorSelect
+                        <ColorSelect
                           value={target.rect.color}
                           onChange={(value) =>
                             this.onKeyChange('target', {
@@ -413,7 +413,7 @@ class Config extends Component<
                   </Item>
                   <Item label="颜色">
                     <FullForm>
-                      <CompatColorSelect
+                      <ColorSelect
                         value={path.color}
                         onChange={(value) =>
                           this.onKeyChange('path', {
