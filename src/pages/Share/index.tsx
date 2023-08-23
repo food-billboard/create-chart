@@ -1,3 +1,6 @@
+import { message } from 'antd';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { connect } from 'umi';
 import { useHashChangeReload } from '@/hooks';
 import {
   shareScreenGet,
@@ -5,16 +8,12 @@ import {
   shareScreenPost,
 } from '@/services';
 import { getLocationQuery } from '@/utils';
-import { message } from 'antd';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { connect } from 'umi';
 import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
 import PainterWrapper from './components/PainterWrapper';
 import PasswordConfirm, {
   PasswordConfirmRef,
 } from './components/PasswordConfirm';
-import WaterMark from './components/WaterMark';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import useWrapperProps from './useWrapperProps';
 
@@ -127,7 +126,6 @@ function Share(props: {
       {heartbeat && <NormalPainter {...wrapperProps} />}
       <FetchScreenComponent needFetch={needFetch} />
       <PasswordConfirm ref={passwordConfirmRef} onOk={onPasswordConfirm} />
-      <WaterMark />
     </PainterWrapper>
   );
 }

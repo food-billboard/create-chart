@@ -1,10 +1,9 @@
-import { useHashChangeReload } from '@/hooks';
 import { useEffect } from 'react';
 import { connect } from 'umi';
+import { useHashChangeReload } from '@/hooks';
 import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
 import PainterWrapper from '../Share/components/PainterWrapper';
-import WaterMark from '../Share/components/WaterMark';
 import useWrapperProps from '../Share/useWrapperProps';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
@@ -43,7 +42,6 @@ function Viewer(props: {
     <PainterWrapper scale={scale}>
       <NormalPainter {...wrapperProps} />
       <FetchScreenComponent />
-      <WaterMark />
     </PainterWrapper>
   );
 }

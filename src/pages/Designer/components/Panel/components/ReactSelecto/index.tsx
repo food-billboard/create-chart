@@ -1,3 +1,6 @@
+import { useCallback, useRef } from 'react';
+import ReactSelecto from 'react-selecto';
+import { connect } from 'umi';
 import ColorSelect from '@/components/ColorSelect';
 import { BACKGROUND_ID } from '@/components/DesignerBackground';
 import { usePrimaryColorObject } from '@/hooks';
@@ -7,10 +10,7 @@ import {
 } from '@/utils/Assist/Component';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
 import { SELECTO_CLASSNAME } from '@/utils/constants';
-import { useCallback, useRef } from 'react';
-import ReactSelecto from 'react-selecto';
-import { connect } from 'umi';
-import { PANEL_ID } from '../Painter';
+import { PANEL_ID } from '@/utils/constants/another';
 import { wrapperId } from '../PanelWrapper/constants';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';

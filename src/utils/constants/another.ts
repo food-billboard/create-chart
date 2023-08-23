@@ -73,6 +73,9 @@ const KEY_PRESS_MAP = {
   'Shift + →': '右移动',
 };
 
+// 画布的元素id
+const PANEL_ID = 'panel-id';
+
 export {
   IMAGE_FALLBACK,
   MIN_LAYER_WIDTH,
@@ -86,4 +89,5 @@ export {
   API_CONTAIN_PARAMS_LAZY_REQUEST_URL_FLAG,
   API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG,
   KEY_PRESS_MAP,
+  PANEL_ID,
 };

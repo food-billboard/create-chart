@@ -1,10 +1,3 @@
-import ColorImageBackground from '@/components/ColorImageBackground';
-import { useBackground } from '@/hooks';
-import { DragData } from '@/models/connect';
-import { createComponent } from '@/utils/Assist/Component';
-import DataChangePool from '@/utils/Assist/DataChangePool';
-import LogWinbox from '@/utils/Assist/Logger/Window';
-import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants/index';
 import { useDebounceFn } from 'ahooks';
 import classnames from 'classnames';
 import { merge } from 'lodash';
@@ -25,6 +18,14 @@ import {
   DropTargetMonitor,
 } from 'react-dnd';
 import { connect } from 'umi';
+import ColorImageBackground from '@/components/ColorImageBackground';
+import { useBackground } from '@/hooks';
+import { DragData } from '@/models/connect';
+import { createComponent } from '@/utils/Assist/Component';
+import DataChangePool from '@/utils/Assist/DataChangePool';
+import LogWinbox from '@/utils/Assist/Logger/Window';
+import { PANEL_ID } from '@/utils/constants/another';
+import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants/index';
 import { ExchangePreviewerContext } from '../../../ExchangeScreenFlag/components/MobilePreviewer/context';
 import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
 import ComponentList from '../ComponentList';
@@ -49,8 +50,6 @@ export type PainterProps = {
   children?: ReactNode;
   // ? hack h5转换预览时用
 };
-
-export const PANEL_ID = 'panel-id';
 
 const Painter = (props: PainterProps) => {
   const {

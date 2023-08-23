@@ -1,13 +1,12 @@
-import { useHashChangeReload, useIsModelHash } from '@/hooks';
-import { previewScreenModelValid, previewScreenValid } from '@/services';
-import { getLocationQuery } from '@/utils';
 import { message } from 'antd';
 import { useEffect, useState } from 'react';
 import { connect } from 'umi';
+import { useHashChangeReload, useIsModelHash } from '@/hooks';
+import { previewScreenModelValid, previewScreenValid } from '@/services';
+import { getLocationQuery } from '@/utils';
 import FetchScreenComponent from '../Designer/components/FetchScreenComponent';
 import { NormalPainter } from '../Designer/components/Panel/components/Painter';
 import PainterWrapper from '../Share/components/PainterWrapper';
-import WaterMark from '../Share/components/WaterMark';
 import useWrapperProps from '../Share/useWrapperProps';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
@@ -77,7 +76,6 @@ function Previewer(props: {
     <PainterWrapper scale={scale}>
       <NormalPainter {...wrapperProps} />
       <FetchScreenComponent needFetch={needFetch} />
-      <WaterMark />
     </PainterWrapper>
   );
 }

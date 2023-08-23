@@ -1,11 +1,12 @@
-import { ConnectState } from '@/models/connect';
 import { useSize } from 'ahooks';
 import { Empty } from 'antd';
 import classnames from 'classnames';
 import IsMobile from 'is-mobile';
 import { ReactNode } from 'react';
 import { connect } from 'umi';
+import { ConnectState } from '@/models/connect';
 import styles from '../../index.less';
+import WaterMark from '../WaterMark';
 
 const isMobile = IsMobile();
 
@@ -15,6 +16,8 @@ function PainterWrapper(props: {
   children?: ReactNode;
 }) {
   const { flag, children, scale } = props;
+
+  let realChildren = children;
 
   const { height = 0 } =
     useSize(() => document.querySelector('.page-preview-container')) || {};
@@ -46,7 +49,7 @@ function PainterWrapper(props: {
   }
 
   if (flag === 'H5') {
-    return (
+    realChildren = (
       <div
         className={classnames(
           'w-100 h-100 zero-scrollbar',
@@ -66,7 +69,7 @@ function PainterWrapper(props: {
     );
   }
 
-  return <>{children}</>;
+  return <WaterMark>{realChildren}</WaterMark>;
 }
 
 export default connect(
