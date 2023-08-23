@@ -20,7 +20,7 @@ import LeftContent from './components/LeftContent';
 import PageLoading from './components/PageLoading';
 import Panel from './components/Panel';
 import RightContent from './components/RightContent';
-import ShepherdWrapper from './components/ShepherdWrapper';
+import Tour from './components/Tour';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -196,30 +196,29 @@ const Designer = (props: {
 
   return (
     <ConfigProvider componentSize="small">
-      <ShepherdWrapper
+      <div
+        className={styles['designer-page']}
+        onContextMenu={preventDefaultContextMenu}
+        style={{
+          pointerEvents: loading || guideLoading ? 'none' : 'all',
+          // @ts-ignore
+          '--designer-primary-color': primaryColor,
+        }}
+      >
+        <Header />
+        <div className={styles['designer-page-content']}>
+          <DndProvider backend={HTML5Backend}>
+            <LeftContent />
+            <Panel />
+          </DndProvider>
+          <RightContent />
+        </div>
+      </div>
+      <Tour
         onStart={setGuideLoading.bind(null, true)}
         onComplete={setGuideLoading.bind(null, false)}
         loading={loading}
-      >
-        <div
-          className={styles['designer-page']}
-          onContextMenu={preventDefaultContextMenu}
-          style={{
-            pointerEvents: loading || guideLoading ? 'none' : 'all',
-            // @ts-ignore
-            '--designer-primary-color': primaryColor,
-          }}
-        >
-          <Header />
-          <div className={styles['designer-page-content']}>
-            <DndProvider backend={HTML5Backend}>
-              <LeftContent />
-              <Panel />
-            </DndProvider>
-            <RightContent />
-          </div>
-        </div>
-      </ShepherdWrapper>
+      />
       <PageLoading value={loading} />
       <FetchScreenComponent onLoad={onLoad} ref={requestRef} />
     </ConfigProvider>
