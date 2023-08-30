@@ -1,17 +1,15 @@
+import { CaretRightOutlined } from '@ant-design/icons';
 import { Collapse, Row } from 'antd';
 import classnames from 'classnames';
 import type { ItemType } from 'rc-collapse/es/interface';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { connect } from 'umi';
 import Empty from '@/components/Empty';
-import { ConnectState } from '@/models/connect';
-import { CaretRightOutlined } from '@ant-design/icons';
 import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
 import styles from './index.less';
 import ComponentItem from './item';
 
-const ComponentList = (props: { type: string; componentCollapse: boolean }) => {
-  const { type, componentCollapse } = props;
+const ComponentList = (props: { type: string }) => {
+  const { type } = props;
 
   const [activeKey, setActiveKey] = useState<string[]>([]);
 
@@ -70,9 +68,7 @@ const ComponentList = (props: { type: string; componentCollapse: boolean }) => {
     <Collapse
       className={classnames(
         styles['design-left-component-list'],
-        {
-          [styles['design-left-component-list-show']]: !componentCollapse,
-        },
+        styles['design-left-component-list-show'],
         'normal-background',
         'zero-scrollbar',
         'design-left-component-list',
@@ -89,11 +85,4 @@ const ComponentList = (props: { type: string; componentCollapse: boolean }) => {
   );
 };
 
-export default connect(
-  (state: ConnectState) => {
-    return {
-      componentCollapse: state.local.componentCollapse,
-    };
-  },
-  () => ({}),
-)(ComponentList);
+export default ComponentList;

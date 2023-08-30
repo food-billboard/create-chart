@@ -1,18 +1,18 @@
-import { useRef, useCallback, useEffect } from 'react';
-import classnames from 'classnames';
 import { useGetState } from 'ahooks';
+import classnames from 'classnames';
+import { useRef, useCallback, useEffect } from 'react';
 import FocusWrapper from '@/components/FocusWrapper';
 import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
-import ToolBar from './components/ToolBar';
+import ComponentSearchList from './components/ComponentList/SearchList';
 import ComponentTypeList from './components/ComponentTypeList';
+import componentTypeListStyles from './components/ComponentTypeList/index.less';
 import LayerManage from './components/LayerManage';
 import { LayerManageRef } from './components/LayerManage/type';
-import ComponentSearchList from './components/ComponentList/SearchList';
+import ToolBar from './components/ToolBar';
 import styles from './index.less';
-import ComponentTypeListStyles from './components/ComponentTypeList/index.less';
 
 const LeftContent = () => {
   const [layerVisible, setLayerVisible, getLayerVisible] =
@@ -68,7 +68,7 @@ const LeftContent = () => {
         <ComponentTypeList
           menuClass={
             layerVisible
-              ? ComponentTypeListStyles[
+              ? componentTypeListStyles[
                   'page-design-left-component-list-content-border'
                 ]
               : ''

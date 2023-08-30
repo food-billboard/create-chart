@@ -1,15 +1,17 @@
-import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
-import { useDebounceFn } from 'ahooks';
-import classnames from 'classnames';
-import { Input, Empty, Divider } from 'antd';
 import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
+import { useDebounceFn } from 'ahooks';
+import { Input, Empty, Divider, Button } from 'antd';
+import classnames from 'classnames';
+import { useState, useCallback, useMemo, useRef } from 'react';
+import { connect } from 'umi';
+import { ConnectState, ILocalModelState } from '@/models/connect';
 import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
 import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
-import ComponentItem from './item';
 import styles from './index.less';
+import ComponentItem from './item';
 
 const findComponentByString = (list: any[]) => {
   const searchResult: any[] = [];
@@ -32,8 +34,12 @@ const findComponentByString = (list: any[]) => {
 
 const FORMAT_COMPONENT_LIST = findComponentByString(COMPONENT_TYPE_LIST);
 
-const ComponentSearch = () => {
-  const [visible, setVisible] = useState<boolean>(false);
+const ComponentSearch = (props: {
+  componentCollapse: boolean;
+  setLocalConfig: (value: Partial<ILocalModelState>) => void;
+}) => {
+  const { componentCollapse, setLocalConfig } = props;
+
   const [searchResult, setSearchResult] = useState<
     {
       type: string;
@@ -75,9 +81,13 @@ const ComponentSearch = () => {
   }, []);
 
   const onVisibleChange = () => {
-    setVisible((prev) => {
-      return !prev;
+    setLocalConfig({
+      componentCollapse: !componentCollapse,
     });
+    GLOBAL_EVENT_EMITTER.emit(
+      EVENT_NAME_MAP.COMPONENT_SEARCH_VISIBLE,
+      !componentCollapse,
+    );
   };
 
   const searchListDom = useMemo(() => {
@@ -103,27 +113,17 @@ const ComponentSearch = () => {
     });
   }, [searchResult]);
 
-  useEffect(() => {
-    GLOBAL_EVENT_EMITTER.addListener(
-      EVENT_NAME_MAP.COMPONENT_SEARCH_VISIBLE,
-      onVisibleChange,
-    );
-    return () => {
-      GLOBAL_EVENT_EMITTER.removeListener(
-        EVENT_NAME_MAP.COMPONENT_SEARCH_VISIBLE,
-      );
-    };
-  }, []);
-
   return (
     <div
       className={classnames(styles['component-search-list'], {
-        [styles['component-search-list-visible']]: visible,
+        [styles['component-search-list-visible']]: componentCollapse,
       })}
     >
-      <CloseOutlined
+      <Button
+        icon={<CloseOutlined />}
         onClick={onVisibleChange}
         className={styles['component-search-list-close']}
+        type="text"
       />
       <Input
         placeholder="请输入搜索文字"
@@ -152,4 +152,14 @@ const ComponentSearch = () => {
   );
 };
 
-export default ComponentSearch;
+export default connect(
+  (state: ConnectState) => {
+    return {
+      componentCollapse: state.local.componentCollapse,
+    };
+  },
+  (dispatch: any) => ({
+    setLocalConfig: (value: any) =>
+      dispatch({ type: 'local/setLocalConfig', value }),
+  }),
+)(ComponentSearch);
