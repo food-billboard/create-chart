@@ -1,3 +1,12 @@
+import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
+import { useUpdateEffect } from 'ahooks';
+import { Button, Tooltip as AntTooltip } from 'antd';
+import type { TooltipProps } from 'antd';
+import classnames from 'classnames';
+import EventEmitter from 'eventemitter3';
+import { pick } from 'lodash';
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { connect } from 'umi';
 import { useIdPathMap, usePrimaryColor } from '@/hooks';
 import { ConnectState } from '@/models/connect';
 import { getTopParentComponent } from '@/utils/Assist/Component';
@@ -5,14 +14,6 @@ import {
   EVENT_NAME_MAP,
   GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
-import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
-import { useUpdateEffect } from 'ahooks';
-import { Button } from 'antd';
-import classnames from 'classnames';
-import EventEmitter from 'eventemitter3';
-import { pick } from 'lodash';
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
-import { connect } from 'umi';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -355,13 +356,15 @@ const PanelThumb = connect(
 
 const EventEmitterInstance = new EventEmitter();
 
-export const Tooltip = (props: {
-  visible: boolean;
-  children?: ReactNode;
-  onHide?: () => void;
-  uniqueKey: string;
-}) => {
-  const { visible, children, uniqueKey, onHide } = props;
+export const Tooltip = (
+  props: {
+    visible: boolean;
+    children?: ReactNode;
+    onHide?: () => void;
+    uniqueKey: string;
+  } & Partial<TooltipProps>,
+) => {
+  const { visible, children, uniqueKey, onHide, ...nextProps } = props;
 
   useUpdateEffect(() => {
     EventEmitterInstance.emit('change', uniqueKey, visible);
@@ -380,23 +383,17 @@ export const Tooltip = (props: {
   }, []);
 
   return (
-    <div
-      className={classnames(
-        styles['component-panel-thumb-tooltip'],
-        'border-r-4',
-      )}
-      style={{
-        visibility: visible ? 'visible' : 'hidden',
+    <AntTooltip
+      {...nextProps}
+      title={children}
+      open={visible}
+      overlayInnerStyle={{
+        padding: 0,
+        borderRadius: 4,
+        overflow: 'hidden',
+        ...nextProps.overlayInnerStyle,
       }}
-    >
-      <div
-        style={{
-          transform: `scale(${visible ? 1 : 0})`,
-        }}
-      >
-        {children}
-      </div>
-    </div>
+    />
   );
 };
 

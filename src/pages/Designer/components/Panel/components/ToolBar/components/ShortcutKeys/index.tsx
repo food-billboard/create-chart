@@ -1,10 +1,10 @@
-import { useState, useMemo } from 'react';
-import classnames from 'classnames';
 import { Button, Typography } from 'antd';
-import { usePrimaryColor } from '@/hooks';
+import classnames from 'classnames';
+import { useState, useMemo } from 'react';
 import IconFont from '@/components/ChartComponents/Common/Icon';
-import { Tooltip } from '../PanelThumb';
+import { usePrimaryColor } from '@/hooks';
 import { KEY_PRESS_MAP } from '@/utils/constants/another';
+import { Tooltip } from '../PanelThumb';
 import styles from './index.less';
 
 const ShortcutKeys = () => {
@@ -35,11 +35,9 @@ const ShortcutKeys = () => {
         visible={visible}
         uniqueKey="shortcut"
         onHide={setVisible.bind(null, false)}
+        color={color}
       >
-        <div
-          className={classnames(styles['shortcut-keys'], 'c-f-s p-4')}
-          style={{ backgroundColor: color }}
-        >
+        <div className={classnames(styles['shortcut-keys'], 'c-f-s p-4')}>
           {element}
         </div>
       </Tooltip>
