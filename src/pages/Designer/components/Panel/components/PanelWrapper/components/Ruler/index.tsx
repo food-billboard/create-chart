@@ -1,12 +1,12 @@
-import GuideLine from '@/components/GuideLine';
-import ComponentRuler from '@/components/Ruler';
-import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants';
 import { useHover, useMouse, useThrottleEffect } from 'ahooks';
 import classnames from 'classnames';
 import { merge } from 'lodash';
 import { nanoid } from 'nanoid';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { connect } from 'umi';
+import GuideLine from '@/components/GuideLine';
+import ComponentRuler from '@/components/Ruler';
+import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants';
 import { subWrapperId, wrapperId } from '../../constants';
 import { AbsorbUtil } from '../AbsorbGuideLine/utils';
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -60,7 +60,14 @@ const Ruler = (props: {
   const onGuidelinePositionChange = useCallback(
     (index, item) => {
       let newGuideList = [...guideLineList];
-      newGuideList.splice(index, 1, item);
+      if (
+        item.lineStyle === 'solid' &&
+        item.style[item.type === 'vertical' ? 'left' : 'top'] < 0
+      ) {
+        newGuideList.splice(index, 1);
+      } else {
+        newGuideList.splice(index, 1, item);
+      }
       wrapperSetGuideLine({
         value: newGuideList as ComponentData.TGuideLineConfigItem[],
       });
