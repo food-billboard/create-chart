@@ -1,3 +1,7 @@
+import classnames from 'classnames';
+import { merge } from 'lodash';
+import { CSSProperties, ReactNode, useMemo } from 'react';
+import { connect } from 'umi';
 import {
   useCondition,
   useGroupComponent,
@@ -5,10 +9,6 @@ import {
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { useComponentChildrenStyle } from '@/hooks';
 import { ConnectState } from '@/models/connect';
-import classnames from 'classnames';
-import { merge } from 'lodash';
-import { CSSProperties, ReactNode, useMemo } from 'react';
-import { connect } from 'umi';
 import styles from '../../../index.less';
 import CarouselGroupWrapper from './CarouselGroupWrapper';
 
@@ -17,7 +17,7 @@ const SubGroup = (props: {
   value: ComponentData.TComponentData;
   isOuter?: boolean;
   screenType: 'edit' | 'preview' | 'production';
-  screenTheme: ComponentData.TScreenTheme;
+  screenTheme: ComponentData.TScreenTheme['value'];
   style?: CSSProperties;
   flag: ComponentData.ScreenFlagType;
   wrapper: any;

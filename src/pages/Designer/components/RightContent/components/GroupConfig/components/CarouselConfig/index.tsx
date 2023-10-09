@@ -1,3 +1,15 @@
+import {
+  BorderBottomOutlined,
+  BorderHorizontalOutlined,
+  BorderLeftOutlined,
+  BorderRightOutlined,
+  BorderTopOutlined,
+  BorderVerticleOutlined,
+} from '@ant-design/icons';
+import { useUpdate } from 'ahooks';
+import { Switch } from 'antd';
+import { useCallback, useMemo, useState } from 'react';
+import { connect } from 'umi';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
 import RadioGroup, {
   Radio,
@@ -17,18 +29,6 @@ import {
   EVENT_NAME_MAP,
   GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
-import {
-  BorderBottomOutlined,
-  BorderHorizontalOutlined,
-  BorderLeftOutlined,
-  BorderRightOutlined,
-  BorderTopOutlined,
-  BorderVerticleOutlined,
-} from '@ant-design/icons';
-import { useUpdate } from 'ahooks';
-import { Switch } from 'antd';
-import { useCallback, useMemo, useState } from 'react';
-import { connect } from 'umi';
 import ComponentList from './components/ComponentList';
 
 const { Item } = ConfigList;

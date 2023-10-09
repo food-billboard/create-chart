@@ -17,3 +17,4 @@ export * from './useAnyDva';
 export * from './useGlobalLoading';
 export * from './useValidatorChange';
 export * from './useControlModalDisabledKeyPressVisible';
+export * from './useEventEmitterState';
