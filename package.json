@@ -6,6 +6,7 @@
   "version": "1.21",
   "private": false,
   "scripts": {
+    "deploy:raspberry": "node ../node-server/scripts/publishLocalFile.js",
     "deploy:static": "gh-pages -d dist",
     "build:static": "cross-env REACT_APP=static REACT_APP_ENV=prod max build",
     "analyze:static": "cross-env ANALYZE=1 REACT_APP_ENV=prod REACT_APP=static max build",
@@ -14,6 +15,7 @@
     "start": "cross-env PORT=8001 max dev",
     "start:dev": "cross-env REACT_APP_ENV=dev max dev",
     "build": "cross-env REACT_APP_ENV=prod max build",
+    "build:raspberry": "cross-env REACT_APP_ENV=raspberry max build",
     "build:debug": "cross-env REACT_APP=static REACT_APP_ENV=prod DEBUG=true max build",
     "postinstall": "max setup",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",

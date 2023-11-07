@@ -1,9 +1,9 @@
 // https://umijs.org/config/
-import { merge } from 'lodash';
-import { defineConfig } from 'umi';
 // @ts-ignore
 import CompressionPlugin from 'compression-webpack-plugin';
+import { merge } from 'lodash';
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
+import { defineConfig } from 'umi';
 // import packageJson from '../package.json'
 // @ts-ignore
 // import SentryCliPlugin from '@sentry/webpack-plugin'
@@ -11,7 +11,7 @@ import proxy from './proxy';
 import { normalRouter, staticRouter } from './router-config';
 import darkTheme from './theme';
 
-const { REACT_APP_ENV } = process.env;
+const { REACT_APP_ENV = '' } = process.env;
 
 const commonConfig = {
   // nodeModulesTransform: {
@@ -75,7 +75,7 @@ const commonConfig = {
     //   }
     // ])
     // 生产环境配置
-    if (REACT_APP_ENV === 'prod') {
+    if (['prod', 'raspberry'].includes(REACT_APP_ENV)) {
       config.plugin('compression-webpack-plugin').use(CompressionPlugin, [
         {
           test: /\.(js|css|html)$/i, // 匹配
@@ -160,9 +160,32 @@ const productionConfig: any = merge({}, commonConfig, {
     process.env.REACT_APP === 'static'
       ? '/create-chart/'
       : '/api/backend/screen/',
-  // chunks: ['antdesigns', 'vendors', 'commons', 'umi'],
 });
 
-export default defineConfig(
-  REACT_APP_ENV === 'prod' ? productionConfig : developmentConfig,
-);
+const raspberryConfig: any = merge({}, commonConfig, {
+  define: {
+    'process.env.REACT_APP_ENV': 'raspberry',
+  },
+  esbuildMinifyIIFE: true,
+  codeSplitting: {
+    jsStrategy: 'granularChunks',
+  },
+  base: '/',
+  publicPath: '/api/backend/screen/',
+});
+
+let realConfig;
+
+switch (REACT_APP_ENV) {
+  case 'prod':
+    realConfig = defineConfig(productionConfig);
+    break;
+  case 'raspberry':
+    realConfig = defineConfig(raspberryConfig);
+    break;
+  case 'dev':
+  default:
+    realConfig = defineConfig(developmentConfig);
+}
+
+export default defineConfig(realConfig);
