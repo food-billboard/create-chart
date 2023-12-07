@@ -11,6 +11,18 @@ import { normalRouter, staticRouter } from './router-config';
 
 const { REACT_APP_ENV } = process.env;
 
+function getPublicPath() {
+  const env = process.env.REACT_APP;
+  switch (env) {
+    case 'static':
+      return '/create-chart/';
+    case 'improve':
+      return '';
+    default:
+      return '/api/backend/screen/';
+  }
+}
+
 const commonConfig = {
   define: {
     'process.env.REACT_APP': process.env.REACT_APP,
@@ -145,10 +157,7 @@ const productionConfig: any = merge({}, commonConfig, {
   // base: '/api/backend/screen/',
   base: '/',
   outputPath: process.env.DEBUG ? 'dist/create-chart' : 'dist',
-  publicPath:
-    process.env.REACT_APP === 'static'
-      ? '/create-chart/'
-      : '/api/backend/screen/',
+  publicPath: getPublicPath(),
   // chunks: ['antdesigns', 'vendors', 'commons', 'umi'],
 });
 

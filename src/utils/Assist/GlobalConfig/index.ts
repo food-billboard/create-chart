@@ -5,8 +5,14 @@ import {
 } from '../../constants';
 
 const isStatic = process.env.REACT_APP === 'static';
+const isImportBackend = process.env.REACT_APP === 'improve_prod';
 
 class GlobalConfig {
+  // ? 1.22
+  // 是否为优化分支版本
+  // 优化分支版本是存在后端优化的版本，当中会有一些特殊的接口啥的配置
+  IS_IMPROVE_BACKEND = isImportBackend;
+
   // 是否是简易前端版本
   IS_STATIC = isStatic;
 
