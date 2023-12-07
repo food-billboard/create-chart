@@ -9,79 +9,21 @@ import {
 import classnames from 'classnames';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import ALiMap from '../../../../../public/components/ali-map.jpg';
+import Audio from '../../../../../public/components/audio.jpg';
 import BarBasic from '../../../../../public/components/bar-basic.png';
-import LineBasic from '../../../../../public/components/line-basic.png';
-import PieBasic from '../../../../../public/components/pie-basic.png';
-import ScatterBasic from '../../../../../public/components/scatter-basic.png';
-import RadarBasic from '../../../../../public/components/radar-basic.png';
 import BoxPlotBasic from '../../../../../public/components/box-plot.png';
-import FunnelBasic from '../../../../../public/components/funnel-basic.png';
-import GaugeBasic from '../../../../../public/components/gauge-basic.png';
-import TreeMapBasic from '../../../../../public/components/tree-map-basic.png';
-import SunBurstBasic from '../../../../../public/components/sub-burst-basic.png';
-import PictorialBarBasic from '../../../../../public/components/pictorial-bar-basic.png';
-import ParallelBarBasic from '../../../../../public/components/parallel-basic.png';
-import CandlestickBasic from '../../../../../public/components/candlestick-basic.png';
-import TitleBasic from '../../../../../public/components/title-basic.jpg';
-import TimeMachineBasic from '../../../../../public/components/time-machine.jpg';
-import CountUpNumberBasic from '../../../../../public/components/count-up-number.jpg';
-import ImageBasic from '../../../../../public/components/image-basic.jpg';
-import VideoBasic from '../../../../../public/components/video-basic.jpg';
-import CarouselBasic from '../../../../../public/components/carousel-basic.jpg';
-import WordCloudBasic from '../../../../../public/components/word-cloud.png';
-import IframeBasic from '../../../../../public/components/iframe.jpg';
-import ListBasic from '../../../../../public/components/list-basic.jpg';
-import TabBasic from '../../../../../public/components/tab-basic.jpg';
-import SelectBasic from '../../../../../public/components/select-basic.jpg';
+import BubbleScatter from '../../../../../public/components/bubble-scatter.png';
+import Button from '../../../../../public/components/button.jpg';
 import CachetBar from '../../../../../public/components/cachet-bar.png';
+import CandlestickBasic from '../../../../../public/components/candlestick-basic.png';
+import CarouselBasic from '../../../../../public/components/carousel-basic.jpg';
+import CarouselText from '../../../../../public/components/carousel-text.jpg';
+import Checkbox from '../../../../../public/components/checkbox.jpg';
 import CirclePie from '../../../../../public/components/circle-pie.png';
 import ClockGauge from '../../../../../public/components/clock-gauge.png';
-import HorizontalBar from '../../../../../public/components/horizontal-bar.png';
-import LineBar from '../../../../../public/components/line-bar.png';
-import NegativeBar from '../../../../../public/components/negative-bar.png';
-import NightingalePie from '../../../../../public/components/nightingale-pie.png';
-import PercentBar from '../../../../../public/components/percent-bar.png';
-import ProgressBar from '../../../../../public/components/progress-bar.png';
-import RadialBar from '../../../../../public/components/radial-bar.png';
-import RadialLine from '../../../../../public/components/radial-line.png';
-import RadialStackLine from '../../../../../public/components/radial-stack-line.png';
-import RankBar from '../../../../../public/components/rank-bar.png';
-import StackBar from '../../../../../public/components/stack-bar.png';
-import Tree from '../../../../../public/components/tree.png';
-import WaterFallBar from '../../../../../public/components/waterfall-bar.png';
-import ZebraBar from '../../../../../public/components/zebra-bar.png';
-import TextCarousel from '../../../../../public/components/text-carousel.jpg';
-import Text from '../../../../../public/components/text.jpg';
-import PercentPie from '../../../../../public/components/percent-pie.png';
-import WaterBall from '../../../../../public/components/water-ball.png';
-import ScatterMap from '../../../../../public/components/scatter-map.png';
-import BubbleScatter from '../../../../../public/components/bubble-scatter.png';
-import PolarBar from '../../../../../public/components/polar-bar.png';
-import StepLine from '../../../../../public/components/step-line.png';
-import CarouselText from '../../../../../public/components/carousel-text.jpg';
-import Icon from '../../../../../public/components/icon.jpg';
-import Steps from '../../../../../public/components/steps.jpg';
-import Switch from '../../../../../public/components/switch.jpg';
-import Input from '../../../../../public/components/input.jpg';
-import Checkbox from '../../../../../public/components/checkbox.jpg';
-import Radio from '../../../../../public/components/radio.jpg';
-import StateCard from '../../../../../public/components/state-card.jpg';
-import PictureWall from '../../../../../public/components/picture-wall.jpg';
+import CountUpNumberBasic from '../../../../../public/components/count-up-number.jpg';
 import DatePicker from '../../../../../public/components/date-picker.jpg';
-import PolarStackBar from '../../../../../public/components/polar-stack-bar.png';
-import Rate from '../../../../../public/components/rate.jpg';
-import StateList from '../../../../../public/components/state-list.jpg';
-import Tag from '../../../../../public/components/tag.jpg';
-import Weather from '../../../../../public/components/weather.png';
-import Audio from '../../../../../public/components/audio.jpg';
-import Model from '../../../../../public/components/model.jpg';
-import ALiMap from '../../../../../public/components/ali-map.jpg';
-import QrCode from '../../../../../public/components/qrcode.jpg';
-import PathBasic from '../../../../../public/components/path-basic.jpg';
-import LuckyDraw from '../../../../../public/components/lucky-draw.jpg';
-import Ticket from '../../../../../public/components/ticket.jpg';
-import Button from '../../../../../public/components/button.jpg';
-import Typed from '../../../../../public/components/typed.jpg';
 import Decoration1 from '../../../../../public/components/decoration-1.jpg';
 import Decoration2 from '../../../../../public/components/decoration-2.jpg';
 import Decoration3 from '../../../../../public/components/decoration-3.jpg';
@@ -90,8 +32,66 @@ import Decoration5 from '../../../../../public/components/decoration-5.jpg';
 import Decoration6 from '../../../../../public/components/decoration-6.jpg';
 import Decoration7 from '../../../../../public/components/decoration-7.jpg';
 import Decoration8 from '../../../../../public/components/decoration-8.jpg';
-import Pagination from '../../../../../public/components/pagination.jpg';
 import FullScreen from '../../../../../public/components/full-screen.jpg';
+import FunnelBasic from '../../../../../public/components/funnel-basic.png';
+import GaugeBasic from '../../../../../public/components/gauge-basic.png';
+import HorizontalBar from '../../../../../public/components/horizontal-bar.png';
+import Icon from '../../../../../public/components/icon.jpg';
+import IframeBasic from '../../../../../public/components/iframe.jpg';
+import ImageBasic from '../../../../../public/components/image-basic.jpg';
+import Input from '../../../../../public/components/input.jpg';
+import LineBar from '../../../../../public/components/line-bar.png';
+import LineBasic from '../../../../../public/components/line-basic.png';
+import ListBasic from '../../../../../public/components/list-basic.jpg';
+import LuckyDraw from '../../../../../public/components/lucky-draw.jpg';
+import Model from '../../../../../public/components/model.jpg';
+import NegativeBar from '../../../../../public/components/negative-bar.png';
+import NightingalePie from '../../../../../public/components/nightingale-pie.png';
+import Pagination from '../../../../../public/components/pagination.jpg';
+import ParallelBarBasic from '../../../../../public/components/parallel-basic.png';
+import PathBasic from '../../../../../public/components/path-basic.jpg';
+import PercentBar from '../../../../../public/components/percent-bar.png';
+import PercentPie from '../../../../../public/components/percent-pie.png';
+import PictorialBarBasic from '../../../../../public/components/pictorial-bar-basic.png';
+import PictureWall from '../../../../../public/components/picture-wall.jpg';
+import PieBasic from '../../../../../public/components/pie-basic.png';
+import PolarBar from '../../../../../public/components/polar-bar.png';
+import PolarStackBar from '../../../../../public/components/polar-stack-bar.png';
+import ProgressBar from '../../../../../public/components/progress-bar.png';
+import QrCode from '../../../../../public/components/qrcode.jpg';
+import RadarBasic from '../../../../../public/components/radar-basic.png';
+import RadialBar from '../../../../../public/components/radial-bar.png';
+import RadialLine from '../../../../../public/components/radial-line.png';
+import RadialStackLine from '../../../../../public/components/radial-stack-line.png';
+import Radio from '../../../../../public/components/radio.jpg';
+import RankBar from '../../../../../public/components/rank-bar.png';
+import Rate from '../../../../../public/components/rate.jpg';
+import ScatterBasic from '../../../../../public/components/scatter-basic.png';
+import ScatterMap from '../../../../../public/components/scatter-map.png';
+import SelectBasic from '../../../../../public/components/select-basic.jpg';
+import StackBar from '../../../../../public/components/stack-bar.png';
+import StateCard from '../../../../../public/components/state-card.jpg';
+import StateList from '../../../../../public/components/state-list.jpg';
+import StepLine from '../../../../../public/components/step-line.png';
+import Steps from '../../../../../public/components/steps.jpg';
+import SunBurstBasic from '../../../../../public/components/sub-burst-basic.png';
+import Switch from '../../../../../public/components/switch.jpg';
+import TabBasic from '../../../../../public/components/tab-basic.jpg';
+import Tag from '../../../../../public/components/tag.jpg';
+import TextCarousel from '../../../../../public/components/text-carousel.jpg';
+import Text from '../../../../../public/components/text.jpg';
+import Ticket from '../../../../../public/components/ticket.jpg';
+import TimeMachineBasic from '../../../../../public/components/time-machine.jpg';
+import TitleBasic from '../../../../../public/components/title-basic.jpg';
+import TreeMapBasic from '../../../../../public/components/tree-map-basic.png';
+import Tree from '../../../../../public/components/tree.png';
+import Typed from '../../../../../public/components/typed.jpg';
+import VideoBasic from '../../../../../public/components/video-basic.jpg';
+import WaterBall from '../../../../../public/components/water-ball.png';
+import WaterFallBar from '../../../../../public/components/waterfall-bar.png';
+import Weather from '../../../../../public/components/weather.png';
+import WordCloudBasic from '../../../../../public/components/word-cloud.png';
+import ZebraBar from '../../../../../public/components/zebra-bar.png';
 import GENERATE_COMPONENT_LIST from './GenerateList';
 
 const commonClass: string = classnames('ac-i-size-m');
@@ -503,7 +503,7 @@ const _COMPONENT_TYPE_LIST = [
             title: '模型',
             icon: Model,
             description: '',
-            disabled: GlobalConfig.IS_STATIC,
+            disabled: GlobalConfig.IS_STATIC || GlobalConfig.IS_IMPROVE_BACKEND,
           },
         ],
       },
@@ -529,7 +529,7 @@ const _COMPONENT_TYPE_LIST = [
             title: '高德3d地图',
             icon: ALiMap,
             description: '',
-            disabled: GlobalConfig.IS_STATIC,
+            disabled: GlobalConfig.IS_STATIC || GlobalConfig.IS_IMPROVE_BACKEND,
           },
         ],
       },
@@ -585,7 +585,7 @@ const _COMPONENT_TYPE_LIST = [
             title: '天气',
             icon: Weather,
             description: '',
-            disabled: GlobalConfig.IS_STATIC,
+            disabled: GlobalConfig.IS_STATIC || GlobalConfig.IS_IMPROVE_BACKEND,
           },
           {
             type: 'PATH_BASIC',

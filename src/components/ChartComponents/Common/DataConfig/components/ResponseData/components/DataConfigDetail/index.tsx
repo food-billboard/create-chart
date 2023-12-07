@@ -6,22 +6,22 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { useResponseData } from '@/hooks';
 import Select from '@/components/ChartComponents/Common/Select';
 import FocusWrapper from '@/components/FocusWrapper';
-import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import { useResponseData } from '@/hooks';
 import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import CodeViewer from '../CodeViewer';
-import Title from './components/NormalTitle';
-import ResponseDataTitle from './components/ResponseDataTitle';
-import SubTitle, { SubForm } from './components/SubTitle';
 import DataFilter from './components/DataFilter';
 import DefineConfig from './components/DefineConfig';
-import ResponseDataMap from './components/ResponseDataMap';
 import { TOnChange } from './components/DefineConfig/type';
+import Title from './components/NormalTitle';
+import ResponseDataMap from './components/ResponseDataMap';
+import ResponseDataTitle from './components/ResponseDataTitle';
+import SubTitle, { SubForm } from './components/SubTitle';
 import styles from './index.less';
 
 export interface IDataConfigDetailRef {
@@ -117,7 +117,11 @@ const DataConfigDetail = forwardRef<
 
   const dataSourceOptions = useMemo(() => {
     const options = [{ label: '静态数据', value: 'static' }];
-    if (!!GlobalConfig.ENABLE_MOCK_DATA_CONFIG && !GlobalConfig.IS_STATIC)
+    if (
+      !!GlobalConfig.ENABLE_MOCK_DATA_CONFIG &&
+      !GlobalConfig.IS_STATIC &&
+      !GlobalConfig.IS_IMPROVE_BACKEND
+    )
       options.push({ label: 'Mock', value: 'mock' });
     options.push({ label: 'API', value: 'api' });
     return options;

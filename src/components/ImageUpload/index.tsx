@@ -1,17 +1,17 @@
-import { useCallback, CSSProperties, useState, useRef, useEffect } from 'react';
-import { Upload, Modal, UploadProps, message } from 'antd';
+import { FileImageOutlined, LinkOutlined } from '@ant-design/icons';
 import { useControllableValue } from 'ahooks';
+import { Upload, Modal, UploadProps, message } from 'antd';
+import type { UploadFile } from 'antd/es/upload/interface';
 import classnames from 'classnames';
 import { nanoid } from 'nanoid';
-import type { UploadFile } from 'antd/es/upload/interface';
-import { FileImageOutlined, LinkOutlined } from '@ant-design/icons';
+import { useCallback, CSSProperties, useState, useRef, useEffect } from 'react';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import {
   UploadImage,
   createBaseUploadFile,
   createUploadedFile,
   beforeDelete,
 } from '@/utils/Assist/Upload';
-import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import Input, { InputRef } from './Input';
 import styles from './index.less';
 
@@ -108,6 +108,11 @@ const PicturesWall = (
     [UploadImage, setInputValue, onRemove, value],
   );
 
+  // improve自定义上传
+  const beforeUploadImprove = useCallback(async (file) => {
+    return false;
+  }, []);
+
   // 默认自定义上传
   const beforeUploadNormal = useCallback(
     async (file) => {
@@ -131,11 +136,13 @@ const PicturesWall = (
     async (file) => {
       if (GlobalConfig.IS_STATIC) {
         return beforeUploadStatic(file);
+      } else if (GlobalConfig.IS_IMPROVE_BACKEND) {
+        return beforeUploadImprove(file);
       } else {
         return beforeUploadNormal(file);
       }
     },
-    [beforeUploadStatic, beforeUploadNormal],
+    [beforeUploadStatic, beforeUploadNormal, beforeUploadImprove],
   );
 
   const onUrlChange = useCallback(

@@ -1,4 +1,6 @@
 import { message } from 'antd';
+import { isModelHash, useAnyDva } from '@/hooks';
+import { IGlobalModelState } from '@/models/connect';
 import {
   postScreen,
   putScreen,
@@ -7,12 +9,10 @@ import {
   putScreenPool,
   putScreenModelPool,
 } from '@/services';
-import { isModelHash, useAnyDva } from '@/hooks';
-import { IGlobalModelState } from '@/models/connect';
 import { captureCover, captureCoverAndUpload } from '@/utils/captureCover';
+import { SCREEN_VERSION } from '../../constants';
 import LocalConfigInstance, { LocalConfig } from '../LocalConfig';
 import nProgressUtil from '../Progress';
-import { SCREEN_VERSION } from '../../constants';
 
 // 正常保存大屏
 export const saveScreenData = async ({
@@ -87,6 +87,15 @@ export const saveScreenData = async ({
     nProgressUtil.done();
   }
 };
+
+// improve全量保存大屏
+export const saveLocalAllScreenData = async ({
+  loading,
+  setLoading,
+}: {
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+}) => {};
 
 // 链式全量保存大屏
 export const saveScreenDataAllAuto = async ({

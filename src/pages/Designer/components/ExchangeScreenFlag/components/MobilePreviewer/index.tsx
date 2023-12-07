@@ -1,14 +1,3 @@
-import { getComponentByType } from '@/components/ChartComponents';
-import GlobalLoadingActionButton from '@/components/GlobalLoadingActionButton';
-import { InternalBorderWrapper } from '@/components/InternalBorder';
-import { Loading } from '@/components/PageLoading';
-import { ConnectState } from '@/models/connect';
-import { putScreen, putScreenModel } from '@/services';
-import { mergeWithoutArray } from '@/utils';
-import { ComponentTransformOriginChange } from '@/utils/Assist/BreakingChange';
-import { getDvaGlobalModelData } from '@/utils/Assist/Component';
-import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
 import { Drawer, message } from 'antd';
 import classnames from 'classnames';
 import { noop } from 'lodash';
@@ -20,6 +9,17 @@ import {
   useState,
 } from 'react';
 import { connect } from 'umi';
+import { getComponentByType } from '@/components/ChartComponents';
+import GlobalLoadingActionButton from '@/components/GlobalLoadingActionButton';
+import { InternalBorderWrapper } from '@/components/InternalBorder';
+import { Loading } from '@/components/PageLoading';
+import { ConnectState } from '@/models/connect';
+import { putScreen, putScreenModel } from '@/services';
+import { mergeWithoutArray } from '@/utils';
+import { ComponentTransformOriginChange } from '@/utils/Assist/BreakingChange';
+import { getDvaGlobalModelData } from '@/utils/Assist/Component';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
 import { NormalPainter } from '../../../Panel/components/Painter';
 import { ExchangePreviewerContext } from './context';
 import styles from './index.less';
@@ -192,7 +192,7 @@ const MobilePreviewer = forwardRef<MobilePreviewerRef, {}>((props, ref) => {
     }
   }, [componentList]);
 
-  const handleOk = useCallback(async () => {
+  const handleOkNormal = useCallback(async () => {
     setLoading(true);
     try {
       const { screenData } = getDvaGlobalModelData();
@@ -229,6 +229,18 @@ const MobilePreviewer = forwardRef<MobilePreviewerRef, {}>((props, ref) => {
     }
   }, [componentList]);
 
+  const handleOkImprove = useCallback(async () => {}, []);
+
+  const handleOk = useCallback(() => {
+    if (GlobalConfig.IS_STATIC) {
+      return handleOkStatic();
+    } else if (GlobalConfig.IS_IMPROVE_BACKEND) {
+      return handleOkImprove();
+    } else {
+      return handleOkNormal();
+    }
+  }, [handleOkNormal, handleOkStatic, handleOkImprove]);
+
   useImperativeHandle(
     ref,
     () => {
@@ -261,7 +273,7 @@ const MobilePreviewer = forwardRef<MobilePreviewerRef, {}>((props, ref) => {
           </GlobalLoadingActionButton>
           <GlobalLoadingActionButton
             type="primary"
-            onClick={GlobalConfig.IS_STATIC ? handleOkStatic : handleOk}
+            onClick={handleOk}
             loading={loading}
           >
             确认应用

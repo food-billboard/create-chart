@@ -15,7 +15,10 @@ import FocusWrapper from '@/components/FocusWrapper';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import { isModelHash } from '@/hooks';
 import { previewScreen, previewScreenModel } from '@/services';
-import { saveScreenData } from '@/utils/Assist/DataChangePool';
+import {
+  saveScreenData,
+  saveLocalAllScreenData,
+} from '@/utils/Assist/DataChangePool';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { staticExportData, staticLeadIn } from '@/utils/Assist/LeadInAndOutput';
 import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
@@ -75,10 +78,16 @@ const Header = (props: {
     );
   }, [editMode, name, setScreen]);
 
+  const handlePreviewImprove = useCallback(async () => {}, []);
+
   const handlePreview = useCallback(async () => {
     // 纯前端大屏
     if (GlobalConfig.IS_STATIC) {
       return goView();
+    }
+    // improve大屏
+    if (GlobalConfig.IS_IMPROVE_BACKEND) {
+      return handlePreviewImprove();
     }
 
     setFetchLoading(true);
@@ -98,11 +107,17 @@ const Header = (props: {
 
   // 保存
   const handleStore = useCallback(async () => {
-    return saveScreenData({
+    let method: any;
+    if (GlobalConfig.IS_IMPROVE_BACKEND) {
+      method = saveLocalAllScreenData;
+    } else {
+      method = saveScreenData;
+    }
+    return method({
       loading: fetchLoading,
       setLoading: setFetchLoading,
     });
-  }, [fetchLoading]);
+  }, [fetchLoading, handlePreviewImprove]);
 
   // 导入
   const handleImport = useCallback(async () => {
@@ -219,6 +234,11 @@ const Header = (props: {
           previewButton,
           resetScreenButton,
         );
+      }
+      // improve大屏
+      // ? 实时保存在localstorage，但是需要手动保存到后端
+      else if (GlobalConfig.IS_IMPROVE_BACKEND) {
+        baseList.push(previewButton, storeButton);
       } else {
         baseList.push(previewButton);
       }

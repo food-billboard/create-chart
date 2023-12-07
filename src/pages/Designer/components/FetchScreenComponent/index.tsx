@@ -1,3 +1,8 @@
+import { message } from 'antd';
+import { get } from 'lodash';
+import { nanoid } from 'nanoid';
+import { forwardRef, useEffect, useImperativeHandle } from 'react';
+import { connect } from 'umi';
 import { mergeComponentDefaultConfig } from '@/components/ChartComponents';
 import { useIsModelHash } from '@/hooks';
 import { getScreenDetail, getScreenModelDetail } from '@/services';
@@ -11,11 +16,6 @@ import DEFAULT_SCREEN_DATA, {
   createScreenDataRequest,
   DEFAULT_VERSION_CHANGE_TOOLTIP,
 } from '@/utils/constants/screenData';
-import { message } from 'antd';
-import { get } from 'lodash';
-import { nanoid } from 'nanoid';
-import { forwardRef, useEffect, useImperativeHandle } from 'react';
-import { connect } from 'umi';
 import { autoFitScale } from '../Panel/components/ToolBar/components/Scale';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
@@ -145,7 +145,8 @@ const FetchScreenComponent = forwardRef<
     onLoad?.();
   };
 
-  const fetchData = async (isReload: boolean = false) => {
+  // 普通获取数据
+  const fetchDataNormal = async (isReload: boolean = false) => {
     let width;
     let height;
     let flag;
@@ -207,13 +208,24 @@ const FetchScreenComponent = forwardRef<
     onLoad?.();
   };
 
+  // improve获取数据
+  const fetchDataImprove = async (isReload: boolean = false) => {};
+
+  const fetchData = (isReload: boolean = false) => {
+    if (GlobalConfig.IS_STATIC) {
+      return fetchData4Static(isReload);
+    } else if (GlobalConfig.IS_IMPROVE_BACKEND) {
+      return fetchDataImprove(isReload);
+    } else {
+      return fetchDataNormal(isReload);
+    }
+  };
+
   useImperativeHandle(
     ref,
     () => {
       return {
-        reload: GlobalConfig.IS_STATIC
-          ? fetchData4Static.bind(null, true)
-          : fetchData.bind(null, true),
+        reload: fetchData.bind(null, true),
       };
     },
     [],
@@ -221,7 +233,7 @@ const FetchScreenComponent = forwardRef<
 
   useEffect(() => {
     if (needFetch) {
-      GlobalConfig.IS_STATIC ? fetchData4Static() : fetchData();
+      fetchData();
     }
   }, [needFetch]);
 

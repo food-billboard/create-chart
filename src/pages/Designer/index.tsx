@@ -115,8 +115,15 @@ const Designer = (props: {
 
   const onLoad = useCallback(async () => {
     setLoading(false);
-    // 自动保存且为非前端简化大屏才需要创建流式保存
-    if (GlobalConfig.isAutoSaveType() && !GlobalConfig.IS_STATIC) {
+    // 自动保存 且
+    // 为非前端简化大屏 且
+    // 为非improve大屏
+    // 才需要创建流式保存
+    if (
+      GlobalConfig.isAutoSaveType() &&
+      !GlobalConfig.IS_STATIC &&
+      !GlobalConfig.IS_IMPROVE_BACKEND
+    ) {
       const { id } = getLocationQuery() || {};
       clearInterval(heartValidTimerRef.current);
       await createPutScreenPool({
@@ -137,12 +144,14 @@ const Designer = (props: {
 
   const reload = async (hashData: any, prevHashData: any) => {
     setLoading(true);
-    // 非前端大屏才需要
-    if (!GlobalConfig.IS_STATIC)
+    // 非前端大屏和非improve大屏 才需要
+    if (!GlobalConfig.IS_STATIC) {
       await deleteScreenPool(true, {
         type: prevHashData.isModel ? 'model' : 'screen',
         _id: prevHashData.id,
       });
+    }
+
     await requestRef.current?.reload();
   };
 
@@ -153,8 +162,9 @@ const Designer = (props: {
   useHashChangeReload(reload);
 
   useEffect(() => {
-    // 前端大屏不需要
-    if (!GlobalConfig.IS_STATIC) getMockValueKindMap();
+    // 前端大屏或improve不需要
+    if (!GlobalConfig.IS_STATIC && !GlobalConfig.IS_IMPROVE_BACKEND)
+      getMockValueKindMap();
     return () => {
       clearInterval(heartValidTimerRef.current);
     };
@@ -165,9 +175,10 @@ const Designer = (props: {
   }, [setScreenType]);
 
   // 页面关闭的时候需要提示是否保存
-  // 这是在手动保存的时候才需要使用的
+  // 这是在手动保存或者improve的时候才需要使用的
   useEffect(() => {
-    if (GlobalConfig.isAutoSaveType()) return;
+    if (GlobalConfig.isAutoSaveType() && !GlobalConfig.IS_IMPROVE_BACKEND)
+      return;
     window.addEventListener('beforeunload', closeAndPrompt);
     return () => {
       window.removeEventListener('beforeunload', closeAndPrompt);
@@ -178,7 +189,11 @@ const Designer = (props: {
   // 页面关闭或者hash发生改变的时候
   // 关闭后端保存流
   useEffect(() => {
-    if (!GlobalConfig.isAutoSaveType() || GlobalConfig.IS_STATIC) {
+    if (
+      !GlobalConfig.isAutoSaveType() ||
+      GlobalConfig.IS_STATIC ||
+      GlobalConfig.IS_IMPROVE_BACKEND
+    ) {
       return;
     }
     window.addEventListener('unload', deleteScreenPool.bind(null, false, {}));
