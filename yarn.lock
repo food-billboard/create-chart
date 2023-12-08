@@ -42,7 +42,7 @@
   dependencies:
     "@ctrl/tinycolor" "^3.4.0"
 
-"@ant-design/cssinjs@^1.11.1", "@ant-design/cssinjs@^1.18.0", "@ant-design/cssinjs@^1.9.1":
+"@ant-design/cssinjs@^1.11.1", "@ant-design/cssinjs@^1.9.1":
   version "1.18.0"
   resolved "https://registry.npmmirror.com/@ant-design/cssinjs/-/cssinjs-1.18.0.tgz#92701684cab5fc67bb62bc813ec1b4a33258018d"
   integrity sha512-NXzfnNjJgpn+L6d0cD2cS14Tsqs46Bsua6PwVMlmN+F0OEoa9PhJRwUWmI+HyIrc4cgVZVfQTDpXC0p07Jmglw==
@@ -52,6 +52,19 @@
     "@emotion/unitless" "^0.7.5"
     classnames "^2.3.1"
     csstype "^3.0.10"
+    rc-util "^5.35.0"
+    stylis "^4.0.13"
+
+"@ant-design/cssinjs@^1.18.0":
+  version "1.18.1"
+  resolved "https://registry.npmmirror.com/@ant-design/cssinjs/-/cssinjs-1.18.1.tgz#ebb0aa28c751ce2203f149554d4a09b2c09174c0"
+  integrity sha512-1JURAPrsjK1GwpqByTq3bJ7nF7lbMKDZpehqeR2n8/IR5O58/W1U4VcOeaw5ZyTHri3tEMcom7dyP2tvxpW54g==
+  dependencies:
+    "@babel/runtime" "^7.11.1"
+    "@emotion/hash" "^0.8.0"
+    "@emotion/unitless" "^0.7.5"
+    classnames "^2.3.1"
+    csstype "3.1.2"
     rc-util "^5.35.0"
     stylis "^4.0.13"
 
@@ -72,7 +85,7 @@
     lodash "^4.17.15"
     rc-util "^5.9.4"
 
-"@ant-design/icons@^5.0.0", "@ant-design/icons@^5.1.4", "@ant-design/icons@^5.2.6":
+"@ant-design/icons@^5.0.0", "@ant-design/icons@^5.2.6":
   version "5.2.6"
   resolved "https://registry.npmmirror.com/@ant-design/icons/-/icons-5.2.6.tgz#2d4a9a37f531eb2a20cebec01d6fb69cf593900d"
   integrity sha512-4wn0WShF43TrggskBJPRqCD0fcHbzTYjnaoskdiJrVHg86yxoZ8ZUqsXvyn4WUqehRiFKnaclOhqk9w4Ui2KVw==
@@ -168,7 +181,7 @@
     rc-resize-observer "^1.1.0"
     rc-util "^5.0.6"
 
-"@ant-design/pro-layout@7.17.16", "@ant-design/pro-layout@^7.16.4":
+"@ant-design/pro-layout@7.17.16", "@ant-design/pro-layout@^7.17.16":
   version "7.17.16"
   resolved "https://registry.npmmirror.com/@ant-design/pro-layout/-/pro-layout-7.17.16.tgz#124d87d4b602994a395de34caf814304e2c4b72a"
   integrity sha512-nBQbAJEUkGqQNBqT30FcbcNXHepxySj/O7est1+2iXPXeVeyQYLHBJXcdvCrUrMty6ev3loG8K+6L3DXQkJ/5Q==
@@ -244,7 +257,7 @@
     rc-resize-observer "^1.0.0"
     rc-util "^5.0.1"
 
-"@ant-design/pro-utils@2.15.2", "@ant-design/pro-utils@^2.12.6":
+"@ant-design/pro-utils@2.15.2", "@ant-design/pro-utils@^2.15.2":
   version "2.15.2"
   resolved "https://registry.npmmirror.com/@ant-design/pro-utils/-/pro-utils-2.15.2.tgz#d8a6cdd506842ea0d6d6cabb85e2e247bc096977"
   integrity sha512-kzMT658CGrQqoihKPlZhbnRioovwMhM59vqqVXuT6A+IuyxJhs5pxN73C6sN2+ZoeYCo/Gewnfn9v1/2vHU2Zg==
@@ -1357,11 +1370,6 @@
     debug "^4.3.4"
     kolorist "^1.6.0"
     local-pkg "^0.4.2"
-
-"@icons/material@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.npmmirror.com/@icons/material/-/material-0.2.4.tgz#e90c9f71768b3736e76d7dd6783fc6c2afa88bc8"
-  integrity sha512-QPcGmICAPbGLGb6F/yNf/KzKqvFx8z5qx3D1yFqVAjoFmXK35EgyW+cJ57Te3CNsmzblwtzakLGFqHPqrfb4Tw==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -4728,7 +4736,7 @@ cssstyle@^2.3.0:
   dependencies:
     cssom "~0.3.6"
 
-csstype@^3.0.10, csstype@^3.0.2, csstype@^3.1.2:
+csstype@3.1.2, csstype@^3.0.10, csstype@^3.0.2, csstype@^3.1.2:
   version "3.1.2"
   resolved "https://registry.npmmirror.com/csstype/-/csstype-3.1.2.tgz#1d4bf9d572f11c14031f0436e1c10bc1f571f50b"
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
@@ -8475,7 +8483,7 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
-lodash-es@^4.17.15, lodash-es@^4.17.5, lodash-es@^4.2.1:
+lodash-es@^4.17.5, lodash-es@^4.2.1:
   version "4.17.21"
   resolved "https://registry.npmmirror.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
   integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
@@ -8637,11 +8645,6 @@ map-visit@^1.0.0:
   integrity sha512-4y7uGv8bd2WdM9vpQsiQNo41Ln1NvhvDRuVt0k2JZQ+ezN2uaQes7lZeZ+QQUHOLQAtDaBJ+7wCbi+ab/KFs+w==
   dependencies:
     object-visit "^1.0.0"
-
-material-colors@^1.2.1:
-  version "1.2.6"
-  resolved "https://registry.npmmirror.com/material-colors/-/material-colors-1.2.6.tgz#6d1958871126992ceecc72f4bcc4d8f010865f46"
-  integrity sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==
 
 mathml-tag-names@^2.1.3:
   version "2.1.3"
@@ -10943,19 +10946,6 @@ react-base16-styling@^0.6.0:
     lodash.flow "^3.3.0"
     pure-color "^1.2.0"
 
-react-color@^2.19.3:
-  version "2.19.3"
-  resolved "https://registry.npmmirror.com/react-color/-/react-color-2.19.3.tgz#ec6c6b4568312a3c6a18420ab0472e146aa5683d"
-  integrity sha512-LEeGE/ZzNLIsFWa1TMe8y5VYqr7bibneWmvJwm1pCn/eNmrabWDh659JSPn9BuaMpEfU83WTOJfnCcjDZwNQTA==
-  dependencies:
-    "@icons/material" "^0.2.4"
-    lodash "^4.17.15"
-    lodash-es "^4.17.15"
-    material-colors "^1.2.1"
-    prop-types "^15.5.10"
-    reactcss "^1.2.0"
-    tinycolor2 "^1.4.1"
-
 react-dnd-html5-backend@^14.1.0:
   version "14.1.0"
   resolved "https://registry.npmmirror.com/react-dnd-html5-backend/-/react-dnd-html5-backend-14.1.0.tgz#b35a3a0c16dd3a2bfb5eb7ec62cf0c2cace8b62f"
@@ -11314,7 +11304,7 @@ react@^18.2.0:
   dependencies:
     loose-envify "^1.1.0"
 
-reactcss@^1.2.0, reactcss@^1.2.3:
+reactcss@^1.2.3:
   version "1.2.3"
   resolved "https://registry.npmmirror.com/reactcss/-/reactcss-1.2.3.tgz#c00013875e557b1cf0dfd9a368a1c3dab3b548dd"
   integrity sha512-KiwVUcFu1RErkI97ywr8nvx8dNOpT03rbnma0SSalTYjkrPYaEajR4a/MRt6DZ46K6arDRbWMNHF+xH7G7n/8A==
@@ -12738,7 +12728,7 @@ tiny-warning@^1.0.0:
   resolved "https://registry.npmmirror.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
 
-tinycolor2@^1.4.1, tinycolor2@^1.4.2:
+tinycolor2@^1.4.2:
   version "1.6.0"
   resolved "https://registry.npmmirror.com/tinycolor2/-/tinycolor2-1.6.0.tgz#f98007460169b0263b97072c5ae92484ce02d09e"
   integrity sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==

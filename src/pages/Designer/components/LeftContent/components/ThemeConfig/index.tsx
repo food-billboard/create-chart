@@ -103,9 +103,11 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
       title="主题色修改"
       placement="left"
       width={400}
-      bodyStyle={{
-        position: 'relative',
-        pointerEvents: changeLoading ? 'none' : 'all',
+      styles={{
+        body: {
+          position: 'relative',
+          pointerEvents: changeLoading ? 'none' : 'all',
+        },
       }}
     >
       {changeLoading && (

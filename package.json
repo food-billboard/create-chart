@@ -39,9 +39,9 @@
     ]
   },
   "dependencies": {
-    "@ant-design/icons": "^5.1.4",
-    "@ant-design/pro-layout": "^7.16.4",
-    "@ant-design/pro-utils": "^2.12.6",
+    "@ant-design/icons": "^5.2.6",
+    "@ant-design/pro-layout": "^7.17.16",
+    "@ant-design/pro-utils": "^2.15.2",
     "@lucky-canvas/react": "^0.1.13",
     "@monaco-editor/react": "^4.5.1",
     "@scena/react-ruler": "^0.9.1",
@@ -90,7 +90,6 @@
     "raf-manager": "^0.3.0",
     "re-resizable": "^6.9.9",
     "react": "^18.2.0",
-    "react-color": "^2.19.3",
     "react-dnd": "^14.0.5",
     "react-dnd-html5-backend": "^14.1.0",
     "react-dom": "^18.2.0",

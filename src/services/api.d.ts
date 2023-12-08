@@ -193,3 +193,12 @@ declare namespace API_THIRD {
     };
   };
 }
+
+declare namespace API_IMPROVE {
+  export type InternalBackgroundParams = {
+    current: number;
+    pageSize: number;
+  };
+
+  export type InternalBackgroundData = {};
+}

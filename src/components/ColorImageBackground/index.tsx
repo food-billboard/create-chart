@@ -1,6 +1,6 @@
-import { ReactNode, CSSProperties } from 'react';
 import classnames from 'classnames';
-import { BackgroundMap } from '@/components/InternalBackground';
+import { ReactNode, CSSProperties } from 'react';
+import { BackgroundRender } from '@/components/InternalBackground';
 import styles from './index.less';
 
 const ColorImageBackground = (props: {
@@ -37,11 +37,9 @@ const ColorImageBackground = (props: {
           className={styles['component-color-image-background-image']}
         />
       )}
-      {type === 'internal_background' &&
-        ((BackgroundMap as any)[
-          (image || '').replace('internal_background-', '')
-        ]?.value ||
-          '')}
+      {type === 'internal_background' && (
+        <BackgroundRender value={image || ''} />
+      )}
       {children}
     </div>
   );

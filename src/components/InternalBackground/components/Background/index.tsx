@@ -1,6 +1,7 @@
-import GradientMixBackground from './GradientMixBackground';
-import DoodleBubbleBackground from './DoodleBubbleBackground';
 import LazyLoadWrapper from '../../../LazyLoad';
+import DoodleBubbleBackground from './DoodleBubbleBackground';
+import GradientMixBackground from './GradientMixBackground';
+import gradientMixBackground from './images/logo.jpg';
 
 const ColorLineBackground = LazyLoadWrapper(async () => {
   // @ts-ignore
@@ -13,13 +14,16 @@ export default {
   GRADIENT_MIX_BACKGROUND: {
     value: <GradientMixBackground />,
     title: '混合渐变',
+    image: gradientMixBackground,
   },
   DoodleBubbleBackground: {
     value: <DoodleBubbleBackground />,
     title: '气泡',
+    image: gradientMixBackground,
   },
   ColorLineBackground: {
     value: <ColorLineBackground />,
     title: '彩色线条',
+    image: gradientMixBackground,
   },
 };

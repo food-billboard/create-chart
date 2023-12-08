@@ -136,7 +136,11 @@ const DataConfigDetail = forwardRef<
       onClose={setVisible.bind(null, false)}
       title="设置数据源"
       width={500}
-      bodyStyle={{ paddingTop: 0 }}
+      styles={{
+        body: {
+          paddingTop: 0,
+        },
+      }}
       destroyOnClose
     >
       <FocusWrapper

@@ -1,6 +1,5 @@
-import { CSSProperties } from 'react';
 import classnames from 'classnames';
-import { PageLoading } from '@ant-design/pro-layout';
+import { CSSProperties } from 'react';
 import PacmanLoader from 'react-spinners/HashLoader';
 import { usePrimaryColor } from '@/hooks';
 import styles from './index.less';
