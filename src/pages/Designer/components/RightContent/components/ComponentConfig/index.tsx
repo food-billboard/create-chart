@@ -1,10 +1,3 @@
-import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';
-import ConfigWrapper, {
-  ConfigItem,
-} from '@/components/ChartComponents/Common/ConfigWrapper';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import IconTooltip from '@/components/IconTooltip';
-import LazyLoadWrapper from '@/components/LazyLoad';
 import {
   CodeOutlined,
   ControlOutlined,
@@ -12,6 +5,13 @@ import {
 } from '@ant-design/icons';
 import { useCallback, useMemo } from 'react';
 import { connect } from 'umi';
+import BaseConfig from '@/components/ChartComponents/Common/BaseConfig';
+import ConfigWrapper, {
+  ConfigItem,
+} from '@/components/ChartComponents/Common/ConfigWrapper';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import IconTooltip from '@/components/IconTooltip';
+import LazyLoadWrapper from '@/components/LazyLoad';
 import ConfigComponent from './ConfigComponent';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
@@ -59,7 +59,8 @@ const ComponentConfig = (props: {
           {
             label: (
               <IconTooltip title="配置">
-                <ProjectOutlined />
+                <ProjectOutlined className="m-r-4" />
+                配置
               </IconTooltip>
             ),
             key: '1',
@@ -77,7 +78,8 @@ const ComponentConfig = (props: {
           {
             label: (
               <IconTooltip title="数据">
-                <CodeOutlined />
+                <CodeOutlined className="m-r-4" />
+                数据
               </IconTooltip>
             ),
             key: '2',
@@ -90,7 +92,8 @@ const ComponentConfig = (props: {
           {
             label: (
               <IconTooltip title="交互">
-                <ControlOutlined />
+                <ControlOutlined className="m-r-4" />
+                交互
               </IconTooltip>
             ),
             key: '3',
