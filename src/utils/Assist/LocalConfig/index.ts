@@ -10,7 +10,7 @@ export class LocalConfig extends GLOBAL_EVENT_EMITTER_FACTORY {
     });
   }
 
-  // * 记得这里的key其实是从总的事件那边复制来的
+  // * 记得这里的key其实是从总的事件那边复制来的(/src/utils/Assist/EventEmitter/ComponentAbout.event.ts)
   // * 所以需要那边存一份，这样方便统一管理
   static CONFIG_KEY_BACKGROUND = EVENT_NAME_MAP.CONFIG_KEY_BACKGROUND;
   static CONFIG_KEY_LAYER_WIDTH = EVENT_NAME_MAP.CONFIG_KEY_LAYER_WIDTH;
@@ -23,6 +23,8 @@ export class LocalConfig extends GLOBAL_EVENT_EMITTER_FACTORY {
     EVENT_NAME_MAP.STATIC_COMPONENT_DATA_SAVE_TIMESTAMPS;
   static STATIC_GUIDE_LINE_DRAG_INTEGER_STICKY =
     EVENT_NAME_MAP.STATIC_GUIDE_LINE_DRAG_INTEGER_STICKY;
+  static IMPROVE_BACKEND_STATIC_COMPONENT_DATA_SAVE_PREFIX =
+    EVENT_NAME_MAP.IMPROVE_BACKEND_STATIC_COMPONENT_DATA_SAVE_PREFIX;
 
   store;
 

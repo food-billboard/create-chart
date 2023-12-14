@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { Modal, message } from 'antd';
 import { get } from 'lodash';
 import { nanoid } from 'nanoid';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
@@ -50,7 +50,7 @@ const FetchScreenComponent = forwardRef<
 
   const isModel = useIsModelHash();
 
-  const parseComponentData = async (
+  const parseComponentAndSaveData = async (
     screenData: ComponentData.TScreenData,
     version: string,
   ) => {
@@ -79,7 +79,15 @@ const FetchScreenComponent = forwardRef<
   };
 
   // 前端大屏数据获取
-  const fetchData4Static = async (isReload: boolean = false) => {
+  const fetchData4Local = async (params: {
+    // 本地存储的key
+    localKey: string;
+    // 是否需要reload
+    isReload?: boolean;
+    // 是否需要在未存在值的情况下初始化
+    needCache?: boolean;
+  }) => {
+    const { localKey, isReload = false, needCache = true } = params;
     let width;
     let height;
     let flag;
@@ -91,12 +99,13 @@ const FetchScreenComponent = forwardRef<
     height = defaultHeight;
 
     try {
-      const data = await LocalConfigInstance.getItem(
-        LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
-      );
+      const data = await LocalConfigInstance.getItem(localKey);
       if (!data.errMsg && data.value) {
         const { version, ...baseScreenData } = data.value;
-        const screenData = await parseComponentData(baseScreenData, version);
+        const screenData = await parseComponentAndSaveData(
+          baseScreenData,
+          version,
+        );
         width = screenData.config.style.width;
         height = screenData.config.style.height;
         flag = screenData.config.flag.type;
@@ -111,10 +120,8 @@ const FetchScreenComponent = forwardRef<
         });
         // 先注册主题色再修改数据
         await ThemeUtil.initCurrentThemeData(DEFAULT_THEME_NAME, true, true);
-        await LocalConfigInstance.setItem(
-          LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
-          DEFAULT_SCREEN_DATA,
-        );
+        if (needCache)
+          await LocalConfigInstance.setItem(localKey, DEFAULT_SCREEN_DATA);
         if (isReload) {
           setComponentAll([], false);
           setGuideLine({
@@ -145,6 +152,14 @@ const FetchScreenComponent = forwardRef<
     onLoad?.();
   };
 
+  const fetchData4Static = async (isReload: boolean = false) => {
+    return fetchData4Local({
+      localKey: LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
+      isReload,
+      needCache: true,
+    });
+  };
+
   // 普通获取数据
   const fetchDataNormal = async (isReload: boolean = false) => {
     let width;
@@ -167,7 +182,7 @@ const FetchScreenComponent = forwardRef<
           _id: id,
         });
         const { components, _id, version } = data;
-        const screenData = await parseComponentData(
+        const screenData = await parseComponentAndSaveData(
           {
             ...components,
             _id: components._id || _id,
@@ -209,7 +224,39 @@ const FetchScreenComponent = forwardRef<
   };
 
   // improve获取数据
-  const fetchDataImprove = async (isReload: boolean = false) => {};
+  const fetchDataImprove = async (isReload: boolean = false) => {
+    try {
+      const { id } = getLocationQuery() || {};
+      const cacheKey =
+        LocalConfig.IMPROVE_BACKEND_STATIC_COMPONENT_DATA_SAVE_PREFIX + id;
+      const localData = await LocalConfigInstance.getItem(cacheKey);
+      if (!localData.errMsg && localData.value) {
+        return new Promise<void>((resolve) => {
+          Modal.confirm({
+            title: '提示',
+            content: '本地电脑存在未保存的记录，是否加载该记录',
+            okText: '使用本地记录',
+            cancelText: '使用保存记录',
+            maskClosable: false,
+            onCancel: async () => {
+              await fetchDataNormal(isReload);
+              resolve();
+            },
+            onOk: async () => {
+              await fetchData4Local({
+                localKey:
+                  LocalConfig.IMPROVE_BACKEND_STATIC_COMPONENT_DATA_SAVE_PREFIX,
+                isReload,
+                needCache: true,
+              });
+              resolve();
+            },
+          });
+        });
+      }
+      return fetchDataNormal(isReload);
+    } catch (err) {}
+  };
 
   const fetchData = (isReload: boolean = false) => {
     if (GlobalConfig.IS_STATIC) {

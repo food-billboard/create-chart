@@ -4,6 +4,7 @@ import {
   saveScreenDataAuto,
   saveScreenDataAllAuto,
   saveScreenDataAllAutoStatic,
+  saveLocalAllScreenData,
 } from '../DataChangePool';
 import GlobalConfig from '../GlobalConfig';
 
@@ -71,7 +72,9 @@ export const ScreenDataRequest = (state: IGlobalModelState, action: any) => {
       let method: any = saveScreenDataAuto;
       switch (GlobalConfig.DEFAULT_SCREEN_SAVE_TYPE) {
         case 'auto-all-storage':
-          method = saveScreenDataAllAutoStatic;
+          method = GlobalConfig.IS_IMPROVE_BACKEND
+            ? saveLocalAllScreenData
+            : saveScreenDataAllAutoStatic;
           break;
         case 'auto-all':
           method = saveScreenDataAllAuto;

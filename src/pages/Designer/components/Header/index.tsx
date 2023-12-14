@@ -15,10 +15,7 @@ import FocusWrapper from '@/components/FocusWrapper';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import { isModelHash } from '@/hooks';
 import { previewScreen, previewScreenModel } from '@/services';
-import {
-  saveScreenData,
-  saveLocalAllScreenData,
-} from '@/utils/Assist/DataChangePool';
+import { saveScreenData } from '@/utils/Assist/DataChangePool';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { staticExportData, staticLeadIn } from '@/utils/Assist/LeadInAndOutput';
 import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
@@ -107,13 +104,7 @@ const Header = (props: {
 
   // 保存
   const handleStore = useCallback(async () => {
-    let method: any;
-    if (GlobalConfig.IS_IMPROVE_BACKEND) {
-      method = saveLocalAllScreenData;
-    } else {
-      method = saveScreenData;
-    }
-    return method({
+    return saveScreenData({
       loading: fetchLoading,
       setLoading: setFetchLoading,
     });

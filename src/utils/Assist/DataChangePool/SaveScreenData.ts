@@ -11,6 +11,7 @@ import {
 } from '@/services';
 import { captureCover, captureCoverAndUpload } from '@/utils/captureCover';
 import { SCREEN_VERSION } from '../../constants';
+import GlobalConfig from '../GlobalConfig';
 import LocalConfigInstance, { LocalConfig } from '../LocalConfig';
 import nProgressUtil from '../Progress';
 
@@ -79,6 +80,13 @@ export const saveScreenData = async ({
     setScreen?.({
       _id: result as string,
     });
+
+    // 成功保存后，improve需要手动删除localstorage
+    if (GlobalConfig.IS_IMPROVE_BACKEND && _id) {
+      await LocalConfigInstance.removeItem(
+        LocalConfig.IMPROVE_BACKEND_STATIC_COMPONENT_DATA_SAVE_PREFIX + _id,
+      );
+    }
   } catch (err) {
     message.info('保存失败，请重试');
     console.error(err);
@@ -87,15 +95,6 @@ export const saveScreenData = async ({
     nProgressUtil.done();
   }
 };
-
-// improve全量保存大屏
-export const saveLocalAllScreenData = async ({
-  loading,
-  setLoading,
-}: {
-  loading: boolean;
-  setLoading: (loading: boolean) => void;
-}) => {};
 
 // 链式全量保存大屏
 export const saveScreenDataAllAuto = async ({
@@ -199,6 +198,48 @@ export const saveScreenDataAuto = async ({
     }
 
     await method(params as any);
+  } catch (err) {
+    message.info('保存失败，请重试');
+    console.error(err);
+  } finally {
+    nProgressUtil.done();
+  }
+};
+
+// 链式improve全量保存大屏
+export const saveLocalAllScreenData = async ({
+  state,
+  action,
+}: {
+  state: IGlobalModelState;
+  action: {
+    type: API_SCREEN.TEditScreenPoolParams['type'];
+    action?: any;
+  };
+}) => {
+  nProgressUtil.start();
+
+  try {
+    const { screenData, components, guideLine } = state;
+    const { _id } = screenData;
+    if (!_id) throw new Error();
+
+    const params = {
+      version: SCREEN_VERSION(),
+      ...screenData,
+      config: {
+        ...screenData.config,
+        attr: {
+          ...screenData.config.attr,
+          guideLine,
+        },
+      },
+      components,
+    };
+    await LocalConfigInstance.setItem(
+      LocalConfig.IMPROVE_BACKEND_STATIC_COMPONENT_DATA_SAVE_PREFIX + _id,
+      params,
+    );
   } catch (err) {
     message.info('保存失败，请重试');
     console.error(err);
