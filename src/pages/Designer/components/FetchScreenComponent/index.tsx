@@ -239,13 +239,13 @@ const FetchScreenComponent = forwardRef<
             cancelText: '使用保存记录',
             maskClosable: false,
             onCancel: async () => {
+              await LocalConfigInstance.removeItem(cacheKey);
               await fetchDataNormal(isReload);
               resolve();
             },
             onOk: async () => {
               await fetchData4Local({
-                localKey:
-                  LocalConfig.IMPROVE_BACKEND_STATIC_COMPONENT_DATA_SAVE_PREFIX,
+                localKey: cacheKey,
                 isReload,
                 needCache: true,
               });
