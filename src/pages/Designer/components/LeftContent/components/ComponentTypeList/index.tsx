@@ -1,4 +1,4 @@
-import { Menu } from 'antd';
+import { Tabs } from 'antd';
 import classnames from 'classnames';
 import { useCallback, useMemo, useState } from 'react';
 import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
@@ -16,9 +16,8 @@ const ComponentTypeList = (props: {
   );
 
   const handleClick = useCallback((value) => {
-    const key = value.key;
-    setActiveComponentType(key);
-    onChange?.(key);
+    setActiveComponentType(value);
+    onChange?.(value);
   }, []);
 
   const list: any = useMemo(() => {
@@ -26,7 +25,17 @@ const ComponentTypeList = (props: {
       const { type, icon, title } = item;
       return {
         key: type,
-        label: icon,
+        label: (
+          <div
+            className={classnames(
+              styles['page-design-left-component-list-item'],
+              'dis-flex-column',
+            )}
+          >
+            {icon}
+            {title}
+          </div>
+        ),
         title,
       };
     });
@@ -38,19 +47,15 @@ const ComponentTypeList = (props: {
         className={classnames(
           styles['page-design-left-component-list'],
           'pos-sti normal-background',
+          menuClass,
         )}
       >
-        <Menu
-          theme="dark"
-          mode="vertical"
-          onClick={handleClick}
-          className={classnames(
-            styles['page-design-left-component-list-content'],
-            'zero-scrollbar',
-            menuClass,
-          )}
-          selectedKeys={[activeComponentType]}
+        <Tabs
+          activeKey={activeComponentType}
           items={list}
+          onChange={handleClick}
+          tabPosition="right"
+          tabBarGutter={4}
         />
       </div>
       <ComponentList type={activeComponentType} />

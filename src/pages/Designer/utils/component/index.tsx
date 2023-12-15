@@ -769,23 +769,7 @@ const _COMPONENT_TYPE_LIST = [
   },
 ];
 
-export const COMPONENT_TYPE_LIST: {
-  type: string;
-  title: string;
-  icon: JSX.Element;
-  children: {
-    type: string;
-    title: string;
-    children: {
-      type: string;
-      title: string;
-      icon: any;
-      description: string;
-      disabled?: boolean;
-      development?: boolean;
-    }[];
-  }[];
-}[] = [
+export const COMPONENT_TYPE_LIST: ComponentType.ComponentTypeList[] = [
   ..._COMPONENT_TYPE_LIST.reduce<typeof _COMPONENT_TYPE_LIST>((acc, cur) => {
     const { type, children } = cur;
     let newChildren = [...children];

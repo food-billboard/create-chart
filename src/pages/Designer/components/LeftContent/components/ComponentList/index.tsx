@@ -8,10 +8,8 @@ import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
 import styles from './index.less';
 import ComponentItem from './item';
 
-const ComponentList = (props: { type: string }) => {
-  const { type } = props;
-
-  const [activeKey, setActiveKey] = useState<string[]>([]);
+const ComponentList = ({ type }: { type: string }) => {
+  const [activeKey, setActiveKey] = useState<string>('All');
 
   const target = useMemo(() => {
     return COMPONENT_TYPE_LIST.find((item) => item.type === type);
@@ -23,13 +21,26 @@ const ComponentList = (props: { type: string }) => {
 
   const list: ItemType[] = useMemo(() => {
     if (!target?.children.length) return [];
-    return target.children.map((item) => {
+    return [
+      {
+        type: 'All',
+        title: '全部',
+        children: target.children.reduce<ComponentType.ComponentChildren[]>(
+          (acc, cur) => {
+            acc.push(...cur.children);
+            return acc;
+          },
+          [],
+        ),
+      },
+      ...target.children,
+    ].map((item) => {
       const { type, title, children } = item;
       return {
         key: type,
         label: title,
         children: (
-          <Row gutter={24}>
+          <Row gutter={24} style={{ margin: 0 }}>
             {children && children.length ? (
               children.map((item) => {
                 return <ComponentItem {...(item as any)} key={item.type} />;
@@ -43,6 +54,10 @@ const ComponentList = (props: { type: string }) => {
     });
   }, [target]);
 
+  useEffect(() => {
+    setActiveKey('All');
+  }, [type]);
+
   if (!target?.children.length)
     return (
       <Empty
@@ -55,14 +70,35 @@ const ComponentList = (props: { type: string }) => {
       />
     );
 
-  useEffect(() => {
-    if (target?.children.length) {
-      const firstList = target.children.find((item) => !!item.children.length);
-      if (firstList) {
-        setActiveKey([firstList.type]);
-      }
-    }
-  }, [target]);
+  return (
+    <div className={classnames(styles['design-left-component-list'])}>
+      {list.length > 2 && (
+        <div className={styles['design-left-component-list-label']}>
+          {list.map((item) => {
+            const { key, label } = item;
+            return (
+              <div
+                className={classnames(
+                  styles['design-left-component-list-item'],
+                  {
+                    [styles['design-left-component-list-item-active']]:
+                      key === activeKey,
+                  },
+                )}
+                onClick={onCollapseChange.bind(null, key)}
+                key={key}
+              >
+                {label}
+              </div>
+            );
+          })}
+        </div>
+      )}
+      <div className={styles['design-left-component-list-main']}>
+        {list.find((item) => item.key === activeKey)?.children || null}
+      </div>
+    </div>
+  );
 
   return (
     <Collapse
