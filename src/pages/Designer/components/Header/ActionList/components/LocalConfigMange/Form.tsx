@@ -1,11 +1,6 @@
-import {
-  useState,
-  forwardRef,
-  useCallback,
-  useMemo,
-  useImperativeHandle,
-} from 'react';
+import { useControllableValue } from 'ahooks';
 import { Button, Drawer } from 'antd';
+import { forwardRef, useCallback, useMemo, useImperativeHandle } from 'react';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import BackgroundConfig from './components/BackgroundConfig';
 import CrossClipboard from './components/CrossClipboard';
@@ -16,20 +11,21 @@ export interface LocalConfigManageRef {
 }
 
 export interface LocalConfigManageProps {
-  onClose?: () => void;
+  onVisibleChange?: (visible: boolean) => void;
+  visible?: boolean;
 }
 
 const LocalConfigManage = forwardRef<
   LocalConfigManageRef,
   LocalConfigManageProps
 >((props, ref) => {
-  const { onClose: propsOnClose } = props;
-
-  const [visible, setVisible] = useState<boolean>(false);
+  const [visible, setVisible] = useControllableValue<boolean>(props, {
+    trigger: 'onVisibleChange',
+    valuePropName: 'visible',
+  });
 
   const onClose = useCallback(() => {
     setVisible(false);
-    propsOnClose?.();
   }, []);
 
   const open = useCallback(() => {

@@ -11,7 +11,6 @@ import ComponentTypeList from './components/ComponentTypeList';
 import componentTypeListStyles from './components/ComponentTypeList/index.less';
 import LayerManage from './components/LayerManage';
 import { LayerManageRef } from './components/LayerManage/type';
-import ToolBar from './components/ToolBar';
 import styles from './index.less';
 
 const LeftContent = () => {
@@ -19,10 +18,6 @@ const LeftContent = () => {
     useGetState<boolean>(false);
 
   const layerRef = useRef<LayerManageRef>(null);
-
-  const handleClick = useCallback((type) => {
-    // TODO
-  }, []);
 
   const handleClose = useCallback(() => {
     setLayerVisible(false);
@@ -63,7 +58,6 @@ const LeftContent = () => {
         )}
         id="design-page-left-content"
       >
-        <ToolBar onClick={handleClick} />
         <LayerManage ref={layerRef} onClose={handleClose} />
         <ComponentTypeList
           menuClass={

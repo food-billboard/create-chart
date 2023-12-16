@@ -1,9 +1,9 @@
-import { useState, useCallback } from 'react';
 import { Upload, message } from 'antd';
 import type { UploadFile } from 'antd';
 import Color from 'color';
-import { useGlobalLoading } from '@/hooks';
+import { useState, useCallback } from 'react';
 import { UploadButton } from '@/components/ImageUpload';
+import { useGlobalLoading } from '@/hooks';
 import getImageColor from '@/utils/getImageColor';
 import styles from './index.less';
 

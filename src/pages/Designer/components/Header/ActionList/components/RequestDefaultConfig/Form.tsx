@@ -1,28 +1,34 @@
+import { useControllableValue } from 'ahooks';
+import { Drawer, Switch } from 'antd';
+import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
+import { connect } from 'umi';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import Select from '@/components/ChartComponents/Common/Select';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
-import { Drawer, Switch } from 'antd';
-import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
-import { connect } from 'umi';
 import CodeEditor from './CodeEditor';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const { Item } = ConfigList;
 
-export type RequestCofigRef = {
+export type RequestConfigRef = {
   open: () => void;
 };
 
 type Props = {
   setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
   request: ComponentData.ScreenCommonRequestConfig;
+  visible?: boolean;
+  onVisibleChange?: (visible: boolean) => void;
 };
 
-const LensConfig = forwardRef<RequestCofigRef, Props>((props, ref) => {
-  const [visible, setVisible] = useState<boolean>(false);
+const LensConfig = forwardRef<RequestConfigRef, Props>((props, ref) => {
+  const [visible, setVisible] = useControllableValue<boolean>(props, {
+    valuePropName: 'visible',
+    trigger: 'onVisibleChange',
+  });
 
   const { request, setScreen } = props;
   const { method, headers, body, serviceRequest, frequency } = request;

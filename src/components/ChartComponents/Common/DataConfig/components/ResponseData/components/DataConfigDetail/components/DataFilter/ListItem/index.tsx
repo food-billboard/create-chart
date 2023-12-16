@@ -13,7 +13,7 @@ import CodeEditor from '@/components/CodeEditor';
 import IconTooltip from '@/components/IconTooltip';
 import ParamsSelect from '@/components/ParamsSelect';
 import FunctionHeader from '@/components/SyncCodeEditor/FunctionHeader';
-import { ComponentNumber } from '@/pages/Designer/components/LeftContent/components/CallbackManage';
+import { ComponentNumber } from '@/pages/Designer/components/Header/ActionList/components/CallbackManage/Form';
 import NameEditor from './NameEditor';
 import StepDataButton from './StepData';
 import styles from './index.less';

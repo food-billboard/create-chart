@@ -1,7 +1,7 @@
-import React from 'react';
 import { Row, Col } from 'antd';
 import classnames from 'classnames';
 import Color from 'color';
+import React from 'react';
 import ColorSelect from '@/components/ColorSelect';
 import { getHexString } from '@/utils/Assist/Theme';
 import styles from './index.less';

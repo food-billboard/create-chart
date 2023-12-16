@@ -1,14 +1,9 @@
-import FocusWrapper from '@/components/FocusWrapper';
-import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
-import LazyLoadWrapper from '@/components/LazyLoad';
-import ParamsSelect from '@/components/ParamsSelect';
-import Tooltip from '@/components/Tooltip';
-import { useIdPathMap } from '@/hooks';
 import {
   DeleteOutlined,
   MinusSquareOutlined,
   PlusSquareOutlined,
 } from '@ant-design/icons';
+import { useControllableValue } from 'ahooks';
 import { Button, Drawer, Empty, Modal, Popconfirm, Table } from 'antd';
 import { nanoid } from 'nanoid';
 import {
@@ -19,6 +14,12 @@ import {
   useState,
 } from 'react';
 import { connect } from 'umi';
+import FocusWrapper from '@/components/FocusWrapper';
+import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
+import LazyLoadWrapper from '@/components/LazyLoad';
+import ParamsSelect from '@/components/ParamsSelect';
+import Tooltip from '@/components/Tooltip';
+import { useIdPathMap } from '@/hooks';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const CodeViewer = LazyLoadWrapper(
@@ -29,7 +30,8 @@ export interface CallbackManageRef {
 }
 
 export interface CallbackManageProps {
-  onClose?: () => void;
+  onClose?: (visible: boolean) => void;
+  visible?: boolean;
 }
 
 const ComponentList = (props: {
@@ -325,13 +327,13 @@ const WrapperCallbackList = connect(
 
 const CallbackManage = forwardRef<CallbackManageRef, CallbackManageProps>(
   (props, ref) => {
-    const { onClose: propsOnClose } = props;
-
-    const [visible, setVisible] = useState<boolean>(false);
+    const [visible, setVisible] = useControllableValue<boolean>(props, {
+      trigger: 'onClose',
+      valuePropName: 'visible',
+    });
 
     const onClose = useCallback(() => {
       setVisible(false);
-      propsOnClose?.();
     }, []);
 
     const open = useCallback(() => {
