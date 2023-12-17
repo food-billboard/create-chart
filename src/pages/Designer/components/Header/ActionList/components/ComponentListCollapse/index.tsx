@@ -5,6 +5,10 @@ import IconFont from '@/components/ChartComponents/Common/Icon';
 import DebounceButton from '@/components/DebounceButton';
 import Tooltip from '@/components/Tooltip';
 import { ConnectState, ILocalModelState } from '@/models/connect';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
 import styles from './index.less';
 
 // 组件列表折叠
@@ -18,6 +22,10 @@ const InternalComponentListCollapse = (props: {
     setLocalConfig({
       componentCollapse: !componentCollapse,
     });
+    GLOBAL_EVENT_EMITTER.emit(
+      EVENT_NAME_MAP.COMPONENT_LIST_VISIBLE,
+      componentCollapse,
+    );
   }, [componentCollapse, setLocalConfig]);
 
   return (

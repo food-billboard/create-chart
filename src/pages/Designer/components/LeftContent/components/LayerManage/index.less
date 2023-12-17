@@ -4,7 +4,8 @@
   flex-shrink: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  border-top: 1px solid var(--border-color-base);
+  border: 1px solid var(--border-color-base);
+  border-radius: 8px;
   position: relative;
   .design-layer-manage-content {
     position: relative;
@@ -27,12 +28,12 @@
   transition-duration: 0.5s, 0.5s;
 }
 .design-layer-manage-resize {
-  height: 100%;
+  height: ~'calc(100% - 4px)';
   position: absolute;
   top: 0;
   right: -8px;
   width: 4px;
-  padding: 0 2px;
+  padding: 2px;
   cursor: col-resize;
   box-sizing: content-box;
   opacity: 0.4;

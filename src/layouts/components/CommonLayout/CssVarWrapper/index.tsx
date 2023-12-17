@@ -32,6 +32,7 @@ const CssVarWrapper = (props: any) => {
           '--border-color-base': '#434343',
           '--layout-header-background': '#1f1f1f',
           '--component-background': '#141414',
+          '--layout-header-background-active': '#14161a',
           '--menu-dark-highlight-color': '#fff',
           '--screen-xs': `${screenXS}px`,
         }}

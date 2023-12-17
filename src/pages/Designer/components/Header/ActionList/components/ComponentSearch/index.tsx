@@ -14,20 +14,22 @@ import styles from './index.less';
 
 // 组件搜索
 const InternalComponentSearch = (props: {
-  componentCollapse: boolean;
+  componentSearchCollapse: boolean;
   setLocalConfig: (value: Partial<ILocalModelState>) => void;
 }) => {
-  const { componentCollapse, setLocalConfig } = props;
+  const { componentSearchCollapse, setLocalConfig } = props;
 
   const handleClick = useCallback(async () => {
-    setLocalConfig({
-      componentCollapse: !componentCollapse,
-    });
+    const newValue = !componentSearchCollapse;
+    const newConfig: Partial<ILocalModelState> = {
+      componentSearchCollapse: newValue,
+    };
+    setLocalConfig(newConfig);
     GLOBAL_EVENT_EMITTER.emit(
       EVENT_NAME_MAP.COMPONENT_SEARCH_VISIBLE,
-      !componentCollapse,
+      !newValue,
     );
-  }, [componentCollapse, setLocalConfig]);
+  }, [componentSearchCollapse, setLocalConfig]);
 
   return (
     <div
@@ -37,7 +39,7 @@ const InternalComponentSearch = (props: {
         <GlobalLoadingActonButton
           icon={<SearchOutlined />}
           onClick={handleClick}
-          type={componentCollapse ? 'primary' : 'default'}
+          type={!componentSearchCollapse ? 'primary' : 'default'}
           Component={DebounceButton}
           needLoading={false}
         />
@@ -49,7 +51,7 @@ const InternalComponentSearch = (props: {
 const ComponentSearch = connect(
   (state: ConnectState) => {
     return {
-      componentCollapse: state.local.componentCollapse,
+      componentSearchCollapse: state.local.componentSearchCollapse,
     };
   },
   (dispatch: any) => ({

@@ -4,6 +4,7 @@ import { ThemeMap } from '@/utils/constants';
 
 export type ILocalModelState = {
   componentCollapse: boolean;
+  componentSearchCollapse: boolean;
   componentConfigCollapse: boolean;
   globalActionLoading: boolean;
   debug: {

@@ -47,6 +47,9 @@ export default {
   // 组件搜索框显示隐藏
   COMPONENT_SEARCH_VISIBLE: 'COMPONENT_SEARCH_VISIBLE',
 
+  // 组件列表显示隐藏
+  COMPONENT_LIST_VISIBLE: 'COMPONENT_LIST_VISIBLE',
+
   // 图层搜索
   LAYER_SEARCH: 'LAYER_SEARCH',
 

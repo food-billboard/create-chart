@@ -1,18 +1,20 @@
-import FocusWrapper from '@/components/FocusWrapper';
-import { useIsScrolling, useLocalStorage, usePrimaryColor } from '@/hooks';
-import { LocalConfig } from '@/utils/Assist/LocalConfig';
-import { MAX_LAYER_WIDTH, MIN_LAYER_WIDTH } from '@/utils/constants';
 import classnames from 'classnames';
 import { throttle } from 'lodash';
 import {
+  CSSProperties,
   Component,
   forwardRef,
   useCallback,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useRef,
   useState,
 } from 'react';
+import FocusWrapper from '@/components/FocusWrapper';
+import { useIsScrolling, useLocalStorage, usePrimaryColor } from '@/hooks';
+import { LocalConfig } from '@/utils/Assist/LocalConfig';
+import { MAX_LAYER_WIDTH, MIN_LAYER_WIDTH } from '@/utils/constants';
 import Header from './components/Header';
 import LayerList from './components/Tree';
 import styles from './index.less';
@@ -99,6 +101,17 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
       document.querySelector('.design-layer-manage-wrapper'),
     );
 
+    const style = useMemo(() => {
+      const baseStyle: CSSProperties = {
+        width: visible ? stateLayerWidth : 0,
+        paddingRight: visible ? 8 : 0,
+      };
+      if (!visible) {
+        baseStyle.border = 'none';
+      }
+      return baseStyle;
+    }, [visible, stateLayerWidth]);
+
     const onClose = useCallback(() => {
       setVisible(false);
       propsOnClose?.();
@@ -130,16 +143,13 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
     return (
       <FocusWrapper
         className={classnames(
-          'design-layer-manage-wrapper',
+          'design-layer-manage-wrapper zero-scrollbar',
           styles['design-layer-manage-wrapper'],
           {
-            'p-lr-8': visible,
             [styles['design-layer-manage-wrapper-transition']]: !disabled,
           },
         )}
-        style={{
-          width: visible ? stateLayerWidth : 0,
-        }}
+        style={style}
       >
         <div className={styles['design-layer-manage-content']}>
           <Header

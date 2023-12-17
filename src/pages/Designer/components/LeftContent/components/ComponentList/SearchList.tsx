@@ -2,7 +2,7 @@ import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
 import { useDebounceFn } from 'ahooks';
 import { Input, Empty, Divider, Button } from 'antd';
 import classnames from 'classnames';
-import { useState, useCallback, useMemo, useRef } from 'react';
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { connect } from 'umi';
 import { ConnectState, ILocalModelState } from '@/models/connect';
 import {
@@ -35,10 +35,10 @@ const findComponentByString = (list: any[]) => {
 const FORMAT_COMPONENT_LIST = findComponentByString(COMPONENT_TYPE_LIST);
 
 const ComponentSearch = (props: {
-  componentCollapse: boolean;
+  componentSearchCollapse: boolean;
   setLocalConfig: (value: Partial<ILocalModelState>) => void;
 }) => {
-  const { componentCollapse, setLocalConfig } = props;
+  const { componentSearchCollapse, setLocalConfig } = props;
 
   const [searchResult, setSearchResult] = useState<
     {
@@ -82,11 +82,11 @@ const ComponentSearch = (props: {
 
   const onVisibleChange = () => {
     setLocalConfig({
-      componentCollapse: !componentCollapse,
+      componentSearchCollapse: !componentSearchCollapse,
     });
     GLOBAL_EVENT_EMITTER.emit(
       EVENT_NAME_MAP.COMPONENT_SEARCH_VISIBLE,
-      !componentCollapse,
+      componentSearchCollapse,
     );
   };
 
@@ -113,10 +113,34 @@ const ComponentSearch = (props: {
     });
   }, [searchResult]);
 
+  useEffect(() => {
+    const listener = (visible: boolean) => {
+      if (visible) {
+        setLocalConfig({
+          componentSearchCollapse: true,
+        });
+        GLOBAL_EVENT_EMITTER.emit(
+          EVENT_NAME_MAP.COMPONENT_SEARCH_VISIBLE,
+          false,
+        );
+      }
+    };
+    GLOBAL_EVENT_EMITTER.addListener(
+      EVENT_NAME_MAP.COMPONENT_LIST_VISIBLE,
+      listener,
+    );
+    return () => {
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.COMPONENT_LIST_VISIBLE,
+        listener,
+      );
+    };
+  }, []);
+
   return (
     <div
       className={classnames(styles['component-search-list'], {
-        [styles['component-search-list-visible']]: componentCollapse,
+        [styles['component-search-list-visible']]: !componentSearchCollapse,
       })}
     >
       <Button
@@ -155,7 +179,7 @@ const ComponentSearch = (props: {
 export default connect(
   (state: ConnectState) => {
     return {
-      componentCollapse: state.local.componentCollapse,
+      componentSearchCollapse: state.local.componentSearchCollapse,
     };
   },
   (dispatch: any) => ({

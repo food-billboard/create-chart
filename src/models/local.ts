@@ -5,6 +5,7 @@ export default {
 
   state: {
     componentCollapse: false,
+    componentSearchCollapse: true,
     componentConfigCollapse: false,
     debug: {
       show: true,

@@ -87,14 +87,14 @@
   margin: 0;
   overflow: hidden;
   border-radius: 0 8px 8px 0;
-  background-color: var(--layout-header-background) !important;
-  border: 1px solid var(--border-color-base) !important;
-  border-left: none !important;
+  border: 1px solid var(--border-color-base);
+  border-left: none;
   width: 208px;
   display: flex;
   &-label {
-    width: 60px;
+    width: 70px;
     flex-shrink: 0;
+    background-color: var(--layout-header-background);
   }
   &-item {
     line-height: 16px;
@@ -107,6 +107,7 @@
   }
   &-item&-item-active {
     color: var(--primary-color);
+    background-color: var(--component-background);
   }
   &-main {
     flex: 1;
@@ -178,18 +179,17 @@
   // min-width: 150px;
 }
 .component-search-list {
-  width: 222px;
+  width: 0;
+  opacity: 0;
   height: 100%;
-  padding: 24px;
   overflow: hidden;
   background-color: var(--layout-header-background);
-  transition: transform 0.5s;
-  transform: translateX(100%);
-  position: absolute;
-  right: 0;
-  top: 0;
+  transition-property: width opacity;
+  transition-duration: 0.5s;
   display: flex;
   flex-direction: column;
+  position: relative;
+  border-radius: 0 8px 8px 0;
   &-close {
     position: absolute;
     right: 0;
@@ -229,5 +229,7 @@
   }
 }
 .component-search-list-visible {
-  transform: translateX(0);
+  width: 222px;
+  padding: 24px;
+  opacity: 1;
 }
