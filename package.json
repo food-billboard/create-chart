@@ -13,6 +13,7 @@
     "build:static": "cross-env REACT_APP=static REACT_APP_ENV=prod max build",
     "analyze:static": "cross-env ANALYZE=1 REACT_APP_ENV=prod REACT_APP=static max build",
     "start:static": "cross-env PORT=8001 REACT_APP=static max dev",
+    "start:debug": "cross-env PORT=8001 REACT_APP=static REACT_DEBUG=debug max dev",
     "analyze": "cross-env ANALYZE=1 REACT_APP_ENV=prod max build",
     "start": "cross-env PORT=8001 max dev",
     "start:dev": "cross-env REACT_APP_ENV=dev max dev",

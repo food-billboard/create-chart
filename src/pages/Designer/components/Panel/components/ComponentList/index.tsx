@@ -1,7 +1,8 @@
-import { useIdPathMap } from '@/hooks';
-import { getPath } from '@/utils/Assist/Component';
 import { useMemo } from 'react';
 import { connect } from 'umi';
+import { useIdPathMap } from '@/hooks';
+import { getPath } from '@/utils/Assist/Component';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import RenderComponent from '../../../RenderComponent';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
@@ -12,6 +13,7 @@ const ComponentList = (props: {
 
   const list = useMemo(() => {
     useIdPathMap(true, components);
+    if (GlobalConfig.COMPONENT_HIDDEN) return [];
     return components.map((item, index) => {
       const path = getPath(item.id);
       // * 暂时这样处理防止 组 内更新下面不刷新

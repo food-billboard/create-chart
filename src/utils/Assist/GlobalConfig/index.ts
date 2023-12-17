@@ -6,8 +6,16 @@ import {
 
 const isStatic = process.env.REACT_APP === 'static';
 const isImportBackend = process.env.REACT_APP === 'improve_prod';
+const isDebug = process.env.REACT_DEBUG === 'debug';
 
 class GlobalConfig {
+  // --debug--
+
+  // 组件隐藏
+  COMPONENT_HIDDEN = isDebug && true;
+
+  // --debug
+
   // ? 1.22
   // 是否为优化分支版本
   // 优化分支版本是存在后端优化的版本，当中会有一些特殊的接口啥的配置

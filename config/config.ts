@@ -26,6 +26,7 @@ function getPublicPath() {
 const commonConfig = {
   define: {
     'process.env.REACT_APP': process.env.REACT_APP,
+    'process.env.REACT_DEBUG': process.env.REACT_DEBUG,
   },
   hash: true,
   antd: {},
