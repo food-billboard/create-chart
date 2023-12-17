@@ -1,16 +1,11 @@
-import FocusWrapper from '@/components/FocusWrapper';
-import GhostButton from '@/components/GhostButton';
 import { PlusOutlined } from '@ant-design/icons';
+import { useControllableValue } from 'ahooks';
 import { Button, Drawer, Input, Table } from 'antd';
 import { nanoid } from 'nanoid';
-import {
-  forwardRef,
-  useCallback,
-  useImperativeHandle,
-  useMemo,
-  useState,
-} from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useMemo } from 'react';
 import { connect } from 'umi';
+import FocusWrapper from '@/components/FocusWrapper';
+import GhostButton from '@/components/GhostButton';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const { TextArea } = Input;
@@ -20,7 +15,8 @@ export interface ConstantManageRef {
 }
 
 export interface ConstantManageProps {
-  onClose?: () => void;
+  onVisibleChange?: (visible: boolean) => void;
+  visible?: boolean;
 }
 
 const ConstantList = (props: {
@@ -192,13 +188,13 @@ const WrapperConstantList = connect(
 
 const ConstantManage = forwardRef<ConstantManageRef, ConstantManageProps>(
   (props, ref) => {
-    const { onClose: propsOnClose } = props;
-
-    const [visible, setVisible] = useState<boolean>(false);
+    const [visible, setVisible] = useControllableValue<boolean>(props, {
+      trigger: 'onVisibleChange',
+      valuePropName: 'visible',
+    });
 
     const onClose = useCallback(() => {
       setVisible(false);
-      propsOnClose?.();
     }, []);
 
     const open = useCallback(() => {

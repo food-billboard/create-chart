@@ -1,10 +1,11 @@
-import Slider from '@/components/ChartComponents/Common/Slider';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import { useControllableValue } from 'ahooks';
 import { Drawer, Switch } from 'antd';
 import classnames from 'classnames';
 import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
 import { connect } from 'umi';
+import Slider from '@/components/ChartComponents/Common/Slider';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -19,10 +20,15 @@ type Value = ComponentData.TScreenData['config']['attr']['lens'];
 type Props = {
   setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
   lens: Value;
+  visible?: boolean;
+  onVisibleChange?: (visible: boolean) => void;
 };
 
 const LensConfig = forwardRef<LensConfigRef, Props>((props, ref) => {
-  const [visible, setVisible] = useState<boolean>(false);
+  const [visible, setVisible] = useControllableValue<boolean>(props, {
+    trigger: 'onVisibleChange',
+    valuePropName: 'visible',
+  });
 
   const { lens, setScreen } = props;
   const {

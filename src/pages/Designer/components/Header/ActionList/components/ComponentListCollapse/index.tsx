@@ -1,9 +1,11 @@
+import classnames from 'classnames';
+import { useCallback } from 'react';
+import { connect } from 'umi';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 import DebounceButton from '@/components/DebounceButton';
 import Tooltip from '@/components/Tooltip';
 import { ConnectState, ILocalModelState } from '@/models/connect';
-import { useCallback } from 'react';
-import { connect } from 'umi';
+import styles from './index.less';
 
 // 组件列表折叠
 const InternalComponentListCollapse = (props: {
@@ -19,9 +21,17 @@ const InternalComponentListCollapse = (props: {
   }, [componentCollapse, setLocalConfig]);
 
   return (
-    <Tooltip title="折叠组件列表">
+    <Tooltip title="组件列表">
       <DebounceButton
-        icon={<IconFont title="折叠组件列表" type="icon-userConfig" />}
+        icon={
+          <IconFont
+            title="组件列表"
+            type="icon-userConfig"
+            className={classnames({
+              [styles['rotate-icon']]: componentCollapse,
+            })}
+          />
+        }
         onClick={handleClick}
         type={componentCollapse ? 'default' : 'primary'}
       />

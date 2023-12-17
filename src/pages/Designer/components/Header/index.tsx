@@ -15,10 +15,7 @@ import FocusWrapper from '@/components/FocusWrapper';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import { isModelHash } from '@/hooks';
 import { previewScreen, previewScreenModel } from '@/services';
-import {
-  saveScreenData,
-  saveLocalAllScreenData,
-} from '@/utils/Assist/DataChangePool';
+import { saveScreenData } from '@/utils/Assist/DataChangePool';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { staticExportData, staticLeadIn } from '@/utils/Assist/LeadInAndOutput';
 import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
@@ -107,13 +104,7 @@ const Header = (props: {
 
   // 保存
   const handleStore = useCallback(async () => {
-    let method: any;
-    if (GlobalConfig.IS_IMPROVE_BACKEND) {
-      method = saveLocalAllScreenData;
-    } else {
-      method = saveScreenData;
-    }
-    return method({
+    return saveScreenData({
       loading: fetchLoading,
       setLoading: setFetchLoading,
     });
@@ -262,23 +253,31 @@ const Header = (props: {
         title={Title}
         extra={extra}
         backIcon={false}
-        {...(GlobalConfig.IS_STATIC
-          ? {
-              breadcrumbRender: () => (
-                <Marquee gradient={false} play pauseOnHover>
-                  当前版本为简化版本，不存在网络交互，本地图片上传均转换为base64（推荐直接使用链接），所有功能均为纯前端实现，包括数据的存储，请及时对浏览器缓存进行处理。关于完整版本，请fork
-                  <a
-                    href="https://github.com/food-billboard/create-chart"
-                    target="blank"
-                  >
-                    《github仓库》
-                  </a>
-                  代码在本地运行。
-                  可以将本地的大屏配置文件导入的设计器当中，预览的数据也会跟着改变。
-                </Marquee>
-              ),
-            }
-          : {})}
+        breadcrumbRender={() => {
+          if (GlobalConfig.IS_STATIC) {
+            return (
+              <Marquee gradient={false} play pauseOnHover>
+                当前版本为简化版本，不存在网络交互，本地图片上传均转换为base64（推荐直接使用链接），所有功能均为纯前端实现，包括数据的存储，请及时对浏览器缓存进行处理。关于完整版本，请fork
+                <a
+                  href="https://github.com/food-billboard/create-chart"
+                  target="blank"
+                >
+                  《github仓库》
+                </a>
+                代码在本地运行。
+                可以将本地的大屏配置文件导入的设计器当中，预览的数据也会跟着改变。
+              </Marquee>
+            );
+          }
+          if (GlobalConfig.IS_IMPROVE_BACKEND) {
+            return (
+              <Marquee gradient={false} play pauseOnHover>
+                新版本的大屏的保存方式发生了变化，虽然是实时保存，但是它只是保存在本地，需要手动点击保存才可以真正保存。忘记点保存也没有关系，只要下次打开还是同一电脑的同一浏览器，记录就还是存在的。
+              </Marquee>
+            );
+          }
+          return null;
+        }}
       >
         <ActionList />
       </PageHeader>

@@ -755,3 +755,27 @@ declare namespace Logger {
 
   export type LoggerItemWithoutId = Omit<LoggerItem, 'id'>;
 }
+
+declare namespace ComponentType {
+  export type ComponentChildren = {
+    type: string;
+    title: string;
+    icon: any;
+    description: string;
+    disabled?: boolean;
+    development?: boolean;
+  };
+
+  export type ComponentTypeSubChildren = {
+    type: string;
+    title: string;
+    children: ComponentChildren[];
+  };
+
+  export type ComponentTypeList = {
+    type: string;
+    title: string;
+    icon: JSX.Element;
+    children: ComponentTypeSubChildren[];
+  };
+}

@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { Switch } from 'antd';
+import { useCallback } from 'react';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import IconTooltip from '@/components/IconTooltip';

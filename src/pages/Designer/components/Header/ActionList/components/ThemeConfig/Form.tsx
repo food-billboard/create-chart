@@ -1,3 +1,4 @@
+import { useControllableValue } from 'ahooks';
 import { Drawer, Space, Tabs } from 'antd';
 import classnames from 'classnames';
 import {
@@ -29,10 +30,15 @@ type Props = {
   setComponent: ComponentMethod.SetComponentMethod;
   theme: ComponentData.TScreenTheme;
   setSelect: (select: string[]) => void;
+  visible?: boolean;
+  onVisibleChange?: (visible: boolean) => void;
 };
 
 const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
-  const [visible, setVisible] = useState<boolean>(false);
+  const [visible, setVisible] = useControllableValue<boolean>(props, {
+    trigger: 'onVisibleChange',
+    valuePropName: 'visible',
+  });
   const [changeLoading, setChangeLoading] = useState(false);
 
   const { theme, setScreen, setComponent, setSelect } = props;

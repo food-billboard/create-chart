@@ -62,6 +62,6 @@ export interface ConnectState {
   local: ILocalModelState;
 }
 
-export interface Route extends MenuDataItem {
-  routes?: Route[];
-}
+// export interface Route extends MenuDataItem {
+//   routes?: Route[];
+// }

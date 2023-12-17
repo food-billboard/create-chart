@@ -3,8 +3,25 @@
   min-width: 48px;
   height: 100%;
   top: 0;
-  border-right: 1px solid var(--border-color-base);
-  border-top: 1px solid var(--border-color-base);
+  border: 1px solid var(--border-color-base);
+  border-radius: 8px 0 0 8px;
+  :global {
+    .ant-tabs-content-holder {
+      display: none;
+    }
+    .ant-tabs-nav {
+      width: 100%;
+    }
+    .ant-tabs-tab {
+      padding: 8px !important;
+      & > div {
+        width: 100%;
+      }
+    }
+  }
+  &-item {
+    align-items: center;
+  }
   &-content {
     height: 100%;
     overflow: auto;
@@ -29,7 +46,7 @@
       }
     }
   }
-  &-content-border {
-    border-left: 1px solid var(--border-color-base);
-  }
+}
+.page-design-left-component-list-content-border {
+  border-left: 1px solid var(--border-color-base);
 }
