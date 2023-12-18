@@ -9,7 +9,7 @@ import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
-import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
+import { COMPONENT_TYPE_LIST } from '../../../../../../utils/component';
 import styles from './index.less';
 import ComponentItem from './item';
 

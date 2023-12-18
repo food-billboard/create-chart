@@ -10,7 +10,7 @@ import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
-import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
+import { COMPONENT_TYPE_LIST } from '../../../../../../utils/component';
 import styles from './index.less';
 import ComponentItem from './item';
 
@@ -108,7 +108,7 @@ const ComponentList = ({
   return (
     <div
       className={classnames(styles['design-left-component-list'])}
-      style={componentCollapse ? { width: 0 } : {}}
+      style={componentCollapse ? { width: 0, border: 'none' } : {}}
     >
       {list.length > 2 && (
         <div className={styles['design-left-component-list-label']}>

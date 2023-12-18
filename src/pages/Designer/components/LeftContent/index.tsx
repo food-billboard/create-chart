@@ -6,9 +6,7 @@ import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
-import ComponentSearchList from './components/ComponentList/SearchList';
-import ComponentTypeList from './components/ComponentTypeList';
-import componentTypeListStyles from './components/ComponentTypeList/index.less';
+import ComponentManage from './components/ComponentManage';
 import LayerManage from './components/LayerManage';
 import { LayerManageRef } from './components/LayerManage/type';
 import styles from './index.less';
@@ -59,16 +57,7 @@ const LeftContent = () => {
         id="design-page-left-content"
       >
         <LayerManage ref={layerRef} onClose={handleClose} />
-        <ComponentTypeList
-          menuClass={
-            layerVisible
-              ? componentTypeListStyles[
-                  'page-design-left-component-list-content-border'
-                ]
-              : ''
-          }
-        />
-        <ComponentSearchList />
+        <ComponentManage />
       </div>
     </FocusWrapper>
   );

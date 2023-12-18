@@ -1,5 +1,6 @@
-import { ReactNode, useCallback, CSSProperties, useMemo } from 'react';
-import { Button } from 'antd';
+import { Button, ConfigProvider } from 'antd';
+import { ReactNode, useCallback, CSSProperties } from 'react';
+import { usePrimaryColor } from '@/hooks';
 import { ChildrenType } from './type';
 
 const useChildren = (
@@ -15,26 +16,10 @@ const useChildren = (
     className?: string;
   },
 ) => {
-  const {
-    icon,
-    title,
-    disabled,
-    onClick,
-    key,
-    style: _style,
-    className,
-    checked,
-  } = options;
+  const { icon, title, disabled, onClick, key, style, className, checked } =
+    options;
 
-  const style = useMemo(() => {
-    if (_style?.display !== 'none') {
-      return {
-        ..._style,
-        padding: '3px 6px',
-      };
-    }
-    return _style;
-  }, [_style]);
+  const primaryColor = usePrimaryColor();
 
   const handleClick = useCallback(
     (e) => {
@@ -56,15 +41,25 @@ const useChildren = (
 
   if (childrenType === 'button') {
     return (
-      <Button
-        icon={icon}
-        {...(typeof title === 'string' ? { title } : {})}
-        type={checked ? 'primary' : 'link'}
-        onClick={handleClick}
-        disabled={disabled}
-        style={style}
-        className={className}
-      />
+      <ConfigProvider
+        theme={{
+          components: {
+            Button: {
+              textHoverBg: primaryColor,
+            },
+          },
+        }}
+      >
+        <Button
+          icon={icon}
+          {...(typeof title === 'string' ? { title } : {})}
+          type={checked ? 'primary' : 'text'}
+          onClick={handleClick}
+          disabled={disabled}
+          style={style}
+          className={className}
+        />
+      </ConfigProvider>
     );
   }
 

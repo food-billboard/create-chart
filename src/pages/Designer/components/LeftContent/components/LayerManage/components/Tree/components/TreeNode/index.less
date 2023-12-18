@@ -1,5 +1,5 @@
-@disable-opacity: 0.4;
-@lock-opacity: 0.5;
+@disable-opacity: 0.5;
+@lock-opacity: 0.6;
 @default-opacity: 0.8;
 
 .design-page-layer-item {
@@ -8,12 +8,14 @@
   align-items: center;
   z-index: 9999;
   visibility: visible;
-  opacity: @default-opacity;
+  opacity: 1;
+  color: rgba(255, 255, 255, @default-opacity);
   &-name {
     flex: 1;
     text-align: left;
     height: 100%;
     overflow: hidden;
+    color: currentColor;
     &-basic {
       user-select: none;
       text-overflow: ellipsis;
@@ -39,10 +41,8 @@
     visibility: visible;
   }
 }
-.design-page-layer-item-hover {
-  &:hover {
-    opacity: 1;
-  }
+.design-page-layer-item-hover:hover {
+  color: rgba(255, 255, 255, 1);
 }
 .design-page-layer-item-mode-icon {
   @item-height: 50px;

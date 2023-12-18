@@ -1,6 +1,3 @@
-import { DragData } from '@/models/connect';
-import { createComponent } from '@/utils/Assist/Component';
-import DataChangePool from '@/utils/Assist/DataChangePool';
 import { LockOutlined } from '@ant-design/icons';
 import { Col } from 'antd';
 import classnames from 'classnames';
@@ -15,6 +12,9 @@ import {
   DragSourceMonitor,
 } from 'react-dnd';
 import { connect } from 'umi';
+import { DragData } from '@/models/connect';
+import { createComponent } from '@/utils/Assist/Component';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 

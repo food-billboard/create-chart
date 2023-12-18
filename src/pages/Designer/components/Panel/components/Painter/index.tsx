@@ -27,7 +27,7 @@ import LogWinbox from '@/utils/Assist/Logger/Window';
 import { PANEL_ID } from '@/utils/constants/another';
 import { PANEL_ABSOLUTE_POSITION } from '@/utils/constants/index';
 import { ExchangePreviewerContext } from '../../../ExchangeScreenFlag/components/MobilePreviewer/context';
-import { DRAG_TYPE } from '../../../LeftContent/components/ComponentList/item';
+import { DRAG_TYPE } from '../../../LeftContent/components/ComponentManage/components/ComponentList/item';
 import ComponentList from '../ComponentList';
 import H5AutoHeight from '../H5AutoHeight';
 import { mapDispatchToProps, mapStateToProps } from './connect';

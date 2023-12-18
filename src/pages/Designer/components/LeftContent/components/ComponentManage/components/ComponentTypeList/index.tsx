@@ -1,7 +1,7 @@
 import { Tabs } from 'antd';
 import classnames from 'classnames';
 import { useCallback, useMemo, useState } from 'react';
-import { COMPONENT_TYPE_LIST } from '../../../../utils/component';
+import { COMPONENT_TYPE_LIST } from '../../../../../../utils/component';
 import ComponentList from '../ComponentList';
 import styles from './index.less';
 

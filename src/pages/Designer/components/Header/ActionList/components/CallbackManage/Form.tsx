@@ -312,7 +312,12 @@ const CallbackList = (props: {
         onCancel={() => setVisible(false)}
         footer={null}
         open={visible}
-        bodyStyle={{ padding: 0, fontSize: '12px' }}
+        styles={{
+          body: {
+            padding: 0,
+            fontSize: '12px',
+          },
+        }}
       >
         <CodeViewer>{code}</CodeViewer>
       </Modal>

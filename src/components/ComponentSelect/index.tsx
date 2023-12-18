@@ -1,5 +1,3 @@
-import { usePrimaryColor } from '@/hooks';
-import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
 import { useDebounce } from 'ahooks';
 import { Col, Input, Modal, Row } from 'antd';
 import classnames from 'classnames';
@@ -10,6 +8,8 @@ import {
   useMemo,
   useState,
 } from 'react';
+import { usePrimaryColor } from '@/hooks';
+import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
 import { Loading } from '../PageLoading';
 import styles from './index.less';
 
@@ -147,9 +147,11 @@ const ComponentSelect = forwardRef<
   return (
     <Modal
       open={visible}
-      bodyStyle={{
-        height: 500,
-        overflowY: 'auto',
+      styles={{
+        body: {
+          height: 500,
+          overflowY: 'auto',
+        },
       }}
       onCancel={close}
       onOk={handleOk}
