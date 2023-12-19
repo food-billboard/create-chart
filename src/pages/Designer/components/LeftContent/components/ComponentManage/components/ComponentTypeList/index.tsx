@@ -8,8 +8,9 @@ import styles from './index.less';
 const ComponentTypeList = (props: {
   onChange?: (type: string) => void;
   menuClass?: string;
+  onClick?: () => void;
 }) => {
-  const { onChange, menuClass } = props;
+  const { onChange, onClick, menuClass } = props;
 
   const [activeComponentType, setActiveComponentType] = useState<string>(
     COMPONENT_TYPE_LIST[0].type,
@@ -54,6 +55,7 @@ const ComponentTypeList = (props: {
           activeKey={activeComponentType}
           items={list}
           onChange={handleClick}
+          onTabClick={onClick}
           tabPosition="right"
           tabBarGutter={4}
         />

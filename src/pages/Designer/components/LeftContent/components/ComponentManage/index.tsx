@@ -26,6 +26,15 @@ const ComponentManage = (props: {
     );
   }, [componentCollapse]);
 
+  const onTypeClick = useCallback(() => {
+    if (componentCollapse) {
+      setLocalConfig({
+        componentCollapse: false,
+      });
+      GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_LIST_VISIBLE, true);
+    }
+  }, [componentCollapse]);
+
   const headerClassName = useMemo(() => {
     if (componentCollapse) {
       return styles['component-manage-collapse-header'];
@@ -37,7 +46,7 @@ const ComponentManage = (props: {
     <div className={styles['component-manage']}>
       <CommonHeader title="组件" onBack={onBack} className={headerClassName} />
       <div className="dis-flex">
-        <ComponentTypeList />
+        <ComponentTypeList onClick={onTypeClick} />
         <ComponentSearchList />
       </div>
     </div>
