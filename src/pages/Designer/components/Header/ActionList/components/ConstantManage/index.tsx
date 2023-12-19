@@ -1,8 +1,8 @@
 import { GlobalOutlined } from '@ant-design/icons';
 import { useDebounceFn } from 'ahooks';
-import { Tooltip } from 'antd';
 import { useState } from 'react';
 import DebounceButton from '@/components/DebounceButton';
+import Tooltip from '@/components/Tooltip';
 import ConstantsManage from './Form';
 
 // 全局常量管理

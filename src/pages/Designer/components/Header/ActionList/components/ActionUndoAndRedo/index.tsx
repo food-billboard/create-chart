@@ -1,9 +1,9 @@
 import { RedoOutlined, UndoOutlined } from '@ant-design/icons';
 import { useDebounceFn } from 'ahooks';
-import { Tooltip } from 'antd';
 import { connect } from 'umi';
 import DebounceButton from '@/components/DebounceButton';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
+import Tooltip from '@/components/Tooltip';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const RedoButton = ({

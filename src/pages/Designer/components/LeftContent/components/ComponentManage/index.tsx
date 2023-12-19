@@ -45,7 +45,7 @@ const ComponentManage = (props: {
   return (
     <div className={styles['component-manage']}>
       <CommonHeader title="组件" onBack={onBack} className={headerClassName} />
-      <div className="dis-flex">
+      <div className="dis-flex h-100">
         <ComponentTypeList onClick={onTypeClick} />
         <ComponentSearchList />
       </div>

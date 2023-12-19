@@ -12,7 +12,9 @@ import Marquee from 'react-fast-marquee';
 import { connect } from 'umi';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 import FocusWrapper from '@/components/FocusWrapper';
-import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
+import GlobalLoadingActonButton, {
+  Props,
+} from '@/components/GlobalLoadingActionButton';
 import { isModelHash } from '@/hooks';
 import { previewScreen, previewScreenModel } from '@/services';
 import { saveScreenData } from '@/utils/Assist/DataChangePool';
@@ -47,7 +49,6 @@ const Header = (props: {
           className={styles['designer-page-header-title-active']}
           defaultValue={name}
           allowClear
-          size="large"
           autoFocus
           onBlur={(e) => {
             setScreen?.({
@@ -144,26 +145,39 @@ const Header = (props: {
   }, []);
 
   const extra = useMemo(() => {
+    const buttonProps: Props = {
+      size: 'large',
+      type: 'link',
+      loading: fetchLoading,
+    };
+    const tooltipProps: Props['tooltip'] = {
+      mouseLeaveDelay: 0.3,
+    };
     const previewButton = (
       <GlobalLoadingActonButton
+        {...buttonProps}
+        tooltip={{
+          ...tooltipProps,
+          title: '预览',
+        }}
         key="preview"
-        size="large"
         title="预览"
-        type="link"
         onClick={handlePreview}
         icon={<FundOutlined />}
         loading={fetchLoading}
-      ></GlobalLoadingActonButton>
+      />
     );
     const storeButton = (
       <GlobalLoadingActonButton
+        {...buttonProps}
+        tooltip={{
+          ...tooltipProps,
+          title: '保存',
+        }}
         key="send"
-        size="large"
         title="保存"
-        type="link"
         onClick={handleStore}
         icon={<SendOutlined />}
-        loading={fetchLoading}
       ></GlobalLoadingActonButton>
     );
     const exchangeScreenFlagButton = (
@@ -175,35 +189,41 @@ const Header = (props: {
     );
     const exportScreenButton = (
       <GlobalLoadingActonButton
+        {...buttonProps}
+        tooltip={{
+          ...tooltipProps,
+          title: '导出',
+        }}
         key="export"
-        size="large"
         title="导出"
-        type="link"
         onClick={handleExport}
         icon={<ExportOutlined />}
-        loading={fetchLoading}
       ></GlobalLoadingActonButton>
     );
     const leadinScreenButton = (
       <GlobalLoadingActonButton
+        {...buttonProps}
+        tooltip={{
+          ...tooltipProps,
+          title: '导入',
+        }}
         key="import"
-        size="large"
         title="导入"
-        type="link"
         onClick={handleImport}
         icon={<ImportOutlined />}
-        loading={fetchLoading}
       ></GlobalLoadingActonButton>
     );
     const resetScreenButton = (
       <GlobalLoadingActonButton
+        {...buttonProps}
+        tooltip={{
+          ...tooltipProps,
+          title: '初始化',
+        }}
         key="reset"
-        size="large"
         title="初始化"
-        type="link"
         onClick={handleReset}
         icon={<IconFont type="icon-Initialize-o" />}
-        loading={fetchLoading}
       ></GlobalLoadingActonButton>
     );
     let baseList: any[] = [];

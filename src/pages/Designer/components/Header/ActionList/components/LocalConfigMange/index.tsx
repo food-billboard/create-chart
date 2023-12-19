@@ -1,8 +1,8 @@
 import { MacCommandOutlined } from '@ant-design/icons';
 import { useDebounceFn } from 'ahooks';
-import { Tooltip } from 'antd';
 import { useState } from 'react';
 import DebounceButton from '@/components/DebounceButton';
+import Tooltip from '@/components/Tooltip';
 import LocalConfigMange from './Form';
 
 // 本地配置管理

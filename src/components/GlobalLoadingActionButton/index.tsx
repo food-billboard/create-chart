@@ -1,22 +1,25 @@
-import { useCallback, useMemo } from 'react';
 import { Button } from 'antd';
-import type { ButtonProps } from 'antd';
+import type { ButtonProps, TooltipProps } from 'antd';
+import { useCallback, useMemo } from 'react';
 import { useGlobalLoading, IsGlobalActionLoadingParams } from '@/hooks';
+import Tooltip from '../Tooltip';
 
-const GlobalLoadingActonButton = (
-  props: Omit<ButtonProps, 'onClick'> & {
-    onClick?: IsGlobalActionLoadingParams['globalLoadingAction'];
-    Component?: any;
-    triggerName?: string;
-    [key: string]: any;
-  } & Omit<IsGlobalActionLoadingParams, 'globalLoadingAction'>,
-) => {
+export type Props = Omit<ButtonProps, 'onClick'> & {
+  onClick?: IsGlobalActionLoadingParams['globalLoadingAction'];
+  Component?: any;
+  triggerName?: string;
+  tooltip?: false | Partial<TooltipProps>;
+  [key: string]: any;
+} & Omit<IsGlobalActionLoadingParams, 'globalLoadingAction'>;
+
+const GlobalLoadingActonButton = (props: Props) => {
   const {
     onClick,
     Component,
     needLoading = true,
     force = false,
     triggerName = 'onClick',
+    tooltip = false,
     ...nextProps
   } = props;
 
@@ -38,7 +41,7 @@ const GlobalLoadingActonButton = (
     return Component || Button;
   }, [Component]);
 
-  return (
+  const children = (
     <Comp
       {...nextProps}
       {...{
@@ -46,6 +49,12 @@ const GlobalLoadingActonButton = (
       }}
     />
   );
+
+  if (tooltip) {
+    return <Tooltip {...tooltip}>{children}</Tooltip>;
+  }
+
+  return children;
 };
 
 export default GlobalLoadingActonButton;

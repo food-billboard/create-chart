@@ -1,7 +1,7 @@
-import GlobalLoadingActionButton from '@/components/GlobalLoadingActionButton';
 import { MobileOutlined } from '@ant-design/icons';
 import { useCallback, useRef } from 'react';
 import { connect } from 'umi';
+import GlobalLoadingActionButton from '@/components/GlobalLoadingActionButton';
 import MobilePreviewer, {
   MobilePreviewerRef,
 } from './components/MobilePreviewer';
@@ -31,6 +31,10 @@ const ExchangeButton = ({
         icon={<MobileOutlined />}
         loading={loading}
         needLoading={false}
+        tooltip={{
+          mouseLeaveDelay: 0.3,
+          title: '切换移动端',
+        }}
       ></GlobalLoadingActionButton>
       <MobilePreviewer ref={ref} />
     </>

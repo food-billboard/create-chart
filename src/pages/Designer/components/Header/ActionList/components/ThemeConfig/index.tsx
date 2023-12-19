@@ -1,8 +1,8 @@
 import { useDebounceFn } from 'ahooks';
-import { Tooltip } from 'antd';
 import { useState } from 'react';
 import IconFont from '@/components/ChartComponents/Common/Icon';
 import DebounceButton from '@/components/DebounceButton';
+import Tooltip from '@/components/Tooltip';
 import ThemeConfig from './Form';
 
 // 请求默认配置
