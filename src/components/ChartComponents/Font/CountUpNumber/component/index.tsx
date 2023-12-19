@@ -1,8 +1,8 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
-import { uniqueId, merge, round as mathRound } from 'lodash';
+import { useDeepCompareEffect } from 'ahooks';
 import classnames from 'classnames';
 import { CountUp } from 'countup.js';
-import { useDeepCompareEffect } from 'ahooks';
+import { uniqueId, merge, round as mathRound } from 'lodash';
+import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import {
   useComponent,
   useCondition,
@@ -10,8 +10,8 @@ import {
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { TCountUpNumberConfig } from '../type';
 import { CHART_ID } from '../id';
+import { TCountUpNumberConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
@@ -128,8 +128,8 @@ const CountUpNumberBasic = (
         duration: animation.duration,
         useGrouping: thousands.show,
         separator: thousands.content,
-        prefix: addonBefore.show ? addonBefore.content : '',
-        suffix: addonAfter.show ? addonAfter.content : '',
+        // prefix: addonBefore.show ? addonBefore.content : '',
+        // suffix: addonAfter.show ? addonAfter.content : '',
         decimal,
         useEasing: true,
         easingFn: EASING_FN_MAP[animation.easingFn],
@@ -158,12 +158,15 @@ const CountUpNumberBasic = (
         onClick={onClick}
       >
         <Wrapper border={border}>
-          <div
-            id={chartId.current}
-            className="w-100 h-100 dis-flex"
-            style={componentStyle}
-          >
-            {calculateValue || ''}
+          <div className="w-100 h-100 dis-flex" style={componentStyle}>
+            <span>{addonBefore.show ? addonBefore.content : ''}</span>
+            <div
+              id={chartId.current}
+              className={styles['component-font-count-up-number-main']}
+            >
+              {calculateValue || ''}
+            </div>
+            <span>{addonAfter.show ? addonAfter.content : ''}</span>
           </div>
           {children}
         </Wrapper>
