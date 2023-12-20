@@ -16,8 +16,8 @@ const SubGroup = (props: {
   children?: ReactNode;
   value: ComponentData.TComponentData;
   isOuter?: boolean;
-  screenType: 'edit' | 'preview' | 'production';
-  screenTheme: ComponentData.TScreenTheme['value'];
+  screenType: ComponentData.ScreenType;
+  screenTheme: ComponentData.TScreenTheme;
   style?: CSSProperties;
   flag: ComponentData.ScreenFlagType;
   wrapper: any;
@@ -66,7 +66,7 @@ const SubGroup = (props: {
     global: {
       setParams: () => {},
       screenType,
-      screenTheme,
+      screenTheme: screenTheme.value,
     },
   });
 

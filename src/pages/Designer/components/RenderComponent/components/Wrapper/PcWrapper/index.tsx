@@ -1,14 +1,15 @@
-import { ReactNode, CSSProperties, useState, useMemo, useRef } from 'react';
-import { Rnd, Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
-import { merge, omit } from 'lodash';
 import { useRafState } from 'ahooks';
+import { merge, omit } from 'lodash';
+import { ReactNode, CSSProperties, useMemo, useRef } from 'react';
+import { Rnd, Props, RndDragCallback, RndResizeCallback } from 'react-rnd';
+import { AbsorbUtil } from '@/pages/Designer/components/Panel/components/PanelWrapper/components/AbsorbGuideLine/utils';
 import {
   MIN_COMPONENT_HEIGHT,
   MIN_COMPONENT_WIDTH,
   SELECTO_CLASSNAME,
 } from '@/utils/constants';
-import { AbsorbUtil } from '@/pages/Designer/components/Panel/components/PanelWrapper/components/AbsorbGuideLine/utils';
 import KeyActionComponent from './KeyActionComponent';
+import resizeHandleComponent from './ResizeComponent';
 
 type IProps = {
   children?: ReactNode;
@@ -141,6 +142,7 @@ const ComponentWrapper = (
   return (
     <KeyActionComponent onChange={onLockAspectRatioChange}>
       <Rnd
+        resizeHandleComponent={resizeHandleComponent}
         enableResizing={!pointerDisabled && isSelect}
         disableDragging={flag === 'H5' || pointerDisabled || !isSelect}
         className={className}
