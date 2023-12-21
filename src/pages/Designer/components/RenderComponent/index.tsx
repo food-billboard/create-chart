@@ -1,5 +1,3 @@
-import { useComponentStyle } from '@/hooks';
-import DataChangePool from '@/utils/Assist/DataChangePool';
 import { useRafState } from 'ahooks';
 import classnames from 'classnames';
 import { isEqual } from 'lodash';
@@ -12,6 +10,8 @@ import {
   useRef,
 } from 'react';
 import { connect } from 'umi';
+import { useComponentStyle } from '@/hooks';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import ContextMenu from '../../../../components/ContextMenu';
 import Content from './components/Content';
 import HoverChangeWrapper from './components/HoverChangeWrapper';

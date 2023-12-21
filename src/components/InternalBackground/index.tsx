@@ -1,6 +1,6 @@
 import { FileImageOutlined } from '@ant-design/icons';
 import { useControllableValue } from 'ahooks';
-import { Modal, Pagination, Flex } from 'antd';
+import { Modal, Pagination, Row, Col } from 'antd';
 import classnames from 'classnames';
 import {
   CSSProperties,
@@ -167,11 +167,12 @@ export const InternalBackgroundSelect = (props: {
         zIndex={1071}
       >
         <div className={styles['internal-background-modal-list']}>
-          <Flex wrap="wrap" gap={'middle'}>
+          <Row gutter={24}>
             {dataSource.map((item) => {
               const { label, value } = item;
               return (
-                <div
+                <Col
+                  span={6}
                   key={value}
                   className={styles['internal-background-modal-list-item']}
                 >
@@ -190,10 +191,10 @@ export const InternalBackgroundSelect = (props: {
                   >
                     {label}
                   </div>
-                </div>
+                </Col>
               );
             })}
-          </Flex>
+          </Row>
           <Pagination
             total={total}
             pageSize={pageSize}

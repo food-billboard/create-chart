@@ -1,3 +1,6 @@
+import { Switch } from 'antd';
+import { useCallback, useMemo } from 'react';
+import { connect } from 'umi';
 import { mergeWithoutArray } from '@/utils';
 import {
   getComponent,
@@ -6,9 +9,6 @@ import {
 } from '@/utils/Assist/Component';
 import DataChangePool from '@/utils/Assist/DataChangePool';
 import GroupUtil from '@/utils/Assist/Group';
-import { Switch } from 'antd';
-import { useCallback, useMemo } from 'react';
-import { connect } from 'umi';
 import { DEFAULT_BORDER, InternalBorderSelect } from '../../../InternalBorder';
 import AngleSelect from '../AngleSelect';
 import InputNumber, { InputNumberProps } from '../InputNumber';
@@ -348,7 +348,7 @@ const BaseConfig = (props: {
                   onChange={(value) => {
                     onValueChange('border', {
                       ...border,
-                      value: value,
+                      value,
                     });
                   }}
                 />

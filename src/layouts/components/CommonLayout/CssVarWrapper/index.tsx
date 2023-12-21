@@ -16,6 +16,9 @@ const CssVarWrapper = (props: any) => {
             titleFontSizeSM: 12,
             verticalItemMargin: '0px',
           },
+          Modal: {
+            zIndexPopupBase: 1071,
+          },
         },
         algorithm: theme.darkAlgorithm,
         token: {

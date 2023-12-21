@@ -1,0 +1,27 @@
+.internal-border-modal-list {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  &-item {
+    width: 100%;
+    height: 100px;
+    cursor: pointer;
+    &-main {
+      height: 76px;
+      width: 100%;
+      transform-origin: center center;
+      transition: transform 0.2s;
+      &:hover {
+        transform: scale(1.01);
+      }
+    }
+    &-label {
+      text-align: center;
+      line-height: 24px;
+      color: white;
+      font-size: 12px;
+    }
+  }
+}
