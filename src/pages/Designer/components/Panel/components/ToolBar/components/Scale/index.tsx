@@ -1,9 +1,9 @@
-import Dropdown from '@/components/ChartComponents/Common/Dropdown';
-import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import { useControllableValue } from 'ahooks';
 import { InputNumber, Slider, Space } from 'antd';
 import { useCallback, useMemo } from 'react';
 import { connect } from 'umi';
+import Dropdown from '@/components/ChartComponents/Common/Dropdown';
+import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import { wrapperId } from '../../../PanelWrapper/constants';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
@@ -79,6 +79,7 @@ const Scale = (props: {
             items: sizeSelect,
             selectable: true,
             onSelect: selectScaleSize,
+            selectedKeys: [],
           }}
         >
           <GlobalLoadingActonButton type="link" onClick={autoFitScaleMethod}>
