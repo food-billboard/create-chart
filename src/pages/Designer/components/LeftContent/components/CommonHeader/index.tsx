@@ -25,7 +25,7 @@ const CommonHeader = (props: {
     >
       <div
         className={classnames(
-          'text-ellipsis c-f-s-big',
+          'text-ellipsis c-f-s',
           styles['design-common-header-title'],
         )}
       >
