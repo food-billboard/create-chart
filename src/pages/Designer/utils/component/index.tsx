@@ -190,6 +190,12 @@ const _COMPONENT_TYPE_LIST = [
             icon: PolarStackBar,
             description: '',
           },
+          {
+            type: 'THREE_BAR',
+            title: '伪3D柱形图',
+            icon: PolarStackBar,
+            description: '',
+          },
         ],
       },
       {

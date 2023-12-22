@@ -49,3 +49,11 @@ export function LinearGradient(
 ) {
   return new ECHARTS.graphic.LinearGradient(x, y, x1, y1, colorStops);
 }
+
+let REGISTER_SHAPE_MAP: any = {};
+export function registerShape(name: string, options: any) {
+  if (REGISTER_SHAPE_MAP[name]) return;
+  const shape = ECHARTS?.graphic?.extendShape(options);
+  if (shape) REGISTER_SHAPE_MAP[name] = true;
+  ECHARTS?.graphic?.registerShape?.(name, shape);
+}

@@ -1,92 +1,90 @@
-import { ReactNode } from 'react';
 import { get, omit } from 'lodash';
+import { ReactNode } from 'react';
 import { getDvaGlobalModelData } from '@/utils/Assist/Component';
-import { mergeWithoutArray } from '@/utils/tool';
-import { DEFAULT_GROUP_CONFIG } from '@/utils/constants/screenData';
 import { isGroupComponent } from '@/utils/Assist/Component';
-import RenderWrapper from './Common/RenderWrapper';
+import { DEFAULT_GROUP_CONFIG } from '@/utils/constants/screenData';
+import { mergeWithoutArray } from '@/utils/tool';
 // Chart
 import BarBasic from './Chart/Bar/BarBasic';
-import LineBasic from './Chart/Line/LineBasic';
-import PieBasic from './Chart/Pie/PieBasic';
-import ScatterBasic from './Chart/Scatter/ScatterBasic';
-import RadarBasic from './Chart/Radar/RadarBasic';
-import BoxPlotBasic from './Chart/BoxPlot/BoxPlotBasic';
-import FunnelBasic from './Chart/Funnel/FunnelBasic';
-import GaugeBasic from './Chart/Gauge/GaugeBasic';
-import TreeMapBasic from './Chart/TreeMap/TreeMapBasic';
-import SunBurstBasic from './Chart/SunBurst/SunBurstBasic';
-import PictorialBarBasic from './Chart/PictorialBar/PictorialBarBasic';
-import ParallelBasic from './Chart/Parallel/ParallelBasic';
-import CandlestickBasic from './Chart/Candlestick/CandlestickBasic';
-import RadialBar from './Chart/Bar/RadialBar';
-import RadialLine from './Chart/Line/RadialLine';
-import ProgressBar from './Chart/Bar/ProgressBar';
-import NightingalePie from './Chart/Pie/NightingalePie';
-import RadialStackLine from './Chart/Line/RadialStackLine';
-import ClockGauge from './Chart/Gauge/ClockGauge';
-import CirclePie from './Chart/Pie/CirclePie';
-import HorizontalBar from './Chart/Bar/HorizontalBar';
-import RankBar from './Chart/Bar/RankBar';
 import CachetBar from './Chart/Bar/CachetBar';
-import PercentPie from './Chart/Pie/PercentPie';
-import StackBar from './Chart/Bar/StackBar';
+import HorizontalBar from './Chart/Bar/HorizontalBar';
+import LineBar from './Chart/Bar/LineBar';
 import NegativeBar from './Chart/Bar/NegativeBar';
 import PercentBar from './Chart/Bar/PercentBar';
-import LineBar from './Chart/Bar/LineBar';
-import ZebraBar from './Chart/Bar/ZebraBar';
-import TreeBasic from './Chart/Tree/TreeBasic';
-import WaterFallBar from './Chart/Bar/WaterFallBar';
-import BubbleScatter from './Chart/Scatter/BubbleScatter';
 import PolarBar from './Chart/Bar/PolarBar';
-import StepLine from './Chart/Line/StepLine';
 import PolarStackBar from './Chart/Bar/PolarStackBar';
-// other
-import WordCloud from './Other/WordCloud';
-import Iframe from './Other/Iframe';
-import List from './Other/List';
-import WaterBall from './Other/WaterBall';
-import StateCard from './Other/StateCard';
-import StateList from './Other/StateList';
-import Weather from './Other/Weather';
-import PathBasic from './Other/PathBasic';
-import QrCode from './Other/QrCode';
-import LuckyDraw from './Other/LuckyDraw';
-// font
-import Title from './Font/Title';
-import TimeMachine from './Font/TimeMachine';
+import ProgressBar from './Chart/Bar/ProgressBar';
+import RadialBar from './Chart/Bar/RadialBar';
+import RankBar from './Chart/Bar/RankBar';
+import StackBar from './Chart/Bar/StackBar';
+import ThreeBar from './Chart/Bar/ThreeBar';
+import WaterFallBar from './Chart/Bar/WaterFallBar';
+import ZebraBar from './Chart/Bar/ZebraBar';
+import BoxPlotBasic from './Chart/BoxPlot/BoxPlotBasic';
+import CandlestickBasic from './Chart/Candlestick/CandlestickBasic';
+import FunnelBasic from './Chart/Funnel/FunnelBasic';
+import ClockGauge from './Chart/Gauge/ClockGauge';
+import GaugeBasic from './Chart/Gauge/GaugeBasic';
+import LineBasic from './Chart/Line/LineBasic';
+import RadialLine from './Chart/Line/RadialLine';
+import RadialStackLine from './Chart/Line/RadialStackLine';
+import StepLine from './Chart/Line/StepLine';
+import ParallelBasic from './Chart/Parallel/ParallelBasic';
+import PictorialBarBasic from './Chart/PictorialBar/PictorialBarBasic';
+import CirclePie from './Chart/Pie/CirclePie';
+import NightingalePie from './Chart/Pie/NightingalePie';
+import PercentPie from './Chart/Pie/PercentPie';
+import PieBasic from './Chart/Pie/PieBasic';
+import RadarBasic from './Chart/Radar/RadarBasic';
+import BubbleScatter from './Chart/Scatter/BubbleScatter';
+import ScatterBasic from './Chart/Scatter/ScatterBasic';
+import SunBurstBasic from './Chart/SunBurst/SunBurstBasic';
+import TreeBasic from './Chart/Tree/TreeBasic';
+import TreeMapBasic from './Chart/TreeMap/TreeMapBasic';
+import RenderWrapper from './Common/RenderWrapper';
 import CountUpNumber from './Font/CountUpNumber';
 import FontCarousel from './Font/FontCarousel';
-import Text from './Font/Text';
-import LoopText from './Font/LoopText';
 import Icon from './Font/Icon';
+import LoopText from './Font/LoopText';
 import Tag from './Font/Tag';
-// media
-import Image from './Media/Image';
-import Video from './Media/Video';
-import Carousel from './Media/Carousel';
-import PictureWall from './Media/PictureWall';
-import Audio from './Media/Audio';
-import Model from './Media/Model';
-// interactive
-import Tab from './Interactive/Tab';
+import Text from './Font/Text';
+import TimeMachine from './Font/TimeMachine';
+// font
+import Title from './Font/Title';
+import Button from './Interactive/Button';
+import Checkbox from './Interactive/Checkbox';
+import Datepicker from './Interactive/Datepicker';
+import FullScreen from './Interactive/FullScreen';
+import Input from './Interactive/Input';
+import Pagination from './Interactive/Pagination';
+import Radio from './Interactive/Radio';
+import Rate from './Interactive/Rate';
 import Select from './Interactive/Select';
 import Steps from './Interactive/Steps';
 import Switch from './Interactive/Switch';
-import Input from './Interactive/Input';
-import Checkbox from './Interactive/Checkbox';
-import Radio from './Interactive/Radio';
-import Datepicker from './Interactive/Datepicker';
-import Rate from './Interactive/Rate';
-import Button from './Interactive/Button';
-import Pagination from './Interactive/Pagination';
-import FullScreen from './Interactive/FullScreen';
+// interactive
+import Tab from './Interactive/Tab';
+import Ali3DMap from './Map/Ali3DMap';
 // map
 import ScatterMap from './Map/ScatterMap';
-import Ali3DMap from './Map/Ali3DMap';
-// source
-import Ticket from './Source/Ticket';
-import Typed from './Source/Typed';
+import Audio from './Media/Audio';
+import Carousel from './Media/Carousel';
+// media
+import Image from './Media/Image';
+import Model from './Media/Model';
+import PictureWall from './Media/PictureWall';
+import Video from './Media/Video';
+import Iframe from './Other/Iframe';
+import List from './Other/List';
+import LuckyDraw from './Other/LuckyDraw';
+import PathBasic from './Other/PathBasic';
+import QrCode from './Other/QrCode';
+import StateCard from './Other/StateCard';
+import StateList from './Other/StateList';
+import WaterBall from './Other/WaterBall';
+import Weather from './Other/Weather';
+// other
+import WordCloud from './Other/WordCloud';
 import Decoration1 from './Source/Decoration1';
 import Decoration2 from './Source/Decoration2';
 import Decoration3 from './Source/Decoration3';
@@ -95,6 +93,10 @@ import Decoration5 from './Source/Decoration5';
 import Decoration6 from './Source/Decoration6';
 import Decoration7 from './Source/Decoration7';
 import Decoration8 from './Source/Decoration8';
+// source
+import Ticket from './Source/Ticket';
+import Typed from './Source/Typed';
+
 // component-map-import-prefix
 
 type MapKey = ComponentData.TComponentSelfType;
@@ -192,6 +194,7 @@ COMPONENT_MAP.set(Decoration7.type, Decoration7);
 COMPONENT_MAP.set(Decoration8.type, Decoration8);
 COMPONENT_MAP.set(Pagination.type, Pagination);
 COMPONENT_MAP.set(FullScreen.type, FullScreen);
+COMPONENT_MAP.set(ThreeBar.type, ThreeBar);
 // component-map-insert-prefix
 
 // 根据组件类型获取组件信息

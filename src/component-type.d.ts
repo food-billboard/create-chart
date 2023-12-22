@@ -7,6 +7,7 @@ declare type ComponentSelfType =
   | 'LINE_WATERFALL'
   | 'SCATTER_BASIC'
   | 'RADAR_BASIC'
+  | 'THREE_BAR'
   | 'BOX_PLOT_BASIC'
   | 'FUNNEL_BASIC'
   | 'GAUGE_BASIC'
