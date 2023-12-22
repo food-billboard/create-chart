@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { useCallback, useMemo } from 'react';
 import { connect } from 'umi';
 import { ConnectState, ILocalModelState } from '@/models/connect';
@@ -43,9 +44,9 @@ const ComponentManage = (props: {
   }, [componentCollapse]);
 
   return (
-    <div className={styles['component-manage']}>
+    <div className={classnames(styles['component-manage'], 'dis-flex-column')}>
       <CommonHeader title="组件" onBack={onBack} className={headerClassName} />
-      <div className="dis-flex h-100">
+      <div className="dis-flex h-100 f-1">
         <ComponentTypeList onClick={onTypeClick} />
         <ComponentSearchList />
       </div>
