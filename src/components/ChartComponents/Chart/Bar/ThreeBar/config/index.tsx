@@ -32,8 +32,6 @@ class Config extends Component<
       },
     } = value;
 
-    return null;
-
     return (
       <ComponentOptionConfig
         items={[
@@ -88,15 +86,16 @@ class Config extends Component<
             ),
             key: '5',
           },
-          {
-            label: <Tab>动画</Tab>,
-            children: (
-              <ConfigList level={1}>
-                <AnimationConfig value={animation} onChange={onChange} />
-              </ConfigList>
-            ),
-            key: '6',
-          },
+          // ? 目前设置动画没有效果，暂时先去除
+          // {
+          //   label: <Tab>动画</Tab>,
+          //   children: (
+          //     <ConfigList level={1}>
+          //       <AnimationConfig value={animation} onChange={onChange} />
+          //     </ConfigList>
+          //   ),
+          //   key: '6',
+          // },
           {
             label: <Tab>条件</Tab>,
             children: (

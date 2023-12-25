@@ -155,8 +155,6 @@ const ThreeBar = (
 
   const onClick = (params: any) => {
     const { seriesName, name, value } = params;
-    console.log(params, 22222);
-    return;
     const target = {
       x: name,
       y: value,
@@ -184,6 +182,16 @@ const ThreeBar = (
     const widthA = Math.sin(Math.PI / 6) * barWidth;
     const widthB = Math.sin(Math.PI / 3) * barWidth;
     const snapHeight = barWidth / 2;
+    const animationConfig = {
+      animation: show,
+      animationEasing,
+      animationEasingUpdate: animationEasing,
+      animationDuration,
+      animationDurationUpdate: animationDuration,
+      emphasis: {
+        focus: 'series',
+      },
+    };
 
     const baseSeries = {
       ...nextSeries,
@@ -191,16 +199,14 @@ const ThreeBar = (
       barWidth,
       label: {
         ...label,
-        show: true,
         position: 'top',
         color: getRgbaString(label.color),
-        offset: [0, -20],
+        offset: [widthA / 2, -widthB / 4],
       },
       type: 'bar',
       itemStyle: {
         ...itemStyle,
-        // color: 'transparent',
-        color: 'red',
+        color: 'transparent',
       },
       tooltip: {
         show: false,
@@ -271,14 +277,7 @@ const ThreeBar = (
         };
       },
       data: yAxisValues._defaultValue_,
-      animation: show,
-      animationEasing,
-      animationEasingUpdate: animationEasing,
-      animationDuration,
-      animationDurationUpdate: animationDuration,
-      emphasis: {
-        focus: 'series',
-      },
+      ...animationConfig,
     });
 
     const realSeries = seriesKeys.length
@@ -286,9 +285,6 @@ const ThreeBar = (
           acc.push(
             {
               ...baseSeries,
-              // itemStyle: {
-              //   color: getRgbaString(itemStyle.color[index])
-              // },
               data: yAxisValues[item] || [],
               name: item,
             },

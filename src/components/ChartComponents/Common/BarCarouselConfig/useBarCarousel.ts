@@ -8,7 +8,7 @@ export default (
   const { show, speed, showCount } = config;
 
   const [stateValue, setStateValue] = useState<any[]>(
-    value.slice(0, showCount),
+    show ? value.slice(0, showCount) : value,
   );
 
   const timerRef = useRef<NodeJS.Timeout>();
