@@ -80,6 +80,7 @@ import TabBasic from '../../../../../public/components/tab-basic.jpg';
 import Tag from '../../../../../public/components/tag.jpg';
 import TextCarousel from '../../../../../public/components/text-carousel.jpg';
 import Text from '../../../../../public/components/text.jpg';
+import ThreeBar from '../../../../../public/components/three-bar.jpg';
 import Ticket from '../../../../../public/components/ticket.jpg';
 import TimeMachineBasic from '../../../../../public/components/time-machine.jpg';
 import TitleBasic from '../../../../../public/components/title-basic.jpg';
@@ -193,7 +194,7 @@ const _COMPONENT_TYPE_LIST = [
           {
             type: 'THREE_BAR',
             title: '伪3D柱形图',
-            icon: PolarStackBar,
+            icon: ThreeBar,
             description: '',
           },
         ],

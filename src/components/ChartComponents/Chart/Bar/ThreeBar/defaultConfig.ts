@@ -23,8 +23,8 @@ import {
 } from '../../../Common/Constants/defaultConfig';
 import { TThreeBarConfig } from './type';
 
-const DEFAULT_DATE_LABEL = getDate(10);
-const DEFAULT_DATE_VALUE = getNumberValue(10);
+const DEFAULT_DATE_LABEL = getDate(5);
+const DEFAULT_DATE_VALUE = getNumberValue(5);
 
 const DEFAULT_VALUE = DEFAULT_DATE_LABEL.map((item, index) => {
   return {
