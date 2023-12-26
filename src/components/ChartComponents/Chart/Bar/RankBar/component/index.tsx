@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
-import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import { useDeepUpdateEffect } from '@/hooks';
+import { uniqueId, merge } from 'lodash';
+import { useEffect, useRef } from 'react';
+import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
 import {
   useComponent,
   useChartComponentResize,
@@ -12,13 +12,13 @@ import {
   useChartComponentTooltip,
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { init } from '@/utils/Assist/EchartsLoader';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import ColorSelect from '@/components/ColorSelect';
-import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
-import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
-import { TRankBarConfig } from '../type';
+import { useDeepUpdateEffect } from '@/hooks';
+import { init } from '@/utils/Assist/EchartsLoader';
 import { CHART_ID } from '../id';
+import { TRankBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
 
@@ -66,7 +66,13 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
     className: conditionClassName,
   } = useCondition(onCondition, screenType);
 
-  const processedValue = useBarCarousel(carousel, screenType, _processedValue);
+  const processedValue = useBarCarousel({
+    config: carousel,
+    screenType,
+    value: _processedValue,
+    seriesKey: 's',
+    fieldMap: componentFilterMap,
+  });
 
   const { xAxisKeys, yAxisValues } = useChartValueMapField(processedValue, {
     map: componentFilterMap,

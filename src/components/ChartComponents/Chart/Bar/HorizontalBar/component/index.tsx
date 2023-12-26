@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
-import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import { useDeepUpdateEffect } from '@/hooks';
+import { uniqueId, merge } from 'lodash';
+import { useEffect, useRef } from 'react';
+import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
 import {
   useComponent,
   useChartComponentResize,
@@ -12,13 +12,13 @@ import {
   useChartComponentTooltip,
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
-import ColorSelect from '@/components/ColorSelect';
-import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
-import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
+import ColorSelect from '@/components/ColorSelect';
+import { useDeepUpdateEffect } from '@/hooks';
 import { init } from '@/utils/Assist/EchartsLoader';
-import { THorizontalBarConfig } from '../type';
 import { CHART_ID } from '../id';
+import { THorizontalBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
 
@@ -68,7 +68,13 @@ const HorizontalBar = (
     className: conditionClassName,
   } = useCondition(onCondition, screenType);
 
-  const processedValue = useBarCarousel(carousel, screenType, _processedValue);
+  const processedValue = useBarCarousel({
+    config: carousel,
+    screenType,
+    value: _processedValue,
+    seriesKey: 's',
+    fieldMap: componentFilterMap,
+  });
 
   const { seriesKeys, xAxisKeys, yAxisValues } = useChartValueMapField(
     processedValue,

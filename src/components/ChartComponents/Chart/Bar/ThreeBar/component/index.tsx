@@ -139,7 +139,13 @@ const ThreeBar = (
     className: conditionClassName,
   } = useCondition(onCondition, screenType);
 
-  const processedValue = useBarCarousel(carousel, screenType, _processedValue);
+  const processedValue = useBarCarousel({
+    config: carousel,
+    screenType,
+    value: _processedValue,
+    seriesKey: 's',
+    fieldMap: componentFilterMap,
+  });
 
   const { seriesKeys, xAxisKeys, yAxisValues } = useChartValueMapField(
     processedValue,
