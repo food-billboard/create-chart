@@ -309,6 +309,7 @@ const ThreeBar = (
 
   const setOption = () => {
     const { animation, ...nextTooltip } = tooltip;
+    const { itemStyle } = series;
 
     const realSeries = getSeries();
 
@@ -319,7 +320,14 @@ const ThreeBar = (
         },
         legend: {
           ...legend,
-          data: seriesKeys,
+          data: seriesKeys.map((item: string, index: number) => {
+            return {
+              name: item,
+              itemStyle: {
+                color: getRgbaString(itemStyle.color[index]),
+              },
+            };
+          }),
         },
         series: realSeries,
         xAxis: [
