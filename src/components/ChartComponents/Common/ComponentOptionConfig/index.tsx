@@ -1,4 +1,4 @@
-import { Tabs, ConfigProvider } from 'antd';
+import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import classnames from 'classnames';
 import { ReactNode } from 'react';
@@ -10,22 +10,12 @@ const ComponentOptionConfig = (props: { items?: TabsProps['items'] }) => {
   const { items = [] } = props;
 
   return (
-    <ConfigProvider
-      theme={{
-        components: {
-          Tabs: {
-            titleFontSizeSM: 12,
-          },
-        },
-      }}
-    >
-      <Tabs
-        tabPosition={'left'}
-        defaultActiveKey="0"
-        className={styles['design-config-default-tab']}
-        items={items}
-      />
-    </ConfigProvider>
+    <Tabs
+      tabPosition={'left'}
+      defaultActiveKey="0"
+      className={styles['design-config-default-tab']}
+      items={items}
+    />
   );
 };
 

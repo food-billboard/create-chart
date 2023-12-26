@@ -1,5 +1,5 @@
 import { LeftOutlined } from '@ant-design/icons';
-import { Tabs, ConfigProvider } from 'antd';
+import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import classnames from 'classnames';
 import { uniqueId } from 'lodash';
@@ -32,26 +32,16 @@ const ConfigWrapper = (props: {
   }, [items]);
 
   return (
-    <ConfigProvider
-      theme={{
-        components: {
-          Tabs: {
-            titleFontSizeSM: 14,
-          },
-        },
-      }}
-    >
-      <Tabs
-        centered
-        className={classnames(
-          'h-100',
-          styles['design-config-wrapper-header'],
-          styles[`design-config-wrapper-header-${tabCounter}`],
-        )}
-        tabBarGutter={0}
-        items={realItems}
-      />
-    </ConfigProvider>
+    <Tabs
+      centered
+      className={classnames(
+        'h-100',
+        styles['design-config-wrapper-header'],
+        styles[`design-config-wrapper-header-${tabCounter}`],
+      )}
+      tabBarGutter={0}
+      items={realItems}
+    />
   );
 };
 
