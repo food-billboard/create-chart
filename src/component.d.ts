@@ -246,10 +246,17 @@ declare namespace ComponentData {
 
   // 大屏主题色
   export type TScreenTheme = {
-    type: 'internal' | 'custom';
+    // type: 'internal' | 'custom';
     value: string;
     // 只有非内置的需要保存颜色数组
-    color?: string[];
+    // color?: string[];
+
+    // ? 1.22
+    // ? 将所有自定义主题全部保存在大屏中，方便url当中使用
+    color: {
+      value: string[];
+      label: string;
+    }[];
   };
 
   // 大屏端类型

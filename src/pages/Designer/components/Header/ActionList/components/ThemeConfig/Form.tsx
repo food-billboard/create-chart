@@ -1,3 +1,4 @@
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { useControllableValue } from 'ahooks';
 import { Drawer, Space, Tabs } from 'antd';
 import classnames from 'classnames';
@@ -10,6 +11,7 @@ import {
 } from 'react';
 import { connect } from 'umi';
 import { Loading } from '@/components/PageLoading';
+import { sleep } from '@/utils';
 import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
 import {
   EVENT_NAME_MAP,
@@ -42,7 +44,7 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
   const [changeLoading, setChangeLoading] = useState(false);
 
   const { theme, setScreen, setComponent, setSelect } = props;
-  const { type, value, color = [] } = theme;
+  const { value } = theme;
 
   const COLOR_MAP: {
     [key: string]: string[];
@@ -55,29 +57,33 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
   }, []);
 
   const onChange = useCallback(
-    async (type: ComponentData.TScreenTheme['type'], value) => {
-      setChangeLoading(true);
-      let realValue = value;
-      try {
-        realValue = value.target.value;
-      } catch (err) {}
-      // 更改色调
-      await ThemeUtil.initCurrentThemeData(realValue);
-      setScreen({
-        config: {
-          attr: {
-            theme: {
-              type,
-              value: realValue,
+    (value) => {
+      setChangeLoading(() => true);
+
+      sleep(500)
+        .then(() => {
+          // 更改色调
+          return ThemeUtil.initCurrentThemeData(value);
+        })
+        .then(() => {
+          setScreen({
+            config: {
+              attr: {
+                theme: {
+                  value: value,
+                },
+              },
             },
-          },
-        },
-      });
-      // 修改组件颜色
-      setComponent(ComponentThemeChange(realValue));
-      // 通知组件更新
-      GLOBAL_EVENT_EMITTER.emitDebounce(EVENT_NAME_MAP.SCREEN_THEME_CHANGE);
-      setChangeLoading(false);
+          });
+          // 修改组件颜色
+          setComponent(ComponentThemeChange(value));
+          // 通知组件更新
+          GLOBAL_EVENT_EMITTER.emitDebounce(EVENT_NAME_MAP.SCREEN_THEME_CHANGE);
+          return sleep(2000);
+        })
+        .then(() => {
+          setChangeLoading(() => false);
+        });
     },
     [setScreen],
   );
@@ -126,10 +132,14 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
           <Loading size={25} />
         </div>
       )}
+      <div className="m-b-4">
+        <InfoCircleOutlined className="m-r-4" />{' '}
+        此处设置的主题会被地址上的主题设置覆盖
+      </div>
       <Tabs
         className={styles['designer-theme-config']}
         centered
-        defaultActiveKey={type}
+        defaultActiveKey={'internal'}
         items={[
           {
             key: 'internal',
@@ -142,7 +152,7 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
                     <ColorItem
                       value={colorList}
                       name={theme}
-                      onClick={onChange.bind(null, 'internal')}
+                      onClick={onChange.bind(null, theme)}
                       checked={value === theme}
                       key={theme}
                     />

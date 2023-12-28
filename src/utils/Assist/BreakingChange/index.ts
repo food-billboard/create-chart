@@ -1,9 +1,10 @@
 import { get } from 'lodash';
-import { ConditionChange } from './ConditionChange';
-import { ScreenThemeTypeChange } from './ScreenThemeTypeChange';
-import { ComponentInputButtonWidthChange } from './ComponentInputButtonWidthChange';
-import { ScreenComponentConfigChangeTooltip } from './ScreenComponentConfigChangeTooltip';
 import { mergeWithoutArray } from '../../tool';
+import { ComponentInputButtonWidthChange } from './ComponentInputButtonWidthChange';
+import { ConditionChange } from './ConditionChange';
+import { ScreenComponentConfigChangeTooltip } from './ScreenComponentConfigChangeTooltip';
+import { ScreenThemeSaveLogicChange } from './ScreenThemeSaveLogicChange';
+import { ScreenThemeTypeChange } from './ScreenThemeTypeChange';
 
 export * from './ComponentTransformOriginChange';
 
@@ -20,7 +21,9 @@ const BreakingChange: (
   );
 
   // * breaking change 1.14
-  const newTheme = ScreenThemeTypeChange(get(config, 'attr.theme'));
+  let newTheme = ScreenThemeTypeChange(
+    get(config, 'attr.theme'),
+  ) as ComponentData.TScreenTheme;
 
   // * breaking change 1.17
   newVersionComponentList = ComponentInputButtonWidthChange(
@@ -33,6 +36,9 @@ const BreakingChange: (
     screenData,
     version,
   );
+
+  // * breaking change 1.22
+  newTheme = ScreenThemeSaveLogicChange(newTheme, version);
 
   return {
     ...nextScreenData,

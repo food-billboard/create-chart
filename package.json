@@ -3,7 +3,7 @@
   "homepage": "https://food-billboard.github.io/create-chart/index.html",
   "description": "数据可视化大屏设计器",
   "author": "Daniel GLF",
-  "version": "1.21",
+  "version": "1.22",
   "private": false,
   "scripts": {
     "build:improve": "cross-env REACT_APP=improve REACT_APP_ENV=prod max build",

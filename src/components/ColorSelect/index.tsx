@@ -41,15 +41,28 @@ type TColorSelectProps = Partial<
   value?: ComponentData.TColorConfig;
   defaultValue?: ComponentData.TColorConfig;
   onChange?: (color: ComponentData.TColorConfig) => void;
+  closeOnChangeComplete?: boolean;
 };
 
 const ColorSelect = (props: TColorSelectProps) => {
-  const { value, onChange, defaultValue, ...nextProps } = props;
+  const {
+    value,
+    onChange,
+    defaultValue,
+    closeOnChangeComplete = false,
+    ...nextProps
+  } = props;
 
   const [stateValue, setStateValue] =
     useControllableValue<ComponentData.TColorConfig>(props, {
       defaultValue: DEFAULT_COLOR,
     });
+
+  const [open, onOpenChange] = useControllableValue(props, {
+    trigger: 'onOpenChange',
+    valuePropName: 'open',
+    defaultValue: false,
+  });
 
   const colorThemeList = useColorThemeList();
 
@@ -71,14 +84,14 @@ const ColorSelect = (props: TColorSelectProps) => {
     return getRgbaString(stateValue);
   }, [stateValue]);
 
-  const onInternalChange = useCallback((value: Color) => {
-    const rgb = value.toRgb();
-    setStateValue(rgb);
-  }, []);
-
-  // useUpdateEffect(() => {
-  //   value && setStateValue(value);
-  // }, [value]);
+  const onInternalChange = useCallback(
+    (value: Color) => {
+      const rgb = value.toRgb();
+      setStateValue(rgb);
+      if (closeOnChangeComplete) onOpenChange(false);
+    },
+    [closeOnChangeComplete],
+  );
 
   useUnmount(() => {
     if (!isEqual(value, stateValue)) onChange?.(stateValue);
@@ -91,6 +104,8 @@ const ColorSelect = (props: TColorSelectProps) => {
       presets={presetColorList}
       value={colorValue}
       onChangeComplete={onInternalChange}
+      open={open}
+      onOpenChange={onOpenChange}
     />
   );
 };

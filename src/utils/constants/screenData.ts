@@ -1,15 +1,14 @@
-import { nanoid } from 'nanoid';
 import IsMobile from 'is-mobile';
 import { pick, merge } from 'lodash';
-import { DEFAULT_BORDER } from '@/components/InternalBorder';
+import { nanoid } from 'nanoid';
 import {
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_GROUP_COMPONENT_TRANSFORM,
   BASIC_DEFAULT_DATA_CONFIG,
 } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import { DEFAULT_BORDER } from '@/components/InternalBorder';
 import ScreenComponentConfigChangeTooltipMap from '@/components/ScreenComponentConfigChangeTooltip/Constants';
 import GlobalConfig from '../Assist/GlobalConfig';
-import Theme from '../../theme/wonderland.project.json';
 import { DEFAULT_THEME_NAME } from '../Assist/Theme';
 
 const isMobile = IsMobile();
@@ -31,8 +30,8 @@ export const createScreenDataRequest = ({
     config: {
       attr: {
         theme: {
-          type: 'internal',
           value: DEFAULT_THEME_NAME,
+          color: [],
         },
       },
     },
@@ -148,8 +147,8 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
       params: [],
       constants: [],
       theme: {
-        type: 'custom',
-        value: Theme.themeName,
+        value: DEFAULT_THEME_NAME,
+        color: [],
       },
       guideLine: {
         show: true,

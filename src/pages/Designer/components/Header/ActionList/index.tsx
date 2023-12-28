@@ -11,6 +11,7 @@ import LayerShowIcon from './components/LayerShowControl';
 import LensManage from './components/LensConfig';
 import LocalConfigManage from './components/LocalConfigMange';
 import RequestDefaultConfig from './components/RequestDefaultConfig';
+import ThemeConfig from './components/ThemeConfig';
 import styles from './index.less';
 
 const ActionList = () => {
@@ -29,6 +30,7 @@ const ActionList = () => {
       <LocalConfigManage />
       <RequestDefaultConfig />
       <LensManage />
+      <ThemeConfig />
     </Space>
   );
 };

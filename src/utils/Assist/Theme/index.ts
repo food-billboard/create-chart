@@ -181,7 +181,7 @@ class ThemeUtil {
 
   // 初始化
   init() {
-    this.initCurrentThemeData(WonderlandTheme.themeName, false);
+    this.initCurrentThemeData(DEFAULT_THEME_NAME, false);
   }
 
   registerThemeLoading = false;
@@ -206,7 +206,9 @@ class ThemeUtil {
 
   // 初始化自定义主题
   initCustomTheme(themeConfig: ComponentData.TScreenTheme) {
-    const { color = [], value } = themeConfig;
+    const { color: colorDataSource = [], value } = themeConfig;
+    const color = colorDataSource.find((item) => item.label === value)?.value;
+    if (!color?.length) return false;
     this.themeDataSource[value] = {
       seriesCnt: '3',
       backgroundColor: 'rgba(255,255,255,0)',
@@ -353,6 +355,7 @@ class ThemeUtil {
       datazoomHandleWidth: '100',
       datazoomLabelColor: '#999999',
     };
+    return true;
   }
 
   // 设置当前的色调
@@ -365,8 +368,9 @@ class ThemeUtil {
       typeof themeConfig === 'string' ? themeConfig : themeConfig.value;
     if (!themeName || (this.currentTheme === themeName && !force)) return;
     // custom theme
-    if ((themeConfig as ComponentData.TScreenTheme).type === 'custom')
+    if (!this.originThemeDataSource[themeName]) {
       this.initCustomTheme(themeConfig as ComponentData.TScreenTheme);
+    }
 
     if (registerTheme) {
       await this.registerTheme(themeName, this.themeDataSource[themeName]);
