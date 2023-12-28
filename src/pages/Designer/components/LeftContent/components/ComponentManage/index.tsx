@@ -46,7 +46,7 @@ const ComponentManage = (props: {
   return (
     <div className={classnames(styles['component-manage'], 'dis-flex-column')}>
       <CommonHeader title="组件" onBack={onBack} className={headerClassName} />
-      <div className="dis-flex h-100 f-1">
+      <div className="dis-flex h-100 f-1 over-hide">
         <ComponentTypeList onClick={onTypeClick} />
         <ComponentSearchList />
       </div>

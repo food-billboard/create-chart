@@ -101,17 +101,23 @@ const ComponentList = ({
           styles['design-left-component-list'],
           'border-r-8',
           'normal-background',
+          'h-100',
         )}
       />
     );
 
   return (
     <div
-      className={classnames(styles['design-left-component-list'])}
+      className={classnames(styles['design-left-component-list'], 'h-100')}
       style={componentCollapse ? { width: 0, border: 'none' } : {}}
     >
       {list.length > 2 && (
-        <div className={styles['design-left-component-list-label']}>
+        <div
+          className={classnames(
+            styles['design-left-component-list-label'],
+            'zero-scrollbar',
+          )}
+        >
           {list.map((item) => {
             const { key, label } = item;
             return (

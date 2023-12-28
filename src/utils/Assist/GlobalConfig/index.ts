@@ -46,6 +46,7 @@ class GlobalConfig {
     STATE_CARD: 10,
     STATE_LIST: 20,
     LUCKY_DRAW: 20,
+    THREE_BAR: 6,
   };
 
   // 是否开启 mock数据配置
