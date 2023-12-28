@@ -1,4 +1,4 @@
-import { Modal, message } from 'antd';
+import { Modal, App } from 'antd';
 import { get } from 'lodash';
 import { nanoid } from 'nanoid';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
@@ -47,6 +47,8 @@ const FetchScreenComponent = forwardRef<
     setVersion,
     onLoad,
   } = props;
+
+  const { message, modal } = App.useApp();
 
   const isModel = useIsModelHash();
 
@@ -232,7 +234,7 @@ const FetchScreenComponent = forwardRef<
       const localData = await LocalConfigInstance.getItem(cacheKey);
       if (!localData.errMsg && localData.value) {
         return new Promise<void>((resolve) => {
-          Modal.confirm({
+          modal.confirm({
             title: '提示',
             content: '本地电脑存在未保存的记录，是否加载该记录',
             okText: '使用本地记录',

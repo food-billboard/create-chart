@@ -1,4 +1,4 @@
-import { Drawer, message } from 'antd';
+import { Drawer, App } from 'antd';
 import classnames from 'classnames';
 import { noop } from 'lodash';
 import {
@@ -108,6 +108,8 @@ const MobilePreviewer = forwardRef<MobilePreviewerRef, {}>((props, ref) => {
   const [componentList, setComponentList] = useState<
     ComponentData.TComponentData[]
   >([]);
+
+  const { message } = App.useApp();
 
   const exchangeMobileComponents = (
     components: ComponentData.TComponentData[],

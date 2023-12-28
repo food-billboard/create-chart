@@ -1,5 +1,5 @@
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Row, Col, Button, Popconfirm, Input, message } from 'antd';
+import { Row, Col, Button, Popconfirm, Input, App } from 'antd';
 import classnames from 'classnames';
 import Color from 'color';
 import { useCallback, useState } from 'react';
@@ -31,6 +31,8 @@ const ColorItem = ({
 }) => {
   const span = Math.floor(24 / value.length);
   const prefixSpan = 24 - span * value.length;
+
+  const { message } = App.useApp();
 
   const [themeName, setThemeName] = useState('');
 

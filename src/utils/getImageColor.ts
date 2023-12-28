@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { message } from '@/components/Message';
 // @ts-ignore
 import ColorThief from '../lib/color-thief';
 

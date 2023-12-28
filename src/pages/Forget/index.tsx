@@ -1,4 +1,4 @@
-import { Button, message } from 'antd';
+import { Button, App } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
 import { connect } from 'umi';
 import { Captcha, Email, Password } from '../Login';
@@ -7,6 +7,8 @@ import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const Forget = (props: { forger: (value: any) => any }) => {
   const { forger } = props;
+
+  const { message } = App.useApp();
 
   const [password, setPassword] = useState<string>('');
   const [email, setEmail] = useState<string>('');

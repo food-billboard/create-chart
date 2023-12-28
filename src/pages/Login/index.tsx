@@ -1,15 +1,15 @@
-import Icon from '@/components/ChartComponents/Common/Icon';
-import { getCaptcha } from '@/services';
 import {
   BarcodeOutlined,
   LockOutlined,
   MobileOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Button, Col, Input, message, Row, Space } from 'antd';
+import { Button, Col, Input, App, Row, Space } from 'antd';
 import classnames from 'classnames';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { connect, history } from 'umi';
+import Icon from '@/components/ChartComponents/Common/Icon';
+import { getCaptcha } from '@/services';
 import CommonBackground from './components/Background';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
@@ -102,6 +102,8 @@ export const Captcha = (props: {
   const [count, setCount] = useState<number>(60);
   const [timing, setTiming] = useState(false);
 
+  const { message } = App.useApp();
+
   const { value, onChange, status, email } = props;
 
   const onGetCaptcha = useCallback(async () => {
@@ -160,6 +162,8 @@ export const Captcha = (props: {
 
 const Login = (props: { login: (value: any) => any }) => {
   const { login } = props;
+
+  const { message } = App.useApp();
 
   const [mobile, setMobile] = useState<string>('18356778908');
   const [password, setPassword] = useState<string>('123456789');

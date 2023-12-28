@@ -1,5 +1,3 @@
-import { useRef, useCallback } from 'react';
-import { Row, Col, Button, Switch, message, Modal, Tag } from 'antd';
 import {
   SendOutlined,
   DeleteOutlined,
@@ -7,7 +5,9 @@ import {
   CopyOutlined,
   ExportOutlined,
 } from '@ant-design/icons';
+import { Row, Col, Button, Switch, App } from 'antd';
 import classnames from 'classnames';
+import { useRef, useCallback } from 'react';
 import {
   deleteScreen,
   previewScreen,
@@ -16,8 +16,8 @@ import {
   disabledScreen,
   copyScreen,
 } from '@/services';
-import { goDesign, goPreview } from '@/utils/tool';
 import { exportData } from '@/utils/Assist/LeadInAndOutput';
+import { goDesign, goPreview } from '@/utils/tool';
 import ShareSetting, { ShareSettingRef } from './ShareSetting';
 import styles from './index.less';
 
@@ -34,6 +34,8 @@ const ScreenList = (props: {
   onChange?: () => any;
 }) => {
   const { value, onChange } = props;
+
+  const { message, modal } = App.useApp();
 
   const fetchLoading = useRef<boolean>(false);
   const shareSettingRef = useRef<ShareSettingRef>(null);
@@ -77,7 +79,7 @@ const ScreenList = (props: {
           type: 'screen',
         });
         await onChange?.();
-        Modal.confirm({
+        modal.confirm({
           title: '提示',
           content: '复制成功，是否跳转编辑？',
           onOk: () => {
@@ -137,7 +139,7 @@ const ScreenList = (props: {
     async (value, e) => {
       e.stopPropagation();
       if (fetchLoading.current) return;
-      Modal.confirm({
+      modal.confirm({
         title: '提示',
         content: '是否确定删除？',
         onOk: async () => {

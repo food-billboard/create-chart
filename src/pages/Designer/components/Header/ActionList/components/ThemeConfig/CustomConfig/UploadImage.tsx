@@ -1,4 +1,4 @@
-import { Upload, message } from 'antd';
+import { Upload, App } from 'antd';
 import type { UploadFile } from 'antd';
 import Color from 'color';
 import { useState, useCallback } from 'react';
@@ -9,6 +9,8 @@ import styles from './index.less';
 
 const UploadImage = (props: { onChange?: (value: string[][]) => void }) => {
   const { onChange } = props;
+
+  const { message } = App.useApp();
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 

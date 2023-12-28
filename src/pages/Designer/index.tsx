@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { connect } from 'umi';
+import { modal } from '@/components/Message';
 import { isModelHash, useHashChangeReload, usePrimaryColor } from '@/hooks';
 import FetchScreenComponent, {
   FetchScreenComponentRef,
@@ -89,7 +90,7 @@ const Designer = (props: {
   };
 
   const errorPrompt = useCallback(() => {
-    handleModal(Modal.error.bind(null, { ...COMMON_MODAL_PROPS }));
+    handleModal(modal.error.bind(null, { ...COMMON_MODAL_PROPS }));
   }, [handleModal]);
 
   // 心跳检测
@@ -100,7 +101,7 @@ const Designer = (props: {
         if (!result) {
           clearInterval(heartValidTimerRef.current);
           handleModal(
-            Modal.confirm.bind(null, {
+            modal.confirm.bind(null, {
               ...COMMON_MODAL_PROPS,
               content: '长时间未操作！',
             }),

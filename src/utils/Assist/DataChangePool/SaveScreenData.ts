@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { message } from '@/components/Message';
 import { isModelHash, useAnyDva } from '@/hooks';
 import { IGlobalModelState } from '@/models/connect';
 import {

@@ -1,6 +1,6 @@
 import { FileImageOutlined, LinkOutlined } from '@ant-design/icons';
 import { useControllableValue } from 'ahooks';
-import { Upload, Modal, UploadProps, message } from 'antd';
+import { Upload, Modal, UploadProps, App } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
 import classnames from 'classnames';
 import { nanoid } from 'nanoid';
@@ -53,6 +53,8 @@ const PicturesWall = (
   const [value = [], setValue] = useControllableValue<UploadFile[]>(props, {
     defaultValuePropName: 'defaultFileList',
   });
+
+  const { message } = App.useApp();
 
   const { value: propsValue, onChange, className, ...nextProps } = props;
 

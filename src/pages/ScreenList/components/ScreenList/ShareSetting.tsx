@@ -1,20 +1,20 @@
 import {
+  Modal,
+  Form,
+  Select,
+  Radio,
+  Input,
+  App,
+  Button,
+  Typography,
+} from 'antd';
+import {
   forwardRef,
   useImperativeHandle,
   useCallback,
   useState,
   useMemo,
 } from 'react';
-import {
-  Modal,
-  Form,
-  Select,
-  Radio,
-  Input,
-  message,
-  Button,
-  Typography,
-} from 'antd';
 import { shareScreenGet, closeShareScreen } from '@/services';
 import { getShare } from '@/utils';
 
@@ -80,6 +80,8 @@ const ShareSetting = forwardRef<
   const [password, setPassword] = useState<string>('');
   const [screenId, setScreenId] = useState<string>('');
   const [shared, setShared] = useState<boolean>(false);
+
+  const { message } = App.useApp();
 
   const clear = useCallback(() => {
     setAuth('PUBLIC');

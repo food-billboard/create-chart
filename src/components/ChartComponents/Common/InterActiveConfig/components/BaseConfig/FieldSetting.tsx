@@ -1,14 +1,13 @@
-import { useMemo, useCallback, useState } from 'react';
-import { Button, Space, Modal, Form, message } from 'antd';
 import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Space, Modal, Form, App } from 'antd';
+import { useMemo, useCallback, useState } from 'react';
 import Input, { InputModal } from '@/components/ChartComponents/Common/Input';
 import GhostButton from '@/components/GhostButton';
 import IconTooltip from '@/components/IconTooltip';
 import { getPath } from '@/utils/Assist/Component';
 import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
-import InteractiveUtil from '@/utils/Assist/Interactive';
-import { updateInteractiveAndSyncParams } from '../../../utils';
 import MapTable from '../../../MapTable';
+import { updateInteractiveAndSyncParams } from '../../../utils';
 import styles from './index.less';
 
 const { Item, useForm } = Form;
@@ -29,6 +28,8 @@ const EditModal = (props: {
   disabled?: boolean;
 }) => {
   const { onOk, fields, disabled = false } = props;
+
+  const { message } = App.useApp();
 
   const [form] = useForm();
 

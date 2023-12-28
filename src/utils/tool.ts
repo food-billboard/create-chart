@@ -174,7 +174,6 @@ export function versionCompare(
     stringVersionB = semver.coerce(stringVersionB)?.version || '';
     return semver.gt(stringVersionA, stringVersionB);
   } catch (err) {
-    message.error('版本号错误，请重试！');
     throw new Error('version parse error');
   }
 

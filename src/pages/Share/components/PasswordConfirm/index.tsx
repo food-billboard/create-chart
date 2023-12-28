@@ -1,5 +1,5 @@
+import { Modal, Input, App, Button } from 'antd';
 import { forwardRef, useImperativeHandle, useCallback, useState } from 'react';
-import { Modal, Input, message, Button } from 'antd';
 import EnterSubmitWrapper from '@/components/EnterSubmitWrapper';
 
 const { Password } = Input;
@@ -18,6 +18,8 @@ const PasswordConfirm = forwardRef<
 
   const [visible, setVisible] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
+
+  const { message } = App.useApp();
 
   const clear = useCallback(() => {
     setPassword('');

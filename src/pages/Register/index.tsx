@@ -1,4 +1,4 @@
-import { Button, message } from 'antd';
+import { Button, App } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
 import { connect } from 'umi';
 import { Captcha, Email, Mobile, Password } from '../Login';
@@ -7,6 +7,8 @@ import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const Register = (props: { register: (value: any) => any }) => {
   const { register } = props;
+
+  const { message } = App.useApp();
 
   const [mobile, setMobile] = useState<string>('');
   const [password, setPassword] = useState<string>('');

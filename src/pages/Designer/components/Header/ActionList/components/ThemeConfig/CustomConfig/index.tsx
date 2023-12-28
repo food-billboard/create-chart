@@ -1,4 +1,4 @@
-import { Radio, Space, message } from 'antd';
+import { Radio, Space, App } from 'antd';
 import classnames from 'classnames';
 import { useCallback } from 'react';
 import { connect } from 'umi';
@@ -24,6 +24,8 @@ const CustomConfig = (props: {
 }) => {
   const { theme, setScreen, setComponent, setLoading } = props;
   const { color = [], value: currentThemeName } = theme;
+
+  const { message } = App.useApp();
 
   const setScreenTheme = useCallback(
     (themeConfig: Partial<ComponentData.TScreenTheme>) => {

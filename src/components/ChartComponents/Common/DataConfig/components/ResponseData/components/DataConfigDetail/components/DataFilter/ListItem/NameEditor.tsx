@@ -1,6 +1,6 @@
-import { useCallback, useState } from 'react';
-import { Button, Input, message } from 'antd';
 import { EditFilled } from '@ant-design/icons';
+import { Button, Input, App } from 'antd';
+import { useCallback, useState } from 'react';
 import styles from './index.less';
 
 const NameEditor = (props: {
@@ -13,6 +13,8 @@ const NameEditor = (props: {
   const { value, isHover, onChange, onFocus, onBlur } = props;
   const [inputValue, setInputValue] = useState<string>(value);
   const [editable, setEditable] = useState<boolean>(false);
+
+  const { message } = App.useApp();
 
   const onInputChange = useCallback((e: any) => {
     const value = e.target.value;

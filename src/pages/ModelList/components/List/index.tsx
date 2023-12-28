@@ -1,12 +1,12 @@
-import { useRef, useCallback } from 'react';
-import { Row, Col, Button, Switch, message, Modal } from 'antd';
 import {
   DeleteOutlined,
   FolderViewOutlined,
   ExportOutlined,
   BranchesOutlined,
 } from '@ant-design/icons';
+import { Row, Col, Button, Switch, App, Modal } from 'antd';
 import classnames from 'classnames';
+import { useRef, useCallback } from 'react';
 import {
   deleteScreenModel,
   previewScreenModel,
@@ -14,8 +14,8 @@ import {
   disabledScreenModel,
   copyScreen,
 } from '@/services';
-import { goDesignModel, goPreviewModel, goDesign } from '@/utils/tool';
 import { exportData } from '@/utils/Assist/LeadInAndOutput';
+import { goDesignModel, goPreviewModel, goDesign } from '@/utils/tool';
 import styles from './index.less';
 
 const COL_SPAN = {
@@ -31,6 +31,8 @@ const ScreenList = (props: {
   onChange?: () => any;
 }) => {
   const { value, onChange } = props;
+
+  const { message, modal } = App.useApp();
 
   const fetchLoading = useRef<boolean>(false);
 
@@ -82,7 +84,7 @@ const ScreenList = (props: {
     async (value, e) => {
       e.stopPropagation();
       if (fetchLoading.current) return;
-      Modal.confirm({
+      modal.confirm({
         title: '提示',
         content: '是否确定删除？',
         onOk: async () => {

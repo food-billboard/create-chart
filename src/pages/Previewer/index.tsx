@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { App } from 'antd';
 import { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { useHashChangeReload, useIsModelHash } from '@/hooks';
@@ -28,6 +28,8 @@ function Previewer(props: {
   } = props;
 
   const [needFetch, setNeedFetch] = useState<boolean>(false);
+
+  const { message } = App.useApp();
 
   const isModel = useIsModelHash();
 

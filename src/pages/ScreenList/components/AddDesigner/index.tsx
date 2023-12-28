@@ -1,14 +1,16 @@
+import { Button, Modal, Form, Input, App, Select } from 'antd';
 import { useCallback, useState, useMemo } from 'react';
-import { Button, Modal, Form, Input, message, Select } from 'antd';
 import { postScreen, postScreenModel } from '@/services';
-import { goDesign, goDesignModel } from '@/utils/tool';
-import { createScreenDataRequest } from '@/utils/constants/screenData';
 import ThemeUtil from '@/utils/Assist/Theme';
+import { createScreenDataRequest } from '@/utils/constants/screenData';
+import { goDesign, goDesignModel } from '@/utils/tool';
 
 const { Item, useForm } = Form;
 
 const AddDesigner = (props: { type: 'screen' | 'model' }) => {
   const { type } = props;
+
+  const { message } = App.useApp();
 
   const [form] = useForm();
 

@@ -1,8 +1,8 @@
-import { notification, message } from 'antd';
 import axios, { AxiosRequestConfig } from 'axios';
-import { history } from 'umi';
 import { debounce } from 'lodash';
 import { stringify } from 'querystring';
+import { history } from 'umi';
+import { message, notification } from '@/components/Message';
 import { useAnyDva } from '@/hooks';
 import { REQUEST_TIMEOUT } from './constants';
 import { formatQuery } from './tool';

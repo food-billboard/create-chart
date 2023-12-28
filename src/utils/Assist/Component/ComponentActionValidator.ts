@@ -1,8 +1,8 @@
-import { message } from 'antd';
+import { message } from '@/components/Message';
 import { useIdPathMap } from '@/hooks';
+import { MAX_CHART_TO_BE_ADD_IN_PANEL } from '../../constants/screenData';
 import { EVENT_NAME_MAP, GLOBAL_EVENT_EMITTER } from '../EventEmitter';
 import { getFlatComponents } from './index';
-import { MAX_CHART_TO_BE_ADD_IN_PANEL } from '../../constants/screenData';
 
 // ? 限制一些对组件的行为操作
 class ComponentActionValidator {

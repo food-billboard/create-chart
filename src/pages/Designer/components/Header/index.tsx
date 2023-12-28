@@ -5,7 +5,7 @@ import {
   SendOutlined,
 } from '@ant-design/icons';
 import { PageHeader } from '@ant-design/pro-layout';
-import { Input, message } from 'antd';
+import { Input, App } from 'antd';
 import classnames from 'classnames';
 import { useCallback, useMemo, useState } from 'react';
 import Marquee from 'react-fast-marquee';
@@ -39,6 +39,9 @@ const Header = (props: {
       flag: { type },
     },
   } = screenData || {};
+
+  const { message } = App.useApp();
+
   const [editMode, setEditMode] = useState<boolean>(false);
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
 

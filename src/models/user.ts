@@ -1,6 +1,6 @@
 import { stringify } from 'querystring';
 import { history } from 'umi';
-import { message } from 'antd';
+import { message } from '@/components/Message';
 import {
   getUserInfo,
   forgetPassword,
@@ -11,12 +11,12 @@ import {
   ResetParamsType,
   outLogin,
 } from '@/services';
-import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { getPageQuery } from '@/utils';
 import {
   setErrorOriginUser,
   unsetErrorOriginUser,
 } from '@/utils/Assist/ErrorBoundary';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 
 export default {
   namespace: 'user',

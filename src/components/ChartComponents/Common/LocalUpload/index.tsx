@@ -1,7 +1,8 @@
-import { Upload, Modal, message } from 'antd';
+import { Upload, Modal } from 'antd';
 import { uniqueId } from 'lodash';
 import { Component } from 'react';
 import { getBase64, UploadButton } from '@/components/ImageUpload';
+import { message } from '@/components/Message';
 import styles from './index.less';
 
 export const MAX_FILE_SIZE = 1021 * 5;

@@ -1,15 +1,17 @@
-import { useMemo, useCallback, useState } from 'react';
-import { Button, message } from 'antd';
+import { App } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
-import LoadingButton from '../LoadingButton';
+import { useMemo, useCallback } from 'react';
 import { captureCover, captureCoverAndUpload } from '@/utils/captureCover';
 import ImageUpload from '../ImageUpload';
+import LoadingButton from '../LoadingButton';
 
 const CoverSelect = (props: {
   value?: string;
   onChange?: (value: string) => void;
 }) => {
   const { value, onChange } = props;
+
+  const { message } = App.useApp();
 
   const fileList = useMemo(() => {
     const realValue: any =

@@ -1,7 +1,8 @@
-import { useRef, useCallback } from 'react';
-import { uniqueId } from 'lodash';
-import { message } from 'antd';
+import { App } from 'antd';
 import type { ArgsProps } from 'antd/es/message';
+import { uniqueId } from 'lodash';
+import { useRef, useCallback } from 'react';
+import { message } from '@/components/Message';
 
 const MESSAGE_KEY = 'MESSAGE_KEY';
 
@@ -10,6 +11,8 @@ function useMessage(
   config: Partial<Pick<ArgsProps, 'duration'>>,
 ) {
   const { duration = 30 } = config;
+
+  const { message } = App.useApp();
 
   const messageKey = useRef<string>();
   const loading = useRef<boolean>(false);

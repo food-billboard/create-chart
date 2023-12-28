@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { App } from 'antd';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
 import { useHashChangeReload } from '@/hooks';
@@ -33,6 +33,8 @@ function Share(props: {
     flag,
     scale: scaleConfig,
   } = props;
+
+  const { message } = App.useApp();
 
   const [needFetch, setNeedFetch] = useState<boolean>(false);
   const [heartbeat, setHeartbeat] = useState<boolean>(true);
