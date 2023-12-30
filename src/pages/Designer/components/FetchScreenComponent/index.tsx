@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { connect } from 'umi';
 import { mergeComponentDefaultConfig } from '@/components/ChartComponents';
-import { useIsModelHash } from '@/hooks';
+import { useIsModelHash, useThemeChange } from '@/hooks';
 import { getScreenDetail, getScreenModelDetail } from '@/services';
 import { getLocationQuery, isDesignerPage, sleep } from '@/utils';
 import BreakingChange from '@/utils/Assist/BreakingChange';
@@ -52,6 +52,8 @@ const FetchScreenComponent = forwardRef<
   const { message, modal } = App.useApp();
 
   const isModel = useIsModelHash();
+
+  useThemeChange();
 
   const themeSet = async (themeConfig: InitThemeDataParams) => {
     if (isDesignerPage()) {
