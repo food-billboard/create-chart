@@ -14,12 +14,11 @@ import {
   DEFAULT_ANIMATION_CONFIG,
   DEFAULT_CONDITION_CONFIG,
   DEFAULT_TOOLTIP_ANIMATION_CONFIG,
-  DEFAULT_THEME_RADIAL_COLOR_LIST,
+  DEFAULT_THEME_COLOR_LIST,
   DEFAULT_GRID_CONFIG,
   DEFAULT_LINKAGE_CONFIG,
   DEFAULT_BAR_CAROUSEL_CONFIG,
   DEFAULT_INTERACTIVE_BASE_CONFIG,
-  DEFAULT_THEME_COLOR_LIST,
 } from '../../../Common/Constants/defaultConfig';
 import { TThreeBarConfig } from './type';
 
@@ -172,8 +171,7 @@ export default () => {
 
 export const themeConfig = {
   convert: (colorList: string[], options: TThreeBarConfig) => {
-    const realColorList = DEFAULT_THEME_RADIAL_COLOR_LIST();
-    const length = realColorList.length;
+    const realColorList = DEFAULT_THEME_COLOR_LIST();
     return {
       yAxis: {
         splitLine: {
@@ -190,13 +188,7 @@ export const themeConfig = {
       },
       series: {
         itemStyle: {
-          color: options.series.itemStyle.color.map((item, index) => {
-            return {
-              ...item,
-              start: realColorList[index % length].start,
-              end: realColorList[index % length].end,
-            };
-          }),
+          color: realColorList,
         },
       },
     };
