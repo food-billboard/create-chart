@@ -105,6 +105,7 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
           pointerEvents: changeLoading ? 'none' : 'all',
         },
       }}
+      destroyOnClose
     >
       {changeLoading && (
         <div
@@ -123,7 +124,9 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
       <Tabs
         className={styles['designer-theme-config']}
         centered
-        defaultActiveKey={'internal'}
+        defaultActiveKey={
+          ThemeUtil.isInternalThemeName(value) ? 'internal' : 'custom'
+        }
         items={[
           {
             key: 'internal',
