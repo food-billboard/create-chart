@@ -1,13 +1,11 @@
 import { getComponentThemeConfigByType } from '@/components/ChartComponents';
-import ThemeUtil from '../Theme';
 import { getDvaGlobalModelData } from './index';
 
 function covertComponentsThemeColor(
-  themeName: string,
+  colorList: string[],
 ): ComponentMethod.SetComponentMethodParamsData[] {
   const state = getDvaGlobalModelData();
   const components: ComponentData.TComponentData[] = state.components;
-  const colorList = ThemeUtil.getThemeColorList(themeName);
   const changeComponents = components
     .map((component) => {
       const { id, componentType, config } = component;

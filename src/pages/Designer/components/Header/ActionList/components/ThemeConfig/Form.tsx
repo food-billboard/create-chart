@@ -12,11 +12,6 @@ import {
 import { connect } from 'umi';
 import { Loading } from '@/components/PageLoading';
 import { sleep } from '@/utils';
-import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
-import {
-  EVENT_NAME_MAP,
-  GLOBAL_EVENT_EMITTER,
-} from '@/utils/Assist/EventEmitter';
 import ThemeUtil from '@/utils/Assist/Theme';
 import ColorItem from './ColorItem';
 import CustomConfig from './CustomConfig';
@@ -29,7 +24,6 @@ export type ThemeConfigRef = {
 
 type Props = {
   setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
-  setComponent: ComponentMethod.SetComponentMethod;
   theme: ComponentData.TScreenTheme;
   setSelect: (select: string[]) => void;
   visible?: boolean;
@@ -43,8 +37,8 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
   });
   const [changeLoading, setChangeLoading] = useState(false);
 
-  const { theme, setScreen, setComponent, setSelect } = props;
-  const { value } = theme;
+  const { theme, setScreen, setSelect } = props;
+  const { value, color } = theme;
 
   const COLOR_MAP: {
     [key: string]: string[];
@@ -63,29 +57,19 @@ const ThemeConfig = forwardRef<ThemeConfigRef, Props>((props, ref) => {
       sleep(500)
         .then(() => {
           // 更改色调
-          return ThemeUtil.initCurrentThemeData(value);
-        })
-        .then(() => {
-          setScreen({
-            config: {
-              attr: {
-                theme: {
-                  value: value,
-                },
-              },
+          return ThemeUtil.initCurrentThemeDataAndUpdateScreenData({
+            themeConfig: {
+              value,
+              color,
             },
+            needNotRequest: false,
           });
-          // 修改组件颜色
-          setComponent(ComponentThemeChange(value));
-          // 通知组件更新
-          GLOBAL_EVENT_EMITTER.emitDebounce(EVENT_NAME_MAP.SCREEN_THEME_CHANGE);
-          return sleep(2000);
         })
         .then(() => {
           setChangeLoading(() => false);
         });
     },
-    [setScreen],
+    [setScreen, color],
   );
 
   const open = () => {

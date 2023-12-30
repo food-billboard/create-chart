@@ -2,10 +2,10 @@ import arrayMove from 'array-move';
 import { set, get, merge, pick, isNil, omit } from 'lodash';
 import { useComponentPath, useIdPathMap } from '@/hooks';
 import { IGlobalModelState } from '@/models/connect';
-import GroupUtil from '../Group';
-import { mergeWithoutArray } from '../../tool';
-import { ScreenDataRequest } from '../RequestPool';
 import { isGroupComponent, isComponentParentEqual } from '.';
+import { mergeWithoutArray } from '../../tool';
+import GroupUtil from '../Group';
+import { ScreenDataRequest } from '../RequestPool';
 
 // get parentPath
 export const getParentPath = (path: string) => {
@@ -610,7 +610,7 @@ class ComponentUtil {
   };
 
   setComponent(state: IGlobalModelState, action: any) {
-    const { payload } = action;
+    const { payload, needNotRequest } = action;
 
     let changeComponents: ComponentMethod.SetComponentMethodParamsData[] =
       Array.isArray(payload) ? payload : [payload];
@@ -733,16 +733,17 @@ class ComponentUtil {
     components = arrayMove(components, 0, 0);
 
     // 上传大屏的数据到后台
-    ScreenDataRequest(
-      {
-        ...state,
-        components,
-      },
-      {
-        type: 'component',
-        action: payload,
-      },
-    );
+    !needNotRequest &&
+      ScreenDataRequest(
+        {
+          ...state,
+          components,
+        },
+        {
+          type: 'component',
+          action: payload,
+        },
+      );
 
     return components;
   }

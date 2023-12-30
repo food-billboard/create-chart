@@ -1,4 +1,4 @@
-import { Modal, App } from 'antd';
+import { App } from 'antd';
 import { get } from 'lodash';
 import { nanoid } from 'nanoid';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
@@ -6,15 +6,16 @@ import { connect } from 'umi';
 import { mergeComponentDefaultConfig } from '@/components/ChartComponents';
 import { useIsModelHash } from '@/hooks';
 import { getScreenDetail, getScreenModelDetail } from '@/services';
-import { getLocationQuery, sleep } from '@/utils';
+import { getLocationQuery, isDesignerPage, sleep } from '@/utils';
 import BreakingChange from '@/utils/Assist/BreakingChange';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
-import ThemeUtil, { DEFAULT_THEME_NAME } from '@/utils/Assist/Theme';
+import ThemeUtil, { InitThemeDataParams } from '@/utils/Assist/Theme';
 import { SCREEN_VERSION } from '@/utils/constants';
 import DEFAULT_SCREEN_DATA, {
   createScreenDataRequest,
   DEFAULT_VERSION_CHANGE_TOOLTIP,
+  DEFAULT_THEME_DATA,
 } from '@/utils/constants/screenData';
 import { autoFitScale } from '../Panel/components/ToolBar/components/Scale';
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -52,6 +53,17 @@ const FetchScreenComponent = forwardRef<
 
   const isModel = useIsModelHash();
 
+  const themeSet = async (themeConfig: InitThemeDataParams) => {
+    if (isDesignerPage()) {
+      await ThemeUtil.initCurrentThemeData(themeConfig);
+    } else {
+      await ThemeUtil.initCurrentThemeDataAndUpdateScreenData({
+        ...themeConfig,
+        needNotRequest: true,
+      });
+    }
+  };
+
   const parseComponentAndSaveData = async (
     screenData: ComponentData.TScreenData,
     version: string,
@@ -61,12 +73,10 @@ const FetchScreenComponent = forwardRef<
       version,
     );
     const { components: componentsList, ...nextData } = realScreenData;
-    // 先注册主题色再修改数据
-    await ThemeUtil.initCurrentThemeData(
-      nextData.config.attr.theme,
-      true,
-      true,
-    );
+    const theme = get(nextData, 'config.attr.theme');
+
+    // ! 下面的主题设置如果有问题就放在这里再试试
+    // ? 放在下面的原因是主题设置存在覆盖的需求，需要更改大屏的数据，所以就先设置数据然后再设置主题
 
     setScreen({
       ...nextData,
@@ -76,6 +86,12 @@ const FetchScreenComponent = forwardRef<
 
     const mergedComponentList = mergeComponentDefaultConfig(componentsList);
     setComponentAll(mergedComponentList, false);
+
+    await themeSet({
+      themeConfig: theme,
+      registerTheme: true,
+      force: true,
+    });
 
     return realScreenData;
   };
@@ -121,7 +137,11 @@ const FetchScreenComponent = forwardRef<
           },
         });
         // 先注册主题色再修改数据
-        await ThemeUtil.initCurrentThemeData(DEFAULT_THEME_NAME, true, true);
+        await themeSet({
+          themeConfig: DEFAULT_THEME_DATA,
+          registerTheme: true,
+          force: true,
+        });
         if (needCache)
           await LocalConfigInstance.setItem(localKey, DEFAULT_SCREEN_DATA);
         if (isReload) {
@@ -140,7 +160,6 @@ const FetchScreenComponent = forwardRef<
             versionChangeTooltip: DEFAULT_VERSION_CHANGE_TOOLTIP,
           },
         });
-        // setScreen(DEFAULT_SCREEN_DATA);
       }
     } catch (err) {
       console.error(err);
@@ -199,7 +218,9 @@ const FetchScreenComponent = forwardRef<
       }
     } else {
       // 先注册主题色再修改数据
-      await ThemeUtil.initCurrentThemeData(DEFAULT_THEME_NAME);
+      await themeSet({
+        themeConfig: get(DEFAULT_SCREEN_DATA, 'config.attr.theme'),
+      });
       if (isReload) {
         setComponentAll([], false);
         setGuideLine({

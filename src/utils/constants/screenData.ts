@@ -13,6 +13,11 @@ import { DEFAULT_THEME_NAME } from '../Assist/Theme';
 
 const isMobile = IsMobile();
 
+export const DEFAULT_THEME_DATA: ComponentData.TScreenTheme = {
+  value: DEFAULT_THEME_NAME,
+  color: [],
+};
+
 export const createScreenDataRequest = ({
   name,
   flag,
@@ -29,10 +34,7 @@ export const createScreenDataRequest = ({
     poster: GlobalConfig.DEFAULT_SCREEN_COVER,
     config: {
       attr: {
-        theme: {
-          value: DEFAULT_THEME_NAME,
-          color: [],
-        },
+        theme: { ...DEFAULT_THEME_DATA },
       },
     },
     ...extra,
@@ -146,10 +148,7 @@ const DEFAULT_SCREEN_DATA: ComponentData.TScreenData = {
       filter: DEFAULT_FILTER_LIST,
       params: [],
       constants: [],
-      theme: {
-        value: DEFAULT_THEME_NAME,
-        color: [],
-      },
+      theme: { ...DEFAULT_THEME_DATA },
       guideLine: {
         show: true,
         value: [],

@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
 import queryString from 'query-string';
+import { useEffect, useRef } from 'react';
+import { isDesignerPage } from '@/utils/tool';
 
 export const useHash = (
   onHashChange?: (hash: string, prevHash: string) => void,
@@ -42,7 +43,7 @@ export const useIsModelHash = () => {
 
 export const useHashChangeReload = (reload: any) => {
   const isDesigner = (hash: string) => {
-    return hash.startsWith('#/designer') || hash.startsWith('#/model-designer');
+    return isDesignerPage(hash);
   };
 
   const isPreview = (hash: string) => {

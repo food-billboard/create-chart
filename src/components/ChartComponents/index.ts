@@ -1,5 +1,4 @@
 import { get, omit } from 'lodash';
-import { ReactNode } from 'react';
 import { getDvaGlobalModelData } from '@/utils/Assist/Component';
 import { isGroupComponent } from '@/utils/Assist/Component';
 import { DEFAULT_GROUP_CONFIG } from '@/utils/constants/screenData';

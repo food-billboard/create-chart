@@ -22,7 +22,9 @@ export const BaseThemeConfig = (props: {
   const onChange = useCallback(
     (value) => {
       propsOnChange?.(value);
-      ThemeUtil.initCurrentThemeData(value);
+      ThemeUtil.initCurrentThemeData({
+        themeConfig: value,
+      });
     },
     [propsOnChange],
   );

@@ -1,11 +1,10 @@
 import { getDvaApp } from 'umi';
-import type { Dispatch } from 'dva';
 import { ConnectState } from '@/models/connect';
 
 let app: any;
 
 export function useAnyDva(): {
-  dispatch: Dispatch;
+  dispatch: any;
   getState: () => ConnectState;
 } {
   if (!app) app = getDvaApp();

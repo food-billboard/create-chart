@@ -1,11 +1,18 @@
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Row, Col, Button, Popconfirm, Input, App } from 'antd';
+import {
+  EditOutlined,
+  DeleteOutlined,
+  InfoCircleOutlined,
+} from '@ant-design/icons';
+import { Row, Col, Button, Popconfirm, Input, App, Typography } from 'antd';
 import classnames from 'classnames';
 import Color from 'color';
 import { useCallback, useState } from 'react';
 import ColorSelect from '@/components/ColorSelect';
+import Tooltip from '@/components/Tooltip';
 import { getHexString } from '@/utils/Assist/Theme';
 import styles from './index.less';
+
+const { Paragraph } = Typography;
 
 const ColorItem = ({
   value,
@@ -154,6 +161,9 @@ const ColorItem = ({
             disabled={!editable}
           />
         </Popconfirm>
+        <Tooltip title={<Paragraph copyable>{name}</Paragraph>}>
+          <Button type="link" icon={<InfoCircleOutlined />} title="主题名称" />
+        </Tooltip>
       </div>
     </div>
   );

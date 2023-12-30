@@ -12,8 +12,10 @@ export const isUrl = (path: string): boolean => reg.test(path);
 
 export const getPageQuery = () => parse(window.location.href.split('?')[1]);
 
-export function getLocationQuery(): { [key: string]: string } {
-  const search = history.location.search;
+export function getLocationQuery(customSearch?: string): {
+  [key: string]: string;
+} {
+  const search = customSearch || history.location.search;
   return parse(search.startsWith('?') ? search.slice(1) : search) as any;
 }
 
@@ -128,6 +130,11 @@ export function goView() {
 export function goShare(id: string) {
   const url = getShare(id);
   window.open(url, '_blank');
+}
+
+// 是否为设计页面
+export function isDesignerPage(hash = location.hash) {
+  return hash.startsWith('#/designer') || hash.startsWith('#/model-designer');
 }
 
 // 设计页面

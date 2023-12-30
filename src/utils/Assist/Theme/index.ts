@@ -1,5 +1,8 @@
 import color from 'color';
 import { omit, pick } from 'lodash';
+import { message } from '@/components/Message';
+import { useAnyDva } from '@/hooks';
+import { getLocationQuery, sleep, isDesignerPage } from '@/utils/tool';
 import EssosTheme from '../../../theme/essos.project.json';
 import MacaronsTheme from '../../../theme/macarons.project.json';
 import RomaTheme from '../../../theme/roma.project.json';
@@ -142,6 +145,19 @@ export function getHexString(
 export const DEFAULT_THEME_COLOR = WonderlandTheme.theme.color[0];
 export const DEFAULT_THEME_NAME = WonderlandTheme.themeName;
 
+export type InitThemeDataParams = {
+  // 主题配置
+  themeConfig: string | ComponentData.TScreenTheme;
+  // 是否需要echarts注册主题
+  registerTheme?: boolean;
+  // 是否强制主题更新
+  force?: boolean;
+  // 是否允许使用query的theme来覆盖
+  canUseQueryTheme?: boolean;
+  // ? 重复调用的情况 防止死循环
+  retryTimes?: number;
+};
+
 class ThemeUtil {
   currentTheme!: string;
   currentThemeColor: string[] = [];
@@ -168,7 +184,7 @@ class ThemeUtil {
   }
 
   getThemeColorList(name?: string) {
-    return this.themeDataSource[name || this.currentTheme].color;
+    return this.themeDataSource[name || this.currentTheme]?.color || [];
   }
 
   isThemeNameValid(name: string) {
@@ -181,7 +197,11 @@ class ThemeUtil {
 
   // 初始化
   init() {
-    this.initCurrentThemeData(DEFAULT_THEME_NAME, false);
+    this.initCurrentThemeData({
+      themeConfig: DEFAULT_THEME_NAME,
+      registerTheme: false,
+      canUseQueryTheme: false,
+    });
   }
 
   registerThemeLoading = false;
@@ -359,29 +379,119 @@ class ThemeUtil {
   }
 
   // 设置当前的色调
-  async initCurrentThemeData(
-    themeConfig: string | ComponentData.TScreenTheme,
+  async initCurrentThemeData({
+    themeConfig,
     registerTheme = true,
     force = false,
-  ) {
-    const themeName =
+    canUseQueryTheme: _canUseQueryTheme,
+    retryTimes = 0,
+  }: InitThemeDataParams): Promise<any> {
+    const { theme: customThemeName } = getLocationQuery();
+    const canUseQueryTheme = _canUseQueryTheme ?? !isDesignerPage();
+
+    const originThemeName =
       typeof themeConfig === 'string' ? themeConfig : themeConfig.value;
-    if (!themeName || (this.currentTheme === themeName && !force)) return;
+    let themeName = canUseQueryTheme
+      ? customThemeName || originThemeName
+      : originThemeName;
+
+    // 实际的色调配置
+    let finalThemeConfig = {
+      value: themeName,
+    } as ComponentData.TScreenTheme;
+    if (typeof themeConfig === 'object') {
+      finalThemeConfig = {
+        ...themeConfig,
+        ...finalThemeConfig,
+      };
+    }
+
+    if (!themeName || (this.currentTheme === themeName && !force))
+      return finalThemeConfig;
+
     // custom theme
     if (!this.originThemeDataSource[themeName]) {
-      this.initCustomTheme(themeConfig as ComponentData.TScreenTheme);
+      const success = this.initCustomTheme(finalThemeConfig);
+      // 不成功即未找到对应的自定义主题
+      if (!success) {
+        // 为url自定义主题
+        if (customThemeName) {
+          message.info('加载自定义主题失败，正在尝试加载原主题');
+          finalThemeConfig.value = originThemeName;
+        } else {
+          finalThemeConfig.value = DEFAULT_THEME_NAME;
+        }
+        // 加载原始主题
+        return this.initCurrentThemeData({
+          themeConfig: {
+            ...(themeConfig as ComponentData.TScreenTheme),
+            // ? 多次调用则将主题设置为默认主题
+            value: retryTimes < 2 ? finalThemeConfig.value : DEFAULT_THEME_NAME,
+          },
+          registerTheme,
+          force,
+          canUseQueryTheme: false,
+          retryTimes: retryTimes + 1,
+        });
+      }
     }
 
     if (registerTheme) {
-      await this.registerTheme(themeName, this.themeDataSource[themeName]);
+      await this.registerTheme(
+        finalThemeConfig.value,
+        this.themeDataSource[finalThemeConfig.value],
+      );
     }
-    const theme = this.themeDataSource[themeName];
-    this.currentTheme = themeName;
+    const theme = this.themeDataSource[finalThemeConfig.value];
+    this.currentTheme = finalThemeConfig.value;
     this.currentThemeColor = theme.color;
 
     GLOBAL_EVENT_EMITTER.emit(
       EVENT_NAME_MAP.THEME_CHANGE,
       this.currentThemeColor[0],
+    );
+
+    return finalThemeConfig;
+  }
+
+  // 设置当前色调并更新数据
+  async initCurrentThemeDataAndUpdateScreenData(
+    config: InitThemeDataParams & { needNotRequest?: boolean },
+  ) {
+    const { needNotRequest = false, ...nextConfig } = config;
+
+    const { dispatch } = useAnyDva();
+    const setScreen = (value: any) =>
+      dispatch({ type: 'global/setScreen', value, needNotRequest });
+    const setComponent = (value: any) =>
+      dispatch({ type: 'global/setComponent', value, needNotRequest });
+    // 更改色调
+    return this.initCurrentThemeData(nextConfig).then(
+      async (newThemeConfig: ComponentData.TScreenTheme) => {
+        setScreen({
+          config: {
+            attr: {
+              theme: {
+                ...newThemeConfig,
+              },
+            },
+          },
+        });
+        // 修改组件颜色
+        // ? 循环依赖报错 改成了动态引入
+        await import('../Component/ComponentThemeChange').then(
+          (ComponentThemeChange) => {
+            setComponent(
+              ComponentThemeChange.default(
+                this.getThemeColorList(newThemeConfig.value),
+              ),
+            );
+          },
+        );
+        // 通知组件更新
+        GLOBAL_EVENT_EMITTER.emitDebounce(EVENT_NAME_MAP.SCREEN_THEME_CHANGE);
+        return sleep(2000);
+      },
     );
   }
 

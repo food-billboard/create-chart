@@ -4,11 +4,6 @@ import { useCallback } from 'react';
 import { connect } from 'umi';
 import { ConnectState } from '@/models/connect';
 import { sleep } from '@/utils';
-import ComponentThemeChange from '@/utils/Assist/Component/ComponentThemeChange';
-import {
-  EVENT_NAME_MAP,
-  GLOBAL_EVENT_EMITTER,
-} from '@/utils/Assist/EventEmitter';
 import ThemeUtil, { DEFAULT_THEME_NAME } from '@/utils/Assist/Theme';
 import ColorItem from '../ColorItem';
 import UploadImage from './UploadImage';
@@ -19,10 +14,9 @@ const generateName = () => `custom_${Date.now()}`;
 const CustomConfig = (props: {
   theme: ComponentData.TScreenTheme;
   setScreen: (value: any) => void;
-  setComponent: ComponentMethod.SetComponentMethod;
   setLoading: (loading: boolean) => void;
 }) => {
-  const { theme, setScreen, setComponent, setLoading } = props;
+  const { theme, setScreen, setLoading } = props;
   const { color = [], value: currentThemeName } = theme;
 
   const { message } = App.useApp();
@@ -43,12 +37,11 @@ const CustomConfig = (props: {
   const updateScreenThemeState = useCallback(
     async (themeConfig: ComponentData.TScreenTheme) => {
       // 更改色调
-      await ThemeUtil.initCurrentThemeData(themeConfig, true, true);
-
-      // 修改组件颜色
-      setComponent(ComponentThemeChange(themeConfig.value));
-      // 通知组件更新
-      GLOBAL_EVENT_EMITTER.emitDebounce(EVENT_NAME_MAP.SCREEN_THEME_CHANGE);
+      await ThemeUtil.initCurrentThemeDataAndUpdateScreenData({
+        themeConfig,
+        registerTheme: true,
+        force: true,
+      });
     },
     [],
   );
@@ -60,19 +53,14 @@ const CustomConfig = (props: {
       const { label: themeName } = value;
       const changeData: Partial<ComponentData.TScreenTheme> = {
         value: themeName,
+        color: [...realColor],
       };
-      if (newColorData) {
-        changeData.color = [...realColor];
-      }
-
-      setScreenTheme(changeData);
 
       sleep(500)
         .then(() => {
-          return updateScreenThemeState({
-            value: themeName,
-            color: realColor,
-          });
+          return updateScreenThemeState(
+            changeData as ComponentData.TScreenTheme,
+          );
         })
         .then(() => {
           setLoading(false);
@@ -105,7 +93,6 @@ const CustomConfig = (props: {
         if (isSelect) {
           changeData.value = DEFAULT_THEME_NAME;
         }
-        setScreenTheme(changeData);
 
         // ? 选中状态的情况下删除需要重置为默认的主题
         if (isSelect) {
@@ -194,8 +181,6 @@ export default connect(
   (dispatch: any) => {
     return {
       setScreen: (value: any) => dispatch({ type: 'global/setScreen', value }),
-      setComponent: (value: any) =>
-        dispatch({ type: 'global/setComponent', value }),
     };
   },
 )(CustomConfig);

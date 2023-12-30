@@ -1,10 +1,10 @@
-import { set, get, merge, cloneDeep } from 'lodash';
 import arrayMove from 'array-move';
+import { set, get, merge, cloneDeep } from 'lodash';
+import ComponentUtil from '@/utils/Assist/Component';
+import { HistoryUtil } from '@/utils/Assist/History';
+import { ScreenDataRequest } from '@/utils/Assist/RequestPool';
 import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
 import { mergeWithoutArray } from '@/utils/tool';
-import { HistoryUtil } from '@/utils/Assist/History';
-import ComponentUtil from '@/utils/Assist/Component';
-import { ScreenDataRequest } from '@/utils/Assist/RequestPool';
 import { DragData } from './connect';
 
 export default {
@@ -53,14 +53,17 @@ export default {
     *setScreen(
       {
         value,
-        init,
-      }: { value: ComponentMethod.GlobalUpdateScreenDataParams; init: boolean },
+        needNotRequest,
+      }: {
+        value: ComponentMethod.GlobalUpdateScreenDataParams;
+        needNotRequest: boolean;
+      },
       { put }: any,
     ) {
       yield put({
         type: 'setData',
         payload: value,
-        init,
+        needNotRequest,
       });
     },
 
@@ -79,13 +82,13 @@ export default {
     },
 
     *setGuideLine(
-      { value, init }: { value: string; init: boolean },
+      { value, needNotRequest }: { value: string; needNotRequest: boolean },
       { put }: any,
     ) {
       yield put({
         type: 'setGuideLineData',
         payload: value,
-        init,
+        needNotRequest,
       });
     },
 
@@ -119,6 +122,7 @@ export default {
           | Partial<ComponentData.TComponentData>
           | Partial<ComponentData.TComponentData>[];
         enqueue: boolean;
+        needNotRequest?: boolean;
       },
       { put }: any,
     ) {
@@ -132,6 +136,7 @@ export default {
       value: {
         value: ComponentData.TComponentData[];
         enqueue: boolean;
+        needNotRequest?: boolean;
       },
       { put }: any,
     ) {
@@ -220,7 +225,7 @@ export default {
         'screenData',
         mergeWithoutArray({}, screenData, action.payload),
       );
-      !action.init &&
+      !action.needNotRequest &&
         ScreenDataRequest(state, {
           type: 'screen',
           action: action.payload,
@@ -252,7 +257,7 @@ export default {
         'guideLine',
         mergeWithoutArray({}, state.guideLine, action.payload),
       );
-      !action.init &&
+      !action.needNotRequest &&
         ScreenDataRequest(state, {
           type: 'guideLine',
           action: action.payload,
@@ -286,29 +291,14 @@ export default {
 
     setComponentData(state: any, action: any) {
       const {
-        payload: { value, enqueue },
+        payload: { value, enqueue, needNotRequest },
       } = action;
       const prevComponents = cloneDeep(get(state, 'components') || []);
       const history = get(state, 'history.value');
 
-      // ! 先看看其他会不会有问题再说
-      // const newState = (Array.isArray(value) ? value : [value]).reduce(
-      //   (state, value) => {
-      //     const newComponents = ComponentUtil.setComponent(state, {
-      //       ...action,
-      //       payload: value,
-      //     });
-      //     set(state, 'components', newComponents);
-
-      //     return state;
-      //   },
-      //   {
-      //     ...state,
-      //   },
-      // );
-
       const newComponents = ComponentUtil.setComponent(state, {
         ...action,
+        needNotRequest,
         payload: value,
       });
       set(state, 'components', newComponents);
