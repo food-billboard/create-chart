@@ -36,11 +36,9 @@ export const useColorThemeList = () => {
 };
 
 export const usePrimaryColorObject = () => {
-  const [color, setColor] = useState<ComponentData.TColorConfig>({
-    r: 78,
-    g: 163,
-    b: 151,
-  });
+  const [color, setColor] = useState<ComponentData.TColorConfig>(
+    ThemeUtil.generateNextColor4CurrentTheme(0),
+  );
 
   useEffect(() => {
     const onChange = () => {
