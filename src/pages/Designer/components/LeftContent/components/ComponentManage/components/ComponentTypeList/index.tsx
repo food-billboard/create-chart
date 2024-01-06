@@ -1,8 +1,10 @@
 import { Tabs } from 'antd';
 import classnames from 'classnames';
 import { useCallback, useMemo, useState } from 'react';
+import { COMPONENT_TYPE_WIDTH } from '@/utils/constants/another';
 import { COMPONENT_TYPE_LIST } from '../../../../../../utils/component';
 import ComponentList from '../ComponentList';
+import ComponentSearchList from '../ComponentList/SearchList';
 import styles from './index.less';
 
 const ComponentTypeList = (props: {
@@ -43,13 +45,17 @@ const ComponentTypeList = (props: {
   }, [activeComponentType]);
 
   return (
-    <>
+    <div className="dis-flex h-100 f-1 over-hide pos-re">
       <div
         className={classnames(
           styles['page-design-left-component-list'],
           'pos-sti normal-background',
           menuClass,
         )}
+        style={{
+          // @ts-ignore
+          '--component-type-width': `${COMPONENT_TYPE_WIDTH}px`,
+        }}
       >
         <Tabs
           activeKey={activeComponentType}
@@ -61,7 +67,8 @@ const ComponentTypeList = (props: {
         />
       </div>
       <ComponentList type={activeComponentType} />
-    </>
+      <ComponentSearchList />
+    </div>
   );
 };
 

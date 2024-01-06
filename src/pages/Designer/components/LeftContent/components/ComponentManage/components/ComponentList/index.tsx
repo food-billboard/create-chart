@@ -1,5 +1,4 @@
-import { CaretRightOutlined } from '@ant-design/icons';
-import { Collapse, Row } from 'antd';
+import { Row } from 'antd';
 import classnames from 'classnames';
 import type { ItemType } from 'rc-collapse/es/interface';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -10,6 +9,8 @@ import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
+import { COMPONENT_LIST_MIN_WIDTH } from '@/utils/constants/another';
+import { COMPONENT_SUB_TYPE_WIDTH } from '@/utils/constants/another';
 import { COMPONENT_TYPE_LIST } from '../../../../../../utils/component';
 import styles from './index.less';
 import ComponentItem from './item';
@@ -108,8 +109,15 @@ const ComponentList = ({
 
   return (
     <div
-      className={classnames(styles['design-left-component-list'], 'h-100')}
-      style={componentCollapse ? { width: 0, border: 'none' } : {}}
+      className={classnames(
+        styles['design-left-component-list'],
+        'h-100 pos-re',
+      )}
+      style={
+        componentCollapse
+          ? { border: 'none', width: 0 }
+          : { minWidth: COMPONENT_LIST_MIN_WIDTH }
+      }
     >
       {list.length > 2 && (
         <div
@@ -117,6 +125,10 @@ const ComponentList = ({
             styles['design-left-component-list-label'],
             'zero-scrollbar',
           )}
+          style={{
+            // @ts-ignore
+            '--type-width': `${COMPONENT_SUB_TYPE_WIDTH}px`,
+          }}
         >
           {list.map((item) => {
             const { key, label } = item;
@@ -142,26 +154,6 @@ const ComponentList = ({
         {list.find((item) => item.key === activeKey)?.children || null}
       </div>
     </div>
-  );
-
-  return (
-    <Collapse
-      className={classnames(
-        styles['design-left-component-list'],
-        styles['design-left-component-list-show'],
-        'normal-background',
-        'zero-scrollbar',
-        'design-left-component-list',
-      )}
-      bordered={false}
-      ghost
-      activeKey={activeKey}
-      expandIcon={({ isActive }) => (
-        <CaretRightOutlined rotate={isActive ? 90 : 0} />
-      )}
-      onChange={onCollapseChange}
-      items={list}
-    />
   );
 };
 

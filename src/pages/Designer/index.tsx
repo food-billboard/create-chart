@@ -1,5 +1,5 @@
 import { useUnmount } from 'ahooks';
-import { ConfigProvider, Modal } from 'antd';
+import { ConfigProvider } from 'antd';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -21,6 +21,7 @@ import LeftContent from './components/LeftContent';
 import PageLoading from './components/PageLoading';
 import Panel from './components/Panel';
 import RightContent from './components/RightContent';
+import SplitPane from './components/SplitPane';
 import Tour from './components/Tour';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
@@ -223,11 +224,12 @@ const Designer = (props: {
       >
         <Header />
         <div className={styles['designer-page-content']}>
-          <DndProvider backend={HTML5Backend}>
+          {/* <DndProvider backend={HTML5Backend}>
             <LeftContent />
             <Panel />
           </DndProvider>
-          <RightContent />
+          <RightContent /> */}
+          <SplitPane />
         </div>
       </div>
       <Tour

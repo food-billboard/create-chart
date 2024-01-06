@@ -11,8 +11,14 @@ import {
   useRef,
   useState,
 } from 'react';
+import { connect } from 'umi';
 import FocusWrapper from '@/components/FocusWrapper';
 import { useIsScrolling, useLocalStorage, usePrimaryColor } from '@/hooks';
+import { ConnectState, ILocalModelState } from '@/models/connect';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
 import { MAX_LAYER_WIDTH, MIN_LAYER_WIDTH } from '@/utils/constants';
 import Header from './components/Header';
@@ -22,6 +28,8 @@ import { LayerManageRef } from './type';
 
 export interface LayerManageProps {
   onClose?: () => void;
+  layerCollapse: boolean;
+  setLocalConfig: (config: Partial<ILocalModelState>) => void;
 }
 
 type ResizeLineProps = {
@@ -86,9 +94,10 @@ const ResizeWrapper = (props: ResizeLineProps) => {
 
 const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
   (props, ref) => {
-    const { onClose: propsOnClose } = props;
+    const { onClose: propsOnClose, layerCollapse, setLocalConfig } = props;
 
-    const [visible, setVisible] = useState<boolean>(false);
+    const visible = !layerCollapse;
+
     const [iconMode, setIconMode] = useState<boolean>(true);
     const [disabled, setDisabled] = useState<boolean>(false);
     const [layerWidth = 300, setLayerWidth] = useLocalStorage<number>(
@@ -113,12 +122,18 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
     }, [visible, stateLayerWidth]);
 
     const onClose = useCallback(() => {
-      setVisible(false);
+      setLocalConfig({
+        layerCollapse: true,
+      });
+      GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.LAYER_VISIBLE_CHANGE, false);
       propsOnClose?.();
     }, []);
 
     const open = useCallback(() => {
-      setVisible(true);
+      setLocalConfig({
+        layerCollapse: false,
+      });
+      GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.LAYER_VISIBLE_CHANGE, true);
     }, []);
 
     useImperativeHandle(
@@ -178,4 +193,14 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
   },
 );
 
-export default LayerManage;
+export default connect(
+  (state: ConnectState) => {
+    return {
+      layerCollapse: state.local.layerCollapse,
+    };
+  },
+  (dispatch) => ({
+    setLocalConfig: (value: any) =>
+      dispatch({ type: 'local/setLocalConfig', value }),
+  }),
+)(LayerManage);

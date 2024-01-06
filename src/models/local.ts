@@ -4,9 +4,14 @@ export default {
   namespace: 'local',
 
   state: {
+    // 组件列表是否折叠
     componentCollapse: false,
+    // 组件搜索是否折叠
     componentSearchCollapse: true,
+    // 组件配置是否折叠
     componentConfigCollapse: false,
+    // 图层是否折叠
+    layerCollapse: true,
     debug: {
       show: true,
       showComponentId: true,
@@ -20,6 +25,7 @@ export default {
   effects: {
     // 组件列表折叠
     // 组件配置折叠
+    // 图层折叠
     *setLocalConfig({ value }: any, { call, put }: { call: any; put: any }) {
       yield put({
         type: 'saveData',

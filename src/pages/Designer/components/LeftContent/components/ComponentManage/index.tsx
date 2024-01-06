@@ -7,7 +7,6 @@ import {
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
 import CommonHeader from '../CommonHeader';
-import ComponentSearchList from './components/ComponentList/SearchList';
 import ComponentTypeList from './components/ComponentTypeList';
 import styles from './index.less';
 
@@ -44,12 +43,11 @@ const ComponentManage = (props: {
   }, [componentCollapse]);
 
   return (
-    <div className={classnames(styles['component-manage'], 'dis-flex-column')}>
+    <div
+      className={classnames(styles['component-manage'], 'dis-flex-column f-1')}
+    >
       <CommonHeader title="组件" onBack={onBack} className={headerClassName} />
-      <div className="dis-flex h-100 f-1 over-hide">
-        <ComponentTypeList onClick={onTypeClick} />
-        <ComponentSearchList />
-      </div>
+      <ComponentTypeList onClick={onTypeClick} />
     </div>
   );
 };

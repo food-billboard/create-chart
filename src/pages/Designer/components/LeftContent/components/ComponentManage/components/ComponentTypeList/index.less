@@ -1,6 +1,6 @@
 .page-design-left-component-list {
-  width: 48px;
-  min-width: 48px;
+  width: var(--component-type-width, 48px);
+  min-width: var(--component-type-width, 48px);
   height: 100%;
   top: 0;
   :global {
@@ -23,31 +23,4 @@
   &-item {
     align-items: center;
   }
-  &-content {
-    height: 100%;
-    overflow: auto;
-    background: inherit;
-    :global {
-      .ant-menu-item {
-        height: 38px !important;
-        line-height: 38px !important;
-        margin: 0 !important;
-        margin-bottom: 4px !important;
-        padding: 0 14px !important;
-        border-radius: 0 !important;
-        width: 100%;
-        :global {
-          .ant-menu-title-content {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            justify-content: center;
-          }
-        }
-      }
-    }
-  }
-}
-.page-design-left-component-list-content-border {
-  border-left: 1px solid var(--border-color-base);
 }
