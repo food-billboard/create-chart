@@ -6,9 +6,7 @@ import styles from './index.less';
 
 const LeftContent = () => {
   return (
-    <FocusWrapper
-      className={classnames(styles['design-page-left'], 'pos-re w-100')}
-    >
+    <FocusWrapper className={classnames(styles['design-page-left'], 'pos-re')}>
       <div
         className={classnames(
           'p-lr-24',

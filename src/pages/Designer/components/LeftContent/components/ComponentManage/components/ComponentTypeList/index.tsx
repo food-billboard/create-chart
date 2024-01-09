@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { COMPONENT_TYPE_WIDTH } from '@/utils/constants/another';
 import { COMPONENT_TYPE_LIST } from '../../../../../../utils/component';
 import ComponentList from '../ComponentList';
-import ComponentSearchList from '../ComponentList/SearchList';
+import ComponentSearchList from '../ComponentSearch/ComponentSearchList';
 import styles from './index.less';
 
 const ComponentTypeList = (props: {

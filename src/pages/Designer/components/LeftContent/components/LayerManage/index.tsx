@@ -1,27 +1,24 @@
 import classnames from 'classnames';
-import { throttle } from 'lodash';
 import {
   CSSProperties,
-  Component,
   forwardRef,
   useCallback,
-  useEffect,
   useImperativeHandle,
   useMemo,
-  useRef,
   useState,
 } from 'react';
 import { connect } from 'umi';
 import FocusWrapper from '@/components/FocusWrapper';
-import { useIsScrolling, useLocalStorage, usePrimaryColor } from '@/hooks';
+import { useIsScrolling } from '@/hooks';
 import { ConnectState, ILocalModelState } from '@/models/connect';
 import {
   GLOBAL_EVENT_EMITTER,
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
-import { MAX_LAYER_WIDTH, MIN_LAYER_WIDTH } from '@/utils/constants';
+import { MIN_LAYER_WIDTH, MAX_LAYER_WIDTH } from '@/utils/constants/another';
 import Header from './components/Header';
+import { useResize } from './components/Resize';
 import LayerList from './components/Tree';
 import styles from './index.less';
 import { LayerManageRef } from './type';
@@ -32,65 +29,7 @@ export interface LayerManageProps {
   setLocalConfig: (config: Partial<ILocalModelState>) => void;
 }
 
-type ResizeLineProps = {
-  value: number;
-  onChange?: (value: number) => void;
-  onResizeEnd?: () => void;
-  onResizeStart?: () => void;
-};
-
-class ResizeLine extends Component<ResizeLineProps & { primaryColor: string }> {
-  sizeValueRef = 0;
-
-  onMouseDown = (e: any) => {
-    this.props.onResizeStart?.();
-    const clientX = e.clientX;
-    this.sizeValueRef = clientX;
-    document.addEventListener('mousemove', this.onMouseMove);
-    document.addEventListener('mouseup', this.onMouseUp);
-  };
-
-  onMouseMove = (e: any) => {
-    const { value, onChange } = this.props;
-    const clientX = e.clientX;
-    const moveX = clientX - this.sizeValueRef;
-    let newValue = value + moveX;
-    this.sizeValueRef = clientX;
-    newValue = Math.max(Math.min(MAX_LAYER_WIDTH, newValue), MIN_LAYER_WIDTH);
-    onChange?.(newValue);
-  };
-
-  throttleOnMouseMove = throttle(this.onMouseMove, 50);
-
-  onMouseUp = () => {
-    document.removeEventListener('mousemove', this.onMouseMove);
-    document.removeEventListener('mouseup', this.onMouseUp);
-    this.sizeValueRef = 0;
-    this.props.onResizeEnd?.();
-  };
-
-  render() {
-    return (
-      <div
-        className={styles['design-layer-manage-resize']}
-        onMouseDown={this.onMouseDown}
-      >
-        <div
-          className={styles['design-layer-manage-resize-content']}
-          style={{
-            backgroundColor: this.props.primaryColor,
-          }}
-        ></div>
-      </div>
-    );
-  }
-}
-
-const ResizeWrapper = (props: ResizeLineProps) => {
-  const primaryColor = usePrimaryColor();
-
-  return <ResizeLine {...props} primaryColor={primaryColor} />;
-};
+const DEFAULT_LAYER_WIDTH = MIN_LAYER_WIDTH + 50;
 
 const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
   (props, ref) => {
@@ -99,27 +38,32 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
     const visible = !layerCollapse;
 
     const [iconMode, setIconMode] = useState<boolean>(true);
-    const [disabled, setDisabled] = useState<boolean>(false);
-    const [layerWidth = 300, setLayerWidth] = useLocalStorage<number>(
-      LocalConfig.CONFIG_KEY_LAYER_WIDTH,
-      300,
-    );
-    const [stateLayerWidth, setStateLayerWidth] = useState<number>(layerWidth);
-    const isDeal = useRef<boolean>(false);
+
     const isScroll = useIsScrolling(
       document.querySelector('.design-layer-manage-wrapper'),
     );
 
+    const [resizeElement, resizeWidth, isResizing] = useResize({
+      defaultSize: DEFAULT_LAYER_WIDTH,
+      min: MIN_LAYER_WIDTH,
+      max: MAX_LAYER_WIDTH,
+      localKey: LocalConfig.CONFIG_KEY_LAYER_WIDTH,
+      direction: 1,
+      style: {
+        height: 'calc(100% - 4px)',
+      },
+    });
+
     const style = useMemo(() => {
       const baseStyle: CSSProperties = {
-        width: visible ? stateLayerWidth : 0,
+        width: visible ? resizeWidth : 0,
         paddingRight: visible ? 8 : 0,
       };
       if (!visible) {
         baseStyle.border = 'none';
       }
       return baseStyle;
-    }, [visible, stateLayerWidth]);
+    }, [visible, resizeWidth]);
 
     const onClose = useCallback(() => {
       setLocalConfig({
@@ -148,20 +92,13 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
       [open, visible, onClose],
     );
 
-    useEffect(() => {
-      if (!isDeal.current && layerWidth != stateLayerWidth) {
-        setStateLayerWidth(layerWidth);
-        isDeal.current = true;
-      }
-    }, [stateLayerWidth, layerWidth]);
-
     return (
       <FocusWrapper
         className={classnames(
           'design-layer-manage-wrapper zero-scrollbar',
           styles['design-layer-manage-wrapper'],
           {
-            [styles['design-layer-manage-wrapper-transition']]: !disabled,
+            [styles['design-layer-manage-wrapper-transition']]: !isResizing,
           },
         )}
         style={style}
@@ -174,19 +111,11 @@ const LayerManage = forwardRef<LayerManageRef, LayerManageProps>(
               setIconMode(value);
             }}
           />
-          <LayerList iconMode={iconMode} disabled={disabled} />
-          {(!!disabled || isScroll) && (
+          <LayerList iconMode={iconMode} disabled={isResizing} />
+          {(!!isResizing || isScroll) && (
             <div className={styles['design-layer-manage-content-cover']}></div>
           )}
-          <ResizeWrapper
-            value={stateLayerWidth}
-            onChange={setStateLayerWidth}
-            onResizeStart={setDisabled.bind(null, true)}
-            onResizeEnd={() => {
-              setLayerWidth(stateLayerWidth);
-              setDisabled(false);
-            }}
-          />
+          {resizeElement}
         </div>
       </FocusWrapper>
     );

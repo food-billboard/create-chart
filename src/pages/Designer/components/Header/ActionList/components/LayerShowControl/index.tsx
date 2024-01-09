@@ -31,7 +31,7 @@ const LayerShowIcon = (props: {
       <DebounceButton
         title="图层"
         icon={<BlockOutlined />}
-        type={layerCollapse ? 'primary' : 'default'}
+        type={!layerCollapse ? 'primary' : 'default'}
         onClick={handleOpen}
       ></DebounceButton>
     </Tooltip>

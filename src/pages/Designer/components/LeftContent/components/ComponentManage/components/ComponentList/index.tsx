@@ -4,12 +4,8 @@ import type { ItemType } from 'rc-collapse/es/interface';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { connect } from 'umi';
 import Empty from '@/components/Empty';
-import { ConnectState, ILocalModelState } from '@/models/connect';
-import {
-  GLOBAL_EVENT_EMITTER,
-  EVENT_NAME_MAP,
-} from '@/utils/Assist/EventEmitter';
-import { COMPONENT_LIST_MIN_WIDTH } from '@/utils/constants/another';
+import { ConnectState } from '@/models/connect';
+import { COMPONENT_LIST_WIDTH } from '@/utils/constants/another';
 import { COMPONENT_SUB_TYPE_WIDTH } from '@/utils/constants/another';
 import { COMPONENT_TYPE_LIST } from '../../../../../../utils/component';
 import styles from './index.less';
@@ -18,11 +14,9 @@ import ComponentItem from './item';
 const ComponentList = ({
   type,
   componentCollapse,
-  setLocalConfig,
 }: {
   type: string;
   componentCollapse: boolean;
-  setLocalConfig: (value: Partial<ILocalModelState>) => void;
 }) => {
   const [activeKey, setActiveKey] = useState<string>('All');
 
@@ -73,27 +67,6 @@ const ComponentList = ({
     setActiveKey('All');
   }, [type]);
 
-  useEffect(() => {
-    const listener = (visible: boolean) => {
-      if (visible) {
-        setLocalConfig({
-          componentCollapse: true,
-        });
-        GLOBAL_EVENT_EMITTER.emit(EVENT_NAME_MAP.COMPONENT_LIST_VISIBLE, false);
-      }
-    };
-    GLOBAL_EVENT_EMITTER.addListener(
-      EVENT_NAME_MAP.COMPONENT_SEARCH_VISIBLE,
-      listener,
-    );
-    return () => {
-      GLOBAL_EVENT_EMITTER.removeListener(
-        EVENT_NAME_MAP.COMPONENT_SEARCH_VISIBLE,
-        listener,
-      );
-    };
-  }, []);
-
   if (!target?.children.length)
     return (
       <Empty
@@ -116,7 +89,7 @@ const ComponentList = ({
       style={
         componentCollapse
           ? { border: 'none', width: 0 }
-          : { minWidth: COMPONENT_LIST_MIN_WIDTH }
+          : { width: COMPONENT_LIST_WIDTH }
       }
     >
       {list.length > 2 && (
@@ -163,10 +136,7 @@ export default connect(
       componentCollapse: state.local.componentCollapse,
     };
   },
-  (dispatch) => {
-    return {
-      setLocalConfig: (value: any) =>
-        dispatch({ type: 'local/setLocalConfig', value }),
-    };
+  () => {
+    return {};
   },
 )(ComponentList);

@@ -78,13 +78,18 @@ const COMPONENT_TYPE_WIDTH = 48;
 // 组件二级分类宽度
 const COMPONENT_SUB_TYPE_WIDTH = 70;
 
-// 组件列表的最小宽度
-const COMPONENT_LIST_MIN_WIDTH = 208;
+// 组件列表的宽度
+const COMPONENT_LIST_WIDTH = 208;
 
 // 图层的最大宽度
 const MAX_LAYER_WIDTH = 500;
 // 图层的最小宽度
 const MIN_LAYER_WIDTH = 250;
+
+// 配置面板最大宽度
+const MAX_CONFIG_WIDTH = 500;
+// 配置面板最小宽度
+const MIN_CONFIG_WIDTH = 302;
 
 export {
   IMAGE_FALLBACK,
@@ -102,5 +107,7 @@ export {
   PANEL_ID,
   COMPONENT_TYPE_WIDTH,
   COMPONENT_SUB_TYPE_WIDTH,
-  COMPONENT_LIST_MIN_WIDTH,
+  COMPONENT_LIST_WIDTH,
+  MAX_CONFIG_WIDTH,
+  MIN_CONFIG_WIDTH,
 };
