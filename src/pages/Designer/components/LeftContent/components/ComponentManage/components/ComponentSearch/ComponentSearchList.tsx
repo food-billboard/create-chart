@@ -2,7 +2,7 @@ import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
 import { useDebounceFn } from 'ahooks';
 import { Input, Empty, Divider, Button } from 'antd';
 import classnames from 'classnames';
-import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import { connect } from 'umi';
 import { ConnectState, ILocalModelState } from '@/models/connect';
 import {
@@ -10,8 +10,8 @@ import {
   EVENT_NAME_MAP,
 } from '@/utils/Assist/EventEmitter';
 import { COMPONENT_TYPE_LIST } from '../../../../../../utils/component';
+import ComponentItem from '../ComponentList/item';
 import styles from './index.less';
-import ComponentItem from './item';
 
 const findComponentByString = (list: any[]) => {
   const searchResult: any[] = [];
@@ -112,30 +112,6 @@ const ComponentSearch = (props: {
       );
     });
   }, [searchResult]);
-
-  useEffect(() => {
-    const listener = (visible: boolean) => {
-      if (visible) {
-        setLocalConfig({
-          componentSearchCollapse: true,
-        });
-        GLOBAL_EVENT_EMITTER.emit(
-          EVENT_NAME_MAP.COMPONENT_SEARCH_VISIBLE,
-          false,
-        );
-      }
-    };
-    GLOBAL_EVENT_EMITTER.addListener(
-      EVENT_NAME_MAP.COMPONENT_LIST_VISIBLE,
-      listener,
-    );
-    return () => {
-      GLOBAL_EVENT_EMITTER.removeListener(
-        EVENT_NAME_MAP.COMPONENT_LIST_VISIBLE,
-        listener,
-      );
-    };
-  }, []);
 
   return (
     <div

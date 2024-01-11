@@ -1,3 +1,9 @@
+import { InfoCircleOutlined } from '@ant-design/icons';
+import { Input, Switch } from 'antd';
+import classnames from 'classnames';
+import { set } from 'lodash';
+import { useCallback, useMemo } from 'react';
+import { connect } from 'umi';
 import BackgroundSelect from '@/components/BackgroundSelect';
 import ConfigWrapper, {
   ConfigItem,
@@ -8,12 +14,6 @@ import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import CoverSelect from '@/components/CoverSelect';
 import IconTooltip from '@/components/IconTooltip';
-import { InfoCircleOutlined } from '@ant-design/icons';
-import { Input, Switch } from 'antd';
-import classnames from 'classnames';
-import { set } from 'lodash';
-import { useCallback } from 'react';
-import { connect } from 'umi';
 import ScaleConfig from './components/ScaleConfig';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';

@@ -3,7 +3,6 @@ import { UndoIcon, RedoIcon } from './components/ActionUndoAndRedo';
 import CallbackManage from './components/CallbackManage';
 import CollapseConfigPanel from './components/CollapseConfigPanel';
 import ComponentListCollapse from './components/ComponentListCollapse';
-import ComponentSearch from './components/ComponentSearch';
 import ConstantManage from './components/ConstantManage';
 import DebugConfig from './components/DebugConfig';
 import LayerSearch from './components/LayerSearch';
@@ -20,7 +19,6 @@ const ActionList = () => {
       <UndoIcon />
       <RedoIcon />
       <DebugConfig />
-      <ComponentSearch />
       <LayerSearch />
       <ComponentListCollapse />
       <CollapseConfigPanel />

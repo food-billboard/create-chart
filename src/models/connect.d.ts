@@ -6,6 +6,7 @@ export type ILocalModelState = {
   componentCollapse: boolean;
   componentSearchCollapse: boolean;
   componentConfigCollapse: boolean;
+  layerCollapse: boolean;
   globalActionLoading: boolean;
   debug: {
     show: boolean;

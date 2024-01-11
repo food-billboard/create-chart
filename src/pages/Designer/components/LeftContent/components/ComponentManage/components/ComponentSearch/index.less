@@ -1,0 +1,56 @@
+.component-search-list {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform: translateX(100%);
+  background-color: var(--layout-header-background);
+  transition-property: transform;
+  transition-duration: 0.2s;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 0 8px 8px 0;
+  &-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  &-empty {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: transparent;
+  }
+  &-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  &-item-path {
+    :global {
+      .ant-divider-inner-text {
+        font-weight: bold;
+        font-size: 12px;
+      }
+    }
+  }
+  :global {
+    .ant-drawer-body {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .ant-input {
+      position: sticky;
+      top: 0;
+      font-size: 12px;
+    }
+  }
+}
+.component-search-list-visible {
+  padding: 24px;
+  transform: translateX(0);
+}

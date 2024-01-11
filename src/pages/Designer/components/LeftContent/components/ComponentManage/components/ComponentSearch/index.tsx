@@ -1,16 +1,13 @@
 import { SearchOutlined } from '@ant-design/icons';
-import classnames from 'classnames';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { connect } from 'umi';
 import DebounceButton from '@/components/DebounceButton';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
-import Tooltip from '@/components/Tooltip';
 import { ConnectState, ILocalModelState } from '@/models/connect';
 import {
   EVENT_NAME_MAP,
   GLOBAL_EVENT_EMITTER,
 } from '@/utils/Assist/EventEmitter';
-import styles from './index.less';
 
 // 组件搜索
 const InternalComponentSearch = (props: {
@@ -31,20 +28,38 @@ const InternalComponentSearch = (props: {
     );
   }, [componentSearchCollapse, setLocalConfig]);
 
+  useEffect(() => {
+    const listener = (visible: boolean) => {
+      if (!visible) {
+        setLocalConfig({
+          componentSearchCollapse: true,
+        });
+        GLOBAL_EVENT_EMITTER.emit(
+          EVENT_NAME_MAP.COMPONENT_SEARCH_VISIBLE,
+          false,
+        );
+      }
+    };
+    GLOBAL_EVENT_EMITTER.addListener(
+      EVENT_NAME_MAP.COMPONENT_LIST_VISIBLE,
+      listener,
+    );
+    return () => {
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.COMPONENT_LIST_VISIBLE,
+        listener,
+      );
+    };
+  }, []);
+
   return (
-    <div
-      className={classnames(styles['design-header-action-component-search'])}
-    >
-      <Tooltip title={'组件搜索'} placement="top">
-        <GlobalLoadingActonButton
-          icon={<SearchOutlined />}
-          onClick={handleClick}
-          type={!componentSearchCollapse ? 'primary' : 'default'}
-          Component={DebounceButton}
-          needLoading={false}
-        />
-      </Tooltip>
-    </div>
+    <GlobalLoadingActonButton
+      icon={<SearchOutlined className="c-f-s-big" />}
+      onClick={handleClick}
+      type={'link'}
+      Component={DebounceButton}
+      needLoading={false}
+    />
   );
 };
 

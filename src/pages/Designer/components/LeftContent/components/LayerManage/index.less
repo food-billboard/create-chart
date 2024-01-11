@@ -1,7 +1,7 @@
 .design-layer-manage-wrapper {
   height: 100%;
-  flex: 1;
   flex-shrink: 0;
+  flex-grow: 0;
   overflow-y: auto;
   overflow-x: hidden;
   border: 1px solid var(--border-color-base);
@@ -31,25 +31,4 @@
 .design-layer-manage-wrapper-transition {
   transition-property: padding, width;
   transition-duration: 0.5s, 0.5s;
-}
-.design-layer-manage-resize {
-  height: ~'calc(100% - 4px)';
-  position: absolute;
-  top: 0;
-  right: -8px;
-  width: 4px;
-  padding: 2px;
-  cursor: col-resize;
-  box-sizing: content-box;
-  opacity: 0.4;
-  transition: opacity 0.3s;
-  &:hover {
-    opacity: 1;
-  }
-  &-content {
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    border-radius: 2px;
-  }
 }

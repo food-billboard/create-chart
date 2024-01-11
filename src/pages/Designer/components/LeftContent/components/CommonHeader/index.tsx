@@ -1,4 +1,5 @@
 import { CaretLeftOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import classnames from 'classnames';
 import { ReactNode, CSSProperties } from 'react';
 import styles from './index.less';
@@ -32,7 +33,11 @@ const CommonHeader = (props: {
         {title}
       </div>
       {extra}
-      <CaretLeftOutlined className="m-r-8 c-po" onClick={onBack} />
+      <Button
+        className="c-f-s-big"
+        type="link"
+        icon={<CaretLeftOutlined onClick={onBack} />}
+      />
     </div>
   );
 };
