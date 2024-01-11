@@ -167,6 +167,7 @@ const RenderComponent = memo(
         path={path}
         disabled={pointerDisabled}
         actionFrom="screen"
+        open
       >
         <ComponentWrapper
           type={type}

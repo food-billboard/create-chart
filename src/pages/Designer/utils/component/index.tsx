@@ -840,3 +840,14 @@ export const COMPONENT_ICON_MAP: {
   });
   return acc;
 }, {} as any);
+
+export const COMPONENT_TOP_ICON_MAP: {
+  [K in ComponentData.TComponentSelfType]: any;
+} = COMPONENT_TYPE_LIST.reduce((acc, cur) => {
+  cur.children.forEach((children) => {
+    children.children.forEach((item) => {
+      acc[item.type] = cur.icon;
+    });
+  });
+  return acc;
+}, {} as any);

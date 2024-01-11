@@ -1,10 +1,10 @@
-import { useGlobalLoading } from '@/hooks';
-import DataChangePool from '@/utils/Assist/DataChangePool';
-import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
 import type { DropDownProps } from 'antd/es/dropdown';
 import { isEqual } from 'lodash';
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { connect } from 'umi';
+import { useGlobalLoading } from '@/hooks';
+import DataChangePool from '@/utils/Assist/DataChangePool';
+import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
 import Dropdown from '../ChartComponents/Common/Dropdown';
 import { ActionItem, ActionItemType, DEFAULT_ACTION_LIST } from './action.map';
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -96,7 +96,7 @@ const ContextMenu = (
         label,
         key: type,
         style: {
-          padding: 0,
+          padding: '2px 4px',
         },
       };
     });
@@ -119,7 +119,7 @@ const ContextMenu = (
   }, [actionIgnore, flag]);
 
   const onVisibleChange = useCallback(
-    (visible: boolean) => {
+    (visible: boolean, info) => {
       const action = async () => {
         const select = getGlobalSelect();
         if (visible) {
@@ -130,7 +130,7 @@ const ContextMenu = (
             setInternalSelect(select);
           }
         }
-        propsOnVisibleChange?.(visible);
+        propsOnVisibleChange?.(visible, info);
         setVisible(visible);
       };
       if (visible) {

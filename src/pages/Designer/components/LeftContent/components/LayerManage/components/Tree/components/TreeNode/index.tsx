@@ -1,23 +1,31 @@
 import {
+  FolderOutlined,
+  FolderOpenOutlined,
+  QuestionCircleOutlined,
+} from '@ant-design/icons';
+import { useHover, useRafState } from 'ahooks';
+import { Space } from 'antd';
+import classnames from 'classnames';
+import {
   useCallback,
   useRef,
   useMemo,
   useEffect,
   CSSProperties,
   useTransition,
+  cloneElement,
 } from 'react';
-import { Space } from 'antd';
-import classnames from 'classnames';
-import { FolderOutlined, FolderOpenOutlined } from '@ant-design/icons';
-import { useHover, useRafState } from 'ahooks';
-import { useComponentHover, useLayerHover } from '@/hooks';
 import ContextMenu from '@/components/ContextMenu';
 import { ActionItemType } from '@/components/ContextMenu/action.map';
+import { useComponentHover, useLayerHover } from '@/hooks';
 import DataChangePool from '@/utils/Assist/DataChangePool';
-import { COMPONENT_ICON_MAP } from '../../../../../../../../utils/component';
-import VisibleEditor from './Visible';
-import NameEditor, { NameEditorRefProps } from './NameEdit';
+import {
+  COMPONENT_ICON_MAP,
+  COMPONENT_TOP_ICON_MAP,
+} from '../../../../../../../../utils/component';
 import LockEditor from './Lock';
+import NameEditor, { NameEditorRefProps } from './NameEdit';
+import VisibleEditor from './Visible';
 import styles from './index.less';
 
 const ListItem = ({
@@ -72,6 +80,16 @@ const ListItem = ({
     return COMPONENT_ICON_MAP[componentType];
   }, [componentType]);
 
+  const parentIcon = useMemo(() => {
+    const icon = COMPONENT_TOP_ICON_MAP[componentType];
+    if (!icon) {
+      return <QuestionCircleOutlined />;
+    }
+    return cloneElement(icon as any, {
+      className: 'p-lr-6',
+    });
+  }, [componentType]);
+
   const setComponent = useCallback(
     (value: ComponentMethod.SetComponentMethodParamsData) => {
       DataChangePool.setComponent?.(value);
@@ -120,7 +138,17 @@ const ListItem = ({
   );
 
   const treeNodeIcon = useMemo(() => {
-    if (!iconMode) return null;
+    if (!iconMode) {
+      if (isLeaf) {
+        return parentIcon;
+      } else {
+        return isExpend ? (
+          <FolderOpenOutlined className="p-lr-6" />
+        ) : (
+          <FolderOutlined className="p-lr-6" />
+        );
+      }
+    }
     if (isLeaf) {
       return (
         <div
@@ -136,12 +164,15 @@ const ListItem = ({
     }
     return (
       <div
-        className={classnames(styles['design-page-layer-item-icon'], 'm-r-8')}
+        className={classnames(
+          styles['design-page-layer-item-icon'],
+          'm-r-8 ac-i-size-m',
+        )}
       >
         {isExpend ? <FolderOpenOutlined /> : <FolderOutlined />}
       </div>
     );
-  }, [isLeaf, icon, isExpend, iconMode]);
+  }, [isLeaf, icon, isExpend, iconMode, parentIcon]);
 
   useEffect(() => {
     return eventBinder((hoverSelect) => {
