@@ -5,6 +5,10 @@ import { COMPONENT_TYPE_WIDTH } from '@/utils/constants/another';
 import { COMPONENT_TYPE_LIST } from '../../../../../../utils/component';
 import ComponentList from '../ComponentList';
 import ComponentSearchList from '../ComponentSearch/ComponentSearchList';
+import {
+  useExtraComponentTypeList,
+  ExtraComponentChildren,
+} from './components/ExtraComponentTypeList';
 import styles from './index.less';
 
 const ComponentTypeList = (props: {
@@ -18,14 +22,25 @@ const ComponentTypeList = (props: {
     COMPONENT_TYPE_LIST[0].type,
   );
 
+  const [extraTypeList] = useExtraComponentTypeList();
+
   const handleClick = useCallback((value) => {
     setActiveComponentType(value);
     onChange?.(value);
   }, []);
 
+  const onTabClick = useCallback(() => {
+    onClick?.();
+  }, [onClick]);
+
   const list: any = useMemo(() => {
-    return COMPONENT_TYPE_LIST.map((item) => {
-      const { type, icon, title } = item;
+    const baseList = (
+      [
+        ...COMPONENT_TYPE_LIST,
+        ...extraTypeList,
+      ] as (ComponentType.ComponentTypeList & { onClick?: () => void })[]
+    ).map((item) => {
+      const { type, icon, title, onClick } = item;
       return {
         key: type,
         label: (
@@ -34,6 +49,7 @@ const ComponentTypeList = (props: {
               styles['page-design-left-component-list-item'],
               'dis-flex-column',
             )}
+            onClick={onClick}
           >
             {icon}
             {title}
@@ -42,14 +58,15 @@ const ComponentTypeList = (props: {
         title,
       };
     });
-  }, [activeComponentType]);
+    return baseList;
+  }, [activeComponentType, extraTypeList]);
 
   return (
     <div className="dis-flex h-100 f-1 over-hide pos-re">
       <div
         className={classnames(
           styles['page-design-left-component-list'],
-          'pos-sti normal-background',
+          'pos-sti normal-background zero-scrollbar',
           menuClass,
         )}
         style={{
@@ -61,13 +78,14 @@ const ComponentTypeList = (props: {
           activeKey={activeComponentType}
           items={list}
           onChange={handleClick}
-          onTabClick={onClick}
+          onTabClick={onTabClick}
           tabPosition="right"
           tabBarGutter={4}
         />
       </div>
       <ComponentList type={activeComponentType} />
       <ComponentSearchList />
+      <ExtraComponentChildren />
     </div>
   );
 };

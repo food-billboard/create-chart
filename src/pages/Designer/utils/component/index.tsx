@@ -95,7 +95,7 @@ import WordCloudBasic from '../../../../../public/components/word-cloud.png';
 import ZebraBar from '../../../../../public/components/zebra-bar.png';
 import GENERATE_COMPONENT_LIST from './GenerateList';
 
-const commonClass: string = classnames('ac-i-size-m');
+export const commonClass: string = classnames('ac-i-size-m');
 
 const _COMPONENT_TYPE_LIST = [
   {

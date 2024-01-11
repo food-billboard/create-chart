@@ -202,3 +202,5 @@ declare namespace API_IMPROVE {
 
   export type InternalBackgroundData = {};
 }
+
+declare namespace API_MEDIA_MANAGE {}

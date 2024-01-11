@@ -5,3 +5,4 @@ export * from './model';
 export * from './mock';
 export * from './third';
 export * from './improve';
+export * from './mediaManage';

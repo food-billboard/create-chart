@@ -8,6 +8,7 @@ import { ConnectState } from '@/models/connect';
 import { COMPONENT_LIST_WIDTH } from '@/utils/constants/another';
 import { COMPONENT_SUB_TYPE_WIDTH } from '@/utils/constants/another';
 import { COMPONENT_TYPE_LIST } from '../../../../../../utils/component';
+import { EXTRA_TYPE_EMPTY_DESC_MAP } from '../ComponentTypeList/components/ExtraComponentTypeList';
 import styles from './index.less';
 import ComponentItem from './item';
 
@@ -70,12 +71,14 @@ const ComponentList = ({
   if (!target?.children.length)
     return (
       <Empty
-        description="暂无组件"
+        description={(EXTRA_TYPE_EMPTY_DESC_MAP as any)[type] || '暂无组件'}
         className={classnames(
           styles['design-left-component-list'],
+          styles['design-left-component-list-empty'],
           'border-r-8',
           'normal-background',
           'h-100',
+          'dis-flex',
         )}
       />
     );
@@ -84,7 +87,7 @@ const ComponentList = ({
     <div
       className={classnames(
         styles['design-left-component-list'],
-        'h-100 pos-re',
+        'h-100 pos-re dis-flex',
       )}
       style={
         componentCollapse

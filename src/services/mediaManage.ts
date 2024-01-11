@@ -1,7 +1,7 @@
 import request from '../utils/request';
 
-// mock数据格式列表
-export const getMockKindList = async () => {
+//
+export const getMediaClassicList = async () => {
   return request<API_MOCK.TGetMockKindListData[]>('/api/screen/mock/params', {
     method: 'GET',
   }).then((data) => {
