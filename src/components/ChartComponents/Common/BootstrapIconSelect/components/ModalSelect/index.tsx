@@ -1,5 +1,5 @@
 import { useControllableValue, useDebounceEffect } from 'ahooks';
-import { Input } from 'antd';
+import { Input, Empty } from 'antd';
 import classnames from 'classnames';
 import { useCallback, useState } from 'react';
 import { AutoSizer, Collection } from 'react-virtualized';
@@ -132,7 +132,12 @@ const ModalSelect = (props: {
       >
         <div className={styles['icon-modal-select']}>
           <div className={styles['icon-modal-select-search']}>
-            <Input value={searchValue} onChange={onSearchChange} />
+            <Input
+              placeholder="输入关键字搜索图标"
+              allowClear
+              value={searchValue}
+              onChange={onSearchChange}
+            />
           </div>
           <div>
             <AutoSizer disableHeight>
@@ -143,7 +148,13 @@ const ModalSelect = (props: {
                   cellSizeAndPositionGetter={cellSizeAndPositionGetter}
                   className={styles.collection}
                   height={MODAL_HEIGHT - 8 * 2 - 24}
-                  noContentRenderer={() => <div>没数据</div>}
+                  noContentRenderer={() => {
+                    return (
+                      <div className="h-100 dis-flex-cen dis-flex-column">
+                        <Empty />
+                      </div>
+                    );
+                  }}
                   width={width}
                   style={{
                     overflowX: 'hidden',
