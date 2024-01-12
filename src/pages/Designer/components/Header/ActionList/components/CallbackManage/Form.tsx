@@ -4,7 +4,7 @@ import {
   PlusSquareOutlined,
 } from '@ant-design/icons';
 import { useControllableValue } from 'ahooks';
-import { Button, Drawer, Empty, Modal, Popconfirm, Table } from 'antd';
+import { Button, Drawer, Empty, Popconfirm, Table } from 'antd';
 import { nanoid } from 'nanoid';
 import {
   forwardRef,
@@ -14,6 +14,7 @@ import {
   useState,
 } from 'react';
 import { connect } from 'umi';
+import Modal from '@/components/FocusModal';
 import FocusWrapper from '@/components/FocusWrapper';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import LazyLoadWrapper from '@/components/LazyLoad';

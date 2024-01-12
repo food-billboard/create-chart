@@ -1,6 +1,6 @@
 import { FileImageOutlined } from '@ant-design/icons';
 import { useControllableValue } from 'ahooks';
-import { Modal, Pagination, Row, Col } from 'antd';
+import { Pagination, Row, Col } from 'antd';
 import classnames from 'classnames';
 import {
   CSSProperties,
@@ -10,6 +10,7 @@ import {
   useMemo,
   useState,
 } from 'react';
+import Modal from '@/components/FocusModal';
 import { getInternalBackgroundList } from '@/services';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import BackgroundMap from './components/Background';

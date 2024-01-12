@@ -1,11 +1,11 @@
 import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
-import { Button, Space, Modal, Form, App } from 'antd';
+import { Button, Space, Form, App } from 'antd';
 import { useMemo, useCallback, useState } from 'react';
 import Input, { InputModal } from '@/components/ChartComponents/Common/Input';
+import Modal from '@/components/FocusModal';
 import GhostButton from '@/components/GhostButton';
 import IconTooltip from '@/components/IconTooltip';
 import { getPath } from '@/utils/Assist/Component';
-import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
 import MapTable from '../../../MapTable';
 import { updateInteractiveAndSyncParams } from '../../../utils';
 import styles from './index.less';
@@ -41,13 +41,11 @@ const EditModal = (props: {
 
   const show = () => {
     setVisible(true);
-    CopyAndPasteUtil.forceFocus();
   };
 
   const hide = () => {
     setVisible(false);
     form.resetFields();
-    CopyAndPasteUtil.forceUnFocus();
   };
 
   const handleOk = useCallback(() => {

@@ -1,10 +1,11 @@
 import { FileImageOutlined, LinkOutlined } from '@ant-design/icons';
 import { useControllableValue } from 'ahooks';
-import { Upload, Modal, UploadProps, App } from 'antd';
+import { Upload, UploadProps, App } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
 import classnames from 'classnames';
 import { nanoid } from 'nanoid';
 import { useCallback, CSSProperties, useState, useRef, useEffect } from 'react';
+import Modal from '@/components/FocusModal';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import {
   UploadImage,

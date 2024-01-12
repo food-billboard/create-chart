@@ -1,5 +1,5 @@
 import { useDebounce } from 'ahooks';
-import { Col, Input, Modal, Row } from 'antd';
+import { Col, Input, Row } from 'antd';
 import classnames from 'classnames';
 import {
   forwardRef,
@@ -8,8 +8,8 @@ import {
   useMemo,
   useState,
 } from 'react';
+import Modal from '@/components/FocusModal';
 import { usePrimaryColor } from '@/hooks';
-import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
 import { Loading } from '../PageLoading';
 import styles from './index.less';
 
@@ -47,7 +47,6 @@ const ComponentSelect = forwardRef<
     if (visible) return;
     setVisible(true);
     setLoading(true);
-    CopyAndPasteUtil.forceFocus();
     setSelect(select || '');
     if (!componentOnlyTypeList.length) {
       import('@/pages/Designer/utils/component').then((data) => {
@@ -88,7 +87,6 @@ const ComponentSelect = forwardRef<
 
   const close = useCallback(() => {
     setVisible(false);
-    CopyAndPasteUtil.forceUnFocus();
   }, []);
 
   const handleOk = useCallback(() => {

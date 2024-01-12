@@ -1,6 +1,7 @@
-import { Upload, Modal } from 'antd';
+import { Upload } from 'antd';
 import { uniqueId } from 'lodash';
 import { Component } from 'react';
+import Modal from '@/components/FocusModal';
 import { getBase64, UploadButton } from '@/components/ImageUpload';
 import { message } from '@/components/Message';
 import styles from './index.less';

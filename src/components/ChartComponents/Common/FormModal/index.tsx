@@ -1,7 +1,8 @@
-import { useCallback } from 'react';
-import { Modal, Button } from 'antd';
+import { Button } from 'antd';
 import type { ModalProps } from 'antd';
 import classnames from 'classnames';
+import { useCallback } from 'react';
+import Modal from '@/components/FocusModal';
 import { useControlDisableKeyPressVisible } from '@/hooks';
 import { sleep } from '@/utils';
 

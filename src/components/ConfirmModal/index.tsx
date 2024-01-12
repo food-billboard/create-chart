@@ -1,3 +1,5 @@
+import { useKeyPress } from 'ahooks';
+import type { ModalProps } from 'antd';
 import {
   ReactNode,
   useCallback,
@@ -5,10 +7,7 @@ import {
   useImperativeHandle,
   forwardRef,
 } from 'react';
-import { Modal } from 'antd';
-import { ModalProps } from 'antd/es/modal';
-import { useKeyPress } from 'ahooks';
-import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
+import Modal from '@/components/FocusModal';
 
 export type ConfirmModalRef = {
   open: () => void;
@@ -44,7 +43,6 @@ const ConfirmModal = forwardRef<
     (e) => {
       propsOnOk?.(e);
       setVisible(false);
-      CopyAndPasteUtil.forceUnFocus();
     },
     [propsOnOk],
   );
@@ -53,7 +51,6 @@ const ConfirmModal = forwardRef<
     (e) => {
       propsOnCancel?.(e);
       setVisible(false);
-      CopyAndPasteUtil.forceUnFocus();
     },
     [propsOnCancel],
   );
@@ -64,7 +61,6 @@ const ConfirmModal = forwardRef<
       return {
         open: () => {
           setVisible(true);
-          CopyAndPasteUtil.forceFocus();
         },
       };
     },
