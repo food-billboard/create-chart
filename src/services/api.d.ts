@@ -195,10 +195,31 @@ declare namespace API_THIRD {
 }
 
 declare namespace API_IMPROVE {
-  export type InternalBackgroundParams = {
+  export type MediaParams = {
     current: number;
     pageSize: number;
+    classic?: string;
   };
 
-  export type InternalBackgroundData = {};
+  export type MediaData = {};
+
+  export type MediaClassicData = {
+    label: string;
+    value: string;
+  };
+
+  export type AddMediaClassicParams = {
+    label: string;
+  };
+
+  export type UpdateMediaClassParams = AddMediaClassicParams & {
+    value: string;
+  };
+
+  export type AddMediaDataParams = {
+    classic: string;
+    value: string;
+  };
+
+  export type DeleteMediaDataParams = AddMediaDataParams;
 }

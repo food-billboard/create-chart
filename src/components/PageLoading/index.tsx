@@ -27,6 +27,29 @@ export const Loading = (props: {
   );
 };
 
+export const ContentLoading = (props: {
+  style?: CSSProperties;
+  className?: string;
+  size?: number;
+  loading?: boolean;
+}) => {
+  const { style, className, size = 25, loading } = props;
+
+  if (!loading) return null;
+
+  return (
+    <div
+      className={classnames('pos-ab w-100 h-100', styles['content-loading'])}
+    >
+      <Loading
+        style={style}
+        className={classnames(styles['page-custom-loading'], className)}
+        size={size}
+      />
+    </div>
+  );
+};
+
 const WrapperLoading = (props: {
   style?: CSSProperties;
   className?: string;

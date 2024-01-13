@@ -46,9 +46,11 @@ export const UploadButton = (props: {
 };
 
 const PicturesWall = (
-  props: Partial<Exclude<UploadProps, 'fileList' | 'onChange'>> & {
+  props: Partial<Omit<UploadProps, 'fileList' | 'onChange'>> & {
     value?: UploadFile[];
     onChange?: (value: UploadFile[]) => void;
+    inputVisible?: boolean;
+    height?: CSSProperties['height'];
   },
 ) => {
   const [value = [], setValue] = useControllableValue<UploadFile[]>(props, {
@@ -57,7 +59,14 @@ const PicturesWall = (
 
   const { message } = App.useApp();
 
-  const { value: propsValue, onChange, className, ...nextProps } = props;
+  const {
+    value: propsValue,
+    onChange,
+    className,
+    inputVisible = true,
+    height = '200px',
+    ...nextProps
+  } = props;
 
   const [previewVisible, setPreviewVisible] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string>('');
@@ -192,14 +201,16 @@ const PicturesWall = (
 
   return (
     <>
-      <Input
-        defaultValue={value[0]?.preview || ''}
-        onBlur={onUrlChange}
-        className="w-100 m-b-4"
-        ref={inputRef}
-        prefix={<LinkOutlined />}
-        placeholder="请输入图片地址"
-      />
+      {!!inputVisible && (
+        <Input
+          defaultValue={value[0]?.preview || ''}
+          onBlur={onUrlChange}
+          className="w-100 m-b-4"
+          ref={inputRef}
+          prefix={<LinkOutlined />}
+          placeholder="请输入图片地址"
+        />
+      )}
       <Upload
         listType="picture-card"
         fileList={value.map((item) => ({
@@ -209,10 +220,15 @@ const PicturesWall = (
         onPreview={handlePreview}
         beforeUpload={beforeUpload}
         accept="image/*"
-        className={classnames(styles['component-image-upload'], className)}
         onRemove={onRemove}
         disabled={validLoading}
         {...nextProps}
+        className={classnames(styles['component-image-upload'], className)}
+        style={{
+          ...nextProps.style,
+          // @ts-ignore
+          '--upload-item-height': height,
+        }}
       >
         {value.length >= 1 ? null : <UploadButton />}
       </Upload>
