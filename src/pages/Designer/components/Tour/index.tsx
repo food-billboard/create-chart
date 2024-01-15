@@ -1,11 +1,6 @@
-import { Tour } from 'antd';
 import type { TourProps } from 'antd';
-import { useEffect, useState, useCallback } from 'react';
-import { connect } from 'umi';
-import { useLocalStorage } from '@/hooks';
+import Tour, { Props } from '@/components/Tour';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
-import { mapDispatchToProps, mapStateToProps } from './connect';
-import './index.less';
 
 const steps: TourProps['steps'] = [
   {
@@ -47,45 +42,15 @@ const steps: TourProps['steps'] = [
   },
 ];
 
-let SHEPHERD_DONE = false;
-
-const ShepherdWrapper = (props: {
-  onStart?: () => void;
-  onComplete?: () => void;
-  loading: boolean;
-  userId: string;
-}) => {
-  const { onStart, onComplete, loading, userId } = props;
-  const [open, setOpen] = useState(false);
-
-  // 缓存中是否存在
-  const [value = {}, setValue, initialDone] = useLocalStorage<{
-    [key: string]: {
-      timestamps: number;
-    };
-  }>(LocalConfig.CONFIG_KEY_SHEPHERD_INFO, {});
-
-  const close = useCallback(() => {
-    onComplete?.();
-    setOpen(false);
-  }, [onComplete]);
-
-  useEffect(() => {
-    if (SHEPHERD_DONE || !initialDone || loading) return;
-    const target = value?.[userId];
-    const current = Date.now();
-    if (!target || current - target.timestamps > 1000 * 60 * 60 * 24 * 30) {
-      onStart?.();
-      setOpen(true);
-    }
-    SHEPHERD_DONE = true;
-    value[userId] = {
-      timestamps: Date.now(),
-    };
-    setValue(value);
-  }, [value, initialDone, loading]);
-
-  return <Tour steps={steps} onClose={close} onFinish={close} open={open} />;
+const ShepherdWrapper = (props: Partial<Props>) => {
+  return (
+    <Tour
+      {...props}
+      tourUniqueKey="DESIGNER_GUIDE"
+      steps={steps}
+      localKey={LocalConfig.CONFIG_KEY_SHEPHERD_INFO}
+    />
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShepherdWrapper);
+export default ShepherdWrapper;
