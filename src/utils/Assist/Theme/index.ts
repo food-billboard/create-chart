@@ -142,7 +142,8 @@ export function getHexString(
   return prefix ? result : result.slice(1);
 }
 
-export const DEFAULT_THEME_COLOR = WonderlandTheme.theme.color[0];
+export const DEFAULT_THEME_COLOR_LIST = WonderlandTheme.theme.color;
+export const DEFAULT_THEME_COLOR = DEFAULT_THEME_COLOR_LIST[0];
 export const DEFAULT_THEME_NAME = WonderlandTheme.themeName;
 
 export type InitThemeDataParams = {
@@ -497,8 +498,11 @@ class ThemeUtil {
 
   // 生成下一个当前色调的颜色
   generateNextColor4CurrentTheme(index: number) {
-    const realIndex = index % this.currentThemeColor.length;
-    const targetColor = this.currentThemeColor[realIndex];
+    const currentColorList = this.currentThemeColor.length
+      ? this.currentThemeColor
+      : DEFAULT_THEME_COLOR_LIST;
+    const realIndex = index % currentColorList.length;
+    const targetColor = currentColorList[realIndex];
     return color(targetColor).object() as ComponentData.TColorConfig;
   }
 }
