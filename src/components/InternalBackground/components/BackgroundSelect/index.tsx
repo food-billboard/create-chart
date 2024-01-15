@@ -13,6 +13,7 @@ import {
   forwardRef,
   useImperativeHandle,
   useRef,
+  CSSProperties,
 } from 'react';
 import Modal from '@/components/FocusModal';
 import { ContentLoading } from '@/components/PageLoading';
@@ -50,11 +51,14 @@ export type BackgroundSelectProps = {
   onChange?: (value: string) => void;
   mode: 'select' | 'editable';
   modalProps?: ModalProps;
+  visibleType?: 'modal' | 'page';
+  style?: CSSProperties;
+  className?: string;
 };
 
 const BackgroundSelect = forwardRef<BackgroundSelectRef, BackgroundSelectProps>(
   (props, ref) => {
-    const { mode, modalProps } = props;
+    const { mode, modalProps, visibleType = 'modal', style, className } = props;
 
     const { modal } = App.useApp();
 
@@ -259,7 +263,7 @@ const BackgroundSelect = forwardRef<BackgroundSelectRef, BackgroundSelectProps>(
       () => {
         return {
           open: () => {
-            setVisible(false);
+            setVisible(true);
             setCurrentClassic('');
             setCurrentPage(1);
           },
@@ -287,83 +291,91 @@ const BackgroundSelect = forwardRef<BackgroundSelectRef, BackgroundSelectProps>(
           : 12;
     }, [mode, currentClassic]);
 
+    const children = (
+      <div
+        className={classnames(
+          styles['internal-background-modal-list'],
+          'pos-re',
+          className,
+        )}
+        style={style}
+      >
+        <Tabs
+          type={mode === 'editable' ? 'editable-card' : 'line'}
+          onEdit={onTabEdit}
+          items={classicItems}
+          onChange={onTabChange}
+          tabBarExtraContent={tabBarExtraContent}
+        />
+        <Row gutter={24}>
+          {GlobalConfig.IS_IMPROVE_BACKEND ||
+            (mode === 'editable' && (
+              <Col span={6}>
+                <ImageUpload
+                  defaultFileList={[]}
+                  onChange={onBackgroundChange}
+                  inputVisible={false}
+                  height={'80px'}
+                />
+              </Col>
+            ))}
+          {dataSource.map((item) => {
+            const { label, value } = item;
+            return (
+              <Col
+                span={6}
+                key={value}
+                className={styles['internal-background-modal-list-item']}
+              >
+                <BackgroundRender
+                  onClick={handleSelectConfirm.bind(null, value)}
+                  value={value}
+                  className={styles['internal-background-modal-list-item-main']}
+                  thumb
+                  editable={
+                    mode === 'editable' && {
+                      onDelete: onDeleteBackground.bind(null, item),
+                    }
+                  }
+                />
+                <div
+                  className={
+                    styles['internal-background-modal-list-item-label']
+                  }
+                >
+                  {label}
+                </div>
+              </Col>
+            );
+          })}
+        </Row>
+        <Pagination
+          total={total}
+          pageSize={pageSize.current}
+          current={currentPage}
+          onChange={onPageChange}
+          hideOnSinglePage
+        />
+        <ContentLoading loading={fetchLoading} />
+      </div>
+    );
+
     return (
       <>
-        <Modal
-          title="背景选择"
-          open={visible}
-          footer={null}
-          onCancel={setVisible.bind(null, false)}
-          zIndex={1071}
-          {...modalProps}
-        >
-          <div
-            className={classnames(
-              styles['internal-background-modal-list'],
-              'pos-re',
-            )}
+        {visibleType === 'modal' ? (
+          <Modal
+            title="背景选择"
+            open={visible}
+            footer={null}
+            onCancel={setVisible.bind(null, false)}
+            zIndex={1071}
+            {...modalProps}
           >
-            <Tabs
-              type={mode === 'editable' ? 'editable-card' : 'line'}
-              onEdit={onTabEdit}
-              items={classicItems}
-              onChange={onTabChange}
-              tabBarExtraContent={tabBarExtraContent}
-            />
-            <Row gutter={24}>
-              {GlobalConfig.IS_IMPROVE_BACKEND ||
-                (mode === 'editable' && (
-                  <Col span={6}>
-                    <ImageUpload
-                      defaultFileList={[]}
-                      onChange={onBackgroundChange}
-                      inputVisible={false}
-                      height={'80px'}
-                    />
-                  </Col>
-                ))}
-              {dataSource.map((item) => {
-                const { label, value } = item;
-                return (
-                  <Col
-                    span={6}
-                    key={value}
-                    className={styles['internal-background-modal-list-item']}
-                  >
-                    <BackgroundRender
-                      onClick={handleSelectConfirm.bind(null, value)}
-                      value={value}
-                      className={
-                        styles['internal-background-modal-list-item-main']
-                      }
-                      thumb
-                      editable={
-                        mode === 'editable' && {
-                          onDelete: onDeleteBackground.bind(null, item),
-                        }
-                      }
-                    />
-                    <div
-                      className={
-                        styles['internal-background-modal-list-item-label']
-                      }
-                    >
-                      {label}
-                    </div>
-                  </Col>
-                );
-              })}
-            </Row>
-            <Pagination
-              total={total}
-              pageSize={pageSize.current}
-              current={currentPage}
-              onChange={onPageChange}
-              hideOnSinglePage
-            />
-            <ContentLoading loading={fetchLoading} />
-          </div>
-        </Modal>
+            {children}
+          </Modal>
+        ) : (
+          <>{children}</>
+        )}
         <AddClassic ref={addClassicRef} onConfirm={handleAddClassic} />
       </>
     );

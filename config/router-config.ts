@@ -37,6 +37,10 @@ export const normalRouter = [
             component: '@/pages/ScreenList',
           },
           {
+            path: '/media',
+            component: '@/pages/MediaManage',
+          },
+          {
             path: '/designer',
             component: '@/pages/Designer',
           },
