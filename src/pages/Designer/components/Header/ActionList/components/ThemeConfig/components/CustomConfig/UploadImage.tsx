@@ -1,14 +1,20 @@
 import { Upload, App } from 'antd';
 import type { UploadFile } from 'antd';
+import classnames from 'classnames';
 import Color from 'color';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, CSSProperties } from 'react';
 import { UploadButton } from '@/components/ImageUpload';
 import { useGlobalLoading } from '@/hooks';
 import getImageColor from '@/utils/getImageColor';
 import styles from './index.less';
 
-const UploadImage = (props: { onChange?: (value: string[][]) => void }) => {
-  const { onChange } = props;
+const UploadImage = (props: {
+  style?: CSSProperties;
+  id?: string;
+  className?: string;
+  onChange?: (value: string[][]) => void;
+}) => {
+  const { onChange, className, ...nextProps } = props;
 
   const { message } = App.useApp();
 
@@ -45,13 +51,17 @@ const UploadImage = (props: { onChange?: (value: string[][]) => void }) => {
 
   return (
     <Upload
+      {...nextProps}
       listType="picture-card"
       fileList={fileList}
       onChange={handleChange}
       beforeUpload={() => false}
       accept="image/*"
       multiple={false}
-      className={styles['designer-theme-config-custom-upload']}
+      className={classnames(
+        className,
+        styles['designer-theme-config-custom-upload'],
+      )}
     >
       {fileList.length >= 1 ? null : <UploadButton />}
     </Upload>

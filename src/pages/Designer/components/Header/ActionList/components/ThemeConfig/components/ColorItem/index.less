@@ -1,0 +1,19 @@
+.designer-theme-config-list {
+  cursor: pointer;
+  transition: 0.2s;
+  border-radius: 8px;
+}
+.designer-theme-config-list:not(.designer-theme-config-list-check) {
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+.designer-theme-config-list&.designer-theme-config-list-check {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.designer-theme-config-item {
+  border-radius: 50%;
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+}
