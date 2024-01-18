@@ -1,19 +1,16 @@
 import { Component } from 'react';
-import { Tabs } from 'antd';
 import ComponentOptionConfig, {
   Tab,
 } from '@/components/ChartComponents/Common/ComponentOptionConfig';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import LegendConfig from './Legend';
-import TooltipConfig from './Tooltip';
-import AxisConfig from './Axis';
-import SeriesConfig from './Series';
+import { TNegativeBarConfig } from '../type';
 import AnimationConfig from './Animation';
+import AxisConfig from './Axis';
 import ConditionConfig from './Condition';
 import GridConfig from './GridConfig';
-import { TNegativeBarConfig } from '../type';
-
-const { TabPane } = Tabs;
+import LegendConfig from './Legend';
+import SeriesConfig from './Series';
+import TooltipConfig from './Tooltip';
 
 class Config extends Component<
   ComponentData.ComponentConfigProps<TNegativeBarConfig>

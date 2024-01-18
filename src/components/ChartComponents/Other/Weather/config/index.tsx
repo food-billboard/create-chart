@@ -18,7 +18,6 @@ import IconTooltip from '@/components/IconTooltip';
 import { KEY_MAP } from '../defaultConfig';
 import { TWeatherConfig } from '../type';
 
-const { TabPane } = Tabs;
 const { Item } = ConfigList;
 
 class Config extends Component<

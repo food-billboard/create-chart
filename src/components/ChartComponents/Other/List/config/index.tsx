@@ -1,5 +1,5 @@
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { Tabs, Switch } from 'antd';
+import { Switch } from 'antd';
 import { merge } from 'lodash';
 import { Component } from 'react';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
@@ -21,7 +21,6 @@ import { DEFAULT_FONT_CONFIG } from '../../../Common/Constants/defaultConfig';
 import { TListConfig } from '../type';
 import ConditionConfig from './Condition';
 
-const { TabPane } = Tabs;
 const { Item } = ConfigList;
 
 class Config extends Component<
@@ -32,6 +31,20 @@ class Config extends Component<
       config: {
         options: {
           [key]: value,
+        },
+      },
+    });
+  };
+
+  onKeyChangeAndForceUpdate = (key: keyof TListConfig, value: any) => {
+    this.props.onChange({
+      config: {
+        options: {
+          [key]: {
+            ...value,
+            // ! 暂时用这个方法强制刷新
+            timestamps: Date.now(),
+          },
         },
       },
     });
@@ -131,6 +144,61 @@ class Config extends Component<
                           this.onKeyChange('global', {
                             animation: {
                               autoplaySpeed: value,
+                            },
+                          });
+                        }}
+                      />
+                    </HalfForm>
+                  </Item>
+                </Collapse>
+                <Collapse
+                  child={{
+                    header: (
+                      <>
+                        指标
+                        <IconTooltip title="列设置数据类型为指标时生效">
+                          <InfoCircleOutlined className="m-l-4" />
+                        </IconTooltip>
+                      </>
+                    ),
+                    key: 'animation',
+                    value: global.numberPoint.animation,
+                  }}
+                >
+                  <Item label="动画">
+                    <FullForm>
+                      <Switch
+                        checked={global.numberPoint.animation}
+                        onChange={(value) => {
+                          this.onKeyChange('global', {
+                            numberPoint: {
+                              animation: value,
+                            },
+                          });
+                        }}
+                      />
+                    </FullForm>
+                  </Item>
+                  <Item label="指标色">
+                    <HalfForm label="上升">
+                      <ColorSelect
+                        value={global.numberPoint.positiveColor}
+                        onChange={(value) => {
+                          this.onKeyChange('global', {
+                            numberPoint: {
+                              positiveColor: value,
+                            },
+                          });
+                        }}
+                      />
+                    </HalfForm>
+                    <HalfForm label="下降">
+                      <ColorSelect
+                        value={global.numberPoint.negativeColor}
+                        onChange={(value) => {
+                          this.onKeyChange('global', {
+                            numberPoint: {
+                              negativeColor: value,
                             },
                           });
                         }}
@@ -432,10 +500,8 @@ class Config extends Component<
                                     width: value,
                                   }),
                                 );
-                                this.onKeyChange('columns', {
+                                this.onKeyChangeAndForceUpdate('columns', {
                                   data: newData,
-                                  // ! 暂时用这个方法强制刷新
-                                  timestamps: Date.now(),
                                 });
                               }}
                             />
@@ -455,10 +521,8 @@ class Config extends Component<
                                     type: value,
                                   }),
                                 );
-                                this.onKeyChange('columns', {
+                                this.onKeyChangeAndForceUpdate('columns', {
                                   data: newData,
-                                  // ! 暂时用这个方法强制刷新
-                                  timestamps: Date.now(),
                                 });
                               }}
                               options={[
@@ -500,10 +564,8 @@ class Config extends Component<
                                     },
                                   }),
                                 );
-                                this.onKeyChange('columns', {
+                                this.onKeyChangeAndForceUpdate('columns', {
                                   data: newData,
-                                  // ! 暂时用这个方法强制刷新
-                                  timestamps: Date.now(),
                                 });
                               }}
                             />
@@ -526,10 +588,8 @@ class Config extends Component<
                                   textStyle: value,
                                 }),
                               );
-                              this.onKeyChange('columns', {
+                              this.onKeyChangeAndForceUpdate('columns', {
                                 data: newData,
-                                // ! 暂时用这个方法强制刷新
-                                timestamps: Date.now(),
                               });
                             }}
                           />

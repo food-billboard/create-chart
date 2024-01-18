@@ -7,6 +7,14 @@ export type TListConfig = {
       autoplaySpeed: number;
     };
     column: number;
+    numberPoint: {
+      // 指标动画
+      animation: boolean;
+      // 指标颜色上升
+      positiveColor: ComponentData.TColorConfig;
+      // 指标颜色下降
+      negativeColor: ComponentData.TColorConfig;
+    };
   };
   header: {
     show: boolean;

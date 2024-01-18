@@ -1,8 +1,10 @@
-import { useMemo, useRef, useCallback } from 'react';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-import { merge, uniqueId } from 'lodash';
 import classnames from 'classnames';
+import { merge, uniqueId } from 'lodash';
+import { useMemo, useRef, useCallback } from 'react';
 import Slider from 'react-slick';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
 import {
   useComponent,
   useCondition,
@@ -11,26 +13,60 @@ import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import ScrollText from '@/components/ScrollText';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { TListConfig } from '../type';
 import { CHART_ID } from '../id';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { TListConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
 
-const MarkText = ({ value }: { value: number }) => {
+const MarkText = ({
+  value,
+  positiveColor,
+  negativeColor,
+  animation = true,
+}: {
+  value: number;
+  positiveColor: string;
+  negativeColor: string;
+  animation: boolean;
+}) => {
   const realValue = parseFloat(value as any) || 0;
   return (
     <div
-      className={classnames(styles['component-other-list-item-mark'], 'w-100')}
+      className={classnames(styles['component-other-list-item-mark'], 'w-100', {
+        [styles['component-other-list-item-mark-animation-positive']]:
+          animation && realValue > 0,
+        [styles['component-other-list-item-mark-animation-negative']]:
+          animation && realValue < 0,
+      })}
       style={{
-        color: realValue > 0 ? 'red' : realValue < 0 ? 'green' : 'currentcolor',
+        color:
+          realValue > 0
+            ? positiveColor
+            : realValue < 0
+            ? negativeColor
+            : 'currentcolor',
+        // @ts-ignore
+        '--animation-direction': realValue / Math.abs(realValue),
       }}
     >
+      {realValue > 0 && (
+        <ArrowUpOutlined
+          className={classnames(
+            'm-r-4',
+            styles['component-other-list-item-mark-animation-icon'],
+          )}
+        />
+      )}
+      {realValue < 0 && (
+        <ArrowDownOutlined
+          className={classnames(
+            'm-r-4',
+            styles['component-other-list-item-mark-animation-icon'],
+          )}
+        />
+      )}
       <strong>{value}</strong>
-      {realValue > 0 && <ArrowUpOutlined className="m-l-4" />}
-      {realValue < 0 && <ArrowDownOutlined className="m-l-4" />}
     </div>
   );
 };
@@ -47,7 +83,7 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
     },
   } = value;
   const {
-    global: { animation, column },
+    global: { animation, column, numberPoint },
     index,
     columns: { data, margin, even, odd },
     header,
@@ -130,6 +166,7 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
   // 列表行
   const listItem = useCallback(
     (value: any, currIndex: number) => {
+      const { animation, positiveColor, negativeColor } = numberPoint;
       return (
         <div key={currIndex}>
           <div
@@ -208,7 +245,14 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
                   {type === 'image' && <img src={value[key]} alt={name} />}
                   {type === 'text' &&
                     (show ? <ScrollText>{value[key]}</ScrollText> : value[key])}
-                  {type === 'number-point' && <MarkText value={value[key]} />}
+                  {type === 'number-point' && (
+                    <MarkText
+                      value={value[key]}
+                      positiveColor={getRgbaString(positiveColor)}
+                      negativeColor={getRgbaString(negativeColor)}
+                      animation={animation}
+                    />
+                  )}
                 </div>
               );
             })}
@@ -216,7 +260,7 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
         </div>
       );
     },
-    [data, listItemHeight, index, onItemClick, margin],
+    [data, listItemHeight, index, onItemClick, margin, numberPoint],
   );
 
   // 列表内容
