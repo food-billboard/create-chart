@@ -70,6 +70,7 @@ import Audio from './Media/Audio';
 import Carousel from './Media/Carousel';
 // media
 import Image from './Media/Image';
+import LottieAnime from './Media/LottieAnime';
 import Model from './Media/Model';
 import PictureWall from './Media/PictureWall';
 import Video from './Media/Video';
@@ -194,6 +195,7 @@ COMPONENT_MAP.set(Decoration8.type, Decoration8);
 COMPONENT_MAP.set(Pagination.type, Pagination);
 COMPONENT_MAP.set(FullScreen.type, FullScreen);
 COMPONENT_MAP.set(ThreeBar.type, ThreeBar);
+COMPONENT_MAP.set(LottieAnime.type, LottieAnime);
 // component-map-insert-prefix
 
 // 根据组件类型获取组件信息

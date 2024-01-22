@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useState, useEffect } from 'react';
 import { InputNumber as AntInputNumber, Switch } from 'antd';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import ConfigList from '../Structure/ConfigList';
 import FullForm from '../Structure/FullForm';
 
@@ -15,11 +15,12 @@ export type PositionValue = {
 export const InputNumber = (props: {
   value: number | 'auto';
   onChange: (value: number | 'auto') => void;
+  defaultValue?: number;
 }) => {
-  const { value, onChange } = props;
+  const { value, onChange, defaultValue = 0 } = props;
 
   const [stateValue, setStateValue] = useState<number>(
-    value === 'auto' ? 0 : value,
+    value === 'auto' ? defaultValue : value,
   );
 
   const disabled = useMemo(() => {

@@ -512,6 +512,12 @@ const _COMPONENT_TYPE_LIST = [
             description: '',
             disabled: GlobalConfig.IS_STATIC || GlobalConfig.IS_IMPROVE_BACKEND,
           },
+          {
+            type: 'LOTTIE_ANIME',
+            title: 'lottie动画',
+            icon: Audio,
+            description: '',
+          },
         ],
       },
     ],

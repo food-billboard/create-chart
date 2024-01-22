@@ -1,16 +1,16 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
-import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
-import Marquee from 'react-fast-marquee';
+import { uniqueId, merge } from 'lodash';
+import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import {
   useComponent,
   useCondition,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
+import Marquee from '@/components/ChartComponents/Common/Marquee';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { TFontCarouselConfig } from '../type';
 import { CHART_ID } from '../id';
+import { TFontCarouselConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
@@ -106,6 +106,7 @@ const TFontCarousel = (
           {children}
           {
             <Marquee
+              open
               gradient={false}
               play={screenType !== 'edit' && play}
               speed={speed}

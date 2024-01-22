@@ -1,10 +1,10 @@
-import { getComponent } from '@/utils/Assist/Component';
-import DataChangePool from '@/utils/Assist/DataChangePool';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import { get } from 'lodash';
 import { useMemo } from 'react';
 import { connect } from 'umi';
+import { getComponent } from '@/utils/Assist/Component';
+import DataChangePool from '@/utils/Assist/DataChangePool';
 import BaseConfig from './components/BaseConfig';
 import LinkageConfig from './components/LinkageConfig';
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -37,7 +37,7 @@ const InterActiveConfig = (props: {
     >
       {!baseInteractive.length && !linkageInteractive.length && (
         <div className={styles['design-config-interactive-base-empty']}>
-          <InfoCircleOutlined style={{ marginRight: 4 }} />
+          <InfoCircleOutlined style={{ marginRight: 4, paddingLeft: 10 }} />
           该组件无交互事件
         </div>
       )}
