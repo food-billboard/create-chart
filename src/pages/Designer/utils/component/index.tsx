@@ -43,6 +43,7 @@ import Input from '../../../../../public/components/input.jpg';
 import LineBar from '../../../../../public/components/line-bar.png';
 import LineBasic from '../../../../../public/components/line-basic.png';
 import ListBasic from '../../../../../public/components/list-basic.jpg';
+import LottieAnime from '../../../../../public/components/lottie-anime.png';
 import LuckyDraw from '../../../../../public/components/lucky-draw.jpg';
 import Model from '../../../../../public/components/model.jpg';
 import NegativeBar from '../../../../../public/components/negative-bar.png';
@@ -515,7 +516,7 @@ const _COMPONENT_TYPE_LIST = [
           {
             type: 'LOTTIE_ANIME',
             title: 'lottie动画',
-            icon: Audio,
+            icon: LottieAnime,
             description: '',
           },
         ],
