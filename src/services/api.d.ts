@@ -223,3 +223,31 @@ declare namespace API_IMPROVE {
 
   export type DeleteMediaDataParams = AddMediaDataParams;
 }
+
+declare namespace API_DATA_MANAGE {
+  export type DataSourceParams = {
+    current: number;
+    pageSize: number;
+    content?: string;
+  };
+
+  export type DataSourceData = {
+    _id: string;
+    name: string;
+    dataType: 'Mysql' | 'ClickHouse' | 'PostgreSQL' | 'Oracle' | 'SqlServer';
+    jdbc: string;
+    memo: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+
+  export type PostDataSourceParams = Pick<
+    DataSourceData,
+    'name' | 'dataType' | 'memo' | 'jdbc'
+  > & {
+    username: string;
+    password: string;
+  };
+
+  export type UpdateDataSourceParams = PostDataSourceParams & { _id: string };
+}

@@ -9,12 +9,6 @@ import styles from './index.less';
 
 const { Header, Content, Footer } = AntLayout;
 
-const PATH_MAP: any = {
-  '/model': 'model',
-  '/screen': 'screen',
-  '/media': 'media',
-};
-
 // 外部layout
 const Layout = (props: { children?: ReactNode }) => {
   const { pathname } = useLocation();
@@ -50,11 +44,15 @@ const Layout = (props: { children?: ReactNode }) => {
               label: '模板',
               key: '/model',
             },
-            ...(!GlobalConfig.IS_IMPROVE_BACKEND
+            ...(GlobalConfig.IS_IMPROVE_BACKEND
               ? [
                   {
                     label: '媒体资源',
                     key: '/media',
+                  },
+                  {
+                    label: '数据源',
+                    key: '/data',
                   },
                 ]
               : []),

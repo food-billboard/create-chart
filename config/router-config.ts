@@ -41,6 +41,10 @@ export const normalRouter = [
             component: '@/pages/MediaManage',
           },
           {
+            path: '/data',
+            component: '@/pages/DataManage',
+          },
+          {
             path: '/designer',
             component: '@/pages/Designer',
           },
