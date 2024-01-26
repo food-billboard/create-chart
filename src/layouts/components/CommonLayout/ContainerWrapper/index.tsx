@@ -47,7 +47,9 @@ const GlobalLayout = (props: any) => {
     );
   }
 
-  if (['/screen', '/model', '/media', '/data'].includes(pathname)) {
+  if (
+    ['/screen', '/model', '/media', '/data', '/data-set'].includes(pathname)
+  ) {
     return (
       <FetchLoginWrapper {...props}>
         <Layout>

@@ -88,6 +88,7 @@ const DataManage = () => {
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             onSearch={fetchData}
+            placeholder="请输入数据源名称搜索"
           />
           <Button type="primary" onClick={handleAdd.bind(null, undefined)}>
             新增

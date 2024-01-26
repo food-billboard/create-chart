@@ -20,6 +20,9 @@ const CssVarWrapper = (props: any) => {
           Modal: {
             zIndexPopupBase: 1071,
           },
+          Tree: {
+            nodeSelectedBg: primaryColor,
+          },
         },
         algorithm: theme.darkAlgorithm,
         token: {

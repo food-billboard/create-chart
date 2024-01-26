@@ -47,3 +47,53 @@ export async function getTestDataSource(
     data,
   });
 }
+
+// 获取数据集列表
+export async function getDataSetList(params: API_DATA_MANAGE.DataSetParams) {
+  return request('/api/screen/model', {
+    method: 'GET',
+    params,
+  });
+}
+
+// 获取数据集分组列表
+export async function getDataSetGroupList() {
+  return request('/api/screen/model', {
+    method: 'GET',
+  });
+}
+
+// 删除数据集分组
+export async function deleteDataSetGroup(params: { _id: string }) {
+  return request('/api/screen/model', {
+    method: 'DELETE',
+    params,
+  });
+}
+
+// 新增同级数据集分组
+export async function addBroDataSetGroup(data: { _id: string; label: string }) {
+  return request('/api/screen/model', {
+    method: 'POST',
+    data,
+  });
+}
+
+// 新增子级数据集分组
+export async function addChildDataSetGroup(data: {
+  _id: string;
+  label: string;
+}) {
+  return request('/api/screen/model', {
+    method: 'POST',
+    data,
+  });
+}
+
+// 修改数据集分组名称
+export async function updateDataSetGroup(data: { _id: string; label: string }) {
+  return request('/api/screen/model', {
+    method: 'PUT',
+    data,
+  });
+}

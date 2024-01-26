@@ -231,10 +231,17 @@ declare namespace API_DATA_MANAGE {
     content?: string;
   };
 
+  type DataType =
+    | 'Mysql'
+    | 'ClickHouse'
+    | 'PostgreSQL'
+    | 'Oracle'
+    | 'SqlServer';
+
   export type DataSourceData = {
     _id: string;
     name: string;
-    dataType: 'Mysql' | 'ClickHouse' | 'PostgreSQL' | 'Oracle' | 'SqlServer';
+    dataType: DataType;
     jdbc: string;
     memo: string;
     createdAt: string;
@@ -250,4 +257,45 @@ declare namespace API_DATA_MANAGE {
   };
 
   export type UpdateDataSourceParams = PostDataSourceParams & { _id: string };
+
+  export type DataSetParams = {
+    current: number;
+    pageSize: number;
+    content?: string;
+    type?: string;
+  };
+
+  export type DataSetType =
+    | 'origin-set'
+    | 'self-set'
+    | 'process-store-set'
+    | 'json-set'
+    | 'http-set'
+    | 'script-set';
+
+  export type DataSetData = {
+    _id: string;
+    name: string;
+    dataType: DataSetType;
+    jdbc: string;
+    memo: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+
+  export type PostDataSetParams = Pick<
+    DataSourceData,
+    'name' | 'dataType' | 'memo' | 'jdbc'
+  > & {
+    username: string;
+    password: string;
+  };
+
+  export type UpdateDataSetParams = PostDataSourceParams & { _id: string };
+
+  export type DataSetGroupData = {
+    label: string;
+    value: string;
+    children?: DataSetGroupData[];
+  };
 }

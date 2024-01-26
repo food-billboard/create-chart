@@ -45,6 +45,10 @@ export const normalRouter = [
             component: '@/pages/DataManage',
           },
           {
+            path: '/data-set',
+            component: '@/pages/DataSetManage',
+          },
+          {
             path: '/designer',
             component: '@/pages/Designer',
           },

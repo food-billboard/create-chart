@@ -44,7 +44,7 @@ const Layout = (props: { children?: ReactNode }) => {
               label: '模板',
               key: '/model',
             },
-            ...(GlobalConfig.IS_IMPROVE_BACKEND
+            ...(!GlobalConfig.IS_IMPROVE_BACKEND
               ? [
                   {
                     label: '媒体资源',
@@ -53,6 +53,10 @@ const Layout = (props: { children?: ReactNode }) => {
                   {
                     label: '数据源',
                     key: '/data',
+                  },
+                  {
+                    label: '数据集',
+                    key: '/data-set',
                   },
                 ]
               : []),
