@@ -107,7 +107,6 @@ const ColorSelect = (props: TColorSelectProps) => {
       onChangeComplete={onInternalChange}
       open={open}
       onOpenChange={(open) => {
-        console.log(open, 22222);
         onOpenChange(open);
       }}
     />
