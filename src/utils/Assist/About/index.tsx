@@ -12,3 +12,10 @@ export const gotoOperation = () => {
     '_blank',
   );
 };
+
+export const gotoIssue = () => {
+  window.open(
+    'https://github.com/food-billboard/create-chart/issues',
+    '_blank',
+  );
+};

@@ -10,8 +10,6 @@ import {
 } from 'react';
 import { BUTTON_LIST } from './constants';
 
-const BUTTON_LIST_LENGTH = BUTTON_LIST.length;
-
 export default function useDrag(
   defaultPosition: {
     right: number;
@@ -73,7 +71,10 @@ export default function useDrag(
 
     const maxRight = windowSize.current.width - 40 - 24;
     const minRight = 24;
-    const maxBottom = windowSize.current.height - 50 * BUTTON_LIST_LENGTH - 80;
+    const maxBottom =
+      windowSize.current.height -
+      50 * BUTTON_LIST().filter((item) => item.visible).length -
+      80;
     const minBottom = 24;
 
     const maxRightAbs = Math.abs(maxRight - right);

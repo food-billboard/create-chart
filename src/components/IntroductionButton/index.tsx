@@ -1,6 +1,6 @@
 import { SmileOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useColorThemeList } from '@/hooks';
 import { BUTTON_LIST } from './constants';
 import styles from './index.less';
@@ -18,22 +18,31 @@ const IntroductionButton = () => {
     bottom: 80,
   });
 
+  const handleClick = useCallback((key) => {
+    // TODO
+  }, []);
+
   const children = useMemo(() => {
-    return new Array(Math.min(nextColorList.length, BUTTON_LIST.length))
+    const list = BUTTON_LIST().filter((item) => item.visible);
+    return new Array(Math.min(nextColorList.length, list.length))
       .fill(0)
       .map((_, index) => {
+        const { key, visible = true, ...nextItem } = list[index];
+        if ((typeof visible === 'function' && !visible) || !visible)
+          return null;
         return (
           <FloatButton
-            {...BUTTON_LIST[index]}
+            onClick={handleClick.bind(null, key)}
+            {...nextItem}
             style={{
               backgroundColor: nextColorList[index],
               ...commonStyle,
             }}
-            key={BUTTON_LIST[index].key}
+            key={key}
           />
         );
       });
-  }, [nextColorList]);
+  }, [nextColorList, handleClick]);
 
   useEffect(() => {
     if (!isDragging) setButtonOpen(false);
