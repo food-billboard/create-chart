@@ -1,6 +1,6 @@
 import {
   ExportOutlined,
-  FundOutlined,
+  DesktopOutlined,
   ImportOutlined,
   SendOutlined,
 } from '@ant-design/icons';
@@ -166,7 +166,7 @@ const Header = (props: {
         key="preview"
         title="预览"
         onClick={handlePreview}
-        icon={<FundOutlined />}
+        icon={<DesktopOutlined />}
         loading={fetchLoading}
       />
     );
