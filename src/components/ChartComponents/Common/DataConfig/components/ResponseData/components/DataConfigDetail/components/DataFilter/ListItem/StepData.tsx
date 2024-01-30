@@ -1,8 +1,8 @@
-import { useCallback, useMemo, useState } from 'react';
+import { BugOutlined } from '@ant-design/icons';
 import { Popover, Button } from 'antd';
 import type { ButtonProps } from 'antd';
+import { useCallback, useMemo, useState } from 'react';
 import ReactJson from 'react-json-view';
-import { BugOutlined } from '@ant-design/icons';
 import { FILTER_STEP_MAP_DATA } from '@/utils/Assist/FilterData';
 import styles from './index.less';
 
@@ -40,18 +40,25 @@ const StepData = (props: { id: string }) => {
   );
 };
 
-const StepDataButton = (props: { buttonProps?: ButtonProps; id: string }) => {
+const StepDataButton = (props: {
+  buttonProps?: ButtonProps;
+  id: string;
+  disabled?: boolean;
+}) => {
   const [visible, setVisible] = useState<boolean>(false);
 
-  const { buttonProps = {}, id } = props;
+  const { buttonProps = {}, id, disabled } = props;
 
-  const handleClick = useCallback((e: any) => {
-    e.stopPropagation();
-    setVisible((prev) => !prev);
-  }, []);
+  const handleClick = useCallback(
+    (e: any) => {
+      e.stopPropagation();
+      if (!visible) setVisible(true);
+    },
+    [visible],
+  );
 
   const onVisibleChange = useCallback((visible) => {
-    if (!visible) setVisible(visible);
+    setVisible(visible);
   }, []);
 
   return (
@@ -68,6 +75,8 @@ const StepDataButton = (props: { buttonProps?: ButtonProps; id: string }) => {
         type="link"
         icon={<BugOutlined />}
         onClick={handleClick}
+        disabled={!!disabled}
+        title="debug"
         {...buttonProps}
       />
     </Popover>

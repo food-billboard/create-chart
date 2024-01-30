@@ -8,9 +8,8 @@ const NameEditor = (props: {
   onChange?: (value: string) => void;
   onFocus?: () => void;
   onBlur?: () => void;
-  isHover: boolean;
 }) => {
-  const { value, isHover, onChange, onFocus, onBlur } = props;
+  const { value, onChange, onFocus, onBlur: propsOnBlur } = props;
   const [inputValue, setInputValue] = useState<string>(value);
   const [editable, setEditable] = useState<boolean>(false);
 
@@ -24,13 +23,12 @@ const NameEditor = (props: {
   const onConfirm = useCallback(() => {
     if (!inputValue.trim().length) {
       message.info('名称不能为空');
-      setInputValue(value);
       return;
     }
     onChange?.(inputValue || value);
     setEditable(false);
-    onBlur?.();
-  }, [onChange, inputValue, value]);
+    propsOnBlur?.();
+  }, [onChange, inputValue, value, propsOnBlur]);
 
   const stop = (e: any) => {
     e.stopPropagation();
@@ -49,14 +47,16 @@ const NameEditor = (props: {
       onClick={wrapperClick}
     >
       {editable ? (
-        <Input
-          value={inputValue}
-          onChange={onInputChange}
-          onBlur={onConfirm}
-          onClick={stop}
-          autoFocus
-          onFocus={onFocus}
-        />
+        <>
+          <Input
+            value={inputValue}
+            onChange={onInputChange}
+            onBlur={onConfirm}
+            onClick={stop}
+            autoFocus
+            onFocus={onFocus}
+          />
+        </>
       ) : (
         <>
           <div className="text-ellipsis" title={inputValue}>
@@ -65,9 +65,6 @@ const NameEditor = (props: {
           <Button
             className="h-a"
             type="link"
-            style={{
-              visibility: isHover ? 'visible' : 'hidden',
-            }}
             icon={<EditFilled />}
             onClick={(e) => {
               stop(e);

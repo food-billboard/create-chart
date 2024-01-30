@@ -4,12 +4,12 @@ import {
   HolderOutlined,
   QuestionCircleOutlined,
 } from '@ant-design/icons';
-import { useHover } from 'ahooks';
 import { Button, Checkbox, Collapse, Badge, Space } from 'antd';
 import classnames from 'classnames';
 import { useState, useCallback, useMemo, useRef } from 'react';
 import { SortableHandle, SortableElement } from 'react-sortable-hoc';
 import CodeEditor from '@/components/CodeEditor';
+import CopyAnimeButton from '@/components/CopyAnimeButton';
 import IconTooltip from '@/components/IconTooltip';
 import ParamsSelect from '@/components/ParamsSelect';
 import FunctionHeader from '@/components/SyncCodeEditor/FunctionHeader';
@@ -23,7 +23,7 @@ export type TOnChangeType = (
   value: Partial<ComponentData.TFilterConfig> & { id: string },
 ) => void;
 export type TOnComponentChangeType = (
-  action: 'delete' | 'update' | 'name-update',
+  action: 'delete' | 'update' | 'name-update' | 'copy',
   value: Partial<ComponentData.TComponentFilterConfig> & { id: string },
 ) => void;
 
@@ -59,10 +59,6 @@ const DataFilter = (props: {
     );
 
   const [activeKey, setActiveKey] = useState<string>(isTemp ? id : '');
-
-  const headerRef = useRef<HTMLDivElement>(null);
-
-  const isHover = useHover(headerRef);
 
   const onCodeCancel = useCallback(() => {
     setUpdateFilter(null);
@@ -105,7 +101,7 @@ const DataFilter = (props: {
   const onComponentChange = useCallback(
     (
       key: keyof ComponentData.TComponentFilterConfig,
-      action: 'delete' | 'update',
+      action: 'delete' | 'update' | 'copy',
       value: any,
     ) => {
       propsOnComponentChange?.(action, {
@@ -123,7 +119,6 @@ const DataFilter = (props: {
   const header = useMemo(() => {
     return (
       <div
-        ref={headerRef}
         className={classnames(
           'dis-flex',
           'w-100',
@@ -131,14 +126,7 @@ const DataFilter = (props: {
         )}
       >
         {!dragDisabled && !isTemp && <DragHandle />}
-        <StepDataButton
-          buttonProps={{
-            style: {
-              visibility: isHover && !disabled ? 'visible' : 'hidden',
-            },
-          }}
-          id={id}
-        />
+        <StepDataButton disabled={disabled} id={id} />
         <Checkbox
           checked={!disabled}
           onChange={(e) => {
@@ -152,7 +140,6 @@ const DataFilter = (props: {
         <NameEditor
           value={name}
           onChange={onConfigChange.bind(null, 'name', 'name-update')}
-          isHover={isHover}
         />
         <div
           className={
@@ -176,25 +163,27 @@ const DataFilter = (props: {
             className="h-a"
             type="link"
             icon={<DeleteOutlined />}
-            style={{
-              visibility: isHover ? 'visible' : 'hidden',
-            }}
             onClick={(e) => {
               stop(e);
               onComponentChange('id', 'delete', null);
             }}
+            title="删除"
           />
+          {!isTemp && (
+            <CopyAnimeButton
+              className="h-a"
+              type="link"
+              onClick={(e) => {
+                stop(e);
+                onComponentChange('id', 'copy', null);
+              }}
+              title="复制"
+            />
+          )}
         </div>
       </div>
     );
-  }, [
-    disabled,
-    name,
-    onComponentChange,
-    onConfigChange,
-    isHover,
-    dragDisabled,
-  ]);
+  }, [disabled, name, onComponentChange, onConfigChange, dragDisabled]);
 
   const onPanelCloseChange = useCallback(
     (value) => {
@@ -218,6 +207,7 @@ const DataFilter = (props: {
       {...nextProps}
       items={[
         {
+          collapsible: 'icon',
           key: id,
           label: header,
           className: classnames({

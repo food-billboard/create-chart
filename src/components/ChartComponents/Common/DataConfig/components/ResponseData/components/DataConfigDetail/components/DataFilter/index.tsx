@@ -1,19 +1,19 @@
-import { DEFAULT_FILTER_CODE } from '@/utils';
-import {
-  EVENT_NAME_MAP,
-  GLOBAL_EVENT_EMITTER,
-} from '@/utils/Assist/EventEmitter';
 import { useControllableValue, useUnmount } from 'ahooks';
 import arrayMove from 'array-move';
 import classnames from 'classnames';
 import { nanoid } from 'nanoid';
 import { useCallback, useMemo, useState } from 'react';
 import { connect } from 'umi';
+import { DEFAULT_FILTER_CODE } from '@/utils';
+import {
+  EVENT_NAME_MAP,
+  GLOBAL_EVENT_EMITTER,
+} from '@/utils/Assist/EventEmitter';
+import List from './List';
+import ListItem, { TOnChangeType, TOnComponentChangeType } from './ListItem';
 import AddItem from './addItem';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
-import List from './List';
-import ListItem, { TOnChangeType, TOnComponentChangeType } from './ListItem';
 
 const DataFilter = (props: {
   id: string;
@@ -135,6 +135,23 @@ const DataFilter = (props: {
         if (updateValue.id === tempFilterConfig?.id) {
           setTempFilterConfig(null);
         }
+      } else if (action === 'copy') {
+        const newId = nanoid();
+        const copyTarget = value.find((item) => item.id === updateValue.id);
+        const copyCallbackTarget = filter.find(
+          (item) => item.id === updateValue.id,
+        );
+        if (!copyTarget || !copyCallbackTarget) return;
+        wrapperSetValue({
+          value: [
+            ...value,
+            {
+              ...copyTarget,
+              id: newId,
+            },
+          ],
+        });
+        setCallbackData([...filter, { ...copyCallbackTarget, id: newId }]);
       } else {
         wrapperSetValue({
           value: value.map((item) => {
@@ -147,7 +164,7 @@ const DataFilter = (props: {
         });
       }
     },
-    [value, tempFilterConfig],
+    [value, tempFilterConfig, filter],
   );
 
   const onConfigChange: TOnChangeType = useCallback(
