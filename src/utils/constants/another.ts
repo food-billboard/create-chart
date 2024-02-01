@@ -91,6 +91,9 @@ const MAX_CONFIG_WIDTH = 500;
 // 配置面板最小宽度
 const MIN_CONFIG_WIDTH = 302;
 
+// 快照可生成最大个数
+const MAX_SCREEN_SHOT_COUNT = 3;
+
 export {
   IMAGE_FALLBACK,
   MIN_LAYER_WIDTH,
@@ -110,4 +113,5 @@ export {
   COMPONENT_LIST_WIDTH,
   MAX_CONFIG_WIDTH,
   MIN_CONFIG_WIDTH,
+  MAX_SCREEN_SHOT_COUNT,
 };

@@ -24,6 +24,7 @@ import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
 import { goPreview, goPreviewModel, goView } from '@/utils/tool';
 import ExchangeScreenFlagButton from '../ExchangeScreenFlag';
 import ActionList from './ActionList';
+import ScreenShotManage from './ActionList/components/ScreenShotManage';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -229,6 +230,9 @@ const Header = (props: {
         icon={<IconFont type="icon-Initialize-o" />}
       ></GlobalLoadingActonButton>
     );
+    const screenShotManage = (
+      <ScreenShotManage buttonProps={buttonProps} key="screen-shot" />
+    );
     let baseList: any[] = [];
     // pc大屏有切换移动端
     if (type === 'PC') baseList.push(exchangeScreenFlagButton);
@@ -257,6 +261,8 @@ const Header = (props: {
         baseList.push(previewButton);
       }
     }
+    if (GlobalConfig.IS_STATIC || GlobalConfig.IS_IMPROVE_BACKEND)
+      baseList.push(screenShotManage);
     return baseList;
   }, [
     handlePreview,

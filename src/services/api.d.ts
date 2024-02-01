@@ -222,4 +222,22 @@ declare namespace API_IMPROVE {
   };
 
   export type DeleteMediaDataParams = AddMediaDataParams;
+
+  export type GetScreenShotListParams = {
+    _id: string;
+  };
+
+  export type GetScreenShotListData = {
+    _id: string;
+    createAt: string;
+    user: string;
+    description: string;
+    isUse: boolean;
+  };
+
+  export type UpdateScreenShotData = {
+    description: string;
+    _id: string;
+    screen: string;
+  };
 }
