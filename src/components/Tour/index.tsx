@@ -35,7 +35,7 @@ const ShepherdWrapper = (
   const tourDoneRef = useRef(false);
 
   // 缓存中是否存在
-  const [value = {}, setValue, initialDone] = useLocalStorage<{
+  const [value = {}, setValue, _, initialDone] = useLocalStorage<{
     [key: string]: {
       timestamps: number;
     };

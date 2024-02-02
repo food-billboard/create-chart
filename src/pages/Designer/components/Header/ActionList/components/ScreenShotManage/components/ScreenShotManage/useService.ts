@@ -1,4 +1,7 @@
+import dayjs from 'dayjs';
 import { useState } from 'react';
+import { message } from '@/components/Message';
+import { useLocalStorage, useAnyDva } from '@/hooks';
 import {
   getScreenShotList,
   addScreenShot,
@@ -7,9 +10,20 @@ import {
   useScreenShot,
 } from '@/services';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import { LocalConfig } from '@/utils/Assist/LocalConfig';
+import { MAX_SCREEN_SHOT_COUNT } from '@/utils/constants';
 
-// 区分improve 和 staitc
+// 区分improve 和 static
 const useService = ({ screen }: { screen: string }) => {
+  const { getState } = useAnyDva();
+
+  const [localDataSource = {}, setLocalDataSource, getLocalDataSource] =
+    useLocalStorage<{
+      [screenId: string]: (API_IMPROVE.GetScreenShotListData & {
+        value: ComponentData.TScreenData;
+      })[];
+    }>(LocalConfig.CONFIG_KEY_BACKGROUND, {});
+
   const [dataSource, setDataSource] = useState<
     API_IMPROVE.GetScreenShotListData[]
   >([]);
@@ -21,22 +35,6 @@ const useService = ({ screen }: { screen: string }) => {
       setDataSource(result as API_IMPROVE.GetScreenShotListData[]);
     } else if (GlobalConfig.IS_STATIC) {
       // TODO
-      setDataSource([
-        {
-          _id: '1',
-          createAt: '2023-01-01',
-          user: '我是煞笔',
-          description: '',
-          isUse: false,
-        },
-        {
-          _id: '2',
-          createAt: '2023-02-01',
-          user: '我是煞笔',
-          description: '222'.repeat(200),
-          isUse: true,
-        },
-      ]);
     }
   };
 
@@ -45,7 +43,33 @@ const useService = ({ screen }: { screen: string }) => {
     if (GlobalConfig.IS_IMPROVE_BACKEND) {
       await addScreenShot({ _id: screen });
     } else if (GlobalConfig.IS_STATIC) {
-      // TODO
+      try {
+        const { screenData, components } = getState().global;
+        const localDataSource = getLocalDataSource() || {};
+        if (MAX_SCREEN_SHOT_COUNT <= localDataSource[screen]?.length) {
+          return message.info('超过快照生成最大数量');
+        }
+        await setLocalDataSource({
+          ...localDataSource,
+          [screen]: [
+            ...(localDataSource[screen] || []),
+            {
+              _id: Date.now().toString(),
+              createAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+              user: '',
+              description: '',
+              isUse: false,
+              value: {
+                ...screenData,
+                components,
+              } as ComponentData.TScreenData,
+            },
+          ],
+        });
+      } catch (err) {
+        console.error(err);
+        message.info('快照生成失败');
+      }
     }
     callback();
   };
@@ -58,7 +82,24 @@ const useService = ({ screen }: { screen: string }) => {
     if (GlobalConfig.IS_IMPROVE_BACKEND) {
       await updateScreenShot({ screen, _id, description: value });
     } else if (GlobalConfig.IS_STATIC) {
-      // TODO
+      try {
+        const localDataSource = getLocalDataSource() || {};
+        await setLocalDataSource({
+          ...localDataSource,
+          [screen]: (localDataSource[screen] || []).map((item) => {
+            if (item._id === _id) {
+              return {
+                ...item,
+                description: value,
+              };
+            }
+            return item;
+          }),
+        });
+      } catch (err) {
+        console.error(err);
+        message.info('操作失败');
+      }
     }
     callback();
   };
@@ -71,7 +112,18 @@ const useService = ({ screen }: { screen: string }) => {
     if (GlobalConfig.IS_IMPROVE_BACKEND) {
       await deleteScreenShot({ screen, _id });
     } else if (GlobalConfig.IS_STATIC) {
-      // TODO
+      try {
+        const localDataSource = getLocalDataSource() || {};
+        await setLocalDataSource({
+          ...localDataSource,
+          [screen]: (localDataSource[screen] || []).filter((item) => {
+            return item.isUse || item._id !== _id;
+          }),
+        });
+      } catch (err) {
+        console.error(err);
+        message.info('操作失败');
+      }
     }
     callback();
   };
@@ -81,7 +133,21 @@ const useService = ({ screen }: { screen: string }) => {
     if (GlobalConfig.IS_IMPROVE_BACKEND) {
       await useScreenShot({ screen, _id });
     } else if (GlobalConfig.IS_STATIC) {
-      // TODO
+      try {
+        const localDataSource = getLocalDataSource() || {};
+        await setLocalDataSource({
+          ...localDataSource,
+          [screen]: (localDataSource[screen] || []).map((item) => {
+            return {
+              ...item,
+              isUse: item._id === _id,
+            };
+          }),
+        });
+      } catch (err) {
+        console.error(err);
+        message.info('操作失败');
+      }
     }
     callback();
   };
@@ -92,7 +158,9 @@ const useService = ({ screen }: { screen: string }) => {
     onUpdate,
     onDelete,
     onUse,
-    dataSource,
+    dataSource: GlobalConfig.IS_STATIC
+      ? localDataSource[screen] || []
+      : dataSource,
   };
 };
 
