@@ -109,7 +109,15 @@ export async function addScreenShot(data: { _id: string }) {
 // 使用快照
 export async function useScreenShot(data: { _id: string; screen: string }) {
   return request('/api/screen/model', {
-    method: 'POST',
+    method: 'PUT',
+    data,
+  });
+}
+
+// 覆盖快照
+export async function coverScreenShot(data: { _id: string; screen: string }) {
+  return request('/api/screen/model', {
+    method: 'PUT',
     data,
   });
 }

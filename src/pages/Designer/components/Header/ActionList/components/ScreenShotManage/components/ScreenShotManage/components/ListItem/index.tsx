@@ -2,6 +2,7 @@ import {
   EditOutlined,
   DeleteOutlined,
   CheckCircleOutlined,
+  CloudSyncOutlined,
 } from '@ant-design/icons';
 import { Button, Input, Popconfirm } from 'antd';
 import classnames from 'classnames';
@@ -22,7 +23,12 @@ const ListItem = (props: {
 
   const primaryColor = usePrimaryColor();
 
-  const { onUpdate: serviceUpdate, onDelete, onUse } = useService({ screen });
+  const {
+    onUpdate: serviceUpdate,
+    onDelete,
+    onUse,
+    onCover,
+  } = useService({ screen });
 
   const [editable, setEditable] = useState(false);
   const [descriptionValue, setDescriptionValue] = useState(description || '');
@@ -84,6 +90,17 @@ const ListItem = (props: {
             size="middle"
             disabled={isUse}
           />
+          <Popconfirm
+            title="将使用最新的大屏数据覆盖当前快照，是否确认？"
+            onConfirm={() => onCover({ _id }, onUpdate)}
+          >
+            <Button
+              type="link"
+              icon={<CloudSyncOutlined />}
+              title="覆盖当前快照"
+              size="middle"
+            />
+          </Popconfirm>
         </div>
       </div>
       <FocusModal

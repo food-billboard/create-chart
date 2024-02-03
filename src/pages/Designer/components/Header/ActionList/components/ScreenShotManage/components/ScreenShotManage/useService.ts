@@ -8,6 +8,7 @@ import {
   updateScreenShot,
   deleteScreenShot,
   useScreenShot,
+  coverScreenShot,
 } from '@/services';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
@@ -43,7 +44,7 @@ const useService = ({ screen }: { screen: string }) => {
       await addScreenShot({ _id: screen });
     } else if (GlobalConfig.IS_STATIC) {
       try {
-        const { screenData, components } = getState().global;
+        const { screenData, components, version } = getState().global;
         const localDataSource = getLocalDataSource() || {};
         if (MAX_SCREEN_SHOT_COUNT <= localDataSource[screen]?.length) {
           return message.info('超过快照生成最大数量');
@@ -62,6 +63,7 @@ const useService = ({ screen }: { screen: string }) => {
                 ...screenData,
                 components,
               } as ComponentData.TScreenData,
+              version,
             },
           ],
         });
@@ -151,12 +153,48 @@ const useService = ({ screen }: { screen: string }) => {
     callback();
   };
 
+  // 覆盖
+  const onCover = async (
+    { _id }: { _id: string },
+    callback: any = fetchData,
+  ) => {
+    if (GlobalConfig.IS_IMPROVE_BACKEND) {
+      await coverScreenShot({ screen, _id });
+    } else if (GlobalConfig.IS_STATIC) {
+      try {
+        const { screenData, components, version } = getState().global;
+        const localDataSource = getLocalDataSource() || {};
+        await setLocalDataSource({
+          ...localDataSource,
+          [screen]: (localDataSource[screen] || []).map((item) => {
+            if (item._id === _id) {
+              return {
+                ...item,
+                version,
+                value: {
+                  ...screenData,
+                  components,
+                } as ComponentData.TScreenData,
+              };
+            }
+            return item;
+          }),
+        });
+      } catch (err) {
+        console.error(err);
+        message.info('操作失败');
+      }
+    }
+    callback();
+  };
+
   return {
     fetchData,
     onAdd,
     onUpdate,
     onDelete,
     onUse,
+    onCover,
     dataSource: GlobalConfig.IS_STATIC
       ? localDataSource[screen] || []
       : dataSource,

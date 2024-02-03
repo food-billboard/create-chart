@@ -227,7 +227,10 @@ const FetchScreenComponent = forwardRef<
             if (!targetScreenShotData) return fetch(false);
             return {
               errMsg: false,
-              value: targetScreenShotData.value,
+              value: {
+                ...targetScreenShotData.value,
+                version: targetScreenShotData.version,
+              },
             };
           } else {
             return LocalConfigInstance.getItem(localKey);
