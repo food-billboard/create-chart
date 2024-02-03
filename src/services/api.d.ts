@@ -240,4 +240,12 @@ declare namespace API_IMPROVE {
     _id: string;
     screen: string;
   };
+
+  export type LocalScreenShotDataValue = GetScreenShotListData & {
+    value: ComponentData.TScreenData;
+  };
+
+  export type LocalScreenShotData = {
+    [screenId: string]: LocalScreenShotDataValue[];
+  };
 }

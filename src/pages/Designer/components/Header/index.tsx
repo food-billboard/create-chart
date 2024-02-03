@@ -15,7 +15,7 @@ import FocusWrapper from '@/components/FocusWrapper';
 import GlobalLoadingActonButton, {
   Props,
 } from '@/components/GlobalLoadingActionButton';
-import { isModelHash } from '@/hooks';
+import { isModelHash, useIsModelHash } from '@/hooks';
 import { previewScreen, previewScreenModel } from '@/services';
 import { saveScreenData } from '@/utils/Assist/DataChangePool';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
@@ -45,6 +45,8 @@ const Header = (props: {
 
   const [editMode, setEditMode] = useState<boolean>(false);
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
+
+  const isModel = useIsModelHash();
 
   const Title = useMemo(() => {
     if (editMode) {
@@ -94,7 +96,6 @@ const Header = (props: {
 
     setFetchLoading(true);
     try {
-      const isModel = isModelHash(location.hash);
       // 大屏预览或模板预览
       const requestMethod = isModel ? previewScreenModel : previewScreen;
       const linkMethod = isModel ? goPreviewModel : goPreview;
@@ -105,7 +106,7 @@ const Header = (props: {
     } finally {
       setFetchLoading(false);
     }
-  }, [_id, fetchLoading]);
+  }, [_id, fetchLoading, isModel]);
 
   // 保存
   const handleStore = useCallback(async () => {
@@ -261,8 +262,12 @@ const Header = (props: {
         baseList.push(previewButton);
       }
     }
-    if (GlobalConfig.IS_STATIC || GlobalConfig.IS_IMPROVE_BACKEND)
+    if (
+      GlobalConfig.IS_STATIC ||
+      (GlobalConfig.IS_IMPROVE_BACKEND && !isModel)
+    ) {
       baseList.push(screenShotManage);
+    }
     return baseList;
   }, [
     handlePreview,

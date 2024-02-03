@@ -18,11 +18,10 @@ const useService = ({ screen }: { screen: string }) => {
   const { getState } = useAnyDva();
 
   const [localDataSource = {}, setLocalDataSource, getLocalDataSource] =
-    useLocalStorage<{
-      [screenId: string]: (API_IMPROVE.GetScreenShotListData & {
-        value: ComponentData.TScreenData;
-      })[];
-    }>(LocalConfig.CONFIG_KEY_BACKGROUND, {});
+    useLocalStorage<API_IMPROVE.LocalScreenShotData>(
+      LocalConfig.STATIC_SCREEN_SHOT_SAVE_KEY,
+      {},
+    );
 
   const [dataSource, setDataSource] = useState<
     API_IMPROVE.GetScreenShotListData[]

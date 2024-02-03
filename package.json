@@ -5,6 +5,7 @@
   "author": "Daniel GLF",
   "version": "1.22",
   "private": false,
+  "license": "MIT",
   "scripts": {
     "build:improve": "cross-env REACT_APP=improve REACT_APP_ENV=prod max build",
     "analyze:improve": "cross-env ANALYZE=1 REACT_APP_ENV=prod REACT_APP=improve max build",
