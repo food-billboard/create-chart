@@ -1,7 +1,6 @@
 import classnames from 'classnames';
 import { uniqueId, merge } from 'lodash';
 import { useEffect, useRef } from 'react';
-import useBarCarousel from '@/components/ChartComponents/Common/BarCarouselConfig/useBarCarousel';
 import {
   useComponent,
   useChartComponentResize,
@@ -52,7 +51,7 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
     getValue,
     requestUrl,
     componentFilter,
-    value: _processedValue = [],
+    value: processedValue = [],
     componentFilterMap,
     onCondition,
   } = useComponent<TRankBarConfig>({
@@ -65,14 +64,6 @@ const RankBar = (props: ComponentData.CommonComponentProps<TRankBarConfig>) => {
     style: conditionStyle,
     className: conditionClassName,
   } = useCondition(onCondition, screenType);
-
-  const processedValue = useBarCarousel({
-    config: carousel,
-    screenType,
-    value: _processedValue,
-    seriesKey: 's',
-    fieldMap: componentFilterMap,
-  });
 
   const { xAxisKeys, yAxisValues } = useChartValueMapField(processedValue, {
     map: componentFilterMap,
