@@ -1,8 +1,9 @@
-import type { TourProps } from 'antd';
+import type { TourStepProps } from 'antd';
 import Tour, { Props } from '@/components/Tour';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
 
-const steps: TourProps['steps'] = [
+const steps: TourStepProps[] = [
   {
     title: '设置可视化大屏的名称，最少5个字',
     target: () => document.querySelector('.ant-page-header-heading-title')!,
@@ -40,6 +41,15 @@ const steps: TourProps['steps'] = [
     target: () => document.querySelector('.design-page-right')!,
     placement: 'left',
   },
+  ...(GlobalConfig.IS_STATIC
+    ? ([
+        {
+          title: '如果完成的大屏数据可点击按钮优先进行导入(*￣︶￣)',
+          target: () => document.querySelector('#static-import-button')!,
+          placement: 'left',
+        },
+      ] as TourStepProps[])
+    : []),
 ];
 
 const ShepherdWrapper = (props: Partial<Props>) => {

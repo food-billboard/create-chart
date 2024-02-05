@@ -240,6 +240,7 @@ const Header = (props: {
         title="导入"
         onClick={handleImport}
         icon={<ImportOutlined />}
+        id="static-import-button"
       ></GlobalLoadingActonButton>
     );
     const resetScreenButton = (
