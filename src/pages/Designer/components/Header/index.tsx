@@ -3,6 +3,7 @@ import {
   DesktopOutlined,
   ImportOutlined,
   SendOutlined,
+  RocketOutlined,
 } from '@ant-design/icons';
 import { PageHeader } from '@ant-design/pro-layout';
 import { Input, App } from 'antd';
@@ -15,13 +16,18 @@ import FocusWrapper from '@/components/FocusWrapper';
 import GlobalLoadingActonButton, {
   Props,
 } from '@/components/GlobalLoadingActionButton';
-import { isModelHash, useIsModelHash } from '@/hooks';
+import { useIsModelHash } from '@/hooks';
 import { previewScreen, previewScreenModel } from '@/services';
 import { saveScreenData } from '@/utils/Assist/DataChangePool';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { staticExportData, staticLeadIn } from '@/utils/Assist/LeadInAndOutput';
-import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
-import { goPreview, goPreviewModel, goView } from '@/utils/tool';
+import { removeCurrentScreenData } from '@/utils/Assist/ScreenShotUtils';
+import {
+  goPreview,
+  goPreviewModel,
+  goView,
+  goStaticProductionView,
+} from '@/utils/tool';
 import ExchangeScreenFlagButton from '../ExchangeScreenFlag';
 import ActionList from './ActionList';
 import ScreenShotManage from './ActionList/components/ScreenShotManage';
@@ -120,7 +126,14 @@ const Header = (props: {
   const handleImport = useCallback(async () => {
     setFetchLoading(true);
     try {
-      staticLeadIn(window.location.reload);
+      staticLeadIn({
+        onError: window.location.reload,
+        onOk: () => {
+          message.info('导入成功，即将刷新页面', 1, () => {
+            window.location.reload();
+          });
+        },
+      });
     } catch (err) {
       message.info('操作失败');
     } finally {
@@ -138,12 +151,10 @@ const Header = (props: {
   // 初始化
   const handleReset = useCallback(async () => {
     setFetchLoading(true);
-    const { value } = await LocalConfigInstance.removeItem(
-      LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
-    );
-    if (value) {
+    try {
+      await removeCurrentScreenData();
       message.info('操作成功，页面即将刷新', 1, () => window.location.reload());
-    } else {
+    } catch (err) {
       message.info('操作出错');
     }
     setFetchLoading(false);
@@ -171,6 +182,19 @@ const Header = (props: {
         icon={<DesktopOutlined />}
         loading={fetchLoading}
       />
+    );
+    const productionPreviewButton = (
+      <GlobalLoadingActonButton
+        {...buttonProps}
+        tooltip={{
+          ...tooltipProps,
+          title: '生产环境预览',
+        }}
+        key="production-preview"
+        title="生产环境预览"
+        onClick={goStaticProductionView}
+        icon={<RocketOutlined />}
+      ></GlobalLoadingActonButton>
     );
     const storeButton = (
       <GlobalLoadingActonButton
@@ -231,6 +255,7 @@ const Header = (props: {
         icon={<IconFont type="icon-Initialize-o" />}
       ></GlobalLoadingActonButton>
     );
+
     const screenShotManage = (
       <ScreenShotManage buttonProps={buttonProps} key="screen-shot" />
     );
@@ -251,6 +276,7 @@ const Header = (props: {
           exportScreenButton,
           leadinScreenButton,
           previewButton,
+          productionPreviewButton,
           resetScreenButton,
         );
       }

@@ -1,4 +1,4 @@
-import { FontSizeOutlined, RocketOutlined } from '@ant-design/icons';
+import { FontSizeOutlined, AntDesignOutlined } from '@ant-design/icons';
 import { Switch } from 'antd';
 import { Component } from 'react';
 import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
@@ -178,7 +178,7 @@ class Config extends Component<
                         <Radio
                           value="icon"
                           key="icon"
-                          icon={<RocketOutlined title="图标" />}
+                          icon={<AntDesignOutlined title="图标" />}
                         />
                       </IconRadio>
                     </FullForm>

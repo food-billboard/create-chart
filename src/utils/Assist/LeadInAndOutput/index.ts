@@ -1,8 +1,11 @@
 import { Upload } from 'chunk-file-upload';
+import dayjs from 'dayjs';
 import { saveAs } from 'file-saver';
+import { get } from 'lodash';
 import { message } from '@/components/Message';
 import { postScreenLeadIn, postScreenExport } from '@/services';
 import LocalConfigInstance, { LocalConfig } from '../LocalConfig';
+import { updateCurrentScreenShot } from '../ScreenShotUtils';
 import { exitDataFn, uploadFn } from '../Upload';
 
 // 导入 loading
@@ -121,14 +124,28 @@ export async function staticExportData() {
 
   EXPORT_LOADING = true;
 
-  return LocalConfigInstance.getItem(LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY)
+  return Promise.all([
+    LocalConfigInstance.getItem(LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY),
+    LocalConfigInstance.getItem(LocalConfig.STATIC_SCREEN_SHOT_SAVE_KEY),
+  ])
     .then((data) => {
-      const { value, errMsg } = data;
-      if (errMsg) return Promise.reject(errMsg);
-      const blob = new Blob([JSON.stringify(value!)], {
+      const index = data.findIndex((item) => item.errMsg);
+      if (!!~index) return Promise.reject(data[index].errMsg);
+      const [value, screenShot] = data;
+      return {
+        value: value.value,
+        screenShot: screenShot.value?.[value.value._id] || {},
+      };
+    })
+    .then((data) => {
+      const blob = new Blob([JSON.stringify(data)], {
         type: 'application/json',
       });
-      return saveAs(blob, 'component.json');
+      let filename = get(data, 'value.name') || 'component';
+      return saveAs(
+        blob,
+        `${filename}-screen-data-${dayjs().format('YYYY-MM-DD')}.json`,
+      );
     })
     .catch((err) => {
       console.error(err);
@@ -140,7 +157,12 @@ export async function staticExportData() {
 }
 
 // 静态导入
-export async function staticLeadIn(callback?: () => void) {
+export async function staticLeadIn(config?: {
+  onError?: () => void;
+  onOk?: () => void;
+  onStart?: () => void;
+}) {
+  const { onError, onOk, onStart } = config || {};
   if (LEAD_IN_LOADING) return;
   const input = document.createElement('input');
   input.setAttribute('type', 'file');
@@ -149,6 +171,7 @@ export async function staticLeadIn(callback?: () => void) {
     const file = e.target?.files[0];
     if (file) {
       LEAD_IN_LOADING = true;
+      onStart?.();
       message.info('导入中...');
 
       const fileReader = new FileReader();
@@ -156,23 +179,43 @@ export async function staticLeadIn(callback?: () => void) {
       fileReader.onload = function (e) {
         const data = e.target?.result;
         if (data) {
-          LocalConfigInstance.setItem(
-            LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
-            JSON.parse(data as string),
-          )
+          // * 1.22 前只有大屏的数据，之后会把快照的数据也一并导出，所以在导入这边需要分别保存
+          const jsonData = JSON.parse(data as string);
+          let action: any[] = [];
+          // 新版本
+          if (jsonData.screenShot) {
+            action = [
+              LocalConfigInstance.setItem(
+                LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
+                jsonData.value,
+              ),
+              updateCurrentScreenShot(
+                jsonData.value._id,
+                jsonData.screenShot[jsonData.value._id],
+              ),
+            ];
+          } else {
+            action = [
+              LocalConfigInstance.setItem(
+                LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
+                jsonData,
+              ),
+            ];
+          }
+
+          Promise.all(action)
             .then(() => {
-              message.info('导入成功，即将刷新页面', 1, () => {
-                window.location.reload();
-              });
+              onOk?.();
             })
             .catch((err) => {
               console.error(err);
-              message.info('导入出错');
-              callback?.();
+              message.info('文件解析错误');
+              onError?.();
               LEAD_IN_LOADING = false;
             });
         } else {
-          callback?.();
+          message.info('文件解析错误');
+          onError?.();
           LEAD_IN_LOADING = false;
         }
       };

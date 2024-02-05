@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import classnames from 'classnames';
 import { useUnmount } from 'ahooks';
+import classnames from 'classnames';
+import { useEffect } from 'react';
 import useResize from '../Share/useResize';
 import styles from './index.less';
 
@@ -10,12 +10,14 @@ const useWrapperProps = ({
   setScale,
   flag = 'PC',
   scale: scaleConfig,
+  bodyCalculate = true,
 }: {
   containerWidth: number;
   containerHeight: number;
   setScale: (value: number) => void;
   flag: ComponentData.ScreenFlagType;
   scale: ComponentData.ScreenScaleType;
+  bodyCalculate?: boolean;
 }) => {
   const [scaleX, scaleY] = useResize({
     containerWidth,
@@ -26,6 +28,7 @@ const useWrapperProps = ({
   });
 
   useEffect(() => {
+    if (!bodyCalculate) return;
     // * 将缩放样式直接应用到body和html上
     const html = document.querySelector('html');
     const body = document.body;
@@ -63,7 +66,15 @@ const useWrapperProps = ({
     cssText += `transform-origin: left top;width: ${containerWidth}px; height: ${containerHeight}px`;
     body.style.cssText = cssText;
     if (app) app.style.overflow = 'visible';
-  }, [flag, scaleX, scaleY, scaleConfig, containerWidth, containerHeight]);
+  }, [
+    flag,
+    scaleX,
+    scaleY,
+    scaleConfig,
+    containerWidth,
+    containerHeight,
+    bodyCalculate,
+  ]);
 
   useUnmount(() => {
     // * 将样式还原

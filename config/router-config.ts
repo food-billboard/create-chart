@@ -88,6 +88,10 @@ export const staticRouter = [
         component: '@/pages/Viewer',
       },
       {
+        path: '/static-share',
+        component: '@/pages/StaticShare',
+      },
+      {
         path: '/',
         redirect: '/designer',
       },

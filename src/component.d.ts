@@ -690,6 +690,11 @@ declare namespace ComponentData {
     children?: React.ReactNode;
     wrapper: any;
   };
+
+  export type StaticExportData = {
+    value: TScreenData;
+    screenShot: API_IMPROVE.LocalScreenShotDataValue[];
+  };
 }
 
 declare namespace ComponentClipboard {

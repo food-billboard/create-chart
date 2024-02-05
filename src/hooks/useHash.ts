@@ -47,11 +47,15 @@ export const useHashChangeReload = (reload: any) => {
   };
 
   const isPreview = (hash: string) => {
-    return (
-      hash.startsWith('#/preview') ||
-      hash.startsWith('#/model-preview') ||
-      hash.startsWith('#/viewer')
-    );
+    return [
+      '#/preview',
+      '#/model-preview',
+      '#/viewer',
+      '#/static-share',
+      '#/share',
+    ].some((item) => {
+      return hash.startsWith(item);
+    });
   };
 
   const isModel = (hash: string) => {
