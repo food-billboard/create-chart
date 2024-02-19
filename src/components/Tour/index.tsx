@@ -13,13 +13,10 @@ export type Props = TourProps & {
   expire?: number;
   tourUniqueKey: string;
   localKey: string;
+  userId: string;
 };
 
-const ShepherdWrapper = (
-  props: Props & {
-    userId: string;
-  },
-) => {
+const ShepherdWrapper = (props: Props) => {
   const {
     onStart,
     onComplete,

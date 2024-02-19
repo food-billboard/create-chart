@@ -34,7 +34,7 @@ const useService = ({ screen }: { screen: string }) => {
       const result = await getScreenShotList({ _id: screen });
       setDataSource(result as API_IMPROVE.GetScreenShotListData[]);
     } else if (GlobalConfig.IS_STATIC) {
-      // TODO
+      // ? 不需要获取数据，直接从本地storage拿
     }
   };
 

@@ -174,6 +174,7 @@ export function closeWindow() {
 }
 
 // 版本号比较
+// a > b ?
 export function versionCompare(
   versionA: string | number,
   versionB: string | number,
