@@ -1,7 +1,7 @@
 import { SmileOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useColorThemeList } from '@/hooks';
+import { DEFAULT_THEME_COLOR_LIST } from '@/utils/Assist/Theme';
 import { BUTTON_LIST } from './constants';
 import styles from './index.less';
 import useDrag from './useDrag';
@@ -11,7 +11,7 @@ const commonStyle = {};
 const IntroductionButton = () => {
   const [buttonOpen, setButtonOpen] = useState(false);
 
-  const [primaryColor, ...nextColorList] = useColorThemeList();
+  const [primaryColor, ...nextColorList] = DEFAULT_THEME_COLOR_LIST;
 
   const { isDragging, ...dragProps } = useDrag({
     right: 24,

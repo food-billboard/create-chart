@@ -9,7 +9,7 @@ import type {
 } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 import FocusModal from '@/components/FocusModal';
-import { usePrimaryColor } from '@/hooks';
+import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
 import { ICON_MAP } from '@/utils/constants/icon';
 import styles from './index.less';
 
@@ -28,8 +28,6 @@ const ModalSelect = (props: {
   const [visible, setVisible] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [iconList, setIconList] = useState(ICON_MAP);
-
-  const primaryColor = usePrimaryColor();
 
   const close = () => setVisible(false);
 
@@ -55,7 +53,7 @@ const ModalSelect = (props: {
           key={key}
           style={{
             ...style,
-            color: iconValue === templateSelect ? primaryColor : '#fff',
+            color: iconValue === templateSelect ? DEFAULT_THEME_COLOR : '#fff',
           }}
           className={classnames(styles['icon-modal-select-item'], 'c-po')}
           onClick={() => setTemplateSelect(iconValue)}
@@ -64,7 +62,7 @@ const ModalSelect = (props: {
         </div>
       );
     },
-    [iconList, templateSelect, primaryColor],
+    [iconList, templateSelect],
   );
 
   const cellSizeAndPositionGetter: CollectionCellSizeAndPositionGetter = ({
@@ -114,7 +112,7 @@ const ModalSelect = (props: {
           <div className="dis-flex flex-al-cen">
             图标选择
             <span
-              style={{ color: primaryColor }}
+              style={{ color: DEFAULT_THEME_COLOR }}
               className={classnames('bi ac-i-size-m m-l-4', templateSelect)}
             />
           </div>

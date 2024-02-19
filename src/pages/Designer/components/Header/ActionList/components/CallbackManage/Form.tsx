@@ -21,6 +21,7 @@ import LazyLoadWrapper from '@/components/LazyLoad';
 import ParamsSelect from '@/components/ParamsSelect';
 import Tooltip from '@/components/Tooltip';
 import { useIdPathMap } from '@/hooks';
+import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const CodeViewer = LazyLoadWrapper(
@@ -186,8 +187,11 @@ const CallbackList = (props: {
           return (
             <div
               title={value}
-              className="c-po text-ellipsis normal-color"
+              className="c-po text-ellipsis"
               onClick={previewCode.bind(null, value)}
+              style={{
+                color: DEFAULT_THEME_COLOR,
+              }}
             >
               {value}
             </div>

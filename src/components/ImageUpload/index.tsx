@@ -200,7 +200,14 @@ const PicturesWall = (
   }, [value]);
 
   return (
-    <>
+    <div
+      style={{
+        ...nextProps.style,
+        // @ts-ignore
+        '--upload-item-height': height,
+      }}
+      className={styles['component-image-upload']}
+    >
       {!!inputVisible && (
         <Input
           defaultValue={value[0]?.preview || ''}
@@ -223,12 +230,7 @@ const PicturesWall = (
         onRemove={onRemove}
         disabled={validLoading}
         {...nextProps}
-        className={classnames(styles['component-image-upload'], className)}
-        style={{
-          ...nextProps.style,
-          // @ts-ignore
-          '--upload-item-height': height,
-        }}
+        className={className}
       >
         {value.length >= 1 ? null : <UploadButton />}
       </Upload>
@@ -240,7 +242,7 @@ const PicturesWall = (
       >
         <img alt="background" style={{ width: '100%' }} src={previewImage} />
       </Modal>
-    </>
+    </div>
   );
 };
 

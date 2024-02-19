@@ -9,7 +9,6 @@ import {
   useState,
 } from 'react';
 import Modal from '@/components/FocusModal';
-import { usePrimaryColor } from '@/hooks';
 import { Loading } from '../PageLoading';
 import styles from './index.less';
 
@@ -40,8 +39,6 @@ const ComponentSelect = forwardRef<
       icon: string;
     }[]
   >([]);
-
-  const primaryColor = usePrimaryColor();
 
   const open = async (select?: string) => {
     if (visible) return;
@@ -118,7 +115,7 @@ const ComponentSelect = forwardRef<
             style={
               isSelect
                 ? {
-                    borderColor: primaryColor,
+                    borderColor: 'var(--primary-color)',
                   }
                 : {}
             }
@@ -130,7 +127,7 @@ const ComponentSelect = forwardRef<
         </Col>
       );
     });
-  }, [select, filterComponentList, primaryColor]);
+  }, [select, filterComponentList]);
 
   useImperativeHandle(
     ref,

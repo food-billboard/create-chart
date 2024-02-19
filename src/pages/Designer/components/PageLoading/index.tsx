@@ -1,17 +1,14 @@
-import {} from 'react';
 import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
-import { usePrimaryColor } from '@/hooks';
+import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
 import styles from './index.less';
 
 const PageLoading = (props: { value: boolean }) => {
   const { value } = props;
 
-  const color = usePrimaryColor();
-
   if (value) {
     return (
       <div className={styles['page-designer-loading']}>
-        <ClimbingBoxLoader loading color={color} />
+        <ClimbingBoxLoader loading color={DEFAULT_THEME_COLOR} />
       </div>
     );
   }

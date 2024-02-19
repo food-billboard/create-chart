@@ -1,8 +1,8 @@
-import ColorSelect from '@/components/ColorSelect';
-import { usePrimaryColor } from '@/hooks';
 import ReactRuler, { RulerProps as BaseRulerProps } from '@scena/react-ruler';
 import { Component, createRef } from 'react';
 import { connect } from 'umi';
+import ColorSelect from '@/components/ColorSelect';
+import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 export type RulerProps = Partial<BaseRulerProps>;
@@ -44,6 +44,7 @@ class Ruler extends Component<Props> {
           lineColor={'rgb(255, 255, 255)'}
           textColor={'rgb(255, 255, 255)'}
           type="vertical"
+          backgroundColor={DEFAULT_THEME_COLOR}
           {...this.props}
           ref={this.rulerRef}
         />
@@ -52,13 +53,4 @@ class Ruler extends Component<Props> {
   }
 }
 
-export const RulerWrapper = (props: Props) => {
-  const color = usePrimaryColor();
-
-  return <Ruler backgroundColor={color} {...props} />;
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(RulerWrapper) as any;
+export default connect(mapStateToProps, mapDispatchToProps)(Ruler) as any;

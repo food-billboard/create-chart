@@ -1,8 +1,7 @@
-import { usePrimaryColor } from '@/hooks';
-import { ConnectState } from '@/models/connect';
 import { throttle } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
+import { ConnectState } from '@/models/connect';
 import styles from './index.less';
 
 const CircleSelect = (props: {
@@ -13,8 +12,6 @@ const CircleSelect = (props: {
   const { value = 0, onChange } = props;
 
   const [stateValue, setStateValue] = useState<number>(value);
-
-  const primaryColor = usePrimaryColor();
 
   const selectRef = useRef<{
     x: number;
@@ -116,7 +113,6 @@ const CircleSelect = (props: {
       className={styles['component-circle-select']}
       style={{
         // @ts-ignore
-        '--component-circle-select-color': primaryColor,
         '--component-circle-select-value': `rotate(${stateValue}deg)`,
       }}
       onMouseDown={onMouseDown}

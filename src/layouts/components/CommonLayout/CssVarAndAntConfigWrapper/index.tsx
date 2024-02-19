@@ -1,13 +1,12 @@
 import { theme, ConfigProvider, App } from 'antd';
 import Message from '@/components/Message';
-import { usePrimaryColor } from '@/hooks';
+import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
 
 const { useToken } = theme;
 const CssVarWrapper = (props: any) => {
   const { Component, ...nextProps } = props;
   const { token } = useToken();
   const { screenXS } = token;
-  const primaryColor = usePrimaryColor();
   return (
     <ConfigProvider
       theme={{
@@ -23,8 +22,8 @@ const CssVarWrapper = (props: any) => {
         },
         algorithm: theme.darkAlgorithm,
         token: {
-          colorPrimary: primaryColor,
-          colorLink: primaryColor,
+          colorPrimary: DEFAULT_THEME_COLOR,
+          colorLink: DEFAULT_THEME_COLOR,
           fontSize: 12,
         },
       }}
@@ -33,7 +32,7 @@ const CssVarWrapper = (props: any) => {
         <div
           style={{
             // @ts-ignore
-            '--primary-color': primaryColor,
+            '--primary-color': DEFAULT_THEME_COLOR,
             '--border-color-base': '#434343',
             '--layout-header-background': '#1f1f1f',
             '--component-background': '#141414',

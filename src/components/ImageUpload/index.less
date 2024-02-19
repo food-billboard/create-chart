@@ -1,11 +1,10 @@
 .component-image-upload {
-  .ant-upload.ant-upload-select-picture-card,
-  .ant-upload-list-picture-card-container,
-  .ant-upload-list-item-container,
-  .ant-upload-select {
-    width: 100% !important;
-    height: var(--upload-item-height, 200px) !important;
-    margin: 0 !important;
+  :global {
+    .ant-upload-select {
+      width: 100% !important;
+      height: var(--upload-item-height, 200px) !important;
+      margin: 0 !important;
+    }
   }
   &-placeholder {
     & > span {

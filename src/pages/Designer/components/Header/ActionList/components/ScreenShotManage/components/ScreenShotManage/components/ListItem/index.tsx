@@ -9,7 +9,6 @@ import classnames from 'classnames';
 import { useCallback, useState } from 'react';
 import FocusModal from '@/components/FocusModal';
 import LoadingButton from '@/components/LoadingButton';
-import { usePrimaryColor } from '@/hooks';
 import useService from '../../useService';
 import styles from './index.less';
 
@@ -20,8 +19,6 @@ const ListItem = (props: {
 }) => {
   const { value, onUpdate, screen } = props;
   const { isUse, _id, createAt, description } = value;
-
-  const primaryColor = usePrimaryColor();
 
   const {
     onUpdate: serviceUpdate,
@@ -52,7 +49,9 @@ const ListItem = (props: {
             styles['screen-shot-list-item-content'],
           )}
         >
-          <div style={isUse ? { color: primaryColor } : {}}>{createAt}</div>
+          <div style={isUse ? { color: 'var(--primary-color)' } : {}}>
+            {createAt}
+          </div>
           <div
             title={description}
             className={classnames('text-ellipsis', {

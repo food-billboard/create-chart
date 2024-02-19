@@ -1,11 +1,10 @@
-import { useMemo, useCallback, Fragment } from 'react';
 import classnames from 'classnames';
-import { usePrimaryColor } from '@/hooks';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import { useMemo, useCallback, Fragment } from 'react';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import styles from './index.less';
 import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import styles from './index.less';
 
 const { Item } = ConfigList;
 
@@ -14,8 +13,6 @@ const PointSelect = (props: {
   onChange: (value: [number, number]) => void;
 }) => {
   const { value, onChange } = props;
-
-  const themeColor = usePrimaryColor();
 
   const handleClick = useCallback(
     (pos) => {
@@ -33,14 +30,12 @@ const PointSelect = (props: {
           styles['point-select-item'],
         )}
         style={{
-          // @ts-ignore
-          '--point-select-item-active': themeColor,
           left: value[0] + '%',
           top: value[1] + '%',
         }}
       ></div>
     );
-  }, [value, themeColor]);
+  }, [value]);
 
   return (
     <div className={classnames(styles['point-select'], 'pos-re')}>

@@ -1,12 +1,9 @@
-import {} from 'react';
 import { Tooltip as AntTooltip } from 'antd';
 import type { TooltipProps } from 'antd/es/tooltip';
-import { usePrimaryColor } from '@/hooks';
+import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
 
 const Tooltip = (props: TooltipProps) => {
-  const primaryColor = usePrimaryColor();
-
-  return <AntTooltip color={primaryColor} {...props} />;
+  return <AntTooltip {...props} color={DEFAULT_THEME_COLOR} />;
 };
 
 export default Tooltip;

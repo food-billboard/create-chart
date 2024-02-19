@@ -1,16 +1,15 @@
+import {
+  DeleteOutlined,
+  EyeInvisibleOutlined,
+  EyeOutlined,
+} from '@ant-design/icons';
 import { useScroll } from 'ahooks';
 import { Button } from 'antd';
 import { useCallback, useMemo } from 'react';
 import { connect } from 'umi';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import Tooltip from '@/components/Tooltip';
-import { usePrimaryColor } from '@/hooks';
 import { ConnectState } from '@/models/connect';
-import {
-  DeleteOutlined,
-  EyeInvisibleOutlined,
-  EyeOutlined,
-} from '@ant-design/icons';
 import { wrapperId } from '../../constants';
 import styles from './index.less';
 
@@ -20,8 +19,6 @@ const GuideLineButton = (props: {
   setGuideLine: (value: ComponentData.TGuideLineConfig) => void;
 }) => {
   const { show, onClick, setGuideLine } = props;
-
-  const primaryColor = usePrimaryColor();
 
   const { left, top } = useScroll(document.querySelector(`#${wrapperId}`)) || {
     left: 0,
@@ -48,13 +45,10 @@ const GuideLineButton = (props: {
           type="link"
           title="删除所有辅助线"
           className={styles['designer-page-main-guide-btn-sub']}
-          style={{
-            backgroundColor: primaryColor,
-          }}
         />
       </>
     );
-  }, [primaryColor]);
+  }, []);
 
   return (
     <Tooltip title={title}>
@@ -65,7 +59,6 @@ const GuideLineButton = (props: {
         style={{
           left,
           top,
-          backgroundColor: primaryColor,
         }}
         icon={guideLineShowIcon}
       ></Button>
