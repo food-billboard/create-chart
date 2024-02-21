@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { CSSProperties } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import PacmanLoader from 'react-spinners/HashLoader';
 import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
 import styles from './index.less';
@@ -30,8 +30,9 @@ export const ContentLoading = (props: {
   className?: string;
   size?: number;
   loading?: boolean;
+  children?: ReactNode;
 }) => {
-  const { style, className, size = 25, loading } = props;
+  const { style, className, size = 25, loading, children } = props;
 
   if (!loading) return null;
 
@@ -41,9 +42,10 @@ export const ContentLoading = (props: {
     >
       <Loading
         style={style}
-        className={classnames(styles['page-custom-loading'], className)}
+        className={classnames(styles['content-loading-main'], className)}
         size={size}
       />
+      {children}
     </div>
   );
 };

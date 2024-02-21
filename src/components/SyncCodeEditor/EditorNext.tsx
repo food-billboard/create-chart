@@ -1,3 +1,13 @@
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import MonacoEditor, {
+  EditorProps as MonacoEditorProps,
+  OnMount as EditorDidMount,
+  loader,
+} from '@monaco-editor/react';
+import { useControllableValue } from 'ahooks';
+// import * as monaco from 'monaco-editor';
+import classnames from 'classnames';
+import { merge } from 'lodash';
 import {
   useCallback,
   useMemo,
@@ -5,20 +15,27 @@ import {
   useImperativeHandle,
   useState,
 } from 'react';
-import { useControllableValue } from 'ahooks';
-import MonacoEditor, {
-  EditorProps as MonacoEditorProps,
-  OnMount as EditorDidMount,
-  loader,
-} from '@monaco-editor/react';
-// import * as monaco from 'monaco-editor';
-import classnames from 'classnames';
-import { merge } from 'lodash';
 import { sleep } from '@/utils';
-import { Loading } from '../PageLoading';
+import Tooltip from '../IconTooltip';
+import { ContentLoading } from '../PageLoading';
 import styles from './index.less';
 
-// loader.config({ monaco })
+// 非开发环境
+if (process.env.REACT_APP_ENV === 'prod') {
+  // 静态版本 || 后端版本
+  if (['prod', 'static'].includes(process.env.REACT_APP || '')) {
+    loader.config({
+      paths: {
+        vs: 'https://food-billboard.github.io/create-chart/lib/monaco-editor/vs',
+      },
+    });
+  }
+  // improve版本
+  if (process.env.REACT_APP === 'improve') {
+    // TODO
+    // 把文件放到对应服务器上
+  }
+}
 
 export type EditorProps = Partial<MonacoEditorProps> & {
   autoFocus?: boolean;
@@ -164,7 +181,21 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
         },
         className,
       )}
-      loading={<Loading size={40} className="w-100 h-100" />}
+      loading={
+        <ContentLoading size={40} loading>
+          <span style={{ marginTop: 32 }}>
+            <Tooltip title="若长时间未响应，可尝试刷新页面￣□￣｜｜">
+              <QuestionCircleOutlined
+                className={classnames(
+                  'm-r-4',
+                  styles['component-code-editor-loading'],
+                )}
+              />
+            </Tooltip>
+            代码编辑器加载中。。。
+          </span>
+        </ContentLoading>
+      }
       theme={'vs-dark'}
       onMount={editorDidMount}
       // 设置代码提示
