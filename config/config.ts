@@ -64,7 +64,7 @@ const commonConfig = {
   chainWebpack(config: any) {
     config.plugin('monaco-editor').use(MonacoWebpackPlugin, [
       {
-        languages: ['javascript', 'json'],
+        languages: ['javascript', 'json', 'html'],
       },
     ]);
     // config.plugin('sentry-plugin').use(SentryCliPlugin, [

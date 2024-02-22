@@ -68,6 +68,7 @@ import Ali3DMap from './Map/Ali3DMap';
 import ScatterMap from './Map/ScatterMap';
 import Audio from './Media/Audio';
 import Carousel from './Media/Carousel';
+import HtmlFragment from './Media/HtmlFragment';
 // media
 import Image from './Media/Image';
 import LottieAnime from './Media/LottieAnime';
@@ -196,6 +197,7 @@ COMPONENT_MAP.set(Pagination.type, Pagination);
 COMPONENT_MAP.set(FullScreen.type, FullScreen);
 COMPONENT_MAP.set(ThreeBar.type, ThreeBar);
 COMPONENT_MAP.set(LottieAnime.type, LottieAnime);
+COMPONENT_MAP.set(HtmlFragment.type, HtmlFragment);
 // component-map-insert-prefix
 
 // 根据组件类型获取组件信息

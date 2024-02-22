@@ -36,6 +36,7 @@ import FullScreen from '../../../../../public/components/full-screen.jpg';
 import FunnelBasic from '../../../../../public/components/funnel-basic.png';
 import GaugeBasic from '../../../../../public/components/gauge-basic.png';
 import HorizontalBar from '../../../../../public/components/horizontal-bar.png';
+import HtmlFragment from '../../../../../public/components/html-fragment.png';
 import Icon from '../../../../../public/components/icon.jpg';
 import IframeBasic from '../../../../../public/components/iframe.jpg';
 import ImageBasic from '../../../../../public/components/image-basic.jpg';
@@ -517,6 +518,12 @@ const _COMPONENT_TYPE_LIST = [
             type: 'LOTTIE_ANIME',
             title: 'lottie动画',
             icon: LottieAnime,
+            description: '',
+          },
+          {
+            type: 'HTML_FRAGMENT',
+            title: 'HTML片段',
+            icon: HtmlFragment,
             description: '',
           },
         ],
