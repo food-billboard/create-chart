@@ -1,5 +1,5 @@
 import { useControllableValue } from 'ahooks';
-import { InputNumber, Slider, Space } from 'antd';
+import { ConfigProvider, InputNumber, Slider, Space } from 'antd';
 import { useCallback, useMemo } from 'react';
 import { connect } from 'umi';
 import Dropdown from '@/components/ChartComponents/Common/Dropdown';
@@ -68,44 +68,54 @@ const Scale = (props: {
   }, [selectScaleSize]);
 
   return (
-    <div className={styles['design-page-toolbar-scale']}>
-      <Space
-        style={{
-          minWidth: 300,
-        }}
-      >
-        <Dropdown
-          menu={{
-            items: sizeSelect,
-            selectable: true,
-            onSelect: selectScaleSize,
-            selectedKeys: [],
+    <ConfigProvider
+      theme={{
+        components: {
+          Dropdown: {
+            zIndexPopup: 1071,
+          },
+        },
+      }}
+    >
+      <div className={styles['design-page-toolbar-scale']}>
+        <Space
+          style={{
+            minWidth: 300,
           }}
         >
-          <GlobalLoadingActonButton type="link" onClick={autoFitScaleMethod}>
-            自适应
-          </GlobalLoadingActonButton>
-        </Dropdown>
-        <InputNumber
-          max={200}
-          min={25}
-          step={5}
-          value={value}
-          onChange={(value) => {
-            setValue(value ?? 25);
-          }}
-        />
-        <Slider
-          value={value}
-          onChange={(value) => {
-            setValue(value);
-          }}
-          max={200}
-          min={25}
-          step={5}
-        />
-      </Space>
-    </div>
+          <Dropdown
+            menu={{
+              items: sizeSelect,
+              selectable: true,
+              onSelect: selectScaleSize,
+              selectedKeys: [],
+            }}
+          >
+            <GlobalLoadingActonButton type="link" onClick={autoFitScaleMethod}>
+              自适应
+            </GlobalLoadingActonButton>
+          </Dropdown>
+          <InputNumber
+            max={200}
+            min={25}
+            step={5}
+            value={value}
+            onChange={(value) => {
+              setValue(value ?? 25);
+            }}
+          />
+          <Slider
+            value={value}
+            onChange={(value) => {
+              setValue(value);
+            }}
+            max={200}
+            min={25}
+            step={5}
+          />
+        </Space>
+      </div>
+    </ConfigProvider>
   );
 };
 
