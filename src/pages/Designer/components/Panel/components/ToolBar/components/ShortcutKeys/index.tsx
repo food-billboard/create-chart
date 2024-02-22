@@ -2,7 +2,7 @@ import { Button, Typography } from 'antd';
 import classnames from 'classnames';
 import { useState, useMemo } from 'react';
 import IconFont from '@/components/ChartComponents/Common/Icon';
-import CusTooltip from '@/components/Tooltip';
+import { ScreenTooltip } from '@/components/Tooltip';
 import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
 import { KEY_PRESS_MAP } from '@/utils/constants/another';
 import { Tooltip } from '../PanelThumb';
@@ -40,13 +40,13 @@ const ShortcutKeys = () => {
           {element}
         </div>
       </Tooltip>
-      <CusTooltip title="快捷键">
+      <ScreenTooltip title="快捷键">
         <Button
           type="link"
           icon={<IconFont title="快捷键" type="icon-keyborad" />}
           onClick={setVisible.bind(null, !visible)}
         ></Button>
-      </CusTooltip>
+      </ScreenTooltip>
     </div>
   );
 };
