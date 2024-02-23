@@ -1,7 +1,9 @@
 import { SmileOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { DEFAULT_THEME_COLOR_LIST } from '@/utils/Assist/Theme';
+import FeedBackModal, { FeedBackRef } from './components/FeedBackModal';
 import { BUTTON_LIST } from './constants';
 import styles from './index.less';
 import useDrag from './useDrag';
@@ -18,8 +20,15 @@ const IntroductionButton = () => {
     bottom: 80,
   });
 
-  const handleClick = useCallback((key) => {
-    // TODO
+  const feedBackRef = useRef<FeedBackRef>(null);
+
+  const handleClick = useCallback((key, callback) => {
+    // 问题反馈
+    if (key === 'feedback' && GlobalConfig.IS_IMPROVE_BACKEND) {
+      feedBackRef.current?.open();
+    } else {
+      callback();
+    }
   }, []);
 
   const children = useMemo(() => {
@@ -27,13 +36,13 @@ const IntroductionButton = () => {
     return new Array(Math.min(nextColorList.length, list.length))
       .fill(0)
       .map((_, index) => {
-        const { key, visible = true, ...nextItem } = list[index];
+        const { key, visible = true, onClick, ...nextItem } = list[index];
         if ((typeof visible === 'function' && !visible) || !visible)
           return null;
         return (
           <FloatButton
-            onClick={handleClick.bind(null, key)}
             {...nextItem}
+            onClick={handleClick.bind(null, key, onClick)}
             style={{
               backgroundColor: nextColorList[index],
               ...commonStyle,
@@ -49,22 +58,25 @@ const IntroductionButton = () => {
   }, [isDragging]);
 
   return (
-    <FloatButton.Group
-      {...dragProps}
-      trigger="hover"
-      type="primary"
-      style={{
-        ...dragProps.style,
-        // @ts-ignore
-        '--float-button-color': primaryColor,
-      }}
-      icon={<SmileOutlined />}
-      className={styles['introduction-button']}
-      open={isDragging ? false : buttonOpen}
-      onOpenChange={setButtonOpen}
-    >
-      {children}
-    </FloatButton.Group>
+    <>
+      <FloatButton.Group
+        {...dragProps}
+        trigger="hover"
+        type="primary"
+        style={{
+          ...dragProps.style,
+          // @ts-ignore
+          '--float-button-color': primaryColor,
+        }}
+        icon={<SmileOutlined />}
+        className={styles['introduction-button']}
+        open={isDragging ? false : buttonOpen}
+        onOpenChange={setButtonOpen}
+      >
+        {children}
+      </FloatButton.Group>
+      <FeedBackModal ref={feedBackRef} />
+    </>
   );
 };
 
