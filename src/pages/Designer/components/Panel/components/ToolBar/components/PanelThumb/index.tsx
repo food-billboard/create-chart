@@ -1,6 +1,6 @@
 import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { useUpdateEffect } from 'ahooks';
-import { Button, Tooltip as AntTooltip } from 'antd';
+import { Button, Tooltip as AntTooltip, ConfigProvider } from 'antd';
 import type { TooltipProps } from 'antd';
 import classnames from 'classnames';
 import EventEmitter from 'eventemitter3';
@@ -381,17 +381,27 @@ export const Tooltip = (
   }, []);
 
   return (
-    <AntTooltip
-      {...nextProps}
-      title={children}
-      open={visible}
-      overlayInnerStyle={{
-        padding: 0,
-        borderRadius: 4,
-        overflow: 'hidden',
-        ...nextProps.overlayInnerStyle,
+    <ConfigProvider
+      theme={{
+        components: {
+          Tooltip: {
+            zIndexPopupBase: 900,
+          },
+        },
       }}
-    />
+    >
+      <AntTooltip
+        {...nextProps}
+        title={children}
+        open={visible}
+        overlayInnerStyle={{
+          padding: 0,
+          borderRadius: 4,
+          overflow: 'hidden',
+          ...nextProps.overlayInnerStyle,
+        }}
+      />
+    </ConfigProvider>
   );
 };
 
