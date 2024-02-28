@@ -4,6 +4,7 @@ import { InputProps } from 'antd/es/input';
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { Validator, useValidatorChange } from '@/hooks';
 import FormModal from '../FormModal';
+import TextArea from '../Textarea';
 
 export type Props = Omit<InputProps, 'onChange'> & {
   triggerOnChangeInOnChange?: boolean;
@@ -78,6 +79,6 @@ const Input = (props: Props) => {
   );
 };
 
-export const InputModal = FormModal<Props>(Input);
+export const InputModal = FormModal<Props>(Input, TextArea);
 
 export default Input;

@@ -10,9 +10,12 @@ import { sleep } from '@/utils';
 
 function FormModal<T extends object & { onClick?: (...args: any[]) => void }>(
   Component: any,
+  ModalComponent?: any,
 ) {
   return (props: T & { modalProps?: ModalProps }) => {
     const { onClick: propsOnClick, modalProps, ...netProps } = props;
+
+    const RealModalComponent = ModalComponent || Component;
 
     const [visible, setVisible] = useControlDisableKeyPressVisible(false);
 
@@ -45,7 +48,7 @@ function FormModal<T extends object & { onClick?: (...args: any[]) => void }>(
             'design-config-format-font-size',
           )}
         >
-          <Component {...netProps} />
+          <RealModalComponent {...netProps} />
         </Modal>
       </>
     );

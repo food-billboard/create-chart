@@ -118,6 +118,7 @@ const LinkageConfig = (props: {
               value={value}
               onChange={onLinkageChange.bind(null, 'value', name)}
               disabled={!show}
+              rows={2}
             />
           ),
         });

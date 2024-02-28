@@ -1,12 +1,14 @@
-import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { Button, Space, Form, App } from 'antd';
-import { useMemo, useCallback, useState } from 'react';
+import type { ColumnsType } from 'antd/es/table/interface';
+import { useMemo, useCallback, useState, useRef } from 'react';
 import Input, { InputModal } from '@/components/ChartComponents/Common/Input';
 import Modal from '@/components/FocusModal';
 import GhostButton from '@/components/GhostButton';
 import IconTooltip from '@/components/IconTooltip';
 import { getPath } from '@/utils/Assist/Component';
 import MapTable from '../../../MapTable';
+import VariableUsage, { VariableUsageRef } from '../../../VariableUsage';
 import { updateInteractiveAndSyncParams } from '../../../utils';
 import styles from './index.less';
 
@@ -102,6 +104,8 @@ const FieldSetting = (props: IProps) => {
   } = props;
   const { name, fields, show, type, extend } = value;
 
+  const variableUsageRef = useRef<VariableUsageRef>(null);
+
   const onFieldMapChange = useCallback(
     (
       value: ComponentData.TBaseInteractiveConfigField,
@@ -128,56 +132,6 @@ const FieldSetting = (props: IProps) => {
           action: 'update',
         });
       }
-
-      // ! 上面没问题的话把下面删了
-      // const updateValue = value[key];
-      // const variable = key === 'variable' ? mapValue : value.variable;
-      // const realValue = key === 'defaultValue' ? mapValue : value.defaultValue;
-
-      // if (updateValue === mapValue) return;
-
-      // // sync the global params
-      // const mapId = InteractiveUtil.updateBaseInteractiveVariable(
-      //   {
-      //     params,
-      //     setParams,
-      //   },
-      //   {
-      //     variable,
-      //     id: value.mapId,
-      //     origin: id,
-      //     key: value.key,
-      //     show,
-      //     originId: type,
-      //     value: realValue,
-      //   },
-      // );
-
-      // onChange?.({
-      //   value: {
-      //     config: {
-      //       interactive: {
-      //         base: dataSource.map((item) => {
-      //           if (item.name !== name) return item;
-      //           return {
-      //             ...item,
-      //             fields: item.fields.map((item) => {
-      //               if (item.key !== value.key) return item;
-      //               return {
-      //                 ...item,
-      //                 mapId,
-      //                 [key]: mapValue,
-      //               };
-      //             }),
-      //           };
-      //         }),
-      //       },
-      //     },
-      //   },
-      //   id,
-      //   path,
-      //   action: 'update',
-      // });
     },
     [id, onChange, dataSource],
   );
@@ -210,6 +164,7 @@ const FieldSetting = (props: IProps) => {
     [fields, onChange, dataSource],
   );
 
+  // 删除
   const handleDelete = useCallback(
     (record) => {
       const newFields = [...fields].filter((item) => item.key !== record.key);
@@ -234,7 +189,15 @@ const FieldSetting = (props: IProps) => {
     [fields, onChange, dataSource],
   );
 
-  const columns = useMemo(() => {
+  // 查看使用情况
+  const handleCheck = useCallback((record) => {
+    const { variable } = record;
+    variableUsageRef.current?.open(variable);
+  }, []);
+
+  const columns = useMemo<
+    ColumnsType<ComponentData.TBaseInteractiveConfigField>
+  >(() => {
     return [
       {
         key: 'key',
@@ -259,10 +222,7 @@ const FieldSetting = (props: IProps) => {
         ),
         dataIndex: 'variable',
         width: 100,
-        render: (
-          value: string,
-          record: ComponentData.TBaseInteractiveConfigField,
-        ) => {
+        render: (value, record) => {
           return (
             <InputModal
               className="w-100"
@@ -292,10 +252,7 @@ const FieldSetting = (props: IProps) => {
         ),
         dataIndex: 'defaultValue',
         width: 90,
-        render: (
-          value: string | false,
-          record: ComponentData.TBaseInteractiveConfigField,
-        ) => {
+        render: (value, record) => {
           if (record._defaultValue_ === false) return value || '-';
           return (
             <InputModal
@@ -312,9 +269,49 @@ const FieldSetting = (props: IProps) => {
         key: 'description',
         title: '字段说明',
         dataIndex: 'description',
+        width: 90,
+        render: (value, record) => {
+          return (
+            <InputModal
+              className="w-100"
+              value={value || ''}
+              onChange={onFieldMapChange.bind(null, record, 'description')}
+              placeholder="请输入字段说明"
+            />
+          );
+        },
+      },
+      {
+        key: 'operation',
+        title: '操作',
+        dataIndex: 'operation',
+        fixed: 'right',
+        render: (_, record) => {
+          return (
+            <Space>
+              <Button
+                disabled={disabled || !record.variable}
+                type="link"
+                onClick={handleCheck.bind(null, record)}
+              >
+                使用情况
+              </Button>
+              {!!extend && (
+                <Button
+                  type="link"
+                  danger
+                  disabled={disabled}
+                  onClick={handleDelete.bind(null, record)}
+                >
+                  删除
+                </Button>
+              )}
+            </Space>
+          );
+        },
       },
     ];
-  }, [onChange, onFieldMapChange, disabled]);
+  }, [onChange, onFieldMapChange, disabled, extend, handleDelete, handleCheck]);
 
   return (
     <>
@@ -323,33 +320,11 @@ const FieldSetting = (props: IProps) => {
       )}
       <MapTable
         dataSource={fields}
-        columns={
-          !!extend
-            ? [
-                ...columns,
-                {
-                  key: 'operation',
-                  title: '操作',
-                  dataIndex: 'operation',
-                  render: (_, record, index) => {
-                    return (
-                      <Space>
-                        <Button
-                          type="link"
-                          danger
-                          disabled={disabled}
-                          icon={<DeleteOutlined />}
-                          onClick={handleDelete.bind(null, record)}
-                        />
-                      </Space>
-                    );
-                  },
-                },
-              ]
-            : columns
-        }
+        columns={columns}
         rowKey="key"
+        scroll={{ x: 'max-content' }}
       />
+      <VariableUsage ref={variableUsageRef} />
     </>
   );
 };
