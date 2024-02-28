@@ -1,7 +1,5 @@
 import Select from '../Select';
 
-const { Option } = Select;
-
 const LINE_STYLE_MAP = [
   {
     label: '圆',

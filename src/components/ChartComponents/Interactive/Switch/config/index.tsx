@@ -70,7 +70,6 @@ class Config extends Component<
                     <FullForm>
                       <ColorSelect
                         value={onColor}
-                        ignoreAlpha
                         onChange={this.onKeyChange.bind(this, 'onColor')}
                       />
                     </FullForm>
@@ -79,7 +78,6 @@ class Config extends Component<
                     <FullForm>
                       <ColorSelect
                         value={onHandleColor}
-                        ignoreAlpha
                         onChange={this.onKeyChange.bind(this, 'onHandleColor')}
                       />
                     </FullForm>
@@ -171,7 +169,6 @@ class Config extends Component<
                     <FullForm>
                       <ColorSelect
                         value={offColor}
-                        ignoreAlpha
                         onChange={this.onKeyChange.bind(this, 'offColor')}
                       />
                     </FullForm>
@@ -180,7 +177,6 @@ class Config extends Component<
                     <FullForm>
                       <ColorSelect
                         value={offHandleColor}
-                        ignoreAlpha
                         onChange={this.onKeyChange.bind(this, 'offHandleColor')}
                       />
                     </FullForm>

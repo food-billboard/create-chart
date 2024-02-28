@@ -3,7 +3,6 @@ import { Button } from 'antd';
 import classnames from 'classnames';
 import { useCallback, useMemo } from 'react';
 import Select from '@/components/ChartComponents/Common/Select';
-import GhostButton from '@/components/GhostButton';
 import styles from './index.less';
 
 const DataFilter = (props: {

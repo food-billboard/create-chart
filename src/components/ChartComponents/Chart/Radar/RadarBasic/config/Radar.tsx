@@ -9,7 +9,6 @@ import LineStyleGroupConfig from '@/components/ChartComponents/Common/LineStyleG
 import Select from '@/components/ChartComponents/Common/Select';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import ColorSelect from '@/components/ColorSelect';
 import { TRadarBasicConfig } from '../type';
 

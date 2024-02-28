@@ -1,5 +1,5 @@
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { Tabs, Switch } from 'antd';
+import { Switch } from 'antd';
 import { merge } from 'lodash';
 import { Component } from 'react';
 import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';

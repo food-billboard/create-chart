@@ -1,15 +1,13 @@
-import Select from '@/components/ChartComponents/Common/Select';
-import VariableStringUtil from '@/utils/Assist/VariableString';
 import { Checkbox } from 'antd';
 import { SelectProps } from 'antd/es/select';
 import classnames from 'classnames';
-import { isEqual, merge } from 'lodash';
-import { CSSProperties, useCallback, useMemo, useState } from 'react';
+import { merge } from 'lodash';
+import { CSSProperties, useCallback, useMemo } from 'react';
 import { connect } from 'umi';
+import Select from '@/components/ChartComponents/Common/Select';
+import VariableStringUtil from '@/utils/Assist/VariableString';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
-
-const { Option } = Select;
 
 type CommonProps = {
   params: ComponentData.TParams[];
@@ -32,9 +30,6 @@ const ParamsSelect = (
   const {
     params,
     constants,
-    value,
-    onChange,
-    onBlur,
     needChangeLazy = false,
     changeLazy,
     style,
@@ -43,8 +38,6 @@ const ParamsSelect = (
     wrapperStyle,
     ...nextProps
   } = props;
-
-  const [stateValue, setStateValue] = useState<string[]>(value);
 
   const dataSource = useMemo(() => {
     return VariableStringUtil.getAllGlobalParams4Array(params, constants);
@@ -59,18 +52,6 @@ const ParamsSelect = (
       };
     });
   }, [dataSource]);
-
-  const handleBlur = useCallback(
-    (e) => {
-      if (!isEqual(value, stateValue)) onChange?.(stateValue);
-      onBlur?.(e);
-    },
-    [onChange, stateValue, onBlur, value],
-  );
-
-  const handleChange = useCallback((value) => {
-    setStateValue(value);
-  }, []);
 
   const changeLazyNode = useMemo(() => {
     if (!needChangeLazy) return null;
@@ -98,9 +79,6 @@ const ParamsSelect = (
           width: needChangeLazy ? 'calc(100% - 80px)' : '100%',
         })}
         placeholder="选择全局参数"
-        value={stateValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
         {...nextProps}
         options={options}
       />
@@ -122,19 +100,20 @@ const InternalParamsSelectSingle = (
   const {
     params,
     constants,
-    value,
     onChange,
-    onBlur,
     needChangeLazy = false,
     changeLazy,
     onChangeLazyChange,
     style,
     wrapperClassName,
     wrapperStyle,
+    value,
     ...nextProps
   } = props;
 
-  const [stateValue, setStateValue] = useState<string>(value);
+  const realValue = useMemo(() => {
+    return Array.isArray(value) ? value : value ? [value] : [];
+  }, [value]);
 
   const dataSource = useMemo(() => {
     return VariableStringUtil.getAllGlobalParams4Array(params, constants);
@@ -150,17 +129,9 @@ const InternalParamsSelectSingle = (
     });
   }, [dataSource]);
 
-  const handleBlur = useCallback(
-    (e) => {
-      if (stateValue !== value) onChange?.(stateValue);
-      onBlur?.(e);
-    },
-    [onChange, stateValue, onBlur, value],
-  );
-
   const handleChange = useCallback((value) => {
     const [target] = value.slice(-1);
-    setStateValue(target || '');
+    onChange?.(target);
   }, []);
 
   const changeLazyNode = useMemo(() => {
@@ -189,10 +160,9 @@ const InternalParamsSelectSingle = (
           width: needChangeLazy ? 'calc(100% - 80px)' : '100%',
         })}
         placeholder="选择全局参数"
-        value={stateValue ? [stateValue] : []}
         onChange={handleChange}
-        onBlur={handleBlur}
         {...nextProps}
+        value={realValue}
         options={options}
       />
       {changeLazyNode}
