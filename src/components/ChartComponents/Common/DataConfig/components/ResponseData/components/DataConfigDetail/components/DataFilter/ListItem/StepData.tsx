@@ -2,7 +2,7 @@ import { BugOutlined } from '@ant-design/icons';
 import { Popover, Button } from 'antd';
 import type { ButtonProps } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
-import ReactJson from 'react-json-view';
+import ReactJson from '@/components/JsonView';
 import { FILTER_STEP_MAP_DATA } from '@/utils/Assist/FilterData';
 import styles from './index.less';
 
@@ -22,20 +22,7 @@ const StepData = (props: { id: string }) => {
         e.preventDefault();
       }}
     >
-      {/* @ts-ignore */}
-      <ReactJson
-        src={jsonData}
-        theme="greenscreen"
-        enableClipboard={true}
-        onEdit={false}
-        onDelete={false}
-        onAdd={false}
-        displayDataTypes={false}
-        displayObjectSize
-        indentWidth={2}
-        collapseStringsAfterLength={10}
-        iconStyle="square"
-      ></ReactJson>
+      <ReactJson src={jsonData}></ReactJson>
     </div>
   );
 };
