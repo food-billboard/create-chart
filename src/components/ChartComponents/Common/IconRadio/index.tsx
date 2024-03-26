@@ -1,8 +1,10 @@
-import { Children, ReactNode, useMemo, cloneElement } from 'react';
-import { Radio as AntRadio } from 'antd';
 import { useControllableValue } from 'ahooks';
+import { Radio as AntRadio } from 'antd';
+import type { TooltipProps } from 'antd';
+import type { RadioProps } from 'antd/es/radio';
 import classnames from 'classnames';
-import { RadioProps } from 'antd/es/radio';
+import { Children, ReactNode, useMemo, cloneElement } from 'react';
+import Tooltip from '../Tooltip';
 import styles from './index.less';
 
 const IconRadio = (props: {
@@ -32,11 +34,21 @@ export const Radio = (
     className?: string;
     parentValue?: string;
     onChange?: (value: string) => void;
+    tooltip?: boolean | TooltipProps;
   } & Partial<RadioProps>,
 ) => {
-  const { icon, value, className, parentValue, onChange, ...nextProps } = props;
+  const {
+    icon,
+    value,
+    className,
+    parentValue,
+    onChange,
+    tooltip = false,
+    title,
+    ...nextProps
+  } = props;
 
-  return (
+  const children = (
     <AntRadio
       className={classnames(className, styles['icon-radio'], {
         [styles['icon-radio-active']]: value === parentValue,
@@ -46,6 +58,14 @@ export const Radio = (
     >
       {icon}
     </AntRadio>
+  );
+
+  if (!tooltip) return children;
+
+  return (
+    <Tooltip title={title} {...(tooltip === true ? {} : tooltip)}>
+      {children}
+    </Tooltip>
   );
 };
 

@@ -1,5 +1,5 @@
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { Tabs, Switch } from 'antd';
+import { Switch } from 'antd';
 import { merge } from 'lodash';
 import { Component } from 'react';
 import BootstrapIconSelect from '@/components/ChartComponents/Common/BootstrapIconSelect';
@@ -18,7 +18,6 @@ import IconTooltip from '@/components/IconTooltip';
 import { KEY_MAP } from '../defaultConfig';
 import { TWeatherConfig } from '../type';
 
-const { TabPane } = Tabs;
 const { Item } = ConfigList;
 
 class Config extends Component<

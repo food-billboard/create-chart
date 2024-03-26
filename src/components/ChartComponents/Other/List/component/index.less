@@ -22,11 +22,48 @@
     display: inline-block;
     white-space: nowrap;
   }
+  &-item-image {
+    & img {
+      // object-fit: cover;
+    }
+  }
   &-item-mark {
     :global {
       .anticon {
         opacity: 0.8;
       }
+    }
+  }
+  &-item-mark-animation-positive {
+    @keyframes arrow-up {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-25%);
+      }
+      100% {
+        transform: translateY(-50%);
+      }
+    }
+    .component-other-list-item-mark-animation-icon {
+      animation: arrow-up 1s linear infinite alternate;
+    }
+  }
+  &-item-mark-animation-negative {
+    @keyframes arrow-down {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(25%);
+      }
+      100% {
+        transform: translateY(50%);
+      }
+    }
+    .component-other-list-item-mark-animation-icon {
+      animation: arrow-down 1s linear infinite alternate;
     }
   }
   &-content-column {

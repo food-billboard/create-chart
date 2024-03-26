@@ -7,7 +7,7 @@ import type { WinBoxPropType } from 'react-winbox';
 // required
 import 'winbox/dist/css/themes/modern.min.css';
 import 'winbox/dist/css/winbox.min.css';
-import { useColorThemeList } from '@/hooks';
+import { DEFAULT_THEME_COLOR_LIST } from '@/utils/Assist/Theme';
 
 export type WinBoxRef = {
   open: () => void;
@@ -30,7 +30,7 @@ const Winbox = forwardRef<
 
   const [visible, setVisible] = useState(true);
 
-  const [colorA, , colorB] = useColorThemeList();
+  const [colorA, , colorB] = DEFAULT_THEME_COLOR_LIST;
 
   const boxRef = useRef<WinBox>(null);
 

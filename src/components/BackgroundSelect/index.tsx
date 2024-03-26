@@ -3,7 +3,7 @@ import { Col, Radio } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
 import classnames from 'classnames';
 import { merge } from 'lodash';
-import React, { useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 import { DEFAULT_BACKGROUND_CONFIG } from '@/utils/constants';
 import ColorSelect from '../ColorSelect';
 import ImageUpload from '../ImageUpload';
@@ -43,7 +43,7 @@ const BackgroundSelect = (props: {
     [value],
   );
 
-  const onBackgroundChange: any = useCallback(
+  const onBackgroundChange = useCallback(
     (fileList: UploadFile<any>[]) => {
       const [target] = fileList;
       if (!target) {

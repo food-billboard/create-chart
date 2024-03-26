@@ -1,7 +1,7 @@
 import {
   SendOutlined,
   DeleteOutlined,
-  FolderViewOutlined,
+  DesktopOutlined,
   CopyOutlined,
   ExportOutlined,
 } from '@ant-design/icons';
@@ -265,7 +265,7 @@ const ScreenList = (props: {
                     />
                     <Button
                       size="small"
-                      icon={<FolderViewOutlined />}
+                      icon={<DesktopOutlined />}
                       type="link"
                       onClick={previewScreenMethod.bind(null, item)}
                     >

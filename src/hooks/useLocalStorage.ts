@@ -1,14 +1,20 @@
+import { useGetState } from 'ahooks';
 import { useEffect, useState, useCallback } from 'react';
 import LocalConfig from '@/utils/Assist/LocalConfig';
 
 export const useLocalStorage: <T>(
   key: string,
   defaultValue?: T,
-) => [T | undefined, (value: T) => Promise<void>, boolean] = <T>(
-  key: string,
-  defaultValue?: T,
-) => {
-  const [value, setStateValue] = useState<T | undefined>(defaultValue);
+  needInitChange?: boolean,
+) => [
+  T | undefined,
+  (value: T) => Promise<void>,
+  () => T | undefined,
+  boolean,
+] = <T>(key: string, defaultValue?: T, needInitChange = true) => {
+  const [value, setStateValue, getStateValue] = useGetState<T | undefined>(
+    defaultValue,
+  );
   const [initialDone, setInitialDone] = useState<boolean>(false);
 
   const onChange = async (init = false) => {
@@ -30,12 +36,12 @@ export const useLocalStorage: <T>(
   }, []);
 
   useEffect(() => {
-    onChange(true);
+    needInitChange && onChange(true);
     LocalConfig.addListener('change', onChange);
     return () => {
       LocalConfig.removeListener('change', onChange);
     };
   }, []);
 
-  return [value, setValue, initialDone];
+  return [value, setValue, getStateValue, initialDone];
 };

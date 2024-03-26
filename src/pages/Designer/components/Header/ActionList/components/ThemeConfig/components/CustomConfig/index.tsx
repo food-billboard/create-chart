@@ -122,21 +122,26 @@ const CustomConfig = (props: {
   );
 
   return (
-    <div className={styles['designer-theme-config-custom']}>
-      <UploadImage
-        onChange={(value) => {
-          if (value.length)
-            setScreenTheme({
-              color: [
-                {
-                  label: generateName(),
-                  value: value[0],
-                },
-                ...color,
-              ],
-            });
-        }}
-      />
+    <div
+      className={styles['designer-theme-config-custom']}
+      id="designer-theme-config-custom"
+    >
+      <div id="designer-theme-config-custom-upload">
+        <UploadImage
+          onChange={(value) => {
+            if (value.length)
+              setScreenTheme({
+                color: [
+                  {
+                    label: generateName(),
+                    value: value[0],
+                  },
+                  ...color,
+                ],
+              });
+          }}
+        />
+      </div>
       <Space direction="vertical" className="w-100">
         {color.map((item) => {
           const { label, value: colorValue } = item;

@@ -1,15 +1,16 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useUnmount } from 'ahooks';
 import { Input as AntInput } from 'antd';
 import { TextAreaProps } from 'antd/es/input';
-import { useUnmount } from 'ahooks';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { Validator, useValidatorChange } from '@/hooks';
+import FormModal from '../FormModal';
 
-const Textarea = (
-  props: TextAreaProps & {
-    triggerOnChangeInOnChange?: boolean;
-    validator?: Validator[];
-  },
-) => {
+export type Props = TextAreaProps & {
+  triggerOnChangeInOnChange?: boolean;
+  validator?: Validator[];
+};
+
+const Textarea = (props: Props) => {
   const {
     triggerOnChangeInOnChange = false,
     validator = [],
@@ -67,6 +68,7 @@ const Textarea = (
 
   return (
     <AntInput.TextArea
+      rows={3}
       {...nextProps}
       onChange={onChange}
       onBlur={onBlur}
@@ -75,5 +77,7 @@ const Textarea = (
     />
   );
 };
+
+export const TextareaModal = FormModal<Props>(Textarea);
 
 export default Textarea;

@@ -1,14 +1,14 @@
 import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { useUpdateEffect } from 'ahooks';
-import { Button, Tooltip as AntTooltip } from 'antd';
+import { Button, Tooltip as AntTooltip, ConfigProvider } from 'antd';
 import type { TooltipProps } from 'antd';
 import classnames from 'classnames';
 import EventEmitter from 'eventemitter3';
 import { pick } from 'lodash';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { connect } from 'umi';
-import CusTooltip from '@/components/Tooltip';
-import { useIdPathMap, usePrimaryColor } from '@/hooks';
+import { ScreenTooltip } from '@/components/Tooltip';
+import { useIdPathMap } from '@/hooks';
 import { ConnectState } from '@/models/connect';
 import { getTopParentComponent } from '@/utils/Assist/Component';
 import {
@@ -63,8 +63,6 @@ const InternalComponentActiveItem = (props: {
   const [widthScale, setWidthScale] = useState<number>(1);
   const [heightScale, setHeightScale] = useState<number>(1);
 
-  const primaryColor = usePrimaryColor();
-
   const activeComponentRef = useRef<{
     left: number;
     top: number;
@@ -112,7 +110,6 @@ const InternalComponentActiveItem = (props: {
               height: componentHeight * scale,
               left: left * scale,
               top: top * scale,
-              backgroundColor: primaryColor,
             }}
             key={component.id}
           ></div>,
@@ -120,7 +117,7 @@ const InternalComponentActiveItem = (props: {
       }
       return acc;
     }, []);
-  }, [isActive, select, scale, components, primaryColor]);
+  }, [isActive, select, scale, components]);
 
   const onDragStart = ({ componentId }: CommonEventType) => {
     actionType.current = 'drag';
@@ -384,17 +381,27 @@ export const Tooltip = (
   }, []);
 
   return (
-    <AntTooltip
-      {...nextProps}
-      title={children}
-      open={visible}
-      overlayInnerStyle={{
-        padding: 0,
-        borderRadius: 4,
-        overflow: 'hidden',
-        ...nextProps.overlayInnerStyle,
+    <ConfigProvider
+      theme={{
+        components: {
+          Tooltip: {
+            zIndexPopupBase: 900,
+          },
+        },
       }}
-    />
+    >
+      <AntTooltip
+        {...nextProps}
+        title={children}
+        open={visible}
+        overlayInnerStyle={{
+          padding: 0,
+          borderRadius: 4,
+          overflow: 'hidden',
+          ...nextProps.overlayInnerStyle,
+        }}
+      />
+    </ConfigProvider>
   );
 };
 
@@ -416,13 +423,13 @@ const ThumbButton = () => {
       >
         <PanelThumb />
       </Tooltip>
-      <CusTooltip title="缩略图">
+      <ScreenTooltip title="缩略图">
         <Button
           type="link"
           icon={icon}
           onClick={setVisible.bind(null, !visible)}
         ></Button>
-      </CusTooltip>
+      </ScreenTooltip>
     </div>
   );
 };

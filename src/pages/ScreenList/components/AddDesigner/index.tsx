@@ -1,5 +1,6 @@
-import { Button, Modal, Form, Input, App, Select } from 'antd';
+import { Button, Form, Input, App, Select } from 'antd';
 import { useCallback, useState, useMemo } from 'react';
+import Modal from '@/components/FocusModal';
 import { postScreen, postScreenModel } from '@/services';
 import ThemeUtil from '@/utils/Assist/Theme';
 import { createScreenDataRequest } from '@/utils/constants/screenData';

@@ -1,7 +1,8 @@
-import { useCallback } from 'react';
-import { Modal, Button } from 'antd';
+import { Button } from 'antd';
 import type { ModalProps } from 'antd';
 import classnames from 'classnames';
+import { useCallback } from 'react';
+import Modal from '@/components/FocusModal';
 import { useControlDisableKeyPressVisible } from '@/hooks';
 import { sleep } from '@/utils';
 
@@ -9,9 +10,12 @@ import { sleep } from '@/utils';
 
 function FormModal<T extends object & { onClick?: (...args: any[]) => void }>(
   Component: any,
+  ModalComponent?: any,
 ) {
   return (props: T & { modalProps?: ModalProps }) => {
     const { onClick: propsOnClick, modalProps, ...netProps } = props;
+
+    const RealModalComponent = ModalComponent || Component;
 
     const [visible, setVisible] = useControlDisableKeyPressVisible(false);
 
@@ -44,7 +48,7 @@ function FormModal<T extends object & { onClick?: (...args: any[]) => void }>(
             'design-config-format-font-size',
           )}
         >
-          <Component {...netProps} />
+          <RealModalComponent {...netProps} />
         </Modal>
       </>
     );

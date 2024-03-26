@@ -1,4 +1,3 @@
-import { usePrimaryColor } from '@/hooks';
 import classnames from 'classnames';
 import { connect } from 'umi';
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -11,14 +10,11 @@ const NameTag = (props: {
 }) => {
   const { componentName, componentId, loggerMode } = props;
 
-  const color = usePrimaryColor();
-
   return (
     <div
       className={classnames(styles['component-name-tag'], 'pos-ab p-4')}
       style={{
         visibility: loggerMode ? 'visible' : 'hidden',
-        color: color,
       }}
     >
       <span>{componentName}</span>

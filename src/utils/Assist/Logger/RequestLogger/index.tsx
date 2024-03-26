@@ -1,6 +1,6 @@
-import { useIdPathMap } from '@/hooks';
 import { Collapse, Table } from 'antd';
-import ReactJson from 'react-json-view';
+import ReactJson from '@/components/JsonView';
+import { useIdPathMap } from '@/hooks';
 import styles from './index.less';
 
 const { Panel } = Collapse;
@@ -114,20 +114,7 @@ export default function logRequest(context: any, log: Logger.LoggerItem) {
         {error ? (
           <div style={{ color: 'red' }}>{error.toString()}</div>
         ) : (
-          // @ts-ignore
-          <ReactJson
-            src={error || response}
-            theme="greenscreen"
-            enableClipboard={true}
-            onEdit={false}
-            onDelete={false}
-            onAdd={false}
-            displayDataTypes={false}
-            displayObjectSize
-            indentWidth={2}
-            collapseStringsAfterLength={10}
-            iconStyle="square"
-          ></ReactJson>
+          <ReactJson src={error || response}></ReactJson>
         )}
       </div>
     </Panel>

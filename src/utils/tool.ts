@@ -126,6 +126,13 @@ export function goView() {
   window.open(url, '_blank');
 }
 
+// 静态版本生产环境预览
+export function goStaticProductionView() {
+  const { origin, pathname } = new URL(location.href);
+  const url = origin + pathname + '#/static-share?skipUpload=1';
+  window.open(url, '_blank');
+}
+
 // 分享
 export function goShare(id: string) {
   const url = getShare(id);
@@ -167,6 +174,7 @@ export function closeWindow() {
 }
 
 // 版本号比较
+// a > b ?
 export function versionCompare(
   versionA: string | number,
   versionB: string | number,

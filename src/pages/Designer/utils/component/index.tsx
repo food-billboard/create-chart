@@ -36,6 +36,7 @@ import FullScreen from '../../../../../public/components/full-screen.jpg';
 import FunnelBasic from '../../../../../public/components/funnel-basic.png';
 import GaugeBasic from '../../../../../public/components/gauge-basic.png';
 import HorizontalBar from '../../../../../public/components/horizontal-bar.png';
+import HtmlFragment from '../../../../../public/components/html-fragment.png';
 import Icon from '../../../../../public/components/icon.jpg';
 import IframeBasic from '../../../../../public/components/iframe.jpg';
 import ImageBasic from '../../../../../public/components/image-basic.jpg';
@@ -43,6 +44,7 @@ import Input from '../../../../../public/components/input.jpg';
 import LineBar from '../../../../../public/components/line-bar.png';
 import LineBasic from '../../../../../public/components/line-basic.png';
 import ListBasic from '../../../../../public/components/list-basic.jpg';
+import LottieAnime from '../../../../../public/components/lottie-anime.png';
 import LuckyDraw from '../../../../../public/components/lucky-draw.jpg';
 import Model from '../../../../../public/components/model.jpg';
 import NegativeBar from '../../../../../public/components/negative-bar.png';
@@ -511,6 +513,18 @@ const _COMPONENT_TYPE_LIST = [
             icon: Model,
             description: '',
             disabled: GlobalConfig.IS_STATIC || GlobalConfig.IS_IMPROVE_BACKEND,
+          },
+          {
+            type: 'LOTTIE_ANIME',
+            title: 'lottie动画',
+            icon: LottieAnime,
+            description: '',
+          },
+          {
+            type: 'HTML_FRAGMENT',
+            title: 'HTML片段',
+            icon: HtmlFragment,
+            description: '',
           },
         ],
       },

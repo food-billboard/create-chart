@@ -1,3 +1,4 @@
+import { Space } from 'antd';
 import {
   useCallback,
   forwardRef,
@@ -6,13 +7,11 @@ import {
   useRef,
   useMemo,
 } from 'react';
-import { Space } from 'antd';
-import classnames from 'classnames';
+import ClipboardAction from './Clipboard';
 import Editor, {
   EditorProps as InternalEditorProps,
   EditorRef as InternalEditorRef,
 } from './EditorNext';
-import ClipboardAction from './Clipboard';
 import FullScreenEditor from './FullScreenEditor';
 import Typesetting from './Typesetting';
 import styles from './index.less';
@@ -95,9 +94,7 @@ const CodeEditor = forwardRef<EditorRef, EditorProps>((props, ref) => {
   return (
     <div className="pos-re">
       <Editor {...props} onChange={onCodeChange} ref={editorContentRef} />
-      <div className={classnames(styles['component-code-editor-action'])}>
-        {actionList}
-      </div>
+      <div className={styles['component-code-editor-action']}>{actionList}</div>
     </div>
   );
 });

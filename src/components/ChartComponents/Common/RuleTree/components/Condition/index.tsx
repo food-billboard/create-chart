@@ -1,8 +1,8 @@
-import { useCallback, useMemo, CSSProperties } from 'react';
-import classnames from 'classnames';
 import { DeleteOutlined, PlusCircleTwoTone } from '@ant-design/icons';
-import { ParamsSelectSingle } from '@/components/ParamsSelect';
+import classnames from 'classnames';
+import { useCallback, useMemo, CSSProperties } from 'react';
 import Select from '@/components/ChartComponents/Common/Select';
+import { ParamsSelectSingle } from '@/components/ParamsSelect';
 import { DEFAULT_CONDITION_CONFIG_ITEM_RULE_VALUE } from '../../../Constants/defaultConfig';
 import Input from '../../../Input';
 import Header from '../Header';
@@ -52,7 +52,7 @@ const ConditionItem = (props: {
       <ParamsSelectSingle
         value={params}
         wrapperStyle={{
-          width: 74,
+          width: 72,
         }}
         style={{
           height: 24,
@@ -63,18 +63,20 @@ const ConditionItem = (props: {
             params: newParams as any,
           });
         }}
+        popupMatchSelectWidth={false}
         wrapperClassName={classnames(COMMON_CONDITION_ITEM_CLASS, 'dis-in-b')}
       />
       <Select
         className={classnames(COMMON_CONDITION_ITEM_CLASS, 'dis-in-b')}
         value={condition}
-        style={{ width: 74, minWidth: 74 }}
+        style={{ width: 72, minWidth: 72 }}
         onChange={(condition) => {
           onChange({
             ...value,
             condition,
           });
         }}
+        popupMatchSelectWidth={false}
         options={[
           {
             label: '小于',

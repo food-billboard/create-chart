@@ -1,16 +1,17 @@
+import { Switch } from 'antd';
 import { useCallback, useMemo } from 'react';
-import { Select, Switch } from 'antd';
-import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
-import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
-import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
-import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
-import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
+import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
 import { SingleCollapse as Collapse } from '@/components/ChartComponents/Common/Collapse';
-import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
+import FormatterSelect from '@/components/ChartComponents/Common/FormatterSelect';
 import InputNumber from '@/components/ChartComponents/Common/InputNumber';
 import LineStyle from '@/components/ChartComponents/Common/LineStyleSelect';
-import CenterPositionConfig from '@/components/ChartComponents/Common/CenterPositionConfig';
 import MaxMinConfig from '@/components/ChartComponents/Common/MaxMinConfig';
+import Select from '@/components/ChartComponents/Common/Select';
+import SeriesLabelConfig from '@/components/ChartComponents/Common/SeriesLabelConfig';
+import SimpleHueSelect from '@/components/ChartComponents/Common/SimpleHueSelect';
+import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
+import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import HalfForm from '@/components/ChartComponents/Common/Structure/HalfForm';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { TPieBasicConfig } from '../type';
 

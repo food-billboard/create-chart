@@ -1,10 +1,11 @@
 import { FileImageOutlined, LinkOutlined } from '@ant-design/icons';
 import { useControllableValue } from 'ahooks';
-import { Upload, Modal, UploadProps, App } from 'antd';
+import { Upload, UploadProps, App } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
 import classnames from 'classnames';
 import { nanoid } from 'nanoid';
 import { useCallback, CSSProperties, useState, useRef, useEffect } from 'react';
+import Modal from '@/components/FocusModal';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import {
   UploadImage,
@@ -45,9 +46,11 @@ export const UploadButton = (props: {
 };
 
 const PicturesWall = (
-  props: Partial<Exclude<UploadProps, 'fileList' | 'onChange'>> & {
+  props: Partial<Omit<UploadProps, 'fileList' | 'onChange'>> & {
     value?: UploadFile[];
     onChange?: (value: UploadFile[]) => void;
+    inputVisible?: boolean;
+    height?: CSSProperties['height'];
   },
 ) => {
   const [value = [], setValue] = useControllableValue<UploadFile[]>(props, {
@@ -56,7 +59,14 @@ const PicturesWall = (
 
   const { message } = App.useApp();
 
-  const { value: propsValue, onChange, className, ...nextProps } = props;
+  const {
+    value: propsValue,
+    onChange,
+    className,
+    inputVisible = true,
+    height = '200px',
+    ...nextProps
+  } = props;
 
   const [previewVisible, setPreviewVisible] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string>('');
@@ -190,15 +200,24 @@ const PicturesWall = (
   }, [value]);
 
   return (
-    <>
-      <Input
-        defaultValue={value[0]?.preview || ''}
-        onBlur={onUrlChange}
-        className="w-100 m-b-4"
-        ref={inputRef}
-        prefix={<LinkOutlined />}
-        placeholder="请输入图片地址"
-      />
+    <div
+      style={{
+        ...nextProps.style,
+        // @ts-ignore
+        '--upload-item-height': height,
+      }}
+      className={styles['component-image-upload']}
+    >
+      {!!inputVisible && (
+        <Input
+          defaultValue={value[0]?.preview || ''}
+          onBlur={onUrlChange}
+          className="w-100 m-b-4"
+          ref={inputRef}
+          prefix={<LinkOutlined />}
+          placeholder="请输入图片地址"
+        />
+      )}
       <Upload
         listType="picture-card"
         fileList={value.map((item) => ({
@@ -208,10 +227,10 @@ const PicturesWall = (
         onPreview={handlePreview}
         beforeUpload={beforeUpload}
         accept="image/*"
-        className={classnames(styles['component-image-upload'], className)}
         onRemove={onRemove}
         disabled={validLoading}
         {...nextProps}
+        className={className}
       >
         {value.length >= 1 ? null : <UploadButton />}
       </Upload>
@@ -223,7 +242,7 @@ const PicturesWall = (
       >
         <img alt="background" style={{ width: '100%' }} src={previewImage} />
       </Modal>
-    </>
+    </div>
   );
 };
 

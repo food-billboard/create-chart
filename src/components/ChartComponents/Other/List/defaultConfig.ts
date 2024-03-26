@@ -1,5 +1,6 @@
 import { random } from 'lodash';
 import { mergeWithoutArray } from '@/utils';
+import ThemeUtil from '@/utils/Assist/Theme';
 import {
   BASIC_DEFAULT_CONFIG,
   BASIC_DEFAULT_DATA_CONFIG,
@@ -9,7 +10,6 @@ import {
   DEFAULT_LINKAGE_CONFIG,
   DEFAULT_INTERACTIVE_BASE_CONFIG,
 } from '../../Common/Constants/defaultConfig';
-import ThemeUtil from '@/utils/Assist/Theme';
 import { TListConfig } from './type';
 
 const DEFAULT_VALUE = new Array(20)
@@ -126,10 +126,23 @@ export default () => {
           autoplaySpeed: 3000,
         },
         column: 10,
+        numberPoint: {
+          animation: true,
+          positiveColor: {
+            r: 255,
+            g: 0,
+            b: 0,
+          },
+          negativeColor: {
+            r: 0,
+            g: 255,
+            b: 0,
+          },
+        },
       },
       header: {
         show: true,
-        height: 60,
+        height: 30,
         ...DEFAULT_HEADER,
       },
       index: {

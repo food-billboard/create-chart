@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
 import { modal } from '@/components/Message';
-import { isModelHash, useHashChangeReload, usePrimaryColor } from '@/hooks';
+import { isModelHash, useHashChangeReload } from '@/hooks';
 import FetchScreenComponent, {
   FetchScreenComponentRef,
 } from '@/pages/Designer/components/FetchScreenComponent';
@@ -73,8 +73,6 @@ const Designer = (props: {
 
   const [loading, setLoading] = useState<boolean>(true);
   const [guideLoading, setGuideLoading] = useState<boolean>(false);
-
-  const primaryColor = usePrimaryColor();
 
   const requestRef = useRef<FetchScreenComponentRef>(null);
   const heartValidTimerRef = useRef<any>();
@@ -214,8 +212,6 @@ const Designer = (props: {
         onContextMenu={preventDefaultContextMenu}
         style={{
           pointerEvents: loading || guideLoading ? 'none' : 'all',
-          // @ts-ignore
-          '--designer-primary-color': primaryColor,
         }}
       >
         <Header />

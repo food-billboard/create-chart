@@ -1,10 +1,9 @@
-import { ReactNode, useCallback, useMemo, useState } from 'react';
-import { Tabs } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { Tabs } from 'antd';
+import classnames from 'classnames';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
 import GhostButton from '@/components/GhostButton';
 import styles from './index.less';
-
-const { TabPane } = Tabs;
 
 const MultipleSeriesConfig = (props: {
   onAdd?: () => void;
@@ -67,13 +66,13 @@ const MultipleSeriesConfig = (props: {
   return (
     <>
       {!hideAdd && (
-        <GhostButton
-          icon={<PlusOutlined />}
-          onClick={add}
-          className="m-t-8 m-b-4"
+        <div
+          className={classnames('p-8', styles['multiple-series-config-add'])}
         >
-          {buttonLabel || '新增系列'}
-        </GhostButton>
+          <GhostButton icon={<PlusOutlined />} onClick={add} block>
+            {buttonLabel || '新增系列'}
+          </GhostButton>
+        </div>
       )}
       <Tabs
         type={disabledCal ? 'card' : 'editable-card'}

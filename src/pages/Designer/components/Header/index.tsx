@@ -1,29 +1,36 @@
 import {
   ExportOutlined,
-  FundOutlined,
+  DesktopOutlined,
   ImportOutlined,
   SendOutlined,
+  RocketOutlined,
 } from '@ant-design/icons';
 import { PageHeader } from '@ant-design/pro-layout';
 import { Input, App } from 'antd';
 import classnames from 'classnames';
 import { useCallback, useMemo, useState } from 'react';
-import Marquee from 'react-fast-marquee';
 import { connect } from 'umi';
 import IconFont from '@/components/ChartComponents/Common/Icon';
+import Marquee from '@/components/ChartComponents/Common/Marquee';
 import FocusWrapper from '@/components/FocusWrapper';
 import GlobalLoadingActonButton, {
   Props,
 } from '@/components/GlobalLoadingActionButton';
-import { isModelHash } from '@/hooks';
+import { useIsModelHash } from '@/hooks';
 import { previewScreen, previewScreenModel } from '@/services';
 import { saveScreenData } from '@/utils/Assist/DataChangePool';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { staticExportData, staticLeadIn } from '@/utils/Assist/LeadInAndOutput';
-import LocalConfigInstance, { LocalConfig } from '@/utils/Assist/LocalConfig';
-import { goPreview, goPreviewModel, goView } from '@/utils/tool';
+import { removeCurrentScreenData } from '@/utils/Assist/ScreenShotUtils';
+import {
+  goPreview,
+  goPreviewModel,
+  goView,
+  goStaticProductionView,
+} from '@/utils/tool';
 import ExchangeScreenFlagButton from '../ExchangeScreenFlag';
 import ActionList from './ActionList';
+import ScreenShotManage from './ActionList/components/ScreenShotManage';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
@@ -44,6 +51,8 @@ const Header = (props: {
 
   const [editMode, setEditMode] = useState<boolean>(false);
   const [fetchLoading, setFetchLoading] = useState<boolean>(false);
+
+  const isModel = useIsModelHash();
 
   const Title = useMemo(() => {
     if (editMode) {
@@ -93,7 +102,6 @@ const Header = (props: {
 
     setFetchLoading(true);
     try {
-      const isModel = isModelHash(location.hash);
       // 大屏预览或模板预览
       const requestMethod = isModel ? previewScreenModel : previewScreen;
       const linkMethod = isModel ? goPreviewModel : goPreview;
@@ -104,7 +112,7 @@ const Header = (props: {
     } finally {
       setFetchLoading(false);
     }
-  }, [_id, fetchLoading]);
+  }, [_id, fetchLoading, isModel]);
 
   // 保存
   const handleStore = useCallback(async () => {
@@ -118,7 +126,14 @@ const Header = (props: {
   const handleImport = useCallback(async () => {
     setFetchLoading(true);
     try {
-      staticLeadIn(window.location.reload);
+      staticLeadIn({
+        onError: window.location.reload,
+        onOk: () => {
+          message.info('导入成功，即将刷新页面', 1, () => {
+            window.location.reload();
+          });
+        },
+      });
     } catch (err) {
       message.info('操作失败');
     } finally {
@@ -136,12 +151,10 @@ const Header = (props: {
   // 初始化
   const handleReset = useCallback(async () => {
     setFetchLoading(true);
-    const { value } = await LocalConfigInstance.removeItem(
-      LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
-    );
-    if (value) {
+    try {
+      await removeCurrentScreenData();
       message.info('操作成功，页面即将刷新', 1, () => window.location.reload());
-    } else {
+    } catch (err) {
       message.info('操作出错');
     }
     setFetchLoading(false);
@@ -166,9 +179,22 @@ const Header = (props: {
         key="preview"
         title="预览"
         onClick={handlePreview}
-        icon={<FundOutlined />}
+        icon={<DesktopOutlined />}
         loading={fetchLoading}
       />
+    );
+    const productionPreviewButton = (
+      <GlobalLoadingActonButton
+        {...buttonProps}
+        tooltip={{
+          ...tooltipProps,
+          title: '生产环境预览',
+        }}
+        key="production-preview"
+        title="生产环境预览"
+        onClick={goStaticProductionView}
+        icon={<RocketOutlined />}
+      ></GlobalLoadingActonButton>
     );
     const storeButton = (
       <GlobalLoadingActonButton
@@ -214,6 +240,7 @@ const Header = (props: {
         title="导入"
         onClick={handleImport}
         icon={<ImportOutlined />}
+        id="static-import-button"
       ></GlobalLoadingActonButton>
     );
     const resetScreenButton = (
@@ -228,6 +255,10 @@ const Header = (props: {
         onClick={handleReset}
         icon={<IconFont type="icon-Initialize-o" />}
       ></GlobalLoadingActonButton>
+    );
+
+    const screenShotManage = (
+      <ScreenShotManage buttonProps={buttonProps} key="screen-shot" />
     );
     let baseList: any[] = [];
     // pc大屏有切换移动端
@@ -246,6 +277,7 @@ const Header = (props: {
           exportScreenButton,
           leadinScreenButton,
           previewButton,
+          productionPreviewButton,
           resetScreenButton,
         );
       }
@@ -256,6 +288,12 @@ const Header = (props: {
       } else {
         baseList.push(previewButton);
       }
+    }
+    if (
+      GlobalConfig.IS_STATIC ||
+      (GlobalConfig.IS_IMPROVE_BACKEND && !isModel)
+    ) {
+      baseList.push(screenShotManage);
     }
     return baseList;
   }, [
@@ -279,7 +317,7 @@ const Header = (props: {
         breadcrumbRender={() => {
           if (GlobalConfig.IS_STATIC) {
             return (
-              <Marquee gradient={false} play pauseOnHover>
+              <Marquee gradient={false} play pauseOnHover open>
                 当前版本为简化版本，不存在网络交互，本地图片上传均转换为base64（推荐直接使用链接），所有功能均为纯前端实现，包括数据的存储，请及时对浏览器缓存进行处理。关于完整版本，请fork
                 <a
                   href="https://github.com/food-billboard/create-chart"
@@ -294,7 +332,7 @@ const Header = (props: {
           }
           if (GlobalConfig.IS_IMPROVE_BACKEND) {
             return (
-              <Marquee gradient={false} play pauseOnHover>
+              <Marquee gradient={false} play pauseOnHover open>
                 新版本的大屏的保存方式发生了变化，虽然是实时保存，但是它只是保存在本地，需要手动点击保存才可以真正保存。忘记点保存也没有关系，只要下次打开还是同一电脑的同一浏览器，记录就还是存在的。
               </Marquee>
             );

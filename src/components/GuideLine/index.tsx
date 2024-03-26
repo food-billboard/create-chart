@@ -1,9 +1,8 @@
-import { usePrimaryColor } from '@/hooks';
-import { GUIDE_LINE_PADDING } from '@/utils/constants';
 import type { SuperPartial } from 'chunk-file-upload';
 import classnames from 'classnames';
 import { merge, throttle } from 'lodash';
 import { Component, CSSProperties } from 'react';
+import { GUIDE_LINE_PADDING } from '@/utils/constants';
 import styles from './index.less';
 import AbsorbGuideLine from './utils';
 
@@ -22,8 +21,8 @@ type Props = {
   size: { width: number; height: number };
   isGuideLineSticky?: boolean;
 } & ComponentData.TGuideLineConfigItem;
-class GuideLine extends Component<Props & { primaryColor: string }> {
-  constructor(props: Props & { primaryColor: string }) {
+class GuideLine extends Component<Props> {
+  constructor(props: Props) {
     super(props);
     const { type, style, lineStyle, id } = props;
     this.AbsorbGuideLineUtil = new AbsorbGuideLine(
@@ -182,7 +181,7 @@ class GuideLine extends Component<Props & { primaryColor: string }> {
   }
 
   render() {
-    const { type, lineStyle = 'dashed', className, primaryColor } = this.props;
+    const { type, lineStyle = 'dashed', className } = this.props;
     const { style } = this.state;
 
     return (
@@ -199,7 +198,7 @@ class GuideLine extends Component<Props & { primaryColor: string }> {
         <div
           className={styles[`ruler-guide-line-flag-${type}`]}
           style={{
-            backgroundColor: primaryColor,
+            backgroundColor: 'var(--primary-color)',
           }}
         >
           {Math.round(style.left ?? style.top) || 0}
@@ -211,7 +210,7 @@ class GuideLine extends Component<Props & { primaryColor: string }> {
             {},
             {
               borderStyle: lineStyle,
-              borderColor: primaryColor,
+              borderColor: 'var(--primary-color)',
             },
             type === 'horizontal'
               ? { top: GUIDE_LINE_PADDING * 2 }
@@ -223,10 +222,4 @@ class GuideLine extends Component<Props & { primaryColor: string }> {
   }
 }
 
-const GuideLineWrapper = (props: Props) => {
-  const color = usePrimaryColor();
-
-  return <GuideLine {...props} primaryColor={color} />;
-};
-
-export default GuideLineWrapper;
+export default GuideLine;

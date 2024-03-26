@@ -127,7 +127,7 @@ const ColorItem = ({
         })}
         {!!prefixSpan && <Col span={prefixSpan}></Col>}
       </Row>
-      <div className="p-l-8">
+      <div className="p-l-8" id="designer-theme-config-edit">
         <Popconfirm
           title="编辑主题名称"
           description={

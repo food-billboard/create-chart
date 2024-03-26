@@ -1,6 +1,5 @@
 import { Button, ConfigProvider } from 'antd';
 import { ReactNode, useCallback, CSSProperties } from 'react';
-import { usePrimaryColor } from '@/hooks';
 import { ChildrenType } from './type';
 
 const useChildren = (
@@ -18,8 +17,6 @@ const useChildren = (
 ) => {
   const { icon, title, disabled, onClick, key, style, className, checked } =
     options;
-
-  const primaryColor = usePrimaryColor();
 
   const handleClick = useCallback(
     (e) => {
@@ -45,7 +42,7 @@ const useChildren = (
         theme={{
           components: {
             Button: {
-              textHoverBg: primaryColor,
+              textHoverBg: 'var(--primary-color)',
             },
           },
         }}

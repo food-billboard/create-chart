@@ -27,6 +27,7 @@ export type FetchScreenComponentRef = {
 const FetchScreenComponent = forwardRef<
   FetchScreenComponentRef,
   {
+    fetchScreenShot?: boolean;
     needFetch?: boolean;
     onLoad?: () => void;
     setScale?: (scale: number) => void;
@@ -47,6 +48,7 @@ const FetchScreenComponent = forwardRef<
     setGuideLine,
     setVersion,
     onLoad,
+    fetchScreenShot = false,
   } = props;
 
   const { message, modal } = App.useApp();
@@ -98,16 +100,21 @@ const FetchScreenComponent = forwardRef<
     return realScreenData;
   };
 
-  // 前端大屏数据获取
-  const fetchData4Local = async (params: {
-    // 本地存储的key
-    localKey: string;
+  const commonScreenDataSet = async ({
+    fetchData,
+    isReload,
+    onNotFoundData,
+  }: {
+    // 获取数据
+    fetchData: () => Promise<
+      { version: string; screenData: ComponentData.TScreenData } | undefined
+    >;
     // 是否需要reload
     isReload?: boolean;
-    // 是否需要在未存在值的情况下初始化
-    needCache?: boolean;
+    onNotFoundData?: (
+      defaultScreenData: ComponentData.TScreenData,
+    ) => Promise<void>;
   }) => {
-    const { localKey, isReload = false, needCache = true } = params;
     let width;
     let height;
     let flag;
@@ -119,16 +126,16 @@ const FetchScreenComponent = forwardRef<
     height = defaultHeight;
 
     try {
-      const data = await LocalConfigInstance.getItem(localKey);
-      if (!data.errMsg && data.value) {
-        const { version, ...baseScreenData } = data.value;
-        const screenData = await parseComponentAndSaveData(
-          baseScreenData,
+      const data = await fetchData();
+      if (data) {
+        const { version, screenData } = data;
+        const realScreenData = await parseComponentAndSaveData(
+          screenData,
           version,
         );
-        width = screenData.config.style.width;
-        height = screenData.config.style.height;
-        flag = screenData.config.flag.type;
+        width = realScreenData.config.style.width;
+        height = realScreenData.config.style.height;
+        flag = realScreenData.config.flag.type;
       } else {
         const DEFAULT_SCREEN_DATA = createScreenDataRequest({
           name: 'screen',
@@ -138,14 +145,18 @@ const FetchScreenComponent = forwardRef<
             _id: nanoid(),
           },
         });
+
+        await onNotFoundData?.(
+          DEFAULT_SCREEN_DATA as ComponentData.TScreenData,
+        );
+
         // 先注册主题色再修改数据
         await themeSet({
           themeConfig: DEFAULT_THEME_DATA,
           registerTheme: true,
           force: true,
         });
-        if (needCache)
-          await LocalConfigInstance.setItem(localKey, DEFAULT_SCREEN_DATA);
+
         if (isReload) {
           setComponentAll([], false);
           setGuideLine({
@@ -165,6 +176,7 @@ const FetchScreenComponent = forwardRef<
       }
     } catch (err) {
       console.error(err);
+      message.info('数据获取失败');
     }
 
     const result = autoFitScale(width, height, flag);
@@ -175,77 +187,119 @@ const FetchScreenComponent = forwardRef<
     onLoad?.();
   };
 
+  // 前端大屏数据获取
+  const fetchData4Local = async (params: {
+    // 本地存储的key
+    localKey: string;
+    // 是否需要reload
+    isReload?: boolean;
+    // 是否需要在未存在值的情况下初始化
+    needCache?: boolean;
+    // 是否获取快照
+    fetchScreenShot?: boolean;
+  }) => {
+    const {
+      localKey,
+      isReload = false,
+      needCache = true,
+      fetchScreenShot = false,
+    } = params;
+
+    return commonScreenDataSet({
+      fetchData: async () => {
+        async function fetch(
+          fetchScreenShot?: boolean,
+        ): Promise<{ errMsg?: any; value?: any }> {
+          if (fetchScreenShot) {
+            // * 本地获取快照只可能是static版本大屏
+            // * 1 先获取大屏快照
+            // * 2 获取不到则获取大屏详情
+            const { errMsg, value } = await LocalConfigInstance.getItem(
+              LocalConfig.STATIC_SCREEN_SHOT_SAVE_KEY,
+            );
+            if (errMsg || !value) return fetch(false);
+            // ? 目前(1.22)静态版本为单个大屏的模式，所以直接取对象中的唯一key即可
+            const [screenId] = Object.keys(value);
+            if (!screenId) return fetch(false);
+            const targetScreenShotData = (
+              value[screenId] as API_IMPROVE.LocalScreenShotDataValue[]
+            ).find((item) => item.isUse);
+            if (!targetScreenShotData) return fetch(false);
+            return {
+              errMsg: false,
+              value: {
+                ...targetScreenShotData.value,
+                version: targetScreenShotData.version,
+              },
+            };
+          } else {
+            return LocalConfigInstance.getItem(localKey);
+          }
+        }
+
+        const data = await fetch(fetchScreenShot);
+
+        if (!data.errMsg && data.value) {
+          const { version, ...baseScreenData } = data.value;
+          return {
+            version,
+            screenData: baseScreenData,
+          };
+        }
+      },
+      isReload,
+      onNotFoundData: async (defaultScreenData) => {
+        if (needCache) {
+          await LocalConfigInstance.setItem(localKey, defaultScreenData);
+        }
+      },
+    });
+  };
+
+  // 静态大屏数据
   const fetchData4Static = async (isReload: boolean = false) => {
     return fetchData4Local({
       localKey: LocalConfig.STATIC_COMPONENT_DATA_SAVE_KEY,
       isReload,
       needCache: true,
+      fetchScreenShot,
     });
   };
 
   // 普通获取数据
   const fetchDataNormal = async (isReload: boolean = false) => {
-    let width;
-    let height;
-    let flag;
-    const { width: defaultWidth, height: defaultHeight } = get(
-      DEFAULT_SCREEN_DATA,
-      'config.style',
-    );
-    width = defaultWidth;
-    height = defaultHeight;
+    return commonScreenDataSet({
+      fetchData: async () => {
+        const { id } = getLocationQuery() || {};
+        if (!id) return;
+        let method: any;
+        if (GlobalConfig.IS_IMPROVE_BACKEND) {
+          // !这里是要改过的，improve的接口还未提供
+          if (isModel) {
+            method = getScreenModelDetail;
+          } else if (fetchScreenShot) {
+            method = getScreenDetail;
+          } else {
+            method = getScreenDetail;
+          }
+        } else {
+          method = isModel ? getScreenModelDetail : getScreenDetail;
+        }
 
-    const { id } = getLocationQuery() || {};
-
-    // fetchData
-    if (id) {
-      try {
-        const method = isModel ? getScreenModelDetail : getScreenDetail;
         const data = await method({
           _id: id,
         });
         const { components, _id, version } = data;
-        const screenData = await parseComponentAndSaveData(
-          {
+        return {
+          version,
+          screenData: {
             ...components,
             _id: components._id || _id,
           },
-          version,
-        );
-        width = screenData.config.style.width;
-        height = screenData.config.style.height;
-        flag = screenData.config.flag.type;
-      } catch (err) {
-        message.info('数据获取失败');
-      }
-    } else {
-      // 先注册主题色再修改数据
-      await themeSet({
-        themeConfig: get(DEFAULT_SCREEN_DATA, 'config.attr.theme'),
-      });
-      if (isReload) {
-        setComponentAll([], false);
-        setGuideLine({
-          show: true,
-          value: [],
-        });
-        // 添加新增独有的tooltip配置
-        setScreen({
-          ...DEFAULT_SCREEN_DATA,
-          extra: {
-            ...DEFAULT_SCREEN_DATA.extra,
-            versionChangeTooltip: DEFAULT_VERSION_CHANGE_TOOLTIP,
-          },
-        });
-      }
-    }
-
-    const result = autoFitScale(width, height, flag);
-    setScale?.(result);
-
-    await sleep(1000);
-
-    onLoad?.();
+        };
+      },
+      isReload,
+    });
   };
 
   // improve获取数据
@@ -255,7 +309,7 @@ const FetchScreenComponent = forwardRef<
       const cacheKey =
         LocalConfig.IMPROVE_BACKEND_STATIC_COMPONENT_DATA_SAVE_PREFIX + id;
       const localData = await LocalConfigInstance.getItem(cacheKey);
-      if (!localData.errMsg && localData.value) {
+      if (!localData.errMsg && localData.value && !fetchScreenShot) {
         return new Promise<void>((resolve) => {
           modal.confirm({
             title: '提示',
@@ -307,7 +361,7 @@ const FetchScreenComponent = forwardRef<
     if (needFetch) {
       fetchData();
     }
-  }, [needFetch]);
+  }, [needFetch, fetchScreenShot]);
 
   return <></>;
 });

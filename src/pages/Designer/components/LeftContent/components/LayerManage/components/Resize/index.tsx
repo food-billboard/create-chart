@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import { throttle } from 'lodash';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { CSSProperties, Component } from 'react';
-import { usePrimaryColor, useLocalStorage } from '@/hooks';
+import { useLocalStorage } from '@/hooks';
 import styles from './index.less';
 
 export type ResizeLineProps = {
@@ -17,7 +17,7 @@ export type ResizeLineProps = {
   direction: 1 | -1;
 };
 
-class ResizeLine extends Component<ResizeLineProps & { primaryColor: string }> {
+class ResizeLine extends Component<ResizeLineProps> {
   sizeValueRef = 0;
 
   onMouseDown = (e: any) => {
@@ -55,24 +55,13 @@ class ResizeLine extends Component<ResizeLineProps & { primaryColor: string }> {
         style={style}
         onMouseDown={this.onMouseDown}
       >
-        <div
-          className={styles['design-layer-manage-resize-content']}
-          style={{
-            backgroundColor: this.props.primaryColor,
-          }}
-        ></div>
+        <div className={styles['design-layer-manage-resize-content']}></div>
       </div>
     );
   }
 }
 
-const ResizeWrapper = (props: ResizeLineProps) => {
-  const primaryColor = usePrimaryColor();
-
-  return <ResizeLine {...props} primaryColor={primaryColor} />;
-};
-
-export default ResizeWrapper;
+export default ResizeLine;
 
 export function useResize(
   config: {
@@ -125,7 +114,7 @@ export function useResize(
   }, [stateWidth, width]);
 
   return [
-    <ResizeWrapper
+    <ResizeLine
       {...nextConfig}
       value={stateWidth}
       onChange={onChange}

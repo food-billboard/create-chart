@@ -1,5 +1,5 @@
 import { useDebounce } from 'ahooks';
-import { Col, Input, Modal, Row } from 'antd';
+import { Col, Input, Row } from 'antd';
 import classnames from 'classnames';
 import {
   forwardRef,
@@ -8,8 +8,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { usePrimaryColor } from '@/hooks';
-import CopyAndPasteUtil from '@/utils/Assist/CopyAndPaste';
+import Modal from '@/components/FocusModal';
 import { Loading } from '../PageLoading';
 import styles from './index.less';
 
@@ -41,13 +40,10 @@ const ComponentSelect = forwardRef<
     }[]
   >([]);
 
-  const primaryColor = usePrimaryColor();
-
   const open = async (select?: string) => {
     if (visible) return;
     setVisible(true);
     setLoading(true);
-    CopyAndPasteUtil.forceFocus();
     setSelect(select || '');
     if (!componentOnlyTypeList.length) {
       import('@/pages/Designer/utils/component').then((data) => {
@@ -88,7 +84,6 @@ const ComponentSelect = forwardRef<
 
   const close = useCallback(() => {
     setVisible(false);
-    CopyAndPasteUtil.forceUnFocus();
   }, []);
 
   const handleOk = useCallback(() => {
@@ -120,7 +115,7 @@ const ComponentSelect = forwardRef<
             style={
               isSelect
                 ? {
-                    borderColor: primaryColor,
+                    borderColor: 'var(--primary-color)',
                   }
                 : {}
             }
@@ -132,7 +127,7 @@ const ComponentSelect = forwardRef<
         </Col>
       );
     });
-  }, [select, filterComponentList, primaryColor]);
+  }, [select, filterComponentList]);
 
   useImperativeHandle(
     ref,

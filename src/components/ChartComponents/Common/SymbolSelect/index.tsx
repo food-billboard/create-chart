@@ -1,38 +1,36 @@
 import Select from '../Select';
 
-const { Option } = Select;
-
 const LINE_STYLE_MAP = [
   {
-    label: 'circle',
+    label: '圆',
     value: 'circle',
   },
   {
-    label: 'rect',
+    label: '方块',
     value: 'rect',
   },
   {
-    label: 'roundRect',
+    label: '圆角方块',
     value: 'roundRect',
   },
   {
-    label: 'triangle',
+    label: '三角',
     value: 'triangle',
   },
   {
-    label: 'diamond',
+    label: '菱形',
     value: 'diamond',
   },
   {
-    label: 'pin',
+    label: '气球',
     value: 'pin',
   },
   {
-    label: 'arrow',
+    label: '箭头',
     value: 'arrow',
   },
   {
-    label: 'none',
+    label: '空',
     value: 'none',
   },
 ];

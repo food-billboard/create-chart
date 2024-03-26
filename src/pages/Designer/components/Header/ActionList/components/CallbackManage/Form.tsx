@@ -4,7 +4,7 @@ import {
   PlusSquareOutlined,
 } from '@ant-design/icons';
 import { useControllableValue } from 'ahooks';
-import { Button, Drawer, Empty, Modal, Popconfirm, Table } from 'antd';
+import { Button, Drawer, Empty, Popconfirm, Table } from 'antd';
 import { nanoid } from 'nanoid';
 import {
   forwardRef,
@@ -14,12 +14,14 @@ import {
   useState,
 } from 'react';
 import { connect } from 'umi';
+import Modal from '@/components/FocusModal';
 import FocusWrapper from '@/components/FocusWrapper';
 import GlobalLoadingActonButton from '@/components/GlobalLoadingActionButton';
 import LazyLoadWrapper from '@/components/LazyLoad';
 import ParamsSelect from '@/components/ParamsSelect';
 import Tooltip from '@/components/Tooltip';
 import { useIdPathMap } from '@/hooks';
+import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 const CodeViewer = LazyLoadWrapper(
@@ -185,8 +187,11 @@ const CallbackList = (props: {
           return (
             <div
               title={value}
-              className="c-po text-ellipsis normal-color"
+              className="c-po text-ellipsis"
               onClick={previewCode.bind(null, value)}
+              style={{
+                color: DEFAULT_THEME_COLOR,
+              }}
             >
               {value}
             </div>

@@ -3,12 +3,12 @@ import ReactSelecto from 'react-selecto';
 import { connect } from 'umi';
 import ColorSelect from '@/components/ColorSelect';
 import { BACKGROUND_ID } from '@/components/DesignerBackground';
-import { usePrimaryColorObject } from '@/hooks';
 import {
   isComponentDisabled,
   isComponentSelect,
 } from '@/utils/Assist/Component';
 import { getGlobalSelect } from '@/utils/Assist/GlobalDva';
+import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
 import { SELECTO_CLASSNAME } from '@/utils/constants';
 import { PANEL_ID } from '@/utils/constants/another';
 import { wrapperId } from '../PanelWrapper/constants';
@@ -16,8 +16,6 @@ import { mapDispatchToProps, mapStateToProps } from './connect';
 import styles from './index.less';
 
 const VALID_SELECT_CONTAINER = [BACKGROUND_ID, wrapperId, PANEL_ID];
-
-const { getRgbaString } = ColorSelect;
 
 const Selecto = (props: {
   setSelect: (value: string[]) => void;
@@ -107,17 +105,11 @@ const Selecto = (props: {
 const InternalSelecto = connect(mapStateToProps, mapDispatchToProps)(Selecto);
 
 const OuterSelecto = () => {
-  const primaryColor = usePrimaryColorObject();
-
   return (
     <div
       style={{
         // @ts-ignore
-        '--react-select-to-border': getRgbaString(primaryColor),
-        '--react-select-to-background': getRgbaString({
-          ...primaryColor,
-          a: 0.4,
-        }),
+        '--react-select-to-background': `${DEFAULT_THEME_COLOR}66`,
       }}
       className={styles['react-select-to-wrapper']}
     >

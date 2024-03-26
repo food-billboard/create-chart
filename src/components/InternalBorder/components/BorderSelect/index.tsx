@@ -1,7 +1,8 @@
-import { Input, Modal, Row, Col } from 'antd';
+import { Input, Row, Col } from 'antd';
 import classnames from 'classnames';
 import { useCallback, useMemo, useState } from 'react';
 import Select from '@/components/ChartComponents/Common/Select';
+import Modal from '@/components/FocusModal';
 import BorderMap from '../Border';
 import { InternalBorderWrapper } from '../BorderRender';
 import styles from './index.less';

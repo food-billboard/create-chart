@@ -1,13 +1,15 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useUnmount } from 'ahooks';
 import { Input as AntInput } from 'antd';
 import { InputProps } from 'antd/es/input';
-import { useUnmount } from 'ahooks';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { Validator, useValidatorChange } from '@/hooks';
 import FormModal from '../FormModal';
+import TextArea from '../Textarea';
 
-export type Props = InputProps & {
+export type Props = Omit<InputProps, 'onChange'> & {
   triggerOnChangeInOnChange?: boolean;
   validator?: Validator[];
+  onChange?: (value: string) => void;
 };
 
 const Input = (props: Props) => {
@@ -77,6 +79,6 @@ const Input = (props: Props) => {
   );
 };
 
-export const InputModal = FormModal<Props>(Input);
+export const InputModal = FormModal<Props>(Input, TextArea);
 
 export default Input;

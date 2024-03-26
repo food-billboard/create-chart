@@ -1,7 +1,7 @@
 import { useHover } from 'ahooks';
 import { merge } from 'lodash';
 import { CSSProperties, useMemo } from 'react';
-import { usePrimaryColorObject } from '@/hooks';
+import { DEFAULT_THEME_COLOR } from '@/utils/Assist/Theme';
 
 export const useComponentStyle: (
   value: ComponentData.TComponentData,
@@ -22,8 +22,7 @@ export const useComponentStyle: (
   } = value;
   const { isSelect, style, scale, query, screenType, flag } = options;
 
-  const { r, g, b } = usePrimaryColorObject();
-  const primaryColor = `rgba(${r}, ${g}, ${b}, 0.8)`;
+  const primaryColor = `${DEFAULT_THEME_COLOR}CC`;
 
   const isHover = useHover(() => document.querySelector(query));
 

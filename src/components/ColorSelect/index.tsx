@@ -61,6 +61,7 @@ const ColorSelect = (props: TColorSelectProps) => {
   const [open, onOpenChange] = useControllableValue(props, {
     trigger: 'onOpenChange',
     valuePropName: 'open',
+    defaultValuePropName: 'defaultOpen',
     defaultValue: false,
   });
 
@@ -105,7 +106,9 @@ const ColorSelect = (props: TColorSelectProps) => {
       value={colorValue}
       onChangeComplete={onInternalChange}
       open={open}
-      onOpenChange={onOpenChange}
+      onOpenChange={(open) => {
+        onOpenChange(open);
+      }}
     />
   );
 };

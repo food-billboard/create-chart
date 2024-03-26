@@ -37,6 +37,10 @@ export const normalRouter = [
             component: '@/pages/ScreenList',
           },
           {
+            path: '/media',
+            component: '@/pages/MediaManage',
+          },
+          {
             path: '/designer',
             component: '@/pages/Designer',
           },
@@ -82,6 +86,10 @@ export const staticRouter = [
       {
         path: '/viewer',
         component: '@/pages/Viewer',
+      },
+      {
+        path: '/static-share',
+        component: '@/pages/StaticShare',
       },
       {
         path: '/',

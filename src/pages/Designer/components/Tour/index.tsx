@@ -1,13 +1,9 @@
-import { Tour } from 'antd';
-import type { TourProps } from 'antd';
-import { useEffect, useState, useCallback } from 'react';
-import { connect } from 'umi';
-import { useLocalStorage } from '@/hooks';
+import type { TourStepProps } from 'antd';
+import Tour, { Props } from '@/components/Tour';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
 import { LocalConfig } from '@/utils/Assist/LocalConfig';
-import { mapDispatchToProps, mapStateToProps } from './connect';
-import './index.less';
 
-const steps: TourProps['steps'] = [
+const steps: TourStepProps[] = [
   {
     title: '设置可视化大屏的名称，最少5个字',
     target: () => document.querySelector('.ant-page-header-heading-title')!,
@@ -45,47 +41,26 @@ const steps: TourProps['steps'] = [
     target: () => document.querySelector('.design-page-right')!,
     placement: 'left',
   },
+  ...(GlobalConfig.IS_STATIC
+    ? ([
+        {
+          title: '如果完成的大屏数据可点击按钮优先进行导入(*￣︶￣)',
+          target: () => document.querySelector('#static-import-button')!,
+          placement: 'left',
+        },
+      ] as TourStepProps[])
+    : []),
 ];
 
-let SHEPHERD_DONE = false;
-
-const ShepherdWrapper = (props: {
-  onStart?: () => void;
-  onComplete?: () => void;
-  loading: boolean;
-  userId: string;
-}) => {
-  const { onStart, onComplete, loading, userId } = props;
-  const [open, setOpen] = useState(false);
-
-  // 缓存中是否存在
-  const [value = {}, setValue, initialDone] = useLocalStorage<{
-    [key: string]: {
-      timestamps: number;
-    };
-  }>(LocalConfig.CONFIG_KEY_SHEPHERD_INFO, {});
-
-  const close = useCallback(() => {
-    onComplete?.();
-    setOpen(false);
-  }, [onComplete]);
-
-  useEffect(() => {
-    if (SHEPHERD_DONE || !initialDone || loading) return;
-    const target = value?.[userId];
-    const current = Date.now();
-    if (!target || current - target.timestamps > 1000 * 60 * 60 * 24 * 30) {
-      onStart?.();
-      setOpen(true);
-    }
-    SHEPHERD_DONE = true;
-    value[userId] = {
-      timestamps: Date.now(),
-    };
-    setValue(value);
-  }, [value, initialDone, loading]);
-
-  return <Tour steps={steps} onClose={close} onFinish={close} open={open} />;
+const ShepherdWrapper = (props: Partial<Props>) => {
+  return (
+    <Tour
+      {...props}
+      tourUniqueKey="DESIGNER_GUIDE"
+      steps={steps}
+      localKey={LocalConfig.CONFIG_KEY_SHEPHERD_INFO}
+    />
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShepherdWrapper);
+export default ShepherdWrapper;

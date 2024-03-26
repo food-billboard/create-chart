@@ -195,12 +195,60 @@ declare namespace API_THIRD {
 }
 
 declare namespace API_IMPROVE {
-  export type InternalBackgroundParams = {
+  export type MediaParams = {
     current: number;
     pageSize: number;
+    classic?: string;
   };
 
-  export type InternalBackgroundData = {};
+  export type MediaData = {};
+
+  export type MediaClassicData = {
+    label: string;
+    value: string;
+  };
+
+  export type AddMediaClassicParams = {
+    label: string;
+  };
+
+  export type UpdateMediaClassParams = AddMediaClassicParams & {
+    value: string;
+  };
+
+  export type AddMediaDataParams = {
+    classic: string;
+    value: string;
+  };
+
+  export type DeleteMediaDataParams = AddMediaDataParams;
+
+  export type GetScreenShotListParams = {
+    _id: string;
+  };
+
+  export type GetScreenShotListData = {
+    _id: string;
+    createAt: string;
+    user: string;
+    description: string;
+    isUse: boolean;
+  };
+
+  export type UpdateScreenShotData = {
+    description: string;
+    _id: string;
+    screen: string;
+  };
+
+  export type LocalScreenShotDataValue = GetScreenShotListData & {
+    value: ComponentData.TScreenData;
+    version: string;
+  };
+
+  export type LocalScreenShotData = {
+    [screenId: string]: LocalScreenShotDataValue[];
+  };
 }
 
 declare namespace API_MEDIA_MANAGE {}

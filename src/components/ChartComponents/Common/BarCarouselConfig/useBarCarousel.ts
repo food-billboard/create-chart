@@ -21,7 +21,7 @@ export default ({
 
   const originDataSeriesKey = useMemo(() => {
     const targetFieldMap = fieldMap.find((field) => field.field === seriesKey);
-    return targetFieldMap!.map || targetFieldMap!.field;
+    return targetFieldMap?.map || targetFieldMap?.field || '';
   }, [seriesKey, fieldMap]);
 
   // { [seriesKey]: [ value0, value1 ] }

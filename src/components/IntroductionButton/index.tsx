@@ -1,119 +1,83 @@
-import {
-  ContactsOutlined,
-  GithubOutlined,
-  QuestionCircleOutlined,
-  SmileOutlined,
-} from '@ant-design/icons';
+import { SmileOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
-// import { Action, Fab } from 'react-tiny-fab';
-// import 'react-tiny-fab/dist/styles.css';
-import { useColorThemeList } from '@/hooks';
-import { gotoBlog, gotoGithub, gotoOperation } from '@/utils/Assist/About';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import GlobalConfig from '@/utils/Assist/GlobalConfig';
+import { DEFAULT_THEME_COLOR_LIST } from '@/utils/Assist/Theme';
+import FeedBackModal, { FeedBackRef } from './components/FeedBackModal';
+import { BUTTON_LIST } from './constants';
 import styles from './index.less';
+import useDrag from './useDrag';
 
-const commonStyle = {
-  // color: 'white',
-  // width: 30,
-  // height: 30,
-  // fontSize: '12px',
-};
+const commonStyle = {};
 
 const IntroductionButton = () => {
-  const [primaryColor, subColor, thirdColor, forthColor] = useColorThemeList();
+  const [buttonOpen, setButtonOpen] = useState(false);
+
+  const [primaryColor, ...nextColorList] = DEFAULT_THEME_COLOR_LIST;
+
+  const { isDragging, ...dragProps } = useDrag({
+    right: 24,
+    bottom: 80,
+  });
+
+  const feedBackRef = useRef<FeedBackRef>(null);
+
+  const handleClick = useCallback((key, callback) => {
+    // 问题反馈
+    if (key === 'feedback' && GlobalConfig.IS_IMPROVE_BACKEND) {
+      feedBackRef.current?.open();
+    } else {
+      callback();
+    }
+  }, []);
+
+  const children = useMemo(() => {
+    const list = BUTTON_LIST().filter((item) => item.visible);
+    return new Array(Math.min(nextColorList.length, list.length))
+      .fill(0)
+      .map((_, index) => {
+        const { key, visible = true, onClick, ...nextItem } = list[index];
+        if ((typeof visible === 'function' && !visible) || !visible)
+          return null;
+        return (
+          <FloatButton
+            {...nextItem}
+            onClick={handleClick.bind(null, key, onClick)}
+            style={{
+              backgroundColor: nextColorList[index],
+              ...commonStyle,
+            }}
+            key={key}
+          />
+        );
+      });
+  }, [nextColorList, handleClick]);
+
+  useEffect(() => {
+    if (!isDragging) setButtonOpen(false);
+  }, [isDragging]);
 
   return (
-    <FloatButton.Group
-      trigger="hover"
-      type="primary"
-      style={{
-        right: 24,
-        // top: 56,
-        // @ts-ignore
-        '--float-button-color': primaryColor,
-      }}
-      icon={<SmileOutlined />}
-      className={styles['introduction-button']}
-    >
-      <FloatButton
-        onClick={gotoGithub}
-        icon={<GithubOutlined />}
+    <>
+      <FloatButton.Group
+        {...dragProps}
+        trigger="hover"
+        type="primary"
         style={{
-          backgroundColor: subColor,
-          ...commonStyle,
+          ...dragProps.style,
+          // @ts-ignore
+          '--float-button-color': primaryColor,
         }}
-        tooltip="Github"
-      />
-      <FloatButton
-        onClick={gotoBlog}
-        icon={<ContactsOutlined />}
-        style={{
-          backgroundColor: thirdColor,
-          ...commonStyle,
-        }}
-        tooltip="Blog"
-      />
-      <FloatButton
-        onClick={gotoOperation}
-        icon={<QuestionCircleOutlined />}
-        style={{
-          backgroundColor: forthColor,
-          ...commonStyle,
-        }}
-        tooltip="操作文档"
-      />
-    </FloatButton.Group>
+        icon={<SmileOutlined />}
+        className={styles['introduction-button']}
+        open={isDragging ? false : buttonOpen}
+        onOpenChange={setButtonOpen}
+      >
+        {children}
+      </FloatButton.Group>
+      <FeedBackModal ref={feedBackRef} />
+    </>
   );
-
-  // return (
-  //   <div className={styles['introduction-button']}>
-  //     <Fab
-  //       mainButtonStyles={{
-  //         backgroundColor: primaryColor,
-  //         color: 'white',
-  //         width: 34,
-  //         height: 34,
-  //       }}
-  //       style={{
-  //         right: 0,
-  //         top: 56,
-  //       }}
-  //       icon={<SmileOutlined />}
-  //       event={'hover'}
-  //       alwaysShowTitle
-  //     >
-  //       <Action
-  //         text="Github"
-  //         onClick={gotoGithub}
-  //         style={{
-  //           backgroundColor: subColor,
-  //           ...commonStyle,
-  //         }}
-  //       >
-  //         <GithubOutlined />
-  //       </Action>
-  //       <Action
-  //         text="Blog"
-  //         onClick={gotoBlog}
-  //         style={{
-  //           backgroundColor: thirdColor,
-  //           ...commonStyle,
-  //         }}
-  //       >
-  //         <ContactsOutlined />
-  //       </Action>
-  //       <Action
-  //         text="操作文档"
-  //         onClick={gotoOperation}
-  //         style={{
-  //           backgroundColor: forthColor,
-  //           ...commonStyle,
-  //         }}
-  //       >
-  //         <QuestionCircleOutlined />
-  //       </Action>
-  //     </Fab>
-  //   </div>
-  // );
 };
 
 export default IntroductionButton;

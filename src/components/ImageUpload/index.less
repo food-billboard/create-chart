@@ -1,11 +1,8 @@
 .component-image-upload {
   :global {
-    .ant-upload.ant-upload-select-picture-card,
-    .ant-upload-list-picture-card-container,
-    .ant-upload-list-item-container,
     .ant-upload-select {
       width: 100% !important;
-      height: 200px !important;
+      height: var(--upload-item-height, 200px) !important;
       margin: 0 !important;
     }
   }
