@@ -153,15 +153,26 @@ const BackgroundSelect = forwardRef<BackgroundSelectRef, BackgroundSelectProps>(
     // improve 获取数据
     const fetchData = useCallback(
       async ({ current, classic }: { current: number; classic: string }) => {
-        if (!GlobalConfig.IS_IMPROVE_BACKEND) return;
+        // if (!GlobalConfig.IS_IMPROVE_BACKEND) return;
         setFetchLoading(true);
-        const data: any = await getMediaList({
+        const data: API_IMPROVE.MediaDataRes = await getMediaList({
           current,
           pageSize: pageSize.current,
           classic,
         });
-        setImproveDataSource(data.list as BackgroundData[]);
-        setTotal(data.total);
+        console.log(data, 22222);
+        setImproveDataSource(
+          data.items.map((item) => {
+            return {
+              value: `http://jimmy2021nas.ddnsfree.com:20038/api/${item.collectionId}/${item.id}/${item.file}`,
+              image: `http://jimmy2021nas.ddnsfree.com:20038/api/${item.collectionId}/${item.id}/${item.file}`,
+              classic: item.collectionId,
+              // 没有label
+              label: '',
+            };
+          }),
+        );
+        setTotal(data.totalItems);
         setFetchLoading(false);
       },
       [],
@@ -278,10 +289,11 @@ const BackgroundSelect = forwardRef<BackgroundSelectRef, BackgroundSelectProps>(
 
     useEffect(() => {
       if (!GlobalConfig.IS_IMPROVE_BACKEND) return;
-      getMediaClassicList().then((data) => {
-        // TODO
-        setImproveClassicDataSource([]);
-      });
+      // ? 因为没有分类，所以直接设置一个全部
+      // 后面有需要把这个注释打开
+      // getMediaClassicList().then((data) => {
+      //   setImproveClassicDataSource([]);
+      // });
     }, []);
 
     useEffect(() => {
@@ -301,7 +313,8 @@ const BackgroundSelect = forwardRef<BackgroundSelectRef, BackgroundSelectProps>(
         style={style}
       >
         <Tabs
-          type={mode === 'editable' ? 'editable-card' : 'line'}
+          // ? 现在没有分类，所以先去掉，后面如果加了分类再改回来
+          // type={mode === 'editable' ? 'editable-card' : 'line'}
           onEdit={onTabEdit}
           items={classicItems}
           onChange={onTabChange}

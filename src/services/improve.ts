@@ -1,20 +1,39 @@
 import request from '../utils/request';
 
-// 获取媒体资源列表
-export async function getMediaList(params: API_IMPROVE.MediaParams) {
-  return request('/api/screen/model', {
-    method: 'GET',
-    params,
+// 文件上传
+export async function uploadFileImprove(file: File) {
+  const formData = new FormData();
+  formData.append('file', file);
+  return request('/api/collections/media/records', {
+    method: 'POST',
+    data: formData,
+    improve: true,
   });
 }
 
+// 获取媒体资源列表
+export async function getMediaList(params: API_IMPROVE.MediaParams) {
+  const { current, pageSize } = params;
+  return request<API_IMPROVE.MediaDataRes>('/api/collections/media/records', {
+    method: 'GET',
+    params: {
+      page: current,
+      perPage: pageSize,
+    },
+    improve: true,
+  });
+}
+
+// ! 暂时没用
 // 获取媒体资源分类列表
 export async function getMediaClassicList() {
   return request('/api/screen/model', {
     method: 'GET',
+    improve: true,
   });
 }
 
+// ! 暂时没用
 // 删除媒体资源分类
 export async function deleteClassic(classic: string) {
   return request('/api/screen/model', {
@@ -22,40 +41,48 @@ export async function deleteClassic(classic: string) {
     params: {
       classic,
     },
+    improve: true,
   });
 }
 
+// ! 暂时没用
 // 新增媒体资源分类
 export async function addClassic(data: API_IMPROVE.AddMediaClassicParams) {
   return request('/api/screen/model', {
     method: 'POST',
     data,
+    improve: true,
   });
 }
 
+// ! 暂时没用
 // 修改媒体资源分类
 export async function updateClassic(data: API_IMPROVE.UpdateMediaClassParams) {
   return request('/api/screen/model', {
     method: 'PUT',
     data,
+    improve: true,
   });
 }
 
-// 新增图片
+// 新增媒体资源
 export async function addMediaData(data: API_IMPROVE.AddMediaDataParams) {
   return request('/api/screen/model', {
     method: 'POST',
     data,
+    improve: true,
   });
 }
 
-// 删除图片
+// 删除媒体资源
 export async function deleteMediaData(
   params: API_IMPROVE.DeleteMediaDataParams,
 ) {
-  return request('/api/screen/model', {
+  const { value, classic } = params;
+  return request(`/api/files/${classic}/${'records'}/${value}`, {
     method: 'DELETE',
     params,
+    improve: true,
   });
 }
 
@@ -66,6 +93,7 @@ export async function getScreenShotList(
   return request('/api/screen/model', {
     method: 'GET',
     params,
+    improve: true,
   });
 }
 
@@ -76,6 +104,7 @@ export async function getCurrentScreenShotData(
   return request('/api/screen/model', {
     method: 'GET',
     params,
+    improve: true,
   });
 }
 
@@ -87,6 +116,7 @@ export async function deleteScreenShot(params: {
   return request('/api/screen/model', {
     method: 'DELETE',
     params,
+    improve: true,
   });
 }
 
@@ -95,6 +125,7 @@ export async function updateScreenShot(data: API_IMPROVE.UpdateScreenShotData) {
   return request('/api/screen/model', {
     method: 'PUT',
     data,
+    improve: true,
   });
 }
 
@@ -103,6 +134,7 @@ export async function addScreenShot(data: { _id: string }) {
   return request('/api/screen/model', {
     method: 'POST',
     data,
+    improve: true,
   });
 }
 
@@ -111,6 +143,7 @@ export async function useScreenShot(data: { _id: string; screen: string }) {
   return request('/api/screen/model', {
     method: 'PUT',
     data,
+    improve: true,
   });
 }
 
@@ -119,5 +152,6 @@ export async function coverScreenShot(data: { _id: string; screen: string }) {
   return request('/api/screen/model', {
     method: 'PUT',
     data,
+    improve: true,
   });
 }

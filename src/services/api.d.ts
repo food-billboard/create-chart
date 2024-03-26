@@ -201,7 +201,23 @@ declare namespace API_IMPROVE {
     classic?: string;
   };
 
-  export type MediaData = {};
+  export type MediaData = {
+    // 文件对应的数据id
+    collectionId: string;
+    // 文件对应的数据集名
+    collectionName: string;
+    created: string;
+    // 文件
+    file: string;
+    // 文件id
+    id: string;
+    updated: string;
+  };
+
+  export type MediaDataRes = {
+    totalItems: number;
+    items: MediaData[];
+  };
 
   export type MediaClassicData = {
     label: string;

@@ -29,6 +29,8 @@ const codeMessage = {
 interface RequestOptions extends AxiosRequestConfig {
   mis?: boolean;
   origin?: boolean;
+  // improve 后端给的数据格式和之前的不一样，这里加个判断
+  improve?: boolean;
 }
 
 // 未登录的多次触发处理
@@ -89,7 +91,7 @@ const request = async <ResBody>(
   setting: RequestOptions = {} as RequestOptions,
 ) => {
   // 过滤URL参数
-  const { params, mis = true, origin, ...options } = setting;
+  const { params, mis = true, origin, improve = false, ...options } = setting;
 
   let body: any;
   let error: any;
@@ -123,7 +125,10 @@ const request = async <ResBody>(
 
   // 返回真正的response body res 内容
   if (!error) {
-    return (origin ? body : body?.data?.res?.data ?? {}) as ResBody;
+    console.log(body, 222222);
+    return (
+      origin ? body : (improve ? body?.data : body?.data?.res?.data) ?? {}
+    ) as ResBody;
   }
   error.mis = mis;
   mis && (await misManage(error));

@@ -1,12 +1,14 @@
+import type { UploadFile, RcFile } from 'antd/es/upload/interface';
 import { Upload } from 'chunk-file-upload';
 import { nanoid } from 'nanoid';
-import type { UploadFile, RcFile } from 'antd/es/upload/interface';
 import {
   checkUploadFile,
   uploadFile,
   DEFAULT_CHECK_UPLOAD_PARAMS,
   getUploadFile,
+  uploadFileImprove,
 } from '@/services';
+import GlobalConfig from '../GlobalConfig';
 
 const UPLOAD_INSTANCE = new Upload();
 
@@ -67,6 +69,12 @@ export function UploadImage(
   },
 ) {
   const { originFileObj } = value;
+
+  // improve版本
+  if (GlobalConfig.IS_IMPROVE_BACKEND) {
+    return uploadFileImprove(originFileObj!).then((data) => {});
+  }
+
   value.response = value.response || {};
 
   const [name] = UPLOAD_INSTANCE.add({
