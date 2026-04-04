@@ -115,9 +115,10 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
   });
 
   const finalValue = useMemo(() => {
-    return FilterDataUtil.getFieldMapValue(processedValue, {
+    const value = FilterDataUtil.getFieldMapValue(processedValue, {
       map: componentFilterMap,
     });
+    return Array.isArray(value) ? value : [];
   }, [processedValue, componentFilterMap]);
 
   const onColumnClick = useCallback(
