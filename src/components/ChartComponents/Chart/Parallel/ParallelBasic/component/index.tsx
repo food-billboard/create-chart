@@ -1,6 +1,5 @@
-import { useEffect, useRef } from 'react';
 import { uniqueId, merge } from 'lodash';
-import classnames from 'classnames';
+import { useEffect, useRef } from 'react';
 import {
   useComponent,
   useChartComponentResize,
@@ -8,14 +7,15 @@ import {
   useComponentResize,
   useAnimationChange,
   useCondition,
+  ConditionComponent,
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { useDeepUpdateEffect } from '@/hooks';
-import ColorSelect from '@/components/ColorSelect';
-import { init } from '@/utils/Assist/EchartsLoader';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
-import { TParallelBasicConfig } from '../type';
+import ColorSelect from '@/components/ColorSelect';
+import { useDeepUpdateEffect } from '@/hooks';
+import { init } from '@/utils/Assist/EchartsLoader';
 import { CHART_ID } from '../id';
+import { TParallelBasicConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
 
@@ -57,11 +57,11 @@ const ParallelBasic = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const { seriesKeys, xAxisKeys, yAxisValues } = useChartValueMapField(
     processedValue,
@@ -220,15 +220,15 @@ const ParallelBasic = (
 
   return (
     <>
-      <div
-        className={classnames(className, conditionClassName)}
+      <ConditionComponent
+        componentId={id}
+        className={className}
         style={merge(
           {
             width: '100%',
             height: '100%',
           },
           style,
-          conditionStyle,
         )}
         onClick={onClick}
       >
@@ -236,7 +236,7 @@ const ParallelBasic = (
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

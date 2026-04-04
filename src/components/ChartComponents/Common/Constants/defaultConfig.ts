@@ -323,6 +323,5 @@ export const DEFAULT_CONDITION_CONFIG: () => ComponentData.ComponentConditionCon
       },
     ],
     initialState: 'visible',
-    modalEnable: true,
     ...extraConfig,
   });

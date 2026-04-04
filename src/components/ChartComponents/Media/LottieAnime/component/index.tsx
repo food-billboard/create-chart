@@ -7,6 +7,7 @@ import { useEffect, useRef } from 'react';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { ComponentDemoTooltip } from '@/components/ChartComponents/Common/Marquee';
@@ -42,11 +43,11 @@ const LottieAnime = (
       global,
     });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const setOption = async (needReCreate: boolean) => {
     const { loop, speed, direction } = nextOptions;
@@ -85,11 +86,11 @@ const LottieAnime = (
 
   return (
     <>
-      <div
+      <ConditionComponent
+        componentId={id}
         className={classnames(
           className,
           styles['component-media-lottie-anime'],
-          conditionClassName,
         )}
         style={merge(
           {
@@ -97,7 +98,6 @@ const LottieAnime = (
             height: '100%',
           },
           style,
-          conditionStyle,
         )}
       >
         <Wrapper border={border}>
@@ -105,7 +105,7 @@ const LottieAnime = (
           <ComponentDemoTooltip open={!lottieData && screenType === 'edit'} />
           {children}
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

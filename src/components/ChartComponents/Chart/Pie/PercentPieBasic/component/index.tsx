@@ -8,6 +8,7 @@ import {
   useComponentResize,
   useAnimationChange,
   useCondition,
+  ConditionComponent,
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
@@ -61,11 +62,11 @@ const PercentPieBasic = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -219,15 +220,15 @@ const PercentPieBasic = (
 
   return (
     <>
-      <div
-        className={classnames(className, conditionClassName)}
+      <ConditionComponent
+        componentId={id}
+        className={className}
         style={merge(
           {
             width: '100%',
             height: '100%',
           },
           style,
-          conditionStyle,
         )}
       >
         <Wrapper border={border}>
@@ -235,7 +236,7 @@ const PercentPieBasic = (
           {children}
           {statisticsElement}
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

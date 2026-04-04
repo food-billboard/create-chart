@@ -1,19 +1,15 @@
-import { forwardRef, useImperativeHandle, useRef, useCallback } from 'react';
-import { Switch } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import LazyLoadWrapper from '@/components/LazyLoad';
-import type { WinBoxRef } from '@/components/Winbox';
-import type { ConnectState } from '@/models/connect';
-import IconTooltip from '@/components/IconTooltip';
+import { Switch } from 'antd';
+import { forwardRef, useImperativeHandle, useRef, useCallback } from 'react';
 import ConfigList from '@/components/ChartComponents/Common/Structure/ConfigList';
 import FullForm from '@/components/ChartComponents/Common/Structure/FullForm';
+import IconTooltip from '@/components/IconTooltip';
+import WinBox from '@/components/Winbox';
+import type { WinBoxRef } from '@/components/Winbox';
+import type { ConnectState } from '@/models/connect';
 import InsertComponent from './components/InsertComponent';
 
 const { Item } = ConfigList;
-
-const WinBox = LazyLoadWrapper<any, WinBoxRef>(() => {
-  return import(/* webpackChunkName: "WinBox" */ '@/components/Winbox');
-});
 
 export type { WinBoxRef } from '@/components/Winbox';
 
@@ -44,14 +40,16 @@ const Winbox = forwardRef<
     ref,
     () => {
       return {
-        open: () => boxRef.current?.open(),
+        open: () => {
+          boxRef.current?.open();
+        },
       };
     },
     [],
   );
 
   return (
-    <WinBox wrapperComponentRef={boxRef}>
+    <WinBox ref={boxRef} actionIgnore={['expand', 'full']}>
       <ConfigList level={1}>
         <Item label="开启Debug">
           <FullForm>

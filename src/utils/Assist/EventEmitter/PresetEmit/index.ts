@@ -1,6 +1,6 @@
 import { get } from 'lodash';
-import InteractiveUtil from '@/utils/Assist/Interactive';
 import { useAnyDva } from '@/hooks';
+import InteractiveUtil from '@/utils/Assist/Interactive';
 import { GLOBAL_EVENT_EMITTER, EVENT_NAME_MAP } from '../index';
 
 // 组件被删除
@@ -14,16 +14,11 @@ function onComponentDelete(deleteComponent: string[]) {
   InteractiveUtil.deleteComponentInteractive(
     {
       params,
-      setParams: (params) => {
+      setParams: (params, changeValue) => {
         dispatch({
-          type: 'global/setScreen',
-          value: {
-            config: {
-              attr: {
-                params,
-              },
-            },
-          },
+          type: 'global/setParams',
+          value: params,
+          changeValue,
         });
       },
     },

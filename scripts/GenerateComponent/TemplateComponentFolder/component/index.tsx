@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
@@ -49,9 +50,12 @@ const Component = (
 
   const {
     onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+    actionAble
+  } = useCondition({
+    onCondition, 
+    screenType,
+    componentId: id
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -80,13 +84,13 @@ const Component = (
     return classnames(
       className,
       'dis-flex',
-      conditionClassName,
     );
-  }, [className, conditionClassName]);
+  }, [className]);
 
   return (
     <>
-      <div
+      <ConditionComponent
+        componentId={id}
         className={componentClassName}
         style={merge(
           {
@@ -95,7 +99,6 @@ const Component = (
           },
           style,
           componentStyle,
-          conditionStyle,
         )}
         id={chartId.current}
         onClick={onClick}
@@ -104,7 +107,7 @@ const Component = (
           {children}
           组件render的地方
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

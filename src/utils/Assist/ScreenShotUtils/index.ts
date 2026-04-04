@@ -12,7 +12,7 @@ export async function removeCurrentScreenData() {
   const { value: screenShotData } = await LocalConfigInstance.getItem(
     LocalConfig.STATIC_SCREEN_SHOT_SAVE_KEY,
   );
-  delete screenShotData[screenData._id];
+  if (screenShotData) delete screenShotData[screenData._id];
   const { errMsg: screenShotErrMsg } = await LocalConfigInstance.setItem(
     LocalConfig.STATIC_SCREEN_SHOT_SAVE_KEY,
     screenShotData,

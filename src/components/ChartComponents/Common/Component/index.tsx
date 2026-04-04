@@ -1,7 +1,7 @@
-import { Component as ReactComponent } from 'react';
 import { get } from 'lodash';
-import FilterDataUtil from '@/utils/Assist/FilterData';
+import { Component as ReactComponent } from 'react';
 import { mergeWithoutArray } from '@/utils';
+import FilterDataUtil from '@/utils/Assist/FilterData';
 
 // ! 这个应该是没有用的
 // 公共渲染组件
@@ -128,16 +128,25 @@ class Component<P extends object = {}, S = {}> extends ReactComponent<
       return true;
     });
 
-    setParams(
-      params.map((param) => {
-        const { id } = param;
-        if (!toUpdateParamsId.includes(id)) return param;
-        return {
-          ...param,
-          value: value[param.key],
-        };
-      }),
-    );
+    const changeParams: {
+      prev: ComponentData.TParams;
+      now: ComponentData.TParams;
+    }[] = [];
+    const newParams = params.map((param) => {
+      const { id } = param;
+      if (!toUpdateParamsId.includes(id)) return param;
+      const changeData = {
+        ...param,
+        value: value[param.key],
+      };
+      changeParams.push({
+        prev: { ...param },
+        now: { ...changeData },
+      });
+      return changeData;
+    });
+
+    setParams(newParams, changeParams);
   };
 
   // * --------------------交互相关-end--------------------

@@ -1,10 +1,10 @@
-import { useRef, useCallback, useEffect, useState, useMemo } from 'react';
-import { get, isEqual, noop } from 'lodash';
 import { useUpdateEffect } from 'ahooks';
-import FilterDataUtil from '@/utils/Assist/FilterData';
-import VariableStringUtil from '@/utils/Assist/VariableString';
+import { get, isEqual, noop } from 'lodash';
+import { useRef, useCallback, useEffect, useState, useMemo } from 'react';
 import { mergeWithoutArray } from '@/utils';
 import { getDvaGlobalModelData } from '@/utils/Assist/Component';
+import FilterDataUtil from '@/utils/Assist/FilterData';
+import VariableStringUtil from '@/utils/Assist/VariableString';
 import { useFilterChange } from './useFilterChange';
 import { useLinkageInteractive } from './useLinkageInteractive';
 
@@ -283,16 +283,24 @@ export function useComponent<P extends object = {}>(
         return true;
       });
 
-      setParams(
-        params.map((param) => {
-          const { id } = param;
-          if (!toUpdateParamsId.includes(id)) return param;
-          return {
-            ...param,
-            value: value[param.key],
-          };
-        }),
-      );
+      const changeParams: {
+        prev: ComponentData.TParams;
+        now: ComponentData.TParams;
+      }[] = [];
+      const newParams = params.map((param) => {
+        const { id } = param;
+        if (!toUpdateParamsId.includes(id)) return param;
+        const changeData = {
+          ...param,
+          value: value[param.key],
+        };
+        changeParams.push({
+          prev: { ...param },
+          now: { ...changeData },
+        });
+        return changeData;
+      });
+      setParams(newParams, changeParams);
     },
     [component, global, screenType, baseInteractive],
   );

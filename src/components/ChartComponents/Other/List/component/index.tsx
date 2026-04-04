@@ -1,6 +1,6 @@
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
-import { merge, uniqueId } from 'lodash';
+import { uniqueId } from 'lodash';
 import { useMemo, useRef, useCallback } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
@@ -8,6 +8,7 @@ import 'slick-carousel/slick/slick.css';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
@@ -107,11 +108,11 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -156,12 +157,8 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
   }, [contentHeight, column, margin]);
 
   const componentClassName = useMemo(() => {
-    return classnames(
-      className,
-      styles['component-other-list'],
-      conditionClassName,
-    );
-  }, [className, animation, conditionClassName]);
+    return classnames(className, styles['component-other-list']);
+  }, [className, animation]);
 
   // 列表行
   const listItem = useCallback(
@@ -355,9 +352,10 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
 
   return (
     <>
-      <div
+      <ConditionComponent
+        componentId={id}
         className={componentClassName}
-        style={merge(style, conditionStyle)}
+        style={style}
         id={chartId.current}
       >
         <Wrapper border={border}>
@@ -365,7 +363,7 @@ const ListBasic = (props: ComponentData.CommonComponentProps<TListConfig>) => {
           {headerDom}
           {listContent}
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

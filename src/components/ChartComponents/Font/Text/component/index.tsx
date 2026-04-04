@@ -1,16 +1,17 @@
-import { CSSProperties, useMemo, useRef, useCallback } from 'react';
-import { uniqueId, merge } from 'lodash';
-import classnames from 'classnames';
 import { useSize } from 'ahooks';
+import classnames from 'classnames';
+import { uniqueId, merge } from 'lodash';
+import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { TTextConfig } from '../type';
 import { CHART_ID } from '../id';
+import { TTextConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
@@ -47,11 +48,11 @@ const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const isLimit = useMemo(() => {
     return (textSize?.height || 0) <= height;
@@ -86,12 +87,8 @@ const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
   }, [textStyle]);
 
   const componentClassName = useMemo(() => {
-    return classnames(
-      className,
-      styles['component-font-text'],
-      conditionClassName,
-    );
-  }, [className, conditionClassName]);
+    return classnames(className, styles['component-font-text']);
+  }, [className]);
 
   const element = useMemo(() => {
     if (isLimit || !animation.show) {
@@ -118,7 +115,8 @@ const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
 
   return (
     <>
-      <div
+      <ConditionComponent
+        componentId={id}
         className={componentClassName}
         style={merge(
           {
@@ -126,7 +124,6 @@ const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
             height: '100%',
           },
           style,
-          conditionStyle,
         )}
         id={chartId.current}
         onClick={onClick}
@@ -135,7 +132,7 @@ const Text = (props: ComponentData.CommonComponentProps<TTextConfig>) => {
           {children}
           {element}
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

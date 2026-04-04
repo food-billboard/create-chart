@@ -1,7 +1,5 @@
-import { useEffect, useRef } from 'react';
 import { uniqueId, merge } from 'lodash';
-import classnames from 'classnames';
-import { useDeepUpdateEffect } from '@/hooks';
+import { useEffect, useRef } from 'react';
 import {
   useComponent,
   useChartComponentResize,
@@ -9,14 +7,16 @@ import {
   useComponentResize,
   useAnimationChange,
   useCondition,
+  ConditionComponent,
   useChartComponentTooltip,
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { init } from '@/utils/Assist/EchartsLoader';
-import ColorSelect from '@/components/ColorSelect';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
-import { TZebraBarConfig } from '../type';
+import ColorSelect from '@/components/ColorSelect';
+import { useDeepUpdateEffect } from '@/hooks';
+import { init } from '@/utils/Assist/EchartsLoader';
 import { CHART_ID } from '../id';
+import { TZebraBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
 
@@ -59,11 +59,11 @@ const ZebraBar = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const { seriesKeys, xAxisKeys, yAxisValues } = useChartValueMapField(
     processedValue,
@@ -197,22 +197,22 @@ const ZebraBar = (
 
   return (
     <>
-      <div
-        className={classnames(className, conditionClassName)}
+      <ConditionComponent
+        componentId={id}
+        className={className}
         style={merge(
           {
             width: '100%',
             height: '100%',
           },
           style,
-          conditionStyle,
         )}
       >
         <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

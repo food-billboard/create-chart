@@ -1,18 +1,18 @@
+import { get } from 'lodash';
+import { CSSProperties, useCallback, useMemo } from 'react';
+import { connect } from 'umi';
 import { getComponentByType } from '@/components/ChartComponents';
 import { getTargetBorder } from '@/components/InternalBorder';
 import { ConnectState } from '@/models/connect';
 import { mergeWithoutArray } from '@/utils';
 import { EComponentType } from '@/utils/constants';
-import { get } from 'lodash';
-import { CSSProperties, useCallback, useMemo } from 'react';
-import { connect } from 'umi';
 import ComponentInternalWrapper from './ComponentInternalWrapper';
 import ComponentWrapper from './ComponentWrapper';
-import styles from './index.less';
 import SubGroup from './SubGroup';
+import styles from './index.less';
 
 const Content = (props: {
-  setParams: (value: ComponentData.TParams[]) => void;
+  setParams: ComponentData.SetParamsFunction;
   screenType: ComponentData.ScreenType;
   component: ComponentData.ComponentProps['component'];
   timestamps?: number;
@@ -206,8 +206,10 @@ export default connect(
   },
   (dispatch: any) => {
     return {
-      setParams: (value: ComponentData.TParams[]) =>
-        dispatch({ type: 'global/setParams', value }),
+      setParams: (
+        value: ComponentData.TParams[],
+        changeValue: ComponentData.SetParamsChangeValue[],
+      ) => dispatch({ type: 'global/setParams', value, changeValue }),
     };
   },
 )(Content);

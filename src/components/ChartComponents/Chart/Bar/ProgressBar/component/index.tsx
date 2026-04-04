@@ -1,22 +1,22 @@
-import { useEffect, useRef, useMemo } from 'react';
 import { uniqueId, merge } from 'lodash';
-import classnames from 'classnames';
-import { useDeepUpdateEffect } from '@/hooks';
+import { useEffect, useRef, useMemo } from 'react';
 import {
   useComponent,
   useChartComponentResize,
   useComponentResize,
   useAnimationChange,
   useCondition,
+  ConditionComponent,
   useChartPerConfig,
 } from '@/components/ChartComponents/Common/Component/hook';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import ColorSelect from '@/components/ColorSelect';
+import { useDeepUpdateEffect } from '@/hooks';
 import { init } from '@/utils/Assist/EchartsLoader';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
-import { TProgressBarConfig } from '../type';
 import { CHART_ID } from '../id';
+import { TProgressBarConfig } from '../type';
 
 const { getRgbaString } = ColorSelect;
 
@@ -59,11 +59,11 @@ const ProgressBar = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -218,22 +218,22 @@ const ProgressBar = (
 
   return (
     <>
-      <div
-        className={classnames(className, conditionClassName)}
+      <ConditionComponent
+        componentId={id}
+        className={className}
         style={merge(
           {
             width: '100%',
             height: '100%',
           },
           style,
-          conditionStyle,
         )}
       >
         <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

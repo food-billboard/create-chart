@@ -77,7 +77,7 @@ function Previewer(props: {
   return (
     <PainterWrapper scale={scale}>
       <NormalPainter {...wrapperProps} />
-      <FetchScreenComponent needFetch={needFetch} />
+      <FetchScreenComponent needFetch={needFetch} screenType="preview" />
     </PainterWrapper>
   );
 }

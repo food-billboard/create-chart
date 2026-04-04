@@ -31,6 +31,7 @@ export type FetchScreenComponentRef = {
 const FetchScreenComponent = forwardRef<
   FetchScreenComponentRef,
   {
+    screenType: ComponentData.ScreenType;
     fetchScreenShot?: boolean;
     needFetch?: boolean;
     onLoad?: () => void;
@@ -53,6 +54,7 @@ const FetchScreenComponent = forwardRef<
     setVersion,
     onLoad,
     fetchScreenShot = false,
+    screenType,
   } = props;
 
   const { message, modal } = App.useApp();
@@ -183,8 +185,10 @@ const FetchScreenComponent = forwardRef<
       message.info('数据获取失败');
     }
 
-    const result = autoFitScale(width, height, flag);
-    setScale?.(result);
+    if (screenType === 'edit') {
+      const result = autoFitScale(width, height, flag);
+      setScale?.(result);
+    }
 
     await sleep(1000);
 

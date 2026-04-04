@@ -129,10 +129,13 @@ const InternalParamsSelectSingle = (
     });
   }, [dataSource]);
 
-  const handleChange = useCallback((value) => {
-    const [target] = value.slice(-1);
-    onChange?.(target);
-  }, []);
+  const handleChange = useCallback(
+    (value) => {
+      const [target] = value.slice(-1);
+      onChange?.(target);
+    },
+    [onChange],
+  );
 
   const changeLazyNode = useMemo(() => {
     if (!needChangeLazy) return null;

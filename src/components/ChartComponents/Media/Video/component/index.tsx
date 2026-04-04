@@ -1,17 +1,18 @@
-import { useMemo, useRef, useCallback } from 'react';
-import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
+import { uniqueId, merge } from 'lodash';
+import { useMemo, useRef, useCallback } from 'react';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { useClipPath } from '@/hooks';
-import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
-import FilterDataUtil from '@/utils/Assist/FilterData';
-import { TVideoConfig } from '../type';
-import { CHART_ID } from '../id';
-import styles from './index.less';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
+import { useClipPath } from '@/hooks';
+import FilterDataUtil from '@/utils/Assist/FilterData';
+import { CHART_ID } from '../id';
+import { TVideoConfig } from '../type';
+import styles from './index.less';
 
 const VideoBasic = (
   props: ComponentData.CommonComponentProps<TVideoConfig>,
@@ -53,11 +54,11 @@ const VideoBasic = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const autoplay = useMemo(() => {
     return screenType === 'edit' ? false : opAutoplay;
@@ -76,16 +77,13 @@ const VideoBasic = (
   }, [syncInteractiveAction, finalValue]);
 
   const componentClassName = useMemo(() => {
-    return classnames(
-      className,
-      styles['component-media-video'],
-      conditionClassName,
-    );
-  }, [className, conditionClassName]);
+    return classnames(className, styles['component-media-video']);
+  }, [className]);
 
   return (
     <>
-      <div
+      <ConditionComponent
+        componentId={id}
         className={componentClassName}
         style={merge(
           {
@@ -96,7 +94,6 @@ const VideoBasic = (
           },
           style,
           clipPathStyle,
-          conditionStyle,
         )}
         id={chartId.current}
         onClick={onClick}
@@ -111,7 +108,7 @@ const VideoBasic = (
             src={finalValue.value}
           />
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

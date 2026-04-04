@@ -569,7 +569,8 @@ declare namespace ComponentData {
     | 'hidden'
     | 'ease-in-out'
     | 'ease-in'
-    | 'ease-out';
+    | 'ease-out'
+    | 'modal-visible';
 
   // condition
   export type ComponentCondition = {
@@ -590,7 +591,6 @@ declare namespace ComponentData {
   export type ComponentConditionConfig = {
     value: ComponentCondition[];
     initialState: 'visible' | 'hidden';
-    modalEnable: boolean;
   };
 
   export type ComponentTooltipAnimation = {
@@ -683,8 +683,20 @@ declare namespace ComponentData {
     type: ComponentLineStyle;
   };
 
+  export type SetParamsChangeValue = {
+    // null 表示新增
+    prev: TParams | null;
+    // TParams 修改 false 删除
+    now: TParams | false;
+  };
+
+  export type SetParamsFunction = (
+    params: TParams[],
+    changeParams: SetParamsChangeValue[],
+  ) => void;
+
   export type TGlobalData = {
-    setParams: (params: TParams[]) => void;
+    setParams: SetParamsFunction;
     screenType: 'edit' | 'preview' | 'production';
     screenTheme: TScreenTheme['value'];
   };

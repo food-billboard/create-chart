@@ -10,13 +10,7 @@ const ConditionConfig = (props: {
 
   const onKeyChange = useCallback(
     (value: any) => {
-      onChange({
-        config: {
-          options: {
-            condition: value,
-          },
-        },
-      });
+      onChange(value);
     },
     [onChange],
   );

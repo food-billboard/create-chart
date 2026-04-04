@@ -1,6 +1,6 @@
 import Select from '../../../Select';
 
-const DATASOURCE = [
+const DATA_SOURCE = [
   {
     value: 'visible',
     label: '显示',
@@ -22,7 +22,7 @@ const InitialStateConfig = (props: {
       className="w-100"
       value={value}
       onChange={onChange}
-      options={DATASOURCE}
+      options={DATA_SOURCE}
     />
   );
 };

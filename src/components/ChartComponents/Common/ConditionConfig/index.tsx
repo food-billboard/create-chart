@@ -1,13 +1,13 @@
-import { ReactNode, useCallback, useMemo } from 'react';
 import { Radio } from 'antd';
+import { ReactNode, useCallback, useMemo } from 'react';
 import MultipleSeriesConfig from '@/components/ChartComponents/Common/MultipleSeriesConfig';
 import GlobalConfig from '@/utils/Assist/GlobalConfig';
-import Select from '../Select';
-import CodeEditor from './components/CodeEditor';
 import { DEFAULT_CONDITION_CONFIG } from '../Constants/defaultConfig';
+import RuleTree from '../RuleTree';
+import Select from '../Select';
 import ConfigList from '../Structure/ConfigList';
 import FullForm from '../Structure/FullForm';
-import RuleTree from '../RuleTree';
+import CodeEditor from './components/CodeEditor';
 import InitialStateConfig from './components/InitialStateConfig';
 
 const { Item } = ConfigList;
@@ -132,6 +132,10 @@ const ConditionConfig = (props: ConditionConfigProps) => {
                       {
                         label: '渐隐渐显',
                         value: 'ease-in-out',
+                      },
+                      {
+                        label: '小窗显示',
+                        value: 'modal-visible',
                       },
                     ]}
                     onChange={(action) => {

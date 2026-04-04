@@ -4,6 +4,7 @@ import { CSSProperties, ReactNode, useMemo } from 'react';
 import { connect } from 'umi';
 import {
   useCondition,
+  ConditionComponent,
   useGroupComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
@@ -70,24 +71,24 @@ const SubGroup = (props: {
     },
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   return (
-    <div
+    <ConditionComponent
       className={classnames(
         'w-100 h-100',
-        conditionClassName,
         className,
         styles['render-component-wrapper-inner'],
       )}
-      style={merge(childrenStyle, style || {}, conditionStyle, {
+      style={merge(childrenStyle, style || {}, {
         position: flag === 'H5' ? 'relative' : 'absolute',
       })}
       data-id={id}
+      componentId={id}
     >
       <Wrapper border={border}>
         <div
@@ -113,7 +114,7 @@ const SubGroup = (props: {
         reGetValue={() => []}
         url=""
       />
-    </div>
+    </ConditionComponent>
   );
 };
 

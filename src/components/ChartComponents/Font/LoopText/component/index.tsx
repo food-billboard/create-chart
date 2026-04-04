@@ -1,16 +1,17 @@
-import { CSSProperties, useMemo, useRef } from 'react';
-import { uniqueId, merge } from 'lodash';
 import classnames from 'classnames';
+import { uniqueId, merge } from 'lodash';
+import { CSSProperties, useMemo, useRef } from 'react';
 import { TextLoop } from 'react-text-loop-next';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { TLoopTextConfig } from '../type';
 import { CHART_ID } from '../id';
+import { TLoopTextConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
@@ -53,11 +54,11 @@ const LoopText = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const onClick = (value: string) => {
     linkageMethod('click', { value });
@@ -85,13 +86,13 @@ const LoopText = (
       className,
       'dis-flex',
       styles['component-font-loop-text'],
-      conditionClassName,
     );
-  }, [className, conditionClassName]);
+  }, [className]);
 
   return (
     <>
-      <div
+      <ConditionComponent
+        componentId={id}
         className={componentClassName}
         style={merge(
           {
@@ -99,7 +100,6 @@ const LoopText = (
             height: '100%',
           },
           style,
-          conditionStyle,
         )}
         id={chartId.current}
       >
@@ -146,7 +146,7 @@ const LoopText = (
             )}
           </div>
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

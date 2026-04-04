@@ -1,18 +1,19 @@
-import {
-  useComponent,
-  useCondition,
-} from '@/components/ChartComponents/Common/Component/hook';
-import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
-import ColorSelect from '@/components/ColorSelect';
-import { ConnectState } from '@/models/connect';
-import { sleep } from '@/utils';
-import FilterDataUtil from '@/utils/Assist/FilterData';
 import { useDeepCompareEffect } from 'ahooks';
 import Anime from 'animejs';
 import classnames from 'classnames';
 import { merge, uniqueId } from 'lodash';
 import { useCallback, useMemo, useRef } from 'react';
 import { connect } from 'umi';
+import {
+  useComponent,
+  useCondition,
+  ConditionComponent,
+} from '@/components/ChartComponents/Common/Component/hook';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
+import ColorSelect from '@/components/ColorSelect';
+import { ConnectState } from '@/models/connect';
+import { sleep } from '@/utils';
+import FilterDataUtil from '@/utils/Assist/FilterData';
 import { CHART_ID } from '../id';
 import { TPathBasicConfig } from '../type';
 import styles from './index.less';
@@ -64,11 +65,11 @@ const _PathBasic = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -233,19 +234,15 @@ const _PathBasic = (
 
   return (
     <>
-      <div
-        className={classnames(
-          className,
-          styles['component-other-path-basic'],
-          conditionClassName,
-        )}
+      <ConditionComponent
+        componentId={id}
+        className={classnames(className, styles['component-other-path-basic'])}
         style={merge(
           {
             width: '100%',
             height: '100%',
           },
           style,
-          conditionStyle,
         )}
         id={chartId.current}
         onClick={onClick}
@@ -270,7 +267,7 @@ const _PathBasic = (
             ></path>
           </svg>
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

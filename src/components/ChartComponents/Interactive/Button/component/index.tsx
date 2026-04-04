@@ -1,15 +1,16 @@
+import { Button as AntButton } from 'antd';
+import classnames from 'classnames';
+import { merge, uniqueId } from 'lodash';
+import { useCallback, useMemo, useRef } from 'react';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import { API_CONTAIN_PARAMS_IMMEDIATELY_REQUEST_URL_FLAG } from '@/utils/constants';
-import { Button as AntButton } from 'antd';
-import classnames from 'classnames';
-import { merge, uniqueId } from 'lodash';
-import { useCallback, useMemo, useRef } from 'react';
 import { CHART_ID } from '../id';
 import { TButtonConfig } from '../type';
 import styles from './index.less';
@@ -55,11 +56,11 @@ const Button = (props: ComponentData.CommonComponentProps<TButtonConfig>) => {
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -85,9 +86,8 @@ const Button = (props: ComponentData.CommonComponentProps<TButtonConfig>) => {
       className,
       'dis-flex',
       styles['component-interactive-button'],
-      conditionClassName,
     );
-  }, [className, conditionClassName]);
+  }, [className]);
 
   const iconNode = useMemo(() => {
     return (
@@ -99,7 +99,7 @@ const Button = (props: ComponentData.CommonComponentProps<TButtonConfig>) => {
   }, [icon, fontSize]);
 
   return (
-    <div
+    <ConditionComponent
       className={componentClassName}
       style={merge(
         {
@@ -107,7 +107,6 @@ const Button = (props: ComponentData.CommonComponentProps<TButtonConfig>) => {
           height: '100%',
         },
         style,
-        conditionStyle,
       )}
       id={chartId.current}
     >
@@ -148,7 +147,7 @@ const Button = (props: ComponentData.CommonComponentProps<TButtonConfig>) => {
         componentFilter={componentFilter}
         componentCondition={condition}
       />
-    </div>
+    </ConditionComponent>
   );
 };
 

@@ -6,6 +6,7 @@ import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { parseTextStyle } from '@/components/ChartComponents/Common/utils';
@@ -71,11 +72,11 @@ const CountUpNumberBasic = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -114,9 +115,8 @@ const CountUpNumberBasic = (
       className,
       'dis-flex',
       styles['component-font-count-up-number'],
-      conditionClassName,
     );
-  }, [className, conditionClassName]);
+  }, [className]);
 
   useDeepCompareEffect(() => {
     chartInstance.current = new CountUp(
@@ -143,7 +143,8 @@ const CountUpNumberBasic = (
 
   return (
     <>
-      <div
+      <ConditionComponent
+        componentId={id}
         className={componentClassName}
         style={merge(
           {
@@ -151,7 +152,6 @@ const CountUpNumberBasic = (
             height: '100%',
           },
           style,
-          conditionStyle,
         )}
         onClick={onClick}
       >
@@ -174,7 +174,7 @@ const CountUpNumberBasic = (
           </div>
           {children}
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

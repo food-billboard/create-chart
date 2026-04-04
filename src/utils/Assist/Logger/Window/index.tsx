@@ -1,16 +1,12 @@
-import { useState, ReactNode, useEffect, useRef, useCallback } from 'react';
+import { CaretRightOutlined } from '@ant-design/icons';
 import { useKeyPress } from 'ahooks';
 import { Tabs, Button, Collapse } from 'antd';
-import { CaretRightOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
+import { useState, ReactNode, useEffect, useRef, useCallback } from 'react';
+import WinBox from '@/components/Winbox';
 import type { WinBoxRef } from '@/components/Winbox';
-import LazyLoadWrapper from '@/components/LazyLoad';
 import Logger from '../index';
 import styles from './index.less';
-
-const WinBox = LazyLoadWrapper<any, WinBoxRef>(() => {
-  return import(/* webpackChunkName: "WinBox" */ '@/components/Winbox');
-});
 
 const WindowBoxWrapper = () => {
   const [dataSource, setDataSource] = useState<ReactNode>([]);
@@ -37,11 +33,7 @@ const WindowBoxWrapper = () => {
   }, [currentTab]);
 
   return (
-    <WinBox
-      wrapperComponentRef={boxRef}
-      widthRate={[0.4, 0.7]}
-      heightRate={[0.4, 0.7]}
-    >
+    <WinBox ref={boxRef} actionIgnore={['full']}>
       <div
         className={classnames(styles['logger-window'], 'p-4 dis-flex h-100')}
       >

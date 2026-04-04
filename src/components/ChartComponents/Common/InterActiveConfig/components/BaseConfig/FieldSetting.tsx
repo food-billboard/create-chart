@@ -19,8 +19,6 @@ type IProps = {
   onChange?: ComponentMethod.SetComponentMethod;
   id: string;
   dataSource: ComponentData.TBaseInteractiveConfig[];
-  params: ComponentData.TParams[];
-  setParams: (value: ComponentData.TParams[]) => void;
   disabled?: boolean;
 };
 
@@ -93,15 +91,7 @@ const EditModal = (props: {
 };
 
 const FieldSetting = (props: IProps) => {
-  const {
-    value,
-    onChange,
-    id,
-    dataSource,
-    params,
-    setParams,
-    disabled = false,
-  } = props;
+  const { value, onChange, id, dataSource, disabled = false } = props;
   const { name, fields, show, type, extend } = value;
 
   const variableUsageRef = useRef<VariableUsageRef>(null);

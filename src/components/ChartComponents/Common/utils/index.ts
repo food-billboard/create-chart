@@ -76,10 +76,11 @@ export function updateInteractiveAndSyncParams(
     componentId,
   } = params;
   const { dispatch, getState } = useAnyDva();
-  const setParams = (params: ComponentData.TParams[]) =>
+  const setParams: ComponentData.SetParamsFunction = (params, changeParams) =>
     dispatch({
-      type: 'global/setScreen',
-      value: { config: { attr: { params } } },
+      type: 'global/setParams',
+      value: params,
+      changeValue: changeParams,
     });
   try {
     const params = getState().global.screenData.config.attr.params;

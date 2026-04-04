@@ -9,6 +9,8 @@ declare module '*.svg' {
   export default url;
 }
 
+declare module '@lucky-canvas/react';
+
 declare namespace React {
   // useCallback parameters are implicitly typed to any.
   // This override has the effect of forcing you to write types any parameters you want to use.

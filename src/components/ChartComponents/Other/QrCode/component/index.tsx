@@ -1,19 +1,20 @@
-import { useMemo, useRef, useState } from 'react';
-import { merge, uniqueId } from 'lodash';
+import { useDeepCompareEffect } from 'ahooks';
 import classnames from 'classnames';
+import { uniqueId } from 'lodash';
 import QRCode from 'qrcode';
 import type { QRCodeRenderersOptions } from 'qrcode';
-import { useDeepCompareEffect } from 'ahooks';
+import { useMemo, useRef, useState } from 'react';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
-import { TQrCodeConfig } from '../type';
 import { CHART_ID } from '../id';
+import { TQrCodeConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString, getHexString } = ColorSelect;
@@ -49,11 +50,11 @@ const QrCode = (props: ComponentData.CommonComponentProps<TQrCodeConfig>) => {
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -112,13 +113,8 @@ const QrCode = (props: ComponentData.CommonComponentProps<TQrCodeConfig>) => {
       className,
       'w-100 h-100',
       styles['component-other-qr-code'],
-      conditionClassName,
     );
-  }, [className, conditionClassName]);
-
-  const componentStyle = useMemo(() => {
-    return merge(style, conditionStyle);
-  }, [style, conditionStyle]);
+  }, [className]);
 
   useDeepCompareEffect(() => {
     generateQrCode(finalValue.value, {
@@ -132,9 +128,10 @@ const QrCode = (props: ComponentData.CommonComponentProps<TQrCodeConfig>) => {
 
   return (
     <>
-      <div
+      <ConditionComponent
+        componentId={id}
         className={componentClassName}
-        style={componentStyle}
+        style={style}
         id={chartId.current}
         onClick={onClick}
       >
@@ -155,7 +152,7 @@ const QrCode = (props: ComponentData.CommonComponentProps<TQrCodeConfig>) => {
             {logoDom}
           </div>
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

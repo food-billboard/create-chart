@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import ConditionConfigCommon from '@/components/ChartComponents/Common/ConditionConfig';
 import { TAudioConfig } from '../type';
 
@@ -8,20 +7,7 @@ const ConditionConfig = (props: {
 }) => {
   const { value, onChange } = props;
 
-  const onKeyChange = useCallback(
-    (value: any) => {
-      onChange({
-        config: {
-          options: {
-            condition: value,
-          },
-        },
-      });
-    },
-    [onChange],
-  );
-
-  return <ConditionConfigCommon value={value} onChange={onKeyChange} />;
+  return <ConditionConfigCommon value={value} onChange={onChange} />;
 };
 
 export default ConditionConfig;

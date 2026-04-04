@@ -4,6 +4,7 @@ import { CSSProperties, useMemo, useRef, useCallback } from 'react';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import Marquee from '@/components/ChartComponents/Common/Marquee';
@@ -48,11 +49,11 @@ const TFontCarousel = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -82,13 +83,13 @@ const TFontCarousel = (
       className,
       // 'dis-flex',
       styles['component-font-carousel'],
-      conditionClassName,
     );
-  }, [className, conditionClassName]);
+  }, [className]);
 
   return (
     <>
-      <div
+      <ConditionComponent
+        componentId={id}
         className={componentClassName}
         style={merge(
           {
@@ -97,7 +98,6 @@ const TFontCarousel = (
           },
           style,
           componentStyle,
-          conditionStyle,
         )}
         id={chartId.current}
         onClick={onClick}
@@ -125,7 +125,7 @@ const TFontCarousel = (
             </Marquee>
           }
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

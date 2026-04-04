@@ -1,22 +1,22 @@
-import { useEffect, useRef } from 'react';
 import { uniqueId, merge } from 'lodash';
-import classnames from 'classnames';
-import { useDeepUpdateEffect } from '@/hooks';
+import { useEffect, useRef } from 'react';
 import {
   useComponent,
   useChartComponentResize,
   useChartValueMapField,
   useComponentResize,
   useCondition,
+  ConditionComponent,
   useChartComponentTooltip,
 } from '@/components/ChartComponents/Common/Component/hook';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import { radialGradientColor } from '@/components/ChartComponents/Common/utils';
 import ColorSelect from '@/components/ColorSelect';
+import { useDeepUpdateEffect } from '@/hooks';
 import { init, registerMap } from '@/utils/Assist/EchartsLoader';
-import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
-import chinaMap from './china.json';
-import { TScatterMapConfig } from '../type';
 import { CHART_ID } from '../id';
+import { TScatterMapConfig } from '../type';
+import chinaMap from './china.json';
 
 const { getRgbaString } = ColorSelect;
 
@@ -58,11 +58,11 @@ const ScatterMap = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const { realValue } = useChartValueMapField(processedValue, {
     map: componentFilterMap,
@@ -248,22 +248,22 @@ const ScatterMap = (
 
   return (
     <>
-      <div
-        className={classnames(className, conditionClassName)}
+      <ConditionComponent
+        componentId={id}
+        className={className}
         style={merge(
           {
             width: '100%',
             height: '100%',
           },
           style,
-          conditionStyle,
         )}
       >
         <Wrapper border={border}>
           <div id={chartId.current} className="w-100 h-100"></div>
           {children}
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

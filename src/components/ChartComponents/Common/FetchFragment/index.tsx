@@ -1,8 +1,12 @@
-import { CompareFilterUtil } from '@/utils/Assist/FilterData';
-import { useUpdateEffect } from 'ahooks';
+import { useDeepCompareEffect, useUpdateEffect } from 'ahooks';
 import { noop } from 'lodash';
 import { useEffect, useRef } from 'react';
 import { connect } from 'umi';
+import {
+  EVENT_NAME_MAP,
+  GLOBAL_EVENT_EMITTER,
+} from '@/utils/Assist/EventEmitter';
+import { CompareFilterUtil } from '@/utils/Assist/FilterData';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 export type TFetchFragmentProps = {
@@ -88,10 +92,53 @@ const FetchFragment = (props: TFetchFragmentProps) => {
     filterUtil.current?.compare(params);
   }, [params]);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     componentCondition.forEach((condition) => {
       reCondition(condition, initialState);
     });
+
+    function listener(
+      params: ComponentData.TParams[],
+      changeParams: ComponentData.SetParamsChangeValue[],
+      changeParamsIds: string[],
+    ) {
+      componentCondition.forEach((condition) => {
+        const {
+          action,
+          type,
+          value: { code, condition: valueCondition },
+        } = condition;
+        let valid = false;
+        // 小窗显示的需要单独处理
+        // 判断更改的params中是否包含此组件的关联参数
+        // ? 因为对于弹窗的显示隐藏，要的是多次对于同一条件的多次触发，但是可能存在参数的值并没有发生改变，比如说是点击事件的响应，他的值并不会改变，但是却希望小窗显示始终响应此种改变，所以在此做特殊处理
+        // TODO
+        // ? 对于前面有的关于渐隐渐显条件，看后续是否也需要同样支持
+        if (['modal-visible'].includes(action)) {
+          if (type === 'code') {
+            valid = code.relation.some((item) =>
+              changeParamsIds.includes(item),
+            );
+          } else {
+            valid = valueCondition.rule.some((item) => {
+              return item.rule.some((item) =>
+                changeParamsIds.includes(item.params),
+              );
+            });
+          }
+          if (valid) {
+            reCondition(condition, initialState);
+          }
+        }
+      });
+    }
+    GLOBAL_EVENT_EMITTER.addListener(EVENT_NAME_MAP.PARAMS_CHANGE, listener);
+    return () => {
+      GLOBAL_EVENT_EMITTER.removeListener(
+        EVENT_NAME_MAP.PARAMS_CHANGE,
+        listener,
+      );
+    };
   }, [componentCondition, reCondition, initialState]);
 
   useEffect(() => {

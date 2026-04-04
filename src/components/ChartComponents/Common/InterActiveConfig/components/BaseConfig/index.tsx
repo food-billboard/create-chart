@@ -2,7 +2,7 @@ import { CaretRightOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Checkbox, Collapse } from 'antd';
 import { get } from 'lodash';
 import type { ItemType } from 'rc-collapse/es/interface';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { connect } from 'umi';
 import IconTooltip from '@/components/IconTooltip';
 import { getPath } from '@/utils/Assist/Component';
@@ -53,22 +53,9 @@ const BaseConfig = (props: {
   component: ComponentData.TComponentData;
   onChange?: ComponentMethod.SetComponentMethod;
   params: ComponentData.TParams[];
-  setScreen: (value: ComponentMethod.GlobalUpdateScreenDataParams) => void;
+  setParams: ComponentData.SetParamsFunction;
 }) => {
-  const { id, component, onChange, params, setScreen } = props;
-
-  const setParams = useCallback(
-    (params: ComponentData.TParams[]) => {
-      setScreen({
-        config: {
-          attr: {
-            params,
-          },
-        },
-      });
-    },
-    [setScreen],
-  );
+  const { id, component, onChange, params, setParams } = props;
 
   const enableComponentInteractive = (show: boolean, originId: string) => {
     return InteractiveUtil.enableComponentInteractive(
@@ -148,8 +135,6 @@ const BaseConfig = (props: {
               id={id}
               dataSource={baseInteractive}
               key={name}
-              params={params}
-              setParams={setParams}
               disabled={!show}
             />
           ),

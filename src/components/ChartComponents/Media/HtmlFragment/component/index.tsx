@@ -4,6 +4,7 @@ import { CSSProperties, useMemo, useRef } from 'react';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
@@ -35,11 +36,11 @@ const HtmlFragment = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const componentStyle = useMemo(() => {
     let baseStyle: CSSProperties = {
@@ -54,13 +55,13 @@ const HtmlFragment = (
       className,
       'dis-flex',
       styles['component-media-html-fragment'],
-      conditionClassName,
     );
-  }, [className, conditionClassName]);
+  }, [className]);
 
   return (
     <>
-      <div
+      <ConditionComponent
+        componentId={id}
         className={componentClassName}
         style={merge(
           {
@@ -68,7 +69,6 @@ const HtmlFragment = (
             height: '100%',
           },
           style,
-          conditionStyle,
         )}
         id={chartId.current}
       >
@@ -82,7 +82,7 @@ const HtmlFragment = (
             }}
           />
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={''}

@@ -15,7 +15,7 @@ class InteractiveUtil {
       setParams,
     }: {
       params: ComponentData.TParams[];
-      setParams: (params: ComponentData.TParams[]) => void;
+      setParams: ComponentData.SetParamsFunction;
     },
     updateData: UpdateParams | AddParams,
   ) {
@@ -25,8 +25,16 @@ class InteractiveUtil {
 
     // 相当于是删除了
     if (!variable) {
-      const newParams = params.filter((param) => param.id !== id);
-      setParams(newParams);
+      const newParams = [...params];
+      const index = newParams.findIndex((param) => param.id !== id);
+      const target = newParams[index];
+      newParams.splice(index, 1);
+      setParams(newParams, [
+        {
+          prev: target,
+          now: false,
+        },
+      ]);
       return '';
     }
 
@@ -39,7 +47,15 @@ class InteractiveUtil {
         originType: 'COMPONENT',
         variable,
       };
-      setParams([...params, newParam]);
+      setParams(
+        [...params, newParam],
+        [
+          {
+            prev: null,
+            now: newParam,
+          },
+        ],
+      );
       return newParam.id;
     }
 
@@ -52,7 +68,12 @@ class InteractiveUtil {
       ...updateData,
     });
 
-    setParams(newParams);
+    setParams(newParams, [
+      {
+        prev: target,
+        now: newParams[index],
+      },
+    ]);
 
     return target.id;
   }
@@ -64,17 +85,25 @@ class InteractiveUtil {
       setParams,
     }: {
       params: ComponentData.TParams[];
-      setParams: (params: ComponentData.TParams[]) => void;
+      setParams: ComponentData.SetParamsFunction;
     },
     origin: string | string[],
   ) {
     const realOrigin = Array.isArray(origin) ? origin : [origin];
 
-    const newParams = [...params].filter(
-      (item) => !realOrigin.includes(item.origin as string),
-    );
+    const changeValue: ComponentData.SetParamsChangeValue[] = [];
+    const newParams = [...params].filter((item) => {
+      const isCorrect = !realOrigin.includes(item.origin as string);
+      if (!isCorrect) {
+        changeValue.push({
+          prev: item,
+          now: false,
+        });
+      }
+      return isCorrect;
+    });
 
-    setParams(newParams);
+    setParams(newParams, changeValue);
 
     return origin;
   }
@@ -86,21 +115,27 @@ class InteractiveUtil {
       setParams,
     }: {
       params: ComponentData.TParams[];
-      setParams: (params: ComponentData.TParams[]) => void;
+      setParams: ComponentData.SetParamsFunction;
     },
     origin: string,
     originId: string,
     show: boolean,
   ) {
+    const changeParams: ComponentData.SetParamsChangeValue[] = [];
     const newParams = [...params].map((item) => {
       if (item.origin !== origin && item.originId !== originId) return item;
-      return {
+      const changeData = {
         ...item,
         show,
       };
+      changeParams.push({
+        prev: { ...item },
+        now: { ...changeData },
+      });
+      return changeData;
     });
 
-    setParams(newParams);
+    setParams(newParams, changeParams);
 
     return origin;
   }

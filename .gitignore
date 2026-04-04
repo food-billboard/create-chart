@@ -41,3 +41,4 @@ build
 /public/lib/monaco-editor/*
 
 .env 
+TEMPLATE.README.md

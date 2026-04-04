@@ -130,4 +130,7 @@ export default {
 
   // 多选缩放 缩放暂停
   MULTIPLE_COMPONENT_RESIZE_STOP: 'MULTIPLE_COMPONENT_RESIZE_STOP',
+
+  // params 发生变化
+  PARAMS_CHANGE: 'PARAMS_CHANGE',
 };

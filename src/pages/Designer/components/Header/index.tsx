@@ -149,6 +149,7 @@ const Header = (props: {
       await removeCurrentScreenData();
       message.info('操作成功，页面即将刷新', 1, () => window.location.reload());
     } catch (err) {
+      console.error(err);
       message.info('操作出错');
     }
     setFetchLoading(false);

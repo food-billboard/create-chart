@@ -1,18 +1,19 @@
-import { useMemo, useRef, useCallback } from 'react';
-import { merge, uniqueId } from 'lodash';
-import classnames from 'classnames';
 import { Tag as AntTag } from 'antd';
+import classnames from 'classnames';
+import { merge, uniqueId } from 'lodash';
+import { useMemo, useRef, useCallback } from 'react';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
+import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
 import ThemeUtil from '@/utils/Assist/Theme';
-import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
-import { TTagConfig } from '../type';
 import { CHART_ID } from '../id';
+import { TTagConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
@@ -47,11 +48,11 @@ const Tag = (props: ComponentData.CommonComponentProps<TTagConfig>) => {
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -69,16 +70,12 @@ const Tag = (props: ComponentData.CommonComponentProps<TTagConfig>) => {
   );
 
   const componentClassName = useMemo(() => {
-    return classnames(
-      className,
-      styles['component-font-tag'],
-      conditionClassName,
-    );
-  }, [className, conditionClassName]);
+    return classnames(className, styles['component-font-tag']);
+  }, [className]);
 
   const componentStyle = useMemo(() => {
-    return merge(style, conditionStyle);
-  }, [style, conditionStyle, textStyle]);
+    return merge(style);
+  }, [style, textStyle]);
 
   // 列表行
   const listItem = useCallback(
@@ -132,7 +129,8 @@ const Tag = (props: ComponentData.CommonComponentProps<TTagConfig>) => {
 
   return (
     <>
-      <div
+      <ConditionComponent
+        componentId={id}
         className={componentClassName}
         style={componentStyle}
         id={chartId.current}
@@ -141,7 +139,7 @@ const Tag = (props: ComponentData.CommonComponentProps<TTagConfig>) => {
           {children}
           {valueList}
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

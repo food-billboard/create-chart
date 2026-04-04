@@ -1,17 +1,18 @@
-import { useEffect, useRef } from 'react';
-import { uniqueId, merge, pick } from 'lodash';
-import classnames from 'classnames';
 import { useUnmount } from 'ahooks';
-import { useDeepUpdateEffect } from '@/hooks';
+import classnames from 'classnames';
+import { uniqueId, merge, pick } from 'lodash';
+import { useEffect, useRef } from 'react';
 import {
   useComponent,
   useChartValueMapField,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
-import ColorSelect from '@/components/ColorSelect';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
-import { TAli3DMapConfig } from '../type';
+import ColorSelect from '@/components/ColorSelect';
+import { useDeepUpdateEffect } from '@/hooks';
 import { CHART_ID } from '../id';
+import { TAli3DMapConfig } from '../type';
 import styles from './index.less';
 
 const { getRgbaString } = ColorSelect;
@@ -73,11 +74,11 @@ const Ali3DMap = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const { realValue } = useChartValueMapField(processedValue, {
     map: componentFilterMap,
@@ -356,19 +357,15 @@ const Ali3DMap = (
 
   return (
     <>
-      <div
-        className={classnames(
-          styles['component-map-ali3d'],
-          className,
-          conditionClassName,
-        )}
+      <ConditionComponent
+        componentId={id}
+        className={classnames(styles['component-map-ali3d'], className)}
         style={merge(
           {
             width: '100%',
             height: '100%',
           },
           style,
-          conditionStyle,
         )}
         id={chartId.current}
       >
@@ -378,7 +375,7 @@ const Ali3DMap = (
             <div className="w-100 h-100" id={mapId.current}></div>
           </div>
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

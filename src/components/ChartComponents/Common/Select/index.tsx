@@ -41,15 +41,18 @@ const Select = (
       if (!!~index) templateStateValue.splice(index, 1);
       onChange?.(templateStateValue, { label: '', value: '' });
     },
-    [stateValue],
+    [stateValue, onChange],
   );
 
-  const handleChange = useCallback((value) => {
-    if (!mode) {
-      onChange?.(value, { label: '', value: '' });
-    }
-    setStateValue(value);
-  }, []);
+  const handleChange = useCallback(
+    (value) => {
+      if (!mode) {
+        onChange?.(value, { label: '', value: '' });
+      }
+      setStateValue(value);
+    },
+    [onChange],
+  );
 
   useEffect(() => {
     setStateValue(value);

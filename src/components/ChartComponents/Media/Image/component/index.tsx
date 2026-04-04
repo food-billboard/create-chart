@@ -1,17 +1,18 @@
-import { useMemo, useRef, useCallback, useState } from 'react';
-import { uniqueId, merge } from 'lodash';
 import { Image } from 'antd';
 import classnames from 'classnames';
+import { uniqueId, merge } from 'lodash';
+import { useMemo, useRef, useCallback, useState } from 'react';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
-import { useClipPath } from '@/hooks';
-import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
-import FilterDataUtil from '@/utils/Assist/FilterData';
 import { DEFAULT_BORDER_RADIUS } from '@/components/ChartComponents/Common/Constants/defaultConfig';
-import { TImageConfig } from '../type';
+import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
+import { useClipPath } from '@/hooks';
+import FilterDataUtil from '@/utils/Assist/FilterData';
 import { CHART_ID } from '../id';
+import { TImageConfig } from '../type';
 import styles from './index.less';
 
 const ImageBasic = (
@@ -57,11 +58,11 @@ const ImageBasic = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -96,16 +97,13 @@ const ImageBasic = (
   }, [type, content, finalValue, repeat]);
 
   const componentClassName = useMemo(() => {
-    return classnames(
-      className,
-      styles['component-media-image'],
-      conditionClassName,
-    );
-  }, [className, conditionClassName]);
+    return classnames(className, styles['component-media-image']);
+  }, [className]);
 
   return (
     <>
-      <div
+      <ConditionComponent
+        componentId={id}
         className={componentClassName}
         style={merge(
           {
@@ -113,7 +111,6 @@ const ImageBasic = (
             height: '100%',
           },
           style,
-          conditionStyle,
         )}
       >
         <Wrapper border={border}>
@@ -127,7 +124,7 @@ const ImageBasic = (
           ></div>
           {children}
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <Image
         preview={{
           visible: visible,

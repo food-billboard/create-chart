@@ -1,5 +1,6 @@
+import { LuckyWheel } from '@lucky-canvas/react';
 import classnames from 'classnames';
-import { get, merge, omit, pick, uniqueId } from 'lodash';
+import { get, omit, pick, uniqueId } from 'lodash';
 import { useCallback, useMemo, useRef } from 'react';
 import { connect } from 'umi';
 // @ts-ignore
@@ -7,12 +8,12 @@ import {
   useComponent,
   useComponentSize,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
 import ColorSelect from '@/components/ColorSelect';
 import { ConnectState } from '@/models/connect';
 import FilterDataUtil from '@/utils/Assist/FilterData';
-import { LuckyWheel } from '@lucky-canvas/react';
 import { CHART_ID } from '../id';
 import { TLuckyDrawConfig } from '../type';
 import styles from './index.less';
@@ -81,11 +82,11 @@ const LuckyDrawBasic = (
     return Math.min(componentSize.width, componentSize.height);
   }, [componentSize]);
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const finalValue = useMemo(() => {
     return FilterDataUtil.getFieldMapValue(processedValue, {
@@ -94,12 +95,8 @@ const LuckyDrawBasic = (
   }, [processedValue, componentFilterMap]);
 
   const componentClassName = useMemo(() => {
-    return classnames(
-      className,
-      styles['component-other-lucky-draw'],
-      conditionClassName,
-    );
-  }, [className, conditionClassName]);
+    return classnames(className, styles['component-other-lucky-draw']);
+  }, [className]);
 
   const prizesList = useMemo(() => {
     const defaultRange = 100 / finalValue.length;
@@ -172,9 +169,10 @@ const LuckyDrawBasic = (
 
   return (
     <>
-      <div
+      <ConditionComponent
+        componentId={id}
         className={componentClassName}
-        style={merge(style, conditionStyle)}
+        style={style}
         id={chartId.current}
         onClick={onClick}
       >
@@ -220,7 +218,7 @@ const LuckyDrawBasic = (
             )}
           </div>
         </Wrapper>
-      </div>
+      </ConditionComponent>
       <FetchFragment
         id={id}
         url={requestUrl}

@@ -1,19 +1,20 @@
-import { useMemo, useRef, useState, useEffect, CSSProperties } from 'react';
-import { uniqueId, merge } from 'lodash';
-import classnames from 'classnames';
+import { useUpdateEffect } from 'ahooks';
 import { Pagination as AntPagination } from 'antd';
 import type { PaginationProps } from 'antd';
+import classnames from 'classnames';
+import { uniqueId, merge } from 'lodash';
+import { useMemo, useRef, useState, useEffect, CSSProperties } from 'react';
 import {
   useComponent,
   useCondition,
+  ConditionComponent,
 } from '@/components/ChartComponents/Common/Component/hook';
 import FetchFragment from '@/components/ChartComponents/Common/FetchFragment';
-import FilterDataUtil from '@/utils/Assist/FilterData';
 import ColorSelect from '@/components/ColorSelect';
-import { TPaginationConfig } from '../type';
+import FilterDataUtil from '@/utils/Assist/FilterData';
 import { CHART_ID } from '../id';
+import { TPaginationConfig } from '../type';
 import styles from './index.less';
-import { useUpdateEffect } from 'ahooks';
 
 const { getRgbaString } = ColorSelect;
 
@@ -63,11 +64,11 @@ const Pagination = (
     global,
   });
 
-  const {
-    onCondition: propsOnCondition,
-    style: conditionStyle,
-    className: conditionClassName,
-  } = useCondition(onCondition, screenType);
+  const { onCondition: propsOnCondition } = useCondition({
+    onCondition,
+    screenType,
+    componentId: id,
+  });
 
   const {
     current: requestCurrent,
@@ -86,9 +87,8 @@ const Pagination = (
       className,
       'dis-flex',
       styles['component-interactive-pagination'],
-      conditionClassName,
     );
-  }, [className, conditionClassName]);
+  }, [className]);
 
   const onChange = (value: number, pageSize: number) => {
     setCurrentPage(value);
@@ -154,7 +154,7 @@ const Pagination = (
   }, [requestCurrent, requestPageSize, total]);
 
   return (
-    <div
+    <ConditionComponent
       className={componentClassName}
       style={merge(
         {
@@ -162,7 +162,6 @@ const Pagination = (
           height: '100%',
         },
         style,
-        conditionStyle,
       )}
       id={chartId.current}
     >
@@ -245,7 +244,7 @@ const Pagination = (
         componentFilter={componentFilter}
         componentCondition={condition}
       />
-    </div>
+    </ConditionComponent>
   );
 };
 

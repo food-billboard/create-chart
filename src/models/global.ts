@@ -1,6 +1,10 @@
 import arrayMove from 'array-move';
 import { set, get, merge, cloneDeep } from 'lodash';
 import ComponentUtil from '@/utils/Assist/Component';
+import {
+  GLOBAL_EVENT_EMITTER,
+  EVENT_NAME_MAP,
+} from '@/utils/Assist/EventEmitter';
 import { HistoryUtil } from '@/utils/Assist/History';
 import { ScreenDataRequest } from '@/utils/Assist/RequestPool';
 import { DEFAULT_SCREEN_DATA, ThemeMap } from '@/utils/constants';
@@ -175,7 +179,27 @@ export default {
       });
     },
 
-    *setParams({ value }: { value: ComponentData.TParams[] }, { put }: any) {
+    *setParams(
+      {
+        value,
+        changeValue,
+      }: {
+        value: ComponentData.TParams[];
+        changeValue: ComponentData.SetParamsChangeValue[];
+      },
+      { put }: any,
+    ) {
+      // 通知参数发生变化
+      GLOBAL_EVENT_EMITTER.emit(
+        EVENT_NAME_MAP.PARAMS_CHANGE,
+        value,
+        changeValue,
+        changeValue.map((item) => {
+          const { now, prev } = item;
+          return now ? now.id : prev?.id;
+        }),
+      );
+
       yield put({
         type: 'setData',
         payload: {
